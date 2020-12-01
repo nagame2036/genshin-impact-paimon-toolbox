@@ -1,0 +1,10 @@
+<mat-toolbar color="primary" id="header">
+  <button (click)="showMenu.emit($event)" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 id="title">{{ 'title' | translate }}</h1>
+  <div class="spacer"></div>
+  <button mat-icon-button routerLink="settings">
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>

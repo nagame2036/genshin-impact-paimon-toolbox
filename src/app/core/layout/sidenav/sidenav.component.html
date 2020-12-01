@@ -1,0 +1,18 @@
+<mat-sidenav-container id="container">
+  <mat-sidenav [(opened)]="showMenu" id="nav" mode="side">
+    <mat-nav-list>
+      <a *ngFor="let item of routers" [routerLink]="item.path" class="route-link"
+         mat-list-item routerLinkActive="active">
+        <mat-icon class="route-icon">{{item.icon}}</mat-icon>
+        <p>{{ ('path.' + item.path) | translate }}</p>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content id="content">
+    <mat-card>
+      <mat-card-content class="page-one-col-center" id="subpage">
+        <ng-content></ng-content>
+      </mat-card-content>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

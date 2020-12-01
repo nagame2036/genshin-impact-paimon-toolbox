@@ -1,0 +1,16 @@
+<div class="page-one-col-center">
+  <div class="page-one-col-width">
+    <h1 class="header">{{ 'settings.title' | translate }}</h1>
+    <mat-divider inset></mat-divider>
+    <div class="page-one-col">
+      <div class="settings-item">
+        <span class="settings-label">{{ 'settings.language' | translate }}:</span>
+        <mat-button-toggle-group (change)="changeLanguage($event)" [value]="currentLanguage" appearance="legacy">
+          <mat-button-toggle *ngFor="let lang of languages" [value]="lang.value">
+            {{ lang.name }}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+  </div>
+</div>

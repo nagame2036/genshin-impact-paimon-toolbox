@@ -1,0 +1,5 @@
+<app-header (showMenu)="showMenu = !showMenu">
+</app-header>
+<app-sidenav [routers]="routers" [showMenu]="showMenu">
+  <router-outlet></router-outlet>
+</app-sidenav>

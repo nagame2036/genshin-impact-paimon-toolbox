@@ -1,0 +1,13 @@
+{
+  "title": "原神工具箱",
+  "path": {
+    "home": "首页"
+  },
+  "home": {
+    "thanks": "数据源及鸣谢"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言"
+  }
+}
