@@ -3,7 +3,14 @@
   "dict": {
     "genshin-impact": "原神",
     "resin": "树脂",
-    "minutes": "分钟"
+    "minutes": "分钟",
+    "physical-dmg": "物伤",
+    "anemo-dmg": "风伤",
+    "geo-dmg": "岩伤",
+    "electro-dmg": "雷伤",
+    "hydro-dmg": "水伤",
+    "pyro-dmg": "火伤",
+    "cryo-dmg": "冰伤"
   },
   "path": {
     "home": "首页",
@@ -32,6 +39,7 @@
     "character-stat": {
       "form": {
         "title": "角色面板分析",
+        "dmg-type": "伤害类型",
         "current": "当前",
         "new": "新",
         "change": "变化",
@@ -42,7 +50,7 @@
         "atk": "攻击力",
         "crit-rate": "暴击率",
         "crit-dmg-pct": "暴击伤害",
-        "bonus-dmg-pct": "属性增伤",
+        "bonus-dmg-pct": "增伤",
         "talent-dmg-pct": "技能倍率",
         "no-crit-dmg": "基础伤害",
         "crit-dmg": "暴击后伤害",

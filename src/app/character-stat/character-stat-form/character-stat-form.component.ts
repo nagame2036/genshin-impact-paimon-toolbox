@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {CharacterStat} from './character-stat';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 import {CharacterStatComparer} from './character-stat-comparer';
+import {FormControl} from '@angular/forms';
+import {DamageType} from './damage-type';
 
 @Component({
   selector: 'app-character-stat-form',
@@ -11,6 +13,10 @@ import {CharacterStatComparer} from './character-stat-comparer';
 export class CharacterStatFormComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'character-stat.form';
+
+  dmgType = new FormControl(DamageType.PYRO);
+
+  dmgTypes = Object.values(DamageType);
 
   current = {label: 'current', stat: new CharacterStat()};
 

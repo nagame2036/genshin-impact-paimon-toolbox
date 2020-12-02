@@ -7,6 +7,7 @@ import {CharacterStatFormComponent} from './character-stat-form/character-stat-f
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [CharacterStatPageComponent, CharacterStatFormComponent],
@@ -14,7 +15,8 @@ import {MatInputModule} from '@angular/material/input';
     SharedModule,
     CharacterStatRoutingModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ]
 })
 export class CharacterStatModule {
