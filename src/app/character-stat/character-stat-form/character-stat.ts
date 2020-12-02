@@ -78,14 +78,14 @@ export class CharacterStat {
     render(this.atk, atk);
 
     const critRate = this.critRate.value / 100;
-    const critDmgPct = 1 + this.critDmgPct.value / 100;
+    const critDmgPct = this.critDmgPct.value / 100;
     const critBonusDmg = 1 + critRate * critDmgPct;
     const bonusDmgPct = 1 + this.bonusDmgPct.value / 100;
     const talentDmgPct = this.talentDmgPct.value / 100;
 
     const noCritDmg = atk * bonusDmgPct * talentDmgPct;
     render(this.noCritDmg, noCritDmg);
-    const critDmg = atk * critDmgPct * bonusDmgPct * talentDmgPct;
+    const critDmg = atk * (1 + critDmgPct) * bonusDmgPct * talentDmgPct;
     render(this.critDmg, critDmg);
     const avgDmg = atk * critBonusDmg * bonusDmgPct * talentDmgPct;
     render(this.avgDmg, avgDmg);
