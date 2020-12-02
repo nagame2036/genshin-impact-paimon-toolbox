@@ -5,7 +5,25 @@ export class CharacterStat {
 
   baseAtk = new CharacterStatField();
 
+  plumeAtk = new CharacterStatField({min: 0, max: 311});
+
   bonusAtk = new CharacterStatField();
+
+  atkFields = [
+    this.baseAtk,
+    this.plumeAtk,
+    this.bonusAtk
+  ];
+
+  atkFieldLabels = [
+    'base-atk',
+    'plume-atk',
+    'bonus-atk'
+  ];
+
+  atkIncPct = new FormControl('NaN');
+
+  atk = new FormControl('0.00');
 
   critRate = new CharacterStatField({min: 5, max: 100, suffix: '%'});
 
@@ -15,18 +33,14 @@ export class CharacterStat {
 
   talentDmgPct = new CharacterStatField({min: 0, suffix: '%'});
 
-  fields = [
-    this.baseAtk,
-    this.bonusAtk,
+  effectFields = [
     this.critRate,
     this.critDmgPct,
     this.bonusDmgPct,
     this.talentDmgPct
   ];
 
-  fieldLabels = [
-    'base-atk',
-    'bonus-atk',
+  effectFieldLabels = [
     'crit-rate',
     'crit-dmg-pct',
     'bonus-dmg-pct',
@@ -51,19 +65,27 @@ export class CharacterStat {
     'avg-dmg'
   ];
 
+  private fractionDigits = 2;
+
   calc(): void {
-    const totalAtk = this.baseAtk.value + this.bonusAtk.value;
+    const bonusAtk = this.bonusAtk.value;
+    const baseAtk = this.baseAtk.value;
+    const atkIncPct = (bonusAtk - this.plumeAtk.value) / baseAtk * 100;
+    this.atkIncPct.setValue(atkIncPct.toFixed(this.fractionDigits));
+    const atk = baseAtk + bonusAtk;
+    this.atk.setValue(atk.toFixed(this.fractionDigits));
+
     const critRate = this.critRate.value / 100;
     const critDmgPct = 1 + this.critDmgPct.value / 100;
     const critBonusDmg = 1 + critRate * critDmgPct;
     const bonusDmgPct = 1 + this.bonusDmgPct.value / 100;
     const talentDmgPct = this.talentDmgPct.value / 100;
 
-    const noCritDmg = totalAtk * bonusDmgPct * talentDmgPct;
-    this.noCritDmg.setValue(noCritDmg.toFixed(2));
-    const critDmg = totalAtk * critDmgPct * bonusDmgPct * talentDmgPct;
-    this.critDmg.setValue(critDmg.toFixed(2));
-    const avgDmg = totalAtk * critBonusDmg * bonusDmgPct * talentDmgPct;
-    this.avgDmg.setValue(avgDmg.toFixed(2));
+    const noCritDmg = atk * bonusDmgPct * talentDmgPct;
+    this.noCritDmg.setValue(noCritDmg.toFixed(this.fractionDigits));
+    const critDmg = atk * critDmgPct * bonusDmgPct * talentDmgPct;
+    this.critDmg.setValue(critDmg.toFixed(this.fractionDigits));
+    const avgDmg = atk * critBonusDmg * bonusDmgPct * talentDmgPct;
+    this.avgDmg.setValue(avgDmg.toFixed(this.fractionDigits));
   }
 }

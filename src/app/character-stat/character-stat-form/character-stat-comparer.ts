@@ -6,7 +6,13 @@ export class CharacterStatComparer {
 
   baseAtk = new FormControl('NaN');
 
+  plumeAtk = new FormControl('NaN');
+
   bonusAtk = new FormControl('NaN');
+
+  atkIncPct = new FormControl('NaN');
+
+  atk = new FormControl('NaN');
 
   critRate = new FormControl('0.00');
 
@@ -24,7 +30,10 @@ export class CharacterStatComparer {
 
   fields = [
     this.baseAtk,
+    this.plumeAtk,
     this.bonusAtk,
+    this.atkIncPct,
+    this.atk,
     this.critRate,
     this.critDmgPct,
     this.bonusDmgPct,
@@ -53,7 +62,10 @@ export class CharacterStatComparer {
     const current = this.current;
     const comparedBy = this.comparedBy;
     this.baseAtk.setValue(CharacterStatComparer.renderField(current.baseAtk, comparedBy.baseAtk));
+    this.plumeAtk.setValue(CharacterStatComparer.renderField(current.plumeAtk, comparedBy.plumeAtk));
     this.bonusAtk.setValue(CharacterStatComparer.renderField(current.bonusAtk, comparedBy.bonusAtk));
+    this.atkIncPct.setValue(CharacterStatComparer.renderText(current.atkIncPct, comparedBy.atkIncPct));
+    this.atk.setValue(CharacterStatComparer.renderText(current.atk, comparedBy.atk));
     this.critRate.setValue(CharacterStatComparer.renderField(current.critRate, comparedBy.critRate));
     this.critDmgPct.setValue(CharacterStatComparer.renderField(current.critDmgPct, comparedBy.critDmgPct));
     this.bonusDmgPct.setValue(CharacterStatComparer.renderField(current.bonusDmgPct, comparedBy.bonusDmgPct));

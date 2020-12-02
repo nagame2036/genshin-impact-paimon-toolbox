@@ -2,7 +2,7 @@
   <h1>{{ i18n('title') | translate }}</h1>
   <div class="statistic-grid">
     <div *ngFor="let s of stat" class="flex-column">
-      <div *ngFor="let f of s.stat.fields, let i = index" class="statistic-field">
+      <div *ngFor="let f of s.stat.atkFields, let i = index" class="statistic-field">
         <mat-form-field
           (change)="f.correct(); calc(s.stat)"
           (input)="calc(s.stat)"
@@ -11,7 +11,32 @@
         >
           <mat-label>
             {{ i18n(s.label) | translate }}
-            {{ i18n(s.stat.fieldLabels[i]) | translate }}
+            {{ i18n(s.stat.atkFieldLabels[i]) | translate }}
+          </mat-label>
+          <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
+          <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
+        </mat-form-field>
+      </div>
+      <div *ngFor="let f of [s.stat.atkIncPct, s.stat.atk], let i = index" class="statistic-field">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ i18n(s.label) | translate }}
+            {{ i18n(['atk-inc-pct', 'atk'][i]) | translate }}
+          </mat-label>
+          <input [formControl]="f" matInput readonly/>
+          <div *ngIf="i === 0" matSuffix>%</div>
+        </mat-form-field>
+      </div>
+      <div *ngFor="let f of s.stat.effectFields, let i = index" class="statistic-field">
+        <mat-form-field
+          (change)="f.correct(); calc(s.stat)"
+          (input)="calc(s.stat)"
+          appearance="outline"
+          floatLabel="always"
+        >
+          <mat-label>
+            {{ i18n(s.label) | translate }}
+            {{ i18n(s.stat.effectFieldLabels[i]) | translate }}
           </mat-label>
           <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
           <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
