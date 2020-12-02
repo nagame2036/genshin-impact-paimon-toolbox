@@ -13,12 +13,15 @@ export class CharacterStat {
 
   bonusDmgPct = new CharacterStatField({min: 0, suffix: '%'});
 
+  talentDmgPct = new CharacterStatField({min: 0, suffix: '%'});
+
   fields = [
     this.baseAtk,
     this.bonusAtk,
     this.critRate,
     this.critDmgPct,
-    this.bonusDmgPct
+    this.bonusDmgPct,
+    this.talentDmgPct
   ];
 
   fieldLabels = [
@@ -26,7 +29,8 @@ export class CharacterStat {
     'bonus-atk',
     'crit-rate',
     'crit-dmg-pct',
-    'bonus-dmg'
+    'bonus-dmg-pct',
+    'talent-dmg-pct'
   ];
 
   noCritDmg = new FormControl('0.00');
@@ -52,13 +56,14 @@ export class CharacterStat {
     const critRate = this.critRate.value / 100;
     const critDmgPct = 1 + this.critDmgPct.value / 100;
     const critBonusDmg = 1 + critRate * critDmgPct;
-    const bonusDmg = 1 + this.bonusDmgPct.value / 100;
+    const bonusDmgPct = 1 + this.bonusDmgPct.value / 100;
+    const talentDmgPct = this.talentDmgPct.value / 100;
 
-    const noCritDmg = totalAtk * bonusDmg;
+    const noCritDmg = totalAtk * bonusDmgPct * talentDmgPct;
     this.noCritDmg.setValue(noCritDmg.toFixed(2));
-    const critDmg = totalAtk * critDmgPct * bonusDmg;
+    const critDmg = totalAtk * critDmgPct * bonusDmgPct * talentDmgPct;
     this.critDmg.setValue(critDmg.toFixed(2));
-    const avgDmg = totalAtk * critBonusDmg * bonusDmg;
+    const avgDmg = totalAtk * critBonusDmg * bonusDmgPct * talentDmgPct;
     this.avgDmg.setValue(avgDmg.toFixed(2));
   }
 }
