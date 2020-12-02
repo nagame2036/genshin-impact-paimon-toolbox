@@ -16,7 +16,7 @@ export class ResinReplenishCalculatorComponent extends AbstractTranslateComponen
 
   resin = new FormControl(0, [Validators.min(0), Validators.max(160)]);
 
-  minutes = new FormControl(8, [Validators.min(0), Validators.max(8)]);
+  minutes = new FormControl(8);
 
   results = [20, 40, 60, 80, 120].map(i => {
     return {target: i, control: new FormControl('')};
