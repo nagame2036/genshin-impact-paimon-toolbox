@@ -1,7 +1,7 @@
 <div class="page-one-col-center">
   <h1>{{ i18n('title') | translate }}</h1>
   <div class="statistic-grid">
-    <div *ngFor="let s of stat" class="flex-column">
+    <div *ngFor="let s of stat" class="statistic-row">
       <div *ngFor="let f of s.stat.atkFields, let i = index" class="statistic-field">
         <mat-form-field
           (change)="f.correct(); calc(s.stat)"
@@ -52,7 +52,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="flex-column">
+    <div class="statistic-row">
       <div *ngFor="let f of comparer.fields" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>
