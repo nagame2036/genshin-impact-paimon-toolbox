@@ -4,8 +4,8 @@
     <div *ngFor="let s of stat" class="flex-column">
       <div *ngFor="let f of s.stat.fields, let i = index" class="statistic-field">
         <mat-form-field
-          (change)="f.correct(); s.stat.calc()"
-          (input)="s.stat.calc()"
+          (change)="f.correct(); calc(s.stat)"
+          (input)="calc(s.stat)"
           appearance="outline"
           floatLabel="always"
         >
@@ -24,6 +24,17 @@
             {{ i18n(s.stat.damageLabels[i]) | translate }}
           </mat-label>
           <input [formControl]="f" matInput readonly/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex-column">
+      <div *ngFor="let f of comparer.fields" class="statistic-field">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ i18n('change') | translate }}
+          </mat-label>
+          <input [formControl]="f" matInput readonly/>
+          <div matSuffix>%</div>
         </mat-form-field>
       </div>
     </div>
