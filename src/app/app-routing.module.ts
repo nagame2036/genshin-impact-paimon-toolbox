@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'resin',
     loadChildren: () => import('./resin/resin.module').then(m => m.ResinModule)
+  },
+  {
+    path: 'character-stat',
+    loadChildren: () => import('./character-stat/character-stat.module').then(m => m.CharacterStatModule)
   }
 ];
 

@@ -1,0 +1,31 @@
+<div class="page-one-col-center">
+  <h1>{{ 'character-stat.form.title' | translate }}</h1>
+  <div class="statistic-grid">
+    <div *ngFor="let s of stat" class="flex-column">
+      <div *ngFor="let f of s.stat.fields, let i = index" class="statistic-field">
+        <mat-form-field
+          (change)="f.correct(); s.stat.calc()"
+          (input)="s.stat.calc()"
+          appearance="outline"
+          floatLabel="always"
+        >
+          <mat-label>
+            {{ ('character-stat.form.' + s.label) | translate }}
+            {{ ('character-stat.form.' + s.stat.fieldLabels[i]) | translate }}
+          </mat-label>
+          <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
+          <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
+        </mat-form-field>
+      </div>
+      <div *ngFor="let f of s.stat.damages, let i = index" class="statistic-field">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ ('character-stat.form.' + s.label) | translate }}
+            {{ ('character-stat.form.' + s.stat.damageLabels[i]) | translate }}
+          </mat-label>
+          <input [formControl]="f" matInput readonly/>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>

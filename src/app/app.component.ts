@@ -11,6 +11,7 @@ export class AppComponent {
 
   routers: { path: string; icon: string }[] = [
     {path: 'home', icon: 'home'},
-    {path: 'resin', icon: 'brightness_3'}
+    {path: 'resin', icon: 'brightness_3'},
+    {path: 'character-stat', icon: 'analytics'}
   ];
 }

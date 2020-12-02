@@ -2,7 +2,8 @@
   "title": "原神工具箱",
   "path": {
     "home": "首页",
-    "resin": "树脂"
+    "resin": "树脂",
+    "character-stat": "角色面板"
   },
   "home": {
     "thanks": "数据源及鸣谢"
@@ -20,6 +21,21 @@
       "replenished-in": "下次恢复时间",
       "replenished-to": "树脂恢复到",
       "fully-replenished": "树脂恢复到上限"
+    }
+  },
+  "character-stat": {
+    "form": {
+      "title": "角色面板分析",
+      "current": "当前",
+      "new": "新",
+      "base-atk": "基础攻击力",
+      "bonus-atk": "额外攻击力",
+      "crit-rate": "暴击率",
+      "crit-dmg-pct": "暴击伤害",
+      "bonus-dmg": "属性增伤",
+      "no-crit-dmg": "基础伤害",
+      "crit-dmg": "暴击后伤害",
+      "avg-dmg": "平均伤害"
     }
   }
 }
