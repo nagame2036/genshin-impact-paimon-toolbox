@@ -9,7 +9,6 @@ import {ResinReplenishCalculatorComponent} from './resin-replenish-calculator/re
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [ResinPageComponent, ResinReplenishCalculatorComponent],
@@ -19,8 +18,7 @@ import {MatButtonModule} from '@angular/material/button';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatButtonModule
+    MatSelectModule
   ]
 })
 export class ResinModule {

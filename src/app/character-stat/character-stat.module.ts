@@ -7,7 +7,6 @@ import {CharacterStatFormComponent} from './character-stat-form/character-stat-f
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [CharacterStatPageComponent, CharacterStatFormComponent],
@@ -15,8 +14,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     SharedModule,
     CharacterStatRoutingModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatGridListModule
+    MatInputModule
   ]
 })
 export class CharacterStatModule {
