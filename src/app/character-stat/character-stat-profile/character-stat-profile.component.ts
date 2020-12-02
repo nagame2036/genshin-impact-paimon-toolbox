@@ -6,11 +6,11 @@ import {FormControl} from '@angular/forms';
 import {DamageType} from './damage-type';
 
 @Component({
-  selector: 'app-character-stat-form',
-  templateUrl: './character-stat-form.component.html',
-  styleUrls: ['./character-stat-form.component.sass']
+  selector: 'app-character-stat-profile',
+  templateUrl: './character-stat-profile.component.html',
+  styleUrls: ['./character-stat-profile.component.sass']
 })
-export class CharacterStatFormComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterStatProfileComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'character-stat.form';
 
@@ -18,16 +18,13 @@ export class CharacterStatFormComponent extends AbstractTranslateComponent imple
 
   dmgTypes = Object.values(DamageType);
 
-  current = {label: 'current', stat: new CharacterStat()};
+  current = new CharacterStat('current');
 
-  newStat = {label: 'new', stat: new CharacterStat()};
+  newStat = new CharacterStat('new');
 
-  stat = [
-    this.current,
-    this.newStat
-  ];
+  stat = [this.current, this.newStat];
 
-  comparer = new CharacterStatComparer(this.current.stat, this.newStat.stat);
+  comparer = new CharacterStatComparer(this.current, this.newStat);
 
   constructor() {
     super();

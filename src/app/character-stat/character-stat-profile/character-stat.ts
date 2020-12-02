@@ -7,6 +7,9 @@ function render(control: FormControl, value: number): void {
 
 export class CharacterStat {
 
+  constructor(public label: string) {
+  }
+
   baseAtk = new CharacterStatField();
 
   plumeAtk = new CharacterStatField({min: 0, max: 311});
@@ -19,7 +22,7 @@ export class CharacterStat {
     this.bonusAtk
   ];
 
-  atkFieldLabels = [
+  atkLabels = [
     'base-atk',
     'plume-atk',
     'bonus-atk'
@@ -44,7 +47,7 @@ export class CharacterStat {
     this.talentDmgPct
   ];
 
-  effectFieldLabels = [
+  effectLabels = [
     'crit-rate',
     'crit-dmg-pct',
     'bonus-dmg-pct',
