@@ -1,6 +1,10 @@
 import {CharacterStatField} from './character-stat-field';
 import {FormControl} from '@angular/forms';
 
+function render(control: FormControl, value: number): void {
+  control.setValue(value.toFixed(1));
+}
+
 export class CharacterStat {
 
   baseAtk = new CharacterStatField();
@@ -65,15 +69,13 @@ export class CharacterStat {
     'avg-dmg'
   ];
 
-  private fractionDigits = 2;
-
   calc(): void {
     const bonusAtk = this.bonusAtk.value;
     const baseAtk = this.baseAtk.value;
     const atkIncPct = (bonusAtk - this.plumeAtk.value) / baseAtk * 100;
-    this.atkIncPct.setValue(atkIncPct.toFixed(this.fractionDigits));
+    render(this.atkIncPct, atkIncPct);
     const atk = baseAtk + bonusAtk;
-    this.atk.setValue(atk.toFixed(this.fractionDigits));
+    render(this.atk, atk);
 
     const critRate = this.critRate.value / 100;
     const critDmgPct = 1 + this.critDmgPct.value / 100;
@@ -82,10 +84,10 @@ export class CharacterStat {
     const talentDmgPct = this.talentDmgPct.value / 100;
 
     const noCritDmg = atk * bonusDmgPct * talentDmgPct;
-    this.noCritDmg.setValue(noCritDmg.toFixed(this.fractionDigits));
+    render(this.noCritDmg, noCritDmg);
     const critDmg = atk * critDmgPct * bonusDmgPct * talentDmgPct;
-    this.critDmg.setValue(critDmg.toFixed(this.fractionDigits));
+    render(this.critDmg, critDmg);
     const avgDmg = atk * critBonusDmg * bonusDmgPct * talentDmgPct;
-    this.avgDmg.setValue(avgDmg.toFixed(this.fractionDigits));
+    render(this.avgDmg, avgDmg);
   }
 }

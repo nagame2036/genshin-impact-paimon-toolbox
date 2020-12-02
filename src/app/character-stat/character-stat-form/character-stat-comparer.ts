@@ -1,32 +1,31 @@
-import {FormControl} from '@angular/forms';
-import {CharacterStatField} from './character-stat-field';
 import {CharacterStat} from './character-stat';
+import {CharacterStatCompareField} from './character-stat-compare-field';
 
 export class CharacterStatComparer {
 
-  baseAtk = new FormControl('NaN');
+  baseAtk = new CharacterStatCompareField('NaN', this.current.baseAtk.control, this.comparedBy.baseAtk.control);
 
-  plumeAtk = new FormControl('NaN');
+  plumeAtk = new CharacterStatCompareField('NaN', this.current.plumeAtk.control, this.comparedBy.plumeAtk.control);
 
-  bonusAtk = new FormControl('NaN');
+  bonusAtk = new CharacterStatCompareField('NaN', this.current.bonusAtk.control, this.comparedBy.bonusAtk.control);
 
-  atkIncPct = new FormControl('NaN');
+  atkIncPct = new CharacterStatCompareField('NaN', this.current.atkIncPct, this.comparedBy.atkIncPct);
 
-  atk = new FormControl('NaN');
+  atk = new CharacterStatCompareField('NaN', this.current.atk, this.comparedBy.atk);
 
-  critRate = new FormControl('0.00');
+  critRate = new CharacterStatCompareField('0.00', this.current.critRate.control, this.comparedBy.critRate.control);
 
-  critDmgPct = new FormControl('0.00');
+  critDmgPct = new CharacterStatCompareField('0.00', this.current.critDmgPct.control, this.comparedBy.critDmgPct.control);
 
-  bonusDmgPct = new FormControl('NaN');
+  bonusDmgPct = new CharacterStatCompareField('NaN', this.current.bonusDmgPct.control, this.comparedBy.bonusDmgPct.control);
 
-  talentDmgPct = new FormControl('NaN');
+  talentDmgPct = new CharacterStatCompareField('NaN', this.current.talentDmgPct.control, this.comparedBy.talentDmgPct.control);
 
-  noCritDmg = new FormControl('NaN');
+  noCritDmg = new CharacterStatCompareField('NaN', this.current.noCritDmg, this.comparedBy.noCritDmg);
 
-  critDmg = new FormControl('NaN');
+  critDmg = new CharacterStatCompareField('NaN', this.current.critDmg, this.comparedBy.critDmg);
 
-  avgDmg = new FormControl('NaN');
+  avgDmg = new CharacterStatCompareField('NaN', this.current.avgDmg, this.comparedBy.avgDmg);
 
   fields = [
     this.baseAtk,
@@ -46,32 +45,7 @@ export class CharacterStatComparer {
   constructor(private current: CharacterStat, private comparedBy: CharacterStat) {
   }
 
-  private static renderField(current: CharacterStatField, comparedBy: CharacterStatField): string {
-    return this.render(comparedBy.value, current.value);
-  }
-
-  private static renderText(current: FormControl, comparedBy: FormControl): string {
-    return this.render(comparedBy.value, current.value);
-  }
-
-  private static render(comparedBy: number, current: number): string {
-    return ((comparedBy / current - 1) * 100).toFixed(2);
-  }
-
   calc(): void {
-    const current = this.current;
-    const comparedBy = this.comparedBy;
-    this.baseAtk.setValue(CharacterStatComparer.renderField(current.baseAtk, comparedBy.baseAtk));
-    this.plumeAtk.setValue(CharacterStatComparer.renderField(current.plumeAtk, comparedBy.plumeAtk));
-    this.bonusAtk.setValue(CharacterStatComparer.renderField(current.bonusAtk, comparedBy.bonusAtk));
-    this.atkIncPct.setValue(CharacterStatComparer.renderText(current.atkIncPct, comparedBy.atkIncPct));
-    this.atk.setValue(CharacterStatComparer.renderText(current.atk, comparedBy.atk));
-    this.critRate.setValue(CharacterStatComparer.renderField(current.critRate, comparedBy.critRate));
-    this.critDmgPct.setValue(CharacterStatComparer.renderField(current.critDmgPct, comparedBy.critDmgPct));
-    this.bonusDmgPct.setValue(CharacterStatComparer.renderField(current.bonusDmgPct, comparedBy.bonusDmgPct));
-    this.talentDmgPct.setValue(CharacterStatComparer.renderField(current.talentDmgPct, comparedBy.talentDmgPct));
-    this.noCritDmg.setValue(CharacterStatComparer.renderText(current.noCritDmg, comparedBy.noCritDmg));
-    this.critDmg.setValue(CharacterStatComparer.renderText(current.critDmg, comparedBy.critDmg));
-    this.avgDmg.setValue(CharacterStatComparer.renderText(current.avgDmg, comparedBy.avgDmg));
+    this.fields.forEach(i => i.render());
   }
 }

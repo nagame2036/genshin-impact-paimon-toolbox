@@ -58,7 +58,7 @@
           <mat-label>
             {{ i18n('change') | translate }}
           </mat-label>
-          <input [formControl]="f" matInput readonly/>
+          <input [formControl]="f.control" matInput readonly/>
           <div matSuffix>%</div>
         </mat-form-field>
       </div>
