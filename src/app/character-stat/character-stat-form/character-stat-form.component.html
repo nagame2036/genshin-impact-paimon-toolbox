@@ -1,5 +1,5 @@
 <div class="page-one-col-center">
-  <h1>{{ 'character-stat.form.title' | translate }}</h1>
+  <h1>{{ i18n('title') | translate }}</h1>
   <div class="statistic-grid">
     <div *ngFor="let s of stat" class="flex-column">
       <div *ngFor="let f of s.stat.fields, let i = index" class="statistic-field">
@@ -10,8 +10,8 @@
           floatLabel="always"
         >
           <mat-label>
-            {{ ('character-stat.form.' + s.label) | translate }}
-            {{ ('character-stat.form.' + s.stat.fieldLabels[i]) | translate }}
+            {{ i18n(s.label) | translate }}
+            {{ i18n(s.stat.fieldLabels[i]) | translate }}
           </mat-label>
           <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
           <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
@@ -20,8 +20,8 @@
       <div *ngFor="let f of s.stat.damages, let i = index" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>
-            {{ ('character-stat.form.' + s.label) | translate }}
-            {{ ('character-stat.form.' + s.stat.damageLabels[i]) | translate }}
+            {{ i18n(s.label) | translate }}
+            {{ i18n(s.stat.damageLabels[i]) | translate }}
           </mat-label>
           <input [formControl]="f" matInput readonly/>
         </mat-form-field>

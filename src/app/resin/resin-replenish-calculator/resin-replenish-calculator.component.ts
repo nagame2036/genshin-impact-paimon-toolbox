@@ -3,13 +3,16 @@ import {FormControl, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {coerceIn} from '../../shared/utils/coerce';
 import {TranslateService} from '@ngx-translate/core';
+import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 
 @Component({
   selector: 'app-resin-replenish-calculator',
   templateUrl: './resin-replenish-calculator.component.html',
   styleUrls: ['./resin-replenish-calculator.component.sass']
 })
-export class ResinReplenishCalculatorComponent implements OnInit {
+export class ResinReplenishCalculatorComponent extends AbstractTranslateComponent implements OnInit {
+
+  i18nKey = 'resin.replenish';
 
   resin = new FormControl(0, [Validators.min(0), Validators.max(160)]);
 
@@ -22,6 +25,7 @@ export class ResinReplenishCalculatorComponent implements OnInit {
   resinFull = new FormControl('');
 
   constructor(private translator: TranslateService) {
+    super();
   }
 
   ngOnInit(): void {
@@ -54,4 +58,5 @@ export class ResinReplenishCalculatorComponent implements OnInit {
     const targetTime = moment().add(minutes, 'm').toDate();
     return targetTime.toLocaleString(this.translator.currentLang, {hour12: false});
   }
+
 }

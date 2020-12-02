@@ -1,27 +1,27 @@
 <div class="page-one-col-center">
-  <h1>{{ 'resin.replenish.title' | translate }}</h1>
+  <h1>{{ i18n('title') | translate }}</h1>
   <mat-form-field appearance="outline" floatLabel="always">
-    <mat-label>{{ 'resin.replenish.current' | translate }}</mat-label>
+    <mat-label>{{ i18n('current') | translate }}</mat-label>
     <input (input)="correctResin()" [formControl]="resin" matInput max="160" min="0" required type="number"/>
-    <span matSuffix>{{ 'resin.replenish.resin' | translate }}</span>
+    <span matSuffix>{{ i18nDict('resin') | translate }}</span>
   </mat-form-field>
   <mat-form-field appearance="outline" floatLabel="always">
-    <mat-label>{{ 'resin.replenish.replenished-in' | translate }}</mat-label>
+    <mat-label>{{ i18n('replenished-in') | translate }}</mat-label>
     <mat-select (ngModelChange)="correctMinutes()" [formControl]="minutes" required>
       <mat-option *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8]" [value]="i">
         {{ i }}
       </mat-option>
     </mat-select>
-    <span matSuffix>{{ 'resin.replenish.minutes' | translate }}</span>
+    <span matSuffix>{{ i18nDict('minutes') | translate }}</span>
   </mat-form-field>
   <div *ngFor="let r of results">
     <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>{{ 'resin.replenish.replenished-to' | translate }}{{ r.target }}</mat-label>
+      <mat-label>{{ i18n('replenished-to') | translate }}{{ r.target }}</mat-label>
       <input [formControl]="r.control" matInput readonly/>
     </mat-form-field>
   </div>
   <mat-form-field appearance="outline" floatLabel="always">
-    <mat-label>{{ 'resin.replenish.fully-replenished' | translate }}</mat-label>
+    <mat-label>{{ i18n('fully-replenished') | translate }}</mat-label>
     <input [formControl]="resinFull" matInput readonly/>
   </mat-form-field>
 </div>

@@ -1,41 +1,48 @@
 {
   "title": "原神工具箱",
+  "dict": {
+    "genshin-impact": "原神",
+    "resin": "树脂",
+    "minutes": "分钟"
+  },
   "path": {
     "home": "首页",
     "resin": "树脂",
     "character-stat": "角色面板"
   },
-  "home": {
-    "thanks": "数据源及鸣谢"
-  },
-  "settings": {
-    "title": "设置",
-    "language": "语言"
-  },
-  "resin": {
-    "replenish": {
-      "title": "树脂恢复计算器",
-      "resin": "树脂",
-      "minutes": "分钟",
-      "current": "当前剩余树脂",
-      "replenished-in": "下次恢复时间",
-      "replenished-to": "树脂恢复到",
-      "fully-replenished": "树脂恢复到上限"
-    }
-  },
-  "character-stat": {
-    "form": {
-      "title": "角色面板分析",
-      "current": "当前",
-      "new": "新",
-      "base-atk": "基础攻击力",
-      "bonus-atk": "额外攻击力",
-      "crit-rate": "暴击率",
-      "crit-dmg-pct": "暴击伤害",
-      "bonus-dmg": "属性增伤",
-      "no-crit-dmg": "基础伤害",
-      "crit-dmg": "暴击后伤害",
-      "avg-dmg": "平均伤害"
+  "modules": {
+    "home": {
+      "thanks": "数据源及鸣谢"
+    },
+    "settings": {
+      "title": "设置",
+      "language": "语言"
+    },
+    "resin": {
+      "replenish": {
+        "title": "树脂恢复计算器",
+        "resin": "树脂",
+        "minutes": "分钟",
+        "current": "当前剩余树脂",
+        "replenished-in": "下次恢复时间",
+        "replenished-to": "树脂恢复到",
+        "fully-replenished": "树脂恢复到上限"
+      }
+    },
+    "character-stat": {
+      "form": {
+        "title": "角色面板分析",
+        "current": "当前",
+        "new": "新",
+        "base-atk": "基础攻击力",
+        "bonus-atk": "额外攻击力",
+        "crit-rate": "暴击率",
+        "crit-dmg-pct": "暴击伤害",
+        "bonus-dmg": "属性增伤",
+        "no-crit-dmg": "基础伤害",
+        "crit-dmg": "暴击后伤害",
+        "avg-dmg": "平均伤害"
+      }
     }
   }
 }
