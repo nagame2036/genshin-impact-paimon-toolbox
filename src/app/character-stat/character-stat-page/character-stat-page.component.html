@@ -1,1 +1,12 @@
-<app-character-stat-profile></app-character-stat-profile>
+<div class="character-stat-page">
+  <div class="character-stat-component">
+    <h1 class="mat-h1">{{ i18n('title') | translate }}</h1>
+    <app-character-stat-profile (profile)="profile = $event"></app-character-stat-profile>
+  </div>
+  <mat-divider vertical></mat-divider>
+  <mat-tab-group class="character-stat-tab-group">
+    <mat-tab [label]="i18n('calculator.title') | translate">
+      <app-character-stat-calculator [profile]="profile"></app-character-stat-calculator>
+    </mat-tab>
+  </mat-tab-group>
+</div>

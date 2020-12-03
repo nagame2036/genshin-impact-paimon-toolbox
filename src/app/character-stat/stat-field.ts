@@ -1,7 +1,7 @@
 import {FormControl, Validators} from '@angular/forms';
-import {coerceAtLeast, coerceIn} from '../../shared/utils/coerce';
+import {coerceIn} from '../shared/utils/coerce';
 
-export class CharacterStatField {
+export class StatField {
 
   min = 0;
 
@@ -13,18 +13,19 @@ export class CharacterStatField {
 
   correct: () => void;
 
-  constructor(option: { min: number, max?: number, suffix?: string } = {min: 0}) {
+  constructor(option: { min: number, max?: number, defaultValue?: number, suffix?: string } = {min: 0}) {
     const min = option.min;
     const max = option.max;
+    const defaultVal = option.defaultValue ?? min;
     if (max) {
-      this.control = new FormControl(min, [Validators.min(min), Validators.max(max)]);
+      this.control = new FormControl(defaultVal, [Validators.min(min), Validators.max(max)]);
       this.correct = () => {
         this.control.setValue(coerceIn(this.control.value, min, max), {onlySelf: true});
       };
     } else {
-      this.control = new FormControl(min, Validators.min(min));
+      this.control = new FormControl(defaultVal, Validators.min(min));
       this.correct = () => {
-        this.control.setValue(coerceAtLeast(this.control.value, min), {onlySelf: true});
+        this.control.setValue(Math.max(this.control.value, min), {onlySelf: true});
       };
     }
     this.min = min;

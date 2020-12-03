@@ -1,67 +1,51 @@
-<div class="page-one-col-center">
-  <h1>{{ i18n('title') | translate }}</h1>
-  <div class="statistic-field">
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>{{ i18n('dmg-type') | translate }}</mat-label>
-      <mat-select [formControl]="dmgType">
-        <mat-option *ngFor="let t of dmgTypes" [value]="t">{{ i18nDict(t + '-dmg') | translate }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+<div style="margin-top: 24px">
+  <div class="statistic-row">
+    <app-ascension-level-select (level)="level = $event; calc()"></app-ascension-level-select>
+    <div class="statistic-field">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ i18n('dmg-type') | translate }}</mat-label>
+        <mat-select [formControl]="dmgType" (selectionChange)="calc()">
+          <mat-option *ngFor="let t of dmgTypes" [value]="t">{{ i18nDict(t) | translate }}</mat-option>
+        </mat-select>
+        <div matSuffix>{{ i18nDict('dmg') | translate }}</div>
+      </mat-form-field>
+    </div>
   </div>
   <mat-divider inset></mat-divider>
   <div class="statistic-grid">
-    <div *ngFor="let s of stat" class="statistic-row">
-      <div *ngFor="let f of s.atkFields, let i = index" class="statistic-field">
-        <mat-form-field
-          (change)="f.correct(); calc(s)"
-          (input)="calc(s)"
-          appearance="outline"
-          floatLabel="always"
-        >
+    <div *ngFor="let s of stat" class="flex-column">
+      <div *ngFor="let f of s.fields, let i = index" class="statistic-field">
+        <mat-form-field (change)="f.correct(); calc()" (input)="calc()" appearance="outline" floatLabel="always">
           <mat-label>
             {{ i18n(s.label) | translate }}
-            {{ i18n(s.atkLabels[i]) | translate }}
+            {{ i18n(s.labels[i]) | translate }}
           </mat-label>
           <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
           <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
         </mat-form-field>
       </div>
-      <div *ngFor="let f of [s.atkIncPct, s.atk], let i = index" class="statistic-field">
+      <div class="statistic-field">
+        <mat-form-field (change)="s.elementalDmgBonus.correct(); calc()" (input)="calc()"
+                        appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ i18n(s.label) | translate }}
+            {{ i18nDict(dmgType.value) | translate }}{{ i18n('elemental-dmg-bonus') | translate }}
+          </mat-label>
+          <input [formControl]="s.elementalDmgBonus.control"
+                 [max]="s.elementalDmgBonus.max" [min]="s.elementalDmgBonus.min" matInput required type="number"/>
+        </mat-form-field>
+      </div>
+      <div *ngFor="let f of s.dmgFields, let i = index" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>
             {{ i18n(s.label) | translate }}
-            {{ i18n(['atk-inc-pct', 'atk'][i]) | translate }}
+            {{ i18n(s.dmgLabels[i]) | translate }}
           </mat-label>
-          <input [formControl]="f" matInput readonly/>
-          <div *ngIf="i === 0" matSuffix>%</div>
-        </mat-form-field>
-      </div>
-      <div *ngFor="let f of s.effectFields, let i = index" class="statistic-field">
-        <mat-form-field
-          (change)="f.correct(); calc(s)"
-          (input)="calc(s)"
-          appearance="outline"
-          floatLabel="always"
-        >
-          <mat-label>
-            {{ i18n(s.label) | translate }}
-            {{ (i === 2 ? (i18nDict(dmgType.value + '-dmg') | translate) : '') + (i18n(s.effectLabels[i]) | translate) }}
-          </mat-label>
-          <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
-          <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
-        </mat-form-field>
-      </div>
-      <div *ngFor="let f of s.damages, let i = index" class="statistic-field">
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            {{ i18n(s.label) | translate }}
-            {{ i18n(s.damageLabels[i]) | translate }}
-          </mat-label>
-          <input [formControl]="f" matInput readonly/>
+          <input [formControl]="f" matInput/>
         </mat-form-field>
       </div>
     </div>
-    <div class="statistic-row">
+    <div class="flex-column">
       <div *ngFor="let f of comparer.fields" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>

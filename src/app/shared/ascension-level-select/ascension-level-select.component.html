@@ -1,0 +1,22 @@
+<div style="display: flex">
+  <div class="statistic-field">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>{{ i18nDict('ascension') | translate }}</mat-label>
+      <mat-select [formControl]="ascensionControl" (selectionChange)="correct()">
+        <mat-option *ngFor="let a of ascensions" [value]="a">
+          {{ i18nDict('ascension-option') | translate: {value: levelStats[a].min} }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="statistic-field">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>{{ i18nDict('level') | translate }}</mat-label>
+      <mat-select [formControl]="levelControl" (selectionChange)="correct()">
+        <mat-option *ngFor="let level of levels[ascensionControl.value]" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

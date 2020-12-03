@@ -4,13 +4,24 @@
     "genshin-impact": "原神",
     "resin": "树脂",
     "minutes": "分钟",
-    "physical-dmg": "物伤",
-    "anemo-dmg": "风伤",
-    "geo-dmg": "岩伤",
-    "electro-dmg": "雷伤",
-    "hydro-dmg": "水伤",
-    "pyro-dmg": "火伤",
-    "cryo-dmg": "冰伤"
+    "ascension": "突破",
+    "ascension-option": "{{value}}级突破",
+    "level": "等级",
+    "dmg": "伤",
+    "res": "抗",
+    "dmg-res": "减伤",
+    "physical": "物",
+    "anemo": "风",
+    "geo": "岩",
+    "electro": "雷",
+    "hydro": "水",
+    "pyro": "火",
+    "cryo": "冰",
+    "talent": "技能",
+    "no-crit-hit-dmg": "技能未暴击伤害",
+    "crit-hit-dmg": "技能暴击伤害",
+    "avg-hit-dmg": "技能平均伤害",
+    "enemy": "怪物"
   },
   "path": {
     "home": "首页",
@@ -37,8 +48,8 @@
       }
     },
     "character-stat": {
+      "title": "角色面板分析",
       "form": {
-        "title": "角色面板分析",
         "dmg-type": "伤害类型",
         "current": "当前",
         "new": "新",
@@ -49,12 +60,14 @@
         "atk-inc-pct": "攻击力加成",
         "atk": "攻击力",
         "crit-rate": "暴击率",
-        "crit-dmg-pct": "暴击伤害",
-        "bonus-dmg-pct": "增伤",
-        "talent-dmg-pct": "技能倍率",
-        "no-crit-dmg": "基础伤害",
-        "crit-dmg": "暴击后伤害",
-        "avg-dmg": "平均伤害"
+        "crit-dmg-bonus": "暴击伤害",
+        "elemental-dmg-bonus": "伤加成",
+        "no-crit-base-dmg": "基础伤害",
+        "crit-base-dmg": "暴击伤害",
+        "avg-base-dmg": "平均伤害"
+      },
+      "calculator": {
+        "title": "伤害计算器"
       }
     }
   }

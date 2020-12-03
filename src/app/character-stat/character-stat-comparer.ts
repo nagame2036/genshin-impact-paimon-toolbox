@@ -9,19 +9,13 @@ export class CharacterStatComparer {
 
   bonusAtk = new CharacterStatCompareField('NaN', this.current.bonusAtk.control, this.comparedBy.bonusAtk.control);
 
-  atkIncPct = new CharacterStatCompareField('NaN', this.current.atkIncPct, this.comparedBy.atkIncPct);
-
-  atk = new CharacterStatCompareField('NaN', this.current.atk, this.comparedBy.atk);
-
   critRate = new CharacterStatCompareField('0.00', this.current.critRate.control, this.comparedBy.critRate.control);
 
-  critDmgPct = new CharacterStatCompareField('0.00', this.current.critDmgPct.control, this.comparedBy.critDmgPct.control);
+  critDmgPct = new CharacterStatCompareField('0.00', this.current.critDmgBonus.control, this.comparedBy.critDmgBonus.control);
 
-  bonusDmgPct = new CharacterStatCompareField('NaN', this.current.bonusDmgPct.control, this.comparedBy.bonusDmgPct.control);
+  bonusDmgPct = new CharacterStatCompareField('NaN', this.current.elementalDmgBonus.control, this.comparedBy.elementalDmgBonus.control);
 
-  talentDmgPct = new CharacterStatCompareField('NaN', this.current.talentDmgPct.control, this.comparedBy.talentDmgPct.control);
-
-  noCritDmg = new CharacterStatCompareField('NaN', this.current.noCritDmg, this.comparedBy.noCritDmg);
+  noCritDmg = new CharacterStatCompareField('NaN', this.current.baseDmg, this.comparedBy.baseDmg);
 
   critDmg = new CharacterStatCompareField('NaN', this.current.critDmg, this.comparedBy.critDmg);
 
@@ -31,12 +25,9 @@ export class CharacterStatComparer {
     this.baseAtk,
     this.plumeAtk,
     this.bonusAtk,
-    this.atkIncPct,
-    this.atk,
     this.critRate,
     this.critDmgPct,
     this.bonusDmgPct,
-    this.talentDmgPct,
     this.noCritDmg,
     this.critDmg,
     this.avgDmg
