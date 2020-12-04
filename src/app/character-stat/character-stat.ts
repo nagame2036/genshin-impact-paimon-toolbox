@@ -2,7 +2,6 @@ import {StatField} from './stat-field';
 import {FormControl} from '@angular/forms';
 import {CharacterStatProfile} from './character-stat-profile';
 import {Level} from '../shared/ascension-level-select/level';
-import {DamageType} from './character-stat-profile/damage-type';
 
 function render(control: FormControl, value: number): void {
   control.setValue(value.toFixed(1));
@@ -10,7 +9,7 @@ function render(control: FormControl, value: number): void {
 
 export class CharacterStat {
 
-  constructor(public label: string) {
+  constructor(public label: string, private level: Level, private dmgType: FormControl) {
   }
 
   baseAtk = new StatField();
@@ -59,19 +58,31 @@ export class CharacterStat {
     'mean-dmg'
   ];
 
-  calc(characterLevel: Level, dmgType: DamageType): CharacterStatProfile {
+  calc(): CharacterStatProfile {
     const baseAtk = this.baseAtk.value;
     const plumeAtk = this.plumeAtk.value;
     const bonusAtk = this.bonusAtk.value;
     const critRate = this.critRate.value / 100;
     const critDmgBonus = this.critDmgBonus.value / 100;
-    const elementalDmgBonus = 1 + this.elementalDmgBonus.value / 100;
-    const profile = new CharacterStatProfile(characterLevel, dmgType, baseAtk, plumeAtk, bonusAtk,
+    const elementalDmgBonus = this.elementalDmgBonus.value / 100;
+    const profile = new CharacterStatProfile(this.level, this.dmgType.value, baseAtk, plumeAtk, bonusAtk,
       critRate, critDmgBonus, elementalDmgBonus);
 
     render(this.baseDmg, profile.baseDmg);
     render(this.critDmg, profile.critDmg);
     render(this.meanDmg, profile.meanDmg);
     return profile;
+  }
+
+  copyFromProfile(profile: CharacterStatProfile): void {
+    this.baseAtk.control.setValue(profile.baseAtk);
+    this.plumeAtk.control.setValue(profile.plumeAtk);
+    this.bonusAtk.control.setValue(Math.round(profile.bonusAtk * 10) / 10);
+    this.critRate.control.setValue(Math.round(profile.critRate * 1000) / 10);
+    this.critDmgBonus.control.setValue(Math.round(profile.critDmgBonus * 1000) / 10);
+    this.elementalDmgBonus.control.setValue(Math.round(profile.elementalDmgBonus * 1000) / 10);
+    render(this.baseDmg, profile.baseDmg);
+    render(this.critDmg, profile.critDmg);
+    render(this.meanDmg, profile.meanDmg);
   }
 }

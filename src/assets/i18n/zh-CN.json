@@ -66,6 +66,15 @@
         "crit-dmg": "暴击伤害",
         "mean-dmg": "期望伤害"
       },
+      "analyzer": {
+        "title": "面板分析",
+        "optimized": "最优",
+        "atk-pct": "攻击力加成",
+        "crit-rate-pct": "暴击率加成",
+        "crit-dmg-bonus-pct": "暴击伤害加成",
+        "optimize": "优化",
+        "copy-to-stat": "对比"
+      },
       "calculator": {
         "title": "伤害计算"
       }

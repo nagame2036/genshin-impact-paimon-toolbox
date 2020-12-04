@@ -16,15 +16,15 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   i18nKey = 'character-stat.form';
 
-  level!: Level;
+  level = new Level();
 
   dmgType = new FormControl(DamageType.PYRO);
 
   dmgTypes = Object.values(DamageType);
 
-  current = new CharacterStat('current');
+  current = new CharacterStat('current', this.level, this.dmgType);
 
-  compare = new CharacterStat('compare');
+  compare = new CharacterStat('compare', this.level, this.dmgType);
 
   stat = [this.current, this.compare];
 
@@ -38,14 +38,20 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
   }
 
   ngOnInit(): void {
-    this.calc();
+    this.calc(true);
   }
 
-  calc(): void {
-    const dmgType = this.dmgType.value;
-    const profile = this.current.calc(this.level, dmgType);
-    this.compare.calc(this.level, dmgType);
+  calc(updateProfile: boolean): void {
+    const profile = this.current.calc();
+    this.compare.calc();
     this.comparer.calc();
-    this.profile.emit(profile);
+    if (updateProfile) {
+      this.profile.emit(profile);
+    }
+  }
+
+  receiveOptimizedStat(profile: CharacterStatProfile): void {
+    this.compare.copyFromProfile(profile);
+    this.comparer.calc();
   }
 }

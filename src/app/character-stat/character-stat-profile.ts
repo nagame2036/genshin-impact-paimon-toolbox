@@ -16,7 +16,7 @@ export class CharacterStatProfile {
               public critRate: number = 0.05, public critDmgBonus: number = 0.5, public elementalDmgBonus: number = 0) {
     this.atk = baseAtk + bonusAtk;
     const atk = this.atk;
-    this.baseDmg = atk * elementalDmgBonus;
+    this.baseDmg = atk * (1 + elementalDmgBonus);
     this.critDmg = this.baseDmg * (1 + critDmgBonus);
     this.meanDmg = this.baseDmg * (1 + critRate * critDmgBonus);
   }

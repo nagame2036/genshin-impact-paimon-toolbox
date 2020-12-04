@@ -1,0 +1,37 @@
+<div class="character-stat-analyzer-page">
+  <div class="flex-column">
+    <div style="display: flex">
+      <div *ngFor="let s of statFields" class="statistic-field">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ i18nDict('current') | translate }}{{ i18n(s.label) | translate }}
+          </mat-label>
+          <input [formControl]="s.control" matInput readonly/>
+          <div matSuffix>%</div>
+        </mat-form-field>
+      </div>
+      <div class="statistic-analyzer-button">
+        <button mat-raised-button (click)="optimize()" color="accent">
+          {{ i18n('optimize') | translate }}
+        </button>
+      </div>
+    </div>
+    <div style="display: flex" *ngIf="optimized">
+      <div *ngFor="let s of optimizedFields" class="statistic-field">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ i18n('optimized') | translate }}{{ i18n(s.label) | translate }}
+          </mat-label>
+          <input [formControl]="s.control" matInput readonly/>
+          <div matSuffix>%</div>
+        </mat-form-field>
+      </div>
+      <div class="statistic-analyzer-button">
+        <button mat-raised-button (click)="copyToStat()" color="primary">
+          {{ i18n('copy-to-stat') | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <mat-divider inset></mat-divider>
+</div>
