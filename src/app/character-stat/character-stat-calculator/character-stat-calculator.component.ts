@@ -75,7 +75,7 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
       const dmgField = this.dmgFields[i];
       dmgField[0].setValue((this.profile.baseDmg * this.dmgFactor).toFixed(1));
       dmgField[1].setValue((this.profile.critDmg * this.dmgFactor).toFixed(1));
-      dmgField[2].setValue((this.profile.avgDmg * this.dmgFactor).toFixed(1));
+      dmgField[2].setValue((this.profile.meanDmg * this.dmgFactor).toFixed(1));
     }
   }
 

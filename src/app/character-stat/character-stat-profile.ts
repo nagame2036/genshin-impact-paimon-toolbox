@@ -9,7 +9,7 @@ export class CharacterStatProfile {
 
   critDmg = 0;
 
-  avgDmg = 0;
+  meanDmg = 0;
 
   constructor(public level: Level = new Level(), public dmgType: DamageType = DamageType.PYRO,
               public baseAtk: number = 0, public plumeAtk: number = 0, public bonusAtk: number = 0,
@@ -18,6 +18,6 @@ export class CharacterStatProfile {
     const atk = this.atk;
     this.baseDmg = atk * elementalDmgBonus;
     this.critDmg = this.baseDmg * (1 + critDmgBonus);
-    this.avgDmg = this.baseDmg * (1 + critRate * critDmgBonus);
+    this.meanDmg = this.baseDmg * (1 + critRate * critDmgBonus);
   }
 }

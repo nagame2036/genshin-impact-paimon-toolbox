@@ -45,18 +45,18 @@ export class CharacterStat {
 
   critDmg = new FormControl('0.0');
 
-  avgDmg = new FormControl('0.0');
+  meanDmg = new FormControl('0.0');
 
   dmgFields = [
     this.baseDmg,
     this.critDmg,
-    this.avgDmg
+    this.meanDmg
   ];
 
   dmgLabels = [
-    'no-crit-base-dmg',
-    'crit-base-dmg',
-    'avg-base-dmg'
+    'no-crit-dmg',
+    'crit-dmg',
+    'mean-dmg'
   ];
 
   calc(characterLevel: Level, dmgType: DamageType): CharacterStatProfile {
@@ -71,7 +71,7 @@ export class CharacterStat {
 
     render(this.baseDmg, profile.baseDmg);
     render(this.critDmg, profile.critDmg);
-    render(this.avgDmg, profile.avgDmg);
+    render(this.meanDmg, profile.meanDmg);
     return profile;
   }
 }

@@ -1,6 +1,6 @@
 import {FormControl} from '@angular/forms';
 
-export class CharacterStatCompareField {
+export class CharacterStatChange {
 
   control: FormControl;
 

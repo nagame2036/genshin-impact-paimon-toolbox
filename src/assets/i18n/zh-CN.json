@@ -62,12 +62,12 @@
         "crit-rate": "暴击率",
         "crit-dmg-bonus": "暴击伤害",
         "elemental-dmg-bonus": "伤加成",
-        "no-crit-base-dmg": "基础伤害",
-        "crit-base-dmg": "暴击伤害",
-        "avg-base-dmg": "平均伤害"
+        "no-crit-dmg": "未暴击伤害",
+        "crit-dmg": "暴击伤害",
+        "mean-dmg": "期望伤害"
       },
       "calculator": {
-        "title": "伤害计算器"
+        "title": "伤害计算"
       }
     }
   }
