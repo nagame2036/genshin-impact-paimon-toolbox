@@ -10,7 +10,13 @@ export class CharacterStatChange {
   }
 
   render(): void {
-    const text = ((this.comparedBy.value / this.current.value - 1) * 100).toFixed(1);
-    this.control.setValue(text);
+    const value = (this.comparedBy.value / this.current.value - 1) * 100;
+    if (Number.isNaN(value)) {
+      this.control.setValue('0.0');
+    } else if (Number.isFinite(value)) {
+      this.control.setValue(value.toFixed(1));
+    } else {
+      this.control.setValue('∞');
+    }
   }
 }
