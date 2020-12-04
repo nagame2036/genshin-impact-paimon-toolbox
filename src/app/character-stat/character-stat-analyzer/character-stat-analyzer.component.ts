@@ -78,7 +78,7 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
 
   copyToStat(): void {
     const baseAtk = this.profile.baseAtk;
-    const bonusAtk = baseAtk * this.optimizedResult.atk + 311;
+    const bonusAtk = baseAtk * this.optimizedResult.atk + this.profile.plumeAtk;
     const chc = this.optimizedResult.critRate;
     const critRate = chc === 0 ? .05 : chc + .15;
     const chd = this.optimizedResult.critDmg;
