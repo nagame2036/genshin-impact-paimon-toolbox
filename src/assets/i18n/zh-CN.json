@@ -7,6 +7,8 @@
     "ascension": "突破",
     "ascension-option": "{{value}}级突破",
     "level": "等级",
+    "current": "当前",
+    "compare": "对比",
     "dmg": "伤",
     "res": "抗",
     "dmg-res": "减伤",
@@ -51,8 +53,6 @@
       "title": "角色面板分析",
       "form": {
         "dmg-type": "伤害类型",
-        "current": "当前",
-        "new": "对比",
         "change": "变化",
         "base-atk": "基础攻击力",
         "plume-atk": "羽毛攻击力",

@@ -24,11 +24,11 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   current = new CharacterStat('current');
 
-  newStat = new CharacterStat('new');
+  compare = new CharacterStat('compare');
 
-  stat = [this.current, this.newStat];
+  stat = [this.current, this.compare];
 
-  comparer = new CharacterStatComparer(this.current, this.newStat);
+  comparer = new CharacterStatComparer(this.current, this.compare);
 
   @Output()
   profile = new EventEmitter<CharacterStatProfile>();
@@ -44,7 +44,7 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
   calc(): void {
     const dmgType = this.dmgType.value;
     const profile = this.current.calc(this.level, dmgType);
-    this.newStat.calc(this.level, dmgType);
+    this.compare.calc(this.level, dmgType);
     this.comparer.calc();
     this.profile.emit(profile);
   }

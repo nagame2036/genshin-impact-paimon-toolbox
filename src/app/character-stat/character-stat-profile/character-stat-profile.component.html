@@ -17,7 +17,7 @@
       <div *ngFor="let f of s.fields, let i = index" class="statistic-field">
         <mat-form-field (change)="f.correct(); calc()" (input)="calc()" appearance="outline" floatLabel="always">
           <mat-label>
-            {{ i18n(s.label) | translate }}
+            {{ i18nDict(s.label) | translate }}
             {{ i18n(s.labels[i]) | translate }}
           </mat-label>
           <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
@@ -28,7 +28,7 @@
         <mat-form-field (change)="s.elementalDmgBonus.correct(); calc()" (input)="calc()"
                         appearance="outline" floatLabel="always">
           <mat-label>
-            {{ i18n(s.label) | translate }}
+            {{ i18nDict(s.label) | translate }}
             {{ i18nDict(dmgType.value) | translate }}{{ i18n('elemental-dmg-bonus') | translate }}
           </mat-label>
           <input [formControl]="s.elementalDmgBonus.control"
@@ -38,7 +38,7 @@
       <div *ngFor="let f of s.dmgFields, let i = index" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>
-            {{ i18n(s.label) | translate }}
+            {{ i18nDict(s.label) | translate }}
             {{ i18n(s.dmgLabels[i]) | translate }}
           </mat-label>
           <input [formControl]="f" matInput/>
