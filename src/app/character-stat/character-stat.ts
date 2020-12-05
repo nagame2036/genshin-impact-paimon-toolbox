@@ -9,9 +9,6 @@ function render(control: FormControl, value: number): void {
 
 export class CharacterStat {
 
-  constructor(public label: string, private level: Level, private dmgType: FormControl) {
-  }
-
   baseAtk = new StatField();
 
   plumeAtk = new StatField({min: 0, max: 311});
@@ -58,23 +55,30 @@ export class CharacterStat {
     'mean-dmg'
   ];
 
-  calc(): CharacterStatProfile {
+  profile = new CharacterStatProfile();
+
+  copyTarget!: CharacterStat;
+
+  constructor(public label: string, private level: Level, private dmgType: FormControl, public copyLabel: string) {
+  }
+
+  calc(): void {
     const baseAtk = this.baseAtk.value;
     const plumeAtk = this.plumeAtk.value;
     const bonusAtk = this.bonusAtk.value;
     const critRate = this.critRate.value / 100;
     const critDmgBonus = this.critDmgBonus.value / 100;
     const elementalDmgBonus = this.elementalDmgBonus.value / 100;
-    const profile = new CharacterStatProfile(this.level, this.dmgType.value, baseAtk, plumeAtk, bonusAtk,
+    this.profile = new CharacterStatProfile(this.level, this.dmgType.value, baseAtk, plumeAtk, bonusAtk,
       critRate, critDmgBonus, elementalDmgBonus);
 
-    render(this.baseDmg, profile.baseDmg);
-    render(this.critDmg, profile.critDmg);
-    render(this.meanDmg, profile.meanDmg);
-    return profile;
+    render(this.baseDmg, this.profile.baseDmg);
+    render(this.critDmg, this.profile.critDmg);
+    render(this.meanDmg, this.profile.meanDmg);
   }
 
   copyFromProfile(profile: CharacterStatProfile): void {
+    this.profile = profile;
     this.baseAtk.control.setValue(profile.baseAtk);
     this.plumeAtk.control.setValue(profile.plumeAtk);
     this.bonusAtk.control.setValue(Math.round(profile.bonusAtk * 10) / 10);
@@ -84,5 +88,9 @@ export class CharacterStat {
     render(this.baseDmg, profile.baseDmg);
     render(this.critDmg, profile.critDmg);
     render(this.meanDmg, profile.meanDmg);
+  }
+
+  copy(): void {
+    this.copyTarget.copyFromProfile(this.profile);
   }
 }

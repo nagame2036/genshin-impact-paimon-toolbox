@@ -22,9 +22,9 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   dmgTypes = Object.values(DamageType);
 
-  current = new CharacterStat('current', this.level, this.dmgType);
+  current = new CharacterStat('current', this.level, this.dmgType, 'right');
 
-  compare = new CharacterStat('compare', this.level, this.dmgType);
+  compare = new CharacterStat('compare', this.level, this.dmgType, 'left');
 
   stat = [this.current, this.compare];
 
@@ -35,6 +35,8 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   constructor() {
     super();
+    this.current.copyTarget = this.compare;
+    this.compare.copyTarget = this.current;
   }
 
   ngOnInit(): void {
@@ -42,16 +44,24 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
   }
 
   calc(updateProfile: boolean): void {
-    const profile = this.current.calc();
+    this.current.calc();
     this.compare.calc();
     this.comparer.calc();
     if (updateProfile) {
-      this.profile.emit(profile);
+      this.profile.emit(this.current.profile);
     }
   }
 
   receiveOptimizedStat(profile: CharacterStatProfile): void {
     this.compare.copyFromProfile(profile);
     this.comparer.calc();
+  }
+
+  copy(stat: CharacterStat): void {
+    stat.copy();
+    this.comparer.calc();
+    if (stat.copyTarget === this.current) {
+      this.profile.emit(this.current.profile);
+    }
   }
 }

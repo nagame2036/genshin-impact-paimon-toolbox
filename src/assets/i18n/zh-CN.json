@@ -64,7 +64,10 @@
         "elemental-dmg-bonus": "伤加成",
         "no-crit-dmg": "未暴击伤害",
         "crit-dmg": "暴击伤害",
-        "mean-dmg": "期望伤害"
+        "mean-dmg": "期望伤害",
+        "copy-to": "复制到",
+        "left": "左侧",
+        "right": "右侧"
       },
       "analyzer": {
         "title": "面板分析",

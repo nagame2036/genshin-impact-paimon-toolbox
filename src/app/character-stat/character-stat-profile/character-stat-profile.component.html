@@ -45,6 +45,9 @@
           <input [formControl]="f" matInput/>
         </mat-form-field>
       </div>
+      <button mat-stroked-button class="copy-button" color="accent" (click)="copy(s)">
+        <span>{{ i18n('copy-to') | translate }}{{ i18n(s.copyLabel) | translate }}</span>
+      </button>
     </div>
     <div class="flex-column">
       <div *ngFor="let f of comparer.fields" class="statistic-field">
