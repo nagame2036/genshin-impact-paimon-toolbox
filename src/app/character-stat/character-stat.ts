@@ -69,9 +69,6 @@ export class CharacterStat {
   calc(): void {
     const baseAtk = this.baseAtk.value;
     const plumeAtk = this.plumeAtk.value;
-    if (this.bonusAtk.value < plumeAtk) {
-      this.bonusAtk.value = plumeAtk;
-    }
     const bonusAtk = this.bonusAtk.value;
     const critRate = this.critRate.value / 100;
     const critDmgBonus = this.critDmgBonus.value / 100;
