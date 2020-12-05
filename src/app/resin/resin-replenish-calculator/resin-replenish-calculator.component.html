@@ -16,7 +16,7 @@
   </mat-form-field>
   <div *ngFor="let r of results">
     <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>{{ i18n('replenished-to') | translate }}{{ r.target }}</mat-label>
+      <mat-label>{{ i18n('replenished-to') | translate: {target: r.target} }}</mat-label>
       <input [formControl]="r.control" matInput readonly/>
     </mat-form-field>
   </div>

@@ -17,45 +17,29 @@
       <div *ngFor="let f of s.fields, let i = index" class="statistic-field">
         <mat-form-field (change)="f.correct(); calc(s.label == 'current')"
                         (input)="calc(s.label == 'current')" appearance="outline" floatLabel="always">
-          <mat-label>
-            {{ i18nDict(s.label) | translate }}
-            {{ i18n(s.labels[i]) | translate }}
+          <mat-label [translate]="i18n(s.labels[i])"
+                     [translateParams]="{label: i18n(s.label) | translate, type: i18nDict(dmgType.value) | translate}">
           </mat-label>
           <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
           <div *ngIf="f.suffix" matSuffix>{{ f.suffix }}</div>
         </mat-form-field>
       </div>
-      <div class="statistic-field">
-        <mat-form-field (change)="s.elementalDmgBonus.correct(); calc(s.label == 'current')"
-                        (input)="calc(s.label == 'current')" appearance="outline" floatLabel="always">
-          <mat-label>
-            {{ i18nDict(s.label) | translate }}
-            {{ i18nDict(dmgType.value) | translate }}{{ i18n('elemental-dmg-bonus') | translate }}
-          </mat-label>
-          <input [formControl]="s.elementalDmgBonus.control"
-                 [max]="s.elementalDmgBonus.max" [min]="s.elementalDmgBonus.min" matInput required type="number"/>
-        </mat-form-field>
-      </div>
       <div *ngFor="let f of s.dmgFields, let i = index" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            {{ i18nDict(s.label) | translate }}
-            {{ i18n(s.dmgLabels[i]) | translate }}
+          <mat-label [translate]="i18n(s.dmgLabels[i])" [translateParams]="{label: i18n(s.label) | translate}">
           </mat-label>
-          <input [formControl]="f" matInput/>
+          <input [value]="f() | number: '1.1-1'" matInput/>
         </mat-form-field>
       </div>
       <button mat-stroked-button class="copy-button" color="accent" (click)="copy(s)">
-        <span>{{ i18n('copy-to') | translate }}{{ i18n(s.copyLabel) | translate }}</span>
+        <span>{{ i18n('copy-to') | translate: {label: i18n(s.copyLabel) | translate} }}</span>
       </button>
     </div>
     <div class="flex-column">
       <div *ngFor="let f of comparer.fields" class="statistic-field">
         <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>
-            {{ i18n('change') | translate }}
-          </mat-label>
-          <input [formControl]="f.control" matInput readonly/>
+          <mat-label>{{ i18n('change') | translate }}</mat-label>
+          <input [value]="comparer.calc(f) | number: '1.1-1'" matInput readonly/>
           <div matSuffix>%</div>
         </mat-form-field>
       </div>

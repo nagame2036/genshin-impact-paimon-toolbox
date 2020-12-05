@@ -3,10 +3,6 @@ import {FormControl} from '@angular/forms';
 import {CharacterStatProfile} from './character-stat-profile';
 import {Level} from '../shared/ascension-level-select/level';
 
-function render(control: FormControl, value: number): void {
-  control.setValue(value.toFixed(1));
-}
-
 export class CharacterStat {
 
   baseAtk = new StatField();
@@ -26,7 +22,8 @@ export class CharacterStat {
     this.plumeAtk,
     this.bonusAtk,
     this.critRate,
-    this.critDmgBonus
+    this.critDmgBonus,
+    this.elementalDmgBonus
   ];
 
   labels = [
@@ -34,19 +31,28 @@ export class CharacterStat {
     'plume-atk',
     'bonus-atk',
     'crit-rate',
-    'crit-dmg-bonus'
+    'crit-dmg-bonus',
+    'elemental-dmg-bonus'
   ];
 
-  baseDmg = new FormControl('0.0');
+  profile = new CharacterStatProfile();
 
-  critDmg = new FormControl('0.0');
+  get baseDmg(): number {
+    return this.profile.baseDmg;
+  }
 
-  meanDmg = new FormControl('0.0');
+  get critDmg(): number {
+    return this.profile.critDmg;
+  }
+
+  get meanDmg(): number {
+    return this.profile.meanDmg;
+  }
 
   dmgFields = [
-    this.baseDmg,
-    this.critDmg,
-    this.meanDmg
+    () => this.baseDmg,
+    () => this.critDmg,
+    () => this.meanDmg
   ];
 
   dmgLabels = [
@@ -54,8 +60,6 @@ export class CharacterStat {
     'crit-dmg',
     'mean-dmg'
   ];
-
-  profile = new CharacterStatProfile();
 
   copyTarget!: CharacterStat;
 
@@ -65,29 +69,25 @@ export class CharacterStat {
   calc(): void {
     const baseAtk = this.baseAtk.value;
     const plumeAtk = this.plumeAtk.value;
+    if (this.bonusAtk.value < plumeAtk) {
+      this.bonusAtk.value = plumeAtk;
+    }
     const bonusAtk = this.bonusAtk.value;
     const critRate = this.critRate.value / 100;
     const critDmgBonus = this.critDmgBonus.value / 100;
     const elementalDmgBonus = this.elementalDmgBonus.value / 100;
     this.profile = new CharacterStatProfile(this.level, this.dmgType.value, baseAtk, plumeAtk, bonusAtk,
       critRate, critDmgBonus, elementalDmgBonus);
-
-    render(this.baseDmg, this.profile.baseDmg);
-    render(this.critDmg, this.profile.critDmg);
-    render(this.meanDmg, this.profile.meanDmg);
   }
 
   copyFromProfile(profile: CharacterStatProfile): void {
     this.profile = profile;
-    this.baseAtk.control.setValue(profile.baseAtk);
-    this.plumeAtk.control.setValue(profile.plumeAtk);
-    this.bonusAtk.control.setValue(Math.round(profile.bonusAtk * 10) / 10);
-    this.critRate.control.setValue(Math.round(profile.critRate * 1000) / 10);
-    this.critDmgBonus.control.setValue(Math.round(profile.critDmgBonus * 1000) / 10);
-    this.elementalDmgBonus.control.setValue(Math.round(profile.elementalDmgBonus * 1000) / 10);
-    render(this.baseDmg, profile.baseDmg);
-    render(this.critDmg, profile.critDmg);
-    render(this.meanDmg, profile.meanDmg);
+    this.baseAtk.value = profile.baseAtk;
+    this.plumeAtk.value = profile.plumeAtk;
+    this.bonusAtk.value = profile.bonusAtk;
+    this.critRate.value = profile.critRate * 100;
+    this.critDmgBonus.value = profile.critDmgBonus * 100;
+    this.elementalDmgBonus.value = profile.elementalDmgBonus * 100;
   }
 
   copy(): void {

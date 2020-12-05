@@ -1,42 +1,23 @@
 import {CharacterStat} from './character-stat';
-import {CharacterStatChange} from './character-stat-change';
 
 export class CharacterStatComparer {
 
-  baseAtk = new CharacterStatChange('0.0', this.current.baseAtk.control, this.comparedBy.baseAtk.control);
-
-  plumeAtk = new CharacterStatChange('0.0', this.current.plumeAtk.control, this.comparedBy.plumeAtk.control);
-
-  bonusAtk = new CharacterStatChange('0.0', this.current.bonusAtk.control, this.comparedBy.bonusAtk.control);
-
-  critRate = new CharacterStatChange('0.0', this.current.critRate.control, this.comparedBy.critRate.control);
-
-  critDmgBonus = new CharacterStatChange('0.0', this.current.critDmgBonus.control, this.comparedBy.critDmgBonus.control);
-
-  elementalDmgBonus = new CharacterStatChange('0.0', this.current.elementalDmgBonus.control, this.comparedBy.elementalDmgBonus.control);
-
-  noCritDmg = new CharacterStatChange('0.0', this.current.baseDmg, this.comparedBy.baseDmg);
-
-  critDmg = new CharacterStatChange('0.0', this.current.critDmg, this.comparedBy.critDmg);
-
-  meanDmg = new CharacterStatChange('0.0', this.current.meanDmg, this.comparedBy.meanDmg);
-
   fields = [
-    this.baseAtk,
-    this.plumeAtk,
-    this.bonusAtk,
-    this.critRate,
-    this.critDmgBonus,
-    this.elementalDmgBonus,
-    this.noCritDmg,
-    this.critDmg,
-    this.meanDmg
+    {current: () => this.current.baseAtk.control.value, compared: () => this.compared.baseAtk.control.value},
+    {current: () => this.current.plumeAtk.control.value, compared: () => this.compared.plumeAtk.control.value},
+    {current: () => this.current.bonusAtk.control.value, compared: () => this.compared.bonusAtk.control.value},
+    {current: () => this.current.critRate.control.value, compared: () => this.compared.critRate.control.value},
+    {current: () => this.current.critDmgBonus.control.value, compared: () => this.compared.critDmgBonus.control.value},
+    {current: () => this.current.elementalDmgBonus.control.value, compared: () => this.compared.elementalDmgBonus.control.value},
+    {current: () => this.current.baseDmg, compared: () => this.compared.baseDmg},
+    {current: () => this.current.critDmg, compared: () => this.compared.critDmg},
+    {current: () => this.current.meanDmg, compared: () => this.compared.meanDmg}
   ];
 
-  constructor(private current: CharacterStat, private comparedBy: CharacterStat) {
+  constructor(private current: CharacterStat, private compared: CharacterStat) {
   }
 
-  calc(): void {
-    this.fields.forEach(i => i.render());
+  calc(field: { current: () => number, compared: () => number }): number {
+    return (field.compared() / field.current() - 1) * 100 || 0;
   }
 }

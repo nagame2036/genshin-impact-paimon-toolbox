@@ -1,12 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {CharacterStatProfile} from '../character-stat-profile';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
-import {FormControl} from '@angular/forms';
 import {CharacterStatOptimizerService} from '../character-stat-optimizer.service';
-
-function setFieldValue(field: { control: FormControl }, value: number): void {
-  field.control.setValue((value * 100).toFixed(1));
-}
 
 @Component({
   selector: 'app-character-stat-analyzer',
@@ -21,15 +16,15 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
   profile: CharacterStatProfile = new CharacterStatProfile();
 
   statFields = [
-    {label: 'atk-pct', control: new FormControl('0.0')},
-    {label: 'crit-rate-pct', control: new FormControl('0.0')},
-    {label: 'crit-dmg-bonus-pct', control: new FormControl('0.0')}
+    {label: 'atk-pct', value: 0},
+    {label: 'crit-rate-pct', value: 0},
+    {label: 'crit-dmg-bonus-pct', value: 0}
   ];
 
   optimizedFields = [
-    {label: 'atk-pct', control: new FormControl('0.0')},
-    {label: 'crit-rate-pct', control: new FormControl('0.0')},
-    {label: 'crit-dmg-bonus-pct', control: new FormControl('0.0')},
+    {label: 'atk-pct', value: 0},
+    {label: 'crit-rate-pct', value: 0},
+    {label: 'crit-dmg-bonus-pct', value: 0},
   ];
 
   optimized = false;
@@ -38,6 +33,25 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
 
   @Output()
   optimizedStat = new EventEmitter<CharacterStatProfile>();
+
+  fields = [
+    {
+      label: 'current',
+      visible: () => true,
+      fields: this.statFields,
+      color: 'primary',
+      action: () => this.optimize(),
+      actionText: 'optimize'
+    },
+    {
+      label: 'optimized',
+      visible: () => this.optimized,
+      fields: this.optimizedFields,
+      color: 'accent',
+      action: () => this.copyAndCompare(),
+      actionText: 'copy-and-compare'
+    }
+  ];
 
   constructor(private optimizer: CharacterStatOptimizerService) {
     super();
@@ -59,24 +73,24 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.resetCalculatedFields();
-    setFieldValue(this.statFields[0], this.atkPct);
-    setFieldValue(this.statFields[1], this.critRatePct);
-    setFieldValue(this.statFields[2], this.critDmgBonusPct);
+    this.optimized = false;
+    this.statFields[0].value = this.atkPct;
+    this.statFields[1].value = this.critRatePct;
+    this.statFields[2].value = this.critDmgBonusPct;
   }
 
   optimize(): void {
     // the weight of ATK : CRIT Rate : CRIT DMG = 1.5 : 1 : 2.
     const points = (this.atkPct / 1.5 + this.critRatePct + this.critDmgBonusPct / 2);
     const result = this.optimizer.optimize(this.profile.baseAtk, this.profile.plumeAtk, points);
-    setFieldValue(this.optimizedFields[0], result.atk);
-    setFieldValue(this.optimizedFields[1], result.critRate);
-    setFieldValue(this.optimizedFields[2], result.critDmg);
+    this.optimizedFields[0].value = result.atk;
+    this.optimizedFields[1].value = result.critRate;
+    this.optimizedFields[2].value = result.critDmg;
     this.optimizedResult = result;
     this.optimized = true;
   }
 
-  copyToStat(): void {
+  copyAndCompare(): void {
     const baseAtk = this.profile.baseAtk;
     const bonusAtk = baseAtk * this.optimizedResult.atk + this.profile.plumeAtk;
     const chc = this.optimizedResult.critRate;
@@ -86,9 +100,5 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
     const profile = new CharacterStatProfile(this.profile.level, this.profile.dmgType, baseAtk, this.profile.plumeAtk,
       bonusAtk, critRate, critDmgBonus, this.profile.elementalDmgBonus);
     this.optimizedStat.emit(profile);
-  }
-
-  private resetCalculatedFields(): void {
-    this.optimized = false;
   }
 }

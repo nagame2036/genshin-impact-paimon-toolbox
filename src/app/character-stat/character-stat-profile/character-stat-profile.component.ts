@@ -46,7 +46,6 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
   calc(updateProfile: boolean): void {
     this.current.calc();
     this.compare.calc();
-    this.comparer.calc();
     if (updateProfile) {
       this.profile.emit(this.current.profile);
     }
@@ -54,12 +53,10 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   receiveOptimizedStat(profile: CharacterStatProfile): void {
     this.compare.copyFromProfile(profile);
-    this.comparer.calc();
   }
 
   copy(stat: CharacterStat): void {
     stat.copy();
-    this.comparer.calc();
     if (stat.copyTarget === this.current) {
       this.profile.emit(this.current.profile);
     }

@@ -2,7 +2,6 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 import {CharacterStatProfile} from '../character-stat-profile';
 import {StatField} from '../stat-field';
-import {FormControl} from '@angular/forms';
 import {DamageType} from '../character-stat-profile/damage-type';
 
 @Component({
@@ -21,7 +20,7 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
 
   enemyElementalRes = new StatField({min: -100, max: 100, defaultValue: 10, suffix: '%'});
 
-  enemyDmgRes = new FormControl('55.0');
+  enemyDmgRes = 55;
 
   talents = [
     new StatField({min: 0, defaultValue: 100}),
@@ -30,9 +29,9 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
   ];
 
   dmgFields = [
-    [new FormControl('0.0'), new FormControl('0.0'), new FormControl('0.0')],
-    [new FormControl('0.0'), new FormControl('0.0'), new FormControl('0.0')],
-    [new FormControl('0.0'), new FormControl('0.0'), new FormControl('0.0')]
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
   ];
 
   dmgLabels = [
@@ -69,13 +68,12 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
   }
 
   calc(): void {
-    const dmgRes = (1 - this.dmgFactor) * 100;
-    this.enemyDmgRes.setValue(dmgRes.toFixed(1));
+    this.enemyDmgRes = (1 - this.dmgFactor) * 100;
     for (let i = 0; i < 3; i++) {
       const dmgField = this.dmgFields[i];
-      dmgField[0].setValue((this.profile.baseDmg * this.dmgFactor).toFixed(1));
-      dmgField[1].setValue((this.profile.critDmg * this.dmgFactor).toFixed(1));
-      dmgField[2].setValue((this.profile.meanDmg * this.dmgFactor).toFixed(1));
+      dmgField[0] = this.profile.baseDmg * this.dmgFactor;
+      dmgField[1] = this.profile.critDmg * this.dmgFactor;
+      dmgField[2] = this.profile.meanDmg * this.dmgFactor;
     }
   }
 
