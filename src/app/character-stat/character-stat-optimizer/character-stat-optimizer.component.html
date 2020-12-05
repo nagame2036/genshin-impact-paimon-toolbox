@@ -1,0 +1,19 @@
+<div class="character-stat-optimizer-page">
+  <div class="flex-column">
+    <div *ngFor="let f of fields">
+      <div style="display: flex" *ngIf="f.visible()">
+        <div *ngFor="let s of f.fields" class="statistic-field">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label [translate]="i18n(s.label)"
+                       [translateParams]="{label: i18n(f.label) | translate}"></mat-label>
+            <input [value]="s.value * 100 | number: '1.1-1'" matInput readonly/>
+            <div matSuffix>%</div>
+          </mat-form-field>
+        </div>
+        <div class="statistic-optimizer-button">
+          <button mat-raised-button (click)="f.action()" [color]="f.color">{{ i18n(f.actionText) | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

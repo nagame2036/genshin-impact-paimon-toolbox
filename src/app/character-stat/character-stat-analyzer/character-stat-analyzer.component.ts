@@ -1,104 +1,78 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {CharacterStatProfile} from '../character-stat-profile';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
-import {CharacterStatOptimizerService} from '../character-stat-optimizer.service';
+import {DamageType} from '../character-stat-profile/damage-type';
+import {CharacterStatProfile} from '../character-stat-profile';
 
 @Component({
   selector: 'app-character-stat-analyzer',
   templateUrl: './character-stat-analyzer.component.html',
   styleUrls: ['./character-stat-analyzer.component.sass']
 })
-export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent implements OnInit, OnChanges {
+export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'character-stat.analyzer';
 
   @Input()
-  profile: CharacterStatProfile = new CharacterStatProfile();
-
-  statFields = [
-    {label: 'atk-pct', value: 0},
-    {label: 'crit-rate-pct', value: 0},
-    {label: 'crit-dmg-bonus-pct', value: 0}
-  ];
-
-  optimizedFields = [
-    {label: 'atk-pct', value: 0},
-    {label: 'crit-rate-pct', value: 0},
-    {label: 'crit-dmg-bonus-pct', value: 0},
-  ];
-
-  optimized = false;
-
-  optimizedResult: { atk: number; critRate: number; critDmg: number; } = {atk: 0, critRate: 0, critDmg: 0};
-
-  @Output()
-  optimizedStat = new EventEmitter<CharacterStatProfile>();
+  profile = new CharacterStatProfile();
 
   fields = [
-    {
-      label: 'current',
-      visible: () => true,
-      fields: this.statFields,
-      color: 'primary',
-      action: () => this.optimize(),
-      actionText: 'optimize'
-    },
-    {
-      label: 'optimized',
-      visible: () => this.optimized,
-      fields: this.optimizedFields,
-      color: 'accent',
-      action: () => this.copyAndCompare(),
-      actionText: 'copy-and-compare'
-    }
+    {text: 'atk-inc', profile: this.profile, value: () => this.dmgWhenAtkInc},
+    {text: 'crit-rate-inc', profile: this.profile, value: () => this.dmgWhenCritRateInc},
+    {text: 'crit-dmg-bonus-inc', profile: this.profile, value: () => this.dmgWhenCritDmgBonusInc},
+    {text: 'elemental-dmg-bonus-inc', profile: this.profile, value: () => this.dmgWhenElementalDmgBonusInc},
   ];
 
-  constructor(private optimizer: CharacterStatOptimizerService) {
+  @Output()
+  comparedStat = new EventEmitter<CharacterStatProfile>();
+
+  constructor() {
     super();
   }
 
-  get atkPct(): number {
-    return ((this.profile.bonusAtk - this.profile.plumeAtk) / this.profile.baseAtk) || 0;
+  get weight(): number {
+    return this.profile.dmgType === DamageType.PHYSICAL ? 1.875 : 1.5;
   }
 
-  get critRatePct(): number {
-    return this.profile.critRate - .05;
+  get dmgType(): DamageType {
+    return this.profile.dmgType;
   }
 
-  get critDmgBonusPct(): number {
-    return this.profile.critDmgBonus - .5;
+  get dmgWhenAtkInc(): number {
+    const copy = this.profile.copy();
+    this.fields[0].profile = copy;
+    const baseAtk = copy.baseAtk;
+    const plumeAtk = copy.plumeAtk;
+    const bonusAtkPct = (copy.bonusAtk - plumeAtk) / baseAtk || 0;
+    copy.bonusAtk = (bonusAtkPct + 0.15) * baseAtk + plumeAtk;
+    return copy.meanDmg - this.profile.meanDmg;
+  }
+
+  get dmgWhenCritRateInc(): number {
+    const copy = this.profile.copy();
+    this.fields[1].profile = copy;
+    copy.critRate += 0.1;
+    return copy.meanDmg - this.profile.meanDmg;
+  }
+
+  get dmgWhenCritDmgBonusInc(): number {
+    const copy = this.profile.copy();
+    this.fields[2].profile = copy;
+    copy.critDmgBonus += 0.2;
+    return copy.meanDmg - this.profile.meanDmg;
+  }
+
+  get dmgWhenElementalDmgBonusInc(): number {
+    const copy = this.profile.copy();
+    this.fields[3].profile = copy;
+    copy.elementalDmgBonus += this.weight * 0.1;
+    return copy.meanDmg - this.profile.meanDmg;
   }
 
   ngOnInit(): void {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.optimized = false;
-    this.statFields[0].value = this.atkPct;
-    this.statFields[1].value = this.critRatePct;
-    this.statFields[2].value = this.critDmgBonusPct;
+  copyAndCompare(field: { profile: CharacterStatProfile }): void {
+    this.comparedStat.emit(field.profile);
   }
 
-  optimize(): void {
-    // the weight of ATK : CRIT Rate : CRIT DMG = 1.5 : 1 : 2.
-    const points = (this.atkPct / 1.5 + this.critRatePct + this.critDmgBonusPct / 2);
-    const result = this.optimizer.optimize(this.profile.baseAtk, this.profile.plumeAtk, points);
-    this.optimizedFields[0].value = result.atk;
-    this.optimizedFields[1].value = result.critRate;
-    this.optimizedFields[2].value = result.critDmg;
-    this.optimizedResult = result;
-    this.optimized = true;
-  }
-
-  copyAndCompare(): void {
-    const baseAtk = this.profile.baseAtk;
-    const bonusAtk = baseAtk * this.optimizedResult.atk + this.profile.plumeAtk;
-    const chc = this.optimizedResult.critRate;
-    const critRate = chc === 0 ? .05 : chc + .15;
-    const chd = this.optimizedResult.critDmg;
-    const critDmgBonus = chd === 0 ? .5 : chd + .3;
-    const profile = new CharacterStatProfile(this.profile.level, this.profile.dmgType, baseAtk, this.profile.plumeAtk,
-      bonusAtk, critRate, critDmgBonus, this.profile.elementalDmgBonus);
-    this.optimizedStat.emit(profile);
-  }
 }

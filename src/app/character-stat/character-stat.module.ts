@@ -6,7 +6,7 @@ import {CharacterStatPageComponent} from './character-stat-page/character-stat-p
 import {CharacterStatProfileComponent} from './character-stat-profile/character-stat-profile.component';
 import {CharacterStatAnalyzerComponent} from './character-stat-analyzer/character-stat-analyzer.component';
 import {CharacterStatCalculatorComponent} from './character-stat-calculator/character-stat-calculator.component';
-import {CharacterStatAdviserComponent} from './character-stat-adviser/character-stat-adviser.component';
+import {CharacterStatOptimizerComponent} from './character-stat-optimizer/character-stat-optimizer.component';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -21,7 +21,7 @@ import {MatButtonModule} from '@angular/material/button';
     CharacterStatProfileComponent,
     CharacterStatAnalyzerComponent,
     CharacterStatCalculatorComponent,
-    CharacterStatAdviserComponent
+    CharacterStatOptimizerComponent
   ],
   imports: [
     SharedModule,

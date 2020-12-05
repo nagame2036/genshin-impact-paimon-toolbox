@@ -1,19 +1,17 @@
 <div class="character-stat-analyzer-page">
-  <div class="flex-column">
-    <div *ngFor="let f of fields">
-      <div style="display: flex" *ngIf="f.visible()">
-        <div *ngFor="let s of f.fields" class="statistic-field">
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label [translate]="i18n(s.label)"
-                       [translateParams]="{label: i18n(f.label) | translate}"></mat-label>
-            <input [value]="s.value * 100 | number: '1.1-1'" matInput readonly/>
-            <div matSuffix>%</div>
-          </mat-form-field>
-        </div>
-        <div class="statistic-analyzer-button">
-          <button mat-raised-button (click)="f.action()" [color]="f.color">{{ i18n(f.actionText) | translate }}</button>
-        </div>
-      </div>
-    </div>
+  <p [translate]="i18n('weight')"
+     [translateParams]="{weight: weight, type: i18nDict(profile.dmgType) | translate}">
+  </p>
+  <div *ngFor="let f of fields" style="display: flex">
+    <p [translate]="i18n(f.text)" [translateParams]="{
+           dmgBonus: weight * 10,
+           type: i18nDict(profile.dmgType) | translate,
+           dmg: (f.value() || 0) | number: '1.1-1'
+         }">
+    </p>
+    <button class="character-stat-analyzer-compare-button" mat-stroked-button (click)="copyAndCompare(f)"
+            color="accent">
+      {{ i18n('copy-and-compare') | translate }}
+    </button>
   </div>
 </div>

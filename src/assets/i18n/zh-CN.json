@@ -70,8 +70,7 @@
         "left": "左侧",
         "right": "右侧"
       },
-      "analyzer": {
-        "title": "面板分析",
+      "optimizer": {
         "current": "当前",
         "optimized": "最优",
         "atk-pct": "{{ label }}攻击力加成",
@@ -80,7 +79,8 @@
         "optimize": "优化属性点数",
         "copy-and-compare": "对比当前面板"
       },
-      "adviser": {
+      "analyzer": {
+        "title": "面板分析",
         "weight": "角色面板属性权重为攻击力 : 暴击率 : 暴击伤害 : {{ type }}伤加成 = 1.5 : 1 : 2 : {{ weight }}",
         "atk-inc": "当前面板提升10点数（15%）攻击力可提升期望伤害 {{ dmg }}",
         "crit-rate-inc": "当前面板提升10点数（10%）暴击率可提升期望伤害 {{ dmg }}",
