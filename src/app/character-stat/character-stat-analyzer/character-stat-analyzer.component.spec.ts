@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterStatAnalyzerComponent} from './character-stat-analyzer.component';
 
-describe('CharacterStatAdviserComponent', () => {
+describe('CharacterStatAnalyzerComponent', () => {
   let component: CharacterStatAnalyzerComponent;
   let fixture: ComponentFixture<CharacterStatAnalyzerComponent>;
 

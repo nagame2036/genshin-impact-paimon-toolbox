@@ -51,7 +51,7 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
     }
   }
 
-  receiveOptimizedStat(profile: CharacterStatProfile): void {
+  receiveComparedStat(profile: CharacterStatProfile): void {
     this.compare.copyFromProfile(profile);
   }
 

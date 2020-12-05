@@ -80,6 +80,14 @@
         "optimize": "优化属性点数",
         "copy-and-compare": "对比当前面板"
       },
+      "adviser": {
+        "weight": "角色面板属性权重为攻击力 : 暴击率 : 暴击伤害 : {{ type }}伤加成 = 1.5 : 1 : 2 : {{ weight }}",
+        "atk-inc": "当前面板提升10点数（15%）攻击力可提升期望伤害 {{ dmg }}",
+        "crit-rate-inc": "当前面板提升10点数（10%）暴击率可提升期望伤害 {{ dmg }}",
+        "crit-dmg-bonus-inc": "当前面板提升10点数（20%）暴击伤害可提升期望伤害 {{ dmg }}",
+        "elemental-dmg-bonus-inc": "当前面板提升10点数（{{ dmgBonus }}%）{{ type }}伤加成可提升期望伤害 {{ dmg }}",
+        "copy-and-compare": "对比当前面板"
+      },
       "calculator": {
         "title": "伤害计算"
       }

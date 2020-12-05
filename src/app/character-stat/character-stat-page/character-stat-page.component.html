@@ -6,8 +6,11 @@
   <mat-divider vertical></mat-divider>
   <mat-tab-group class="character-stat-tab-group">
     <mat-tab [label]="i18n('analyzer.title') | translate">
-      <app-character-stat-analyzer [profile]="profile" (optimizedStat)="stat.receiveOptimizedStat($event)">
+      <app-character-stat-analyzer [profile]="profile" (optimizedStat)="stat.receiveComparedStat($event)">
       </app-character-stat-analyzer>
+      <mat-divider inset></mat-divider>
+      <app-character-stat-adviser [profile]="profile" (comparedStat)="stat.receiveComparedStat($event)">
+      </app-character-stat-adviser>
     </mat-tab>
     <mat-tab [label]="i18n('calculator.title') | translate">
       <app-character-stat-calculator [profile]="profile"></app-character-stat-calculator>
