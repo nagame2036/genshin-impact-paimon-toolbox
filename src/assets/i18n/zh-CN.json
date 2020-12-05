@@ -51,7 +51,7 @@
     },
     "character-stat": {
       "title": "角色面板分析",
-      "form": {
+      "profile": {
         "dmg-type": "伤害类型",
         "change": "变化",
         "base-atk": "基础攻击力",
@@ -75,8 +75,8 @@
         "atk-pct": "攻击力加成",
         "crit-rate-pct": "暴击率加成",
         "crit-dmg-bonus-pct": "暴击伤害加成",
-        "optimize": "优化",
-        "copy-to-stat": "对比"
+        "optimize": "优化属性点数",
+        "copy-and-compare": "对比当前面板"
       },
       "calculator": {
         "title": "伤害计算"

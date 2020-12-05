@@ -14,7 +14,7 @@ import {Level} from '../../shared/ascension-level-select/level';
 })
 export class CharacterStatProfileComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'character-stat.form';
+  i18nKey = 'character-stat.profile';
 
   level = new Level();
 
