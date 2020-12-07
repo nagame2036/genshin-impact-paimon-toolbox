@@ -22,7 +22,27 @@
     "no-crit-hit-dmg": "技能{{ num }}未暴击伤害",
     "crit-hit-dmg": "技能{{ num }}暴击伤害",
     "avg-hit-dmg": "技能{{ num }}平均伤害",
-    "enemy": "怪物"
+    "enemy": "怪物",
+    "materials": {
+      "local-special": {
+        "small-lamp-grass": "小灯草",
+        "valberry": "落落莓",
+        "windwheel-aster": "风车草",
+        "wolfhook": "勾勾果",
+        "dandelion-seed": "蒲公英籽",
+        "cecilia": "塞西莉亚花",
+        "philanemo-mushroom": "慕风蘑菇",
+        "calla-lily": "嘟嘟莲",
+        "corlapis": "石珀",
+        "jueyun-chili": "绝云椒椒",
+        "qingxin": "清心",
+        "violetgrass": "琉璃袋",
+        "noctilucous-jade": "夜泊石",
+        "silk-flower": "霓裳花",
+        "glaze-lily": "琉璃百合",
+        "starconch": "星螺"
+      }
+    }
   },
   "path": {
     "home": "首页",
