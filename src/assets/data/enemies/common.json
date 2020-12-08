@@ -1,0 +1,327 @@
+[
+  {
+    "id": 1000,
+    "name": "anemo-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1001,
+    "name": "large-anemo-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1002,
+    "name": "geo-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1003,
+    "name": "large-geo-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1004,
+    "name": "electro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1005,
+    "name": "large-electro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1006,
+    "name": "mutant-electro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1007,
+    "name": "dendro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1008,
+    "name": "large-dendro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1009,
+    "name": "hydro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1010,
+    "name": "large-hydro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1011,
+    "name": "pyro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1012,
+    "name": "large-pyro-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1013,
+    "name": "cryo-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1014,
+    "name": "large-cryo-slime",
+    "family": "slime"
+  },
+  {
+    "id": 1015,
+    "name": "hilichurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1016,
+    "name": "hilichurl-fighter",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1017,
+    "name": "wooden-shield-hilichurl-guard",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1018,
+    "name": "rock-shield-hilichurl-guard",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1019,
+    "name": "rock-shield-hilichurl-guard",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1020,
+    "name": "pyro-hilichurl-berserker",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1021,
+    "name": "pyro-hilichurl-grenadier",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1022,
+    "name": "anemo-samachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1023,
+    "name": "geo-samachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1024,
+    "name": "dendro-samachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1025,
+    "name": "hydro-samachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1026,
+    "name": "hilichurl-shooter",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1027,
+    "name": "electro-hilichurl-shooter",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1028,
+    "name": "pyro-hilichurl-shooter",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1029,
+    "name": "cryo-hilichurl-shooter",
+    "family": "hilichurl"
+  },
+  {
+    "id": 1030,
+    "name": "electro-cicin",
+    "family": "cicin"
+  },
+  {
+    "id": 1031,
+    "name": "hydro-cicin",
+    "family": "cicin"
+  },
+  {
+    "id": 1032,
+    "name": "fatui-skirmisher-anemoboxer-vanguard",
+    "family": "fatui"
+  },
+  {
+    "id": 1033,
+    "name": "fatui-skirmisher-pryoslinger-bracer",
+    "family": "fatui"
+  },
+  {
+    "id": 1034,
+    "name": "fatui-skirmisher-cryogunner-legionnaire",
+    "family": "fatui"
+  },
+  {
+    "id": 1035,
+    "name": "fatui-skirmisher-hydrogunner-legionnaire",
+    "family": "fatui"
+  },
+  {
+    "id": 1036,
+    "name": "fatui-skirmisher-electrohammer-vanguard",
+    "family": "fatui"
+  },
+  {
+    "id": 1037,
+    "name": "fatui-skirmisher-geochanter-bracer",
+    "family": "fatui"
+  },
+  {
+    "id": 1038,
+    "name": "treasure-hoarder-scout",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1039,
+    "name": "treasure-hoarder-crusher",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1040,
+    "name": "treasure-hoarder-gravedigger",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1041,
+    "name": "treasure-hoarder-marksman",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1042,
+    "name": "treasure-hoarder-handyman",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1043,
+    "name": "treasure-hoarder-pugilist",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1044,
+    "name": "treasure-hoarder-electro-potioner",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1045,
+    "name": "treasure-hoarder-hydro-potioner",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1046,
+    "name": "treasure-hoarder-pyro-potioner",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1047,
+    "name": "treasure-hoarder-cryo-potioner",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1048,
+    "name": "treasure-hoarder-seaman",
+    "family": "treasure-hoarder"
+  },
+  {
+    "id": 1049,
+    "name": "pyro-whopperflower",
+    "family": "whopperflower"
+  },
+  {
+    "id": 1050,
+    "name": "cryo-whopperflower",
+    "family": "whopperflower"
+  },
+  {
+    "id": 1051,
+    "name": "unusual-hilichurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 2000,
+    "name": "blazing-axe-mitachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 2001,
+    "name": "wooden-shieldwall-mitachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 2002,
+    "name": "rock-shieldwall-mitachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 2003,
+    "name": "stonehide-lawachurl",
+    "family": "hilichurl"
+  },
+  {
+    "id": 2004,
+    "name": "hydro-abyss-mage",
+    "family": "abyss-mage"
+  },
+  {
+    "id": 2005,
+    "name": "pyro-abyss-mage",
+    "family": "abyss-mage"
+  },
+  {
+    "id": 2006,
+    "name": "cryo-abyss-mage",
+    "family": "abyss-mage"
+  },
+  {
+    "id": 2007,
+    "name": "ruin-guard",
+    "family": "ruin-machina"
+  },
+  {
+    "id": 2008,
+    "name": "ruin-hunter",
+    "family": "ruin-machina"
+  },
+  {
+    "id": 2009,
+    "name": "fatui-electro-cicin-mage",
+    "family": "fatui"
+  },
+  {
+    "id": 2010,
+    "name": "fatui-pryo-agent",
+    "family": "fatui"
+  },
+  {
+    "id": 2011,
+    "name": "geovishap-hatchling",
+    "family": "geovishap"
+  },
+  {
+    "id": 2012,
+    "name": "eye-of-the-storm",
+    "family": "elemental"
+  }
+]

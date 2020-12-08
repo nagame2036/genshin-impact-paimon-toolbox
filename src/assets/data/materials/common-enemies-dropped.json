@@ -1,0 +1,411 @@
+{
+  "tier-craft": [
+    [
+      1
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      9,
+      3,
+      1
+    ]
+  ],
+  "groups": [
+    {
+      "id": 0,
+      "name": "slime",
+      "source": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014
+      ]
+    },
+    {
+      "id": 1,
+      "name": "hilichurl-mask",
+      "source": [
+        1015,
+        1016,
+        1017,
+        1018,
+        1019,
+        1020,
+        1021,
+        1022,
+        1023,
+        1024,
+        1025,
+        1022,
+        1023,
+        1024,
+        1025,
+        1026,
+        1027,
+        1028,
+        1029,
+        2000,
+        2001,
+        2002,
+        2003
+      ]
+    },
+    {
+      "id": 2,
+      "name": "samachurl-scroll",
+      "source": [
+        1022,
+        1023,
+        1024,
+        1025
+      ]
+    },
+    {
+      "id": 3,
+      "name": "hilichurl-arrowhead",
+      "source": [
+        1026,
+        1027,
+        1028,
+        1029
+      ]
+    },
+    {
+      "id": 4,
+      "name": "fatui-insignia",
+      "source": [
+        1032,
+        1033,
+        1034,
+        1035,
+        1036,
+        1037,
+        2009,
+        2010
+      ]
+    },
+    {
+      "id": 5,
+      "name": "treasure-hoarder-insignia",
+      "source": [
+        1038,
+        1039,
+        1040,
+        1041,
+        1042,
+        1043,
+        1044,
+        1045,
+        1046,
+        1047,
+        1048
+      ]
+    },
+    {
+      "id": 6,
+      "name": "whopperflower-nectar",
+      "source": [
+        1049,
+        1050
+      ]
+    },
+    {
+      "id": 100,
+      "name": "mitachurl-horn",
+      "source": [
+        2000,
+        2001,
+        2002,
+        2003
+      ]
+    },
+    {
+      "id": 101,
+      "name": "ley-line",
+      "source": [
+        2004,
+        2005,
+        2006
+      ]
+    },
+    {
+      "id": 102,
+      "name": "chaos-part",
+      "source": [
+        2007,
+        2008
+      ]
+    },
+    {
+      "id": 103,
+      "name": "mist-grass",
+      "source": [
+        2009
+      ]
+    },
+    {
+      "id": 104,
+      "name": "fatui-knife",
+      "source": [
+        2010
+      ]
+    },
+    {
+      "id": 105,
+      "name": "bone-shard",
+      "source": [
+        2011
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": 1000,
+      "name": "slime-condensate",
+      "group": 0,
+      "tier": 0
+    },
+    {
+      "id": 1001,
+      "name": "slime-secretions",
+      "group": 0,
+      "tier": 1
+    },
+    {
+      "id": 1002,
+      "name": "slime-concentrate",
+      "group": 0,
+      "tier": 2
+    },
+    {
+      "id": 1003,
+      "name": "damaged-mask",
+      "group": 0,
+      "tier": 0
+    },
+    {
+      "id": 1004,
+      "name": "stained-mask",
+      "group": 1,
+      "tier": 1
+    },
+    {
+      "id": 1005,
+      "name": "ominous-mask",
+      "group": 1,
+      "tier": 2
+    },
+    {
+      "id": 1006,
+      "name": "divining-scroll",
+      "group": 2,
+      "tier": 0
+    },
+    {
+      "id": 1007,
+      "name": "sealed-scroll",
+      "group": 2,
+      "tier": 1
+    },
+    {
+      "id": 1008,
+      "name": "forbidden-curse-scroll",
+      "group": 2,
+      "tier": 2
+    },
+    {
+      "id": 1009,
+      "name": "firm-arrowhead",
+      "group": 3,
+      "tier": 0
+    },
+    {
+      "id": 1010,
+      "name": "sharp-arrowhead",
+      "group": 3,
+      "tier": 1
+    },
+    {
+      "id": 1011,
+      "name": "weathered-arrowhead",
+      "group": 3,
+      "tier": 2
+    },
+    {
+      "id": 1012,
+      "name": "recruit's-insignia",
+      "group": 4,
+      "tier": 0
+    },
+    {
+      "id": 1013,
+      "name": "sergeant's-insignia",
+      "group": 4,
+      "tier": 1
+    },
+    {
+      "id": 1014,
+      "name": "lieutenant's-insignia",
+      "group": 4,
+      "tier": 2
+    },
+    {
+      "id": 1015,
+      "name": "treasure-hoarder-insignia",
+      "group": 5,
+      "tier": 0
+    },
+    {
+      "id": 1016,
+      "name": "silver-raven-insignia",
+      "group": 5,
+      "tier": 1
+    },
+    {
+      "id": 1017,
+      "name": "golden-raven-insignia",
+      "group": 5,
+      "tier": 2
+    },
+    {
+      "id": 1018,
+      "name": "whopperflower-nectar",
+      "group": 6,
+      "tier": 0
+    },
+    {
+      "id": 1019,
+      "name": "shimmering-nectar",
+      "group": 6,
+      "tier": 1
+    },
+    {
+      "id": 1020,
+      "name": "energy-nectar",
+      "group": 6,
+      "tier": 2
+    },
+    {
+      "id": 2000,
+      "name": "heavy-horn",
+      "group": 100,
+      "tier": 0
+    },
+    {
+      "id": 2001,
+      "name": "black-bronze-horn",
+      "group": 100,
+      "tier": 1
+    },
+    {
+      "id": 2002,
+      "name": "black-crystal-horn",
+      "group": 100,
+      "tier": 2
+    },
+    {
+      "id": 2003,
+      "name": "dead-ley-line-branch",
+      "group": 101,
+      "tier": 0
+    },
+    {
+      "id": 2004,
+      "name": "dead-ley-line-leaves",
+      "group": 101,
+      "tier": 1
+    },
+    {
+      "id": 2005,
+      "name": "ley-line-sprout",
+      "group": 101,
+      "tier": 2
+    },
+    {
+      "id": 2006,
+      "name": "chaos-device",
+      "group": 102,
+      "tier": 0
+    },
+    {
+      "id": 2007,
+      "name": "chaos-circuit",
+      "group": 102,
+      "tier": 1
+    },
+    {
+      "id": 2008,
+      "name": "chaos-core",
+      "group": 102,
+      "tier": 2
+    },
+    {
+      "id": 2009,
+      "name": "mist-grass-pollen",
+      "group": 103,
+      "tier": 0
+    },
+    {
+      "id": 2010,
+      "name": "mist-grass",
+      "group": 103,
+      "tier": 1
+    },
+    {
+      "id": 2011,
+      "name": "mist-grass-lamp",
+      "group": 103,
+      "tier": 2
+    },
+    {
+      "id": 2012,
+      "name": "hunter's-sacrificial-knife",
+      "group": 104,
+      "tier": 0
+    },
+    {
+      "id": 2013,
+      "name": "agent's-sacrificial-knife",
+      "group": 104,
+      "tier": 1
+    },
+    {
+      "id": 2014,
+      "name": "inspector's-sacrificial-knife",
+      "group": 104,
+      "tier": 2
+    },
+    {
+      "id": 2015,
+      "name": "fragile-bone-shard",
+      "group": 105,
+      "tier": 0
+    },
+    {
+      "id": 2016,
+      "name": "sturdy-bone-shard",
+      "group": 105,
+      "tier": 1
+    },
+    {
+      "id": 2017,
+      "name": "fossilized-bone-shard",
+      "group": 105,
+      "tier": 2
+    }
+  ]
+}
