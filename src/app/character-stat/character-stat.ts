@@ -35,7 +35,7 @@ export class CharacterStat {
     'elemental-dmg-bonus'
   ];
 
-  profile = new CharacterStatProfile();
+  profile!: CharacterStatProfile;
 
   get baseDmg(): number {
     return this.profile.baseDmg;

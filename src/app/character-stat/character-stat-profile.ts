@@ -48,7 +48,7 @@ export class CharacterStatProfile {
   }
 
   set bonusAtk(value: number) {
-    this.bonusAtkField = Math.max(0, value);
+    this.bonusAtkField = Math.max(this.plumeAtk, value);
   }
 
   get critRate(): number {
@@ -76,7 +76,7 @@ export class CharacterStatProfile {
   }
 
   get atk(): number {
-    return this.baseAtk + this.bonusAtk;
+    return this.baseAtk + Math.max(this.bonusAtk, this.plumeAtk);
   }
 
   get baseDmg(): number {

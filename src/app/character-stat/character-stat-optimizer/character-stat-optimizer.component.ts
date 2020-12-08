@@ -1,19 +1,19 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CharacterStatProfile} from '../character-stat-profile';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 import {CharacterStatOptimizerService} from '../character-stat-optimizer.service';
+import {CharacterStatProfileService} from '../character-stat-profile.service';
 
 @Component({
   selector: 'app-character-stat-optimizer',
   templateUrl: './character-stat-optimizer.component.html',
   styleUrls: ['./character-stat-optimizer.component.sass']
 })
-export class CharacterStatOptimizerComponent extends AbstractTranslateComponent implements OnInit, OnChanges {
+export class CharacterStatOptimizerComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'character-stat.optimizer';
 
-  @Input()
-  profile: CharacterStatProfile = new CharacterStatProfile();
+  profile!: CharacterStatProfile;
 
   statFields = [
     {label: 'atk-pct', value: 0},
@@ -30,9 +30,6 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
   optimized = false;
 
   optimizedResult: { atk: number; critRate: number; critDmg: number; } = {atk: 0, critRate: 0, critDmg: 0};
-
-  @Output()
-  optimizedStat = new EventEmitter<CharacterStatProfile>();
 
   fields = [
     {
@@ -53,7 +50,7 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
     }
   ];
 
-  constructor(private optimizer: CharacterStatOptimizerService) {
+  constructor(private optimizer: CharacterStatOptimizerService, private profileService: CharacterStatProfileService) {
     super();
   }
 
@@ -70,13 +67,13 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
   }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.optimized = false;
-    this.statFields[0].value = this.atkPct;
-    this.statFields[1].value = this.critRatePct;
-    this.statFields[2].value = this.critDmgBonusPct;
+    this.profileService.current.subscribe(p => {
+      this.profile = p;
+      this.optimized = false;
+      this.statFields[0].value = this.atkPct;
+      this.statFields[1].value = this.critRatePct;
+      this.statFields[2].value = this.critDmgBonusPct;
+    });
   }
 
   optimize(): void {
@@ -99,6 +96,6 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
     const critDmgBonus = chd === 0 ? .5 : chd + .3;
     const profile = new CharacterStatProfile(this.profile.level, this.profile.dmgType, baseAtk, this.profile.plumeAtk,
       bonusAtk, critRate, critDmgBonus, this.profile.elementalDmgBonus);
-    this.optimizedStat.emit(profile);
+    this.profileService.setCompared(profile);
   }
 }

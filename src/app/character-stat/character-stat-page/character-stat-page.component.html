@@ -1,19 +1,17 @@
 <div class="character-stat-page">
   <div class="character-stat-component">
     <h1 class="mat-h1">{{ i18n('title') | translate }}</h1>
-    <app-character-stat-profile (profile)="profile = $event" #stat></app-character-stat-profile>
+    <app-character-stat-profile></app-character-stat-profile>
   </div>
   <mat-divider vertical></mat-divider>
   <mat-tab-group class="character-stat-tab-group">
     <mat-tab [label]="i18n('analyzer.title') | translate">
-      <app-character-stat-optimizer [profile]="profile" (optimizedStat)="stat.receiveComparedStat($event)">
-      </app-character-stat-optimizer>
+      <app-character-stat-optimizer></app-character-stat-optimizer>
       <mat-divider inset></mat-divider>
-      <app-character-stat-analyzer [profile]="profile" (comparedStat)="stat.receiveComparedStat($event)">
-      </app-character-stat-analyzer>
+      <app-character-stat-analyzer></app-character-stat-analyzer>
     </mat-tab>
     <mat-tab [label]="i18n('calculator.title') | translate">
-      <app-character-stat-calculator [profile]="profile"></app-character-stat-calculator>
+      <app-character-stat-calculator></app-character-stat-calculator>
     </mat-tab>
   </mat-tab-group>
 </div>

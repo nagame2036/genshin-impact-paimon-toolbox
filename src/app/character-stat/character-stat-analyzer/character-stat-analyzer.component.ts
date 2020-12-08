@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 import {DamageType} from '../character-stat-profile/damage-type';
 import {CharacterStatProfile} from '../character-stat-profile';
+import {CharacterStatProfileService} from '../character-stat-profile.service';
 
 @Component({
   selector: 'app-character-stat-analyzer',
@@ -12,20 +13,18 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
 
   i18nKey = 'character-stat.analyzer';
 
-  @Input()
-  profile = new CharacterStatProfile();
+  profile!: CharacterStatProfile;
 
   fields = [
-    {text: 'atk-inc', profile: this.profile, value: () => this.dmgWhenAtkInc},
-    {text: 'crit-rate-inc', profile: this.profile, value: () => this.dmgWhenCritRateInc},
-    {text: 'crit-dmg-bonus-inc', profile: this.profile, value: () => this.dmgWhenCritDmgBonusInc},
-    {text: 'elemental-dmg-bonus-inc', profile: this.profile, value: () => this.dmgWhenElementalDmgBonusInc},
+    {text: 'atk-inc', value: () => this.dmgWhenAtkInc},
+    {text: 'crit-rate-inc', value: () => this.dmgWhenCritRateInc},
+    {text: 'crit-dmg-bonus-inc', value: () => this.dmgWhenCritDmgBonusInc},
+    {text: 'elemental-dmg-bonus-inc', value: () => this.dmgWhenElementalDmgBonusInc},
   ];
 
-  @Output()
-  comparedStat = new EventEmitter<CharacterStatProfile>();
+  profiles = new Map<{ text: string, value: () => number }, CharacterStatProfile>();
 
-  constructor() {
+  constructor(private profileService: CharacterStatProfileService) {
     super();
   }
 
@@ -39,7 +38,7 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
 
   get dmgWhenAtkInc(): number {
     const copy = this.profile.copy();
-    this.fields[0].profile = copy;
+    this.profiles.set(this.fields[0], copy);
     const baseAtk = copy.baseAtk;
     const plumeAtk = copy.plumeAtk;
     const bonusAtkPct = (copy.bonusAtk - plumeAtk) / baseAtk || 0;
@@ -49,30 +48,34 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
 
   get dmgWhenCritRateInc(): number {
     const copy = this.profile.copy();
-    this.fields[1].profile = copy;
+    this.profiles.set(this.fields[1], copy);
     copy.critRate += 0.1;
     return copy.meanDmg - this.profile.meanDmg;
   }
 
   get dmgWhenCritDmgBonusInc(): number {
     const copy = this.profile.copy();
-    this.fields[2].profile = copy;
+    this.profiles.set(this.fields[2], copy);
     copy.critDmgBonus += 0.2;
     return copy.meanDmg - this.profile.meanDmg;
   }
 
   get dmgWhenElementalDmgBonusInc(): number {
     const copy = this.profile.copy();
-    this.fields[3].profile = copy;
+    this.profiles.set(this.fields[3], copy);
     copy.elementalDmgBonus += this.weight * 0.1;
     return copy.meanDmg - this.profile.meanDmg;
   }
 
   ngOnInit(): void {
+    this.profileService.current.subscribe(p => this.profile = p);
   }
 
-  copyAndCompare(field: { profile: CharacterStatProfile }): void {
-    this.comparedStat.emit(field.profile);
+  copyAndCompare(field: { text: string, value: () => number }): void {
+    const value = this.profiles.get(field);
+    if (value) {
+      this.profileService.setCompared(value);
+    }
   }
 
 }

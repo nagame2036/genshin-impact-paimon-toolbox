@@ -1,20 +1,20 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 import {CharacterStatProfile} from '../character-stat-profile';
 import {StatField} from '../stat-field';
 import {DamageType} from '../character-stat-profile/damage-type';
+import {CharacterStatProfileService} from '../character-stat-profile.service';
 
 @Component({
   selector: 'app-character-stat-calculator',
   templateUrl: './character-stat-calculator.component.html',
   styleUrls: ['./character-stat-calculator.component.sass']
 })
-export class CharacterStatCalculatorComponent extends AbstractTranslateComponent implements OnInit, OnChanges {
+export class CharacterStatCalculatorComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'character-stat';
 
-  @Input()
-  profile: CharacterStatProfile = new CharacterStatProfile();
+  profile = new CharacterStatProfile();
 
   enemyLevel = new StatField({min: 1, max: 110, defaultValue: 90});
 
@@ -40,7 +40,7 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
     'avg-hit-dmg'
   ];
 
-  constructor() {
+  constructor(private profileService: CharacterStatProfileService) {
     super();
   }
 
@@ -61,10 +61,10 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
   }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(): void {
-    this.calc();
+    this.profileService.current.subscribe(c => {
+      this.profile = c;
+      this.calc();
+    });
   }
 
   calc(): void {

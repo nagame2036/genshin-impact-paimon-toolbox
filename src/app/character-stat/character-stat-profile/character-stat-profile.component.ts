@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CharacterStat} from '../character-stat';
 import {AbstractTranslateComponent} from '../../shared/abstract-translate.component';
 import {CharacterStatComparer} from '../character-stat-comparer';
 import {FormControl} from '@angular/forms';
 import {DamageType} from './damage-type';
-import {CharacterStatProfile} from '../character-stat-profile';
 import {Level} from '../../shared/ascension-level-select/level';
+import {CharacterStatProfileService} from '../character-stat-profile.service';
 
 @Component({
   selector: 'app-character-stat-profile',
@@ -24,41 +24,39 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   current = new CharacterStat('current', this.level, this.dmgType, 'right');
 
-  compare = new CharacterStat('compare', this.level, this.dmgType, 'left');
+  compared = new CharacterStat('compared', this.level, this.dmgType, 'left');
 
-  stat = [this.current, this.compare];
+  stat = [this.current, this.compared];
 
-  comparer = new CharacterStatComparer(this.current, this.compare);
+  comparer = new CharacterStatComparer(this.current, this.compared);
 
-  @Output()
-  profile = new EventEmitter<CharacterStatProfile>();
-
-  constructor() {
+  constructor(private profileService: CharacterStatProfileService) {
     super();
-    this.current.copyTarget = this.compare;
-    this.compare.copyTarget = this.current;
+    this.current.copyTarget = this.compared;
+    this.compared.copyTarget = this.current;
   }
 
   ngOnInit(): void {
+    this.profileService.compared.subscribe(c => this.compared.copyFromProfile(c));
     this.calc(true);
   }
 
   calc(updateProfile: boolean): void {
     this.current.calc();
-    this.compare.calc();
+    this.compared.calc();
     if (updateProfile) {
-      this.profile.emit(this.current.profile);
+      this.update();
     }
-  }
-
-  receiveComparedStat(profile: CharacterStatProfile): void {
-    this.compare.copyFromProfile(profile);
   }
 
   copy(stat: CharacterStat): void {
     stat.copy();
     if (stat.copyTarget === this.current) {
-      this.profile.emit(this.current.profile);
+      this.update();
     }
+  }
+
+  update(): void {
+    this.profileService.setCurrent(this.current.profile);
   }
 }
