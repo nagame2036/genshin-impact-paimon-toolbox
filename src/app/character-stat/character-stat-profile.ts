@@ -4,17 +4,17 @@ import {coerceIn} from '../shared/utils/coerce';
 
 export class CharacterStatProfile {
 
-  private baseAtkField = 0;
+  private baseAtk$ = 0;
 
-  private plumeAtkField = 0;
+  private plumeAtk$ = 0;
 
-  private bonusAtkField = 0;
+  private bonusAtk$ = 0;
 
-  private critRateField = 0.05;
+  private critRate$ = 0.05;
 
-  private critDmgBonusField = 0.5;
+  private critDmgBonus$ = 0.5;
 
-  private elementalDmgBonusField = 0;
+  private elementalDmgBonus$ = 0;
 
   constructor(public level: Level = new Level(), public dmgType: DamageType = DamageType.PYRO,
               baseAtk: number = 0, plumeAtk: number = 0, bonusAtk: number = 0,
@@ -28,51 +28,51 @@ export class CharacterStatProfile {
   }
 
   get baseAtk(): number {
-    return this.baseAtkField;
+    return this.baseAtk$;
   }
 
   set baseAtk(value: number) {
-    this.baseAtkField = Math.max(0, value);
+    this.baseAtk$ = Math.max(0, value);
   }
 
   get plumeAtk(): number {
-    return this.plumeAtkField;
+    return this.plumeAtk$;
   }
 
   set plumeAtk(value: number) {
-    this.plumeAtkField = Math.max(0, value);
+    this.plumeAtk$ = Math.max(0, value);
   }
 
   get bonusAtk(): number {
-    return this.bonusAtkField;
+    return this.bonusAtk$;
   }
 
   set bonusAtk(value: number) {
-    this.bonusAtkField = Math.max(this.plumeAtk, value);
+    this.bonusAtk$ = Math.max(this.plumeAtk, value);
   }
 
   get critRate(): number {
-    return this.critRateField;
+    return this.critRate$;
   }
 
   set critRate(value: number) {
-    this.critRateField = coerceIn(value, 0, 1);
+    this.critRate$ = coerceIn(value, 0, 1);
   }
 
   get critDmgBonus(): number {
-    return this.critDmgBonusField;
+    return this.critDmgBonus$;
   }
 
   set critDmgBonus(value: number) {
-    this.critDmgBonusField = Math.max(0, value);
+    this.critDmgBonus$ = Math.max(0, value);
   }
 
   get elementalDmgBonus(): number {
-    return this.elementalDmgBonusField;
+    return this.elementalDmgBonus$;
   }
 
   set elementalDmgBonus(value: number) {
-    this.elementalDmgBonusField = Math.max(0, value);
+    this.elementalDmgBonus$ = Math.max(0, value);
   }
 
   get atk(): number {
