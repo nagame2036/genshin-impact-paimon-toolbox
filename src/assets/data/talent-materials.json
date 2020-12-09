@@ -1,0 +1,242 @@
+{
+  "groups": [
+    {
+      "id": 0,
+      "name": "freedom",
+      "source": [
+        0
+      ]
+    },
+    {
+      "id": 1,
+      "name": "resistance",
+      "source": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ballad",
+      "source": [
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "name": "prosperity",
+      "source": [
+        3
+      ]
+    },
+    {
+      "id": 4,
+      "name": "diligence",
+      "source": [
+        4
+      ]
+    },
+    {
+      "id": 5,
+      "name": "gold",
+      "source": [
+        5
+      ]
+    },
+    {
+      "id": 500,
+      "name": "dvalin",
+      "source": [
+        100
+      ]
+    },
+    {
+      "id": 501,
+      "name": "andrius",
+      "source": [
+        101
+      ]
+    },
+    {
+      "id": 502,
+      "name": "tartaglia",
+      "source": [
+        102
+      ]
+    },
+    {
+      "id": 1000,
+      "name": "crown-of-sagehood",
+      "source": []
+    }
+  ],
+  "items": [
+    {
+      "id": 1000,
+      "name": "philosophies-of-freedom",
+      "group": 0,
+      "tier": 2
+    },
+    {
+      "id": 1001,
+      "name": "guide-to-freedom",
+      "group": 0,
+      "tier": 1
+    },
+    {
+      "id": 1002,
+      "name": "teachings-of-freedom",
+      "group": 0,
+      "tier": 0
+    },
+    {
+      "id": 1003,
+      "name": "philosophies-of-resistance",
+      "group": 1,
+      "tier": 2
+    },
+    {
+      "id": 1004,
+      "name": "guide-to-resistance",
+      "group": 1,
+      "tier": 1
+    },
+    {
+      "id": 1005,
+      "name": "teachings-of-resistance",
+      "group": 1,
+      "tier": 0
+    },
+    {
+      "id": 1006,
+      "name": "philosophies-of-ballad",
+      "group": 2,
+      "tier": 2
+    },
+    {
+      "id": 1007,
+      "name": "guide-to-ballad",
+      "group": 2,
+      "tier": 1
+    },
+    {
+      "id": 1008,
+      "name": "teachings-of-ballad",
+      "group": 2,
+      "tier": 0
+    },
+    {
+      "id": 1009,
+      "name": "philosophies-of-prosperity",
+      "group": 3,
+      "tier": 2
+    },
+    {
+      "id": 1010,
+      "name": "guide-to-prosperity",
+      "group": 3,
+      "tier": 1
+    },
+    {
+      "id": 1011,
+      "name": "teachings-of-prosperity",
+      "group": 3,
+      "tier": 0
+    },
+    {
+      "id": 1012,
+      "name": "philosophies-of-diligence",
+      "group": 4,
+      "tier": 2
+    },
+    {
+      "id": 1013,
+      "name": "guide-to-diligence",
+      "group": 4,
+      "tier": 1
+    },
+    {
+      "id": 1014,
+      "name": "teachings-of-diligence",
+      "group": 4,
+      "tier": 0
+    },
+    {
+      "id": 1015,
+      "name": "philosophies-of-gold",
+      "group": 5,
+      "tier": 2
+    },
+    {
+      "id": 1016,
+      "name": "guide-to-gold",
+      "group": 5,
+      "tier": 1
+    },
+    {
+      "id": 1017,
+      "name": "teachings-of-gold",
+      "group": 5,
+      "tier": 0
+    },
+    {
+      "id": 5000,
+      "name": "dvalin's-plume",
+      "group": 500,
+      "tier": 0
+    },
+    {
+      "id": 5001,
+      "name": "dvalin's-claw",
+      "group": 500,
+      "tier": 0
+    },
+    {
+      "id": 5002,
+      "name": "dvalin's-sigh",
+      "group": 500,
+      "tier": 0
+    },
+    {
+      "id": 5003,
+      "name": "tail-of-boreas",
+      "group": 501,
+      "tier": 0
+    },
+    {
+      "id": 5004,
+      "name": "ring-of-boreas",
+      "group": 501,
+      "tier": 0
+    },
+    {
+      "id": 5005,
+      "name": "spirit-locket-of-boreas",
+      "group": 501,
+      "tier": 0
+    },
+    {
+      "id": 5006,
+      "name": "tusk-of-monoceros-caeli",
+      "group": 502,
+      "tier": 0
+    },
+    {
+      "id": 5007,
+      "name": "shard-of-a-foul-legacy",
+      "group": 502,
+      "tier": 0
+    },
+    {
+      "id": 5008,
+      "name": "shadow-of-the-warrior",
+      "group": 502,
+      "tier": 0
+    },
+    {
+      "id": 10000,
+      "name": "crown-of-sagehood",
+      "group": 1000,
+      "tier": 0
+    }
+  ]
+}
