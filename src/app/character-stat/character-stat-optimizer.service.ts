@@ -42,7 +42,7 @@ export class CharacterStatOptimizerService {
       return atk * (1 + (critRate + .15) * (critDmg + .3));
     }
 
-    // Points all added to ATK, that is DMG = (Plume ATK + Base ATK * (1 + 1.5% * Stat statPoints)) * (1 + 5% Crit Rate * 50% Crit DMG)
+    // Points all added to ATK, that is DMG = (Plume ATK + Base ATK * (1 + 1.5% * Stat points)) * (1 + 5% Crit Rate * 50% Crit DMG)
     let maxDmg = (plumeAtk + baseAtk * (1 + 1.5 * statPoints)) * 1.025;
     let maxCritPoints = 0;
 
