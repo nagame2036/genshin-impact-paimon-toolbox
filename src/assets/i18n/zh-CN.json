@@ -98,6 +98,19 @@
     "crit-hit-dmg": "技能{{ num }}暴击伤害",
     "avg-hit-dmg": "技能{{ num }}平均伤害",
     "enemy": "怪物",
+    "common-materials": {
+      "mora": "摩拉",
+      "hero's-wit": "大英雄的经验",
+      "adventurer's-experience": "冒险家的经验",
+      "wanderer's-advice": "流浪者的经验",
+      "mystic-enhancement-ore": "精锻用魔矿",
+      "fine-enhancement-ore": "精锻用良矿",
+      "enhancement-ore": "精锻用杂矿",
+      "iron-chunk": "铁块",
+      "white-iron-chunk": "白铁块",
+      "crystal-chunk": "水晶块",
+      "magical-crystal-chunk": "魔晶块"
+    },
     "enemies": {
       "anemo-slime": "风史莱姆",
       "large-anemo-slime": "大型风史莱姆",
