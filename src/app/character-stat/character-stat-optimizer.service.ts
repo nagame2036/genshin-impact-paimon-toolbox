@@ -17,7 +17,7 @@ export class CharacterStatOptimizerService {
    */
   optimize(baseAtk: number, plumeAtk: number, statPoints: number): { atk: number, critRate: number, critDmg: number } {
 
-    // Max number of allocated points for CRIT Rate = 85, equivalent 100% CRIT Rate
+    // Max number of allocated points for CRIT Rate = 85, equivalent to 100% CRIT Rate
     const maxCritRate = .85;
     const atkWeight = 1.5;
     const critDmgWeight = 2;
@@ -46,7 +46,7 @@ export class CharacterStatOptimizerService {
     let maxDmg = (plumeAtk + baseAtk * (1 + 1.5 * statPoints)) * 1.025;
     let maxCritPoints = 0;
 
-    // 70 CRIT points equivalent 50% CRIT Rate and 100% CRIT DMG in stat
+    // 70 CRIT points is equivalent to 50% CRIT Rate and 100% CRIT DMG in stat
     const start = 7000;
     const precision = 0.0001;
     const end = statPoints / precision;
@@ -57,7 +57,7 @@ export class CharacterStatOptimizerService {
         maxDmg = currDmg;
       }
     }
-    const optimizedCritRate = Math.min(maxCritRate, 0.5 * maxCritPoints);
+    const optimizedCritRate = Math.min(maxCritRate, .5 * maxCritPoints);
     const optimizedAtk = atkWeight * (statPoints - maxCritPoints);
     const optimizedCritDmg = critDmgWeight * (maxCritPoints - optimizedCritRate);
     return {atk: optimizedAtk, critRate: optimizedCritRate, critDmg: optimizedCritDmg};
