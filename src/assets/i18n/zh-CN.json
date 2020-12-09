@@ -6,6 +6,75 @@
     "inventory": "背包",
     "resin": "树脂"
   },
+  "modules": {
+    "home": {
+      "thanks": "数据源及鸣谢"
+    },
+    "settings": {
+      "title": "设置",
+      "language": "语言"
+    },
+    "resin": {
+      "replenish": {
+        "title": "树脂恢复计算器",
+        "resin": "树脂",
+        "minutes": "分钟",
+        "current": "当前剩余树脂",
+        "replenished-in": "下次恢复时间",
+        "replenished-to": "树脂恢复到{{ target }}",
+        "fully-replenished": "树脂恢复到上限"
+      }
+    },
+    "character-stat": {
+      "title": "角色面板分析",
+      "profile": {
+        "dmg-type": "伤害类型",
+        "current": "当前",
+        "compared": "对比",
+        "change": "变化",
+        "base-atk": "{{ label }}基础攻击力",
+        "plume-atk": "{{ label }}羽毛攻击力",
+        "bonus-atk": "{{ label }}额外攻击力",
+        "atk-inc-pct": "{{ label }}攻击力加成",
+        "atk": "{{ label }}攻击力",
+        "crit-rate": "{{ label }}暴击率",
+        "crit-dmg-bonus": "{{ label }}暴击伤害",
+        "elemental-dmg-bonus": "{{ label }}{{ type }}伤加成",
+        "no-crit-dmg": "{{ label }}未暴击伤害",
+        "crit-dmg": "{{ label }}暴击伤害",
+        "mean-dmg": "{{ label }}期望伤害",
+        "copy-to": "复制到{{ label }}",
+        "left": "左侧",
+        "right": "右侧"
+      },
+      "optimizer": {
+        "current": "当前",
+        "optimized": "最优",
+        "atk-pct": "{{ label }}攻击力加成",
+        "crit-rate-pct": "{{ label }}暴击率加成",
+        "crit-dmg-bonus-pct": "{{ label }}暴击伤害加成",
+        "optimize": "优化属性点数",
+        "copy-and-compare": "对比当前面板"
+      },
+      "analyzer": {
+        "title": "面板分析",
+        "weight": "角色面板属性权重为攻击力 : 暴击率 : 暴击伤害 : {{ type }}伤加成 = 1.5 : 1 : 2 : {{ weight }}",
+        "atk-inc": "当前面板提升10点数（15%）攻击力可提升期望伤害 {{ dmg }}",
+        "crit-rate-inc": "当前面板提升10点数（10%）暴击率可提升期望伤害 {{ dmg }}",
+        "crit-dmg-bonus-inc": "当前面板提升10点数（20%）暴击伤害可提升期望伤害 {{ dmg }}",
+        "elemental-dmg-bonus-inc": "当前面板提升10点数（{{ dmgBonus }}%）{{ type }}伤加成可提升期望伤害 {{ dmg }}",
+        "copy-and-compare": "对比当前面板"
+      },
+      "calculator": {
+        "title": "伤害计算"
+      }
+    },
+    "inventory": {
+      "amount": "数量",
+      "enemies-materials": "怪物掉落素材",
+      "local-specialties": "地区特产"
+    }
+  },
   "dict": {
     "genshin-impact": "原神",
     "resin": "树脂",
@@ -153,70 +222,6 @@
       "starconch": "星螺",
       "violetgrass": "琉璃袋",
       "cor-lapis": "石珀"
-    }
-  },
-  "modules": {
-    "home": {
-      "thanks": "数据源及鸣谢"
-    },
-    "settings": {
-      "title": "设置",
-      "language": "语言"
-    },
-    "resin": {
-      "replenish": {
-        "title": "树脂恢复计算器",
-        "resin": "树脂",
-        "minutes": "分钟",
-        "current": "当前剩余树脂",
-        "replenished-in": "下次恢复时间",
-        "replenished-to": "树脂恢复到{{ target }}",
-        "fully-replenished": "树脂恢复到上限"
-      }
-    },
-    "character-stat": {
-      "title": "角色面板分析",
-      "profile": {
-        "dmg-type": "伤害类型",
-        "current": "当前",
-        "compared": "对比",
-        "change": "变化",
-        "base-atk": "{{ label }}基础攻击力",
-        "plume-atk": "{{ label }}羽毛攻击力",
-        "bonus-atk": "{{ label }}额外攻击力",
-        "atk-inc-pct": "{{ label }}攻击力加成",
-        "atk": "{{ label }}攻击力",
-        "crit-rate": "{{ label }}暴击率",
-        "crit-dmg-bonus": "{{ label }}暴击伤害",
-        "elemental-dmg-bonus": "{{ label }}{{ type }}伤加成",
-        "no-crit-dmg": "{{ label }}未暴击伤害",
-        "crit-dmg": "{{ label }}暴击伤害",
-        "mean-dmg": "{{ label }}期望伤害",
-        "copy-to": "复制到{{ label }}",
-        "left": "左侧",
-        "right": "右侧"
-      },
-      "optimizer": {
-        "current": "当前",
-        "optimized": "最优",
-        "atk-pct": "{{ label }}攻击力加成",
-        "crit-rate-pct": "{{ label }}暴击率加成",
-        "crit-dmg-bonus-pct": "{{ label }}暴击伤害加成",
-        "optimize": "优化属性点数",
-        "copy-and-compare": "对比当前面板"
-      },
-      "analyzer": {
-        "title": "面板分析",
-        "weight": "角色面板属性权重为攻击力 : 暴击率 : 暴击伤害 : {{ type }}伤加成 = 1.5 : 1 : 2 : {{ weight }}",
-        "atk-inc": "当前面板提升10点数（15%）攻击力可提升期望伤害 {{ dmg }}",
-        "crit-rate-inc": "当前面板提升10点数（10%）暴击率可提升期望伤害 {{ dmg }}",
-        "crit-dmg-bonus-inc": "当前面板提升10点数（20%）暴击伤害可提升期望伤害 {{ dmg }}",
-        "elemental-dmg-bonus-inc": "当前面板提升10点数（{{ dmgBonus }}%）{{ type }}伤加成可提升期望伤害 {{ dmg }}",
-        "copy-and-compare": "对比当前面板"
-      },
-      "calculator": {
-        "title": "伤害计算"
-      }
     }
   }
 }
