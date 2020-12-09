@@ -1,0 +1,299 @@
+{
+  "groups": [
+    {
+      "id": 1,
+      "name": "hurricane-seed",
+      "source": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "basalt-pillar",
+      "source": [
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "name": "lightning-prism",
+      "source": [
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "name": "cleansing-heart",
+      "source": [
+        5
+      ]
+    },
+    {
+      "id": 6,
+      "name": "everflame-seed",
+      "source": [
+        6
+      ]
+    },
+    {
+      "id": 7,
+      "name": "hoarfrost-core",
+      "source": [
+        7
+      ]
+    },
+    {
+      "id": 100,
+      "name": "brilliant-diamond",
+      "source": []
+    },
+    {
+      "id": 101,
+      "name": "vayuda-turquoise",
+      "source": [
+        1
+      ]
+    },
+    {
+      "id": 102,
+      "name": "prithiva-topaz",
+      "source": [
+        2
+      ]
+    },
+    {
+      "id": 103,
+      "name": "vajrada-amethyst",
+      "source": [
+        3
+      ]
+    },
+    {
+      "id": 105,
+      "name": "varunada-lazurite",
+      "source": [
+        5
+      ]
+    },
+    {
+      "id": 106,
+      "name": "agnidus-agate",
+      "source": [
+        6
+      ]
+    },
+    {
+      "id": 107,
+      "name": "shivada-jade",
+      "source": [
+        7
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "hurricane-seed",
+      "group": 1,
+      "tier": 0
+    },
+    {
+      "id": 2,
+      "name": "basalt-pillar",
+      "group": 2,
+      "tier": 0
+    },
+    {
+      "id": 3,
+      "name": "lightning-prism",
+      "group": 3,
+      "tier": 0
+    },
+    {
+      "id": 5,
+      "name": "cleansing-heart",
+      "group": 5,
+      "tier": 0
+    },
+    {
+      "id": 6,
+      "name": "everflame-seed",
+      "group": 6,
+      "tier": 0
+    },
+    {
+      "id": 7,
+      "name": "hoarfrost-core",
+      "group": 7,
+      "tier": 0
+    },
+    {
+      "id": 1000,
+      "name": "brilliant-diamond-gemstone",
+      "group": 100,
+      "tier": 3
+    },
+    {
+      "id": 1001,
+      "name": "brilliant-diamond-chunk",
+      "group": 100,
+      "tier": 2
+    },
+    {
+      "id": 1002,
+      "name": "brilliant-diamond-fragment",
+      "group": 100,
+      "tier": 1
+    },
+    {
+      "id": 1003,
+      "name": "brilliant-diamond-sliver",
+      "group": 100,
+      "tier": 0
+    },
+    {
+      "id": 1004,
+      "name": "vayuda-turquoise-gemstone",
+      "group": 101,
+      "tier": 3
+    },
+    {
+      "id": 1005,
+      "name": "vayuda-turquoise-chunk",
+      "group": 101,
+      "tier": 2
+    },
+    {
+      "id": 1006,
+      "name": "vayuda-turquoise-fragment",
+      "group": 101,
+      "tier": 1
+    },
+    {
+      "id": 1007,
+      "name": "vayuda-turquoise-sliver",
+      "group": 101,
+      "tier": 0
+    },
+    {
+      "id": 1008,
+      "name": "prithiva-topaz-gemstone",
+      "group": 102,
+      "tier": 3
+    },
+    {
+      "id": 1009,
+      "name": "prithiva-topaz-chunk",
+      "group": 102,
+      "tier": 2
+    },
+    {
+      "id": 1010,
+      "name": "prithiva-topaz-fragment",
+      "group": 102,
+      "tier": 1
+    },
+    {
+      "id": 1011,
+      "name": "prithiva-topaz-sliver",
+      "group": 102,
+      "tier": 0
+    },
+    {
+      "id": 1012,
+      "name": "vajrada-amethyst-gemstone",
+      "group": 103,
+      "tier": 3
+    },
+    {
+      "id": 1013,
+      "name": "vajrada-amethyst-chunk",
+      "group": 103,
+      "tier": 2
+    },
+    {
+      "id": 1014,
+      "name": "vajrada-amethyst-fragment",
+      "group": 103,
+      "tier": 1
+    },
+    {
+      "id": 1015,
+      "name": "vajrada-amethyst-sliver",
+      "group": 103,
+      "tier": 0
+    },
+    {
+      "id": 1020,
+      "name": "varunada-lazurite-gemstone",
+      "group": 105,
+      "tier": 3
+    },
+    {
+      "id": 1021,
+      "name": "varunada-lazurite-chunk",
+      "group": 105,
+      "tier": 2
+    },
+    {
+      "id": 1022,
+      "name": "varunada-lazurite-fragment",
+      "group": 105,
+      "tier": 1
+    },
+    {
+      "id": 1023,
+      "name": "varunada-lazurite-sliver",
+      "group": 105,
+      "tier": 0
+    },
+    {
+      "id": 1024,
+      "name": "agnidus-agate-gemstone",
+      "group": 106,
+      "tier": 3
+    },
+    {
+      "id": 1025,
+      "name": "agnidus-agate-chunk",
+      "group": 106,
+      "tier": 2
+    },
+    {
+      "id": 1026,
+      "name": "agnidus-agate-fragment",
+      "group": 106,
+      "tier": 1
+    },
+    {
+      "id": 1027,
+      "name": "agnidus-agate-sliver",
+      "group": 106,
+      "tier": 0
+    },
+    {
+      "id": 1028,
+      "name": "shivada-jade-gemstone",
+      "group": 107,
+      "tier": 3
+    },
+    {
+      "id": 1029,
+      "name": "shivada-jade-chunk",
+      "group": 107,
+      "tier": 2
+    },
+    {
+      "id": 1030,
+      "name": "shivada-jade-fragment",
+      "group": 107,
+      "tier": 1
+    },
+    {
+      "id": 1031,
+      "name": "shivada-jade-sliver",
+      "group": 107,
+      "tier": 0
+    }
+  ]
+}
