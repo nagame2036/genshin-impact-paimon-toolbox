@@ -81,8 +81,10 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
     const points = (this.atkPct / 1.5 + this.critRatePct + this.critDmgBonusPct / 2);
     const result = this.optimizer.optimize(this.profile.baseAtk, this.profile.plumeAtk, points);
     this.optimizedFields[0].value = result.atk;
-    this.optimizedFields[1].value = result.critRate;
-    this.optimizedFields[2].value = result.critDmg;
+    const critRate = result.critRate;
+    this.optimizedFields[1].value = critRate === 0 ? 0 : critRate + .1;
+    const critDmg = result.critDmg;
+    this.optimizedFields[2].value = critDmg === 0 ? 0 : critDmg - .2;
     this.optimizedResult = result;
     this.optimized = true;
   }
