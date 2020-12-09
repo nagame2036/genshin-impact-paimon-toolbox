@@ -1,0 +1,192 @@
+{
+  "groups": [
+    {
+      "id": 0,
+      "name": "decarabian",
+      "source": [
+        0
+      ]
+    },
+    {
+      "id": 1,
+      "name": "boreal-wolf",
+      "source": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "dandelion-gladiator",
+      "source": [
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "name": "guyun",
+      "source": [
+        3
+      ]
+    },
+    {
+      "id": 4,
+      "name": "mist-veiled",
+      "source": [
+        4
+      ]
+    },
+    {
+      "id": 5,
+      "name": "aerosiderite",
+      "source": [
+        5
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": 0,
+      "name": "scattered-piece-of-decarabian's-dream",
+      "group": 0,
+      "tier": 3
+    },
+    {
+      "id": 1,
+      "name": "fragment-of-decarabian's-epic",
+      "group": 0,
+      "tier": 2
+    },
+    {
+      "id": 2,
+      "name": "debris-of-decarabian's-city",
+      "group": 0,
+      "tier": 1
+    },
+    {
+      "id": 3,
+      "name": "tile-of-decarabian's-tower",
+      "group": 0,
+      "tier": 0
+    },
+    {
+      "id": 4,
+      "name": "boreal-wolf's-nostalgia",
+      "group": 1,
+      "tier": 3
+    },
+    {
+      "id": 5,
+      "name": "boreal-wolf's-broken-fang",
+      "group": 1,
+      "tier": 2
+    },
+    {
+      "id": 6,
+      "name": "boreal-wolf's-cracked-tooth",
+      "group": 1,
+      "tier": 1
+    },
+    {
+      "id": 7,
+      "name": "boreal-wolf's-milk-tooth",
+      "group": 1,
+      "tier": 0
+    },
+    {
+      "id": 8,
+      "name": "dream-of-the-dandelion-gladiator",
+      "group": 2,
+      "tier": 3
+    },
+    {
+      "id": 9,
+      "name": "shackles-of-the-dandelion-gladiator",
+      "group": 2,
+      "tier": 2
+    },
+    {
+      "id": 10,
+      "name": "chains-of-the-dandelion-gladiator",
+      "group": 2,
+      "tier": 1
+    },
+    {
+      "id": 11,
+      "name": "fetters-of-the-dandelion-gladiator",
+      "group": 2,
+      "tier": 0
+    },
+    {
+      "id": 12,
+      "name": "divine-body-from-guyun",
+      "group": 3,
+      "tier": 3
+    },
+    {
+      "id": 13,
+      "name": "relic-from-guyun",
+      "group": 3,
+      "tier": 2
+    },
+    {
+      "id": 14,
+      "name": "lustrous-stone-from-guyun",
+      "group": 3,
+      "tier": 1
+    },
+    {
+      "id": 15,
+      "name": "luminous-sands-from-guyun",
+      "group": 3,
+      "tier": 0
+    },
+    {
+      "id": 16,
+      "name": "mist-veiled-primo-elixir",
+      "group": 4,
+      "tier": 3
+    },
+    {
+      "id": 17,
+      "name": "mist-veiled-gold-elixir",
+      "group": 4,
+      "tier": 2
+    },
+    {
+      "id": 18,
+      "name": "mist-veiled-mercury-elixir",
+      "group": 4,
+      "tier": 1
+    },
+    {
+      "id": 19,
+      "name": "mist-veiled-lead-elixir",
+      "group": 4,
+      "tier": 0
+    },
+    {
+      "id": 20,
+      "name": "chunk-of-aerosiderite",
+      "group": 5,
+      "tier": 3
+    },
+    {
+      "id": 21,
+      "name": "bit-of-aerosiderite",
+      "group": 5,
+      "tier": 2
+    },
+    {
+      "id": 22,
+      "name": "piece-of-aerosiderite",
+      "group": 5,
+      "tier": 1
+    },
+    {
+      "id": 23,
+      "name": "grain-of-aerosiderite",
+      "group": 5,
+      "tier": 0
+    }
+  ]
+}
