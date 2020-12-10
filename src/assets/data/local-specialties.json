@@ -1,82 +1,60 @@
-[
-  {
-    "id": 1000,
-    "name": "wolfhook",
-    "nation": 1
+{
+  "groups": {
+    "101": {
+      "nation": 1
+    },
+    "102": {
+      "nation": 2
+    }
   },
-  {
-    "id": 1001,
-    "name": "valberry",
-    "nation": 1
-  },
-  {
-    "id": 1002,
-    "name": "cecilia",
-    "nation": 1
-  },
-  {
-    "id": 1003,
-    "name": "windwheel-aster",
-    "nation": 1
-  },
-  {
-    "id": 1004,
-    "name": "philanemo-mushroom",
-    "nation": 1
-  },
-  {
-    "id": 1005,
-    "name": "small-lamp-grass",
-    "nation": 1
-  },
-  {
-    "id": 1006,
-    "name": "calla-lily",
-    "nation": 1
-  },
-  {
-    "id": 1007,
-    "name": "dandelion-seed",
-    "nation": 1
-  },
-  {
-    "id": 1008,
-    "name": "jueyun-chili",
-    "nation": 2
-  },
-  {
-    "id": 1009,
-    "name": "noctilucous-jade",
-    "nation": 2
-  },
-  {
-    "id": 1010,
-    "name": "silk-flower",
-    "nation": 2
-  },
-  {
-    "id": 1011,
-    "name": "glaze-lily",
-    "nation": 2
-  },
-  {
-    "id": 1012,
-    "name": "qingxin",
-    "nation": 2
-  },
-  {
-    "id": 1013,
-    "name": "starconch",
-    "nation": 2
-  },
-  {
-    "id": 1014,
-    "name": "violetgrass",
-    "nation": 2
-  },
-  {
-    "id": 1015,
-    "name": "cor-lapis",
-    "nation": 2
+  "items": {
+    "10100": {
+      "group": 101
+    },
+    "10101": {
+      "group": 101
+    },
+    "10102": {
+      "group": 101
+    },
+    "10103": {
+      "group": 101
+    },
+    "10104": {
+      "group": 101
+    },
+    "10105": {
+      "group": 101
+    },
+    "10106": {
+      "group": 101
+    },
+    "10107": {
+      "group": 101
+    },
+    "10200": {
+      "group": 102
+    },
+    "10201": {
+      "group": 102
+    },
+    "10202": {
+      "group": 102
+    },
+    "10203": {
+      "group": 102
+    },
+    "10204": {
+      "group": 102
+    },
+    "10205": {
+      "group": 102
+    },
+    "10206": {
+      "group": 102
+    },
+    "10207": {
+      "group": 102
+    }
   }
-]
+}

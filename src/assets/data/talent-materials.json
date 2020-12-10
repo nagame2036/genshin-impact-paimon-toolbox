@@ -1,242 +1,244 @@
 {
-  "groups": [
-    {
-      "id": 0,
-      "name": "freedom",
+  "groups": {
+    "500": {
+      "nation": 1,
+      "source": [
+        301
+      ],
+      "weekday": [
+        1,
+        4
+      ]
+    },
+    "501": {
+      "nation": 1,
+      "source": [
+        301
+      ],
+      "weekday": [
+        2,
+        5
+      ]
+    },
+    "502": {
+      "nation": 1,
+      "source": [
+        301
+      ],
+      "weekday": [
+        3,
+        6
+      ]
+    },
+    "503": {
+      "nation": 2,
+      "source": [
+        302
+      ],
+      "weekday": [
+        1,
+        4
+      ]
+    },
+    "504": {
+      "nation": 2,
+      "source": [
+        302
+      ],
+      "weekday": [
+        2,
+        5
+      ]
+    },
+    "505": {
+      "nation": 2,
+      "source": [
+        302
+      ],
+      "weekday": [
+        3,
+        6
+      ]
+    },
+    "600": {
       "source": [
         0
       ]
     },
-    {
-      "id": 1,
-      "name": "resistance",
+    "601": {
       "source": [
         1
       ]
     },
-    {
-      "id": 2,
-      "name": "ballad",
+    "602": {
       "source": [
         2
       ]
     },
-    {
-      "id": 3,
-      "name": "prosperity",
-      "source": [
-        3
-      ]
-    },
-    {
-      "id": 4,
-      "name": "diligence",
-      "source": [
-        4
-      ]
-    },
-    {
-      "id": 5,
-      "name": "gold",
-      "source": [
-        5
-      ]
-    },
-    {
-      "id": 500,
-      "name": "dvalin",
-      "source": [
-        100
-      ]
-    },
-    {
-      "id": 501,
-      "name": "andrius",
-      "source": [
-        101
-      ]
-    },
-    {
-      "id": 502,
-      "name": "tartaglia",
-      "source": [
-        102
-      ]
-    },
-    {
-      "id": 1000,
-      "name": "crown-of-sagehood",
+    "700": {
       "source": []
     }
-  ],
-  "items": [
-    {
-      "id": 1000,
-      "name": "philosophies-of-freedom",
-      "group": 0,
-      "tier": 2
-    },
-    {
-      "id": 1001,
-      "name": "guide-to-freedom",
-      "group": 0,
-      "tier": 1
-    },
-    {
-      "id": 1002,
-      "name": "teachings-of-freedom",
-      "group": 0,
-      "tier": 0
-    },
-    {
-      "id": 1003,
-      "name": "philosophies-of-resistance",
-      "group": 1,
-      "tier": 2
-    },
-    {
-      "id": 1004,
-      "name": "guide-to-resistance",
-      "group": 1,
-      "tier": 1
-    },
-    {
-      "id": 1005,
-      "name": "teachings-of-resistance",
-      "group": 1,
-      "tier": 0
-    },
-    {
-      "id": 1006,
-      "name": "philosophies-of-ballad",
-      "group": 2,
-      "tier": 2
-    },
-    {
-      "id": 1007,
-      "name": "guide-to-ballad",
-      "group": 2,
-      "tier": 1
-    },
-    {
-      "id": 1008,
-      "name": "teachings-of-ballad",
-      "group": 2,
-      "tier": 0
-    },
-    {
-      "id": 1009,
-      "name": "philosophies-of-prosperity",
-      "group": 3,
-      "tier": 2
-    },
-    {
-      "id": 1010,
-      "name": "guide-to-prosperity",
-      "group": 3,
-      "tier": 1
-    },
-    {
-      "id": 1011,
-      "name": "teachings-of-prosperity",
-      "group": 3,
-      "tier": 0
-    },
-    {
-      "id": 1012,
-      "name": "philosophies-of-diligence",
-      "group": 4,
-      "tier": 2
-    },
-    {
-      "id": 1013,
-      "name": "guide-to-diligence",
-      "group": 4,
-      "tier": 1
-    },
-    {
-      "id": 1014,
-      "name": "teachings-of-diligence",
-      "group": 4,
-      "tier": 0
-    },
-    {
-      "id": 1015,
-      "name": "philosophies-of-gold",
-      "group": 5,
-      "tier": 2
-    },
-    {
-      "id": 1016,
-      "name": "guide-to-gold",
-      "group": 5,
-      "tier": 1
-    },
-    {
-      "id": 1017,
-      "name": "teachings-of-gold",
-      "group": 5,
-      "tier": 0
-    },
-    {
-      "id": 5000,
-      "name": "dvalin's-plume",
+  },
+  "items": {
+    "5000": {
       "group": 500,
-      "tier": 0
+      "rarity": 2
     },
-    {
-      "id": 5001,
-      "name": "dvalin's-claw",
+    "5001": {
       "group": 500,
-      "tier": 0
+      "rarity": 3,
+      "craft": {
+        "0": 175,
+        "5000": 3
+      }
     },
-    {
-      "id": 5002,
-      "name": "dvalin's-sigh",
+    "5002": {
       "group": 500,
-      "tier": 0
+      "rarity": 4,
+      "craft": {
+        "0": 550,
+        "5001": 3
+      }
     },
-    {
-      "id": 5003,
-      "name": "tail-of-boreas",
+    "5010": {
       "group": 501,
-      "tier": 0
+      "rarity": 2
     },
-    {
-      "id": 5004,
-      "name": "ring-of-boreas",
+    "5011": {
       "group": 501,
-      "tier": 0
+      "rarity": 3,
+      "craft": {
+        "0": 175,
+        "5010": 3
+      }
     },
-    {
-      "id": 5005,
-      "name": "spirit-locket-of-boreas",
+    "5012": {
       "group": 501,
-      "tier": 0
+      "rarity": 4,
+      "craft": {
+        "0": 550,
+        "5011": 3
+      }
     },
-    {
-      "id": 5006,
-      "name": "tusk-of-monoceros-caeli",
+    "5020": {
       "group": 502,
-      "tier": 0
+      "rarity": 2
     },
-    {
-      "id": 5007,
-      "name": "shard-of-a-foul-legacy",
+    "5021": {
       "group": 502,
-      "tier": 0
+      "rarity": 3,
+      "craft": {
+        "0": 175,
+        "5020": 3
+      }
     },
-    {
-      "id": 5008,
-      "name": "shadow-of-the-warrior",
+    "5022": {
       "group": 502,
-      "tier": 0
+      "rarity": 4,
+      "craft": {
+        "0": 550,
+        "5021": 3
+      }
     },
-    {
-      "id": 10000,
-      "name": "crown-of-sagehood",
-      "group": 1000,
-      "tier": 0
+    "5030": {
+      "group": 503,
+      "rarity": 2
+    },
+    "5031": {
+      "group": 503,
+      "rarity": 3,
+      "craft": {
+        "0": 175,
+        "5030": 3
+      }
+    },
+    "5032": {
+      "group": 503,
+      "rarity": 4,
+      "craft": {
+        "0": 550,
+        "5031": 3
+      }
+    },
+    "5040": {
+      "group": 504,
+      "rarity": 2
+    },
+    "5041": {
+      "group": 504,
+      "rarity": 3,
+      "craft": {
+        "0": 175,
+        "5040": 3
+      }
+    },
+    "5042": {
+      "group": 504,
+      "rarity": 4,
+      "craft": {
+        "0": 550,
+        "5041": 3
+      }
+    },
+    "5050": {
+      "group": 505,
+      "rarity": 2
+    },
+    "5051": {
+      "group": 505,
+      "rarity": 3,
+      "craft": {
+        "0": 175,
+        "5050": 3
+      }
+    },
+    "5052": {
+      "group": 505,
+      "rarity": 4,
+      "craft": {
+        "0": 550,
+        "5051": 3
+      }
+    },
+    "6000": {
+      "group": 600,
+      "rarity": 5
+    },
+    "6001": {
+      "group": 600,
+      "rarity": 5
+    },
+    "6002": {
+      "group": 600,
+      "rarity": 5
+    },
+    "6010": {
+      "group": 601,
+      "rarity": 5
+    },
+    "6011": {
+      "group": 601,
+      "rarity": 5
+    },
+    "6012": {
+      "group": 601,
+      "rarity": 5
+    },
+    "6020": {
+      "group": 602,
+      "rarity": 5
+    },
+    "6021": {
+      "group": 602,
+      "rarity": 5
+    },
+    "6022": {
+      "group": 602,
+      "rarity": 5
+    },
+    "7000": {
+      "group": 700,
+      "rarity": 5
     }
-  ]
+  }
 }

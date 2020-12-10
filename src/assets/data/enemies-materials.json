@@ -1,397 +1,327 @@
 {
-  "groups": [
-    {
-      "id": 0,
-      "name": "slime",
+  "groups": {
+    "800": {
       "source": [
-        1000,
-        1001,
-        1002,
-        1003,
-        1004,
-        1005,
-        1006,
-        1007,
-        1008,
-        1009,
-        1010,
-        1011,
-        1012,
-        1013,
-        1014
+        500
       ]
     },
-    {
-      "id": 1,
-      "name": "hilichurl-mask",
+    "801": {
       "source": [
-        1015,
-        1016,
-        1017,
-        1018,
-        1019,
-        1020,
-        1021,
-        1022,
-        1023,
-        1024,
-        1025,
-        1022,
-        1023,
-        1024,
-        1025,
-        1026,
-        1027,
-        1028,
-        1029,
-        2000,
-        2001,
-        2002,
-        2003
+        501
       ]
     },
-    {
-      "id": 2,
-      "name": "samachurl-scroll",
+    "802": {
       "source": [
-        1022,
-        1023,
-        1024,
-        1025
+        502
       ]
     },
-    {
-      "id": 3,
-      "name": "hilichurl-arrowhead",
+    "803": {
       "source": [
-        1026,
-        1027,
-        1028,
-        1029
+        503
       ]
     },
-    {
-      "id": 4,
-      "name": "fatui-insignia",
+    "805": {
       "source": [
-        1032,
-        1033,
-        1034,
-        1035,
-        1036,
-        1037,
-        2009,
-        2010
+        505
       ]
     },
-    {
-      "id": 5,
-      "name": "treasure-hoarder-insignia",
+    "806": {
       "source": [
-        1038,
-        1039,
-        1040,
-        1041,
-        1042,
-        1043,
-        1044,
-        1045,
-        1046,
-        1047,
-        1048
+        506
       ]
     },
-    {
-      "id": 6,
-      "name": "whopperflower-nectar",
+    "807": {
       "source": [
-        1049,
-        1050
+        507
       ]
     },
-    {
-      "id": 500,
-      "name": "mitachurl-horn",
+    "900": {
       "source": [
-        2000,
-        2001,
-        2002,
-        2003
+        1000
       ]
     },
-    {
-      "id": 501,
-      "name": "ley-line",
+    "901": {
       "source": [
-        2004,
-        2005,
-        2006
+        1001
       ]
     },
-    {
-      "id": 502,
-      "name": "chaos-part",
+    "902": {
       "source": [
-        2007,
-        2008
+        1002
       ]
     },
-    {
-      "id": 503,
-      "name": "mist-grass",
+    "903": {
       "source": [
-        2009
+        1003
       ]
     },
-    {
-      "id": 504,
-      "name": "agent-knife",
+    "904": {
       "source": [
-        2010
+        1004
       ]
     },
-    {
-      "id": 505,
-      "name": "bone-shard",
+    "905": {
       "source": [
-        2011
+        1005
       ]
+    },
+    "items": {
+      "8000": {
+        "group": 800,
+        "rarity": 1
+      },
+      "8001": {
+        "group": 800,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8000": 3
+        }
+      },
+      "8002": {
+        "group": 800,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8001": 3
+        }
+      },
+      "8010": {
+        "group": 801,
+        "rarity": 1
+      },
+      "8011": {
+        "group": 801,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8010": 3
+        }
+      },
+      "8012": {
+        "group": 801,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8011": 3
+        }
+      },
+      "8020": {
+        "group": 802,
+        "rarity": 1
+      },
+      "8021": {
+        "group": 802,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8020": 3
+        }
+      },
+      "8022": {
+        "group": 802,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8021": 3
+        }
+      },
+      "8030": {
+        "group": 803,
+        "rarity": 1
+      },
+      "8031": {
+        "group": 803,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8030": 3
+        }
+      },
+      "8032": {
+        "group": 803,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8031": 3
+        }
+      },
+      "8050": {
+        "group": 805,
+        "rarity": 1
+      },
+      "8051": {
+        "group": 805,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8050": 3
+        }
+      },
+      "8052": {
+        "group": 805,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8051": 3
+        }
+      },
+      "8060": {
+        "group": 806,
+        "rarity": 1
+      },
+      "8061": {
+        "group": 806,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8060": 3
+        }
+      },
+      "8062": {
+        "group": 806,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8061": 3
+        }
+      },
+      "8071": {
+        "group": 807,
+        "rarity": 2,
+        "craft": {
+          "mora": 25,
+          "8070": 3
+        }
+      },
+      "8072": {
+        "group": 807,
+        "rarity": 3,
+        "craft": {
+          "mora": 50,
+          "8071": 3
+        }
+      },
+      "9000": {
+        "group": 900,
+        "rarity": 2
+      },
+      "9001": {
+        "group": 900,
+        "rarity": 3,
+        "craft": {
+          "mora": 25,
+          "9000": 3
+        }
+      },
+      "9002": {
+        "group": 900,
+        "rarity": 4,
+        "craft": {
+          "mora": 125,
+          "9001": 3
+        }
+      },
+      "9010": {
+        "group": 901,
+        "rarity": 2
+      },
+      "9011": {
+        "group": 901,
+        "rarity": 3,
+        "craft": {
+          "mora": 25,
+          "9010": 3
+        }
+      },
+      "9012": {
+        "group": 901,
+        "rarity": 4,
+        "craft": {
+          "mora": 125,
+          "9011": 3
+        }
+      },
+      "9020": {
+        "group": 902,
+        "rarity": 2
+      },
+      "9021": {
+        "group": 902,
+        "rarity": 3,
+        "craft": {
+          "mora": 25,
+          "9020": 3
+        }
+      },
+      "9022": {
+        "group": 902,
+        "rarity": 4,
+        "craft": {
+          "mora": 125,
+          "9021": 3
+        }
+      },
+      "9030": {
+        "group": 903,
+        "rarity": 2
+      },
+      "9031": {
+        "group": 903,
+        "rarity": 3,
+        "craft": {
+          "mora": 25,
+          "9030": 3
+        }
+      },
+      "9032": {
+        "group": 903,
+        "rarity": 4,
+        "craft": {
+          "mora": 125,
+          "9031": 3
+        }
+      },
+      "9040": {
+        "group": 904,
+        "rarity": 2
+      },
+      "9041": {
+        "group": 904,
+        "rarity": 3,
+        "craft": {
+          "mora": 25,
+          "9040": 3
+        }
+      },
+      "9042": {
+        "group": 904,
+        "rarity": 4,
+        "craft": {
+          "mora": 125,
+          "9041": 3
+        }
+      },
+      "9050": {
+        "group": 905,
+        "rarity": 2
+      },
+      "9051": {
+        "group": 905,
+        "rarity": 3,
+        "craft": {
+          "mora": 25,
+          "9050": 3
+        }
+      },
+      "9052": {
+        "group": 905,
+        "rarity": 4,
+        "craft": {
+          "mora": 125,
+          "9051": 3
+        }
+      }
     }
-  ],
-  "items": [
-    {
-      "id": 1000,
-      "name": "slime-concentrate",
-      "group": 0,
-      "tier": 2
-    },
-    {
-      "id": 1001,
-      "name": "slime-secretions",
-      "group": 0,
-      "tier": 1
-    },
-    {
-      "id": 1002,
-      "name": "slime-condensate",
-      "group": 0,
-      "tier": 0
-    },
-    {
-      "id": 1003,
-      "name": "ominous-mask",
-      "group": 1,
-      "tier": 2
-    },
-    {
-      "id": 1004,
-      "name": "stained-mask",
-      "group": 1,
-      "tier": 1
-    },
-    {
-      "id": 1005,
-      "name": "damaged-mask",
-      "group": 0,
-      "tier": 0
-    },
-    {
-      "id": 1006,
-      "name": "forbidden-curse-scroll",
-      "group": 2,
-      "tier": 2
-    },
-    {
-      "id": 1007,
-      "name": "sealed-scroll",
-      "group": 2,
-      "tier": 1
-    },
-    {
-      "id": 1008,
-      "name": "divining-scroll",
-      "group": 2,
-      "tier": 0
-    },
-    {
-      "id": 1009,
-      "name": "weathered-arrowhead",
-      "group": 3,
-      "tier": 2
-    },
-    {
-      "id": 1010,
-      "name": "sharp-arrowhead",
-      "group": 3,
-      "tier": 1
-    },
-    {
-      "id": 1011,
-      "name": "firm-arrowhead",
-      "group": 3,
-      "tier": 0
-    },
-    {
-      "id": 1012,
-      "name": "lieutenant's-insignia",
-      "group": 4,
-      "tier": 2
-    },
-    {
-      "id": 1013,
-      "name": "sergeant's-insignia",
-      "group": 4,
-      "tier": 1
-    },
-    {
-      "id": 1014,
-      "name": "recruit's-insignia",
-      "group": 4,
-      "tier": 0
-    },
-    {
-      "id": 1015,
-      "name": "golden-raven-insignia",
-      "group": 5,
-      "tier": 2
-    },
-    {
-      "id": 1016,
-      "name": "silver-raven-insignia",
-      "group": 5,
-      "tier": 1
-    },
-    {
-      "id": 1017,
-      "name": "treasure-hoarder-insignia",
-      "group": 5,
-      "tier": 0
-    },
-    {
-      "id": 1018,
-      "name": "energy-nectar",
-      "group": 6,
-      "tier": 2
-    },
-    {
-      "id": 1019,
-      "name": "shimmering-nectar",
-      "group": 6,
-      "tier": 1
-    },
-    {
-      "id": 1020,
-      "name": "whopperflower-nectar",
-      "group": 6,
-      "tier": 0
-    },
-    {
-      "id": 5000,
-      "name": "black-crystal-horn",
-      "group": 100,
-      "tier": 2
-    },
-    {
-      "id": 5001,
-      "name": "black-bronze-horn",
-      "group": 100,
-      "tier": 1
-    },
-    {
-      "id": 5002,
-      "name": "heavy-horn",
-      "group": 100,
-      "tier": 0
-    },
-    {
-      "id": 5003,
-      "name": "ley-line-sprout",
-      "group": 101,
-      "tier": 2
-    },
-    {
-      "id": 5004,
-      "name": "dead-ley-line-leaves",
-      "group": 101,
-      "tier": 1
-    },
-    {
-      "id": 5005,
-      "name": "dead-ley-line-branch",
-      "group": 101,
-      "tier": 0
-    },
-    {
-      "id": 5006,
-      "name": "chaos-core",
-      "group": 102,
-      "tier": 2
-    },
-    {
-      "id": 5007,
-      "name": "chaos-circuit",
-      "group": 102,
-      "tier": 1
-    },
-    {
-      "id": 5008,
-      "name": "chaos-device",
-      "group": 102,
-      "tier": 0
-    },
-    {
-      "id": 5009,
-      "name": "mist-grass-lamp",
-      "group": 103,
-      "tier": 2
-    },
-    {
-      "id": 5010,
-      "name": "mist-grass",
-      "group": 103,
-      "tier": 1
-    },
-    {
-      "id": 5011,
-      "name": "mist-grass-pollen",
-      "group": 103,
-      "tier": 0
-    },
-    {
-      "id": 5012,
-      "name": "inspector's-sacrificial-knife",
-      "group": 104,
-      "tier": 2
-    },
-    {
-      "id": 5013,
-      "name": "agent's-sacrificial-knife",
-      "group": 104,
-      "tier": 1
-    },
-    {
-      "id": 5014,
-      "name": "hunter's-sacrificial-knife",
-      "group": 104,
-      "tier": 0
-    },
-    {
-      "id": 5015,
-      "name": "fossilized-bone-shard",
-      "group": 105,
-      "tier": 2
-    },
-    {
-      "id": 5016,
-      "name": "sturdy-bone-shard",
-      "group": 105,
-      "tier": 1
-    },
-    {
-      "id": 5017,
-      "name": "fragile-bone-shard",
-      "group": 105,
-      "tier": 0
-    }
-  ]
+  }
 }

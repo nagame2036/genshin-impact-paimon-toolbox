@@ -1,0 +1,54 @@
+{
+  "0": {
+    "nation": 1,
+    "resin": 60
+  },
+  "1": {
+    "nation": 1,
+    "resin": 60
+  },
+  "2": {
+    "nation": 1,
+    "resin": 60
+  },
+  "101": {
+    "nation": 1,
+    "resin": 40
+  },
+  "102": {
+    "nation": 2,
+    "resin": 40
+  },
+  "103": {
+    "nation": 1,
+    "resin": 40
+  },
+  "105": {
+    "nation": 2,
+    "resin": 40
+  },
+  "106": {
+    "nation": 2,
+    "resin": 40
+  },
+  "107": {
+    "nation": 1,
+    "resin": 40
+  },
+  "201": {
+    "nation": 1,
+    "resin": 20
+  },
+  "202": {
+    "nation": 2,
+    "resin": 20
+  },
+  "301": {
+    "nation": 1,
+    "resin": 20
+  },
+  "302": {
+    "nation": 2,
+    "resin": 20
+  }
+}
