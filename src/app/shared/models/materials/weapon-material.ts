@@ -2,14 +2,14 @@ import {Nation} from '../nation.enum';
 import {Rarity} from '../rarity.enum';
 import {CraftRecipe} from './craft-recipe';
 
-export interface WeaponAscensionMaterialsData {
+export interface WeaponMaterialsData {
 
-  groups: { [id: number]: WeaponAscensionMaterialGroup };
+  groups: { [id: number]: WeaponMaterialGroup };
 
-  items: { [id: number]: WeaponAscensionMaterialItem };
+  items: { [id: number]: WeaponMaterialItem };
 }
 
-export interface WeaponAscensionMaterialGroup {
+export interface WeaponMaterialGroup {
 
   nation: Nation;
 
@@ -18,7 +18,7 @@ export interface WeaponAscensionMaterialGroup {
   weekday: number[];
 }
 
-export interface WeaponAscensionMaterialItem {
+export interface WeaponMaterialItem {
 
   group: number;
 

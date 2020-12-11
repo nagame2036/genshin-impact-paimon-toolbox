@@ -11,9 +11,9 @@ export class InventoryPageComponent extends AbstractTranslateComponent implement
   i18nKey = 'inventory';
 
   pages = [
-    'character-ascension-materials',
+    'elemental-materials',
     'talent-materials',
-    'weapon-ascension-materials',
+    'weapon-materials',
     'enemies-materials',
     'local-specialties',
   ];
