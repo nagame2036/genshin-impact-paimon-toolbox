@@ -12,8 +12,10 @@ export class InventoryPageComponent extends AbstractTranslateComponent implement
 
   pages = [
     'character-ascension-materials',
+    'talent-materials',
     'weapon-ascension-materials',
     'enemies-materials',
+    'local-specialties',
   ];
 
   constructor() {

@@ -24,7 +24,7 @@ export class InventoryService {
     return this.http.get(`${this.dataPrefix + categories}.json`).pipe(map(res => {
       const data = (res as { items: { [id: number]: { group?: number, rarity: number } } }).items;
       const ids = Object.keys(data).map(Number);
-      const values = ids.map(i => ({id: i, g: data[i].group || 0, rarity: data[i].rarity}));
+      const values = ids.map(i => ({id: i, g: data[i].group || 0, rarity: data[i].rarity || 1}));
       return alasql(this.orderSql, [values]);
     }));
   }
