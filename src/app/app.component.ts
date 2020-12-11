@@ -9,9 +9,10 @@ export class AppComponent {
 
   showMenu = true;
 
-  routers: { path: string; icon: string }[] = [
-    {path: 'home', icon: 'home'},
-    {path: 'resin', icon: 'brightness_3'},
-    {path: 'character-stat', icon: 'analytics'}
+  routers = [
+    {path: 'home'},
+    {path: 'character-stat'},
+    {path: 'inventory'},
+    {path: 'resin'},
   ];
 }

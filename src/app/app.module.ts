@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {CoreModule} from './core/core.module';
 import {AppTranslateModule} from './app-translate.module';
+import {AppIndexedDbModule} from './app-indexed-db.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {AppTranslateModule} from './app-translate.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     AppTranslateModule,
+    AppIndexedDbModule,
     CoreModule
   ],
   providers: [],

@@ -11,7 +11,7 @@ export class SidenavComponent implements OnInit {
   showMenu!: boolean;
 
   @Input()
-  routers!: { path: string, icon: string }[];
+  routers!: { path: string }[];
 
   constructor() {
   }

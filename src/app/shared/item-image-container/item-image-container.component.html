@@ -1,0 +1,15 @@
+<div class="item-container page-one-col-center">
+  <div [class]="['img-container', 'item-rarity-' + rarity]">
+    <img class="item-img" [src]="src" [alt]="i18nDict(itemKey) | translate"/>
+  </div>
+  <div class="stars-container">
+    <svg *ngFor="let r of stars" width="16" height="16">
+      <path d="M 8.000 12.000 L 12.114 13.663 L 11.804 9.236 L 14.657
+         5.837 L 10.351 4.764 L 8.000 1.000 L 5.649 4.764 L 1.343 5.837 L 4.196 9.236 L 3.886 13.663 L 8.000 12.000"
+            stroke="#000" stroke-width="1" fill="yellow">
+      </path>
+    </svg>
+  </div>
+  <span>{{ i18nDict(itemKey) | translate }}</span>
+  <ng-content class="item-field"></ng-content>
+</div>

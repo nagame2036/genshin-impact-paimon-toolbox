@@ -1,0 +1,30 @@
+<div>
+  <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
+    <mat-grid-tile>
+      <app-item-image-container category="materials" [id]="0" [rarity]="5">
+        <app-amount-input [id]="0"></app-amount-input>
+      </app-item-image-container>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
+    <mat-grid-tile *ngFor="let item of characterExps">
+      <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
+        <app-amount-input [id]="item.id"></app-amount-input>
+      </app-item-image-container>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
+    <mat-grid-tile *ngFor="let item of weaponExps">
+      <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
+        <app-amount-input [id]="item.id"></app-amount-input>
+      </app-item-image-container>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
+    <mat-grid-tile *ngFor="let item of ores">
+      <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
+        <app-amount-input [id]="item.id"></app-amount-input>
+      </app-item-image-container>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

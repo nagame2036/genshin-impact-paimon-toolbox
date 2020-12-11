@@ -3,8 +3,7 @@
     <mat-nav-list>
       <a *ngFor="let item of routers" [routerLink]="item.path" class="route-link"
          mat-list-item routerLinkActive="active">
-        <mat-icon class="route-icon">{{item.icon}}</mat-icon>
-        <p>{{ ('path.' + item.path) | translate }}</p>
+        {{ 'path.' + item.path | translate }}
       </a>
     </mat-nav-list>
   </mat-sidenav>
