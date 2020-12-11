@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMaterialsService} from '../../../shared/services/common-materials.service';
-import {Observable} from 'rxjs';
-import {Rarity} from '../../../shared/models/rarity.enum';
+import {InventoryService} from '../../services/inventory.service';
+import {InventoryItem} from '../../models/inventory-item';
 
 @Component({
   selector: 'app-inventory-common-materials',
@@ -10,27 +9,19 @@ import {Rarity} from '../../../shared/models/rarity.enum';
 })
 export class InventoryCommonMaterialsComponent implements OnInit {
 
-  characterExps: { id: number, rarity: Rarity }[] = [];
+  characterExps: InventoryItem[] = [];
 
-  weaponExps: { id: number, rarity: Rarity }[] = [];
+  weaponExps: InventoryItem[] = [];
 
-  ores: { id: number, rarity: Rarity }[] = [];
+  ores: InventoryItem[] = [];
 
-  constructor(private materials: CommonMaterialsService) {
+  constructor(private inventory: InventoryService) {
   }
 
   ngOnInit(): void {
-    this.initData(this.materials.characterExps, (data) => this.characterExps = data.reverse());
-    this.initData(this.materials.weaponExps, (data) => this.weaponExps = data.reverse());
-    this.initData(this.materials.ores, (data) => this.ores = data);
-  }
-
-  initData<T extends { [id: number]: any }>(observable: Observable<T>, setData: (data: { id: number, rarity: Rarity }[]) => void): void {
-    observable.subscribe(data => {
-      const ids = Object.keys(data).map(Number);
-      const items = ids.map(i => ({id: i, rarity: data[i].rarity || 1}));
-      setData(items);
-    });
+    this.inventory.getItems('character-exp-items').subscribe(res => this.characterExps = res);
+    this.inventory.getItems('weapon-exp-items').subscribe(res => this.weaponExps = res);
+    this.inventory.getItems('ore-items').subscribe(res => this.ores = res);
   }
 
 }

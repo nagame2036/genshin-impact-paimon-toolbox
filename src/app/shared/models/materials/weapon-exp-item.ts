@@ -3,7 +3,13 @@ import {CraftRecipe} from './craft-recipe';
 
 export interface WeaponExpItemsData {
 
-  [id: number]: WeaponExpItem;
+  groups: { [id: number]: WeaponExpGroup };
+
+  items: { [id: number]: WeaponExpItem };
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface WeaponExpGroup {
 }
 
 export interface WeaponExpItem {
