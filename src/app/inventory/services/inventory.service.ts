@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {InventoryItem} from '../models/inventory-item';
+import {InventoryData, InventoryItem} from '../models/inventory-item';
 import {HttpClient} from '@angular/common/http';
 import alasql from 'alasql';
 
@@ -22,7 +22,7 @@ export class InventoryService {
 
   getItems(categories: string): Observable<InventoryItem[]> {
     return this.http.get(`${this.dataPrefix + categories}.json`).pipe(map(res => {
-      const data = (res as { items: { [id: number]: { group?: number, rarity: number } } }).items;
+      const data = (res as InventoryData).items;
       const ids = Object.keys(data).map(Number);
       const values = ids.map(i => ({id: i, g: data[i].group || 0, rarity: data[i].rarity || 1}));
       return alasql(this.orderSql, [values]);
