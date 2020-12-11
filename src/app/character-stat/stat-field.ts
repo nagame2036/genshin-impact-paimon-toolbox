@@ -16,25 +16,17 @@ export class StatField {
 
   constructor(option: { min: number, max?: number, defaultValue?: number, suffix?: string, precision?: number } = {min: 0}) {
     const min = option.min;
-    const max = option.max;
-    const defaultVal = option.defaultValue ?? min;
-    const precision = option.precision ?? 1;
-    if (max) {
-      this.control = new FormControl(defaultVal, [Validators.min(min), Validators.max(max)]);
-      this.correct = () => {
-        const value = fixValue(this.control.value, precision);
-        this.control.setValue(coerceIn(value, min, max), {onlySelf: true});
-      };
-    } else {
-      this.control = new FormControl(defaultVal, Validators.min(min));
-      this.correct = () => {
-        const value = fixValue(this.control.value, precision);
-        this.control.setValue(Math.max(value, min), {onlySelf: true});
-      };
-    }
     this.min = min;
+    const max = option.max ?? Infinity;
     this.max = max;
     this.suffix = option.suffix;
+    const defaultVal = option.defaultValue ?? min;
+    const precision = option.precision ?? 1;
+    this.control = new FormControl(defaultVal, [Validators.min(min), Validators.max(max)]);
+    this.correct = () => {
+      const value = fixValue(this.control.value, precision);
+      this.control.setValue(coerceIn(value, min, max), {onlySelf: true});
+    };
   }
 
   get value(): number {
