@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {InventoryCharacterAscensionMaterialsComponent} from './pages/inventory-character-ascension-materials/inventory-character-ascension-materials.component';
 import {InventoryWeaponAscensionMaterialsComponent} from './pages/inventory-weapon-ascension-materials/inventory-weapon-ascension-materials.component';
+import {InventoryEnemiesMaterialsComponent} from './pages/inventory-enemies-materials/inventory-enemies-materials.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {InventoryWeaponAscensionMaterialsComponent} from './pages/inventory-weap
     AmountInputComponent,
     InventoryCommonMaterialsComponent,
     InventoryCharacterAscensionMaterialsComponent,
-    InventoryWeaponAscensionMaterialsComponent
+    InventoryWeaponAscensionMaterialsComponent,
+    InventoryEnemiesMaterialsComponent
   ],
   imports: [
     SharedModule,
