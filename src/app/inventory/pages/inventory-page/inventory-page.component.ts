@@ -10,6 +10,12 @@ export class InventoryPageComponent extends AbstractTranslateComponent implement
 
   i18nKey = 'inventory';
 
+  pages = [
+    'character-ascension-materials',
+    'weapon-ascension-materials',
+    'enemies-materials',
+  ];
+
   constructor() {
     super();
   }

@@ -5,19 +5,9 @@
         <app-inventory-common-materials></app-inventory-common-materials>
       </div>
     </mat-tab>
-    <mat-tab [label]="i18n('character-ascension-materials') | translate">
+    <mat-tab *ngFor="let page of pages" [label]="i18n(page) | translate">
       <div class="inventory-subpage">
-        <app-inventory-character-ascension-materials></app-inventory-character-ascension-materials>
-      </div>
-    </mat-tab>
-    <mat-tab [label]="i18n('weapon-ascension-materials') | translate">
-      <div class="inventory-subpage">
-        <app-inventory-weapon-ascension-materials></app-inventory-weapon-ascension-materials>
-      </div>
-    </mat-tab>
-    <mat-tab [label]="i18n('enemies-materials') | translate">
-      <div class="inventory-subpage">
-        <app-inventory-enemies-materials></app-inventory-enemies-materials>
+        <app-inventory-special-materials [category]="page"></app-inventory-special-materials>
       </div>
     </mat-tab>
   </mat-tab-group>
