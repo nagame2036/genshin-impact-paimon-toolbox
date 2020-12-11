@@ -11,13 +11,15 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {InventoryCharacterAscensionMaterialsComponent} from './pages/inventory-character-ascension-materials/inventory-character-ascension-materials.component';
+import {InventoryWeaponAscensionMaterialsComponent} from './pages/inventory-weapon-ascension-materials/inventory-weapon-ascension-materials.component';
 
 @NgModule({
   declarations: [
     InventoryPageComponent,
     AmountInputComponent,
     InventoryCommonMaterialsComponent,
-    InventoryCharacterAscensionMaterialsComponent
+    InventoryCharacterAscensionMaterialsComponent,
+    InventoryWeaponAscensionMaterialsComponent
   ],
   imports: [
     SharedModule,
