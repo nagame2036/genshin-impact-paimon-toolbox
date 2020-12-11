@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CharacterExpItemsData} from '../models/character-exp-material';
-import {WeaponExpItemsData} from '../models/weapon-exp-material';
+import {CharacterExpItemsData} from '../models/materials/character-exp-material';
+import {WeaponExpItemsData} from '../models/materials/weapon-exp-material';
 import {BehaviorSubject} from 'rxjs';
-import {OreItemsData} from '../models/ore-item';
+import {OreItemsData} from '../models/materials/ore-item';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {ResinPageComponent} from './resin-page/resin-page.component';
+import {ResinPageComponent} from './pages/resin-page/resin-page.component';
 
 const routes: Routes = [
   {path: '', component: ResinPageComponent},

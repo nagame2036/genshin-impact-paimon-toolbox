@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/abstract-translate.component';
+import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 
 @Component({
   selector: 'app-inventory-page',
