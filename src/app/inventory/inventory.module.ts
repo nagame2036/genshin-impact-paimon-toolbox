@@ -10,12 +10,14 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {InventoryCharacterAscensionMaterialsComponent} from './pages/inventory-character-ascension-materials/inventory-character-ascension-materials.component';
 
 @NgModule({
   declarations: [
     InventoryPageComponent,
     AmountInputComponent,
-    InventoryCommonMaterialsComponent
+    InventoryCommonMaterialsComponent,
+    InventoryCharacterAscensionMaterialsComponent
   ],
   imports: [
     SharedModule,

@@ -73,6 +73,7 @@
     "inventory": {
       "amount": "数量",
       "common-materials": "通用素材",
+      "character-ascension-materials": "角色突破素材",
       "enemies-materials": "怪物掉落素材",
       "local-specialties": "地区特产"
     }
