@@ -13,7 +13,7 @@ export class InventoryService {
 
   private readonly storeName = 'materials';
 
-  private readonly dataPrefix = 'assets/data/';
+  private readonly dataPrefix = 'assets/data/materials/';
 
   private readonly orderSql = 'SELECT * FROM ? ORDER BY g, rarity DESC';
 
