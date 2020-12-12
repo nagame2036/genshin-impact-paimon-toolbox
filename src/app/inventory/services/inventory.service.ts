@@ -20,8 +20,8 @@ export class InventoryService {
   constructor(private database: NgxIndexedDBService, private http: HttpClient) {
   }
 
-  getItems(categories: string): Observable<InventoryItem[]> {
-    return this.http.get(`${this.dataPrefix + categories}.json`).pipe(map(res => {
+  getItems(category: string): Observable<InventoryItem[]> {
+    return this.http.get(`${this.dataPrefix + category}.json`).pipe(map(res => {
       const data = (res as InventoryData).items;
       const ids = Object.keys(data).map(Number);
       const values = ids.map(i => ({id: i, g: data[i].group || 0, rarity: data[i].rarity || 1}));
