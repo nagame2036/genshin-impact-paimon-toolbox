@@ -1,6 +1,7 @@
 import {Nation} from '../nation.enum';
 import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
+import {InventoryItem} from './inventory-item';
 
 export interface TalentMaterial {
 
@@ -20,7 +21,7 @@ export interface TalentMaterialGroup {
   weekday: number[];
 }
 
-export interface TalentMaterialItem {
+export interface TalentMaterialItem extends InventoryItem {
 
   id: number;
 

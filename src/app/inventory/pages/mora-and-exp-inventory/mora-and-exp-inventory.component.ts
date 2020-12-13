@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {InventoryService} from '../../services/inventory.service';
-import {InventoryItem} from '../../models/inventory-item';
+import {CharacterExpMaterialService} from '../../../shared/services/character-exp-material.service';
+import {WeaponExpMaterialService} from '../../../shared/services/weapon-exp-material.service';
+import {OreMaterialService} from '../../../shared/services/ore-material.service';
 
 @Component({
   selector: 'app-mora-and-exp-inventory',
@@ -9,19 +10,10 @@ import {InventoryItem} from '../../models/inventory-item';
 })
 export class MoraAndExpInventoryComponent implements OnInit {
 
-  characterExps: InventoryItem[] = [];
-
-  weaponExps: InventoryItem[] = [];
-
-  ores: InventoryItem[] = [];
-
-  constructor(private inventory: InventoryService) {
+  constructor(public characters: CharacterExpMaterialService, public weapons: WeaponExpMaterialService, public ores: OreMaterialService) {
   }
 
   ngOnInit(): void {
-    this.inventory.getItems('character-exp-items').subscribe(res => this.characterExps = res);
-    this.inventory.getItems('weapon-exp-items').subscribe(res => this.weaponExps = res);
-    this.inventory.getItems('ore-items').subscribe(res => this.ores = res);
   }
 
 }

@@ -71,11 +71,11 @@
     },
     "inventory": {
       "amount": "数量",
-      "common-materials": "通用素材",
+      "mora-and-exp": "通用素材",
       "elemental-materials": "角色突破素材",
       "talent-materials": "天赋培养素材",
       "weapon-materials": "武器突破素材",
-      "enemies-materials": "怪物掉落素材",
+      "common-materials": "怪物掉落素材",
       "local-specialties": "地区特产"
     }
   },

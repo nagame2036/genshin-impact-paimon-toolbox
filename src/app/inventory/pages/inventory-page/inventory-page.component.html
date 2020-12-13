@@ -5,9 +5,9 @@
         <app-mora-and-exp-inventory></app-mora-and-exp-inventory>
       </div>
     </mat-tab>
-    <mat-tab *ngFor="let page of pages" [label]="i18n(page) | translate">
+    <mat-tab *ngFor="let page of pages" [label]="i18n(page.label) | translate">
       <div class="inventory-subpage">
-        <app-materials-inventory [category]="page"></app-materials-inventory>
+        <app-materials-inventory [items]="(page.items | async) || []"></app-materials-inventory>
       </div>
     </mat-tab>
   </mat-tab-group>

@@ -1,5 +1,6 @@
 import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
+import {InventoryItem} from './inventory-item';
 
 export interface WeaponExpMaterial {
 
@@ -13,9 +14,11 @@ export interface WeaponExpMaterialGroup {
   id: number;
 }
 
-export interface WeaponExpMaterialItem {
+export interface WeaponExpMaterialItem extends InventoryItem {
 
   id: number;
+
+  group: number;
 
   rarity: Rarity;
 

@@ -1,3 +1,5 @@
+import {InventoryItem} from './inventory-item';
+
 export interface OreMaterial {
 
   groups: OreMaterialGroup[];
@@ -10,7 +12,7 @@ export interface OreMaterialGroup {
   id: number;
 }
 
-export interface OreMaterialItem {
+export interface OreMaterialItem extends InventoryItem {
 
   id: number;
 

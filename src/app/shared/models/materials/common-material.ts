@@ -1,5 +1,6 @@
 import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
+import {InventoryItem} from './inventory-item';
 
 export interface CommonMaterial {
 
@@ -15,7 +16,7 @@ export interface CommonMaterialGroup {
   source: number[];
 }
 
-export interface CommonMaterialItem {
+export interface CommonMaterialItem extends InventoryItem {
 
   id: number;
 

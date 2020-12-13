@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InventoryItem} from '../../models/inventory-item';
-import {InventoryService} from '../../services/inventory.service';
+import {InventoryItem} from '../../../shared/models/materials/inventory-item';
 
 @Component({
   selector: 'app-materials-inventory',
@@ -10,15 +9,12 @@ import {InventoryService} from '../../services/inventory.service';
 export class MaterialsInventoryComponent implements OnInit {
 
   @Input()
-  category!: string;
-
   items: InventoryItem[] = [];
 
-  constructor(private inventory: InventoryService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.inventory.getItems(this.category).subscribe(res => this.items = res);
   }
 
 }

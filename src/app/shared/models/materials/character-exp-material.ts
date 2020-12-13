@@ -1,4 +1,5 @@
 import {Rarity} from '../rarity.enum';
+import {InventoryItem} from './inventory-item';
 
 export interface CharacterExpMaterial {
 
@@ -12,9 +13,11 @@ export interface CharacterExpMaterialGroup {
   id: number;
 }
 
-export interface CharacterExpMaterialItem {
+export interface CharacterExpMaterialItem extends InventoryItem {
 
   id: number;
+
+  group: number;
 
   rarity: Rarity;
 

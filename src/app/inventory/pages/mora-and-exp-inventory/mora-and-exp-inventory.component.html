@@ -7,22 +7,22 @@
     </mat-grid-tile>
   </mat-grid-list>
   <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
-    <mat-grid-tile *ngFor="let item of characterExps">
+    <mat-grid-tile *ngFor="let item of characters.items | async">
       <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
         <app-amount-input [id]="item.id"></app-amount-input>
       </app-item-image-container>
     </mat-grid-tile>
   </mat-grid-list>
   <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
-    <mat-grid-tile *ngFor="let item of weaponExps">
+    <mat-grid-tile *ngFor="let item of weapons.items | async">
       <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
         <app-amount-input [id]="item.id"></app-amount-input>
       </app-item-image-container>
     </mat-grid-tile>
   </mat-grid-list>
   <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
-    <mat-grid-tile *ngFor="let item of ores">
-      <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
+    <mat-grid-tile *ngFor="let item of ores.items | async">
+      <app-item-image-container category="materials" [id]="item.id" [rarity]="1">
         <app-amount-input [id]="item.id"></app-amount-input>
       </app-item-image-container>
     </mat-grid-tile>

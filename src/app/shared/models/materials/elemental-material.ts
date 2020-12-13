@@ -1,6 +1,7 @@
 import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
 import {ElementType} from '../element-type.enum';
+import {InventoryItem} from './inventory-item';
 
 export interface ElementalMaterial {
 
@@ -18,7 +19,7 @@ export interface ElementalMaterialGroup {
   source: number[];
 }
 
-export interface ElementalMaterialItem {
+export interface ElementalMaterialItem extends InventoryItem {
 
   id: number;
 

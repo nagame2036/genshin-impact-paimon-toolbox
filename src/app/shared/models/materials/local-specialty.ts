@@ -1,4 +1,5 @@
 import {Nation} from '../nation.enum';
+import {InventoryItem} from './inventory-item';
 
 export interface LocalSpecialty {
 
@@ -14,7 +15,7 @@ export interface LocalSpecialtyGroup {
   nation: Nation;
 }
 
-export interface LocalSpecialtyItem {
+export interface LocalSpecialtyItem extends InventoryItem {
 
   id: number;
 
