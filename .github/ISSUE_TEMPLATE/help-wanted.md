@@ -1,9 +1,6 @@
 ---
-name: Help wanted
-about: Create a issue to ask a question
-title: ''
-labels: help wanted
-assignees: nagame2036
+name: Help wanted about: Create an issue to ask a question title: ''
+labels: help wanted assignees: nagame2036
 
 ---
 

@@ -33,7 +33,7 @@ Steps to reproduce the behavior:
 If applicable, please attach screenshots to more clearly describe the problem.
 
 **Log**
-If applicable, please attach a entire error log in the following space.
+If applicable, please attach an entire error log in the following space.
 
 **Additional context**
 Add any other context about the problem here.
