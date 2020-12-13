@@ -1,6 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {InventoryPageComponent} from './inventory-page.component';
+import {InventoryModule} from '../../inventory.module';
+import {AppTranslateModule} from '../../../app-translate.module';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('InventoryPageComponent', () => {
   let component: InventoryPageComponent;
@@ -8,7 +12,15 @@ describe('InventoryPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InventoryPageComponent]
+      declarations: [
+        InventoryPageComponent
+      ],
+      imports: [
+        InventoryModule,
+        BrowserAnimationsModule,
+        AppTranslateModule,
+        AppIndexedDbModule
+      ]
     })
       .compileComponents();
   });

@@ -1,6 +1,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AmountInputComponent} from './amount-input.component';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('AmountInputComponent', () => {
   let component: AmountInputComponent;
@@ -8,7 +10,13 @@ describe('AmountInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AmountInputComponent]
+      declarations: [
+        AmountInputComponent
+      ],
+      imports: [
+        HttpClientModule,
+        AppIndexedDbModule
+      ]
     })
       .compileComponents();
   });

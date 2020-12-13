@@ -1,6 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {InventorySpecialMaterialsComponent} from './inventory-special-materials.component';
+import {InventoryModule} from '../../inventory.module';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('InventorySpecialMaterialsComponent', () => {
   let component: InventorySpecialMaterialsComponent;
@@ -8,7 +11,14 @@ describe('InventorySpecialMaterialsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InventorySpecialMaterialsComponent]
+      declarations: [
+        InventorySpecialMaterialsComponent
+      ],
+      imports: [
+        InventoryModule,
+        AppIndexedDbModule,
+        HttpClientModule
+      ]
     })
       .compileComponents();
   });

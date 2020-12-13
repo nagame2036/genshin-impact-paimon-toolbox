@@ -1,14 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SidenavComponent} from './sidenav.component';
+import {CoreModule} from '../../core.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('LayoutComponent', () => {
+describe('SidenavComponent', () => {
   let component: SidenavComponent;
   let fixture: ComponentFixture<SidenavComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SidenavComponent]
+      declarations: [
+        SidenavComponent
+      ],
+      imports: [
+        CoreModule,
+        BrowserAnimationsModule
+      ]
     })
       .compileComponents();
   });
