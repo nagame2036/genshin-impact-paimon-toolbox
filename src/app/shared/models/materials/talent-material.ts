@@ -1,15 +1,17 @@
 import {Nation} from '../nation.enum';
 import {Rarity} from '../rarity.enum';
-import {CraftRecipe} from './craft-recipe';
+import {ItemCost} from './item-cost';
 
 export interface TalentMaterialsData {
 
-  groups: { [id: number]: TalentMaterialGroup };
+  groups: TalentMaterialGroup[];
 
-  items: { [id: number]: TalentMaterialItem };
+  items: TalentMaterialItem[];
 }
 
 export interface TalentMaterialGroup {
+
+  id: number;
 
   nation: Nation;
 
@@ -20,9 +22,11 @@ export interface TalentMaterialGroup {
 
 export interface TalentMaterialItem {
 
+  id: number;
+
   group: number;
 
   rarity: Rarity;
 
-  craft?: CraftRecipe[];
+  craft?: ItemCost[];
 }

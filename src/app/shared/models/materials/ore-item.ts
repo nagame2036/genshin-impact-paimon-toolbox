@@ -1,15 +1,18 @@
 export interface OreItemsData {
 
-  groups: { [id: number]: OreGroup };
+  groups: OreGroup[];
 
-  items: { [id: number]: OreItem };
+  items: OreItem[];
 }
 
-// tslint:disable-next-line:no-empty-interface
 export interface OreGroup {
+
+  id: number;
 }
 
 export interface OreItem {
+
+  id: number;
 
   group: number;
 }

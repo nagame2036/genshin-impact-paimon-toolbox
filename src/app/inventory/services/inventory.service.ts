@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {InventoryData, InventoryItem} from '../models/inventory-item';
 import {HttpClient} from '@angular/common/http';
 import alasql from 'alasql';
+import {ItemCost} from '../../shared/models/materials/item-cost';
 
 @Injectable({
   providedIn: 'root'
@@ -15,22 +16,18 @@ export class InventoryService {
 
   private readonly dataPrefix = 'assets/data/materials/';
 
-  private readonly orderSql = 'SELECT * FROM ? ORDER BY g, rarity DESC';
+  private readonly orderSql = 'SELECT id, [group], COALESCE(rarity, 1) as rarity FROM ? ORDER BY [group], rarity DESC';
 
   constructor(private database: NgxIndexedDBService, private http: HttpClient) {
   }
 
   getItems(category: string): Observable<InventoryItem[]> {
-    return this.http.get(`${this.dataPrefix + category}.json`).pipe(map(res => {
-      const data = (res as InventoryData).items;
-      const ids = Object.keys(data).map(Number);
-      const values = ids.map(i => ({id: i, g: data[i].group || 0, rarity: data[i].rarity || 1}));
-      return alasql(this.orderSql, [values]);
-    }));
+    return this.http.get<InventoryData>(`${this.dataPrefix + category}.json`)
+      .pipe(map(res => alasql(this.orderSql, [res.items])));
   }
 
-  getAmount(id: number): Observable<{ id: number, amount: number }> {
-    return this.database.getByID(this.storeName, id).pipe(map(res => res ? res : {id, amount: 0}));
+  getAmount(id: number): Observable<ItemCost> {
+    return this.database.getByID(this.storeName, id).pipe(map(res => res ?? {id, amount: 0}));
   }
 
   setAmount(id: number, amount: number): void {

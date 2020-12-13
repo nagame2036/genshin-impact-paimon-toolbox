@@ -2,17 +2,21 @@ import {Nation} from '../nation.enum';
 
 export interface LocalSpecialtiesData {
 
-  groups: { [id: number]: LocalSpecialtyGroup };
+  groups: LocalSpecialtyGroup[];
 
-  items: { [id: number]: LocalSpecialtyItem };
+  items: LocalSpecialtyItem[];
 }
 
 export interface LocalSpecialtyItem {
+
+  id: number;
 
   group: number;
 }
 
 export interface LocalSpecialtyGroup {
+
+  id: number;
 
   nation: Nation;
 }

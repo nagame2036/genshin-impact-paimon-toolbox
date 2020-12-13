@@ -2,16 +2,19 @@ import {Rarity} from '../rarity.enum';
 
 export interface CharacterExpItemsData {
 
-  groups: { [id: number]: CharacterExpGroup };
+  groups: CharacterExpGroup[];
 
-  items: { [id: number]: CharacterExpItem };
+  items: CharacterExpItem[];
 }
 
-// tslint:disable-next-line:no-empty-interface
 export interface CharacterExpGroup {
+
+  id: number;
 }
 
 export interface CharacterExpItem {
+
+  id: number;
 
   rarity: Rarity;
 

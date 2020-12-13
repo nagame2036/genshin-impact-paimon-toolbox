@@ -1,15 +1,17 @@
 import {Rarity} from '../rarity.enum';
-import {CraftRecipe} from './craft-recipe';
+import {ItemCost} from './item-cost';
 import {ElementType} from '../element-type.enum';
 
 export interface ElementalMaterialsData {
 
-  groups: { [id: number]: ElementalMaterialGroup };
+  groups: ElementalMaterialGroup[];
 
-  items: { [id: number]: ElementalMaterialItem };
+  items: ElementalMaterialItem[];
 }
 
 export interface ElementalMaterialGroup {
+
+  id: number;
 
   element: ElementType;
 
@@ -18,9 +20,11 @@ export interface ElementalMaterialGroup {
 
 export interface ElementalMaterialItem {
 
+  id: number;
+
   group: number;
 
   rarity: Rarity;
 
-  craft?: CraftRecipe[];
+  craft?: ItemCost[];
 }

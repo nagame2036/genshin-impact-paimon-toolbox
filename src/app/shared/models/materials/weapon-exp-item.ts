@@ -1,22 +1,25 @@
 import {Rarity} from '../rarity.enum';
-import {CraftRecipe} from './craft-recipe';
+import {ItemCost} from './item-cost';
 
 export interface WeaponExpItemsData {
 
-  groups: { [id: number]: WeaponExpGroup };
+  groups: WeaponExpGroup[];
 
-  items: { [id: number]: WeaponExpItem };
+  items: WeaponExpItem[];
 }
 
-// tslint:disable-next-line:no-empty-interface
 export interface WeaponExpGroup {
+
+  id: number;
 }
 
 export interface WeaponExpItem {
+
+  id: number;
 
   rarity: Rarity;
 
   exp: number;
 
-  craft: CraftRecipe[];
+  craft: ItemCost[];
 }

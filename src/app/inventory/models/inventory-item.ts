@@ -1,12 +1,14 @@
 import {Rarity} from '../../shared/models/rarity.enum';
 
 export interface InventoryData {
-  items: { [id: number]: { group?: number, rarity?: Rarity } };
+  items: InventoryItem[];
 }
 
 export interface InventoryItem {
 
   id: number;
+
+  group?: number;
 
   rarity: Rarity;
 }

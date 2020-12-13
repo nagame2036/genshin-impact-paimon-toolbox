@@ -1,15 +1,17 @@
 import {Nation} from '../nation.enum';
 import {Rarity} from '../rarity.enum';
-import {CraftRecipe} from './craft-recipe';
+import {ItemCost} from './item-cost';
 
 export interface WeaponMaterialsData {
 
-  groups: { [id: number]: WeaponMaterialGroup };
+  groups: WeaponMaterialGroup[];
 
-  items: { [id: number]: WeaponMaterialItem };
+  items: WeaponMaterialItem[];
 }
 
 export interface WeaponMaterialGroup {
+
+  id: number;
 
   nation: Nation;
 
@@ -20,9 +22,11 @@ export interface WeaponMaterialGroup {
 
 export interface WeaponMaterialItem {
 
+  id: number;
+
   group: number;
 
   rarity: Rarity;
 
-  craft?: CraftRecipe[];
+  craft?: ItemCost[];
 }
