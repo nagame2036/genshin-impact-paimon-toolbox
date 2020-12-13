@@ -3,11 +3,11 @@ import {InventoryItem} from '../../models/inventory-item';
 import {InventoryService} from '../../services/inventory.service';
 
 @Component({
-  selector: 'app-inventory-special-materials',
-  templateUrl: './inventory-special-materials.component.html',
-  styleUrls: ['./inventory-special-materials.component.sass']
+  selector: 'app-materials-inventory',
+  templateUrl: './materials-inventory.component.html',
+  styleUrls: ['./materials-inventory.component.sass']
 })
-export class InventorySpecialMaterialsComponent implements OnInit {
+export class MaterialsInventoryComponent implements OnInit {
 
   @Input()
   category!: string;

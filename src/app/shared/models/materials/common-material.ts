@@ -1,21 +1,21 @@
 import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
 
-export interface EnemiesMaterialsData {
+export interface CommonMaterial {
 
-  groups: EnemiesMaterialGroup[];
+  groups: CommonMaterialGroup[];
 
-  items: EnemiesMaterialItem[];
+  items: CommonMaterialItem[];
 }
 
-export interface EnemiesMaterialGroup {
+export interface CommonMaterialGroup {
 
   id: number;
 
   source: number[];
 }
 
-export interface EnemiesMaterialItem {
+export interface CommonMaterialItem {
 
   id: number;
 

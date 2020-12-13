@@ -2,7 +2,7 @@ import {Nation} from '../nation.enum';
 import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
 
-export interface TalentMaterialsData {
+export interface TalentMaterial {
 
   groups: TalentMaterialGroup[];
 

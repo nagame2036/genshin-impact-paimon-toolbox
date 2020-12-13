@@ -2,7 +2,7 @@ import {Rarity} from '../rarity.enum';
 import {ItemCost} from './item-cost';
 import {ElementType} from '../element-type.enum';
 
-export interface ElementalMaterialsData {
+export interface ElementalMaterial {
 
   groups: ElementalMaterialGroup[];
 

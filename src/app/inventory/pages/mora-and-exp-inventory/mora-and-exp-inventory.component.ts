@@ -3,11 +3,11 @@ import {InventoryService} from '../../services/inventory.service';
 import {InventoryItem} from '../../models/inventory-item';
 
 @Component({
-  selector: 'app-inventory-common-materials',
-  templateUrl: './inventory-common-materials.component.html',
-  styleUrls: ['./inventory-common-materials.component.sass']
+  selector: 'app-mora-and-exp-inventory',
+  templateUrl: './mora-and-exp-inventory.component.html',
+  styleUrls: ['./mora-and-exp-inventory.component.sass']
 })
-export class InventoryCommonMaterialsComponent implements OnInit {
+export class MoraAndExpInventoryComponent implements OnInit {
 
   characterExps: InventoryItem[] = [];
 
