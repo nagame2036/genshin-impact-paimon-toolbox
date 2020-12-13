@@ -89,12 +89,11 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
 
   copyAndCompare(): void {
     const baseAtk = this.profile.baseAtk;
-    const bonusAtk = baseAtk * this.optimizedResult.atk + this.profile.plumeAtk;
-    const chc = this.optimizedResult.critRate;
-    const critRate = chc === 0 ? .05 : chc + .15;
-    const chd = this.optimizedResult.critDmg;
-    const critDmgBonus = chd === 0 ? .5 : chd + .3;
-    const profile = new CharacterStatProfile(this.profile.level, this.profile.dmgType, baseAtk, this.profile.plumeAtk,
+    const plumeAtk = this.profile.plumeAtk;
+    const bonusAtk = baseAtk * this.optimizedResult.atk + plumeAtk;
+    const critRate = this.optimizedResult.critRate + .05;
+    const critDmgBonus = this.optimizedResult.critDmg + .5;
+    const profile = new CharacterStatProfile(this.profile.level, this.profile.dmgType, baseAtk, plumeAtk,
       bonusAtk, critRate, critDmgBonus, this.profile.elementalDmgBonus);
     this.profileService.setCompared(profile);
   }
