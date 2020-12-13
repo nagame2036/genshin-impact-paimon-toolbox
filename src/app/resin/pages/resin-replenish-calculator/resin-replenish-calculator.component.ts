@@ -27,11 +27,14 @@ export class ResinReplenishCalculatorComponent extends AbstractTranslateComponen
 
   minutes = new FormControl(8);
 
-  results = [20, 40, 60, 80, 120].map(i => {
-    return {target: i, control: new FormControl('')};
-  });
-
-  resinFull = new FormControl('');
+  results = [
+    {target: 20, value: ''},
+    {target: 40, value: ''},
+    {target: 60, value: ''},
+    {target: 80, value: ''},
+    {target: 120, value: ''},
+    {target: 160, value: ''}
+  ];
 
   constructor(private translator: TranslateService) {
     super();
@@ -55,14 +58,11 @@ export class ResinReplenishCalculatorComponent extends AbstractTranslateComponen
   }
 
   renderResult(): void {
-    this.results.forEach(i => i.control.setValue(this.replenishedTime(i.target)));
-    this.resinFull.setValue(this.replenishedTime(160));
+    this.results.forEach(i => i.value = this.replenishedTime(i.target));
   }
 
   private replenishedTime(targetResin: number): string {
-    const currentResin = this.resin.value;
-    const replenishToMinutes = this.minutes.value;
-    const remainingMinutes = (targetResin - currentResin - 1) * 8 + replenishToMinutes;
+    const remainingMinutes = (targetResin - this.resin.value - 1) * 8 + this.minutes.value;
     const minutes = Math.max(0, remainingMinutes);
     const time = new Date();
     time.setMinutes(time.getMinutes() + minutes);

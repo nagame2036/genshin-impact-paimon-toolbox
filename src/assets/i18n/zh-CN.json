@@ -22,8 +22,7 @@
         "minutes": "分钟",
         "current": "当前剩余树脂",
         "replenished-in": "下次恢复时间",
-        "replenished-to": "树脂恢复到{{ target }}",
-        "fully-replenished": "树脂恢复到上限"
+        "replenished-to": "树脂恢复到{{ target }}"
       }
     },
     "character-stat": {
