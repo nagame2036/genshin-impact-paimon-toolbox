@@ -24,7 +24,7 @@ export class ItemImageContainerComponent extends AbstractTranslateComponent impl
   }
 
   get itemKey(): string {
-    return `${this.category}.items.${this.id}`;
+    return `${this.category}.${this.id}`;
   }
 
   get src(): string {

@@ -10,7 +10,7 @@ import {InventoryService} from '../../services/inventory.service';
 export class AmountInputComponent implements OnInit {
 
   @Input()
-  width = 100;
+  width = 80;
 
   @Input()
   id!: number;
@@ -30,7 +30,7 @@ export class AmountInputComponent implements OnInit {
   }
 
   setValue(value: number): void {
-    this.value = coerceIn(value, 0, 999_999_999_999);
+    this.value = coerceIn(value, 0, 9_999_999_999);
     this.inventory.setAmount(this.id, this.value);
   }
 
