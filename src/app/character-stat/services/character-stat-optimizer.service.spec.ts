@@ -17,8 +17,8 @@ describe('CharacterStatOptimizerService', () => {
   it('optimize for common use', () => {
     const optimized = service.optimize(969, 311, 1.78);
     expect(optimized.atk).toBeCloseTo(0.8082, 4);
-    expect(optimized.critRate).toBeCloseTo(0.6206, 4);
-    expect(optimized.critDmg).toBeCloseTo(1.2412, 4);
+    expect(optimized.critRate).toBeCloseTo(0.7206, 4);
+    expect(optimized.critDmg).toBeCloseTo(1.0412, 4);
   });
 
   it('optimize for all stat points should added to ATK', () => {
@@ -31,7 +31,7 @@ describe('CharacterStatOptimizerService', () => {
   it('optimize for CRIT Rate 100%, equivalent to 85 points added to CRIT Rate', () => {
     const optimized = service.optimize(969, 311, 2.68);
     expect(optimized.atk).toBeCloseTo(1.1996, 4);
-    expect(optimized.critRate).toBeCloseTo(0.85, 4);
-    expect(optimized.critDmg).toBeCloseTo(2.0606, 4);
+    expect(optimized.critRate).toBeCloseTo(0.95, 4);
+    expect(optimized.critDmg).toBeCloseTo(1.8606, 4);
   });
 });

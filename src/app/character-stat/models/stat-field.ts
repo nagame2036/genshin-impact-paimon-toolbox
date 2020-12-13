@@ -1,6 +1,6 @@
 import {FormControl, Validators} from '@angular/forms';
-import {coerceIn} from '../shared/utils/coerce';
-import {fixValue} from '../shared/utils/number';
+import {coerceIn} from '../../shared/utils/coerce';
+import {fixValue} from '../../shared/utils/number';
 
 export class StatField {
 

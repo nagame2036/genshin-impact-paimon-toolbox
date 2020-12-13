@@ -57,9 +57,12 @@ export class CharacterStatOptimizerService {
         maxDmg = currDmg;
       }
     }
-    const optimizedCritRate = Math.min(maxCritRate, .5 * maxCritPoints);
     const optimizedAtk = atkWeight * (statPoints - maxCritPoints);
+    if (maxCritPoints === 0) {
+      return {atk: optimizedAtk, critRate: 0, critDmg: 0};
+    }
+    const optimizedCritRate = Math.min(maxCritRate, .5 * maxCritPoints);
     const optimizedCritDmg = critDmgWeight * (maxCritPoints - optimizedCritRate);
-    return {atk: optimizedAtk, critRate: optimizedCritRate, critDmg: optimizedCritDmg};
+    return {atk: optimizedAtk, critRate: optimizedCritRate + .1, critDmg: optimizedCritDmg - .2};
   }
 }

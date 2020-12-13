@@ -1,4 +1,4 @@
-import {StatField} from '../stat-field';
+import {StatField} from './stat-field';
 import {FormControl} from '@angular/forms';
 import {CharacterStatProfile} from './character-stat-profile';
 import {Level} from '../../shared/models/level';

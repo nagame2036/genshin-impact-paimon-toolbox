@@ -1,5 +1,5 @@
 import {Level} from '../../shared/models/level';
-import {DamageType} from '../components/character-stat-profile/damage-type';
+import {DamageType} from './damage-type';
 import {coerceIn} from '../../shared/utils/coerce';
 
 export class CharacterStatProfile {

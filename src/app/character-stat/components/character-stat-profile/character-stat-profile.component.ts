@@ -3,7 +3,7 @@ import {CharacterStat} from '../../models/character-stat';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterStatComparer} from '../../models/character-stat-comparer';
 import {FormControl} from '@angular/forms';
-import {DamageType} from './damage-type';
+import {DamageType} from '../../models/damage-type';
 import {Level} from '../../../shared/models/level';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 

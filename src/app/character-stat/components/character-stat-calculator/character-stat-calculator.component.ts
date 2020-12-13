@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterStatProfile} from '../../models/character-stat-profile';
-import {StatField} from '../../stat-field';
-import {DamageType} from '../character-stat-profile/damage-type';
+import {StatField} from '../../models/stat-field';
+import {DamageType} from '../../models/damage-type';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
 
   enemyElementalRes = new StatField({min: -100, max: 100, defaultValue: 10, suffix: '%'});
 
-  enemyDmgRes = 55;
+  enemyDmgRes!: number;
 
   talents = [
     new StatField({min: 0, defaultValue: 100}),

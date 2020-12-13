@@ -7,22 +7,22 @@ import {CharacterStatProfile} from '../models/character-stat-profile';
 })
 export class CharacterStatProfileService {
 
-  private currentField = new BehaviorSubject(new CharacterStatProfile());
+  #current = new BehaviorSubject(new CharacterStatProfile());
 
-  readonly current = this.currentField.asObservable();
+  readonly current = this.#current.asObservable();
 
-  private comparedField = new BehaviorSubject(new CharacterStatProfile());
+  #compared = new BehaviorSubject(new CharacterStatProfile());
 
-  readonly compared = this.comparedField.asObservable();
+  readonly compared = this.#compared.asObservable();
 
   constructor() {
   }
 
   setCurrent(value: CharacterStatProfile): void {
-    this.currentField.next(value);
+    this.#current.next(value);
   }
 
   setCompared(value: CharacterStatProfile): void {
-    this.comparedField.next(value);
+    this.#compared.next(value);
   }
 }

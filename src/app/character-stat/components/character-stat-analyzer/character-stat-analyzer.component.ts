@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {DamageType} from '../character-stat-profile/damage-type';
+import {DamageType} from '../../models/damage-type';
 import {CharacterStatProfile} from '../../models/character-stat-profile';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 
