@@ -1,11 +1,10 @@
 <div>
   <div fxLayout="row wrap" fxLayoutGap="16px">
     <div *ngFor="let character of characters" class="character-list-item">
-      <app-item-image-container class="character-list-item"
-                                category="characters" [id]="character.id" [rarity]="character.rarity"
+      <app-item-image-container category="characters" [id]="character.id" [rarity]="character.rarity"
                                 (click)="selectCharacter(character)">
         <div container-top-left>
-          <img class="character-list-element-image"
+          <img class="character-list-element-hint"
                [src]="'assets/images/elements/' + character.element + '.png'"
                [alt]="i18nDict('elements.' + character.element) | translate">
         </div>
