@@ -3,6 +3,7 @@ import {Character} from '../../../shared/models/character';
 import {CharacterService} from '../../../shared/services/character.service';
 import alasql from 'alasql';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {PartyCharacter} from '../../../shared/models/party-character';
 
 @Component({
   selector: 'app-character-list',
@@ -34,5 +35,13 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
 
   selectCharacter(character: Character): void {
     this.selected.emit(character);
+  }
+
+  getCharacterLevel(character: Character): number {
+    return (character as PartyCharacter)?.level ?? 1;
+  }
+
+  getCharacterAscension(character: Character): number {
+    return (character as PartyCharacter)?.ascension ?? 0;
   }
 }

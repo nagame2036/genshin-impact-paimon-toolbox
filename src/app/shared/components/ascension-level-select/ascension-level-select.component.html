@@ -4,8 +4,8 @@
       <mat-label [translate]="i18nDict('ascension')" [translateParams]="{label: i18nDict('character') | translate}">
       </mat-label>
       <mat-select [formControl]="ascensionControl" (selectionChange)="correct()">
-        <mat-option *ngFor="let a of ascensions" [value]="a">
-          {{ i18nDict('ascension-option') | translate: {value: levelStats[a].min} }}
+        <mat-option *ngFor="let a of ascensions; let i = index" [value]="a">
+          {{ i18nDict('ascensions.' + i) | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>

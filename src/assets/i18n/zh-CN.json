@@ -92,7 +92,15 @@
     "minutes": "分钟",
     "character": "角色",
     "ascension": "{{ label }}突破",
-    "ascension-option": "{{ value }}级突破",
+    "ascensions": {
+      "0": "未突破",
+      "1": "20突破",
+      "2": "40突破",
+      "3": "50突破",
+      "4": "60突破",
+      "5": "70突破",
+      "6": "80突破"
+    },
     "level": "{{ label }}等级",
     "res": "{{ type }}抗",
     "dmg": "{{ type }}伤",

@@ -8,6 +8,10 @@
                [src]="'assets/images/elements/' + character.element + '.png'"
                [alt]="i18nDict('elements.' + character.element) | translate">
         </div>
+        <div *ngIf="party" container-bottom>
+          {{ i18nDict('ascensions.' + getCharacterAscension(character)) | translate }}
+          Lv.{{ getCharacterLevel(character) }}
+        </div>
       </app-item-image-container>
     </div>
     <div class="character-list-item">
