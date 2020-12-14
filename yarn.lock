@@ -219,6 +219,13 @@
   dependencies:
     tslib "^2.0.0"
 
+"@angular/flex-layout@^11.0.0-beta.33":
+  version "11.0.0-beta.33"
+  resolved "https://registry.npm.taobao.org/@angular/flex-layout/download/@angular/flex-layout-11.0.0-beta.33.tgz#c2d08f90164701b66a62b8c4365b4e22c1e95789"
+  integrity sha1-wtCPkBZHAbZqYrjENltOIsHpV4k=
+  dependencies:
+    tslib "^2.0.0"
+
 "@angular/forms@~11.0.1":
   version "11.0.2"
   resolved "https://registry.npm.taobao.org/@angular/forms/download/@angular/forms-11.0.2.tgz"
