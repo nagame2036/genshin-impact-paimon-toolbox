@@ -1,9 +1,0 @@
-<div>
-  <mat-grid-list cols="9" gutterSize="16" rowHeight="200">
-    <mat-grid-tile *ngFor="let item of items">
-      <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity || 1">
-        <app-amount-input [id]="item.id"></app-amount-input>
-      </app-item-image-container>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>

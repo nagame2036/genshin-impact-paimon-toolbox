@@ -6,5 +6,5 @@ export interface InventoryItem {
 
   group?: number;
 
-  rarity?: Rarity;
+  rarity: Rarity;
 }

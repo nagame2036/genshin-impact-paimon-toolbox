@@ -5,23 +5,23 @@ import {InventoryRoutingModule} from './inventory-routing.module';
 import {InventoryPageComponent} from './pages/inventory-page/inventory-page.component';
 import {AmountInputComponent} from './components/amount-input/amount-input.component';
 import {MoraAndExpInventoryComponent} from './pages/mora-and-exp-inventory/mora-and-exp-inventory.component';
-import {MaterialsInventoryComponent} from './pages/materials-inventory/materials-inventory.component';
+import {MaterialListComponent} from './components/material-list/material-list.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
-import {MatGridListModule} from '@angular/material/grid-list';
+import {FlexModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     InventoryPageComponent,
     AmountInputComponent,
     MoraAndExpInventoryComponent,
-    MaterialsInventoryComponent
+    MaterialListComponent
   ],
   imports: [
     SharedModule,
     InventoryRoutingModule,
     MatTabsModule,
-    MatGridListModule
+    FlexModule
   ]
 })
 export class InventoryModule {
