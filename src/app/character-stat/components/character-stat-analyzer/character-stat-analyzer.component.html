@@ -1,11 +1,11 @@
 <div class="character-stat-analyzer-page">
   <p [translate]="i18n('weight')"
-     [translateParams]="{weight: weight, type: i18nDict(dmgType) | translate}">
+     [translateParams]="{weight: weight, type: i18nDict('elements.' + dmgType) | translate}">
   </p>
   <div *ngFor="let f of fields" style="display: flex">
     <p [translate]="i18n(f.text)" [translateParams]="{
            dmgBonus: weight * 10,
-           type: i18nDict(dmgType) | translate,
+           type: i18nDict('elements.' + dmgType) | translate,
            dmg: f.value() | number: '1.1-1'
          }">
     </p>

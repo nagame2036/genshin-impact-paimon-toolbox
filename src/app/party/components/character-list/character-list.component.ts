@@ -2,13 +2,16 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Character} from '../../../shared/models/character';
 import {CharacterService} from '../../../shared/services/character.service';
 import alasql from 'alasql';
+import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.sass']
 })
-export class CharacterListComponent implements OnInit {
+export class CharacterListComponent extends AbstractTranslateComponent implements OnInit {
+
+  i18nKey = 'party.character';
 
   @Input()
   party = false;
@@ -21,6 +24,7 @@ export class CharacterListComponent implements OnInit {
   selected = new EventEmitter<Character>();
 
   constructor(private characterService: CharacterService) {
+    super();
   }
 
   ngOnInit(): void {

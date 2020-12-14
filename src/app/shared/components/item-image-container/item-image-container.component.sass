@@ -1,4 +1,5 @@
 .item-container
+  position: relative
   width: 100px
   min-height: 100px
   padding-bottom: 4px
@@ -37,7 +38,14 @@
   display: block
   margin: auto
 
-.stars-container
+.item-container-stars
   display: flex
   flex-direction: row
   margin-top: -16px
+  z-index: 1
+
+.item-container-top-left
+  position: absolute
+  left: 0
+  top: 0
+  z-index: 1

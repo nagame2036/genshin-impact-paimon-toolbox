@@ -2,6 +2,7 @@
   {
     "id": 1,
     "rarity": 5,
+    "element": 1,
     "weapon": 1,
     "gem": 300,
     "common": 802,
@@ -10,6 +11,7 @@
   {
     "id": 2,
     "rarity": 5,
+    "element": 2,
     "weapon": 1,
     "gem": 300,
     "common": 802,
@@ -18,6 +20,7 @@
   {
     "id": 501,
     "rarity": 5,
+    "element": 1,
     "weapon": 1,
     "gem": 300,
     "common": 802,
@@ -26,6 +29,7 @@
   {
     "id": 502,
     "rarity": 5,
+    "element": 2,
     "weapon": 1,
     "gem": 300,
     "common": 802,

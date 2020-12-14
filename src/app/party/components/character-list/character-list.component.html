@@ -4,6 +4,11 @@
       <app-item-image-container class="character-list-item"
                                 category="characters" [id]="character.id" [rarity]="character.rarity"
                                 (click)="selectCharacter(character)">
+        <div container-top-left>
+          <img class="character-list-element-image"
+               [src]="'assets/images/elements/' + character.element + '.png'"
+               [alt]="i18nDict('elements.' + character.element) | translate">
+        </div>
       </app-item-image-container>
     </div>
     <div class="character-list-item">

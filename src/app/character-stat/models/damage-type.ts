@@ -1,16 +1,16 @@
 export enum DamageType {
 
-  PHYSICAL = 'physical',
+  PHYSICAL = 0,
 
-  ANEMO = 'anemo',
+  ANEMO = 1,
 
-  GEO = 'geo',
+  GEO = 2,
 
-  ELECTRO = 'electro',
+  ELECTRO = 3,
 
-  HYDRO = 'hydro',
+  HYDRO = 5,
 
-  PYRO = 'pyro',
+  PYRO = 6,
 
-  CRYO = 'cryo'
+  CRYO = 7
 }
