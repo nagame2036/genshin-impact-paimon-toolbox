@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
   },
   {
+    path: 'party',
+    loadChildren: () => import('./party/party.module').then(m => m.PartyModule)
+  },
+  {
     path: 'character-stat',
     loadChildren: () => import('./character-stat/character-stat.module').then(m => m.CharacterStatModule)
   },

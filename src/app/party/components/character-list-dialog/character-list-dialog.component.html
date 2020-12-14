@@ -1,0 +1,4 @@
+<h2 mat-dialog-title>{{ i18n(data.title) | translate }}</h2>
+<div mat-dialog-content>
+  <app-character-list [party]="data.party" (selected)="selectCharacter($event)"></app-character-list>
+</div>

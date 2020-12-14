@@ -11,6 +11,7 @@ export class AppComponent {
 
   routers = [
     {path: 'home'},
+    {path: 'party'},
     {path: 'character-stat'},
     {path: 'inventory'},
     {path: 'resin'},

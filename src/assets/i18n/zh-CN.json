@@ -2,6 +2,7 @@
   "title": "原神工具箱",
   "path": {
     "home": "首页",
+    "party": "Box",
     "character-stat": "角色面板",
     "inventory": "背包",
     "resin": "树脂"
@@ -23,6 +24,12 @@
         "current": "当前剩余树脂",
         "replenished-in": "下次恢复时间",
         "replenished-to": "树脂恢复到{{ target }}"
+      }
+    },
+    "party": {
+      "character": {
+        "add-character": "添加角色",
+        "remove-character": "移除角色"
       }
     },
     "character-stat": {

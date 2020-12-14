@@ -3,8 +3,13 @@ import {DBConfig, NgxIndexedDBModule} from 'ngx-indexed-db';
 
 const config: DBConfig = {
   name: 'GenshinImpactToolbox',
-  version: 10,
+  version: 1,
   objectStoresMeta: [
+    {
+      store: 'party-characters',
+      storeConfig: {keyPath: 'id', autoIncrement: false},
+      storeSchema: []
+    },
     {
       store: 'materials',
       storeConfig: {keyPath: 'id', autoIncrement: false},
