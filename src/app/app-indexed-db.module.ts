@@ -11,6 +11,13 @@ const config: DBConfig = {
       storeSchema: []
     },
     {
+      store: 'party-weapons',
+      storeConfig: {keyPath: 'key', autoIncrement: true},
+      storeSchema: [
+        {name: 'id', keypath: 'id', options: {unique: false}}
+      ]
+    },
+    {
       store: 'materials',
       storeConfig: {keyPath: 'id', autoIncrement: false},
       storeSchema: []

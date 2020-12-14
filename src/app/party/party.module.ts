@@ -7,6 +7,10 @@ import {PartyCharacterComponent} from './pages/party-character/party-character.c
 import {CharacterListComponent} from './components/character-list/character-list.component';
 import {CharacterListDialogComponent} from './components/character-list-dialog/character-list-dialog.component';
 import {CharacterDetailDialogComponent} from './components/character-detail-dialog/character-detail-dialog.component';
+import {PartyWeaponComponent} from './pages/party-weapon/party-weapon.component';
+import {WeaponListComponent} from './components/weapon-list/weapon-list.component';
+import {WeaponListDialogComponent} from './components/weapon-list-dialog/weapon-list-dialog.component';
+import {WeaponDetailDialogComponent} from './components/weapon-detail-dialog/weapon-detail-dialog.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
@@ -21,7 +25,11 @@ import {FlexModule} from '@angular/flex-layout';
     CharacterListComponent,
     CharacterListDialogComponent,
     CharacterDetailDialogComponent,
-    PartyCharacterComponent
+    PartyCharacterComponent,
+    PartyWeaponComponent,
+    WeaponListComponent,
+    WeaponListDialogComponent,
+    WeaponDetailDialogComponent
   ],
   imports: [
     SharedModule,

@@ -1,0 +1,9 @@
+<div>
+  <app-weapon-list [party]="true" (selected)="openWeaponDetail($event)">
+    <div list-tail>
+      <button type="button" class="add-party-member-weapon-button" mat-stroked-button (click)="openAddWeapon()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </app-weapon-list>
+</div>

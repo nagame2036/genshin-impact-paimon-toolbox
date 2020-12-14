@@ -1,0 +1,9 @@
+<div>
+  <img [src]="'assets/images/weapons/' + data.id + '.png'"
+       [alt]="i18nDict('weapons.' + data.id) | translate">
+  <div mat-dialog-actions>
+    <button mat-stroked-button (click)="removeWeapon(data)">
+      {{ i18n('remove') | translate }}
+    </button>
+  </div>
+</div>

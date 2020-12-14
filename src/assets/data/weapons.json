@@ -1,0 +1,634 @@
+[
+  {
+    "id": 0,
+    "type": 1,
+    "rarity": 3,
+    "domain": 400,
+    "elite": 900,
+    "common": 803
+  },
+  {
+    "id": 1,
+    "type": 1,
+    "rarity": 3,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 2,
+    "type": 1,
+    "rarity": 3,
+    "domain": 402,
+    "elite": 903,
+    "common": 802
+  },
+  {
+    "id": 3,
+    "type": 1,
+    "rarity": 3,
+    "domain": 404,
+    "elite": 904,
+    "common": 806
+  },
+  {
+    "id": 4,
+    "type": 1,
+    "rarity": 3,
+    "domain": 405,
+    "elite": 906,
+    "common": 805
+  },
+  {
+    "id": 5,
+    "type": 2,
+    "rarity": 3,
+    "domain": 400,
+    "elite": 900,
+    "common": 807
+  },
+  {
+    "id": 6,
+    "type": 2,
+    "rarity": 3,
+    "domain": 401,
+    "elite": 902,
+    "common": 803
+  },
+  {
+    "id": 7,
+    "type": 2,
+    "rarity": 3,
+    "domain": 402,
+    "elite": 903,
+    "common": 800
+  },
+  {
+    "id": 8,
+    "type": 2,
+    "rarity": 3,
+    "domain": 404,
+    "elite": 904,
+    "common": 801
+  },
+  {
+    "id": 9,
+    "type": 2,
+    "rarity": 3,
+    "domain": 405,
+    "elite": 906,
+    "common": 806
+  },
+  {
+    "id": 10,
+    "type": 5,
+    "rarity": 3,
+    "domain": 403,
+    "elite": 905,
+    "common": 805
+  },
+  {
+    "id": 11,
+    "type": 5,
+    "rarity": 3,
+    "domain": 404,
+    "elite": 904,
+    "common": 807
+  },
+  {
+    "id": 12,
+    "type": 5,
+    "rarity": 3,
+    "domain": 405,
+    "elite": 906,
+    "common": 803
+  },
+  {
+    "id": 13,
+    "type": 3,
+    "rarity": 3,
+    "domain": 400,
+    "elite": 900,
+    "common": 800
+  },
+  {
+    "id": 14,
+    "type": 3,
+    "rarity": 3,
+    "domain": 401,
+    "elite": 902,
+    "common": 802
+  },
+  {
+    "id": 15,
+    "type": 3,
+    "rarity": 3,
+    "domain": 402,
+    "elite": 903,
+    "common": 801
+  },
+  {
+    "id": 16,
+    "type": 3,
+    "rarity": 3,
+    "domain": 403,
+    "elite": 905,
+    "common": 806
+  },
+  {
+    "id": 17,
+    "type": 3,
+    "rarity": 3,
+    "domain": 404,
+    "elite": 904,
+    "common": 805
+  },
+  {
+    "id": 18,
+    "type": 4,
+    "rarity": 3,
+    "domain": 400,
+    "elite": 900,
+    "common": 803
+  },
+  {
+    "id": 19,
+    "type": 4,
+    "rarity": 3,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 20,
+    "type": 4,
+    "rarity": 3,
+    "domain": 402,
+    "elite": 903,
+    "common": 802
+  },
+  {
+    "id": 21,
+    "type": 4,
+    "rarity": 3,
+    "domain": 403,
+    "elite": 905,
+    "common": 801
+  },
+  {
+    "id": 22,
+    "type": 4,
+    "rarity": 3,
+    "domain": 404,
+    "elite": 904,
+    "common": 806
+  },
+  {
+    "id": 23,
+    "type": 1,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 803
+  },
+  {
+    "id": 24,
+    "type": 1,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 25,
+    "type": 1,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 802
+  },
+  {
+    "id": 26,
+    "type": 1,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 801
+  },
+  {
+    "id": 27,
+    "type": 1,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 806
+  },
+  {
+    "id": 28,
+    "type": 1,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 805
+  },
+  {
+    "id": 29,
+    "type": 1,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "common": 807
+  },
+  {
+    "id": 30,
+    "type": 1,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 803
+  },
+  {
+    "id": 31,
+    "type": 1,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 32,
+    "type": 1,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 806
+  },
+  {
+    "id": 33,
+    "type": 2,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 805
+  },
+  {
+    "id": 34,
+    "type": 2,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 807
+  },
+  {
+    "id": 35,
+    "type": 2,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 803
+  },
+  {
+    "id": 36,
+    "type": 2,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 800
+  },
+  {
+    "id": 37,
+    "type": 2,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 802
+  },
+  {
+    "id": 38,
+    "type": 2,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "common": 801
+  },
+  {
+    "id": 39,
+    "type": 2,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 806
+  },
+  {
+    "id": 40,
+    "type": 2,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 805
+  },
+  {
+    "id": 41,
+    "type": 2,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "common": 807
+  },
+  {
+    "id": 42,
+    "type": 5,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 802
+  },
+  {
+    "id": 43,
+    "type": 5,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "common": 801
+  },
+  {
+    "id": 44,
+    "type": 5,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 806
+  },
+  {
+    "id": 45,
+    "type": 5,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 805
+  },
+  {
+    "id": 46,
+    "type": 5,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 807
+  },
+  {
+    "id": 47,
+    "type": 5,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 800
+  },
+  {
+    "id": 49,
+    "type": 3,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 802
+  },
+  {
+    "id": 50,
+    "type": 3,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 801
+  },
+  {
+    "id": 51,
+    "type": 3,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 806
+  },
+  {
+    "id": 52,
+    "type": 3,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 805
+  },
+  {
+    "id": 53,
+    "type": 3,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 807
+  },
+  {
+    "id": 54,
+    "type": 3,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 803
+  },
+  {
+    "id": 55,
+    "type": 3,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "common": 800
+  },
+  {
+    "id": 56,
+    "type": 3,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 802
+  },
+  {
+    "id": 57,
+    "type": 3,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 801
+  },
+  {
+    "id": 58,
+    "type": 4,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 807
+  },
+  {
+    "id": 59,
+    "type": 4,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 803
+  },
+  {
+    "id": 60,
+    "type": 4,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 61,
+    "type": 4,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "common": 802
+  },
+  {
+    "id": 62,
+    "type": 4,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 801
+  },
+  {
+    "id": 63,
+    "type": 4,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "common": 806
+  },
+  {
+    "id": 64,
+    "type": 4,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "common": 805
+  },
+  {
+    "id": 65,
+    "type": 4,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "common": 807
+  },
+  {
+    "id": 66,
+    "type": 4,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 803
+  },
+  {
+    "id": 67,
+    "type": 1,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 68,
+    "type": 2,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "common": 800
+  },
+  {
+    "id": 69,
+    "type": 5,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "common": 802
+  },
+  {
+    "id": 70,
+    "type": 3,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "common": 803
+  },
+  {
+    "id": 71,
+    "type": 4,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "common": 803
+  },
+  {
+    "id": 72,
+    "type": 1,
+    "rarity": 5,
+    "domain": 400,
+    "elite": 900,
+    "common": 803
+  },
+  {
+    "id": 73,
+    "type": 2,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "common": 802
+  },
+  {
+    "id": 74,
+    "type": 5,
+    "rarity": 5,
+    "domain": 403,
+    "elite": 905,
+    "common": 805
+  },
+  {
+    "id": 75,
+    "type": 3,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "common": 800
+  },
+  {
+    "id": 76,
+    "type": 4,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "common": 800
+  },
+  {
+    "id": 77,
+    "type": 2,
+    "rarity": 5,
+    "domain": 404,
+    "elite": 904,
+    "common": 806
+  },
+  {
+    "id": 78,
+    "type": 5,
+    "rarity": 5,
+    "domain": 405,
+    "elite": 906,
+    "common": 806
+  },
+  {
+    "id": 79,
+    "type": 3,
+    "rarity": 5,
+    "domain": 405,
+    "elite": 906,
+    "common": 801
+  }
+]

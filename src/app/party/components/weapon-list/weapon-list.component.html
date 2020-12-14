@@ -1,0 +1,16 @@
+<div>
+  <div fxLayout="row wrap" fxLayoutGap="16px">
+    <div *ngFor="let weapon of weapons" class="weapon-list-item">
+      <app-item-image-container category="weapons" [id]="weapon.id" [rarity]="weapon.rarity"
+                                (click)="selectWeapon(weapon)">
+        <div *ngIf="party" container-bottom>
+          {{ i18nDict('ascensions.' + getWeaponAscension(weapon)) | translate }}
+          Lv.{{ getWeaponLevel(weapon) }}
+        </div>
+      </app-item-image-container>
+    </div>
+    <div class="weapon-list-item">
+      <ng-content select="[list-tail]"></ng-content>
+    </div>
+  </div>
+</div>

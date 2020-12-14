@@ -22,7 +22,7 @@ export class PartyCharacterComponent implements OnInit {
     this.dialog.open(CharacterListDialogComponent, {
       width: '1920px',
       data: {
-        title: 'add-character',
+        title: 'add',
         party: false,
         action: (dialog: MatDialogRef<CharacterListDialogComponent>, character: Character) => {
           this.characters.addPartyMember(character.id);
