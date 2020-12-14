@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CharacterPartyComponent} from './character-party.component';
+import {PartyCharacterComponent} from './party-character.component';
 import {PartyModule} from '../../party.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('CharacterPartyComponent', () => {
-  let component: CharacterPartyComponent;
-  let fixture: ComponentFixture<CharacterPartyComponent>;
+describe('PartyCharacterComponent', () => {
+  let component: PartyCharacterComponent;
+  let fixture: ComponentFixture<PartyCharacterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CharacterPartyComponent
+        PartyCharacterComponent
       ],
       imports: [
         PartyModule,
@@ -24,7 +24,7 @@ describe('CharacterPartyComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterPartyComponent);
+    fixture = TestBed.createComponent(PartyCharacterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,11 +6,11 @@ import {CharacterDetailDialogComponent} from '../../components/character-detail-
 import {Character} from '../../../shared/models/character';
 
 @Component({
-  selector: 'app-character-party',
-  templateUrl: './character-party.component.html',
-  styleUrls: ['./character-party.component.sass']
+  selector: 'app-party-character',
+  templateUrl: './party-character.component.html',
+  styleUrls: ['./party-character.component.sass']
 })
-export class CharacterPartyComponent implements OnInit {
+export class PartyCharacterComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private characters: CharacterService) {
   }
