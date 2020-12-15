@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {AbstractTranslateComponent} from '../abstract-translate.component';
 
 @Component({
@@ -6,7 +6,7 @@ import {AbstractTranslateComponent} from '../abstract-translate.component';
   templateUrl: './item-image-container.component.html',
   styleUrls: ['./item-image-container.component.sass']
 })
-export class ItemImageContainerComponent extends AbstractTranslateComponent implements OnInit {
+export class ItemImageContainerComponent extends AbstractTranslateComponent implements AfterViewInit {
 
   i18nKey = 'item-image-container';
 
@@ -18,6 +18,11 @@ export class ItemImageContainerComponent extends AbstractTranslateComponent impl
 
   @Input()
   rarity = 1;
+
+  @ViewChild('right', {read: ElementRef})
+  detail: ElementRef | undefined;
+
+  hasRight = false;
 
   constructor() {
     super();
@@ -35,7 +40,9 @@ export class ItemImageContainerComponent extends AbstractTranslateComponent impl
     return new Array(this.rarity);
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    const detailHasChild = this.detail?.nativeElement.childNodes.length ?? 0;
+    setTimeout(() => this.hasRight = detailHasChild > 1, 10);
   }
 
 }

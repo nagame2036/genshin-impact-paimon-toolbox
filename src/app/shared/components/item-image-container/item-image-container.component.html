@@ -1,20 +1,25 @@
-<div class="item-container page-one-col-center">
-  <div [class]="['img-container', 'item-rarity-' + rarity]">
-    <div class="item-container-top-left">
-      <ng-content select="[container-top-left]"></ng-content>
+<div fxLayout="row" class="item-container">
+  <div class="page-one-col-center">
+    <div [class]="['img-container' + (hasRight ? '-with-right' : '-non-right'), 'item-rarity-' + rarity]">
+      <div class="item-container-top-left">
+        <ng-content select="[container-top-left]"></ng-content>
+      </div>
+      <img class="item-img" [src]="src" [alt]="i18nDict(itemKey) | translate"/>
     </div>
-    <img class="item-img" [src]="src" [alt]="i18nDict(itemKey) | translate"/>
-  </div>
-  <div class="item-container-stars">
-    <svg *ngFor="let r of stars" width="16" height="16">
-      <path d="M 8.000 12.000 L 12.114 13.663 L 11.804 9.236 L 14.657
+    <div class="item-container-stars">
+      <svg *ngFor="let r of stars" width="16" height="16">
+        <path d="M 8.000 12.000 L 12.114 13.663 L 11.804 9.236 L 14.657
          5.837 L 10.351 4.764 L 8.000 1.000 L 5.649 4.764 L 1.343 5.837 L 4.196 9.236 L 3.886 13.663 L 8.000 12.000"
-            stroke="#000" stroke-width="1" fill="yellow">
-      </path>
-    </svg>
+              stroke="#000" stroke-width="1" fill="yellow">
+        </path>
+      </svg>
+    </div>
+    <span>{{ i18nDict(itemKey) | translate }}</span>
+    <div class="item-container-bottom">
+      <ng-content select="[container-bottom]"></ng-content>
+    </div>
   </div>
-  <span>{{ i18nDict(itemKey) | translate }}</span>
-  <div>
-    <ng-content select="[container-bottom]"></ng-content>
+  <div #right>
+    <ng-content select="[container-right]"></ng-content>
   </div>
 </div>

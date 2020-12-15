@@ -96,7 +96,10 @@
     "minutes": "分钟",
     "character": "角色",
     "weapon": "武器",
-    "ascension": "{{ label }}突破",
+    "constellation": "命之座",
+    "refine-rank": "精炼",
+    "ascension": "突破",
+    "ascension-label": "{{ label }}突破",
     "ascensions": {
       "0": "未突破",
       "1": "20突破",
@@ -106,7 +109,8 @@
       "5": "70突破",
       "6": "80突破"
     },
-    "level": "{{ label }}等级",
+    "level": "等级",
+    "level-label": "{{ label }}等级",
     "res": "{{ type }}抗",
     "dmg": "{{ type }}伤",
     "dmg-res": "{{ type }}伤减伤",

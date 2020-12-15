@@ -38,7 +38,7 @@ export class WeaponService {
 
   addPartyMember(id: number): void {
     this.changePartyMember(id, (weapon, party) => {
-      const newWeapon: PartyWeapon = {...weapon, ascension: Ascension.ZERO, level: 1};
+      const newWeapon: PartyWeapon = {...weapon, ascension: Ascension.ZERO, level: 1, refine: 1};
       this.database.add(this.storeName, newWeapon).subscribe(key => {
         newWeapon.key = key;
         this.#party = party.filter(c => c.key !== key);

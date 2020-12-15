@@ -46,7 +46,7 @@ export class CharacterService {
 
   addPartyMember(id: number): void {
     this.changePartyMember(id, (character, party, nonParty) => {
-      const newCharacter = {...character, ascension: 0, level: 1};
+      const newCharacter: PartyCharacter = {...character, ascension: 0, level: 1, constellation: 0, talent1: 1, talent2: 1, talent3: 1};
       this.database.update(this.storeName, newCharacter).subscribe(_ => {
         this.#party = party.filter(c => c.id !== id);
         this.#party.push(newCharacter);

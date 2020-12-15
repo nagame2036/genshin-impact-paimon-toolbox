@@ -1,7 +1,8 @@
 <div style="display: flex">
   <div class="statistic-field">
     <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label [translate]="i18nDict('ascension')" [translateParams]="{label: i18nDict('character') | translate}">
+      <mat-label [translate]="i18nDict('ascension-label')"
+                 [translateParams]="{label: i18nDict('character') | translate}">
       </mat-label>
       <mat-select [formControl]="ascensionControl" (selectionChange)="correct()">
         <mat-option *ngFor="let a of ascensions; let i = index" [value]="a">

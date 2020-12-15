@@ -44,4 +44,8 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   getWeaponAscension(weapon: Weapon): number {
     return (weapon as PartyWeapon)?.ascension ?? 0;
   }
+
+  getWeaponRefineRank(weapon: Weapon): number {
+    return (weapon as PartyWeapon)?.refine ?? 1;
+  }
 }

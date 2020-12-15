@@ -44,4 +44,22 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   getCharacterAscension(character: Character): number {
     return (character as PartyCharacter)?.ascension ?? 0;
   }
+
+  getCharacterConstellation(character: Character): number {
+    return (character as PartyCharacter)?.constellation ?? 0;
+  }
+
+  getCharacterTalent(character: Character, talent: number): number {
+    const party = character as PartyCharacter;
+    switch (talent) {
+      case 1:
+        return party.talent1;
+      case 2:
+        return party.talent2;
+      case 3:
+        return party.talent3;
+      default:
+        return 0;
+    }
+  }
 }
