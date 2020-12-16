@@ -4,6 +4,9 @@ import {CharacterService} from '../../../shared/services/character.service';
 import alasql from 'alasql';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {PartyCharacter} from '../../../shared/models/party-character';
+import {TalentLevel} from '../../../shared/models/talent-level';
+import {Constellation} from '../../../shared/models/constellation';
+import {Ascension} from '../../../shared/models/ascension.enum';
 
 @Component({
   selector: 'app-character-list',
@@ -33,7 +36,7 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
     characters.subscribe(res => this.characters = alasql(this.sql, [res]));
   }
 
-  selectCharacter(character: Character): void {
+  select(character: Character): void {
     this.selected.emit(character);
   }
 
@@ -41,25 +44,15 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
     return (character as PartyCharacter)?.level ?? 1;
   }
 
-  getCharacterAscension(character: Character): number {
-    return (character as PartyCharacter)?.ascension ?? 0;
+  getCharacterAscension(character: Character): Ascension {
+    return (character as PartyCharacter)?.ascension ?? Ascension.ZERO;
   }
 
-  getCharacterConstellation(character: Character): number {
+  getCharacterConstellation(character: Character): Constellation {
     return (character as PartyCharacter)?.constellation ?? 0;
   }
 
-  getCharacterTalent(character: Character, talent: number): number {
-    const party = character as PartyCharacter;
-    switch (talent) {
-      case 1:
-        return party.talent1;
-      case 2:
-        return party.talent2;
-      case 3:
-        return party.talent3;
-      default:
-        return 0;
-    }
+  getCharacterTalents(character: Character): TalentLevel[] {
+    return (character as PartyCharacter)?.talents ?? [];
   }
 }

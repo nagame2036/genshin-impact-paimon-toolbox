@@ -2,13 +2,13 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {AbstractTranslateComponent} from '../abstract-translate.component';
 
 @Component({
-  selector: 'app-item-image-container',
-  templateUrl: './item-image-container.component.html',
-  styleUrls: ['./item-image-container.component.sass']
+  selector: 'app-item-view',
+  templateUrl: './item-view.component.html',
+  styleUrls: ['./item-view.component.sass']
 })
-export class ItemImageContainerComponent extends AbstractTranslateComponent implements AfterViewInit {
+export class ItemViewComponent extends AbstractTranslateComponent implements AfterViewInit {
 
-  i18nKey = 'item-image-container';
+  i18nKey = 'item-view';
 
   @Input()
   category!: string;

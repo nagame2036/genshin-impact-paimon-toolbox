@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ItemImageContainerComponent} from './item-image-container.component';
+import {ItemViewComponent} from './item-view.component';
 import {InventoryModule} from '../../../inventory/inventory.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
 describe('ItemImageContainerComponent', () => {
-  let component: ItemImageContainerComponent;
-  let fixture: ComponentFixture<ItemImageContainerComponent>;
+  let component: ItemViewComponent;
+  let fixture: ComponentFixture<ItemViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        ItemImageContainerComponent
+        ItemViewComponent
       ],
       imports: [
         InventoryModule,
@@ -26,7 +26,7 @@ describe('ItemImageContainerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemImageContainerComponent);
+    fixture = TestBed.createComponent(ItemViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,5 +1,6 @@
 import {Weapon} from './weapon';
 import {Ascension} from './ascension.enum';
+import {RefineRank} from './refine-rank';
 
 export interface PartyWeapon extends Weapon {
 
@@ -12,8 +13,5 @@ export interface PartyWeapon extends Weapon {
 
   level: number;
 
-  /**
-   * Refine rank.
-   */
-  refine: 1 | 2 | 3 | 4 | 5;
+  refine: RefineRank;
 }

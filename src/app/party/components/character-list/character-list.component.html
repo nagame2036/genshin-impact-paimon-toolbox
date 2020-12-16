@@ -1,8 +1,8 @@
 <div>
   <div fxLayout="row wrap" fxLayoutGap="24px">
     <div *ngFor="let character of characters" class="character-list-item">
-      <app-item-image-container category="characters" [id]="character.id" [rarity]="character.rarity"
-                                (click)="selectCharacter(character)">
+      <app-item-view category="characters" [id]="character.id" [rarity]="character.rarity"
+                     (click)="select(character)">
         <div container-top-left>
           <img class="character-list-element-hint"
                [src]="'assets/images/elements/' + character.element + '.png'"
@@ -35,23 +35,23 @@
               <b>{{ i18nDict('talent') | translate: {num: 1} }}</b>
             </div>
             <div gdArea="talent1-data" class="character-list-party-overview-data">
-              {{ getCharacterTalent(character, 1) }}
+              {{ getCharacterTalents(character)[0] }}
             </div>
             <div gdArea="talent2" class="character-list-party-overview-label">
               <b>{{ i18nDict('talent') | translate: {num: 2} }}</b>
             </div>
             <div gdArea="talent2-data" class="character-list-party-overview-data">
-              {{ getCharacterTalent(character, 2) }}
+              {{ getCharacterTalents(character)[1] }}
             </div>
             <div gdArea="talent3" class="character-list-party-overview-label">
               <b>{{ i18nDict('talent') | translate: {num: 3} }}</b>
             </div>
             <div gdArea="talent3-data" class="character-list-party-overview-data">
-              {{ getCharacterTalent(character, 3) }}
+              {{ getCharacterTalents(character)[2] }}
             </div>
           </div>
         </div>
-      </app-item-image-container>
+      </app-item-view>
     </div>
     <div class="character-list-item">
       <ng-content select="[list-tail]"></ng-content>

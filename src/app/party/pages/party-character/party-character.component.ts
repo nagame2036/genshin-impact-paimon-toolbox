@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CharacterService} from '../../../shared/services/character.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {CharacterListDialogComponent} from '../../components/character-list-dialog/character-list-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {AddCharacterDialogComponent} from '../../components/add-character-dialog/add-character-dialog.component';
 import {CharacterDetailDialogComponent} from '../../components/character-detail-dialog/character-detail-dialog.component';
 import {Character} from '../../../shared/models/character';
 
@@ -12,26 +11,17 @@ import {Character} from '../../../shared/models/character';
 })
 export class PartyCharacterComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private characters: CharacterService) {
+  constructor(private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
 
   openAddCharacter(): void {
-    this.dialog.open(CharacterListDialogComponent, {
-      width: '1920px',
-      data: {
-        title: 'add',
-        party: false,
-        action: (dialog: MatDialogRef<CharacterListDialogComponent>, character: Character) => {
-          this.characters.addPartyMember(character.id);
-        }
-      }
-    });
+    this.dialog.open(AddCharacterDialogComponent, {data: {party: false}});
   }
 
   openCharacterDetail(character: Character): void {
-    this.dialog.open(CharacterDetailDialogComponent, {width: '240px', data: character});
+    this.dialog.open(CharacterDetailDialogComponent, {data: character});
   }
 }

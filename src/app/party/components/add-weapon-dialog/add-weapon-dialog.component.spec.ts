@@ -1,24 +1,24 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WeaponListDialogComponent} from './weapon-list-dialog.component';
+import {AddWeaponDialogComponent} from './add-weapon-dialog.component';
 import {PartyModule} from '../../party.module';
-import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('WeaponListDialogComponent', () => {
-  let component: WeaponListDialogComponent;
-  let fixture: ComponentFixture<WeaponListDialogComponent>;
+describe('AddWeaponDialogComponent', () => {
+  let component: AddWeaponDialogComponent;
+  let fixture: ComponentFixture<AddWeaponDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        WeaponListDialogComponent
+        AddWeaponDialogComponent
       ],
       imports: [
         PartyModule,
-        HttpClientModule,
+        BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
       ],
@@ -37,7 +37,7 @@ describe('WeaponListDialogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WeaponListDialogComponent);
+    fixture = TestBed.createComponent(AddWeaponDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

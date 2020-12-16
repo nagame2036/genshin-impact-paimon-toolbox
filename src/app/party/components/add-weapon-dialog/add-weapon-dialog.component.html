@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ i18n('add') | translate }}</h2>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+  <button *ngIf="selected" @formTrigger class="expand-list-btn" (click)="reset()">
+    {{ i18n('expand-list') | translate }}
+  </button>
+  <div *ngIf="!selected" @listTrigger>
+    <app-weapon-list [party]="data.party" (selected)="select($event)"></app-weapon-list>
+  </div>
+  <div *ngIf="selected" @formTrigger class="add-weapon-form"
+       gdGap="16px" gdAlignColumns="space-around center"
+       gdAreas="image form">
+    <div gdArea="image" style="width: 100px">
+      <app-item-view category="weapons" [id]="selected.id" [rarity]="selected.rarity"></app-item-view>
+    </div>
+    <div gdArea="form" fxLayout="column">
+      <app-ascension-level-select #ascension label="weapon" [horizontal]="false" (levelChange)="setLevel($event)">
+      </app-ascension-level-select>
+      <mat-form-field class="statistic-field" appearance="outline" floatLabel="always">
+        <mat-label>{{ i18nDict('refine-rank') | translate }}</mat-label>
+        <mat-select [(value)]="refine">
+          <mat-option *ngFor="let r of refineOptions" [value]="r">{{ r }}</mat-option>
+        </mat-select>
+        <div matSuffix>{{ i18nDict('refine-rank-unit') | translate }}</div>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div *ngIf="selected" mat-dialog-actions>
+  <button mat-flat-button color="primary" [disabled]="!selected || !level " (click)="add()">
+    {{ i18n('add') | translate }}
+  </button>
+</div>

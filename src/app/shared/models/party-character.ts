@@ -1,5 +1,7 @@
 import {Character} from './character';
 import {Ascension} from './ascension.enum';
+import {TalentLevel} from './talent-level';
+import {Constellation} from './constellation';
 
 export interface PartyCharacter extends Character {
 
@@ -7,11 +9,7 @@ export interface PartyCharacter extends Character {
 
   level: number;
 
-  constellation: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  constellation: Constellation;
 
-  talent1: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-
-  talent2: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-
-  talent3: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  talents: TalentLevel[];
 }

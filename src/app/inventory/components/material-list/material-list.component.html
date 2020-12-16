@@ -1,9 +1,9 @@
 <div>
   <div fxLayout="row wrap" fxLayoutGap="16px">
     <div *ngFor="let item of items || []" class="material-list-item">
-      <app-item-image-container category="materials" [id]="item.id" [rarity]="item.rarity">
+      <app-item-view category="materials" [id]="item.id" [rarity]="item.rarity">
         <app-amount-input container-bottom [id]="item.id"></app-amount-input>
-      </app-item-image-container>
+      </app-item-view>
     </div>
   </div>
 </div>

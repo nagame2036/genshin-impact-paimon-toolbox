@@ -29,10 +29,14 @@
     "party": {
       "character": {
         "add": "添加角色",
+        "add-success": "成功添加角色 - {{ name }}",
+        "expand-list": "展开角色列表",
         "remove": "移除角色"
       },
       "weapon": {
         "add": "添加武器",
+        "add-success": "成功添加武器 - {{ name }}",
+        "expand-list": "展开武器列表",
         "remove": "移除武器"
       }
     },
@@ -97,7 +101,9 @@
     "character": "角色",
     "weapon": "武器",
     "constellation": "命之座",
-    "refine-rank": "精炼",
+    "refine": "精炼",
+    "refine-rank": "精炼阶段",
+    "refine-rank-unit": "阶",
     "ascension": "突破",
     "ascension-label": "{{ label }}突破",
     "ascensions": {

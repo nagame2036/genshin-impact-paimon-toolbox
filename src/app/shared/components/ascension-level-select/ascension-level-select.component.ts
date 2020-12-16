@@ -1,8 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../abstract-translate.component';
-import {FormControl} from '@angular/forms';
 import {rangeList} from '../../utils/range-list';
 import {Level} from '../../models/level';
+import {Ascension} from '../../models/ascension.enum';
 
 @Component({
   selector: 'app-ascension-level-select',
@@ -13,31 +13,42 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
 
   i18nKey = 'shared.ascension-level';
 
+  @Input()
+  horizontal = true;
+
+  @Input()
+  label!: string;
+
   ascensions = rangeList(0, 6);
 
-  ascensionControl = new FormControl(6);
+  ascension: Ascension = Ascension.ZERO;
 
   levelLimit = Level.levelLimit;
 
   levels = this.levelLimit.map(i => rangeList(i.min, i.max));
 
-  levelControl = new FormControl(90);
+  level = 1;
 
   @Output()
-  level = new EventEmitter<Level>();
+  levelChange = new EventEmitter<Level>();
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
-    this.correct();
+    this.change();
   }
 
-  correct(): void {
-    const level = new Level(this.ascensionControl.value, this.levelControl.value);
-    this.levelControl.setValue(level.level);
-    this.level.emit(level);
+  change(): void {
+    const level = new Level(this.ascension, this.level);
+    this.level = level.level;
+    this.levelChange.emit(level);
+  }
+
+  reset(): void {
+    this.ascension = Ascension.ZERO;
+    this.level = 1;
   }
 
 }

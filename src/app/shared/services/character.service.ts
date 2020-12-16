@@ -4,6 +4,9 @@ import {ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character';
+import {Level} from '../models/level';
+import {Constellation} from '../models/constellation';
+import {TalentLevel} from '../models/talent-level';
 
 @Injectable({
   providedIn: 'root'
@@ -44,9 +47,9 @@ export class CharacterService {
     });
   }
 
-  addPartyMember(id: number): void {
+  addPartyMember(id: number, level: Level, constellation: Constellation, talents: TalentLevel[]): void {
     this.changePartyMember(id, (character, party, nonParty) => {
-      const newCharacter: PartyCharacter = {...character, ascension: 0, level: 1, constellation: 0, talent1: 1, talent2: 1, talent3: 1};
+      const newCharacter: PartyCharacter = {...character, ascension: level.ascension, level: level.level, constellation, talents};
       this.database.update(this.storeName, newCharacter).subscribe(_ => {
         this.#party = party.filter(c => c.id !== id);
         this.#party.push(newCharacter);

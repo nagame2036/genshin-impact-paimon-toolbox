@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 
 import {AscensionLevelSelectComponent} from './components/ascension-level-select/ascension-level-select.component';
-import {ItemImageContainerComponent} from './components/item-image-container/item-image-container.component';
+import {ItemViewComponent} from './components/item-view/item-view.component';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -13,7 +13,7 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {FlexModule} from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [AscensionLevelSelectComponent, ItemImageContainerComponent],
+  declarations: [AscensionLevelSelectComponent, ItemViewComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -31,7 +31,7 @@ import {FlexModule} from '@angular/flex-layout';
     TranslateModule,
     NgxIndexedDBModule,
     AscensionLevelSelectComponent,
-    ItemImageContainerComponent
+    ItemViewComponent
   ]
 })
 export class SharedModule {

@@ -4,7 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Weapon} from '../models/weapon';
 import {PartyWeapon} from '../models/party-weapon';
-import {Ascension} from '../models/ascension.enum';
+import {Level} from '../models/level';
+import {RefineRank} from '../models/refine-rank';
 
 @Injectable({
   providedIn: 'root'
@@ -36,9 +37,9 @@ export class WeaponService {
     });
   }
 
-  addPartyMember(id: number): void {
+  addPartyMember(id: number, level: Level, refine: RefineRank): void {
     this.changePartyMember(id, (weapon, party) => {
-      const newWeapon: PartyWeapon = {...weapon, ascension: Ascension.ZERO, level: 1, refine: 1};
+      const newWeapon: PartyWeapon = {...weapon, ascension: level.ascension, level: level.level, refine};
       this.database.add(this.storeName, newWeapon).subscribe(key => {
         newWeapon.key = key;
         this.#party = party.filter(c => c.key !== key);

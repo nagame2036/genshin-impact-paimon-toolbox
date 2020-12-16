@@ -1,6 +1,7 @@
 <div style="margin-top: 24px">
   <div class="statistic-row">
-    <app-ascension-level-select (level)="level.copyFrom($event); calc(true)"></app-ascension-level-select>
+    <app-ascension-level-select label="character" (levelChange)="level.copyFrom($event); calc(true)">
+    </app-ascension-level-select>
     <div class="statistic-field">
       <mat-form-field appearance="outline" floatLabel="always">
         <mat-label>{{ i18n('dmg-type') | translate }}</mat-label>

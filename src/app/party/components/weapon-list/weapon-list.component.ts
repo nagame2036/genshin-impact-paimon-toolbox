@@ -4,6 +4,8 @@ import {Weapon} from '../../../shared/models/weapon';
 import {WeaponService} from '../../../shared/services/weapon.service';
 import {PartyWeapon} from '../../../shared/models/party-weapon';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {Ascension} from '../../../shared/models/ascension.enum';
+import {RefineRank} from '../../../shared/models/refine-rank';
 
 @Component({
   selector: 'app-weapon-list',
@@ -41,11 +43,11 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
     return (weapon as PartyWeapon)?.level ?? 1;
   }
 
-  getWeaponAscension(weapon: Weapon): number {
-    return (weapon as PartyWeapon)?.ascension ?? 0;
+  getWeaponAscension(weapon: Weapon): Ascension {
+    return (weapon as PartyWeapon)?.ascension ?? Ascension.ZERO;
   }
 
-  getWeaponRefineRank(weapon: Weapon): number {
+  getWeaponRefineRank(weapon: Weapon): RefineRank {
     return (weapon as PartyWeapon)?.refine ?? 1;
   }
 }

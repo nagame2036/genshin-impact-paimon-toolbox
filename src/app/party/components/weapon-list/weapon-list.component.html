@@ -1,8 +1,8 @@
 <div>
   <div fxLayout="row wrap" fxLayoutGap="24px">
     <div *ngFor="let weapon of weapons" class="weapon-list-item">
-      <app-item-image-container category="weapons" [id]="weapon.id" [rarity]="weapon.rarity"
-                                (click)="selectWeapon(weapon)">
+      <app-item-view category="weapons" [id]="weapon.id" [rarity]="weapon.rarity"
+                     (click)="selectWeapon(weapon)">
         <div *ngIf="party" container-right>
           <div class="weapon-list-party-overview"
                gdGap="2px" gdColumns="auto auto" gdAlignColumns="space-around stretch"
@@ -20,14 +20,14 @@
               {{ getWeaponLevel(weapon) }}
             </div>
             <div gdArea="refine-rank" class="weapon-list-party-overview-label">
-              <b>{{ i18nDict('refine-rank') | translate }}</b>
+              <b>{{ i18nDict('refine') | translate }}</b>
             </div>
             <div gdArea="refine-rank-data" class="weapon-list-party-overview-data">
               {{ getWeaponRefineRank(weapon) }}
             </div>
           </div>
         </div>
-      </app-item-image-container>
+      </app-item-view>
     </div>
     <div class="weapon-list-item">
       <ng-content select="[list-tail]"></ng-content>
