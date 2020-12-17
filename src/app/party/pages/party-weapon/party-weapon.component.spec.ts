@@ -4,6 +4,7 @@ import {PartyWeaponComponent} from './party-weapon.component';
 import {PartyModule} from '../../party.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {AppTranslateModule} from '../../../app-translate.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('PartyWeaponComponent', () => {
   let component: PartyWeaponComponent;
@@ -16,6 +17,7 @@ describe('PartyWeaponComponent', () => {
       ],
       imports: [
         PartyModule,
+        BrowserAnimationsModule,
         AppIndexedDbModule,
         AppTranslateModule
       ]

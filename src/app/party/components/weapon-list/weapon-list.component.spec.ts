@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponListComponent} from './weapon-list.component';
+import {AppTranslateModule} from '../../../app-translate.module';
 
 describe('WeaponListComponent', () => {
   let component: WeaponListComponent;
@@ -10,6 +11,9 @@ describe('WeaponListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         WeaponListComponent
+      ],
+      imports: [
+        AppTranslateModule
       ]
     })
       .compileComponents();

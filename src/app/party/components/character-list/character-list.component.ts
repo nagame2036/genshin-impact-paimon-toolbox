@@ -2,6 +2,9 @@ import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleC
 import {Character} from '../../../shared/models/character';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import alasql from 'alasql';
+import {ElementType} from '../../../shared/models/element-type.enum';
+import {WeaponType} from '../../../shared/models/weapon-type.enum';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-character-list',
@@ -15,8 +18,6 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   @Input()
   party = false;
 
-  private readonly sql = 'SELECT * FROM ? ORDER BY rarity DESC, id DESC';
-
   @Input()
   characters: Character[] = [];
 
@@ -28,11 +29,42 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   @Output()
   selected = new EventEmitter<Character>();
 
+  sortFields = ['level', 'rarity', 'constellation'];
+
+  sort = 'level';
+
+  elementTypes = [ElementType.ANEMO, ElementType.GEO, ElementType.ELECTRO, ElementType.HYDRO, ElementType.PYRO, ElementType.CRYO];
+
+  elementFilter = this.elementTypes;
+
+  weaponTypes = [WeaponType.SWORD, WeaponType.CLAYMORE, WeaponType.CATALYST, WeaponType.BOW, WeaponType.POLEARM];
+
+  weaponFilter = this.weaponTypes;
+
   constructor() {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.items = alasql(this.sql, [this.characters]);
+    this.update();
+  }
+
+  update(): void {
+    const element = this.elementFilter.map(i => `element = ${i}`).join(' OR ');
+    const weapon = this.weaponFilter.map(i => `weapon = ${i}`).join(' OR ');
+    const sql = `SELECT * FROM ? items WHERE (${element}) AND (${weapon}) ORDER BY ${this.sort} DESC, id DESC`;
+    this.items = alasql(sql, [this.characters]);
+  }
+
+  changeElementFilter(change: MatSelectChange): void {
+    const value = change.value;
+    this.elementFilter = value.length > 0 ? value : [...this.elementFilter];
+    this.update();
+  }
+
+  changeWeaponFilter(change: MatSelectChange): void {
+    const value = change.value;
+    this.weaponFilter = value.length > 0 ? value : [...this.weaponFilter];
+    this.update();
   }
 }

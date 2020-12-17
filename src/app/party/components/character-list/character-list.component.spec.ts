@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterListComponent} from './character-list.component';
+import {AppTranslateModule} from '../../../app-translate.module';
 
 describe('CharacterListComponent', () => {
   let component: CharacterListComponent;
@@ -10,6 +11,9 @@ describe('CharacterListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CharacterListComponent
+      ],
+      imports: [
+        AppTranslateModule
       ]
     })
       .compileComponents();

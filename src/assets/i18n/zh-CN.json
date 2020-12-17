@@ -5,7 +5,9 @@
     "party": "Box",
     "character-stat": "角色面板",
     "inventory": "背包",
-    "resin": "树脂"
+    "resin": "树脂",
+    "characters": "角色列表",
+    "weapons": "武器列表"
   },
   "modules": {
     "home": {
@@ -31,13 +33,15 @@
         "add": "添加角色",
         "add-success": "成功添加角色 - {{ name }}",
         "expand-list": "展开角色列表",
-        "remove": "移除角色"
+        "remove": "移除角色",
+        "sort": "排序"
       },
       "weapon": {
         "add": "添加武器",
         "add-success": "成功添加武器 - {{ name }}",
         "expand-list": "展开武器列表",
-        "remove": "移除武器"
+        "remove": "移除武器",
+        "sort": "排序"
       }
     },
     "character-stat": {
@@ -98,6 +102,8 @@
     "genshin-impact": "原神",
     "resin": "树脂",
     "minutes": "分钟",
+    "rarity": "稀有度",
+    "type": "类型",
     "character": "角色",
     "weapon": "武器",
     "constellation": "命之座",
@@ -120,6 +126,7 @@
     "res": "{{ type }}抗",
     "dmg": "{{ type }}伤",
     "dmg-res": "{{ type }}伤减伤",
+    "element": "神之眼",
     "elements": {
       "0": "物",
       "1": "风",

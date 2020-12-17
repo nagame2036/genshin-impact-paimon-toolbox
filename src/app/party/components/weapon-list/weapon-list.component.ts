@@ -2,6 +2,8 @@ import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleC
 import alasql from 'alasql';
 import {Weapon} from '../../../shared/models/weapon';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {WeaponType} from '../../../shared/models/weapon-type.enum';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-weapon-list',
@@ -15,8 +17,6 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   @Input()
   party = false;
 
-  private readonly sql = 'SELECT * FROM ? ORDER BY rarity DESC, type, id DESC';
-
   @Input()
   weapons: Weapon[] = [];
 
@@ -28,11 +28,31 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   @Output()
   selected = new EventEmitter<Weapon>();
 
+  sortFields = ['level', 'rarity'];
+
+  sort = 'level';
+
+  types = [WeaponType.SWORD, WeaponType.CLAYMORE, WeaponType.CATALYST, WeaponType.BOW, WeaponType.POLEARM];
+
+  typeFilter = this.types;
+
   constructor() {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.items = alasql(this.sql, [this.weapons]);
+    this.update();
+  }
+
+  update(): void {
+    const type = this.typeFilter.map(i => `type = ${i}`).join(' OR ');
+    const sql = `SELECT * FROM ? items WHERE ${type} ORDER BY ${this.sort} DESC, id DESC`;
+    this.items = alasql(sql, [this.weapons]);
+  }
+
+  changeTypeFilter(change: MatSelectChange): void {
+    const value = change.value;
+    this.typeFilter = value.length > 0 ? value : [...this.typeFilter];
+    this.update();
   }
 }

@@ -1,6 +1,30 @@
-<div>
-  <div fxLayout="row wrap">
-    <ng-content select="[list-actions]"></ng-content>
+<div style="display: block; margin-top: 12px">
+  <div fxLayout="row wrap" fxLayoutGap="4px" style="margin-bottom: -16px">
+    <mat-form-field fxFlex="1 1 16%" appearance="outline" floatLabel="always">
+      <mat-label>{{ i18n('sort') | translate }}</mat-label>
+      <mat-select [value]="sort" (selectionChange)="sort = $event.value; update()">
+        <mat-option *ngFor="let f of sortFields" [value]="f">
+          {{ i18nDict(f) | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="1 1 16%" appearance="outline" floatLabel="always">
+      <mat-label>{{ i18nDict('element') | translate }}</mat-label>
+      <mat-select [value]="elementFilter" (selectionChange)="changeElementFilter($event)" multiple>
+        <mat-option *ngFor="let t of elementTypes" [value]="t">
+          {{ i18nDict('elements.' + t) | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="1 1 16%" appearance="outline" floatLabel="always">
+      <mat-label>{{ i18nDict('weapon') | translate }}</mat-label>
+      <mat-select [value]="weaponFilter" (selectionChange)="changeWeaponFilter($event)" multiple>
+        <mat-option *ngFor="let t of weaponTypes" [value]="t">
+          {{ i18nDict('weapon-types.' + t) | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-content fxFlex="1 1 auto" select="[list-actions]"></ng-content>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="24px">
     <div *ngFor="let item of items" class="character-list-item">

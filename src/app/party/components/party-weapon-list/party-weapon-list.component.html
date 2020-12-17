@@ -1,6 +1,6 @@
 <app-weapon-list [party]="true" [weapons]="weapons" (selected)="selected.emit($event)">
   <div list-actions>
-    <button type="button" mat-stroked-button (click)="create.emit($event)">
+    <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
       {{ i18n('add') | translate }}
     </button>
   </div>

@@ -4,6 +4,7 @@ import {PartyCharacterListComponent} from './party-character-list.component';
 import {PartyModule} from '../../party.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('PartyCharacterListComponent', () => {
   let component: PartyCharacterListComponent;
@@ -16,6 +17,7 @@ describe('PartyCharacterListComponent', () => {
       ],
       imports: [
         PartyModule,
+        BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
       ],
