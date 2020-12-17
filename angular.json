@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "genshin-impact-toolbox": {
+    "genshin-impact-paimon-toolbox": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/genshin-impact-toolbox",
+            "outputPath": "dist/genshin-impact-paimon-toolbox",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -70,18 +70,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "genshin-impact-toolbox:build"
+            "browserTarget": "genshin-impact-paimon-toolbox:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "genshin-impact-toolbox:build:production"
+              "browserTarget": "genshin-impact-paimon-toolbox:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "genshin-impact-toolbox:build"
+            "browserTarget": "genshin-impact-paimon-toolbox:build"
           }
         },
         "test": {
@@ -118,18 +118,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "genshin-impact-toolbox:serve"
+            "devServerTarget": "genshin-impact-paimon-toolbox:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "genshin-impact-toolbox:serve:production"
+              "devServerTarget": "genshin-impact-paimon-toolbox:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "genshin-impact-toolbox",
+  "defaultProject": "genshin-impact-paimon-toolbox",
   "cli": {
     "analytics": "fd5d757b-e4b7-45e7-a590-34a8e4beea98"
   }

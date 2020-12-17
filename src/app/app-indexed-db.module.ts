@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {DBConfig, NgxIndexedDBModule} from 'ngx-indexed-db';
 
 const config: DBConfig = {
-  name: 'GenshinImpactToolbox',
+  name: 'PaimonToolbox',
   version: 1,
   objectStoresMeta: [
     {
