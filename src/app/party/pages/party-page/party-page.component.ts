@@ -10,6 +10,8 @@ export class PartyPageComponent extends AbstractTranslateComponent implements On
 
   i18nKey = 'party';
 
+  links = ['characters', 'weapons'];
+
   constructor() {
     super();
   }

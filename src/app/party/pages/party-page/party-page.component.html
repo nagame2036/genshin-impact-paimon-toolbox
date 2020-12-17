@@ -1,10 +1,9 @@
-<div class="party-page">
-  <mat-tab-group class="inventory-tab-group">
-    <mat-tab [label]="i18nDict('character') | translate">
-      <app-party-character></app-party-character>
-    </mat-tab>
-    <mat-tab [label]="i18nDict('weapon') | translate">
-      <app-party-weapon></app-party-weapon>
-    </mat-tab>
-  </mat-tab-group>
+<div class="party-page page-one-col">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of links" [routerLink]="link"
+       routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      {{ 'path.' + link | translate }}
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
