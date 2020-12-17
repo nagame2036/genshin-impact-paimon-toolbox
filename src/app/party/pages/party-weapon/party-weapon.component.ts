@@ -17,11 +17,11 @@ export class PartyWeaponComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openAddWeapon(): void {
-    this.dialog.open(AddWeaponDialogComponent, {data: {party: false}});
+  openAddDialog(): void {
+    this.dialog.open(AddWeaponDialogComponent);
   }
 
-  openWeaponDetail(weapon: Weapon): void {
+  openDetail(weapon: Weapon): void {
     this.dialog.open(WeaponDetailDialogComponent, {data: weapon});
   }
 }

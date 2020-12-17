@@ -5,7 +5,7 @@
     {{ i18n('expand-list') | translate }}
   </button>
   <div *ngIf="!selected" @listTrigger>
-    <app-character-list [party]="data.party" (selected)="select($event)"></app-character-list>
+    <app-character-list [characters]="characters" (selected)="select($event)"></app-character-list>
   </div>
   <div *ngIf="selected" @formTrigger class="add-character-form"
        gdGap="16px" gdAlignColumns="space-around center" gdAreas="image form">

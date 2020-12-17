@@ -1,8 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponListComponent} from './weapon-list.component';
-import {HttpClientModule} from '@angular/common/http';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
 describe('WeaponListComponent', () => {
   let component: WeaponListComponent;
@@ -12,10 +10,6 @@ describe('WeaponListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         WeaponListComponent
-      ],
-      imports: [
-        HttpClientModule,
-        AppIndexedDbModule
       ]
     })
       .compileComponents();

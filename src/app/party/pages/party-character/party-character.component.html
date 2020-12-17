@@ -1,9 +1,3 @@
-<div>
-  <app-character-list [party]="true" (selected)="openCharacterDetail($event)">
-    <div list-tail>
-      <button type="button" class="add-party-member-character-button" mat-stroked-button (click)="openAddCharacter()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-  </app-character-list>
+<div style="margin-top: 12px">
+  <app-party-character-list (selected)="openDetail($event)" (create)="openAddDialog()"></app-party-character-list>
 </div>

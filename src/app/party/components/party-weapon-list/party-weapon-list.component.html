@@ -1,0 +1,30 @@
+<app-weapon-list [party]="true" [weapons]="weapons" (selected)="selected.emit($event)">
+  <div list-actions>
+    <button type="button" mat-stroked-button (click)="create.emit($event)">
+      {{ i18n('add') | translate }}
+    </button>
+  </div>
+  <ng-template let-item #right>
+    <div class="party-weapon-overview" gdGap="2px" gdColumns="auto auto" gdAlignColumns="space-around stretch"
+         gdAreas="ascension ascension-data | level level-data | refine-rank refine-rank-data">
+      <div gdArea="ascension" class="party-weapon-overview-label">
+        <b>{{ i18nDict('ascension') | translate }}</b>
+      </div>
+      <div gdArea="ascension-data" class="party-weapon-overview-data">
+        {{ i18nDict('ascensions.' + getAscension(item)) | translate }}
+      </div>
+      <div gdArea="level" class="party-weapon-overview-label">
+        <b>{{ i18nDict('level') | translate }}</b>
+      </div>
+      <div gdArea="level-data" class="party-weapon-overview-data">
+        {{ getLevel(item) }}
+      </div>
+      <div gdArea="refine-rank" class="party-weapon-overview-label">
+        <b>{{ i18nDict('refine') | translate }}</b>
+      </div>
+      <div gdArea="refine-rank-data" class="party-weapon-overview-data">
+        {{ getRefineRank(item) }}
+      </div>
+    </div>
+  </ng-template>
+</app-weapon-list>

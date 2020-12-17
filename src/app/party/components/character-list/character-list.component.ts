@@ -1,19 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {Character} from '../../../shared/models/character';
-import {CharacterService} from '../../../shared/services/character.service';
-import alasql from 'alasql';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {PartyCharacter} from '../../../shared/models/party-character';
-import {TalentLevel} from '../../../shared/models/talent-level';
-import {Constellation} from '../../../shared/models/constellation';
-import {Ascension} from '../../../shared/models/ascension.enum';
+import alasql from 'alasql';
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.sass']
 })
-export class CharacterListComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterListComponent extends AbstractTranslateComponent implements OnChanges {
 
   i18nKey = 'party.character';
 
@@ -22,37 +17,22 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
 
   private readonly sql = 'SELECT * FROM ? ORDER BY rarity DESC, id DESC';
 
+  @Input()
   characters: Character[] = [];
+
+  items!: Character[];
+
+  @ContentChild('right', {static: false})
+  rightTemplateRef!: TemplateRef<any>;
 
   @Output()
   selected = new EventEmitter<Character>();
 
-  constructor(private characterService: CharacterService) {
+  constructor() {
     super();
   }
 
-  ngOnInit(): void {
-    const characters = this.party ? this.characterService.party : this.characterService.nonParty;
-    characters.subscribe(res => this.characters = alasql(this.sql, [res]));
-  }
-
-  select(character: Character): void {
-    this.selected.emit(character);
-  }
-
-  getCharacterLevel(character: Character): number {
-    return (character as PartyCharacter)?.level ?? 1;
-  }
-
-  getCharacterAscension(character: Character): Ascension {
-    return (character as PartyCharacter)?.ascension ?? Ascension.ZERO;
-  }
-
-  getCharacterConstellation(character: Character): Constellation {
-    return (character as PartyCharacter)?.constellation ?? 0;
-  }
-
-  getCharacterTalents(character: Character): TalentLevel[] {
-    return (character as PartyCharacter)?.talents ?? [];
+  ngOnChanges(changes: SimpleChanges): void {
+    this.items = alasql(this.sql, [this.characters]);
   }
 }

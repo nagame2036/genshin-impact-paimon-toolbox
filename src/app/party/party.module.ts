@@ -11,6 +11,8 @@ import {PartyWeaponComponent} from './pages/party-weapon/party-weapon.component'
 import {WeaponListComponent} from './components/weapon-list/weapon-list.component';
 import {AddWeaponDialogComponent} from './components/add-weapon-dialog/add-weapon-dialog.component';
 import {WeaponDetailDialogComponent} from './components/weapon-detail-dialog/weapon-detail-dialog.component';
+import {PartyCharacterListComponent} from './components/party-character-list/party-character-list.component';
+import {PartyWeaponListComponent} from './components/party-weapon-list/party-weapon-list.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
@@ -33,7 +35,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     PartyWeaponComponent,
     WeaponListComponent,
     AddWeaponDialogComponent,
-    WeaponDetailDialogComponent
+    WeaponDetailDialogComponent,
+    PartyCharacterListComponent,
+    PartyWeaponListComponent
   ],
   imports: [
     SharedModule,

@@ -1,60 +1,19 @@
 <div>
+  <div fxLayout="row wrap">
+    <ng-content select="[list-actions]"></ng-content>
+  </div>
   <div fxLayout="row wrap" fxLayoutGap="24px">
-    <div *ngFor="let character of characters" class="character-list-item">
-      <app-item-view category="characters" [id]="character.id" [rarity]="character.rarity"
-                     (click)="select(character)">
+    <div *ngFor="let item of items" class="character-list-item">
+      <app-item-view category="characters" [id]="item.id" [rarity]="item.rarity" (click)="selected.emit(item);">
         <div container-top-left>
           <img class="character-list-element-hint"
-               [src]="'assets/images/elements/' + character.element + '.png'"
-               [alt]="i18nDict('elements.' + character.element) | translate">
+               [src]="'assets/images/elements/' + item.element + '.png'"
+               [alt]="i18nDict('elements.' + item.element) | translate">
         </div>
-        <div *ngIf="party" container-right>
-          <div class="character-list-party-overview"
-               gdGap="2px" gdColumns="auto auto" gdAlignColumns="space-around stretch"
-               gdAreas="ascension ascension-data | level level-data | constellation constellation-data
-                      | talent1 talent1-data | talent2 talent2-data | talent3 talent3-data">
-            <div gdArea="ascension" class="character-list-party-overview-label">
-              <b>{{ i18nDict('ascension') | translate }}</b>
-            </div>
-            <div gdArea="ascension-data" class="character-list-party-overview-data">
-              {{ i18nDict('ascensions.' + getCharacterAscension(character)) | translate }}
-            </div>
-            <div gdArea="level" class="character-list-party-overview-label">
-              <b>{{ i18nDict('level') | translate }}</b>
-            </div>
-            <div gdArea="level-data" class="character-list-party-overview-data">
-              {{ getCharacterLevel(character) }}
-            </div>
-            <div gdArea="constellation" class="character-list-party-overview-label">
-              <b>{{ i18nDict('constellation') | translate }}</b>
-            </div>
-            <div gdArea="constellation-data" class="character-list-party-overview-data">
-              {{ getCharacterConstellation(character) }}
-            </div>
-            <div gdArea="talent1" class="character-list-party-overview-label">
-              <b>{{ i18nDict('talent') | translate: {num: 1} }}</b>
-            </div>
-            <div gdArea="talent1-data" class="character-list-party-overview-data">
-              {{ getCharacterTalents(character)[0] }}
-            </div>
-            <div gdArea="talent2" class="character-list-party-overview-label">
-              <b>{{ i18nDict('talent') | translate: {num: 2} }}</b>
-            </div>
-            <div gdArea="talent2-data" class="character-list-party-overview-data">
-              {{ getCharacterTalents(character)[1] }}
-            </div>
-            <div gdArea="talent3" class="character-list-party-overview-label">
-              <b>{{ i18nDict('talent') | translate: {num: 3} }}</b>
-            </div>
-            <div gdArea="talent3-data" class="character-list-party-overview-data">
-              {{ getCharacterTalents(character)[2] }}
-            </div>
-          </div>
-        </div>
+        <ng-container container-right *ngIf="party && rightTemplateRef"
+                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+        </ng-container>
       </app-item-view>
-    </div>
-    <div class="character-list-item">
-      <ng-content select="[list-tail]"></ng-content>
     </div>
   </div>
 </div>

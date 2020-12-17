@@ -2,8 +2,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PartyCharacterComponent} from './party-character.component';
 import {PartyModule} from '../../party.module';
-import {HttpClientModule} from '@angular/common/http';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {AppTranslateModule} from '../../../app-translate.module';
 
 describe('PartyCharacterComponent', () => {
   let component: PartyCharacterComponent;
@@ -16,8 +16,8 @@ describe('PartyCharacterComponent', () => {
       ],
       imports: [
         PartyModule,
-        HttpClientModule,
-        AppIndexedDbModule
+        AppIndexedDbModule,
+        AppTranslateModule
       ]
     })
       .compileComponents();

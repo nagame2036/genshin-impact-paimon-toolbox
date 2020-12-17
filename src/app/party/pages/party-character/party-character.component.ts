@@ -11,17 +11,19 @@ import {Character} from '../../../shared/models/character';
 })
 export class PartyCharacterComponent implements OnInit {
 
+  i18nKey = 'party.character';
+
   constructor(private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
 
-  openAddCharacter(): void {
-    this.dialog.open(AddCharacterDialogComponent, {data: {party: false}});
+  openAddDialog(): void {
+    this.dialog.open(AddCharacterDialogComponent);
   }
 
-  openCharacterDetail(character: Character): void {
+  openDetail(character: Character): void {
     this.dialog.open(CharacterDetailDialogComponent, {data: character});
   }
 }

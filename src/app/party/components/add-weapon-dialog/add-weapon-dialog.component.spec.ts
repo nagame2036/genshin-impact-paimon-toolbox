@@ -4,7 +4,6 @@ import {AddWeaponDialogComponent} from './add-weapon-dialog.component';
 import {PartyModule} from '../../party.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AddWeaponDialogComponent', () => {
@@ -21,16 +20,6 @@ describe('AddWeaponDialogComponent', () => {
         BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
-      ],
-      providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        },
-        {
-          provide: MAT_DIALOG_DATA,
-          useValue: {}
-        }
       ]
     })
       .compileComponents();

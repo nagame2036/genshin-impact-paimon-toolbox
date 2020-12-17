@@ -1,36 +1,14 @@
 <div>
+  <div fxLayout="row wrap">
+    <ng-content select="[list-actions]"></ng-content>
+  </div>
   <div fxLayout="row wrap" fxLayoutGap="24px">
-    <div *ngFor="let weapon of weapons" class="weapon-list-item">
-      <app-item-view category="weapons" [id]="weapon.id" [rarity]="weapon.rarity"
-                     (click)="selectWeapon(weapon)">
-        <div *ngIf="party" container-right>
-          <div class="weapon-list-party-overview"
-               gdGap="2px" gdColumns="auto auto" gdAlignColumns="space-around stretch"
-               gdAreas="ascension ascension-data | level level-data | refine-rank refine-rank-data">
-            <div gdArea="ascension" class="weapon-list-party-overview-label">
-              <b>{{ i18nDict('ascension') | translate }}</b>
-            </div>
-            <div gdArea="ascension-data" class="weapon-list-party-overview-data">
-              {{ i18nDict('ascensions.' + getWeaponAscension(weapon)) | translate }}
-            </div>
-            <div gdArea="level" class="weapon-list-party-overview-label">
-              <b>{{ i18nDict('level') | translate }}</b>
-            </div>
-            <div gdArea="level-data" class="weapon-list-party-overview-data">
-              {{ getWeaponLevel(weapon) }}
-            </div>
-            <div gdArea="refine-rank" class="weapon-list-party-overview-label">
-              <b>{{ i18nDict('refine') | translate }}</b>
-            </div>
-            <div gdArea="refine-rank-data" class="weapon-list-party-overview-data">
-              {{ getWeaponRefineRank(weapon) }}
-            </div>
-          </div>
-        </div>
+    <div *ngFor="let item of items" class="weapon-list-item">
+      <app-item-view category="weapons" [id]="item.id" [rarity]="item.rarity" (click)="selected.emit(item)">
+        <ng-container *ngIf="party && rightTemplateRef" container-right
+                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+        </ng-container>
       </app-item-view>
-    </div>
-    <div class="weapon-list-item">
-      <ng-content select="[list-tail]"></ng-content>
     </div>
   </div>
 </div>

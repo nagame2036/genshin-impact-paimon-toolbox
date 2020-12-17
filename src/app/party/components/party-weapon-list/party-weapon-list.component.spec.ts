@@ -1,30 +1,30 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {PartyWeaponComponent} from './party-weapon.component';
+import {PartyWeaponListComponent} from './party-weapon-list.component';
 import {PartyModule} from '../../party.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {AppTranslateModule} from '../../../app-translate.module';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('PartyWeaponComponent', () => {
-  let component: PartyWeaponComponent;
-  let fixture: ComponentFixture<PartyWeaponComponent>;
+describe('PartyWeaponListComponent', () => {
+  let component: PartyWeaponListComponent;
+  let fixture: ComponentFixture<PartyWeaponListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        PartyWeaponComponent
+        PartyWeaponListComponent
       ],
       imports: [
         PartyModule,
-        AppIndexedDbModule,
-        AppTranslateModule
-      ]
+        AppTranslateModule,
+        AppIndexedDbModule
+      ],
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartyWeaponComponent);
+    fixture = TestBed.createComponent(PartyWeaponListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

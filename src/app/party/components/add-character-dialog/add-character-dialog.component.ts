@@ -1,8 +1,6 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Character} from '../../../shared/models/character';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {animate, style, transition, trigger} from '@angular/animations';
 import {AscensionLevelSelectComponent} from '../../../shared/components/ascension-level-select/ascension-level-select.component';
 import {Level} from '../../../shared/models/level';
 import {CharacterService} from '../../../shared/services/character.service';
@@ -11,35 +9,19 @@ import {TalentLevel} from '../../../shared/models/talent-level';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
+import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
 
 @Component({
   selector: 'app-character-select-dialog',
   templateUrl: './add-character-dialog.component.html',
   styleUrls: ['./add-character-dialog.component.sass'],
-  animations: [
-    trigger('listTrigger', [
-      transition(':leave', [
-        animate('400ms ease-in', style({transform: 'translate(-100%, -120%)'})),
-      ]),
-      transition(':enter', [
-        style({transform: 'translate(-100%, -120%)'}),
-        animate('400ms ease-out'), style({transform: 'translate(0, 0)'}),
-      ])
-    ]),
-    trigger('formTrigger', [
-      transition(':leave', [
-        animate('500ms ease-in', style({opacity: 0}))
-      ]),
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('500ms ease-in', style({opacity: 1}))
-      ])
-    ])
-  ]
+  animations: addItemDialogAnimation
 })
 export class AddCharacterDialogComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'party.character';
+
+  characters: Character[] = [];
 
   selected: Character | undefined;
 
@@ -56,12 +38,12 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
 
   talents: { value: TalentLevel }[] = [{value: 1}, {value: 1}, {value: 1}];
 
-  constructor(private service: CharacterService, @Inject(MAT_DIALOG_DATA) public data: { party: boolean },
-              private snake: MatSnackBar, private translator: TranslateService) {
+  constructor(private service: CharacterService, private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
   ngOnInit(): void {
+    this.service.nonParty.subscribe(res => this.characters = res);
   }
 
   select(character: Character): void {
@@ -89,4 +71,3 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
     }
   }
 }
-

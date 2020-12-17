@@ -1,8 +1,6 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Weapon} from '../../../shared/models/weapon';
-import {animate, style, transition, trigger} from '@angular/animations';
 import {Level} from '../../../shared/models/level';
 import {AscensionLevelSelectComponent} from '../../../shared/components/ascension-level-select/ascension-level-select.component';
 import {WeaponService} from '../../../shared/services/weapon.service';
@@ -10,35 +8,19 @@ import {RefineRank} from '../../../shared/models/refine-rank';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
+import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
 
 @Component({
   selector: 'app-add-weapon-dialog',
   templateUrl: './add-weapon-dialog.component.html',
   styleUrls: ['./add-weapon-dialog.component.sass'],
-  animations: [
-    trigger('listTrigger', [
-      transition(':leave', [
-        animate('400ms ease-in', style({transform: 'translate(-100%, -120%)'})),
-      ]),
-      transition(':enter', [
-        style({transform: 'translate(-100%, -120%)'}),
-        animate('400ms ease-out'), style({transform: 'translate(0, 0)'}),
-      ])
-    ]),
-    trigger('formTrigger', [
-      transition(':leave', [
-        animate('500ms ease-in', style({opacity: 0}))
-      ]),
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('500ms ease-in', style({opacity: 1}))
-      ])
-    ])
-  ]
+  animations: addItemDialogAnimation
 })
 export class AddWeaponDialogComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'party.weapon';
+
+  weapons: Weapon[] = [];
 
   selected: Weapon | undefined;
 
@@ -51,12 +33,12 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   refine: RefineRank = 1;
 
-  constructor(private service: WeaponService, @Inject(MAT_DIALOG_DATA) public data: { party: boolean },
-              private snake: MatSnackBar, private translator: TranslateService) {
+  constructor(private service: WeaponService, private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
   ngOnInit(): void {
+    this.service.weapons.subscribe(res => this.weapons = res);
   }
 
   select(weapon: Weapon): void {

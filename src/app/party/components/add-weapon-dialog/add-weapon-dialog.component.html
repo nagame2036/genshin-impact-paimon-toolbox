@@ -5,7 +5,7 @@
     {{ i18n('expand-list') | translate }}
   </button>
   <div *ngIf="!selected" @listTrigger>
-    <app-weapon-list [party]="data.party" (selected)="select($event)"></app-weapon-list>
+    <app-weapon-list [weapons]="weapons" (selected)="select($event)"></app-weapon-list>
   </div>
   <div *ngIf="selected" @formTrigger class="add-weapon-form"
        gdGap="16px" gdAlignColumns="space-around center"
