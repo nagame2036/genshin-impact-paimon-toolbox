@@ -15,14 +15,14 @@
     <div gdArea="form" fxLayout="column">
       <app-ascension-level-select #ascension label="character" [horizontal]="false" (levelChange)="setLevel($event)">
       </app-ascension-level-select>
-      <mat-form-field class="statistic-field" appearance="outline" floatLabel="always">
+      <mat-form-field class="app-form-field" appearance="outline" floatLabel="always">
         <mat-label>{{ i18nDict('constellation') | translate }}</mat-label>
         <mat-select [(value)]="constellation">
           <mat-option *ngFor="let level of constellationLevels" [value]="level">{{ level }}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngFor="let talent of talents; let i = index"
-                      class="statistic-field" appearance="outline" floatLabel="always">
+                      class="app-form-field" appearance="outline" floatLabel="always">
         <mat-label>{{ i18nDict('talent') | translate: {num: i + 1} }}</mat-label>
         <mat-select [(value)]="talent.value">
           <mat-option *ngFor="let level of talentLevels" [value]="level">{{ level }}</mat-option>

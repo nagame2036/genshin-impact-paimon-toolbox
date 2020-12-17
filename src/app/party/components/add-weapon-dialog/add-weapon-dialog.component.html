@@ -16,7 +16,7 @@
     <div gdArea="form" fxLayout="column">
       <app-ascension-level-select #ascension label="weapon" [horizontal]="false" (levelChange)="setLevel($event)">
       </app-ascension-level-select>
-      <mat-form-field class="statistic-field" appearance="outline" floatLabel="always">
+      <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
         <mat-label>{{ i18nDict('refine-rank') | translate }}</mat-label>
         <mat-select [(value)]="refine">
           <mat-option *ngFor="let r of refineOptions" [value]="r">{{ r }}</mat-option>

@@ -1,59 +1,48 @@
 <div class="character-stat-calculator-page">
-  <div style="display: flex">
-    <div class="statistic-field">
-      <mat-form-field (change)="enemyLevel.correct(); this.calc()" (input)="this.calc()"
-                      appearance="outline" floatLabel="always">
-        <mat-label [translate]="i18nDict('level')"
-                   [translateParams]="{label: i18nDict('enemy') | translate}">
-        </mat-label>
-        <input [formControl]="enemyLevel.control" [max]="enemyLevel.max" [min]="enemyLevel.min"
-               matInput required type="number"/>
-      </mat-form-field>
-    </div>
-    <div class="statistic-field">
-      <mat-form-field (change)="enemyElementalRes.correct(); this.calc()" (input)="this.calc()"
-                      appearance="outline" floatLabel="always">
-        <mat-label [translate]="i18nDict('res')"
-                   [translateParams]="{
+  <div fxLayout="row">
+    <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
+                    (change)="enemyLevel.correct(); this.calc()" (input)="this.calc()">
+      <mat-label [translate]="i18nDict('level')"
+                 [translateParams]="{label: i18nDict('enemy') | translate}">
+      </mat-label>
+      <input [formControl]="enemyLevel.control" [max]="enemyLevel.max" [min]="enemyLevel.min"
+             matInput required type="number"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
+                    (change)="enemyElementalRes.correct(); this.calc()" (input)="this.calc()">
+      <mat-label [translate]="i18nDict('res')" [translateParams]="{
                      label: i18nDict('enemy') | translate,
                      type: i18nDict('elements.' + dmgType) | translate
                    }">
-        </mat-label>
-        <input [formControl]="enemyElementalRes.control" [max]="enemyElementalRes.max" [min]="enemyElementalRes.min"
-               matInput required type="number"/>
-        <div matSuffix>%</div>
-      </mat-form-field>
-    </div>
-    <div class="statistic-field">
-      <mat-form-field appearance="outline" floatLabel="always">
-        <mat-label [translate]="i18nDict('dmg-res')"
-                   [translateParams]="{
+      </mat-label>
+      <input [formControl]="enemyElementalRes.control" [max]="enemyElementalRes.max" [min]="enemyElementalRes.min"
+             matInput required type="number"/>
+      <div matSuffix>%</div>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
+      <mat-label [translate]="i18nDict('dmg-res')" [translateParams]="{
                      label: i18nDict('enemy') | translate,
                      type: i18nDict('elements.' + dmgType) | translate
                    }">
-        </mat-label>
-        <input [value]="enemyDmgRes | number: '1.1-1'" matInput readonly/>
-        <div matSuffix>%</div>
-      </mat-form-field>
-    </div>
+      </mat-label>
+      <input [value]="enemyDmgRes | number: '1.1-1'" matInput readonly/>
+      <div matSuffix>%</div>
+    </mat-form-field>
   </div>
-  <mat-divider inset></mat-divider>
-  <div class="talent-grid">
-    <div class="flex-column" *ngFor="let t of talents, let i = index">
-      <div class="statistic-field">
-        <mat-form-field (change)="t.correct(); this.calc()" (input)="this.calc()"
-                        appearance="outline" floatLabel="always">
-          <mat-label>{{ i18nDict('talent') | translate: {num: i + 1} }}</mat-label>
-          <input [formControl]="t.control" [max]="t.max" [min]="t.min" matInput required type="number"/>
-          <div matSuffix>%</div>
-        </mat-form-field>
-      </div>
-      <div *ngFor="let dmg of dmgFields[i], let j = index" class="statistic-field">
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>{{ i18nDict(dmgLabels[j]) | translate: {num: i + 1} }}</mat-label>
-          <input [value]="dmg | number: '1.1-1'" matInput readonly/>
-        </mat-form-field>
-      </div>
+  <mat-divider inset style="margin-top: 8px"></mat-divider>
+  <div fxLayout="row" style="margin-top: 4px">
+    <div fxLayout="column" *ngFor="let t of talents, let i = index">
+      <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
+                      (change)="t.correct(); this.calc()" (input)="this.calc()">
+        <mat-label>{{ i18nDict('talent') | translate: {num: i + 1} }}</mat-label>
+        <input [formControl]="t.control" [max]="t.max" [min]="t.min" matInput required type="number"/>
+        <div matSuffix>%</div>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
+                      *ngFor="let dmg of dmgFields[i], let j = index">
+        <mat-label>{{ i18nDict(dmgLabels[j]) | translate: {num: i + 1} }}</mat-label>
+        <input [value]="dmg | number: '1.1-1'" matInput readonly/>
+      </mat-form-field>
     </div>
   </div>
 </div>

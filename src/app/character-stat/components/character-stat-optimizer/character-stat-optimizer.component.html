@@ -1,8 +1,8 @@
 <div class="character-stat-optimizer-page">
-  <div class="flex-column">
+  <div fxLayout="column">
     <div *ngFor="let f of fields">
-      <div style="display: flex" *ngIf="f.visible()">
-        <div *ngFor="let s of f.fields" class="statistic-field">
+      <div fxLayout="row" *ngIf="f.visible()" style="height: 48px">
+        <div *ngFor="let s of f.fields" class="app-form-field">
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label [translate]="i18n(s.label)"
                        [translateParams]="{label: i18n(f.label) | translate}"></mat-label>
@@ -10,7 +10,7 @@
             <div matSuffix>%</div>
           </mat-form-field>
         </div>
-        <div class="statistic-optimizer-button">
+        <div class="character-stat-optimizer-button">
           <button mat-raised-button (click)="f.action()" [color]="f.color">{{ i18n(f.actionText) | translate }}</button>
         </div>
       </div>
