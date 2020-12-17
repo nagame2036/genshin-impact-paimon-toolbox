@@ -630,5 +630,13 @@
     "domain": 405,
     "elite": 906,
     "common": 801
+  },
+  {
+    "id": 80,
+    "type": 1,
+    "rarity": 3,
+    "domain": 403,
+    "elite": 905,
+    "common": 801
   }
 ]
