@@ -11,13 +11,6 @@
   align-items: center
   justify-items: center
   overflow: hidden
-
-.img-container-with-right
-  @extend .img-container
-  border-radius: 4px 0 0 0
-
-.img-container-non-right
-  @extend .img-container
   border-radius: 4px 4px 16px 0
 
 .item-rarity-1
@@ -54,9 +47,3 @@
   left: 0
   top: 0
   z-index: 1
-
-\:host ::ng-deep [container-bottom]
-  padding-bottom: 4px
-
-\:host ::ng-deep [container-right]
-  border-left: solid 1px #e0e0e0

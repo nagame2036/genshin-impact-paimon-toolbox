@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractTranslateComponent} from '../abstract-translate.component';
 
 @Component({
@@ -6,7 +6,7 @@ import {AbstractTranslateComponent} from '../abstract-translate.component';
   templateUrl: './item-view.component.html',
   styleUrls: ['./item-view.component.sass']
 })
-export class ItemViewComponent extends AbstractTranslateComponent implements AfterViewInit {
+export class ItemViewComponent extends AbstractTranslateComponent {
 
   i18nKey = 'item-view';
 
@@ -18,11 +18,6 @@ export class ItemViewComponent extends AbstractTranslateComponent implements Aft
 
   @Input()
   rarity = 1;
-
-  @ViewChild('right', {read: ElementRef})
-  detail: ElementRef | undefined;
-
-  hasRight = false;
 
   constructor() {
     super();
@@ -38,11 +33,6 @@ export class ItemViewComponent extends AbstractTranslateComponent implements Aft
 
   get stars(): number[] {
     return new Array(this.rarity);
-  }
-
-  ngAfterViewInit(): void {
-    const detailHasChild = this.detail?.nativeElement.childNodes.length ?? 0;
-    setTimeout(() => this.hasRight = detailHasChild > 1, 10);
   }
 
 }
