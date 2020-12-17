@@ -3,6 +3,7 @@ import {CharacterStatProfile} from '../../models/character-stat-profile';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterStatOptimizerService} from '../../services/character-stat-optimizer.service';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
+import {OptimizedStat} from '../../models/optimized-result.model';
 
 @Component({
   selector: 'app-character-stat-optimizer',
@@ -29,7 +30,7 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
 
   optimized = false;
 
-  optimizedResult: { atk: number; critRate: number; critDmg: number; } = {atk: 0, critRate: 0, critDmg: 0};
+  optimizedResult: OptimizedStat = {atk: 0, critRate: 0, critDmg: 0};
 
   fields = [
     {
