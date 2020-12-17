@@ -29,9 +29,11 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   @Output()
   selected = new EventEmitter<Character>();
 
-  sortFields = ['level', 'rarity', 'constellation'];
+  @Input()
+  sortFields = ['rarity'];
 
-  sort = 'level';
+  @Input()
+  sort = 'rarity';
 
   elementTypes = [ElementType.ANEMO, ElementType.GEO, ElementType.ELECTRO, ElementType.HYDRO, ElementType.PYRO, ElementType.CRYO];
 

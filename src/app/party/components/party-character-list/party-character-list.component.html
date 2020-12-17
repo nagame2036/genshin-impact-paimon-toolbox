@@ -1,4 +1,6 @@
-<app-character-list [party]="true" [characters]="characters" (selected)="selected.emit($event)">
+<app-character-list [party]="true" [characters]="characters"
+                    [sortFields]="['level', 'rarity', 'constellation']" sort="level"
+                    (selected)="selected.emit($event)">
   <div list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
       {{ i18n('add') | translate }}

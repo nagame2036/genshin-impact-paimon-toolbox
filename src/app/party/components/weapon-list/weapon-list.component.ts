@@ -28,10 +28,6 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   @Output()
   selected = new EventEmitter<Weapon>();
 
-  sortFields = ['level', 'rarity'];
-
-  sort = 'level';
-
   types = [WeaponType.SWORD, WeaponType.CLAYMORE, WeaponType.CATALYST, WeaponType.BOW, WeaponType.POLEARM];
 
   typeFilter = this.types;
@@ -46,7 +42,7 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
 
   update(): void {
     const type = this.typeFilter.map(i => `type = ${i}`).join(' OR ');
-    const sql = `SELECT * FROM ? items WHERE ${type} ORDER BY ${this.sort} DESC, id DESC`;
+    const sql = `SELECT * FROM ? items WHERE ${type} ORDER BY rarity DESC, type, id DESC`;
     this.items = alasql(sql, [this.weapons]);
   }
 
