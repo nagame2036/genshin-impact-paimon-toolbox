@@ -7,43 +7,44 @@
     </button>
   </div>
   <ng-template let-item #right>
-    <div class="party-character-overview" gdGap="2px" gdColumns="auto auto" gdAlignColumns="space-around stretch"
+    <div class="party-item-overview" gdAlignColumns="space-around stretch"
+         gdColumns="repeat(2, auto)" gdRows="repeat(6, 1fr)"
          gdAreas="ascension ascension-data | level level-data | constellation constellation-data
                       | talent1 talent1-data | talent2 talent2-data | talent3 talent3-data">
-      <div gdArea="ascension" class="party-character-overview-label">
+      <div gdArea="ascension" class="party-item-overview-label party-item-overview-row-non-border-top">
         <b>{{ i18nDict('ascension') | translate }}</b>
       </div>
-      <div gdArea="ascension-data" class="party-character-overview-data">
+      <div gdArea="ascension-data" class="party-item-overview-data party-item-overview-row-non-border-top">
         {{ i18nDict('ascensions.' + getAscension(item)) | translate }}
       </div>
-      <div gdArea="level" class="party-character-overview-label">
+      <div gdArea="level" class="party-item-overview-label">
         <b>{{ i18nDict('level') | translate }}</b>
       </div>
-      <div gdArea="level-data" class="party-character-overview-data">
+      <div gdArea="level-data" class="party-item-overview-data">
         {{ getLevel(item) }}
       </div>
-      <div gdArea="constellation" class="party-character-overview-label">
+      <div gdArea="constellation" class="party-item-overview-label">
         <b>{{ i18nDict('constellation') | translate }}</b>
       </div>
-      <div gdArea="constellation-data" class="party-character-overview-data">
+      <div gdArea="constellation-data" class="party-item-overview-data">
         {{ getConstellation(item) }}
       </div>
-      <div gdArea="talent1" class="party-character-overview-label">
+      <div gdArea="talent1" class="party-item-overview-label">
         <b>{{ i18nDict('talent') | translate: {num: 1} }}</b>
       </div>
-      <div gdArea="talent1-data" class="party-character-overview-data">
+      <div gdArea="talent1-data" class="party-item-overview-data">
         {{ getTalents(item)[0] }}
       </div>
-      <div gdArea="talent2" class="party-character-overview-label">
+      <div gdArea="talent2" class="party-item-overview-label">
         <b>{{ i18nDict('talent') | translate: {num: 2} }}</b>
       </div>
-      <div gdArea="talent2-data" class="party-character-overview-data">
+      <div gdArea="talent2-data" class="party-item-overview-data">
         {{ getTalents(item)[1] }}
       </div>
-      <div gdArea="talent3" class="party-character-overview-label">
+      <div gdArea="talent3" class="party-item-overview-label">
         <b>{{ i18nDict('talent') | translate: {num: 3} }}</b>
       </div>
-      <div gdArea="talent3-data" class="party-character-overview-data">
+      <div gdArea="talent3-data" class="party-item-overview-data">
         {{ getTalents(item)[2] }}
       </div>
     </div>
