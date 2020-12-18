@@ -1,0 +1,6 @@
+<mat-checkbox class="app-multi-select-checkbox" [checked]="multiSelect" (change)="setMultiSelect($event.checked)">
+  {{ i18nDict('multi-select') | translate }}
+</mat-checkbox>
+<mat-checkbox class="app-multi-select-checkbox" [checked]="selectAll" (change)="setSelectAll($event.checked)">
+  {{ i18nDict('select-all') | translate }}
+</mat-checkbox>

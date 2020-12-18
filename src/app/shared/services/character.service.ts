@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ReplaySubject, zip} from 'rxjs';
+import {from, ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character';
 import {Level} from '../models/level';
 import {Constellation} from '../models/constellation';
 import {TalentLevel} from '../models/talent-level';
+import {mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,17 @@ export class CharacterService {
         this.#nonParty.push(character);
         this.nonPartySubject.next(this.#nonParty);
       });
+    });
+  }
+
+  removePartyMemberByList(ids: number[]): void {
+    const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
+    zip(deleted, this.characters, this.party).subscribe(([_, characters, party]) => {
+      this.#party = party.filter(c => !ids.includes(c.id));
+      this.partySubject.next(this.#party);
+      const partyIds = this.#party.map(it => it.id);
+      this.#nonParty = characters.filter(c => !partyIds.includes(c.id));
+      this.nonPartySubject.next(this.#nonParty);
     });
   }
 

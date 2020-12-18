@@ -13,6 +13,7 @@ import {AddWeaponDialogComponent} from './components/add-weapon-dialog/add-weapo
 import {WeaponDetailDialogComponent} from './components/weapon-detail-dialog/weapon-detail-dialog.component';
 import {PartyCharacterListComponent} from './components/party-character-list/party-character-list.component';
 import {PartyWeaponListComponent} from './components/party-weapon-list/party-weapon-list.component';
+import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,6 +24,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     AddWeaponDialogComponent,
     WeaponDetailDialogComponent,
     PartyCharacterListComponent,
-    PartyWeaponListComponent
+    PartyWeaponListComponent,
+    RemoveConfirmDialogComponent
   ],
   imports: [
     SharedModule,
@@ -51,7 +54,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatDividerModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ]
 })
 export class PartyModule {

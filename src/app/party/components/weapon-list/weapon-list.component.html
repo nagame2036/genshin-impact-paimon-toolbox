@@ -11,12 +11,11 @@
     <ng-content fxFlex="1 1 auto" select="[list-actions]"></ng-content>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
-    <div *ngFor="let item of items" class="weapon-list-item">
-      <app-item-view category="weapons" [id]="item.id" [rarity]="item.rarity" (click)="selected.emit(item)">
-        <ng-container *ngIf="party && rightTemplateRef" container-right
-                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-        </ng-container>
-      </app-item-view>
-    </div>
+    <app-item-view *ngFor="let item of items" class="items-list-item" #list (click)="select(item)"
+                   category="weapons" [id]="item.id" [rarity]="item.rarity">
+      <ng-container *ngIf="party && rightTemplateRef" container-right
+                    [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+      </ng-container>
+    </app-item-view>
   </div>
 </div>

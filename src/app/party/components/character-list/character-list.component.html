@@ -27,17 +27,16 @@
     <ng-content select="[list-actions]"></ng-content>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
-    <div *ngFor="let item of items" class="character-list-item">
-      <app-item-view category="characters" [id]="item.id" [rarity]="item.rarity" (click)="selected.emit(item);">
-        <div container-top-left>
-          <img class="character-list-element-hint"
-               [src]="'assets/images/elements/' + item.element + '.png'"
-               [alt]="i18nDict('elements.' + item.element) | translate">
-        </div>
-        <ng-container container-right *ngIf="party && rightTemplateRef"
-                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-        </ng-container>
-      </app-item-view>
-    </div>
+    <app-item-view *ngFor="let item of items" class="items-list-item" #list (click)="select(item)"
+                   category="characters" [id]="item.id" [rarity]="item.rarity">
+      <div container-top-left>
+        <img class="character-list-element-hint"
+             [src]="'assets/images/elements/' + item.element + '.png'"
+             [alt]="i18nDict('elements.' + item.element) | translate">
+      </div>
+      <ng-container container-right *ngIf="party && rightTemplateRef"
+                    [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+      </ng-container>
+    </app-item-view>
   </div>
 </div>

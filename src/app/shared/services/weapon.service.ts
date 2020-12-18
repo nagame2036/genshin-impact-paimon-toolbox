@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject, zip} from 'rxjs';
+import {from, ReplaySubject, zip} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Weapon} from '../models/weapon';
 import {PartyWeapon} from '../models/party-weapon';
 import {Level} from '../models/level';
 import {RefineRank} from '../models/refine-rank';
+import {mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,14 @@ export class WeaponService {
         this.#party = party.filter(c => c.key !== key);
         this.partySubject.next(this.#party);
       });
+    });
+  }
+
+  removePartyMemberByList(ids: number[]): void {
+    const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
+    zip(deleted, this.party).subscribe(([_, party]) => {
+      this.#party = party.filter(c => !ids.includes(c.id));
+      this.partySubject.next(this.#party);
     });
   }
 

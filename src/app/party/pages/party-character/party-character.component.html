@@ -1,3 +1,10 @@
-<div>
-  <app-party-character-list (selected)="openDetail($event)" (create)="openAddDialog()"></app-party-character-list>
-</div>
+<app-party-character-list #list (create)="openAddDialog()"
+                          (selected)="openDetail($event)" (multiSelected)="updateSelected($event)">
+  <div list-actions>
+    <app-multi-select [multiSelect]="multiSelect" [selectAll]="selectAll" (changed)="onMultiSelectChange($event)">
+    </app-multi-select>
+    <button *ngIf="selectedItems.length > 0" type="button" mat-stroked-button color="warn" (click)="openRemoveDialog()">
+      {{ i18n('remove') | translate }}
+    </button>
+  </div>
+</app-party-character-list>

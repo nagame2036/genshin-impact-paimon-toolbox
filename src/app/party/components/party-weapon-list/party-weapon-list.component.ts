@@ -1,10 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Weapon} from '../../../shared/models/weapon';
 import {PartyWeapon} from '../../../shared/models/party-weapon';
 import {Ascension} from '../../../shared/models/ascension.enum';
 import {RefineRank} from '../../../shared/models/refine-rank';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {WeaponService} from '../../../shared/services/weapon.service';
+import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 
 @Component({
   selector: 'app-party-weapon-list',
@@ -21,7 +22,13 @@ export class PartyWeaponListComponent extends AbstractTranslateComponent impleme
   selected = new EventEmitter<Weapon>();
 
   @Output()
+  multiSelected = new EventEmitter<Weapon[]>();
+
+  @Output()
   create = new EventEmitter();
+
+  @ViewChild('list')
+  list!: WeaponListComponent;
 
   constructor(private service: WeaponService) {
     super();
@@ -41,5 +48,10 @@ export class PartyWeaponListComponent extends AbstractTranslateComponent impleme
 
   getRefineRank(weapon: Weapon): RefineRank {
     return (weapon as PartyWeapon)?.refine ?? 1;
+  }
+
+  onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {
+    this.list.multiSelect = event.multiSelect;
+    this.list.selectAll(event.selectAll);
   }
 }

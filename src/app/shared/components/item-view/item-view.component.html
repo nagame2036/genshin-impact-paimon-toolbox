@@ -1,4 +1,4 @@
-<div fxLayout="row" class="item-container">
+<div fxLayout="row" [ngClass]="{'item-container': true, 'item-container-active': active}">
   <div class="page-one-col-center">
     <div [class]="['img-container', 'item-rarity-' + rarity]">
       <div class="item-container-top-left">

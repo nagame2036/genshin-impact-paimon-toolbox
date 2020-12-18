@@ -29,6 +29,7 @@
       }
     },
     "party": {
+      "confirm-to-remove": "确定要将以下移出Box吗？",
       "character": {
         "add": "添加角色",
         "add-success": "成功添加角色 - {{ name }}",
@@ -102,6 +103,10 @@
     "genshin-impact": "原神",
     "resin": "树脂",
     "minutes": "分钟",
+    "multi-select": "多选",
+    "select-all": "全选",
+    "confirm": "我已确定",
+    "cancel": "我再想想",
     "rarity": "稀有度",
     "type": "类型",
     "character": "角色",

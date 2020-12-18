@@ -19,6 +19,8 @@ export class ItemViewComponent extends AbstractTranslateComponent {
   @Input()
   rarity = 1;
 
+  active = false;
+
   constructor() {
     super();
   }

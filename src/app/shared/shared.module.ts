@@ -11,9 +11,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {FlexModule} from '@angular/flex-layout';
+import {MultiSelectComponent} from './components/multi-select/multi-select.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
-  declarations: [AscensionLevelSelectComponent, ItemViewComponent],
+  declarations: [AscensionLevelSelectComponent, ItemViewComponent, MultiSelectComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,7 +24,8 @@ import {FlexModule} from '@angular/flex-layout';
     NgxIndexedDBModule,
     MatFormFieldModule,
     MatSelectModule,
-    FlexModule
+    FlexModule,
+    MatCheckboxModule
   ],
   exports: [
     CommonModule,
@@ -31,7 +34,8 @@ import {FlexModule} from '@angular/flex-layout';
     TranslateModule,
     NgxIndexedDBModule,
     AscensionLevelSelectComponent,
-    ItemViewComponent
+    ItemViewComponent,
+    MultiSelectComponent
   ]
 })
 export class SharedModule {

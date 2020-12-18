@@ -1,10 +1,11 @@
 <app-character-list [party]="true" [characters]="characters"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
-                    (selected)="selected.emit($event)">
-  <div list-actions>
+                    #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
+  <div fxLayout="row" fxLayoutAlign="center center" list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
       {{ i18n('add') | translate }}
     </button>
+    <ng-content select="[list-actions]"></ng-content>
   </div>
   <ng-template let-item #right>
     <div class="party-item-overview" gdAlignColumns="space-around stretch"

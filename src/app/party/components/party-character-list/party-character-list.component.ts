@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from '../../../shared/models/character';
 import {PartyCharacter} from '../../../shared/models/party-character';
 import {Ascension} from '../../../shared/models/ascension.enum';
@@ -6,6 +6,7 @@ import {Constellation} from '../../../shared/models/constellation';
 import {TalentLevel} from '../../../shared/models/talent-level';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterService} from '../../../shared/services/character.service';
+import {CharacterListComponent} from '../character-list/character-list.component';
 
 @Component({
   selector: 'app-party-character-list',
@@ -22,7 +23,13 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
   selected = new EventEmitter<Character>();
 
   @Output()
+  multiSelected = new EventEmitter<Character[]>();
+
+  @Output()
   create = new EventEmitter();
+
+  @ViewChild('list')
+  list!: CharacterListComponent;
 
   constructor(private service: CharacterService) {
     super();
@@ -46,5 +53,10 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
 
   getTalents(item: Character): TalentLevel[] {
     return (item as PartyCharacter)?.talents ?? [1, 1, 1];
+  }
+
+  onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {
+    this.list.multiSelect = event.multiSelect;
+    this.list.selectAll(event.selectAll);
   }
 }
