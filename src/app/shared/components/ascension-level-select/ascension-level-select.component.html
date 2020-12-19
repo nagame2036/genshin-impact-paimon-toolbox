@@ -1,5 +1,5 @@
 <div [class]="horizontal ? 'ascension-level-select-horizontal' : 'ascension-level-select-vertical'">
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
     <mat-label [translate]="i18nDict('ascension-label')" [translateParams]="{label: i18nDict(label) | translate}">
     </mat-label>
     <mat-select [(value)]="ascension" (selectionChange)="change()">
@@ -8,7 +8,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
     <mat-label [translate]="i18nDict('level-label')" [translateParams]="{label: i18nDict(label) | translate}">
     </mat-label>
     <mat-select [(value)]="level" (selectionChange)="change()">

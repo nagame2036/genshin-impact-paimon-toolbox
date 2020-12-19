@@ -14,6 +14,9 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   i18nKey = 'shared.ascension-level';
 
   @Input()
+  width = 128;
+
+  @Input()
   horizontal = true;
 
   @Input()
