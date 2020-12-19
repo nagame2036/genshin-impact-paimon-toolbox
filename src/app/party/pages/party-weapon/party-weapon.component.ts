@@ -7,6 +7,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {WeaponService} from '../../../shared/services/weapon.service';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyWeaponListComponent} from '../../components/party-weapon-list/party-weapon-list.component';
+import {PartyWeapon} from '../../../shared/models/party-weapon';
 
 @Component({
   selector: 'app-party-weapon',
@@ -38,7 +39,7 @@ export class PartyWeaponComponent extends AbstractTranslateComponent implements 
   }
 
   openDetail(weapon: Weapon): void {
-    this.dialog.open(WeaponDetailDialogComponent, {data: weapon});
+    this.dialog.open(WeaponDetailDialogComponent, {data: weapon as PartyWeapon});
   }
 
   openRemoveDialog(): void {

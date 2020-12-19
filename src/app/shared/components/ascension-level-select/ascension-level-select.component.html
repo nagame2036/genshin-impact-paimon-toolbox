@@ -1,18 +1,30 @@
-<div [class]="horizontal ? 'ascension-level-select-horizontal' : 'ascension-level-select-vertical'">
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
-    <mat-label [translate]="i18nDict('ascension-label')" [translateParams]="{label: i18nDict(label) | translate}">
-    </mat-label>
-    <mat-select [(value)]="ascension" (selectionChange)="change()">
-      <mat-option *ngFor="let a of ascensions; let i = index" [value]="a">
-        {{ i18nDict('ascensions.' + i) | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
-    <mat-label [translate]="i18nDict('level-label')" [translateParams]="{label: i18nDict(label) | translate}">
-    </mat-label>
-    <mat-select [(value)]="level" (selectionChange)="change()">
-      <mat-option *ngFor="let level of levels[ascension]" [value]="level">{{ level }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div *ngIf="multi; else single" [fxLayout]="horizontal ? 'row' : 'column'">
+  <app-current-target-select [width]="width" [label]="i18nDict(label + '-ascension-label') | translate"
+                             [currentAvailableValues]="ascensions" [targetAvailableValues]="targetAscensions"
+                             [current]="ascension" (changed)="setAscension($event)" [valueDisplay]="getAscension">
+  </app-current-target-select>
+  <app-current-target-select [width]="width" [label]="i18nDict(label + '-level-label') | translate"
+                             [currentAvailableValues]="levels[ascension]" [targetAvailableValues]="targetLevels"
+                             [current]="level" [target]="targetLevel" (changed)="setLevel($event)">
+  </app-current-target-select>
 </div>
+<ng-template #single>
+  <div [fxLayout]="horizontal ? 'row' : 'column'">
+    <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
+      <mat-label>{{ i18nDict(label + '-ascension-label') | translate }}</mat-label>
+      <mat-select [(value)]="ascension" (selectionChange)="change()">
+        <mat-option *ngFor="let a of ascensions; let i = index" [value]="a">
+          {{ i18nDict('ascensions.' + i) | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
+      <mat-label>{{ i18nDict(label + '-level-label') | translate }}</mat-label>
+      <mat-select [(value)]="level" (selectionChange)="change()">
+        <mat-option *ngFor="let level of levels[ascension]" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-template>

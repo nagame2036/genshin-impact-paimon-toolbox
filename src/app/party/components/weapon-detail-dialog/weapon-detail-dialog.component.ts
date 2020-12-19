@@ -3,6 +3,9 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {WeaponService} from '../../../shared/services/weapon.service';
 import {PartyWeapon} from '../../../shared/models/party-weapon';
+import {rangeList} from '../../../shared/utils/range-list';
+import {RefineRank} from '../../../shared/models/refine-rank';
+import {Level} from '../../../shared/models/level';
 
 @Component({
   selector: 'app-weapon-detail-dialog',
@@ -13,16 +16,45 @@ export class WeaponDetailDialogComponent extends AbstractTranslateComponent impl
 
   i18nKey = 'party.weapon';
 
+  refineRanks = rangeList(1, 5) as RefineRank[];
+
+  refine: RefineRank = 1;
+
+  ascension = 0;
+
+  level = 1;
+
   constructor(public dialogRef: MatDialogRef<WeaponDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: PartyWeapon,
-              private weapons: WeaponService) {
+              private weaponService: WeaponService) {
     super();
   }
 
-  ngOnInit(): void {
+  get weapon(): PartyWeapon {
+    return {...this.data, refine: this.refine, ascension: this.ascension, level: this.level};
   }
 
-  removeWeapon(weapon: PartyWeapon): void {
-    this.weapons.removePartyMember(weapon);
+  ngOnInit(): void {
+    // avoid NG0100: ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.refine = this.data.refine;
+      this.ascension = this.data.ascension;
+      this.level = this.data.level;
+    }, 5);
+  }
+
+  setRefine(refine: RefineRank): void {
+    this.refine = refine;
+    this.weaponService.updatePartyMember(this.weapon);
+  }
+
+  setLevel(event: { current: Level; target: Level }): void {
+    this.ascension = event.current.ascension;
+    this.level = event.current.level;
+    this.weaponService.updatePartyMember(this.weapon);
+  }
+
+  remove(weapon: PartyWeapon): void {
+    this.weaponService.removePartyMember(weapon);
     this.dialogRef.close();
   }
 }

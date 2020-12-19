@@ -1,0 +1,21 @@
+<fieldset class="current-target-select-container" [style.width.px]="width"
+          fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
+  <legend>{{ label }}</legend>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-target-select-field-left">
+    <mat-select [(value)]="current" (selectionChange)="change()">
+      <mat-option *ngFor="let value of currentAvailableValues; let i = index" [value]="value">
+        {{ valueDisplay(value) | async }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-icon fxFlex="auto" style="line-height: 20px">
+    chevron_right
+  </mat-icon>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-target-select-field-right">
+    <mat-select [(value)]="target" (selectionChange)="change()">
+      <mat-option *ngFor="let value of targetAvailableValues; let i = index" [value]="value">
+        {{ valueDisplay(value) | async }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</fieldset>

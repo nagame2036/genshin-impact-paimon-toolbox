@@ -3,6 +3,9 @@ import {AbstractTranslateComponent} from '../abstract-translate.component';
 import {rangeList} from '../../utils/range-list';
 import {Level} from '../../models/level';
 import {Ascension} from '../../models/ascension.enum';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs';
+import {coerceIn} from '../../utils/coerce';
 
 @Component({
   selector: 'app-ascension-level-select',
@@ -20,33 +23,63 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   horizontal = true;
 
   @Input()
+  multi = false;
+
+  @Input()
   label!: string;
 
   ascensions = rangeList(0, 6);
 
+  @Input()
   ascension: Ascension = Ascension.ZERO;
 
-  levelLimit = Level.levelLimit;
+  targetAscension: Ascension = this.ascension;
 
-  levels = this.levelLimit.map(i => rangeList(i.min, i.max));
+  levels = Level.limit.map(i => rangeList(i.min, i.max));
 
+  @Input()
   level = 1;
+
+  targetLevel = this.level;
 
   @Output()
   levelChange = new EventEmitter<Level>();
 
-  constructor() {
+  @Output()
+  multiLevelChange = new EventEmitter<{ current: Level, target: Level }>();
+
+  constructor(public translator: TranslateService) {
     super();
   }
 
+  get targetAscensions(): Ascension[] {
+    return rangeList(this.ascension, Ascension.SIX);
+  }
+
+  get targetLevels(): Ascension[] {
+    const limit = Level.limit[this.targetAscension];
+    return rangeList(limit.min, limit.max);
+  }
+
+  getAscension(value: number): Observable<string> {
+    return this.translator.get('dict.ascensions.' + value);
+  }
+
   ngOnInit(): void {
-    this.change();
+    setTimeout(() => {
+      this.targetAscension = this.ascension;
+      this.targetLevel = this.level;
+      this.change();
+    }, 5);
   }
 
   change(): void {
-    const level = new Level(this.ascension, this.level);
-    this.level = level.level;
-    this.levelChange.emit(level);
+    const current = new Level(this.ascension, this.level);
+    if (this.multi) {
+      this.multiLevelChange.emit({current, target: new Level(this.targetAscension, this.targetLevel)});
+      return;
+    }
+    this.levelChange.emit(current);
   }
 
   reset(): void {
@@ -54,4 +87,22 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
     this.level = 1;
   }
 
+  setAscension(event: { current: number; target: number }): void {
+    this.ascension = event.current;
+    this.targetAscension = Math.max(this.ascension, event.target);
+    this.level = this.correctLevel(this.ascension, this.level);
+    this.targetLevel = this.correctLevel(this.targetAscension, this.targetLevel);
+    this.change();
+  }
+
+  setLevel(event: { current: number; target: number }): void {
+    this.level = this.correctLevel(this.ascension, event.current);
+    this.targetLevel = this.correctLevel(this.targetAscension, event.target);
+    this.change();
+  }
+
+  correctLevel(ascension: Ascension, level: number): number {
+    const limit = Level.limit[ascension];
+    return coerceIn(level, limit.min, limit.max);
+  }
 }

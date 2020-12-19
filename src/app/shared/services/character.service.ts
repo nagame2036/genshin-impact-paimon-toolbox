@@ -51,6 +51,17 @@ export class CharacterService {
     });
   }
 
+  updatePartyMember(character: PartyCharacter): void {
+    const id = character.id;
+    this.changePartyMember(id, ((_, party, __) => {
+      this.database.update(this.storeName, character).subscribe(___ => {
+        const newParty = party.filter(c => c.id !== id);
+        newParty.push(character);
+        this.#party.next(newParty);
+      });
+    }));
+  }
+
   removePartyMember(id: number): void {
     this.changePartyMember(id, (character, party, nonParty) => {
       this.database.delete(this.storeName, id).subscribe(_ => {

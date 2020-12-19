@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('WeaponDetailDialogComponent', () => {
   let component: WeaponDetailDialogComponent;
@@ -18,6 +19,7 @@ describe('WeaponDetailDialogComponent', () => {
       ],
       imports: [
         PartyModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         AppTranslateModule,
         AppIndexedDbModule

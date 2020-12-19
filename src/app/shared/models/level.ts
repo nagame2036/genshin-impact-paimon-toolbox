@@ -3,7 +3,7 @@ import {Ascension} from './ascension.enum';
 
 export class Level {
 
-  static levelLimit = [
+  static limit = [
     {min: 1, max: 20},
     {min: 20, max: 40},
     {min: 40, max: 50},
@@ -24,7 +24,7 @@ export class Level {
   }
 
   set level(value: number) {
-    const limit = Level.levelLimit[this.ascension];
+    const limit = Level.limit[this.ascension];
     this.#level = coerceIn(value, limit.min, limit.max);
   }
 

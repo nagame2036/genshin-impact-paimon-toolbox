@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CharacterDetailDialogComponent', () => {
   let component: CharacterDetailDialogComponent;
@@ -18,6 +19,7 @@ describe('CharacterDetailDialogComponent', () => {
       ],
       imports: [
         PartyModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         AppTranslateModule,
         AppIndexedDbModule
@@ -29,7 +31,9 @@ describe('CharacterDetailDialogComponent', () => {
         },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: {}
+          useValue: {
+            talents: []
+          }
         }
       ]
     })

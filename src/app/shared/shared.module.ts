@@ -6,16 +6,18 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {AscensionLevelSelectComponent} from './components/ascension-level-select/ascension-level-select.component';
 import {ItemViewComponent} from './components/item-view/item-view.component';
+import {MultiSelectComponent} from './components/multi-select/multi-select.component';
+import {CurrentTargetSelectComponent} from './components/current-target-select/current-target-select.component';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
-import {FlexModule} from '@angular/flex-layout';
-import {MultiSelectComponent} from './components/multi-select/multi-select.component';
+import {ExtendedModule, FlexModule} from '@angular/flex-layout';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AscensionLevelSelectComponent, ItemViewComponent, MultiSelectComponent],
+  declarations: [AscensionLevelSelectComponent, ItemViewComponent, MultiSelectComponent, CurrentTargetSelectComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,7 +27,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule,
     MatSelectModule,
     FlexModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIconModule,
+    ExtendedModule
   ],
   exports: [
     CommonModule,
@@ -35,7 +39,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     NgxIndexedDBModule,
     AscensionLevelSelectComponent,
     ItemViewComponent,
-    MultiSelectComponent
+    MultiSelectComponent,
+    CurrentTargetSelectComponent
   ]
 })
 export class SharedModule {

@@ -40,6 +40,17 @@ export class WeaponService {
     });
   }
 
+  updatePartyMember(weapon: PartyWeapon): void {
+    const id = weapon.id;
+    this.changePartyMember(id, ((_, party) => {
+      this.database.update(this.storeName, weapon).subscribe(__ => {
+        const newParty = party.filter(c => c.id !== id);
+        newParty.push(weapon);
+        this.#party.next(newParty);
+      });
+    }));
+  }
+
   removePartyMember(weapon: PartyWeapon): void {
     this.changePartyMember(weapon.id, (_, party) => {
       const key = weapon.key;

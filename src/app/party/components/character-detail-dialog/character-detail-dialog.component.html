@@ -1,8 +1,47 @@
-<div>
-  <img [src]="'assets/images/characters/' + data.id + '.png'"
-       [alt]="i18nDict('characters.' + data.id) | translate">
+<div fxLayout="column" fxLayoutAlign="center center">
+  <app-item-view category="characters" [id]="data.id" [width]="220" [rarity]="data.rarity">
+    <div container-right class="party-item-overview" gdAlignColumns="space-around stretch"
+         gdColumns="repeat(2, auto-fill)" gdRows="repeat(3, 1fr)"
+         gdAreas="element element-data | weapon weapon-data | nation nation-data">
+      <div gdArea="element" class="party-item-overview-label party-item-overview-row-non-border-top">
+        <b>{{ i18nDict('element') | translate }}</b>
+      </div>
+      <div gdArea="element-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+        {{ i18nDict('elements.' + data.element) | translate }}
+      </div>
+      <div gdArea="weapon" class="party-item-overview-label">
+        <b>{{ i18nDict('weapon') | translate }}</b>
+      </div>
+      <div gdArea="weapon-data" class="party-item-overview-data">
+        {{ i18nDict('weapon-types.' + data.weapon) | translate }}
+      </div>
+      <div gdArea="nation" class="party-item-overview-label">
+        <b>{{ i18nDict('nation') | translate }}</b>
+      </div>
+      <div gdArea="nation-data" class="party-item-overview-data">
+        {{ i18nDict('nations.' + (data.nation || 0)) | translate }}
+      </div>
+    </div>
+  </app-item-view>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
+    <mat-label>{{ i18nDict('constellation') | translate }}</mat-label>
+    <mat-select [value]="constellation" (selectionChange)="setConstellation($event.value)">
+      <mat-option *ngFor="let c of constellations" [value]="c">
+        {{ c }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <app-ascension-level-select [multi]="true" label="character" [width]="220" [horizontal]="false"
+                              [ascension]="ascension" [level]="level" (multiLevelChange)="setLevel($event)">
+  </app-ascension-level-select>
+  <app-current-target-select *ngFor="let talent of talents; let i = index" [current]="talent.level"
+                             [label]="talentLabel(talent) | translate: { name: talentName(talent) | translate }"
+                             [currentAvailableValues]="availableTalentLevels"
+                             [targetAvailableValues]="targetAvailableTalentLevels"
+                             (changed)="setTalent(i, $event)">
+  </app-current-target-select>
   <div mat-dialog-actions>
-    <button mat-stroked-button (click)="removeCharacter(data.id)">
+    <button mat-stroked-button (click)="remove(data.id)">
       {{ i18n('remove') | translate }}
     </button>
   </div>
