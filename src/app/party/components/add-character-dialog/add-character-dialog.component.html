@@ -21,11 +21,15 @@
           <mat-option *ngFor="let level of constellationLevels" [value]="level">{{ level }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field *ngFor="let talent of talents; let i = index"
+      <mat-form-field *ngFor="let talent of talentsData; let i = index"
                       class="app-form-field" appearance="outline" floatLabel="always">
-        <mat-label>{{ i18nDict('talent') | translate: {num: i + 1} }}</mat-label>
-        <mat-select [(value)]="talent.value">
-          <mat-option *ngFor="let level of talentLevels" [value]="level">{{ level }}</mat-option>
+        <mat-label [translate]="i18nDict('talent-labels.' + talent.id % 10)"
+                   [translateParams]="{ name: i18nDict('talents.' + talent.id) | translate }">
+        </mat-label>
+        <mat-select [value]="talent.level" (selectionChange)="talent.level = $event.value">
+          <mat-option *ngFor="let level of talentService.availableTalentLevels(level.ascension)" [value]="level">
+            {{ level }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>

@@ -52,7 +52,7 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
   }
 
   getTalents(item: Character): TalentLevel[] {
-    return (item as PartyCharacter)?.talents ?? [1, 1, 1];
+    return (item as PartyCharacter)?.talents.map(it => it.level) ?? [1, 1, 1];
   }
 
   onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {

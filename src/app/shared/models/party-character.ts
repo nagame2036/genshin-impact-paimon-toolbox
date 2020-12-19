@@ -1,6 +1,6 @@
 import {Character} from './character';
 import {Ascension} from './ascension.enum';
-import {TalentLevel} from './talent-level';
+import {TalentLevelData} from './talent-level-data.model';
 import {Constellation} from './constellation';
 
 export interface PartyCharacter extends Character {
@@ -11,5 +11,5 @@ export interface PartyCharacter extends Character {
 
   constellation: Constellation;
 
-  talents: TalentLevel[];
+  talents: TalentLevelData[];
 }

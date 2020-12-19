@@ -5,11 +5,13 @@ import {AscensionLevelSelectComponent} from '../../../shared/components/ascensio
 import {Level} from '../../../shared/models/level';
 import {CharacterService} from '../../../shared/services/character.service';
 import {Constellation} from '../../../shared/models/constellation';
-import {TalentLevel} from '../../../shared/models/talent-level';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
+import {TalentLevelData} from '../../../shared/models/talent-level-data.model';
+import {TalentService} from '../../../shared/services/talent.service';
+import {rangeList} from '../../../shared/utils/range-list';
 
 @Component({
   selector: 'app-character-select-dialog',
@@ -30,23 +32,25 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
 
   level!: Level;
 
-  constellationLevels: Constellation[] = [0, 1, 2, 3, 4, 5, 6];
+  constellationLevels: Constellation[] = rangeList(0, 6) as Constellation[];
 
   constellation: Constellation = 0;
 
-  talentLevels: TalentLevel[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  talentsData: TalentLevelData[] = [];
 
-  talents: { value: TalentLevel }[] = [{value: 1}, {value: 1}, {value: 1}];
-
-  constructor(private service: CharacterService, private snake: MatSnackBar, private translator: TranslateService) {
+  constructor(private characterService: CharacterService, public talentService: TalentService,
+              private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
   ngOnInit(): void {
-    this.service.nonParty.subscribe(res => this.characters = res);
+    this.characterService.nonParty.subscribe(res => this.characters = res);
   }
 
   select(character: Character): void {
+    this.talentService.getTalentsOfCharacter(character.id).subscribe(res => {
+      this.talentsData = res.filter(it => it.level).map(it => ({id: it.id, level: 1}));
+    });
     this.selected = character;
   }
 
@@ -58,12 +62,12 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
     this.selected = undefined;
     this.ascensionLevel.reset();
     this.constellation = 0;
-    this.talents.forEach(i => i.value = 1);
+    this.talentsData = this.talentsData.map(it => ({id: it.id, level: 1}));
   }
 
   add(): void {
     if (this.selected && this.level) {
-      this.service.addPartyMember(this.selected.id, this.level, this.constellation, this.talents.map(i => i.value));
+      this.characterService.addPartyMember(this.selected.id, this.level, this.constellation, this.talentsData);
       this.translator.get(this.i18nDict('characters.' + this.selected.id))
         .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
