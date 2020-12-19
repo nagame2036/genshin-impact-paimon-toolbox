@@ -32,6 +32,9 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   party = false;
 
   @Input()
+  itemWidth = 100;
+
+  @Input()
   characters: Character[] = [];
 
   items!: Character[];

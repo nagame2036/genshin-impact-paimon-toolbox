@@ -1,5 +1,6 @@
-<div fxLayout="row" [ngClass]="{'item-container': true, 'item-container-active': active}">
-  <div class="page-one-col-center">
+<div fxLayout="row" fxLayoutAlign="start stretch" [style.width.px]="width"
+     [ngClass]="{'item-container': true, 'item-container-active': active}">
+  <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start center">
     <div [class]="['img-container', 'item-rarity-' + rarity]">
       <div class="item-container-top-left">
         <ng-content select="[container-top-left]"></ng-content>
@@ -19,7 +20,7 @@
       <ng-content select="[container-bottom]"></ng-content>
     </div>
   </div>
-  <div #right>
+  <div fxFlex="auto">
     <ng-content select="[container-right]"></ng-content>
   </div>
 </div>

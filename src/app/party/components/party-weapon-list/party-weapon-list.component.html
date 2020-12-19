@@ -1,4 +1,4 @@
-<app-weapon-list [party]="true" [weapons]="weapons"
+<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="220"
                  #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">

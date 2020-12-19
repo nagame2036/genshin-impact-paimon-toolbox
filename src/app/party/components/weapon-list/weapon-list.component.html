@@ -11,7 +11,7 @@
     <ng-content fxFlex="1 1 auto" select="[list-actions]"></ng-content>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
-    <app-item-view *ngFor="let item of items" class="items-list-item" #list (click)="select(item)"
+    <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
                    category="weapons" [id]="item.id" [rarity]="item.rarity">
       <ng-container *ngIf="party && rightTemplateRef" container-right
                     [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">

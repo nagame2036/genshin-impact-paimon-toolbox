@@ -1,4 +1,4 @@
-<app-character-list [party]="true" [characters]="characters"
+<app-character-list [party]="true" [characters]="characters" [itemWidth]="220"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
                     #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>

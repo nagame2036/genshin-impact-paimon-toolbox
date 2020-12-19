@@ -11,6 +11,9 @@ export class ItemViewComponent extends AbstractTranslateComponent {
   i18nKey = 'item-view';
 
   @Input()
+  width = 100;
+
+  @Input()
   category!: string;
 
   @Input()

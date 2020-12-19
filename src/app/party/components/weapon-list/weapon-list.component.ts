@@ -31,6 +31,9 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   party = false;
 
   @Input()
+  itemWidth = 100;
+
+  @Input()
   weapons: Weapon[] = [];
 
   items!: Weapon[];
