@@ -13,29 +13,19 @@ import {mergeMap} from 'rxjs/operators';
 })
 export class WeaponService {
 
-  #weapons: Weapon[] = [];
+  #weapons = new ReplaySubject<Weapon[]>(1);
 
-  private weaponsSubject = new ReplaySubject<Weapon[]>(1);
+  readonly weapons = this.#weapons.asObservable();
 
-  readonly weapons = this.weaponsSubject.asObservable();
+  #party = new ReplaySubject<PartyWeapon[]>(1);
 
-  #party: PartyWeapon[] = [];
-
-  private partySubject = new ReplaySubject<PartyWeapon[]>(1);
-
-  readonly party = this.partySubject.asObservable();
+  readonly party = this.#party.asObservable();
 
   private readonly storeName = 'party-weapons';
 
   constructor(http: HttpClient, private database: NgxIndexedDBService) {
-    http.get<Weapon[]>('assets/data/weapons.json').subscribe(res => {
-      this.#weapons = res;
-      this.weaponsSubject.next(this.#weapons);
-    });
-    database.getAll(this.storeName).subscribe(party => {
-      this.#party = party;
-      this.partySubject.next(this.#party);
-    });
+    http.get<Weapon[]>('assets/data/weapons.json').subscribe(res => this.#weapons.next(res));
+    database.getAll(this.storeName).subscribe(party => this.#party.next(party));
   }
 
   addPartyMember(id: number, level: Level, refine: RefineRank): void {
@@ -43,9 +33,9 @@ export class WeaponService {
       const newWeapon: PartyWeapon = {...weapon, ascension: level.ascension, level: level.level, refine};
       this.database.add(this.storeName, newWeapon).subscribe(key => {
         newWeapon.key = key;
-        this.#party = party.filter(c => c.key !== key);
-        this.#party.push(newWeapon);
-        this.partySubject.next(this.#party);
+        const newParty = party.filter(c => c.key !== key);
+        newParty.push(newWeapon);
+        this.#party.next(newParty);
       });
     });
   }
@@ -57,8 +47,8 @@ export class WeaponService {
         return;
       }
       this.database.delete(this.storeName, key).subscribe(__ => {
-        this.#party = party.filter(c => c.key !== key);
-        this.partySubject.next(this.#party);
+        const newParty = party.filter(c => c.key !== key);
+        this.#party.next(newParty);
       });
     });
   }
@@ -66,17 +56,14 @@ export class WeaponService {
   removePartyMemberByList(ids: number[]): void {
     const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
     zip(deleted, this.party).subscribe(([_, party]) => {
-      this.#party = party.filter(c => !ids.includes(c.id));
-      this.partySubject.next(this.#party);
+      const newParty = party.filter(c => !ids.includes(c.id));
+      this.#party.next(newParty);
     });
   }
 
   private changePartyMember(id: number, change: (weapon: Weapon, party: PartyWeapon[]) => void): void {
     zip(this.weapons, this.party).subscribe(([weapons, party]) => {
-      const weapon = weapons.filter(c => c.id === id)[0];
-      if (weapon) {
-        change(weapon, party);
-      }
+      weapons.filter(c => c.id === id).forEach(it => change(it, party));
     });
   }
 }

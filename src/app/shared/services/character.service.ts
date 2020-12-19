@@ -14,37 +14,27 @@ import {mergeMap} from 'rxjs/operators';
 })
 export class CharacterService {
 
-  #characters: Character[] = [];
+  #characters = new ReplaySubject<Character[]>(1);
 
-  private charactersSubject = new ReplaySubject<Character[]>(1);
+  readonly characters = this.#characters.asObservable();
 
-  readonly characters = this.charactersSubject.asObservable();
+  #party = new ReplaySubject<PartyCharacter[]>(1);
 
-  #party: PartyCharacter[] = [];
+  readonly party = this.#party.asObservable();
 
-  private partySubject = new ReplaySubject<PartyCharacter[]>(1);
+  #nonParty = new ReplaySubject<Character[]>(1);
 
-  readonly party = this.partySubject.asObservable();
-
-  #nonParty: Character[] = [];
-
-  private nonPartySubject = new ReplaySubject<Character[]>(1);
-
-  readonly nonParty = this.nonPartySubject.asObservable();
+  readonly nonParty = this.#nonParty.asObservable();
 
   private readonly storeName = 'party-characters';
 
   constructor(http: HttpClient, private database: NgxIndexedDBService) {
-    http.get<Character[]>('assets/data/characters.json').subscribe(res => {
-      this.#characters = res;
-      this.charactersSubject.next(this.#characters);
-    });
+    http.get<Character[]>('assets/data/characters.json').subscribe(res => this.#characters.next(res));
     zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
-      this.#party = party;
-      this.partySubject.next(this.#party);
+      this.#party.next(party);
       const partyIds = party.map(c => c.id);
-      this.#nonParty = characters.filter(c => !partyIds.includes(c.id));
-      this.nonPartySubject.next(this.#nonParty);
+      const nonParty = characters.filter(c => !partyIds.includes(c.id));
+      this.#nonParty.next(nonParty);
     });
   }
 
@@ -52,11 +42,11 @@ export class CharacterService {
     this.changePartyMember(id, (character, party, nonParty) => {
       const newCharacter: PartyCharacter = {...character, ascension: level.ascension, level: level.level, constellation, talents};
       this.database.update(this.storeName, newCharacter).subscribe(_ => {
-        this.#party = party.filter(c => c.id !== id);
-        this.#party.push(newCharacter);
-        this.partySubject.next(this.#party);
-        this.#nonParty = nonParty.filter(c => c.id !== id);
-        this.nonPartySubject.next(this.#nonParty);
+        const newParty = party.filter(c => c.id !== id);
+        newParty.push(newCharacter);
+        this.#party.next(newParty);
+        const newNonParty = nonParty.filter(c => c.id !== id);
+        this.#nonParty.next(newNonParty);
       });
     });
   }
@@ -64,11 +54,11 @@ export class CharacterService {
   removePartyMember(id: number): void {
     this.changePartyMember(id, (character, party, nonParty) => {
       this.database.delete(this.storeName, id).subscribe(_ => {
-        this.#party = party.filter(c => c.id !== id);
-        this.partySubject.next(this.#party);
-        this.#nonParty = nonParty.filter(c => c.id !== id);
-        this.#nonParty.push(character);
-        this.nonPartySubject.next(this.#nonParty);
+        const newParty = party.filter(c => c.id !== id);
+        this.#party.next(newParty);
+        const newNonParty = nonParty.filter(c => c.id !== id);
+        newNonParty.push(character);
+        this.#nonParty.next(newNonParty);
       });
     });
   }
@@ -76,20 +66,17 @@ export class CharacterService {
   removePartyMemberByList(ids: number[]): void {
     const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
     zip(deleted, this.characters, this.party).subscribe(([_, characters, party]) => {
-      this.#party = party.filter(c => !ids.includes(c.id));
-      this.partySubject.next(this.#party);
-      const partyIds = this.#party.map(it => it.id);
-      this.#nonParty = characters.filter(c => !partyIds.includes(c.id));
-      this.nonPartySubject.next(this.#nonParty);
+      const newParty = party.filter(c => !ids.includes(c.id));
+      this.#party.next(newParty);
+      const partyIds = newParty.map(it => it.id);
+      const newNonParty = characters.filter(c => !partyIds.includes(c.id));
+      this.#nonParty.next(newNonParty);
     });
   }
 
   private changePartyMember(id: number, change: (character: Character, party: PartyCharacter[], nonParty: Character[]) => void): void {
     zip(this.characters, this.party, this.nonParty).subscribe(([characters, party, nonParty]) => {
-      const character = characters.filter(c => c.id === id)[0];
-      if (character) {
-        change(character, party, nonParty);
-      }
+      characters.filter(c => c.id === id).forEach(it => change(it, party, nonParty));
     });
   }
 }

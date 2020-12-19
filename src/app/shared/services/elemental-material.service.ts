@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {ElementalMaterial, ElementalMaterialItem} from '../models/materials/elemental-material';
+import {ElementalMaterial, ElementalMaterialGroup, ElementalMaterialItem} from '../models/materials/elemental-material';
 import alasql from 'alasql';
 
 @Injectable({
@@ -9,20 +9,19 @@ import alasql from 'alasql';
 })
 export class ElementalMaterialService {
 
-  private dataSubject = new ReplaySubject<ElementalMaterial>(1);
+  #groups = new ReplaySubject<ElementalMaterialGroup[]>(1);
 
-  readonly data = this.dataSubject.asObservable();
+  readonly groups = this.#groups.asObservable();
 
-  private itemsSubject = new ReplaySubject<ElementalMaterialItem[]>(1);
+  #items = new ReplaySubject<ElementalMaterialItem[]>(1);
 
-  readonly items = this.itemsSubject.asObservable();
-
-  readonly sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
+  readonly items = this.#items.asObservable();
 
   constructor(http: HttpClient) {
     http.get<ElementalMaterial>('assets/data/materials/elemental-materials.json').subscribe(res => {
-      this.dataSubject.next(res);
-      this.itemsSubject.next(alasql(this.sql, [res.items]));
+      this.#groups.next(res.groups);
+      const sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
+      this.#items.next(alasql(sql, [res.items]));
     });
   }
 }

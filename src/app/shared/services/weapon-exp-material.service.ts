@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {WeaponExpMaterial, WeaponExpMaterialItem} from '../models/materials/weapon-exp-material';
+import {WeaponExpMaterial, WeaponExpMaterialGroup, WeaponExpMaterialItem} from '../models/materials/weapon-exp-material';
 import alasql from 'alasql';
 
 @Injectable({
@@ -9,20 +9,19 @@ import alasql from 'alasql';
 })
 export class WeaponExpMaterialService {
 
-  private dataSubject = new ReplaySubject<WeaponExpMaterial>(1);
+  #groups = new ReplaySubject<WeaponExpMaterialGroup[]>(1);
 
-  readonly data = this.dataSubject.asObservable();
+  readonly groups = this.#groups.asObservable();
 
-  private itemsSubject = new ReplaySubject<WeaponExpMaterialItem[]>(1);
+  #items = new ReplaySubject<WeaponExpMaterialItem[]>(1);
 
-  readonly items = this.itemsSubject.asObservable();
-
-  readonly sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
+  readonly items = this.#items.asObservable();
 
   constructor(http: HttpClient) {
     http.get<WeaponExpMaterial>('assets/data/materials/weapon-exp-materials.json').subscribe(res => {
-      this.dataSubject.next(res);
-      this.itemsSubject.next(alasql(this.sql, [res.items]));
+      this.#groups.next(res.groups);
+      const sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
+      this.#items.next(alasql(sql, [res.items]));
     });
   }
 }

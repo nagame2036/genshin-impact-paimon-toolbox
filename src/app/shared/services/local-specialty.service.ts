@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {LocalSpecialty, LocalSpecialtyItem} from '../models/materials/local-specialty';
+import {LocalSpecialty, LocalSpecialtyGroup, LocalSpecialtyItem} from '../models/materials/local-specialty';
 import alasql from 'alasql';
 
 @Injectable({
@@ -9,20 +9,19 @@ import alasql from 'alasql';
 })
 export class LocalSpecialtyService {
 
-  private dataSubject = new ReplaySubject<LocalSpecialty>(1);
+  #groups = new ReplaySubject<LocalSpecialtyGroup[]>(1);
 
-  readonly data = this.dataSubject.asObservable();
+  readonly groups = this.#groups.asObservable();
 
-  private itemsSubject = new ReplaySubject<LocalSpecialtyItem[]>(1);
+  #items = new ReplaySubject<LocalSpecialtyItem[]>(1);
 
-  readonly items = this.itemsSubject.asObservable();
-
-  readonly sql = 'SELECT *, 1 rarity FROM ? ORDER BY [group], rarity DESC';
+  readonly items = this.#items.asObservable();
 
   constructor(http: HttpClient) {
     http.get<LocalSpecialty>('assets/data/materials/local-specialties.json').subscribe(res => {
-      this.dataSubject.next(res);
-      this.itemsSubject.next(alasql(this.sql, [res.items]));
+      this.#groups.next(res.groups);
+      const sql = 'SELECT *, 1 rarity FROM ? ORDER BY [group], rarity DESC';
+      this.#items.next(alasql(sql, [res.items]));
     });
   }
 }
