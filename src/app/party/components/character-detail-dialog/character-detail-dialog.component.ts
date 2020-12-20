@@ -67,6 +67,11 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
     this.talents.forEach(it => it.level = coerceIn(it.level, 1, this.currentTalentMaxLevel) as TalentLevel);
   }
 
+  getConstellationText(constellation: Constellation): string {
+    const text = constellation === 0 ? 'none' : `constellations.${this.data.id}.${constellation}`;
+    return this.i18nDict(text);
+  }
+
   talentLabel(talent: TalentLevelData): string {
     return this.i18nDict('talent-labels.' + talent.id % 10);
   }

@@ -11,7 +11,7 @@
       </div>
     </div>
   </app-item-view>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
     <mat-label>{{ i18nDict('refine-rank') | translate }}</mat-label>
     <mat-select [value]="refine" (selectionChange)="setRefine($event.value)">
       <mat-option *ngFor="let rank of refineRanks" [value]="rank">

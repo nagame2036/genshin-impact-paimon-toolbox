@@ -47,6 +47,11 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
     this.characterService.nonParty.subscribe(res => this.characters = res);
   }
 
+  getConstellationText(constellation: Constellation): string {
+    const text = constellation === 0 ? 'none' : `constellations.${this.selected?.id}.${constellation}`;
+    return this.i18nDict(text);
+  }
+
   select(character: Character): void {
     this.talentService.getTalentsOfCharacter(character.id).subscribe(res => {
       this.talentsData = res.filter(it => it.level).map(it => ({id: it.id, level: 1}));

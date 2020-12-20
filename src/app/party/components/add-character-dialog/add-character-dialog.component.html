@@ -15,9 +15,15 @@
                                 label="character" (levelChange)="setLevel($event)">
     </app-ascension-level-select>
     <mat-form-field class="app-form-field" appearance="outline" floatLabel="always">
-      <mat-label>{{ i18nDict('constellation') | translate }}</mat-label>
+      <mat-label>
+        {{ i18nDict('constellation') | translate }}
+        -
+        {{ i18nDict('constellations.' + selected.id + '.name') | translate }}
+      </mat-label>
       <mat-select [(value)]="constellation">
-        <mat-option *ngFor="let level of constellationLevels" [value]="level">{{ level }}</mat-option>
+        <mat-option *ngFor="let level of constellationLevels" [value]="level">
+          {{ level }} - {{ getConstellationText(level) | translate }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field *ngFor="let talent of talentsData; let i = index"

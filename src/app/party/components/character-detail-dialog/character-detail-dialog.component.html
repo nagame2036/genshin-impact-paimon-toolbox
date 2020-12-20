@@ -23,11 +23,15 @@
       </div>
     </div>
   </app-item-view>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
-    <mat-label>{{ i18nDict('constellation') | translate }}</mat-label>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
+    <mat-label>
+      {{ i18nDict('constellation') | translate }}
+      -
+      {{ i18nDict('constellations.' + data.id + '.name') | translate }}
+    </mat-label>
     <mat-select [value]="constellation" (selectionChange)="setConstellation($event.value)">
       <mat-option *ngFor="let c of constellations" [value]="c">
-        {{ c }}
+        {{ c }} - {{ getConstellationText(c) | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>
