@@ -20,7 +20,15 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   dmgType = new FormControl(DamageType.PYRO);
 
-  dmgTypes = Object.values(DamageType);
+  dmgTypes = [
+    DamageType.PHYSICAL,
+    DamageType.ANEMO,
+    DamageType.GEO,
+    DamageType.ELECTRO,
+    DamageType.HYDRO,
+    DamageType.PYRO,
+    DamageType.CRYO
+  ];
 
   current = new CharacterStat('current', this.level, this.dmgType, 'right');
 
