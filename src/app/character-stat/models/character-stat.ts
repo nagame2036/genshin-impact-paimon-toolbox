@@ -1,7 +1,7 @@
 import {StatField} from './stat-field';
 import {FormControl} from '@angular/forms';
 import {CharacterStatProfile} from './character-stat-profile';
-import {Level} from '../../shared/models/level';
+import {AscensionLevel} from '../../shared/models/ascension-level.model';
 
 export class CharacterStat {
 
@@ -63,7 +63,7 @@ export class CharacterStat {
 
   copyTarget!: CharacterStat;
 
-  constructor(public label: string, private level: Level, private dmgType: FormControl, public copyLabel: string) {
+  constructor(public label: string, private level: AscensionLevel, private dmgType: FormControl, public copyLabel: string) {
   }
 
   calc(): void {

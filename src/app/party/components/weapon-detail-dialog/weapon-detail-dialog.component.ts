@@ -5,7 +5,7 @@ import {WeaponService} from '../../../shared/services/weapon.service';
 import {PartyWeapon} from '../../../shared/models/party-weapon';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../shared/models/refine-rank';
-import {Level} from '../../../shared/models/level';
+import {AscensionLevel} from '../../../shared/models/ascension-level.model';
 
 @Component({
   selector: 'app-weapon-detail-dialog',
@@ -47,7 +47,7 @@ export class WeaponDetailDialogComponent extends AbstractTranslateComponent impl
     this.weaponService.updatePartyMember(this.weapon);
   }
 
-  setLevel(event: { current: Level; target: Level }): void {
+  setLevel(event: { current: AscensionLevel; target: AscensionLevel }): void {
     this.ascension = event.current.ascension;
     this.level = event.current.level;
     this.weaponService.updatePartyMember(this.weapon);

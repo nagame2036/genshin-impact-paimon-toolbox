@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../abstract-translate.component';
 import {rangeList} from '../../utils/range-list';
-import {Level} from '../../models/level';
+import {AscensionLevel} from '../../models/ascension-level.model';
 import {Ascension} from '../../models/ascension.enum';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
@@ -35,7 +35,7 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
 
   targetAscension: Ascension = this.ascension;
 
-  levels = Level.limit.map(i => rangeList(i.min, i.max));
+  levels = AscensionLevel.limit.map(i => rangeList(i.min, i.max));
 
   @Input()
   level = 1;
@@ -43,10 +43,10 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   targetLevel = this.level;
 
   @Output()
-  levelChange = new EventEmitter<Level>();
+  levelChange = new EventEmitter<AscensionLevel>();
 
   @Output()
-  multiLevelChange = new EventEmitter<{ current: Level, target: Level }>();
+  multiLevelChange = new EventEmitter<{ current: AscensionLevel, target: AscensionLevel }>();
 
   constructor(public translator: TranslateService) {
     super();
@@ -57,7 +57,7 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   }
 
   get targetLevels(): Ascension[] {
-    const limit = Level.limit[this.targetAscension];
+    const limit = AscensionLevel.limit[this.targetAscension];
     return rangeList(limit.min, limit.max);
   }
 
@@ -74,9 +74,9 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   }
 
   change(): void {
-    const current = new Level(this.ascension, this.level);
+    const current = new AscensionLevel(this.ascension, this.level);
     if (this.multi) {
-      this.multiLevelChange.emit({current, target: new Level(this.targetAscension, this.targetLevel)});
+      this.multiLevelChange.emit({current, target: new AscensionLevel(this.targetAscension, this.targetLevel)});
       return;
     }
     this.levelChange.emit(current);
@@ -102,7 +102,7 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   }
 
   correctLevel(ascension: Ascension, level: number): number {
-    const limit = Level.limit[ascension];
+    const limit = AscensionLevel.limit[ascension];
     return coerceIn(level, limit.min, limit.max);
   }
 }

@@ -1,7 +1,7 @@
 import {coerceIn} from '../utils/coerce';
 import {Ascension} from './ascension.enum';
 
-export class Level {
+export class AscensionLevel {
 
   static limit = [
     {min: 1, max: 20},
@@ -24,11 +24,11 @@ export class Level {
   }
 
   set level(value: number) {
-    const limit = Level.limit[this.ascension];
+    const limit = AscensionLevel.limit[this.ascension];
     this.#level = coerceIn(value, limit.min, limit.max);
   }
 
-  copyFrom(that: Level): void {
+  copyFrom(that: AscensionLevel): void {
     this.ascension = that.ascension;
     this.level = that.level;
   }

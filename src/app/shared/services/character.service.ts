@@ -4,7 +4,7 @@ import {from, ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character';
-import {Level} from '../models/level';
+import {AscensionLevel} from '../models/ascension-level.model';
 import {Constellation} from '../models/constellation';
 import {TalentLevelData} from '../models/talent-level-data.model';
 import {mergeMap} from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class CharacterService {
     });
   }
 
-  addPartyMember(id: number, level: Level, constellation: Constellation, talents: TalentLevelData[]): void {
+  addPartyMember(id: number, level: AscensionLevel, constellation: Constellation, talents: TalentLevelData[]): void {
     this.changePartyMember(id, (character, party, nonParty) => {
       const newCharacter: PartyCharacter = {...character, ascension: level.ascension, level: level.level, constellation, talents};
       this.database.update(this.storeName, newCharacter).subscribe(_ => {

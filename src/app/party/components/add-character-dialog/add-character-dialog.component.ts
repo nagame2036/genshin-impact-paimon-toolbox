@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Character} from '../../../shared/models/character';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {AscensionLevelSelectComponent} from '../../../shared/components/ascension-level-select/ascension-level-select.component';
-import {Level} from '../../../shared/models/level';
+import {AscensionLevel} from '../../../shared/models/ascension-level.model';
 import {CharacterService} from '../../../shared/services/character.service';
 import {Constellation} from '../../../shared/models/constellation';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -30,7 +30,7 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
   @ViewChild('ascension')
   ascensionLevel!: AscensionLevelSelectComponent;
 
-  level!: Level;
+  level!: AscensionLevel;
 
   constellationLevels: Constellation[] = rangeList(0, 6) as Constellation[];
 
@@ -59,7 +59,7 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
     this.selected = character;
   }
 
-  setLevel(level: Level): void {
+  setLevel(level: AscensionLevel): void {
     this.level = level;
   }
 

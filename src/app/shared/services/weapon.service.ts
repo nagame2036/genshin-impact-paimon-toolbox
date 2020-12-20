@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Weapon} from '../models/weapon';
 import {PartyWeapon} from '../models/party-weapon';
-import {Level} from '../models/level';
+import {AscensionLevel} from '../models/ascension-level.model';
 import {RefineRank} from '../models/refine-rank';
 import {mergeMap} from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class WeaponService {
     database.getAll(this.storeName).subscribe(party => this.#party.next(party));
   }
 
-  addPartyMember(id: number, level: Level, refine: RefineRank): void {
+  addPartyMember(id: number, level: AscensionLevel, refine: RefineRank): void {
     this.changePartyMember(id, (weapon, party) => {
       const newWeapon: PartyWeapon = {...weapon, ascension: level.ascension, level: level.level, refine};
       this.database.add(this.storeName, newWeapon).subscribe(key => {

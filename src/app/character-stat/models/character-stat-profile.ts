@@ -1,4 +1,4 @@
-import {Level} from '../../shared/models/level';
+import {AscensionLevel} from '../../shared/models/ascension-level.model';
 import {DamageType} from './damage-type';
 import {coerceIn} from '../../shared/utils/coerce';
 
@@ -16,7 +16,7 @@ export class CharacterStatProfile {
 
   private elementalDmgBonus$ = 0;
 
-  constructor(public level: Level = new Level(), public dmgType: DamageType = DamageType.PYRO,
+  constructor(public level: AscensionLevel = new AscensionLevel(), public dmgType: DamageType = DamageType.PYRO,
               baseAtk: number = 0, plumeAtk: number = 0, bonusAtk: number = 0,
               critRate: number = 0.05, critDmgBonus: number = 0.5, elementalDmgBonus: number = 0) {
     this.baseAtk = baseAtk;

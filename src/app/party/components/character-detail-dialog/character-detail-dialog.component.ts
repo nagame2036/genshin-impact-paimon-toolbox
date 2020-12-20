@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CharacterService} from '../../../shared/services/character.service';
-import {Level} from '../../../shared/models/level';
+import {AscensionLevel} from '../../../shared/models/ascension-level.model';
 import {PartyCharacter} from '../../../shared/models/party-character';
 import {TalentLevelData} from '../../../shared/models/talent-level-data.model';
 import {TalentService} from '../../../shared/services/talent.service';
@@ -85,7 +85,7 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
     this.characterService.updatePartyMember(this.character);
   }
 
-  setLevel(event: { current: Level; target: Level }): void {
+  setLevel(event: { current: AscensionLevel; target: AscensionLevel }): void {
     this.ascension = event.current.ascension;
     this.level = event.current.level;
     this.targetAscension = event.target.ascension;

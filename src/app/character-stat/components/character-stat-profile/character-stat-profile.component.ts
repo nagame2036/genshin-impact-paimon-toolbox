@@ -4,7 +4,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {CharacterStatComparer} from '../../models/character-stat-comparer';
 import {FormControl} from '@angular/forms';
 import {DamageType} from '../../models/damage-type';
-import {Level} from '../../../shared/models/level';
+import {AscensionLevel} from '../../../shared/models/ascension-level.model';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
 
   i18nKey = 'character-stat.profile';
 
-  level = new Level();
+  level = new AscensionLevel();
 
   dmgType = new FormControl(DamageType.PYRO);
 

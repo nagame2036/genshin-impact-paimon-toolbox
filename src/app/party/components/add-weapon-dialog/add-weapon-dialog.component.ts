@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {Weapon} from '../../../shared/models/weapon';
-import {Level} from '../../../shared/models/level';
+import {AscensionLevel} from '../../../shared/models/ascension-level.model';
 import {AscensionLevelSelectComponent} from '../../../shared/components/ascension-level-select/ascension-level-select.component';
 import {WeaponService} from '../../../shared/services/weapon.service';
 import {RefineRank} from '../../../shared/models/refine-rank';
@@ -27,7 +27,7 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
   @ViewChild('ascension')
   ascensionLevel!: AscensionLevelSelectComponent;
 
-  level!: Level;
+  level!: AscensionLevel;
 
   refineOptions: RefineRank[] = [1, 2, 3, 4, 5];
 
@@ -45,7 +45,7 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
     this.selected = weapon;
   }
 
-  setLevel(level: Level): void {
+  setLevel(level: AscensionLevel): void {
     this.level = level;
   }
 
