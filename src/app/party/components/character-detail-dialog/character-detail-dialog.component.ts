@@ -8,7 +8,6 @@ import {TalentLevelData} from '../../../shared/models/talent-level-data.model';
 import {TalentService} from '../../../shared/services/talent.service';
 import {Constellation} from '../../../shared/models/constellation';
 import {TalentLevel} from '../../../shared/models/talent-level';
-import {coerceIn} from '../../../shared/utils/coerce';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../../shared/models/ascension.enum';
 
@@ -30,8 +29,6 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
   targetAscension = Ascension.ZERO;
 
   level = 1;
-
-  currentTalentMaxLevel = 1;
 
   availableTalentLevels: TalentLevel[] = [];
 
@@ -63,8 +60,7 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
   update(): void {
     this.availableTalentLevels = this.talentService.availableTalentLevels(this.ascension);
     this.targetAvailableTalentLevels = this.talentService.availableTalentLevels(this.targetAscension);
-    this.currentTalentMaxLevel = this.talentService.maxAvailableTalentLevel(this.ascension);
-    this.talents.forEach(it => it.level = coerceIn(it.level, 1, this.currentTalentMaxLevel) as TalentLevel);
+    this.talents.forEach(it => it.level = this.talentService.correctTalentLevel(it.level, this.ascension));
   }
 
   getConstellationText(constellation: Constellation): string {
@@ -94,7 +90,7 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
   }
 
   setTalent(num: number, event: { current: number; target: number }): void {
-    this.talents[num].level = coerceIn(event.current, 1, this.currentTalentMaxLevel) as TalentLevel;
+    this.talents[num].level = this.talentService.correctTalentLevel(event.current as TalentLevel, this.ascension);
     this.characterService.updatePartyMember(this.character);
   }
 

@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {Ascension} from '../models/ascension.enum';
 import {TalentLevel} from '../models/talent-level';
 import {rangeList} from '../utils/range-list';
+import {coerceIn} from '../utils/coerce';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,11 @@ export class TalentService {
    */
   maxAvailableTalentLevel(ascension: Ascension): TalentLevel {
     return (ascension < 2 ? 1 : (ascension - 1) * 2) as TalentLevel;
+  }
+
+  correctTalentLevel(level: TalentLevel, ascension: Ascension): TalentLevel {
+    const max = this.maxAvailableTalentLevel(ascension);
+    return coerceIn(level, 1, max) as TalentLevel;
   }
 
   availableTalentLevels(ascension: Ascension): TalentLevel[] {

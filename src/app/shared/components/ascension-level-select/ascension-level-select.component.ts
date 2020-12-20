@@ -5,7 +5,6 @@ import {AscensionLevel} from '../../models/ascension-level.model';
 import {Ascension} from '../../models/ascension.enum';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
-import {coerceIn} from '../../utils/coerce';
 
 @Component({
   selector: 'app-ascension-level-select',
@@ -66,20 +65,19 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.targetAscension = this.ascension;
-      this.targetLevel = this.level;
-      this.change();
-    }, 5);
+    this.change();
   }
 
   change(): void {
     const current = new AscensionLevel(this.ascension, this.level);
-    if (this.multi) {
-      this.multiLevelChange.emit({current, target: new AscensionLevel(this.targetAscension, this.targetLevel)});
+    this.level = current.level;
+    if (!this.multi) {
+      this.levelChange.emit(current);
       return;
     }
-    this.levelChange.emit(current);
+    const target = new AscensionLevel(this.targetAscension, this.targetLevel);
+    this.targetLevel = target.level;
+    this.multiLevelChange.emit({current, target});
   }
 
   reset(): void {
@@ -90,19 +88,12 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   setAscension(event: { current: number; target: number }): void {
     this.ascension = event.current;
     this.targetAscension = Math.max(this.ascension, event.target);
-    this.level = this.correctLevel(this.ascension, this.level);
-    this.targetLevel = this.correctLevel(this.targetAscension, this.targetLevel);
     this.change();
   }
 
   setLevel(event: { current: number; target: number }): void {
-    this.level = this.correctLevel(this.ascension, event.current);
-    this.targetLevel = this.correctLevel(this.targetAscension, event.target);
+    this.level = AscensionLevel.correctLevel(this.ascension, event.current);
+    this.targetLevel = AscensionLevel.correctLevel(this.targetAscension, event.target);
     this.change();
-  }
-
-  correctLevel(ascension: Ascension, level: number): number {
-    const limit = AscensionLevel.limit[ascension];
-    return coerceIn(level, limit.min, limit.max);
   }
 }

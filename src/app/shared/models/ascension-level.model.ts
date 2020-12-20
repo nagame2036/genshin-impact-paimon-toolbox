@@ -24,8 +24,12 @@ export class AscensionLevel {
   }
 
   set level(value: number) {
-    const limit = AscensionLevel.limit[this.ascension];
-    this.#level = coerceIn(value, limit.min, limit.max);
+    this.#level = AscensionLevel.correctLevel(this.ascension, value);
+  }
+
+  static correctLevel(ascension: Ascension, level: number): number {
+    const limit = AscensionLevel.limit[ascension];
+    return coerceIn(level, limit.min, limit.max);
   }
 
   copyFrom(that: AscensionLevel): void {
