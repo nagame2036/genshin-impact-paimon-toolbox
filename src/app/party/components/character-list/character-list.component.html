@@ -29,10 +29,15 @@
   <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
     <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
                    category="characters" [id]="item.id" [rarity]="item.rarity">
-      <div container-top-left>
+      <div image-top-left>
         <img class="character-list-element-hint"
              [src]="'assets/images/elements/' + item.element + '.png'"
              [alt]="i18nDict('elements.' + item.element) | translate">
+      </div>
+      <div image-top-right>
+        <img class="character-list-weapon-hint"
+             [src]="'assets/images/weapon-types/' + item.weapon + '.png'"
+             [alt]="i18nDict('weapon-types.' + item.weapon) | translate">
       </div>
       <ng-container container-right *ngIf="party && rightTemplateRef"
                     [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">

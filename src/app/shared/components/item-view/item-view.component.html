@@ -3,7 +3,10 @@
   <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start center">
     <div [class]="['img-container', 'item-rarity-' + rarity]">
       <div class="item-container-top-left">
-        <ng-content select="[container-top-left]"></ng-content>
+        <ng-content select="[image-top-left]"></ng-content>
+      </div>
+      <div class="item-container-top-right">
+        <ng-content select="[image-top-right]"></ng-content>
       </div>
       <img class="item-img" [src]="src" [alt]="i18nDict(itemKey) | translate"/>
     </div>

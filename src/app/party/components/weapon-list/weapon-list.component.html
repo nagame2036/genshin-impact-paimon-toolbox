@@ -13,6 +13,11 @@
   <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
     <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
                    category="weapons" [id]="item.id" [rarity]="item.rarity">
+      <div image-top-left>
+        <img class="weapon-type-hint"
+             [src]="'assets/images/weapon-types/' + item.type + '.png'"
+             [alt]="i18nDict('weapon-types.' + item.type) | translate">
+      </div>
       <ng-container *ngIf="party && rightTemplateRef" container-right
                     [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
       </ng-container>
