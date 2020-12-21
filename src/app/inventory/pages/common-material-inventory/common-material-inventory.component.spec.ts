@@ -1,34 +1,30 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {InventoryPageComponent} from './inventory-page.component';
+import {CommonMaterialInventoryComponent} from './common-material-inventory.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from '@angular/router/testing';
 
-describe('InventoryPageComponent', () => {
-  let component: InventoryPageComponent;
-  let fixture: ComponentFixture<InventoryPageComponent>;
+describe('CommonMaterialInventoryComponent', () => {
+  let component: CommonMaterialInventoryComponent;
+  let fixture: ComponentFixture<CommonMaterialInventoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        InventoryPageComponent
+        CommonMaterialInventoryComponent
       ],
       imports: [
         InventoryModule,
-        BrowserAnimationsModule,
         AppTranslateModule,
-        AppIndexedDbModule,
-        RouterTestingModule
+        AppIndexedDbModule
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InventoryPageComponent);
+    fixture = TestBed.createComponent(CommonMaterialInventoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

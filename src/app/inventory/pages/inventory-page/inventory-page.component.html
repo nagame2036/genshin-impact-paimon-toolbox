@@ -1,18 +1,9 @@
-<div class="inventory-page">
-  <mat-tab-group class="inventory-tab-group">
-    <mat-tab [label]="i18n('mora-and-exp') | translate">
-      <div class="inventory-subpage">
-        <app-mora-and-exp-inventory></app-mora-and-exp-inventory>
-      </div>
-    </mat-tab>
-    <mat-tab *ngFor="let page of pages" [label]="i18n(page.label) | translate">
-      <div class="inventory-subpage">
-        <app-material-list [items]="page.items | async">
-          <ng-template let-item #bottom>
-            <app-amount-input [id]="item.id"></app-amount-input>
-          </ng-template>
-        </app-material-list>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+<div class="inventory-page" fxLayout="column">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of links"
+       [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      {{ 'path.' + link | translate }}
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>

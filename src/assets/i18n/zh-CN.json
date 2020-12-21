@@ -7,7 +7,13 @@
     "inventory": "背包",
     "resin": "树脂",
     "characters": "角色列表",
-    "weapons": "武器列表"
+    "weapons": "武器列表",
+    "mora-and-exp": "通用素材",
+    "elemental-materials": "角色突破素材",
+    "talent-materials": "天赋培养素材",
+    "weapon-materials": "武器突破素材",
+    "common-materials": "怪物掉落素材",
+    "local-specialties": "地区特产"
   },
   "modules": {
     "home": {
@@ -88,15 +94,6 @@
       "calculator": {
         "title": "伤害计算"
       }
-    },
-    "inventory": {
-      "amount": "数量",
-      "mora-and-exp": "通用素材",
-      "elemental-materials": "角色突破素材",
-      "talent-materials": "天赋培养素材",
-      "weapon-materials": "武器突破素材",
-      "common-materials": "怪物掉落素材",
-      "local-specialties": "地区特产"
     }
   },
   "dict": {

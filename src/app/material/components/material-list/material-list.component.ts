@@ -9,7 +9,7 @@ import {InventoryItem} from '../../models/inventory-item';
 export class MaterialListComponent implements OnInit {
 
   @Input()
-  items: InventoryItem[] | null = [];
+  items: InventoryItem[] = [];
 
   @ContentChild('bottom', {static: false})
   bottomTemplateRef!: TemplateRef<any>;

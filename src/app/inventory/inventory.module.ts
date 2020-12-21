@@ -9,12 +9,22 @@ import {MoraAndExpInventoryComponent} from './pages/mora-and-exp-inventory/mora-
 import {MatTabsModule} from '@angular/material/tabs';
 import {FlexModule} from '@angular/flex-layout';
 import {AmountInputComponent} from './components/amount-input/amount-input.component';
+import {ElementalMaterialInventoryComponent} from './pages/elemental-material-inventory/elemental-material-inventory.component';
+import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-material-inventory.component';
+import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
+import {CommonMaterialInventoryComponent} from './pages/common-material-inventory/common-material-inventory.component';
+import {LocalSpecialtyInventoryComponent} from './pages/local-specialty-inventory/local-specialty-inventory.component';
 
 @NgModule({
   declarations: [
     InventoryPageComponent,
     AmountInputComponent,
     MoraAndExpInventoryComponent,
+    ElementalMaterialInventoryComponent,
+    TalentMaterialInventoryComponent,
+    WeaponMaterialInventoryComponent,
+    CommonMaterialInventoryComponent,
+    LocalSpecialtyInventoryComponent,
   ],
   imports: [
     SharedModule,
