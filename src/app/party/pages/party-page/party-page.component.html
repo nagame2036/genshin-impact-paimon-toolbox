@@ -1,7 +1,7 @@
-<div class="party-page page-one-col">
+<div class="party-page" fxLayout="column">
   <nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let link of links" [routerLink]="link"
-       routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+    <a mat-tab-link *ngFor="let link of links"
+       [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
       {{ 'path.' + link | translate }}
     </a>
   </nav>
