@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
-import {CharacterExpMaterial, CharacterExpMaterialGroup, CharacterExpMaterialItem} from '../models/character-exp-material';
+import {CharacterExpMaterial, CharacterExpMaterialGroup, CharacterExpMaterialItem} from '../models/character-exp-material.model';
 import {HttpClient} from '@angular/common/http';
 import alasql from 'alasql';
 

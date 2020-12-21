@@ -1,5 +1,5 @@
 import {Rarity} from '../../shared/models/rarity.enum';
-import {InventoryItem} from './inventory-item';
+import {InventoryItem} from './inventory-item.model';
 
 export interface CharacterExpMaterial {
 

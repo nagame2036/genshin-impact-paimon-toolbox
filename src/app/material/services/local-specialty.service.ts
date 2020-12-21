@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {LocalSpecialty, LocalSpecialtyGroup, LocalSpecialtyItem} from '../models/local-specialty';
+import {LocalSpecialty, LocalSpecialtyGroup, LocalSpecialtyItem} from '../models/local-specialty.model';
 import alasql from 'alasql';
 
 @Injectable({

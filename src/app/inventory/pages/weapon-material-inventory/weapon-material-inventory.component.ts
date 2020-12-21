@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {WeaponMaterialItem} from '../../../material/models/weapon-material';
+import {WeaponMaterialItem} from '../../../material/models/weapon-material.model';
 import {WeaponMaterialService} from '../../../material/services/weapon-material.service';
 
 @Component({

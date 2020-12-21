@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {OreMaterial, OreMaterialGroup, OreMaterialItem} from '../models/ore-material';
+import {OreMaterial, OreMaterialGroup, OreMaterialItem} from '../models/ore-material.model';
 import alasql from 'alasql';
 
 @Injectable({

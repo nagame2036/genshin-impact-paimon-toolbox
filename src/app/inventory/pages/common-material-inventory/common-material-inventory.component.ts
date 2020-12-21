@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMaterialItem} from '../../../material/models/common-material';
+import {CommonMaterialItem} from '../../../material/models/common-material.model';
 import {CommonMaterialService} from '../../../material/services/common-material.service';
 
 @Component({

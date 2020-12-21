@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ElementalMaterialService} from '../../../material/services/elemental-material.service';
-import {ElementalMaterialItem} from '../../../material/models/elemental-material';
+import {ElementalMaterialItem} from '../../../material/models/elemental-material.model';
 
 @Component({
   selector: 'app-elemental-material-inventory',

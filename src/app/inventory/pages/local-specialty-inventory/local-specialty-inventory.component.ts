@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalSpecialtyService} from '../../../material/services/local-specialty.service';
-import {LocalSpecialtyItem} from '../../../material/models/local-specialty';
+import {LocalSpecialtyItem} from '../../../material/models/local-specialty.model';
 
 @Component({
   selector: 'app-local-specialty-inventory',

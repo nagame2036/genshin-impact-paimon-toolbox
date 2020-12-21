@@ -1,7 +1,7 @@
 import {Rarity} from '../../shared/models/rarity.enum';
-import {ItemCost} from './item-cost';
+import {ItemCost} from './item-cost.model';
 import {ElementType} from '../../shared/models/element-type.enum';
-import {InventoryItem} from './inventory-item';
+import {InventoryItem} from './inventory-item.model';
 
 export interface ElementalMaterial {
 

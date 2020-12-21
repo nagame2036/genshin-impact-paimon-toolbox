@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {WeaponExpMaterial, WeaponExpMaterialGroup, WeaponExpMaterialItem} from '../models/weapon-exp-material';
+import {WeaponExpMaterial, WeaponExpMaterialGroup, WeaponExpMaterialItem} from '../models/weapon-exp-material.model';
 import alasql from 'alasql';
 
 @Injectable({

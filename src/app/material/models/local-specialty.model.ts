@@ -1,5 +1,5 @@
 import {Nation} from '../../shared/models/nation.enum';
-import {InventoryItem} from './inventory-item';
+import {InventoryItem} from './inventory-item.model';
 
 export interface LocalSpecialty {
 

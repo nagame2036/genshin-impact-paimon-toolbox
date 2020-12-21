@@ -1,6 +1,6 @@
 import {Rarity} from '../../shared/models/rarity.enum';
-import {ItemCost} from './item-cost';
-import {InventoryItem} from './inventory-item';
+import {ItemCost} from './item-cost.model';
+import {InventoryItem} from './inventory-item.model';
 
 export interface CommonMaterial {
 

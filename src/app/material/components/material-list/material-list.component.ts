@@ -1,5 +1,5 @@
 import {Component, ContentChild, Input, OnInit, TemplateRef} from '@angular/core';
-import {InventoryItem} from '../../models/inventory-item';
+import {InventoryItem} from '../../models/inventory-item.model';
 
 @Component({
   selector: 'app-material-list',

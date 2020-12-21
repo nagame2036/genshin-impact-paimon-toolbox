@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {TalentMaterial, TalentMaterialGroup, TalentMaterialItem} from '../models/talent-material';
+import {TalentMaterial, TalentMaterialGroup, TalentMaterialItem} from '../models/talent-material.model';
 import alasql from 'alasql';
 
 @Injectable({

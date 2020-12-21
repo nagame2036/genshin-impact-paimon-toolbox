@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TalentMaterialItem} from '../../../material/models/talent-material';
+import {TalentMaterialItem} from '../../../material/models/talent-material.model';
 import {TalentMaterialService} from '../../../material/services/talent-material.service';
 
 @Component({
