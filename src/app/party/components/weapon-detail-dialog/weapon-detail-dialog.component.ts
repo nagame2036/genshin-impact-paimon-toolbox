@@ -6,6 +6,10 @@ import {PartyWeapon} from '../../../shared/models/party-weapon';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../shared/models/refine-rank';
 import {AscensionLevel} from '../../../shared/models/ascension-level.model';
+import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
+import {Ascension} from '../../../shared/models/ascension.enum';
+import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
+import {toAscensionLevel} from '../../../plan/models/levelup-plan.model';
 
 @Component({
   selector: 'app-weapon-detail-dialog',
@@ -20,37 +24,47 @@ export class WeaponDetailDialogComponent extends AbstractTranslateComponent impl
 
   refine: RefineRank = 1;
 
-  ascension = 0;
+  ascension = Ascension.ZERO;
+
+  targetAscension = Ascension.ZERO;
 
   level = 1;
 
-  constructor(public dialogRef: MatDialogRef<WeaponDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: PartyWeapon,
-              private weaponService: WeaponService) {
-    super();
-  }
+  targetLevel = 1;
 
-  get weapon(): PartyWeapon {
-    return {...this.data, refine: this.refine, ascension: this.ascension, level: this.level};
+  constructor(public dialogRef: MatDialogRef<WeaponDetailDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { weapon: PartyWeapon, plan: WeaponPlan },
+              private weaponService: WeaponService, private planner: WeaponPlanner) {
+    super();
+    const {weapon: weapon, plan: plan} = data;
+    this.refine = weapon.refine;
+    this.ascension = weapon.ascension;
+    this.level = weapon.level;
+    const {ascension: ascension, level: level} = toAscensionLevel(plan.levelup);
+    this.targetAscension = ascension;
+    this.targetLevel = level;
   }
 
   ngOnInit(): void {
-    // avoid NG0100: ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.refine = this.data.refine;
-      this.ascension = this.data.ascension;
-      this.level = this.data.level;
-    }, 5);
   }
 
   setRefine(refine: RefineRank): void {
     this.refine = refine;
-    this.weaponService.updatePartyMember(this.weapon);
+    this.save();
   }
 
   setLevel(event: { current: AscensionLevel; target: AscensionLevel }): void {
     this.ascension = event.current.ascension;
     this.level = event.current.level;
-    this.weaponService.updatePartyMember(this.weapon);
+    this.targetAscension = event.target.ascension;
+    this.targetLevel = event.target.level;
+    this.save();
+  }
+
+  save(): void {
+    const weapon = {...this.data.weapon, refine: this.refine, ascension: this.ascension, level: this.level};
+    this.weaponService.updatePartyMember(weapon);
+    this.planner.updatePlan(this.data.plan.id, this.targetAscension, this.targetLevel);
   }
 
   remove(weapon: PartyWeapon): void {

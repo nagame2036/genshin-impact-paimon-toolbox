@@ -7,7 +7,8 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {PartyCharacterListComponent} from '../../components/party-character-list/party-character-list.component';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {CharacterService} from '../../../shared/services/character.service';
-import {PartyCharacter} from '../../../shared/models/party-character';
+import {CharacterPlanner} from '../../../plan/services/character-planner.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-party-character',
@@ -27,7 +28,7 @@ export class PartyCharacterComponent extends AbstractTranslateComponent implemen
   @ViewChild('list')
   list!: PartyCharacterListComponent;
 
-  constructor(private dialog: MatDialog, private service: CharacterService) {
+  constructor(private dialog: MatDialog, private service: CharacterService, private planner: CharacterPlanner) {
     super();
   }
 
@@ -39,7 +40,9 @@ export class PartyCharacterComponent extends AbstractTranslateComponent implemen
   }
 
   openDetail(character: Character): void {
-    this.dialog.open(CharacterDetailDialogComponent, {data: character as PartyCharacter});
+    this.planner.getPlan(character.id).pipe(first()).subscribe(plan => {
+      this.dialog.open(CharacterDetailDialogComponent, {data: {character, plan}});
+    });
   }
 
   openRemoveDialog(): void {

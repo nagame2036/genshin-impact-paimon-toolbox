@@ -11,9 +11,6 @@
     <div style="width: 100px">
       <app-item-view category="characters" [id]="selected.id" [rarity]="selected.rarity"></app-item-view>
     </div>
-    <app-ascension-level-select #ascension [horizontal]="false" [width]="320"
-                                label="character" (levelChange)="setLevel($event)">
-    </app-ascension-level-select>
     <mat-form-field class="app-form-field" appearance="outline" floatLabel="always">
       <mat-label>
         {{ i18nDict('constellation') | translate }}
@@ -26,13 +23,16 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <app-ascension-level-select #ascensionLevel label="character" [horizontal]="false" [width]="320"
+                                (levelChange)="setLevel($event)">
+    </app-ascension-level-select>
     <mat-form-field *ngFor="let talent of talentsData; let i = index"
                     class="app-form-field" appearance="outline" floatLabel="always">
       <mat-label [translate]="i18nDict('talent-labels.' + talent.id % 10)"
                  [translateParams]="{ name: i18nDict('talents.' + talent.id) | translate }">
       </mat-label>
       <mat-select [(value)]="talent.level">
-        <mat-option *ngFor="let level of talentService.availableTalentLevels(level.ascension)" [value]="level">
+        <mat-option *ngFor="let level of talentService.levels(ascension)" [value]="level">
           {{ level }}
         </mat-option>
       </mat-select>

@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="center center">
-  <app-item-view category="characters" [id]="data.id" [width]="220" [rarity]="data.rarity">
+  <app-item-view category="characters" [id]="data.character.id" [width]="220" [rarity]="data.character.rarity">
     <div container-right class="party-item-overview" gdAlignColumns="space-around stretch"
          gdColumns="repeat(2, auto-fill)" gdRows="repeat(3, 1fr)"
          gdAreas="element element-data | weapon weapon-data | nation nation-data">
@@ -7,19 +7,19 @@
         <b>{{ i18nDict('element') | translate }}</b>
       </div>
       <div gdArea="element-data" class="party-item-overview-data party-item-overview-row-non-border-top">
-        {{ i18nDict('elements.' + data.element) | translate }}
+        {{ i18nDict('elements.' + data.character.element) | translate }}
       </div>
       <div gdArea="weapon" class="party-item-overview-label">
         <b>{{ i18nDict('weapon') | translate }}</b>
       </div>
       <div gdArea="weapon-data" class="party-item-overview-data">
-        {{ i18nDict('weapon-types.' + data.weapon) | translate }}
+        {{ i18nDict('weapon-types.' + data.character.weapon) | translate }}
       </div>
       <div gdArea="nation" class="party-item-overview-label">
         <b>{{ i18nDict('nation') | translate }}</b>
       </div>
       <div gdArea="nation-data" class="party-item-overview-data">
-        {{ i18nDict('nations.' + (data.nation || 0)) | translate }}
+        {{ i18nDict('nations.' + (data.character.nation || 0)) | translate }}
       </div>
     </div>
   </app-item-view>
@@ -27,7 +27,7 @@
     <mat-label>
       {{ i18nDict('constellation') | translate }}
       -
-      {{ i18nDict('constellations.' + data.id + '.name') | translate }}
+      {{ i18nDict('constellations.' + data.character.id + '.name') | translate }}
     </mat-label>
     <mat-select [value]="constellation" (selectionChange)="setConstellation($event.value)">
       <mat-option *ngFor="let c of constellations" [value]="c">
@@ -35,17 +35,18 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <app-ascension-level-select [multi]="true" label="character" [width]="220" [horizontal]="false"
-                              [ascension]="ascension" [level]="level" (multiLevelChange)="setLevel($event)">
-  </app-ascension-level-select>
-  <app-current-target-select *ngFor="let talent of talents; let i = index" [current]="talent.level"
-                             [label]="talentLabel(talent) | translate: { name: talentName(talent) | translate }"
-                             [currentAvailableValues]="availableTalentLevels"
-                             [targetAvailableValues]="targetAvailableTalentLevels"
-                             (changed)="setTalent(i, $event)">
+  <app-current-target-level-select label="character" [ascension]="ascension" [level]="level"
+                                   [targetAscension]="targetAscension" [targetLevel]="targetLevel"
+                                   (changed)="setLevel($event)">
+  </app-current-target-level-select>
+  <app-current-target-select *ngFor="let talent of talents; let i = index"
+                             [currentOptions]="talentLevels" [targetOptions]="targetTalentLevels[i]"
+                             [current]="talent.level" (currentChanged)="setTalent(i, $event)"
+                             [target]="targetTalents[i]?.level || 1" (targetChanged)="setTargetTalent(i, $event)">
+    {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
   </app-current-target-select>
   <div mat-dialog-actions>
-    <button mat-stroked-button (click)="remove(data.id)">
+    <button mat-stroked-button (click)="remove(data.character.id)">
       {{ i18n('remove') | translate }}
     </button>
   </div>

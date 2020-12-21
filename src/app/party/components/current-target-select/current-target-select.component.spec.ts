@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CurrentTargetSelectComponent} from './current-target-select.component';
 import {AppTranslateModule} from '../../../app-translate.module';
+import {PartyModule} from '../../party.module';
 
 describe('CurrentTargetSelectComponent', () => {
   let component: CurrentTargetSelectComponent;
@@ -13,6 +14,7 @@ describe('CurrentTargetSelectComponent', () => {
         CurrentTargetSelectComponent
       ],
       imports: [
+        PartyModule,
         AppTranslateModule
       ]
     })

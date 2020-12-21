@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="center center">
-  <app-item-view category="weapons" [width]="220" [id]="data.id" [rarity]="data.rarity">
+  <app-item-view category="weapons" [width]="220" [id]="data.weapon.id" [rarity]="data.weapon.rarity">
     <div container-right class="party-item-overview" gdAlignColumns="space-around stretch"
          gdColumns="repeat(2, auto)" gdRows="repeat(1, 1fr)"
          gdAreas="weapon weapon-data">
@@ -7,7 +7,7 @@
         <b>{{ i18nDict('type') | translate }}</b>
       </div>
       <div gdArea="weapon-data" class="party-item-overview-data party-item-overview-row-non-border-top">
-        {{ i18nDict('weapon-types.' + data.type) | translate }}
+        {{ i18nDict('weapon-types.' + data.weapon.type) | translate }}
       </div>
     </div>
   </app-item-view>
@@ -19,11 +19,12 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <app-ascension-level-select [multi]="true" label="weapon" [width]="220" [horizontal]="false"
-                              [ascension]="ascension" [level]="level" (multiLevelChange)="setLevel($event)">
-  </app-ascension-level-select>
+  <app-current-target-level-select label="character" [ascension]="ascension" [level]="level"
+                                   [targetAscension]="targetAscension" [targetLevel]="targetLevel"
+                                   (changed)="setLevel($event)">
+  </app-current-target-level-select>
   <div mat-dialog-actions>
-    <button mat-stroked-button (click)="remove(data)">
+    <button mat-stroked-button (click)="remove(data.weapon)">
       {{ i18n('remove') | translate }}
     </button>
   </div>

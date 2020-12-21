@@ -7,6 +7,7 @@ import {Ascension} from '../models/ascension.enum';
 import {TalentLevel} from '../models/talent-level';
 import {rangeList} from '../utils/range-list';
 import {coerceIn} from '../utils/coerce';
+import {TalentLevelData} from '../models/talent-level-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,17 +37,27 @@ export class TalentService {
    *
    * @param ascension ascension phase of character
    */
-  maxAvailableTalentLevel(ascension: Ascension): TalentLevel {
+  maxLevel(ascension: Ascension): TalentLevel {
     return (ascension < 2 ? 1 : (ascension - 1) * 2) as TalentLevel;
   }
 
-  correctTalentLevel(level: TalentLevel, ascension: Ascension): TalentLevel {
-    const max = this.maxAvailableTalentLevel(ascension);
+  correctLevel(ascension: Ascension, level: number): TalentLevel {
+    const max = this.maxLevel(ascension);
     return coerceIn(level, 1, max) as TalentLevel;
   }
 
-  availableTalentLevels(ascension: Ascension): TalentLevel[] {
-    return rangeList(1, this.maxAvailableTalentLevel(ascension)) as TalentLevel[];
+  correctLevels(ascension: Ascension, levels: TalentLevelData[], starts: number[] = [1, 1, 1]): TalentLevelData[] {
+    const max = this.maxLevel(ascension);
+    return levels.map((it, index) => {
+      const min = Math.min(1, starts[index]);
+      const level = coerceIn(it.level, min, max) as TalentLevel;
+      return {id: it.id, level};
+    });
+  }
+
+  levels(ascension: Ascension, start: number = 1): TalentLevel[] {
+    const min = Math.max(1, start);
+    return rangeList(min, this.maxLevel(ascension)) as TalentLevel[];
   }
 
   getTalentsOfCharacter(id: number): Observable<TalentDataItem[]> {

@@ -12,6 +12,8 @@ import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation
 import {TalentLevelData} from '../../../shared/models/talent-level-data.model';
 import {TalentService} from '../../../shared/services/talent.service';
 import {rangeList} from '../../../shared/utils/range-list';
+import {Ascension} from '../../../shared/models/ascension.enum';
+import {CharacterPlanner} from '../../../plan/services/character-planner.service';
 
 @Component({
   selector: 'app-character-select-dialog',
@@ -27,20 +29,24 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
 
   selected: Character | undefined;
 
-  @ViewChild('ascension')
-  ascensionLevel!: AscensionLevelSelectComponent;
-
-  level!: AscensionLevel;
-
   constellationLevels: Constellation[] = rangeList(0, 6) as Constellation[];
 
   constellation: Constellation = 0;
 
+  @ViewChild('ascensionLevel')
+  ascensionLevel!: AscensionLevelSelectComponent;
+
+  level = new AscensionLevel();
+
   talentsData: TalentLevelData[] = [];
 
-  constructor(private characterService: CharacterService, public talentService: TalentService,
+  constructor(private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
     super();
+  }
+
+  get ascension(): Ascension {
+    return this.level?.ascension ?? Ascension.ZERO;
   }
 
   ngOnInit(): void {
@@ -72,8 +78,10 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
 
   add(): void {
     if (this.selected && this.level) {
-      this.characterService.addPartyMember(this.selected.id, this.level, this.constellation, this.talentsData);
-      this.translator.get(this.i18nDict('characters.' + this.selected.id))
+      const id = this.selected.id;
+      this.characterService.addPartyMember(id, this.level, this.constellation, this.talentsData);
+      this.planner.updatePlan(id, this.level.ascension, this.level.level, this.talentsData);
+      this.translator.get(this.i18nDict(`characters.${id}`))
         .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
       this.reset();

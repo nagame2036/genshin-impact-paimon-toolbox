@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponListComponent} from './weapon-list.component';
 import {AppTranslateModule} from '../../../app-translate.module';
+import {PartyModule} from '../../party.module';
 
 describe('WeaponListComponent', () => {
   let component: WeaponListComponent;
@@ -13,6 +14,7 @@ describe('WeaponListComponent', () => {
         WeaponListComponent
       ],
       imports: [
+        PartyModule,
         AppTranslateModule
       ]
     })

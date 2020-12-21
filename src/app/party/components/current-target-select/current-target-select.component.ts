@@ -11,25 +11,22 @@ import {TranslateService} from '@ngx-translate/core';
 export class CurrentTargetSelectComponent implements OnInit {
 
   @Input()
-  width = 128;
-
-  @Input()
-  label = '';
-
-  @Input()
-  currentAvailableValues!: number[];
+  currentOptions!: number[];
 
   @Input()
   current!: number;
 
   @Input()
-  targetAvailableValues!: number[];
+  targetOptions!: number[];
 
   @Input()
   target = 0;
 
   @Output()
-  changed = new EventEmitter<{ current: number, target: number }>();
+  currentChanged = new EventEmitter<number>();
+
+  @Output()
+  targetChanged = new EventEmitter<number>();
 
   constructor(
     /**
@@ -42,19 +39,19 @@ export class CurrentTargetSelectComponent implements OnInit {
   valueDisplay: (value: number) => Observable<string> = (value: number) => of(value.toString());
 
   ngOnInit(): void {
-    // avoid NG0100: ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => this.update(), 5);
   }
 
-  update(): void {
-    this.targetAvailableValues = this.targetAvailableValues.filter(it => it >= this.current);
-    if (this.target < this.current) {
-      this.target = this.current;
+  changeCurrent(value: number): void {
+    this.current = value;
+    if (this.target < value) {
+      this.changeTarget(value);
+      return;
     }
+    this.currentChanged.emit(value);
   }
 
-  change(): void {
-    this.update();
-    this.changed.emit({current: this.current, target: this.target});
+  changeTarget(value: number): void {
+    this.target = value;
+    this.targetChanged.emit(value);
   }
 }

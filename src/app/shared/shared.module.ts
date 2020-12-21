@@ -7,7 +7,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {AscensionLevelSelectComponent} from './components/ascension-level-select/ascension-level-select.component';
 import {ItemViewComponent} from './components/item-view/item-view.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
-import {CurrentTargetSelectComponent} from './components/current-target-select/current-target-select.component';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -17,7 +16,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AscensionLevelSelectComponent, ItemViewComponent, MultiSelectComponent, CurrentTargetSelectComponent],
+  declarations: [AscensionLevelSelectComponent, ItemViewComponent, MultiSelectComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -39,8 +38,7 @@ import {MatIconModule} from '@angular/material/icon';
     NgxIndexedDBModule,
     AscensionLevelSelectComponent,
     ItemViewComponent,
-    MultiSelectComponent,
-    CurrentTargetSelectComponent
+    MultiSelectComponent
   ]
 })
 export class SharedModule {

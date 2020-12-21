@@ -10,6 +10,9 @@ import {Constellation} from '../../../shared/models/constellation';
 import {TalentLevel} from '../../../shared/models/talent-level';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../../shared/models/ascension.enum';
+import {CharacterPlanner} from '../../../plan/services/character-planner.service';
+import {CharacterPlan} from '../../../plan/models/character-plan.model';
+import {toAscensionLevel} from '../../../plan/models/levelup-plan.model';
 
 @Component({
   selector: 'app-character-detail-dialog',
@@ -22,49 +25,46 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
 
   constellations = rangeList(0, 6) as Constellation[];
 
-  constellation: Constellation = 0;
+  constellation: Constellation;
 
-  ascension = Ascension.ZERO;
+  ascension: Ascension;
 
   targetAscension = Ascension.ZERO;
 
-  level = 1;
+  level: number;
 
-  availableTalentLevels: TalentLevel[] = [];
+  targetLevel: number;
 
-  targetAvailableTalentLevels: TalentLevel[] = [];
+  talentLevels: TalentLevel[];
 
-  talents: TalentLevelData[] = [];
+  talents: TalentLevelData[];
 
-  constructor(public dialogRef: MatDialogRef<CharacterDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: PartyCharacter,
-              private characterService: CharacterService, public talentService: TalentService) {
+  targetTalentLevels: TalentLevel[][];
+
+  targetTalents: TalentLevelData[];
+
+  constructor(public dialogRef: MatDialogRef<CharacterDetailDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { character: PartyCharacter, plan: CharacterPlan },
+              private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner) {
     super();
-  }
-
-  get character(): PartyCharacter {
-    return {...this.data, ascension: this.ascension, level: this.level, constellation: this.constellation, talents: this.talents};
+    const {character: character, plan: plan} = this.data;
+    this.constellation = character.constellation;
+    this.ascension = character.ascension;
+    this.level = character.level;
+    this.talents = character.talents;
+    this.talentLevels = this.talentService.levels(this.ascension);
+    const {ascension: ascension, level: level} = toAscensionLevel(plan.levelup);
+    this.targetAscension = ascension;
+    this.targetLevel = level;
+    this.targetTalentLevels = this.talents.map(it => talentService.levels(this.targetAscension, it.level));
+    this.targetTalents = plan.talents;
   }
 
   ngOnInit(): void {
-    // avoid NG0100: ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.constellation = this.data.constellation;
-      this.ascension = this.data.ascension;
-      this.targetAscension = this.ascension;
-      this.level = this.data.level;
-      this.talents = this.data.talents;
-      this.update();
-    }, 5);
-  }
-
-  update(): void {
-    this.availableTalentLevels = this.talentService.availableTalentLevels(this.ascension);
-    this.targetAvailableTalentLevels = this.talentService.availableTalentLevels(this.targetAscension);
-    this.talents.forEach(it => it.level = this.talentService.correctTalentLevel(it.level, this.ascension));
   }
 
   getConstellationText(constellation: Constellation): string {
-    const text = constellation === 0 ? 'none' : `constellations.${this.data.id}.${constellation}`;
+    const text = constellation === 0 ? 'none' : `constellations.${this.data.character.id}.${constellation}`;
     return this.i18nDict(text);
   }
 
@@ -78,20 +78,46 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
 
   setConstellation(constellation: Constellation): void {
     this.constellation = constellation;
-    this.characterService.updatePartyMember(this.character);
+    this.save();
   }
 
   setLevel(event: { current: AscensionLevel; target: AscensionLevel }): void {
     this.ascension = event.current.ascension;
     this.level = event.current.level;
     this.targetAscension = event.target.ascension;
-    this.update();
-    this.characterService.updatePartyMember(this.character);
+    this.targetLevel = event.target.level;
+    this.talentLevels = this.talentService.levels(this.ascension);
+    this.talents = this.talentService.correctLevels(this.ascension, this.talents);
+    this.correctTargetTalents();
+    this.save();
   }
 
-  setTalent(num: number, event: { current: number; target: number }): void {
-    this.talents[num].level = this.talentService.correctTalentLevel(event.current as TalentLevel, this.ascension);
-    this.characterService.updatePartyMember(this.character);
+  setTalent(num: number, value: number): void {
+    this.talents[num].level = this.talentService.correctLevel(this.ascension, value);
+    this.correctTargetTalents();
+    this.save();
+  }
+
+  correctTargetTalents(): void {
+    this.targetTalentLevels = this.talents.map(it => this.talentService.levels(this.targetAscension, it.level));
+    const starts = this.talents.map(it => it.level);
+    this.targetTalents = this.talentService.correctLevels(this.targetAscension, this.targetTalents, starts);
+  }
+
+  setTargetTalent(num: number, value: number): void {
+    this.targetTalents[num].level = this.talentService.correctLevel(this.targetAscension, value);
+    this.save();
+  }
+
+  save(): void {
+    this.characterService.updatePartyMember({
+      ...this.data.character,
+      ascension: this.ascension,
+      level: this.level,
+      constellation: this.constellation,
+      talents: this.talents
+    });
+    this.planner.updatePlan(this.data.plan.id, this.targetAscension, this.targetLevel, this.targetTalents);
   }
 
   remove(id: number): void {

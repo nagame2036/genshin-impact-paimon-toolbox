@@ -1,5 +1,6 @@
 import {coerceIn} from '../utils/coerce';
 import {Ascension} from './ascension.enum';
+import {rangeList} from '../utils/range-list';
 
 export class AscensionLevel {
 
@@ -28,8 +29,14 @@ export class AscensionLevel {
   }
 
   static correctLevel(ascension: Ascension, level: number): number {
-    const limit = AscensionLevel.limit[ascension];
+    const limit = AscensionLevel.limit[ascension ?? Ascension.ZERO];
     return coerceIn(level, limit.min, limit.max);
+  }
+
+  static levels(ascension: Ascension, start: number = -1): number[] {
+    const limit = AscensionLevel.limit[ascension ?? Ascension.ZERO];
+    const min = Math.max(start, limit.min);
+    return rangeList(min, limit.max);
   }
 
   copyFrom(that: AscensionLevel): void {

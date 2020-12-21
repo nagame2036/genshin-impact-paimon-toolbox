@@ -14,6 +14,8 @@ import {WeaponDetailDialogComponent} from './components/weapon-detail-dialog/wea
 import {PartyCharacterListComponent} from './components/party-character-list/party-character-list.component';
 import {PartyWeaponListComponent} from './components/party-weapon-list/party-weapon-list.component';
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
+import {CurrentTargetSelectComponent} from './components/current-target-select/current-target-select.component';
+import {CurrentTargetLevelSelectComponent} from './components/current-target-level-select/current-target-level-select.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
@@ -40,7 +42,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     WeaponDetailDialogComponent,
     PartyCharacterListComponent,
     PartyWeaponListComponent,
-    RemoveConfirmDialogComponent
+    RemoveConfirmDialogComponent,
+    CurrentTargetSelectComponent,
+    CurrentTargetLevelSelectComponent
   ],
   imports: [
     SharedModule,

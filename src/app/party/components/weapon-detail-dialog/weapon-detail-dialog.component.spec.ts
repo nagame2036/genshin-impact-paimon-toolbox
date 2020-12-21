@@ -31,7 +31,17 @@ describe('WeaponDetailDialogComponent', () => {
         },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: {}
+          useValue: {
+            weapon: {
+              ascension: 0
+            },
+            plan: {
+              levelup: {
+                phase: 0,
+                level: 1
+              }
+            }
+          }
         }
       ]
     })

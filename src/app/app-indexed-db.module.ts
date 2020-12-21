@@ -21,6 +21,16 @@ const config: DBConfig = {
       store: 'materials',
       storeConfig: {keyPath: 'id', autoIncrement: false},
       storeSchema: []
+    },
+    {
+      store: 'character-plans',
+      storeConfig: {keyPath: 'id', autoIncrement: false},
+      storeSchema: []
+    },
+    {
+      store: 'weapon-plans',
+      storeConfig: {keyPath: 'id', autoIncrement: false},
+      storeSchema: []
     }
   ]
 };

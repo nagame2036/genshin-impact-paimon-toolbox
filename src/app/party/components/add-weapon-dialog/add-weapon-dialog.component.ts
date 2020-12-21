@@ -9,6 +9,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
+import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 
 @Component({
   selector: 'app-add-weapon-dialog',
@@ -24,16 +25,17 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   selected: Weapon | undefined;
 
-  @ViewChild('ascension')
-  ascensionLevel!: AscensionLevelSelectComponent;
-
-  level!: AscensionLevel;
-
   refineOptions: RefineRank[] = [1, 2, 3, 4, 5];
 
   refine: RefineRank = 1;
 
-  constructor(private service: WeaponService, private snake: MatSnackBar, private translator: TranslateService) {
+  @ViewChild('ascension')
+  ascensionLevel!: AscensionLevelSelectComponent;
+
+  level = new AscensionLevel();
+
+  constructor(private service: WeaponService, private planner: WeaponPlanner,
+              private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
@@ -57,8 +59,10 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   add(): void {
     if (this.selected && this.level) {
-      this.service.addPartyMember(this.selected.id, this.level, this.refine);
-      this.translator.get(this.i18nDict('weapons.' + this.selected.id))
+      const id = this.selected.id;
+      this.service.addPartyMember(id, this.level, this.refine);
+      this.planner.updatePlan(id, this.level.ascension, this.level.level);
+      this.translator.get(this.i18nDict('weapons.' + id))
         .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
       this.reset();

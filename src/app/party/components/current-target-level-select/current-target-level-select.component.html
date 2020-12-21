@@ -1,0 +1,11 @@
+<app-current-target-select [currentOptions]="ascensions" [targetOptions]="targetAscensions"
+                           [current]="ascension" (currentChanged)="setAscension($event)"
+                           [target]="targetAscension" (targetChanged)="setTargetAscension($event)"
+                           [valueDisplay]="getAscension">
+  {{ i18nDict(label + '-ascension-label') | translate }}
+</app-current-target-select>
+<app-current-target-select [currentOptions]="levels" [targetOptions]="targetLevels"
+                           [current]="level" (currentChanged)="setLevel($event)"
+                           [target]="targetLevel" (targetChanged)="setTargetLevel($event)">
+  {{ i18nDict(label + '-level-label') | translate }}
+</app-current-target-select>

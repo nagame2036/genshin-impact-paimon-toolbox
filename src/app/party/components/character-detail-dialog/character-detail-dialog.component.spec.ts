@@ -32,7 +32,17 @@ describe('CharacterDetailDialogComponent', () => {
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            talents: []
+            character: {
+              ascension: 0,
+              talents: []
+            },
+            plan: {
+              levelup: {
+                phase: 0,
+                level: 1
+              },
+              talents: []
+            }
           }
         }
       ]

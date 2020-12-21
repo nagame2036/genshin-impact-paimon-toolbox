@@ -1,9 +1,11 @@
-<fieldset class="current-target-select-container" [style.width.px]="width"
+<fieldset class="current-target-select-container" [style.width.px]="220"
           fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
-  <legend>{{ label }}</legend>
+  <legend>
+    <ng-content></ng-content>
+  </legend>
   <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-target-select-field-left">
-    <mat-select [(value)]="current" (selectionChange)="change()">
-      <mat-option *ngFor="let value of currentAvailableValues; let i = index" [value]="value">
+    <mat-select [value]="current" (selectionChange)="changeCurrent($event.value)">
+      <mat-option *ngFor="let value of currentOptions; let i = index" [value]="value">
         {{ valueDisplay(value) | async }}
       </mat-option>
     </mat-select>
@@ -12,8 +14,8 @@
     chevron_right
   </mat-icon>
   <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-target-select-field-right">
-    <mat-select [(value)]="target" (selectionChange)="change()">
-      <mat-option *ngFor="let value of targetAvailableValues; let i = index" [value]="value">
+    <mat-select [value]="target" (selectionChange)="changeTarget($event.value)">
+      <mat-option *ngFor="let value of targetOptions; let i = index" [value]="value">
         {{ valueDisplay(value) | async }}
       </mat-option>
     </mat-select>
