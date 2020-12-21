@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterListComponent} from './character-list.component';
 import {AppTranslateModule} from '../../../app-translate.module';
+import {PartyModule} from '../../party.module';
 
 describe('CharacterListComponent', () => {
   let component: CharacterListComponent;
@@ -13,6 +14,7 @@ describe('CharacterListComponent', () => {
         CharacterListComponent
       ],
       imports: [
+        PartyModule,
         AppTranslateModule
       ]
     })
