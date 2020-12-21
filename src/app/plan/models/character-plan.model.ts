@@ -1,5 +1,5 @@
 import {LevelupPlan} from './levelup-plan.model';
-import {TalentLevelData} from '../../shared/models/talent-level-data.model';
+import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
 
 export interface CharacterPlan {
 

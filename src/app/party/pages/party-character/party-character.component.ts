@@ -2,11 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCharacterDialogComponent} from '../../components/add-character-dialog/add-character-dialog.component';
 import {CharacterDetailDialogComponent} from '../../components/character-detail-dialog/character-detail-dialog.component';
-import {Character} from '../../../shared/models/character';
+import {Character} from '../../../character-and-gear/models/character.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {PartyCharacterListComponent} from '../../components/party-character-list/party-character-list.component';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
-import {CharacterService} from '../../../shared/services/character.service';
+import {CharacterService} from '../../../character-and-gear/services/character.service';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
 import {first} from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CharacterStatProfile} from '../../models/character-stat-profile';
+import {CharacterStatProfile} from '../../models/character-stat-profile.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterStatOptimizerService} from '../../services/character-stat-optimizer.service';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';

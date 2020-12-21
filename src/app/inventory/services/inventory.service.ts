@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {ItemCost} from '../../shared/models/materials/item-cost';
+import {ItemCost} from '../../material/models/item-cost';
 
 @Injectable({
   providedIn: 'root'

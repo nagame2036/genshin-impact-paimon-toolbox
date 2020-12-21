@@ -4,19 +4,21 @@ import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 
-import {AscensionLevelSelectComponent} from './components/ascension-level-select/ascension-level-select.component';
 import {ItemViewComponent} from './components/item-view/item-view.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
-import {ExtendedModule, FlexModule} from '@angular/flex-layout';
+import {FlexModule} from '@angular/flex-layout';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AscensionLevelSelectComponent, ItemViewComponent, MultiSelectComponent],
+  declarations: [
+    ItemViewComponent,
+    MultiSelectComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,10 +27,9 @@ import {MatIconModule} from '@angular/material/icon';
     NgxIndexedDBModule,
     MatFormFieldModule,
     MatSelectModule,
-    FlexModule,
-    MatCheckboxModule,
     MatIconModule,
-    ExtendedModule
+    FlexModule,
+    MatCheckboxModule
   ],
   exports: [
     CommonModule,
@@ -36,7 +37,6 @@ import {MatIconModule} from '@angular/material/icon';
     ReactiveFormsModule,
     TranslateModule,
     NgxIndexedDBModule,
-    AscensionLevelSelectComponent,
     ItemViewComponent,
     MultiSelectComponent
   ]

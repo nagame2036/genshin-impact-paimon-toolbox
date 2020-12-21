@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
+import {CharacterAndGearModule} from '../character-and-gear/character-and-gear.module';
 import {CharacterStatRoutingModule} from './character-stat-routing.module';
 import {CharacterStatPageComponent} from './pages/character-stat-page/character-stat-page.component';
 import {CharacterStatProfileComponent} from './components/character-stat-profile/character-stat-profile.component';
@@ -26,6 +27,7 @@ import {FlexModule} from '@angular/flex-layout';
   ],
   imports: [
     SharedModule,
+    CharacterAndGearModule,
     CharacterStatRoutingModule,
     MatFormFieldModule,
     MatInputModule,

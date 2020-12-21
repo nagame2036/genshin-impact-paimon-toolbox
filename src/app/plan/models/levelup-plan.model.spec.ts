@@ -2,8 +2,8 @@ import {TestBed} from '@angular/core/testing';
 
 import {getLevelupPlan, LevelupPlan, toAscensionLevel} from './levelup-plan.model';
 import {LevelupPhase} from './levelup-phase.enum';
-import {AscensionLevel} from '../../shared/models/ascension-level.model';
-import {Ascension} from '../../shared/models/ascension.enum';
+import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
 
 describe('LevelupPlan', () => {
   let plan: LevelupPlan;

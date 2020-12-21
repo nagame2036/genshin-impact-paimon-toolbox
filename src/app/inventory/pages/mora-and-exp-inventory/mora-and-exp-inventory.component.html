@@ -1,6 +1,22 @@
 <div>
-  <app-material-list [items]="[{id: 0, rarity: 5}]"></app-material-list>
-  <app-material-list [items]="characters.items | async"></app-material-list>
-  <app-material-list [items]="weapons.items | async"></app-material-list>
-  <app-material-list [items]="ores.items | async"></app-material-list>
+  <app-material-list [items]="[{id: 0, rarity: 5}]">
+    <ng-template let-item #bottom>
+      <app-amount-input [id]="item.id"></app-amount-input>
+    </ng-template>
+  </app-material-list>
+  <app-material-list [items]="characters.items | async">
+    <ng-template let-item #bottom>
+      <app-amount-input [id]="item.id"></app-amount-input>
+    </ng-template>
+  </app-material-list>
+  <app-material-list [items]="weapons.items | async">
+    <ng-template let-item #bottom>
+      <app-amount-input [id]="item.id"></app-amount-input>
+    </ng-template>
+  </app-material-list>
+  <app-material-list [items]="ores.items | async">
+    <ng-template let-item #bottom>
+      <app-amount-input [id]="item.id"></app-amount-input>
+    </ng-template>
+  </app-material-list>
 </div>

@@ -3,7 +3,7 @@ import {Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map} from 'rxjs/operators';
 import {getLevelupPlan} from '../models/levelup-plan.model';
-import {Ascension} from '../../shared/models/ascension.enum';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {WeaponPlan} from '../models/weapon-plan.model';
 
 @Injectable({

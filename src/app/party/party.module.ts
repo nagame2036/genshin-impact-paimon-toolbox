@@ -1,14 +1,13 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
+import {CharacterAndGearModule} from '../character-and-gear/character-and-gear.module';
 import {PartyRoutingModule} from './party-routing.module';
 import {PartyPageComponent} from './pages/party-page/party-page.component';
 import {PartyCharacterComponent} from './pages/party-character/party-character.component';
-import {CharacterListComponent} from './components/character-list/character-list.component';
 import {AddCharacterDialogComponent} from './components/add-character-dialog/add-character-dialog.component';
 import {CharacterDetailDialogComponent} from './components/character-detail-dialog/character-detail-dialog.component';
 import {PartyWeaponComponent} from './pages/party-weapon/party-weapon.component';
-import {WeaponListComponent} from './components/weapon-list/weapon-list.component';
 import {AddWeaponDialogComponent} from './components/add-weapon-dialog/add-weapon-dialog.component';
 import {WeaponDetailDialogComponent} from './components/weapon-detail-dialog/weapon-detail-dialog.component';
 import {PartyCharacterListComponent} from './components/party-character-list/party-character-list.component';
@@ -32,12 +31,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   declarations: [
     PartyPageComponent,
     PartyCharacterComponent,
-    CharacterListComponent,
     AddCharacterDialogComponent,
     CharacterDetailDialogComponent,
     PartyCharacterComponent,
     PartyWeaponComponent,
-    WeaponListComponent,
     AddWeaponDialogComponent,
     WeaponDetailDialogComponent,
     PartyCharacterListComponent,
@@ -48,6 +45,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   ],
   imports: [
     SharedModule,
+    CharacterAndGearModule,
     PartyRoutingModule,
     MatTabsModule,
     MatButtonModule,

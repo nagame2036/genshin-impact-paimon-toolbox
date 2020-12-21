@@ -1,19 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Character} from '../../../shared/models/character';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {AscensionLevelSelectComponent} from '../../../shared/components/ascension-level-select/ascension-level-select.component';
-import {AscensionLevel} from '../../../shared/models/ascension-level.model';
-import {CharacterService} from '../../../shared/services/character.service';
-import {Constellation} from '../../../shared/models/constellation';
+import {Character} from 'src/app/character-and-gear/models/character.model';
+import {AbstractTranslateComponent} from 'src/app/shared/components/abstract-translate.component';
+import {AscensionLevelSelectComponent} from 'src/app/character-and-gear/components/ascension-level-select/ascension-level-select.component';
+import {AscensionLevel} from 'src/app/character-and-gear/models/ascension-level.model';
+import {CharacterService} from 'src/app/character-and-gear/services/character.service';
+import {Constellation} from 'src/app/character-and-gear/models/constellation.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
-import {TalentLevelData} from '../../../shared/models/talent-level-data.model';
-import {TalentService} from '../../../shared/services/talent.service';
-import {rangeList} from '../../../shared/utils/range-list';
-import {Ascension} from '../../../shared/models/ascension.enum';
-import {CharacterPlanner} from '../../../plan/services/character-planner.service';
+import {TalentLevelData} from 'src/app/character-and-gear/models/talent-level-data.model';
+import {TalentService} from 'src/app/character-and-gear/services/talent.service';
+import {rangeList} from 'src/app/shared/utils/range-list';
+import {Ascension} from 'src/app/character-and-gear/models/ascension.enum';
+import {CharacterPlanner} from 'src/app/plan/services/character-planner.service';
 
 @Component({
   selector: 'app-character-select-dialog',

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CharacterExpMaterialService} from '../../../shared/services/character-exp-material.service';
-import {WeaponExpMaterialService} from '../../../shared/services/weapon-exp-material.service';
-import {OreMaterialService} from '../../../shared/services/ore-material.service';
+import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
+import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
+import {OreMaterialService} from '../../../material/services/ore-material.service';
 
 @Component({
   selector: 'app-mora-and-exp-inventory',

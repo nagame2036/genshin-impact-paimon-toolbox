@@ -7,7 +7,11 @@
     </mat-tab>
     <mat-tab *ngFor="let page of pages" [label]="i18n(page.label) | translate">
       <div class="inventory-subpage">
-        <app-material-list [items]="page.items | async"></app-material-list>
+        <app-material-list [items]="page.items | async">
+          <ng-template let-item #bottom>
+            <app-amount-input [id]="item.id"></app-amount-input>
+          </ng-template>
+        </app-material-list>
       </div>
     </mat-tab>
   </mat-tab-group>

@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CurrentTargetSelectComponent} from './current-target-select.component';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {PartyModule} from '../../party.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CurrentTargetSelectComponent', () => {
   let component: CurrentTargetSelectComponent;
@@ -15,6 +16,7 @@ describe('CurrentTargetSelectComponent', () => {
       ],
       imports: [
         PartyModule,
+        BrowserAnimationsModule,
         AppTranslateModule
       ]
     })

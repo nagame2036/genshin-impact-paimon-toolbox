@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {CharacterService} from '../../shared/services/character.service';
+import {CharacterService} from '../../character-and-gear/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
-import {Ascension} from '../../shared/models/ascension.enum';
-import {TalentService} from '../../shared/services/talent.service';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
+import {TalentService} from '../../character-and-gear/services/talent.service';
 import {getLevelupPlan} from '../models/levelup-plan.model';
-import {TalentLevelData} from '../../shared/models/talent-level-data.model';
+import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
 import {map} from 'rxjs/operators';
 
 @Injectable({

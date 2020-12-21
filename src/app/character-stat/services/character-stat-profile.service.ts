@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {CharacterStatProfile} from '../models/character-stat-profile';
+import {CharacterStatProfile} from '../models/character-stat-profile.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Character} from '../../../shared/models/character';
-import {PartyCharacter} from '../../../shared/models/party-character';
-import {Ascension} from '../../../shared/models/ascension.enum';
-import {Constellation} from '../../../shared/models/constellation';
-import {TalentLevel} from '../../../shared/models/talent-level';
+import {Character} from '../../../character-and-gear/models/character.model';
+import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
+import {Ascension} from '../../../character-and-gear/models/ascension.enum';
+import {Constellation} from '../../../character-and-gear/models/constellation.type';
+import {TalentLevel} from '../../../character-and-gear/models/talent-level.type';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {CharacterService} from '../../../shared/services/character.service';
-import {CharacterListComponent} from '../character-list/character-list.component';
+import {CharacterService} from '../../../character-and-gear/services/character.service';
+import {CharacterListComponent} from '../../../character-and-gear/components/character-list/character-list.component';
 
 @Component({
   selector: 'app-party-character-list',

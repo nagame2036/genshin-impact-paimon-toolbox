@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {Weapon} from '../../../shared/models/weapon';
-import {AscensionLevel} from '../../../shared/models/ascension-level.model';
-import {AscensionLevelSelectComponent} from '../../../shared/components/ascension-level-select/ascension-level-select.component';
-import {WeaponService} from '../../../shared/services/weapon.service';
-import {RefineRank} from '../../../shared/models/refine-rank';
+import {AbstractTranslateComponent} from 'src/app/shared/components/abstract-translate.component';
+import {Weapon} from 'src/app/character-and-gear/models/weapon.model';
+import {AscensionLevel} from 'src/app/character-and-gear/models/ascension-level.model';
+import {AscensionLevelSelectComponent} from 'src/app/character-and-gear/components/ascension-level-select/ascension-level-select.component';
+import {WeaponService} from 'src/app/character-and-gear/services/weapon.service';
+import {RefineRank} from 'src/app/character-and-gear/models/refine-rank.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
-import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
+import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 
 @Component({
   selector: 'app-add-weapon-dialog',

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {ElementalMaterialService} from '../../../shared/services/elemental-material.service';
-import {TalentMaterialService} from '../../../shared/services/talent-material.service';
-import {WeaponMaterialService} from '../../../shared/services/weapon-material.service';
-import {CommonMaterialService} from '../../../shared/services/common-material.service';
-import {LocalSpecialtyService} from '../../../shared/services/local-specialty.service';
+import {ElementalMaterialService} from '../../../material/services/elemental-material.service';
+import {TalentMaterialService} from '../../../material/services/talent-material.service';
+import {WeaponMaterialService} from '../../../material/services/weapon-material.service';
+import {CommonMaterialService} from '../../../material/services/common-material.service';
+import {LocalSpecialtyService} from '../../../material/services/local-specialty.service';
 
 @Component({
   selector: 'app-inventory-page',

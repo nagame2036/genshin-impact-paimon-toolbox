@@ -1,6 +1,6 @@
 import {LevelupPhase} from './levelup-phase.enum';
-import {Ascension} from '../../shared/models/ascension.enum';
-import {AscensionLevel} from '../../shared/models/ascension-level.model';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
+import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 
 export interface LevelupPlan {
 

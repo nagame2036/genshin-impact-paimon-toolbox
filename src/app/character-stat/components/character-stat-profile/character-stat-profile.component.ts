@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CharacterStat} from '../../models/character-stat';
+import {CharacterStat} from '../../models/character-stat.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {CharacterStatComparer} from '../../models/character-stat-comparer';
+import {CharacterStatComparer} from '../../models/character-stat-comparer.model';
 import {FormControl} from '@angular/forms';
-import {DamageType} from '../../models/damage-type';
-import {AscensionLevel} from '../../../shared/models/ascension-level.model';
+import {DamageType} from '../../models/damage-type.enum';
+import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 
 @Component({

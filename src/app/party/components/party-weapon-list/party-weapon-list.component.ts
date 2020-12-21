@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Weapon} from '../../../shared/models/weapon';
-import {PartyWeapon} from '../../../shared/models/party-weapon';
-import {Ascension} from '../../../shared/models/ascension.enum';
-import {RefineRank} from '../../../shared/models/refine-rank';
+import {Weapon} from '../../../character-and-gear/models/weapon.model';
+import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
+import {Ascension} from '../../../character-and-gear/models/ascension.enum';
+import {RefineRank} from '../../../character-and-gear/models/refine-rank.type';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {WeaponService} from '../../../shared/services/weapon.service';
-import {WeaponListComponent} from '../weapon-list/weapon-list.component';
+import {WeaponService} from '../../../character-and-gear/services/weapon.service';
+import {WeaponListComponent} from '../../../character-and-gear/components/weapon-list/weapon-list.component';
 
 @Component({
   selector: 'app-party-weapon-list',

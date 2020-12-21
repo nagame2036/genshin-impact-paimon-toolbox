@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {WeaponService} from '../../../shared/services/weapon.service';
-import {PartyWeapon} from '../../../shared/models/party-weapon';
+import {WeaponService} from '../../../character-and-gear/services/weapon.service';
+import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
-import {RefineRank} from '../../../shared/models/refine-rank';
-import {AscensionLevel} from '../../../shared/models/ascension-level.model';
+import {RefineRank} from '../../../character-and-gear/models/refine-rank.type';
+import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
-import {Ascension} from '../../../shared/models/ascension.enum';
+import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {toAscensionLevel} from '../../../plan/models/levelup-plan.model';
 

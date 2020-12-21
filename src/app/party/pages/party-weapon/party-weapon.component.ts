@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Weapon} from '../../../shared/models/weapon';
+import {Weapon} from '../../../character-and-gear/models/weapon.model';
 import {MatDialog} from '@angular/material/dialog';
 import {AddWeaponDialogComponent} from '../../components/add-weapon-dialog/add-weapon-dialog.component';
 import {WeaponDetailDialogComponent} from '../../components/weapon-detail-dialog/weapon-detail-dialog.component';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {WeaponService} from '../../../shared/services/weapon.service';
+import {WeaponService} from '../../../character-and-gear/services/weapon.service';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyWeaponListComponent} from '../../components/party-weapon-list/party-weapon-list.component';
 import {first} from 'rxjs/operators';
