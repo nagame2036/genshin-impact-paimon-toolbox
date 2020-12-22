@@ -1,0 +1,86 @@
+[
+  {
+    "level": 20,
+    "mora": 20000,
+    "elemental": 0,
+    "gem": {
+      "rarity": 2,
+      "amount": 1
+    },
+    "local": 3,
+    "enemy": {
+      "rarity": 1,
+      "amount": 3
+    }
+  },
+  {
+    "level": 40,
+    "mora": 40000,
+    "elemental": 2,
+    "gem": {
+      "rarity": 3,
+      "amount": 3
+    },
+    "local": 10,
+    "enemy": {
+      "rarity": 1,
+      "amount": 15
+    }
+  },
+  {
+    "level": 50,
+    "mora": 60000,
+    "elemental": 4,
+    "gem": {
+      "rarity": 3,
+      "amount": 6
+    },
+    "local": 20,
+    "enemy": {
+      "rarity": 2,
+      "amount": 12
+    }
+  },
+  {
+    "level": 60,
+    "mora": 80000,
+    "elemental": 8,
+    "gem": {
+      "rarity": 4,
+      "amount": 3
+    },
+    "local": 30,
+    "enemy": {
+      "rarity": 2,
+      "amount": 18
+    }
+  },
+  {
+    "level": 70,
+    "mora": 100000,
+    "elemental": 12,
+    "gem": {
+      "rarity": 4,
+      "amount": 6
+    },
+    "local": 45,
+    "enemy": {
+      "rarity": 3,
+      "amount": 12
+    }
+  },
+  {
+    "level": 80,
+    "mora": 120000,
+    "elemental": 20,
+    "gem": {
+      "rarity": 5,
+      "amount": 6
+    },
+    "local": 60,
+    "enemy": {
+      "rarity": 3,
+      "amount": 24
+    }
+  }
+]
