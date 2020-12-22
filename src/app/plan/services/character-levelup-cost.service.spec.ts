@@ -9,7 +9,7 @@ import {WeaponType} from '../../character-and-gear/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 
-describe('CharacterLevelUpService', () => {
+describe('CharacterLevelupService', () => {
   let service: CharacterLevelupCostService;
   let character: PartyCharacter;
 
@@ -77,7 +77,7 @@ describe('CharacterLevelUpService', () => {
     });
   });
 
-  it('calculation of levelup from 50 to 90 with gem = 303 and common = 801', done => {
+  it('calculation of levelup from (2, 50) to (6, 90) with gem = 303 and common = 801', done => {
     character = {
       id: 1,
       rarity: 4,
