@@ -40,11 +40,12 @@ export class PartyWeaponComponent extends AbstractTranslateComponent implements 
     this.dialog.open(AddWeaponDialogComponent).afterClosed().subscribe(_ => this.updateSelected([]));
   }
 
-  openDetail(weapon: PartyWeapon): void {
-    if (!weapon.key) {
+  openDetail(weapon: Weapon): void {
+    const party = weapon as PartyWeapon;
+    if (!party || !party.key) {
       return;
     }
-    this.planner.getPlan(weapon.key).pipe(first()).subscribe(plan => {
+    this.planner.getPlan(party.key).pipe(first()).subscribe(plan => {
       this.dialog.open(WeaponDetailDialogComponent, {data: {weapon, plan}});
     });
   }
