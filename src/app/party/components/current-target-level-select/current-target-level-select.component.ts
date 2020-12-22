@@ -46,13 +46,9 @@ export class CurrentTargetLevelSelectComponent extends AbstractTranslateComponen
   }
 
   ngOnInit(): void {
-    // avoid NG0100: ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.setAscension(this.ascension);
-      this.setLevel(this.level);
-      this.setTargetAscension(this.targetAscension);
-      this.setTargetLevel(this.targetLevel);
-    }, 5);
+    this.levels = AscensionLevel.levels(this.ascension);
+    this.targetAscensions = rangeList(this.ascension, Ascension.SIX);
+    this.targetLevels = AscensionLevel.levels(this.targetAscension, this.level);
   }
 
   getAscension(num: number): Observable<string> {
