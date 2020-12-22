@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {from, ReplaySubject, zip} from 'rxjs';
+import {from, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Weapon} from '../models/weapon.model';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {AscensionLevel} from '../models/ascension-level.model';
 import {RefineRank} from '../models/refine-rank.type';
-import {mergeMap} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -28,39 +28,42 @@ export class WeaponService {
     database.getAll(this.storeName).subscribe(party => this.#party.next(party));
   }
 
-  addPartyMember(id: number, level: AscensionLevel, refine: RefineRank): void {
-    this.changePartyMember(id, (weapon, party) => {
-      const newWeapon: PartyWeapon = {...weapon, ascension: level.ascension, level: level.level, refine};
-      this.database.add(this.storeName, newWeapon).subscribe(key => {
-        newWeapon.key = key;
-        const newParty = party.filter(c => c.key !== key);
-        newParty.push(newWeapon);
-        this.#party.next(newParty);
-      });
-    });
-  }
-
-  updatePartyMember(weapon: PartyWeapon): void {
-    const id = weapon.id;
-    this.changePartyMember(id, ((_, party) => {
-      this.database.update(this.storeName, weapon).subscribe(__ => {
-        const newParty = party.filter(c => c.id !== id);
-        newParty.push(weapon);
-        this.#party.next(newParty);
-      });
+  addPartyMember(id: number, level: AscensionLevel, refine: RefineRank): Observable<number> {
+    const newWeapon = this.exists(id).pipe(map(weapon => {
+      return {...weapon, ascension: level.ascension, level: level.level, refine} as PartyWeapon;
+    }));
+    const addedKey = newWeapon.pipe(mergeMap(res => this.database.add(this.storeName, res)));
+    return zip(this.party, newWeapon, addedKey).pipe(map(([party, weapon, key]) => {
+      weapon.key = key;
+      const newParty = party.filter(c => c.key !== key);
+      newParty.push(weapon);
+      this.#party.next(newParty);
+      return key;
     }));
   }
 
+  updatePartyMember(weapon: PartyWeapon): void {
+    const key = weapon.key;
+    if (!key) {
+      return;
+    }
+    const update = this.exists(weapon.id).pipe(mergeMap(_ => this.database.update(this.storeName, weapon)));
+    zip(update, this.party).subscribe(([_, party]) => {
+      const newParty = party.filter(c => c.key !== key);
+      newParty.push(weapon);
+      this.#party.next(newParty);
+    });
+  }
+
   removePartyMember(weapon: PartyWeapon): void {
-    this.changePartyMember(weapon.id, (_, party) => {
-      const key = weapon.key;
-      if (!key) {
-        return;
-      }
-      this.database.delete(this.storeName, key).subscribe(__ => {
-        const newParty = party.filter(c => c.key !== key);
-        this.#party.next(newParty);
-      });
+    const key = weapon.key;
+    if (!key) {
+      return;
+    }
+    const remove = this.exists(weapon.id).pipe(mergeMap(_ => this.database.delete(this.storeName, key)));
+    zip(remove, this.party).subscribe(([_, party]) => {
+      const newParty = party.filter(c => c.key !== key);
+      this.#party.next(newParty);
     });
   }
 
@@ -72,9 +75,10 @@ export class WeaponService {
     });
   }
 
-  private changePartyMember(id: number, change: (weapon: Weapon, party: PartyWeapon[]) => void): void {
-    zip(this.weapons, this.party).subscribe(([weapons, party]) => {
-      weapons.filter(c => c.id === id).forEach(it => change(it, party));
-    });
+  private exists(id: number): Observable<Weapon> {
+    return this.weapons.pipe(mergeMap(weapons => {
+      const list = weapons.filter(c => c.id === id);
+      return iif(() => list.length > 0, of(list[0]));
+    }));
   }
 }

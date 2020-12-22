@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject, zip} from 'rxjs';
+import {iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {map} from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 import {getLevelupPlan} from '../models/levelup-plan.model';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {WeaponPlan} from '../models/weapon-plan.model';
@@ -22,7 +22,10 @@ export class WeaponPlanner {
   }
 
   getPlan(id: number): Observable<WeaponPlan> {
-    return this.plans.pipe(map(plans => plans[plans.findIndex(it => it.id === id)]));
+    return this.plans.pipe(mergeMap(plans => {
+      const plan = plans[plans.findIndex(it => it.id === id)];
+      return iif(() => plan !== undefined, of(plan));
+    }));
   }
 
   updatePlan(id: number, ascension: Ascension, level: number): void {

@@ -60,8 +60,9 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
   add(): void {
     if (this.selected && this.level) {
       const id = this.selected.id;
-      this.service.addPartyMember(id, this.level, this.refine);
-      this.planner.updatePlan(id, this.level.ascension, this.level.level);
+      this.service.addPartyMember(id, this.level, this.refine).subscribe(key => {
+        this.planner.updatePlan(key, this.level.ascension, this.level.level);
+      });
       this.translator.get(this.i18nDict('weapons.' + id))
         .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));

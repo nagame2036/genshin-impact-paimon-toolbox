@@ -9,6 +9,7 @@ import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dial
 import {PartyWeaponListComponent} from '../../components/party-weapon-list/party-weapon-list.component';
 import {first} from 'rxjs/operators';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
+import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
 
 @Component({
   selector: 'app-party-weapon',
@@ -39,8 +40,11 @@ export class PartyWeaponComponent extends AbstractTranslateComponent implements 
     this.dialog.open(AddWeaponDialogComponent).afterClosed().subscribe(_ => this.updateSelected([]));
   }
 
-  openDetail(weapon: Weapon): void {
-    this.planner.getPlan(weapon.id).pipe(first()).subscribe(plan => {
+  openDetail(weapon: PartyWeapon): void {
+    if (!weapon.key) {
+      return;
+    }
+    this.planner.getPlan(weapon.key).pipe(first()).subscribe(plan => {
       this.dialog.open(WeaponDetailDialogComponent, {data: {weapon, plan}});
     });
   }
