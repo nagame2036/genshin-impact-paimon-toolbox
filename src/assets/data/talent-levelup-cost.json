@@ -1,0 +1,119 @@
+[
+  {
+    "level": 1,
+    "mora": 0
+  },
+  {
+    "level": 2,
+    "mora": 12500,
+    "domain": {
+      "rarity": 2,
+      "amount": 3
+    },
+    "common": {
+      "rarity": 1,
+      "amount": 6
+    }
+  },
+  {
+    "level": 3,
+    "mora": 17500,
+    "domain": {
+      "rarity": 3,
+      "amount": 2
+    },
+    "common": {
+      "rarity": 2,
+      "amount": 3
+    }
+  },
+  {
+    "level": 4,
+    "mora": 25000,
+    "domain": {
+      "rarity": 3,
+      "amount": 4
+    },
+    "common": {
+      "rarity": 2,
+      "amount": 4
+    }
+  },
+  {
+    "level": 5,
+    "mora": 30000,
+    "domain": {
+      "rarity": 3,
+      "amount": 6
+    },
+    "common": {
+      "rarity": 2,
+      "amount": 6
+    }
+  },
+  {
+    "level": 6,
+    "mora": 37500,
+    "domain": {
+      "rarity": 3,
+      "amount": 9
+    },
+    "common": {
+      "rarity": 2,
+      "amount": 9
+    }
+  },
+  {
+    "level": 7,
+    "mora": 120000,
+    "domain": {
+      "rarity": 4,
+      "amount": 4
+    },
+    "common": {
+      "rarity": 3,
+      "amount": 4
+    },
+    "boss": 1
+  },
+  {
+    "level": 8,
+    "mora": 260000,
+    "domain": {
+      "rarity": 4,
+      "amount": 6
+    },
+    "common": {
+      "rarity": 3,
+      "amount": 6
+    },
+    "boss": 1
+  },
+  {
+    "level": 9,
+    "mora": 450000,
+    "domain": {
+      "rarity": 4,
+      "amount": 12
+    },
+    "common": {
+      "rarity": 3,
+      "amount": 9
+    },
+    "boss": 2
+  },
+  {
+    "level": 10,
+    "mora": 700000,
+    "domain": {
+      "rarity": 4,
+      "amount": 16
+    },
+    "common": {
+      "rarity": 3,
+      "amount": 12
+    },
+    "boss": 2,
+    "event": 1
+  }
+]

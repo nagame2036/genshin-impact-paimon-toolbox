@@ -8,24 +8,32 @@ import {TalentLevel} from '../models/talent-level.type';
 import {rangeList} from '../../shared/utils/range-list';
 import {coerceIn} from '../../shared/utils/coerce';
 import {TalentLevelData} from '../models/talent-level-data.model';
+import alasql from 'alasql';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TalentService {
 
-  #groups = new ReplaySubject<TalentDataGroup[]>(1);
+  #groups: TalentDataGroup[] = [];
 
-  readonly groups = this.#groups.asObservable();
+  private groupsSubject = new ReplaySubject<TalentDataGroup[]>(1);
 
-  #talents = new ReplaySubject<TalentDataItem[]>(1);
+  readonly groups = this.groupsSubject.asObservable();
 
-  readonly talents = this.#talents.asObservable();
+  #talents: TalentDataItem[] = [];
+
+  private talentsSubject = new ReplaySubject<TalentDataItem[]>(1);
+
+  readonly talents = this.talentsSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.http.get<TalentData>('assets/data/talents.json').subscribe(res => {
-      this.#groups.next(res.groups);
-      this.#talents.next(res.items);
+      const {groups: groups, items: items} = res;
+      this.#groups = groups;
+      this.groupsSubject.next(groups);
+      this.#talents = items;
+      this.talentsSubject.next(items);
     });
   }
 
@@ -62,5 +70,11 @@ export class TalentService {
 
   getTalentsOfCharacter(id: number): Observable<TalentDataItem[]> {
     return this.talents.pipe(map(it => it.filter(t => t.character === id)));
+  }
+
+  getGroupById(id: number): TalentDataGroup {
+    const sql = 'SELECT g.* FROM ? g JOIN ? t ON t.[group] = g.id WHERE t.id = ?';
+    const list = alasql(sql, [this.#groups, this.#talents, id]);
+    return list.length > 0 ? list[0] : null;
   }
 }
