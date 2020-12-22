@@ -9,13 +9,13 @@ export interface Character {
 
   rarity: Rarity;
 
-  element?: ElementType;
+  element: ElementType;
 
   weapon: WeaponType;
 
   nation?: Nation;
 
-  elemental?: Nation;
+  elemental?: number;
 
   gem: number;
 
