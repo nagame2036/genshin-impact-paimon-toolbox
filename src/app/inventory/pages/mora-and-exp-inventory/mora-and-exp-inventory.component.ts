@@ -5,6 +5,7 @@ import {OreMaterialService} from '../../../material/services/ore-material.servic
 import {CharacterExpMaterialItem} from '../../../material/models/character-exp-material.model';
 import {WeaponExpMaterialItem} from '../../../material/models/weapon-exp-material.model';
 import {OreMaterialItem} from '../../../material/models/ore-material.model';
+import {mora} from '../../../material/models/mora.model';
 
 @Component({
   selector: 'app-mora-and-exp-inventory',
@@ -13,7 +14,7 @@ import {OreMaterialItem} from '../../../material/models/ore-material.model';
 })
 export class MoraAndExpInventoryComponent implements OnInit {
 
-  mora = [{id: 0, rarity: 5}];
+  moraItems = [mora];
 
   characterExpMaterials: CharacterExpMaterialItem[] = [];
 
