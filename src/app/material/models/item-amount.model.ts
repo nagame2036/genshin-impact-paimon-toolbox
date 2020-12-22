@@ -1,4 +1,4 @@
-export interface ItemCost {
+export interface ItemAmount {
 
   id: number;
 

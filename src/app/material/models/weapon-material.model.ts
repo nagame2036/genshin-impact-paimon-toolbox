@@ -1,6 +1,6 @@
 import {Nation} from '../../shared/models/nation.enum';
 import {Rarity} from '../../shared/models/rarity.enum';
-import {ItemCost} from './item-cost.model';
+import {ItemAmount} from './item-amount.model';
 import {InventoryItem} from './inventory-item.model';
 
 export interface WeaponMaterial {
@@ -29,5 +29,5 @@ export interface WeaponMaterialItem extends InventoryItem {
 
   rarity: Rarity;
 
-  craft?: ItemCost[];
+  craft?: ItemAmount[];
 }
