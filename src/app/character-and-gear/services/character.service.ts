@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {from, ReplaySubject, zip} from 'rxjs';
+import {from, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character.model';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
 import {AscensionLevel} from '../models/ascension-level.model';
 import {Constellation} from '../models/constellation.type';
 import {TalentLevelData} from '../models/talent-level-data.model';
-import {mergeMap} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -39,38 +39,38 @@ export class CharacterService {
   }
 
   addPartyMember(id: number, level: AscensionLevel, constellation: Constellation, talents: TalentLevelData[]): void {
-    this.changePartyMember(id, (character, party, nonParty) => {
-      const newCharacter: PartyCharacter = {...character, ascension: level.ascension, level: level.level, constellation, talents};
-      this.database.update(this.storeName, newCharacter).subscribe(_ => {
-        const newParty = party.filter(c => c.id !== id);
-        newParty.push(newCharacter);
-        this.#party.next(newParty);
-        const newNonParty = nonParty.filter(c => c.id !== id);
-        this.#nonParty.next(newNonParty);
-      });
+    const newCharacter = this.exists(id).pipe(map(character => {
+      return {...character, ascension: level.ascension, level: level.level, constellation, talents} as PartyCharacter;
+    }));
+    const add = newCharacter.pipe(mergeMap(res => this.database.add(this.storeName, res)));
+    zip(add, this.party, this.nonParty, newCharacter).subscribe(([_, party, nonParty, character]) => {
+      const newParty = party.filter(c => c.id !== id);
+      newParty.push(character);
+      this.#party.next(newParty);
+      const newNonParty = nonParty.filter(c => c.id !== id);
+      this.#nonParty.next(newNonParty);
     });
   }
 
   updatePartyMember(character: PartyCharacter): void {
     const id = character.id;
-    this.changePartyMember(id, ((_, party, __) => {
-      this.database.update(this.storeName, character).subscribe(___ => {
-        const newParty = party.filter(c => c.id !== id);
-        newParty.push(character);
-        this.#party.next(newParty);
-      });
-    }));
+    const update = this.exists(id).pipe(mergeMap(_ => this.database.update(this.storeName, character)));
+    zip(update, this.party).subscribe(([_, party]) => {
+      const newParty = party.filter(c => c.id !== id);
+      newParty.push(character);
+      this.#party.next(newParty);
+    });
   }
 
   removePartyMember(id: number): void {
-    this.changePartyMember(id, (character, party, nonParty) => {
-      this.database.delete(this.storeName, id).subscribe(_ => {
-        const newParty = party.filter(c => c.id !== id);
-        this.#party.next(newParty);
-        const newNonParty = nonParty.filter(c => c.id !== id);
-        newNonParty.push(character);
-        this.#nonParty.next(newNonParty);
-      });
+    const exists = this.exists(id);
+    const remove = exists.pipe(mergeMap(_ => this.database.delete(this.storeName, id)));
+    zip(remove, this.party, this.nonParty, exists).subscribe(([_, party, nonParty, character]) => {
+      const newParty = party.filter(c => c.id !== id);
+      this.#party.next(newParty);
+      const newNonParty = nonParty.filter(c => c.id !== id);
+      newNonParty.push(character);
+      this.#nonParty.next(newNonParty);
     });
   }
 
@@ -85,9 +85,10 @@ export class CharacterService {
     });
   }
 
-  private changePartyMember(id: number, change: (character: Character, party: PartyCharacter[], nonParty: Character[]) => void): void {
-    zip(this.characters, this.party, this.nonParty).subscribe(([characters, party, nonParty]) => {
-      characters.filter(c => c.id === id).forEach(it => change(it, party, nonParty));
-    });
+  private exists(id: number): Observable<Character> {
+    return this.characters.pipe(mergeMap(characters => {
+      const list = characters.filter(c => c.id === id);
+      return iif(() => list.length > 0, of(list[0]));
+    }));
   }
 }

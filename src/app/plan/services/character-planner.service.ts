@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject, zip} from 'rxjs';
+import {iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterService} from '../../character-and-gear/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
@@ -7,7 +7,7 @@ import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {TalentService} from '../../character-and-gear/services/talent.service';
 import {getLevelupPlan} from '../models/levelup-plan.model';
 import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
-import {map} from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,10 @@ export class CharacterPlanner {
   }
 
   getPlan(id: number): Observable<CharacterPlan> {
-    return this.plans.pipe(map(plans => plans[plans.findIndex(it => it.id === id)]));
+    return this.plans.pipe(mergeMap(plans => {
+      const plan = plans[plans.findIndex(it => it.id === id)];
+      return iif(() => plan !== undefined, of(plan));
+    }));
   }
 
   updatePlan(id: number, ascension: Ascension, level: number, talentsData: TalentLevelData[]): void {
