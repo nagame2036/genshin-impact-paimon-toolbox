@@ -17,7 +17,7 @@ export class WeaponMaterialService {
   readonly items = this.itemsSubject.asObservable();
 
   constructor(http: HttpClient) {
-    http.get<WeaponMaterial>('assets/data/materials/elemental-materials.json').subscribe(res => {
+    http.get<WeaponMaterial>('assets/data/materials/weapon-materials.json').subscribe(res => {
       const sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
       this.#items = alasql(sql, [res.items]);
       this.itemsSubject.next(this.#items);
