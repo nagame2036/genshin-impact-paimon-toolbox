@@ -638,5 +638,45 @@
     "domain": 403,
     "elite": 905,
     "common": 801
+  },
+  {
+    "id": 81,
+    "type": 1,
+    "rarity": 3,
+    "domain": 402,
+    "elite": 900,
+    "common": 805
+  },
+  {
+    "id": 82,
+    "type": 2,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "common": 800
+  },
+  {
+    "id": 83,
+    "type": 1,
+    "rarity": 3,
+    "domain": 402,
+    "elite": 903,
+    "common": 807
+  },
+  {
+    "id": 84,
+    "type": 5,
+    "rarity": 3,
+    "domain": 401,
+    "elite": 904,
+    "common": 805
+  },
+  {
+    "id": 85,
+    "type": 1,
+    "rarity": 5,
+    "domain": 403,
+    "elite": 905,
+    "common": 801
   }
 ]

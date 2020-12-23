@@ -246,6 +246,24 @@
       "common": 800,
       "boss": 6020,
       "event": 7000
+    },
+    {
+      "id": 1025,
+      "domain": [
+        502
+      ],
+      "common": 802,
+      "boss": 6020,
+      "event": 7000
+    },
+    {
+      "id": 1026,
+      "domain": [
+        504
+      ],
+      "common": 807,
+      "boss": 6022,
+      "event": 7000
     }
   ],
   "items": [
@@ -1273,6 +1291,78 @@
       "id": 10245,
       "character": 1024,
       "group": 1024,
+      "level": false
+    },
+    {
+      "id": 10250,
+      "character": 1025,
+      "group": 1025,
+      "level": true
+    },
+    {
+      "id": 10251,
+      "character": 1025,
+      "group": 1025,
+      "level": true
+    },
+    {
+      "id": 10252,
+      "character": 1025,
+      "group": 1025,
+      "level": true
+    },
+    {
+      "id": 10253,
+      "character": 1025,
+      "group": 1025,
+      "level": false
+    },
+    {
+      "id": 10254,
+      "character": 1025,
+      "group": 1025,
+      "level": false
+    },
+    {
+      "id": 10255,
+      "character": 1025,
+      "group": 1025,
+      "level": false
+    },
+    {
+      "id": 10260,
+      "character": 1026,
+      "group": 1026,
+      "level": true
+    },
+    {
+      "id": 10261,
+      "character": 1026,
+      "group": 1026,
+      "level": true
+    },
+    {
+      "id": 10262,
+      "character": 1026,
+      "group": 1026,
+      "level": true
+    },
+    {
+      "id": 10263,
+      "character": 1026,
+      "group": 1026,
+      "level": false
+    },
+    {
+      "id": 10264,
+      "character": 1026,
+      "group": 1026,
+      "level": false
+    },
+    {
+      "id": 10265,
+      "character": 1026,
+      "group": 1026,
       "level": false
     }
   ]

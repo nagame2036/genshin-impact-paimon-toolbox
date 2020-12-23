@@ -309,5 +309,27 @@
     "gem": 302,
     "common": 800,
     "local": 10207
+  },
+  {
+    "id": 1025,
+    "rarity": 5,
+    "element": 2,
+    "weapon": 1,
+    "nation": 1,
+    "elemental": 2020,
+    "gem": 302,
+    "common": 802,
+    "local": 10102
+  },
+  {
+    "id": 1026,
+    "rarity": 5,
+    "element": 7,
+    "weapon": 4,
+    "nation": 2,
+    "elemental": 2070,
+    "gem": 307,
+    "common": 807,
+    "local": 10204
   }
 ]

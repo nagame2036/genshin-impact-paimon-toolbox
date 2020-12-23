@@ -8,4 +8,5 @@
 + [原神WIKI 哔哩哔哩游戏](https://wiki.biligame.com/ys)
 + [Fandom | Genshin Impact Wiki](https://genshin-impact.fandom.com/wiki/Genshin_Impact_Wiki)
 + [Honey Impact | Genshin Impact DB and Tools](https://genshin.honeyhunterworld.com)
++ [Dimbreath/GenshinData Repository containing the game data for the game Genshin Impact.](https://github.com/Dimbreath/GenshinData)
 + [终结暴击暴伤攻击力之争，同数值权重下的暴击暴伤攻击分配 NGA玩家社区](https://nga.178.com/read.php?tid=23711373)
