@@ -16,6 +16,10 @@ import {PartyCharacter} from '../../character-and-gear/models/party-character.mo
 })
 export class CharacterLevelupCostService {
 
+  /**
+   * Stores the cost of mora per level for character level up.
+   * @private
+   */
   private levels = new ReplaySubject<number[]>(1);
 
   private ascensions = new ReplaySubject<CharacterAscensionCost[]>(1);
@@ -27,25 +31,25 @@ export class CharacterLevelupCostService {
   }
 
   cost(character: PartyCharacter, to: AscensionLevel): Observable<ItemCostList> {
-    return zip(this.ascension(character, character.ascension, to.ascension), this.levelup(character.level, to.level)).pipe(
+    return zip(this.ascension(character, to.ascension), this.levelup(character.level, to.level)).pipe(
       map(([ascension, levelup]) => ascension.combine(levelup))
     );
   }
 
-  private ascension(character: PartyCharacter, from: Ascension, to: Ascension): Observable<ItemCostList> {
+  private ascension(character: PartyCharacter, to: Ascension): Observable<ItemCostList> {
     const cost = new ItemCostList();
     return zip(this.ascensions, this.elements.items, this.common.items).pipe(
       map(([ascensions, _, __]) => {
-        ascensions.slice(from, to).forEach(ascension => {
-          cost.addMora(ascension.mora);
+        ascensions.slice(character.ascension, to).forEach(({mora, elemental, gem, local, enemy}) => {
+          cost.addMora(mora);
           if (character.elemental) {
-            cost.addElemental(character.elemental, ascension.elemental);
+            cost.addElemental(character.elemental, elemental);
           }
-          const gem = this.elements.getByGroupAndRarity(character.gem, ascension.gem.rarity);
-          cost.addGem(gem.id, ascension.gem.amount);
-          cost.addLocalSpecialty(character.local, ascension.local);
-          const common = this.common.getByGroupAndRarity(character.common, ascension.enemy.rarity);
-          cost.addCommon(common.id, ascension.enemy.amount);
+          const gemItem = this.elements.getByGroupAndRarity(character.gem, gem.rarity);
+          cost.addGem(gemItem.id, gem.amount);
+          cost.addLocalSpecialty(character.local, local);
+          const common = this.common.getByGroupAndRarity(character.common, enemy.rarity);
+          cost.addCommon(common.id, enemy.amount);
         });
         return cost;
       })
@@ -60,8 +64,7 @@ export class CharacterLevelupCostService {
         cost.addMora(moraAmount);
         let remainingExp = moraAmount * 5;
         cost.addCharacterExp(remainingExp);
-        exps.forEach(item => {
-          const {id, exp} = item;
+        exps.forEach(({id, exp}) => {
           const num = Math.floor(remainingExp / exp);
           cost.addCharacterExpItem(id, num);
           remainingExp = remainingExp - num * exp;
