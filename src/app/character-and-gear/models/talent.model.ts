@@ -37,7 +37,7 @@ export interface TalentDataItem {
   group: number;
 
   /**
-   * Is talent can level up.
+   * Defined when this talent is available for leveling up.
    */
-  level: boolean;
+  level?: number;
 }

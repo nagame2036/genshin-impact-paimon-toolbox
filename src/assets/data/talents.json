@@ -271,1099 +271,1009 @@
       "id": 10,
       "character": 1,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 11,
       "character": 1,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 12,
       "character": 1,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 13,
       "character": 1,
-      "group": 1,
-      "level": false
+      "group": 1
     },
     {
       "id": 14,
       "character": 1,
-      "group": 1,
-      "level": false
+      "group": 1
     },
     {
       "id": 20,
       "character": 2,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 21,
       "character": 2,
       "group": 2,
-      "level": true
+      "level": 1
     },
     {
       "id": 22,
       "character": 2,
       "group": 2,
-      "level": true
+      "level": 1
     },
     {
       "id": 23,
       "character": 2,
-      "group": 2,
-      "level": false
+      "group": 2
     },
     {
       "id": 24,
       "character": 2,
-      "group": 2,
-      "level": false
+      "group": 2
     },
     {
       "id": 5010,
       "character": 501,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 5011,
       "character": 501,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 5012,
       "character": 501,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 5013,
       "character": 501,
-      "group": 1,
-      "level": false
+      "group": 1
     },
     {
       "id": 5014,
       "character": 501,
-      "group": 1,
-      "level": false
+      "group": 1
     },
     {
       "id": 5020,
       "character": 502,
       "group": 1,
-      "level": true
+      "level": 1
     },
     {
       "id": 5021,
       "character": 502,
       "group": 2,
-      "level": true
+      "level": 1
     },
     {
       "id": 5022,
       "character": 502,
       "group": 52,
-      "level": true
+      "level": 1
     },
     {
       "id": 5023,
       "character": 502,
-      "group": 52,
-      "level": false
+      "group": 52
     },
     {
       "id": 5024,
       "character": 502,
-      "group": 2,
-      "level": false
+      "group": 2
     },
     {
       "id": 10000,
       "character": 1000,
       "group": 1000,
-      "level": true
+      "level": 1
     },
     {
       "id": 10001,
       "character": 1000,
       "group": 1000,
-      "level": true
+      "level": 1
     },
     {
       "id": 10002,
       "character": 1000,
       "group": 1000,
-      "level": true
+      "level": 1
     },
     {
       "id": 10003,
       "character": 1000,
-      "group": 1000,
-      "level": false
+      "group": 1000
     },
     {
       "id": 10004,
       "character": 1000,
-      "group": 1000,
-      "level": false
+      "group": 1000
     },
     {
       "id": 10005,
       "character": 1000,
-      "group": 1000,
-      "level": false
+      "group": 1000
     },
     {
       "id": 10010,
       "character": 1001,
       "group": 1001,
-      "level": true
+      "level": 1
     },
     {
       "id": 10011,
       "character": 1001,
       "group": 1001,
-      "level": true
+      "level": 1
     },
     {
       "id": 10012,
       "character": 1001,
       "group": 1001,
-      "level": true
+      "level": 1
     },
     {
       "id": 10013,
       "character": 1001,
-      "group": 1001,
-      "level": false
+      "group": 1001
     },
     {
       "id": 10014,
       "character": 1001,
-      "group": 1001,
-      "level": false
+      "group": 1001
     },
     {
       "id": 10015,
       "character": 1001,
-      "group": 1001,
-      "level": false
+      "group": 1001
     },
     {
       "id": 10020,
       "character": 1002,
       "group": 1002,
-      "level": true
+      "level": 1
     },
     {
       "id": 10021,
       "character": 1002,
       "group": 1002,
-      "level": true
+      "level": 1
     },
     {
       "id": 10022,
       "character": 1002,
       "group": 1002,
-      "level": true
+      "level": 1
     },
     {
       "id": 10023,
       "character": 1002,
-      "group": 1002,
-      "level": false
+      "group": 1002
     },
     {
       "id": 10024,
       "character": 1002,
-      "group": 1002,
-      "level": false
+      "group": 1002
     },
     {
       "id": 10025,
       "character": 1002,
-      "group": 1002,
-      "level": false
+      "group": 1002
     },
     {
       "id": 10030,
       "character": 1003,
       "group": 1003,
-      "level": true
+      "level": 1
     },
     {
       "id": 10031,
       "character": 1003,
       "group": 1003,
-      "level": true
+      "level": 1
     },
     {
       "id": 10032,
       "character": 1003,
       "group": 1003,
-      "level": true
+      "level": 1
     },
     {
       "id": 10033,
       "character": 1003,
-      "group": 1003,
-      "level": false
+      "group": 1003
     },
     {
       "id": 10034,
       "character": 1003,
-      "group": 1003,
-      "level": false
+      "group": 1003
     },
     {
       "id": 10035,
       "character": 1003,
-      "group": 1003,
-      "level": false
+      "group": 1003
     },
     {
       "id": 10040,
       "character": 1004,
       "group": 1004,
-      "level": true
+      "level": 1
     },
     {
       "id": 10041,
       "character": 1004,
       "group": 1004,
-      "level": true
+      "level": 1
     },
     {
       "id": 10042,
       "character": 1004,
       "group": 1004,
-      "level": true
+      "level": 1
     },
     {
       "id": 10043,
       "character": 1004,
-      "group": 1004,
-      "level": false
+      "group": 1004
     },
     {
       "id": 10044,
       "character": 1004,
-      "group": 1004,
-      "level": false
+      "group": 1004
     },
     {
       "id": 10045,
       "character": 1004,
-      "group": 1004,
-      "level": false
+      "group": 1004
     },
     {
       "id": 10050,
       "character": 1005,
       "group": 1005,
-      "level": true
+      "level": 1
     },
     {
       "id": 10051,
       "character": 1005,
       "group": 1005,
-      "level": true
+      "level": 1
     },
     {
       "id": 10052,
       "character": 1005,
       "group": 1005,
-      "level": true
+      "level": 1
     },
     {
       "id": 10053,
       "character": 1005,
-      "group": 1005,
-      "level": false
+      "group": 1005
     },
     {
       "id": 10054,
       "character": 1005,
-      "group": 1005,
-      "level": false
+      "group": 1005
     },
     {
       "id": 10055,
       "character": 1005,
-      "group": 1005,
-      "level": false
+      "group": 1005
     },
     {
       "id": 10060,
       "character": 1006,
       "group": 1006,
-      "level": true
+      "level": 1
     },
     {
       "id": 10061,
       "character": 1006,
       "group": 1006,
-      "level": true
+      "level": 1
     },
     {
       "id": 10062,
       "character": 1006,
       "group": 1006,
-      "level": true
+      "level": 1
     },
     {
       "id": 10063,
       "character": 1006,
-      "group": 1006,
-      "level": false
+      "group": 1006
     },
     {
       "id": 10064,
       "character": 1006,
-      "group": 1006,
-      "level": false
+      "group": 1006
     },
     {
       "id": 10065,
       "character": 1006,
-      "group": 1006,
-      "level": false
+      "group": 1006
     },
     {
       "id": 10070,
       "character": 1007,
       "group": 1007,
-      "level": true
+      "level": 1
     },
     {
       "id": 10071,
       "character": 1007,
       "group": 1007,
-      "level": true
+      "level": 1
     },
     {
       "id": 10072,
       "character": 1007,
       "group": 1007,
-      "level": true
+      "level": 1
     },
     {
       "id": 10073,
       "character": 1007,
-      "group": 1007,
-      "level": false
+      "group": 1007
     },
     {
       "id": 10074,
       "character": 1007,
-      "group": 1007,
-      "level": false
+      "group": 1007
     },
     {
       "id": 10075,
       "character": 1007,
-      "group": 1007,
-      "level": false
+      "group": 1007
     },
     {
       "id": 10080,
       "character": 1008,
       "group": 1008,
-      "level": true
+      "level": 1
     },
     {
       "id": 10081,
       "character": 1008,
       "group": 1008,
-      "level": true
+      "level": 1
     },
     {
       "id": 10082,
       "character": 1008,
       "group": 1008,
-      "level": true
+      "level": 1
     },
     {
       "id": 10083,
       "character": 1008,
-      "group": 1008,
-      "level": false
+      "group": 1008
     },
     {
       "id": 10084,
       "character": 1008,
-      "group": 1008,
-      "level": false
+      "group": 1008
     },
     {
       "id": 10085,
       "character": 1008,
-      "group": 1008,
-      "level": false
+      "group": 1008
     },
     {
       "id": 10090,
       "character": 1009,
       "group": 1009,
-      "level": true
+      "level": 1
     },
     {
       "id": 10091,
       "character": 1009,
       "group": 1009,
-      "level": true
+      "level": 1
     },
     {
       "id": 10092,
       "character": 1009,
       "group": 1009,
-      "level": true
+      "level": 1
     },
     {
       "id": 10093,
       "character": 1009,
-      "group": 1009,
-      "level": false
+      "group": 1009
     },
     {
       "id": 10094,
       "character": 1009,
-      "group": 1009,
-      "level": false
+      "group": 1009
     },
     {
       "id": 10095,
       "character": 1009,
-      "group": 1009,
-      "level": false
+      "group": 1009
     },
     {
       "id": 10100,
       "character": 1010,
       "group": 1010,
-      "level": true
+      "level": 1
     },
     {
       "id": 10101,
       "character": 1010,
       "group": 1010,
-      "level": true
+      "level": 1
     },
     {
       "id": 10102,
       "character": 1010,
       "group": 1010,
-      "level": true
+      "level": 1
     },
     {
       "id": 10103,
       "character": 1010,
-      "group": 1010,
-      "level": false
+      "group": 1010
     },
     {
       "id": 10104,
       "character": 1010,
-      "group": 1010,
-      "level": false
+      "group": 1010
     },
     {
       "id": 10105,
       "character": 1010,
-      "group": 1010,
-      "level": false
+      "group": 1010
     },
     {
       "id": 10110,
       "character": 1011,
       "group": 1011,
-      "level": true
+      "level": 1
     },
     {
       "id": 10111,
       "character": 1011,
       "group": 1011,
-      "level": true
+      "level": 1
     },
     {
       "id": 10112,
       "character": 1011,
       "group": 1011,
-      "level": true
+      "level": 1
     },
     {
       "id": 10113,
       "character": 1011,
-      "group": 1011,
-      "level": false
+      "group": 1011
     },
     {
       "id": 10114,
       "character": 1011,
-      "group": 1011,
-      "level": false
+      "group": 1011
     },
     {
       "id": 10115,
       "character": 1011,
-      "group": 1011,
-      "level": false
+      "group": 1011
     },
     {
       "id": 10120,
       "character": 1012,
       "group": 1012,
-      "level": true
+      "level": 1
     },
     {
       "id": 10121,
       "character": 1012,
       "group": 1012,
-      "level": true
+      "level": 1
     },
     {
       "id": 10122,
       "character": 1012,
       "group": 1012,
-      "level": true
+      "level": 1
     },
     {
       "id": 10123,
       "character": 1012,
-      "group": 1012,
-      "level": false
+      "group": 1012
     },
     {
       "id": 10124,
       "character": 1012,
-      "group": 1012,
-      "level": false
+      "group": 1012
     },
     {
       "id": 10125,
       "character": 1012,
-      "group": 1012,
-      "level": false
+      "group": 1012
     },
     {
       "id": 10130,
       "character": 1013,
       "group": 1013,
-      "level": true
+      "level": 1
     },
     {
       "id": 10131,
       "character": 1013,
       "group": 1013,
-      "level": true
+      "level": 1
     },
     {
       "id": 10132,
       "character": 1013,
       "group": 1013,
-      "level": true
+      "level": 1
     },
     {
       "id": 10133,
       "character": 1013,
-      "group": 1013,
-      "level": false
+      "group": 1013
     },
     {
       "id": 10134,
       "character": 1013,
-      "group": 1013,
-      "level": false
+      "group": 1013
     },
     {
       "id": 10135,
       "character": 1013,
-      "group": 1013,
-      "level": false
+      "group": 1013
     },
     {
       "id": 10140,
       "character": 1014,
       "group": 1014,
-      "level": true
+      "level": 1
     },
     {
       "id": 10141,
       "character": 1014,
       "group": 1014,
-      "level": true
+      "level": 1
     },
     {
       "id": 10142,
       "character": 1014,
       "group": 1014,
-      "level": true
+      "level": 1
     },
     {
       "id": 10143,
       "character": 1014,
-      "group": 1014,
-      "level": false
+      "group": 1014
     },
     {
       "id": 10144,
       "character": 1014,
-      "group": 1014,
-      "level": false
+      "group": 1014
     },
     {
       "id": 10145,
       "character": 1014,
-      "group": 1014,
-      "level": false
+      "group": 1014
     },
     {
       "id": 10150,
       "character": 1015,
       "group": 1015,
-      "level": true
+      "level": 1
     },
     {
       "id": 10151,
       "character": 1015,
       "group": 1015,
-      "level": true
+      "level": 1
     },
     {
       "id": 10152,
       "character": 1015,
       "group": 1015,
-      "level": true
+      "level": 1
     },
     {
       "id": 10153,
       "character": 1015,
-      "group": 1015,
-      "level": false
+      "group": 1015
     },
     {
       "id": 10154,
       "character": 1015,
-      "group": 1015,
-      "level": false
+      "group": 1015
     },
     {
       "id": 10155,
       "character": 1015,
-      "group": 1015,
-      "level": false
+      "group": 1015
     },
     {
       "id": 10160,
       "character": 1016,
       "group": 1016,
-      "level": true
+      "level": 1
     },
     {
       "id": 10161,
       "character": 1016,
       "group": 1016,
-      "level": true
+      "level": 1
     },
     {
       "id": 10162,
       "character": 1016,
       "group": 1016,
-      "level": true
+      "level": 1
     },
     {
       "id": 10163,
       "character": 1016,
-      "group": 1016,
-      "level": false
+      "group": 1016
     },
     {
       "id": 10164,
       "character": 1016,
-      "group": 1016,
-      "level": false
+      "group": 1016
     },
     {
       "id": 10165,
       "character": 1016,
-      "group": 1016,
-      "level": false
+      "group": 1016
     },
     {
       "id": 10170,
       "character": 1017,
       "group": 1017,
-      "level": true
+      "level": 1
     },
     {
       "id": 10171,
       "character": 1017,
       "group": 1017,
-      "level": true
+      "level": 1
     },
     {
       "id": 10172,
       "character": 1017,
       "group": 1017,
-      "level": true
+      "level": 1
     },
     {
       "id": 10173,
       "character": 1017,
-      "group": 1017,
-      "level": false
+      "group": 1017
     },
     {
       "id": 10174,
       "character": 1017,
-      "group": 1017,
-      "level": false
+      "group": 1017
     },
     {
       "id": 10175,
       "character": 1017,
-      "group": 1017,
-      "level": false
+      "group": 1017
     },
     {
       "id": 10176,
       "character": 1017,
-      "group": 1017,
-      "level": false
+      "group": 1017
     },
     {
       "id": 10180,
       "character": 1018,
       "group": 1018,
-      "level": true
+      "level": 1
     },
     {
       "id": 10181,
       "character": 1018,
       "group": 1018,
-      "level": true
+      "level": 1
     },
     {
       "id": 10182,
       "character": 1018,
       "group": 1018,
-      "level": true
+      "level": 1
     },
     {
       "id": 10183,
       "character": 1018,
-      "group": 1018,
-      "level": false
+      "group": 1018
     },
     {
       "id": 10184,
       "character": 1018,
-      "group": 1018,
-      "level": false
+      "group": 1018
     },
     {
       "id": 10185,
       "character": 1018,
-      "group": 1018,
-      "level": false
+      "group": 1018
     },
     {
       "id": 10190,
       "character": 1019,
       "group": 1019,
-      "level": true
+      "level": 1
     },
     {
       "id": 10191,
       "character": 1019,
       "group": 1019,
-      "level": true
+      "level": 1
     },
     {
       "id": 10192,
       "character": 1019,
       "group": 1019,
-      "level": true
+      "level": 1
     },
     {
       "id": 10193,
       "character": 1019,
-      "group": 1019,
-      "level": false
+      "group": 1019
     },
     {
       "id": 10194,
       "character": 1019,
-      "group": 1019,
-      "level": false
+      "group": 1019
     },
     {
       "id": 10195,
       "character": 1019,
-      "group": 1019,
-      "level": false
+      "group": 1019
     },
     {
       "id": 10200,
       "character": 1020,
       "group": 1020,
-      "level": true
+      "level": 1
     },
     {
       "id": 10201,
       "character": 1020,
       "group": 1020,
-      "level": true
+      "level": 1
     },
     {
       "id": 10202,
       "character": 1020,
       "group": 1020,
-      "level": true
+      "level": 1
     },
     {
       "id": 10203,
       "character": 1020,
-      "group": 1020,
-      "level": false
+      "group": 1020
     },
     {
       "id": 10204,
       "character": 1020,
-      "group": 1020,
-      "level": false
+      "group": 1020
     },
     {
       "id": 10205,
       "character": 1020,
-      "group": 1020,
-      "level": false
+      "group": 1020
     },
     {
       "id": 10210,
       "character": 1021,
       "group": 1021,
-      "level": true
+      "level": 1
     },
     {
       "id": 10211,
       "character": 1021,
       "group": 1021,
-      "level": true
+      "level": 1
     },
     {
       "id": 10212,
       "character": 1021,
       "group": 1021,
-      "level": true
+      "level": 1
     },
     {
       "id": 10213,
       "character": 1021,
-      "group": 1021,
-      "level": false
+      "group": 1021
     },
     {
       "id": 10214,
       "character": 1021,
-      "group": 1021,
-      "level": false
+      "group": 1021
     },
     {
       "id": 10215,
       "character": 1021,
-      "group": 1021,
-      "level": false
+      "group": 1021
     },
     {
       "id": 10220,
       "character": 1022,
       "group": 1022,
-      "level": true
+      "level": 1
     },
     {
       "id": 10221,
       "character": 1022,
       "group": 1022,
-      "level": true
+      "level": 1
     },
     {
       "id": 10222,
       "character": 1022,
       "group": 1022,
-      "level": true
+      "level": 1
     },
     {
       "id": 10223,
       "character": 1022,
-      "group": 1022,
-      "level": false
+      "group": 1022
     },
     {
       "id": 10224,
       "character": 1022,
-      "group": 1022,
-      "level": false
+      "group": 1022
     },
     {
       "id": 10225,
       "character": 1022,
-      "group": 1022,
-      "level": false
+      "group": 1022
     },
     {
       "id": 10230,
       "character": 1023,
       "group": 1023,
-      "level": true
+      "level": 1
     },
     {
       "id": 10231,
       "character": 1023,
       "group": 1023,
-      "level": true
+      "level": 1
     },
     {
       "id": 10232,
       "character": 1023,
       "group": 1023,
-      "level": true
+      "level": 1
     },
     {
       "id": 10233,
       "character": 1023,
-      "group": 1023,
-      "level": false
+      "group": 1023
     },
     {
       "id": 10234,
       "character": 1023,
-      "group": 1023,
-      "level": false
+      "group": 1023
     },
     {
       "id": 10235,
       "character": 1023,
-      "group": 1023,
-      "level": false
+      "group": 1023
     },
     {
       "id": 10240,
       "character": 1024,
       "group": 1024,
-      "level": true
+      "level": 1
     },
     {
       "id": 10241,
       "character": 1024,
       "group": 1024,
-      "level": true
+      "level": 1
     },
     {
       "id": 10242,
       "character": 1024,
       "group": 1024,
-      "level": true
+      "level": 1
     },
     {
       "id": 10243,
       "character": 1024,
-      "group": 1024,
-      "level": false
+      "group": 1024
     },
     {
       "id": 10244,
       "character": 1024,
-      "group": 1024,
-      "level": false
+      "group": 1024
     },
     {
       "id": 10245,
       "character": 1024,
-      "group": 1024,
-      "level": false
+      "group": 1024
     },
     {
       "id": 10250,
       "character": 1025,
       "group": 1025,
-      "level": true
+      "level": 1
     },
     {
       "id": 10251,
       "character": 1025,
       "group": 1025,
-      "level": true
+      "level": 1
     },
     {
       "id": 10252,
       "character": 1025,
       "group": 1025,
-      "level": true
+      "level": 1
     },
     {
       "id": 10253,
       "character": 1025,
-      "group": 1025,
-      "level": false
+      "group": 1025
     },
     {
       "id": 10254,
       "character": 1025,
-      "group": 1025,
-      "level": false
+      "group": 1025
     },
     {
       "id": 10255,
       "character": 1025,
-      "group": 1025,
-      "level": false
+      "group": 1025
     },
     {
       "id": 10260,
       "character": 1026,
       "group": 1026,
-      "level": true
+      "level": 1
     },
     {
       "id": 10261,
       "character": 1026,
       "group": 1026,
-      "level": true
+      "level": 1
     },
     {
       "id": 10262,
       "character": 1026,
       "group": 1026,
-      "level": true
+      "level": 1
     },
     {
       "id": 10263,
       "character": 1026,
-      "group": 1026,
-      "level": false
+      "group": 1026
     },
     {
       "id": 10264,
       "character": 1026,
-      "group": 1026,
-      "level": false
+      "group": 1026
     },
     {
       "id": 10265,
       "character": 1026,
-      "group": 1026,
-      "level": false
+      "group": 1026
     }
   ]
 }
