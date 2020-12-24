@@ -23,7 +23,7 @@ import {CharacterPlanner} from 'src/app/plan/services/character-planner.service'
 })
 export class AddCharacterDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.character';
+  i18nKey = 'party.characters';
 
   characters: Character[] = [];
 

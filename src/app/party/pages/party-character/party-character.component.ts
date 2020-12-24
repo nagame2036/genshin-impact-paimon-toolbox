@@ -17,7 +17,7 @@ import {first} from 'rxjs/operators';
 })
 export class PartyCharacterComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.character';
+  i18nKey = 'party.characters';
 
   multiSelect = false;
 

@@ -21,7 +21,7 @@ import {toAscensionLevel} from '../../../plan/models/levelup-plan.model';
 })
 export class CharacterDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.character';
+  i18nKey = 'party.characters';
 
   constellations = rangeList(0, 6) as Constellation[];
 

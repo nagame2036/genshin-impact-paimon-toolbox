@@ -25,7 +25,7 @@ import {toggleItem} from '../../../shared/utils/collections';
 })
 export class WeaponListComponent extends AbstractTranslateComponent implements OnChanges {
 
-  i18nKey = 'party.weapon';
+  i18nKey = 'party.weapons';
 
   @Input()
   party = false;

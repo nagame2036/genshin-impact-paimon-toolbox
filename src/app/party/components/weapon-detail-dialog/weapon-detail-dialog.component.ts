@@ -18,7 +18,7 @@ import {toAscensionLevel} from '../../../plan/models/levelup-plan.model';
 })
 export class WeaponDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapon';
+  i18nKey = 'party.weapons';
 
   refineRanks = rangeList(1, 5) as RefineRank[];
 

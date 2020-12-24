@@ -5,15 +5,7 @@
     "party": "Box",
     "character-stat": "角色面板",
     "inventory": "背包",
-    "resin": "树脂",
-    "characters": "角色列表",
-    "weapons": "武器列表",
-    "mora-and-exp": "通用素材",
-    "elemental-materials": "角色突破素材",
-    "talent-materials": "天赋培养素材",
-    "weapon-materials": "武器突破素材",
-    "common-materials": "怪物掉落素材",
-    "local-specialties": "地区特产"
+    "resin": "树脂"
   },
   "modules": {
     "home": {
@@ -36,19 +28,19 @@
     },
     "party": {
       "confirm-to-remove": "确定要将以下移出Box吗？",
-      "character": {
+      "characters": {
+        "title": "角色列表",
         "add": "添加角色",
         "add-success": "成功添加角色 - {{ name }}",
         "expand-list": "展开角色列表",
-        "remove": "移除角色",
-        "sort": "排序"
+        "remove": "移除角色"
       },
-      "weapon": {
+      "weapons": {
+        "title": "武器列表",
         "add": "添加武器",
         "add-success": "成功添加武器 - {{ name }}",
         "expand-list": "展开武器列表",
-        "remove": "移除武器",
-        "sort": "排序"
+        "remove": "移除武器"
       }
     },
     "character-stat": {
@@ -100,6 +92,7 @@
     "genshin-impact": "原神",
     "resin": "树脂",
     "none": "无",
+    "sort": "排序",
     "minutes": "分钟",
     "multi-select": "多选",
     "select-all": "全选",
@@ -287,6 +280,12 @@
       "84": "龙脊长枪",
       "85": "斫峰之刃"
     },
+    "mora-and-exp": "通用素材",
+    "elemental-materials": "角色突破素材",
+    "talent-materials": "天赋培养素材",
+    "weapon-materials": "武器突破素材",
+    "common-materials": "怪物掉落素材",
+    "local-specialties": "地区特产",
     "materials-groups": {
       "101": "蒙德特产",
       "102": "璃月特产",

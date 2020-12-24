@@ -18,7 +18,7 @@ import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model
 })
 export class PartyWeaponComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapon';
+  i18nKey = 'party.weapons';
 
   multiSelect = false;
 

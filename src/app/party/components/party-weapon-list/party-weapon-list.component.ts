@@ -14,7 +14,7 @@ import {WeaponListComponent} from '../../../character-and-gear/components/weapon
 })
 export class PartyWeaponListComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapon';
+  i18nKey = 'party.weapons';
 
   weapons: Weapon[] = [];
 

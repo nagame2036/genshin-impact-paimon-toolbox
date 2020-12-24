@@ -19,7 +19,7 @@ import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 })
 export class AddWeaponDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapon';
+  i18nKey = 'party.weapons';
 
   weapons: Weapon[] = [];
 

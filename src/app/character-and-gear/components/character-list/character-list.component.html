@@ -1,7 +1,7 @@
 <div style="display: block; margin-top: 12px">
   <div fxLayout="row" fxLayoutGap="4px">
     <mat-form-field fxFlex="1 1 20%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18n('sort') | translate }}</mat-label>
+      <mat-label>{{ i18nDict('sort') | translate }}</mat-label>
       <mat-select [value]="sort" (selectionChange)="sort = $event.value; update()">
         <mat-option *ngFor="let f of sortFields" [value]="f">
           {{ i18nDict(f) | translate }}

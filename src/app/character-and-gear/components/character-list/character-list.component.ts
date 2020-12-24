@@ -26,7 +26,7 @@ import {toggleItem} from '../../../shared/utils/collections';
 })
 export class CharacterListComponent extends AbstractTranslateComponent implements OnChanges {
 
-  i18nKey = 'party.character';
+  i18nKey = 'party.characters';
 
   @Input()
   party = false;

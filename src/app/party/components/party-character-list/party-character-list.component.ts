@@ -15,7 +15,7 @@ import {CharacterListComponent} from '../../../character-and-gear/components/cha
 })
 export class PartyCharacterListComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.character';
+  i18nKey = 'party.characters';
 
   characters: Character[] = [];
 
