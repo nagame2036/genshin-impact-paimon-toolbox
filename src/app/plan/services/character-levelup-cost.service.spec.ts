@@ -43,12 +43,17 @@ describe('CharacterLevelupService', () => {
       talents: []
     };
     service.cost(character, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res.mora).toBe(2092530);
-      expect(res.characterExp).toBe(8362650);
-      expect(res.elements[2060]).toBe(46);
-      expect(res.gems).toEqual({3060: 1, 3061: 9, 3062: 9, 3063: 6});
-      expect(res.common).toEqual({8030: 18, 8031: 30, 8032: 36});
-      expect(res.localSpecialties[10105]).toBe(168);
+      expect(res[0]).toBe(2092530);
+      expect(res[1]).toBe(8362650);
+      expect(res[2060]).toBe(46);
+      expect(res[3060]).toBe(1);
+      expect(res[3061]).toBe(9);
+      expect(res[3062]).toBe(9);
+      expect(res[3063]).toBe(6);
+      expect(res[8030]).toBe(18);
+      expect(res[8031]).toBe(30);
+      expect(res[8032]).toBe(36);
+      expect(res[10105]).toBe(168);
       done();
     });
   });
@@ -68,11 +73,12 @@ describe('CharacterLevelupService', () => {
       talents: []
     };
     service.cost(character, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
-      expect(res.mora).toBe(315520);
-      expect(res.characterExp).toBe(1277600);
-      expect(res.gems).toEqual({3000: 1, 3001: 3});
-      expect(res.common).toEqual({8060: 18});
-      expect(res.localSpecialties[10105]).toBe(13);
+      expect(res[0]).toBe(315520);
+      expect(res[1]).toBe(1277600);
+      expect(res[3000]).toBe(1);
+      expect(res[3001]).toBe(3);
+      expect(res[8060]).toBe(18);
+      expect(res[10105]).toBe(13);
       done();
     });
   });
@@ -93,12 +99,15 @@ describe('CharacterLevelupService', () => {
       talents: []
     };
     service.cost(character, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res.mora).toBe(1777010);
-      expect(res.characterExp).toBe(7085050);
-      expect(res.elements[2060]).toBe(44);
-      expect(res.gems).toEqual({3031: 6, 3032: 9, 3033: 6});
-      expect(res.common).toEqual({8011: 30, 8012: 36});
-      expect(res.localSpecialties[10105]).toBe(155);
+      expect(res[0]).toBe(1777010);
+      expect(res[1]).toBe(7085050);
+      expect(res[2060]).toBe(44);
+      expect(res[3031]).toBe(6);
+      expect(res[3032]).toBe(9);
+      expect(res[3033]).toBe(6);
+      expect(res[8011]).toBe(30);
+      expect(res[8012]).toBe(36);
+      expect(res[10105]).toBe(155);
       done();
     });
   });

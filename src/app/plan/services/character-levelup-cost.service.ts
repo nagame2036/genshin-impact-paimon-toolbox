@@ -41,15 +41,15 @@ export class CharacterLevelupCostService {
     return zip(this.ascensions, this.elements.items, this.common.items).pipe(
       map(([ascensions, _, __]) => {
         ascensions.slice(character.ascension, to).forEach(({mora, elemental, gem, local, enemy}) => {
-          cost.addMora(mora);
+          cost.add(0, mora);
           if (character.elemental) {
-            cost.addElemental(character.elemental, elemental);
+            cost.add(character.elemental, elemental);
           }
           const gemItem = this.elements.getByGroupAndRarity(character.gem, gem.rarity);
-          cost.addGem(gemItem.id, gem.amount);
-          cost.addLocalSpecialty(character.local, local);
+          cost.add(gemItem.id, gem.amount);
+          cost.add(character.local, local);
           const common = this.common.getByGroupAndRarity(character.common, enemy.rarity);
-          cost.addCommon(common.id, enemy.amount);
+          cost.add(common.id, enemy.amount);
         });
         return cost;
       })
@@ -58,24 +58,13 @@ export class CharacterLevelupCostService {
 
   private levelup(from: number, to: number): Observable<ItemCostList> {
     const cost = new ItemCostList();
-    return zip(this.levels, this.exps.items).pipe(
-      map(([levels, exps]) => {
-        const moraAmount = levels.slice(from, to).reduce((sum, curr) => sum + curr, 0);
-        cost.addMora(moraAmount);
-        let remainingExp = moraAmount * 5;
-        cost.addCharacterExp(remainingExp);
-        exps.forEach(({id, exp}) => {
-          const num = Math.floor(remainingExp / exp);
-          cost.addCharacterExpItem(id, num);
-          remainingExp = remainingExp - num * exp;
-        });
-        if (remainingExp > 0) {
-          const minExpItem = exps[exps.length - 1];
-          cost.addCharacterExpItem(minExpItem.id, 1);
-        }
-        return cost;
-      })
-    );
+    return this.levels.pipe(map(levels => {
+      const moraAmount = levels.slice(from, to).reduce((sum, curr) => sum + curr, 0);
+      cost.add(0, moraAmount);
+      const expAmount = moraAmount * 5;
+      cost.add(1, expAmount);
+      return cost;
+    }));
   }
 
 }

@@ -44,11 +44,15 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
-      expect(res.mora).toBe(1652500);
-      expect(res.talents).toEqual({5000: 3, 5001: 21, 5002: 38});
-      expect(res.talentBoss).toEqual({6002: 6});
-      expect(res.talentEvent).toEqual({7000: 1});
-      expect(res.common).toEqual({8030: 6, 8031: 22, 8032: 31});
+      expect(res[0]).toBe(1652500);
+      expect(res[5000]).toBe(3);
+      expect(res[5001]).toBe(21);
+      expect(res[5002]).toBe(38);
+      expect(res[6002]).toBe(6);
+      expect(res[7000]).toBe(1);
+      expect(res[8030]).toBe(6);
+      expect(res[8031]).toBe(22);
+      expect(res[8032]).toBe(31);
       done();
     });
   });
@@ -71,9 +75,11 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 6}]).subscribe(res => {
-      expect(res.mora).toBe(122500);
-      expect(res.talents).toEqual({5000: 3, 5001: 21});
-      expect(res.common).toEqual({8030: 6, 8031: 22});
+      expect(res[0]).toBe(122500);
+      expect(res[5000]).toBe(3);
+      expect(res[5001]).toBe(21);
+      expect(res[8030]).toBe(6);
+      expect(res[8031]).toBe(22);
       done();
     });
   });
@@ -96,11 +102,11 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
-      expect(res.mora).toBe(1530000);
-      expect(res.talents).toEqual({5002: 38});
-      expect(res.talentBoss).toEqual({6002: 6});
-      expect(res.talentEvent).toEqual({7000: 1});
-      expect(res.common).toEqual({8032: 31});
+      expect(res[0]).toBe(1530000);
+      expect(res[5002]).toBe(38);
+      expect(res[6002]).toBe(6);
+      expect(res[7000]).toBe(1);
+      expect(res[8032]).toBe(31);
       done();
     });
   });
@@ -122,11 +128,19 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10, level: 10}]).subscribe(res => {
-      expect(res.mora).toBe(1652500);
-      expect(res.talents).toEqual({5000: 3, 5001: 6, 5002: 6, 5011: 11, 5012: 12, 5021: 4, 5022: 20});
-      expect(res.talentBoss).toEqual({6002: 6});
-      expect(res.talentEvent).toEqual({7000: 1});
-      expect(res.common).toEqual({8020: 6, 8021: 22, 8022: 31});
+      expect(res[0]).toBe(1652500);
+      expect(res[5000]).toBe(3);
+      expect(res[5001]).toBe(6);
+      expect(res[5002]).toBe(6);
+      expect(res[5011]).toBe(11);
+      expect(res[5012]).toBe(12);
+      expect(res[5021]).toBe(4);
+      expect(res[5022]).toBe(20);
+      expect(res[6002]).toBe(6);
+      expect(res[7000]).toBe(1);
+      expect(res[8020]).toBe(6);
+      expect(res[8021]).toBe(22);
+      expect(res[8022]).toBe(31);
       done();
     });
   });

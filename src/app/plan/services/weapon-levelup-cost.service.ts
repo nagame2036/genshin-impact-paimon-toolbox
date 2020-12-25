@@ -38,13 +38,13 @@ export class WeaponLevelupCostService {
     return zip(this.ascensions, this.domain.items, this.common.items).pipe(
       map(([ascensions, _, __]) => {
         ascensions[weapon.rarity].slice(weapon.ascension, to).forEach(({mora, domain, elite, common}) => {
-          cost.addMora(mora);
+          cost.add(0, mora);
           const domainItem = this.domain.getByGroupAndRarity(weapon.domain, domain.rarity);
-          cost.addWeapon(domainItem.id, domain.amount);
+          cost.add(domainItem.id, domain.amount);
           const eliteItem = this.common.getByGroupAndRarity(weapon.elite, elite.rarity);
-          cost.addCommon(eliteItem.id, elite.amount);
+          cost.add(eliteItem.id, elite.amount);
           const commonItem = this.common.getByGroupAndRarity(weapon.common, common.rarity);
-          cost.addCommon(commonItem.id, common.amount);
+          cost.add(commonItem.id, common.amount);
         });
         return cost;
       })
@@ -53,24 +53,13 @@ export class WeaponLevelupCostService {
 
   private levelup(weapon: PartyWeapon, to: number): Observable<ItemCostList> {
     const cost = new ItemCostList();
-    return zip(this.levels, this.exps.items).pipe(
-      map(([levels, exps]) => {
-        const expAmount = levels[weapon.rarity].slice(weapon.level, to).reduce((sum, curr) => sum + curr, 0);
-        cost.addMora(Math.floor(expAmount * .1));
-        cost.addWeaponExp(expAmount);
-        let remainingExp = expAmount;
-        exps.forEach(({id, exp}) => {
-          const num = Math.floor(remainingExp / exp);
-          cost.addWeaponExpItem(id, num);
-          remainingExp = remainingExp - num * exp;
-        });
-        if (remainingExp > 0) {
-          const minExpItem = exps[exps.length - 1];
-          cost.addWeaponExpItem(minExpItem.id, 1);
-        }
-        return cost;
-      })
-    );
+    return this.levels.pipe(map(levels => {
+      const expAmount = levels[weapon.rarity].slice(weapon.level, to).reduce((sum, curr) => sum + curr, 0);
+      cost.add(2, expAmount);
+      const mora = Math.floor(expAmount * .1);
+      cost.add(0, mora);
+      return cost;
+    }));
   }
 
 }
