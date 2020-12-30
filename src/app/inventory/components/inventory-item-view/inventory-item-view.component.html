@@ -17,7 +17,7 @@
   </div>
   <ng-template #overflow>溢出</ng-template>
   <div (keydown.arrowUp)="inc()" (keydown.arrowDown)="dec()">
-    <input class="listening-input" [style]="{width: width + 'px'}"
+    <input class="inventory-have" [style]="{width: width + 'px'}" [disabled]="readonly"
            [value]="have | number: '1.0-0'" (input)="correct($event)"/>
   </div>
 </div>

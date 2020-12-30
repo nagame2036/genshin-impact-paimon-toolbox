@@ -14,7 +14,7 @@ export class InventoryItemViewComponent extends AbstractTranslateComponent imple
   i18nKey = 'inventory';
 
   @Input()
-  width = 84;
+  width = 86;
 
   @Input()
   id!: number;
@@ -22,6 +22,8 @@ export class InventoryItemViewComponent extends AbstractTranslateComponent imple
   need = 0;
 
   have = 0;
+
+  readonly = false;
 
   @Input()
   incStep = 1;
@@ -37,7 +39,10 @@ export class InventoryItemViewComponent extends AbstractTranslateComponent imple
   }
 
   ngOnInit(): void {
-    this.inventory.getAmount(this.id).subscribe(res => this.have = res.amount);
+    this.inventory.getAmount(this.id).subscribe(res => {
+      this.have = res.amount;
+      this.readonly = res.readonly ?? false;
+    });
     this.cost.cost.subscribe(res => this.need = res.get(this.id));
   }
 

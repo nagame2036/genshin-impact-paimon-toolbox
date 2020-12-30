@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
 import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
 import {OreMaterialService} from '../../../material/services/ore-material.service';
-import {CharacterExpMaterialItem} from '../../../material/models/character-exp-material.model';
-import {WeaponExpMaterialItem} from '../../../material/models/weapon-exp-material.model';
+import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {OreMaterialItem} from '../../../material/models/ore-material.model';
-import {mora} from '../../../material/models/mora.model';
+import {characterExp, mora, weaponExp} from '../../../material/models/mora-and-exp.model';
 
 @Component({
   selector: 'app-mora-and-exp-inventory',
@@ -16,9 +15,9 @@ export class MoraAndExpInventoryComponent implements OnInit {
 
   moraItems = [mora];
 
-  characterExpMaterials: CharacterExpMaterialItem[] = [];
+  characterExpMaterials: InventoryItem[] = [];
 
-  weaponExpMaterials: WeaponExpMaterialItem[] = [];
+  weaponExpMaterials: InventoryItem[] = [];
 
   oreMaterials: OreMaterialItem[] = [];
 
@@ -26,8 +25,8 @@ export class MoraAndExpInventoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.characters.items.subscribe(res => this.characterExpMaterials = res);
-    this.weapons.items.subscribe(res => this.weaponExpMaterials = res);
+    this.characters.items.subscribe(res => this.characterExpMaterials = [characterExp, ...res]);
+    this.weapons.items.subscribe(res => this.weaponExpMaterials = [weaponExp, ...res]);
     this.ores.items.subscribe(res => this.oreMaterials = res);
   }
 

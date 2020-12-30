@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {CharacterExpMaterial, CharacterExpMaterialGroup, CharacterExpMaterialItem} from '../models/character-exp-material.model';
 import {HttpClient} from '@angular/common/http';
 import alasql from 'alasql';
+import {ItemAmount} from '../models/item-amount.model';
+import {map} from 'rxjs/operators';
+import {expAmount} from '../utils/exp-amount';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +26,11 @@ export class CharacterExpMaterialService {
       const sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
       this.#items.next(alasql(sql, [res.items]));
     });
+  }
+
+  getExp(inventory: Map<number, ItemAmount>): Observable<ItemAmount> {
+    return this.items.pipe(map(items => {
+      return {id: 1, amount: expAmount(inventory, items), readonly: true};
+    }));
   }
 }
