@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterService} from '../../character-and-gear/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
@@ -7,7 +7,12 @@ import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {TalentService} from '../../character-and-gear/services/talent.service';
 import {getLevelupPlan} from '../models/levelup-plan.model';
 import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
-import {mergeMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
+import {ItemCostList} from '../models/item-cost-list.model';
+import {CharacterLevelupCostService} from './character-levelup-cost.service';
+import {TalentLevelupCostService} from './talent-levelup-cost.service';
+import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
+import {activePlans} from '../utils/party-plans';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +23,23 @@ export class CharacterPlanner {
 
   #plans = new ReplaySubject<CharacterPlan[]>(1);
 
-  plans = this.#plans.asObservable();
+  readonly plans = this.#plans.asObservable();
 
-  constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService) {
+  activePlans: Observable<{ plan: CharacterPlan, party: PartyCharacter }[]>;
+
+  constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
+              private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
+    this.activePlans = combineLatest([this.plans, this.characters.partyMap]).pipe(
+      map(([plans, partyList]) => activePlans(plans, partyList)
+      ));
   }
 
   getPlan(id: number): Observable<CharacterPlan> {
-    return this.plans.pipe(mergeMap(plans => {
-      const plan = plans[plans.findIndex(it => it.id === id)];
-      return iif(() => plan !== undefined, of(plan));
+    return this.activePlans.pipe(switchMap(plans => {
+      const index = plans.findIndex(it => it.plan.id === id);
+      const plan = plans[index];
+      return iif(() => plan !== undefined, of(plan.plan));
     }));
   }
 
@@ -40,5 +52,17 @@ export class CharacterPlanner {
       newPlans.push(plan);
       this.#plans.next(newPlans);
     });
+  }
+
+  plansCost(): Observable<ItemCostList> {
+    return this.activePlans.pipe(switchMap(it => iif(
+      () => it.length === 0,
+      of(new ItemCostList()),
+      this.characterLevelup.totalCost(it).pipe(
+        switchMap(levelupCost => this.talentLevelup.totalCost(it).pipe(
+          map(talentsCost => levelupCost.combine(talentsCost))
+        ))
+      )
+    )));
   }
 }

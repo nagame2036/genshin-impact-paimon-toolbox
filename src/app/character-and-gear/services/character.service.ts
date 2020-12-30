@@ -22,6 +22,10 @@ export class CharacterService {
 
   readonly party = this.#party.asObservable();
 
+  #partyMap = new ReplaySubject<Map<number, PartyCharacter>>(1);
+
+  readonly partyMap = this.#partyMap.asObservable();
+
   #nonParty = new ReplaySubject<Character[]>(1);
 
   readonly nonParty = this.#nonParty.asObservable();
@@ -31,7 +35,7 @@ export class CharacterService {
   constructor(http: HttpClient, private database: NgxIndexedDBService) {
     http.get<Character[]>('assets/data/characters.json').subscribe(res => this.#characters.next(res));
     zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
-      this.#party.next(party);
+      this.cacheParty(party);
       const partyIds = party.map(c => c.id);
       const nonParty = characters.filter(c => !partyIds.includes(c.id));
       this.#nonParty.next(nonParty);
@@ -46,7 +50,7 @@ export class CharacterService {
     zip(add, this.party, this.nonParty, newCharacter).subscribe(([_, party, nonParty, character]) => {
       const newParty = party.filter(c => c.id !== id);
       newParty.push(character);
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
       const newNonParty = nonParty.filter(c => c.id !== id);
       this.#nonParty.next(newNonParty);
     });
@@ -58,7 +62,7 @@ export class CharacterService {
     zip(update, this.party).subscribe(([_, party]) => {
       const newParty = party.filter(c => c.id !== id);
       newParty.push(character);
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
     });
   }
 
@@ -67,7 +71,7 @@ export class CharacterService {
     const remove = exists.pipe(mergeMap(_ => this.database.delete(this.storeName, id)));
     zip(remove, this.party, this.nonParty, exists).subscribe(([_, party, nonParty, character]) => {
       const newParty = party.filter(c => c.id !== id);
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
       const newNonParty = nonParty.filter(c => c.id !== id);
       newNonParty.push(character);
       this.#nonParty.next(newNonParty);
@@ -78,11 +82,18 @@ export class CharacterService {
     const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
     zip(deleted, this.characters, this.party).subscribe(([_, characters, party]) => {
       const newParty = party.filter(c => !ids.includes(c.id));
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
       const partyIds = newParty.map(it => it.id);
       const newNonParty = characters.filter(c => !partyIds.includes(c.id));
       this.#nonParty.next(newNonParty);
     });
+  }
+
+  private cacheParty(party: PartyCharacter[]): void {
+    this.#party.next(party);
+    const mapped = new Map<number, PartyCharacter>();
+    party.forEach(character => mapped.set(character.id, character));
+    this.#partyMap.next(mapped);
   }
 
   private exists(id: number): Observable<Character> {

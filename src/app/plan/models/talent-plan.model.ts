@@ -4,7 +4,7 @@ export interface TalentPlan {
 
   id: number;
 
-  from: TalentLevel;
+  start: TalentLevel;
 
-  to: TalentLevel;
+  goal: TalentLevel;
 }

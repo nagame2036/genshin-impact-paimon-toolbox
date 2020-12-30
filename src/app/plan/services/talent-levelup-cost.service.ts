@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject, zip} from 'rxjs';
+import {from, Observable, ReplaySubject, zip} from 'rxjs';
 import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
 import {CommonMaterialService} from '../../material/services/common-material.service';
 import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
 import {ItemCostList} from '../models/item-cost-list.model';
 import {TalentMaterialService} from '../../material/services/talent-material.service';
-import {map} from 'rxjs/operators';
+import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
 import {TalentLevel} from '../../character-and-gear/models/talent-level.type';
 import {TalentPlan} from '../models/talent-plan.model';
 import {TalentService} from '../../character-and-gear/services/talent.service';
+import {CharacterPlan} from '../models/character-plan.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,25 +25,33 @@ export class TalentLevelupCostService {
     http.get<TalentLevelupCost[]>('assets/data/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
-  cost(character: PartyCharacter, toLevels: TalentLevelData[]): Observable<ItemCostList> {
-    const plans = innerJoinTalentLevels(character.talents, toLevels);
-    const cost = new ItemCostList();
+  totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemCostList> {
+    return from(plans).pipe(
+      switchMap(({party, plan}) => this.cost(party, plan.talents)),
+      take(plans.length),
+      reduce((acc, value) => acc.combine(value), new ItemCostList())
+    );
+  }
+
+  cost(character: PartyCharacter, goal: TalentLevelData[]): Observable<ItemCostList> {
     return zip(this.levels, this.domain.items, this.common.items).pipe(
       map(([levels, _, __]) => {
-        plans.forEach(it => this.levelupCost(it, levels, cost));
+        const plans = innerJoinTalentLevels(character.talents, goal);
+        const cost = new ItemCostList();
+        plans.forEach(it => this.levelup(it, levels, cost));
         return cost;
       })
     );
   }
 
-  levelupCost(plan: TalentPlan, levels: TalentLevelupCost[], cost: ItemCostList): void {
-    const {id, from, to} = plan;
+  private levelup(plan: TalentPlan, levels: TalentLevelupCost[], cost: ItemCostList): void {
+    const {id, start, goal} = plan;
     const talent = this.talents.getGroupById(id);
     if (!talent) {
       return;
     }
     const domainLen = talent.domain.length;
-    for (let i = from; i < to; i++) {
+    for (let i = start; i < goal; i++) {
       const {mora, common, domain, boss, event} = levels[i];
       cost.add(0, mora);
       if (domain) {
@@ -67,9 +76,7 @@ export class TalentLevelupCostService {
 }
 
 function innerJoinTalentLevels(left: TalentLevelData[], right: TalentLevelData[]): TalentPlan[] {
-  const rightMap: { [id: number]: number } = {};
-  for (const {id, level} of right) {
-    rightMap[id] = level;
-  }
-  return left.map(it => ({id: it.id, from: it.level, to: (rightMap[it.id] ?? it.level) as TalentLevel}));
+  const rightMap = new Map<number, number>();
+  right.forEach(({id, level}) => rightMap.set(id, level));
+  return left.map(({id, level}) => ({id, start: level, goal: (rightMap.get(id) ?? level) as TalentLevel}));
 }

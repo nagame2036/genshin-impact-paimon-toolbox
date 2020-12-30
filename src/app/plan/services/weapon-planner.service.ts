@@ -1,10 +1,15 @@
 import {Injectable} from '@angular/core';
-import {iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {mergeMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {getLevelupPlan} from '../models/levelup-plan.model';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {WeaponPlan} from '../models/weapon-plan.model';
+import {ItemCostList} from '../models/item-cost-list.model';
+import {WeaponService} from '../../character-and-gear/services/weapon.service';
+import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
+import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
+import {activePlans} from '../utils/party-plans';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +22,20 @@ export class WeaponPlanner {
 
   plans = this.#plans.asObservable();
 
-  constructor(private database: NgxIndexedDBService) {
+  activePlans: Observable<{ plan: WeaponPlan, party: PartyWeapon }[]>;
+
+  constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
+    this.activePlans = combineLatest([this.plans, this.weapons.partyMap]).pipe(
+      map(([plans, party]) => activePlans(plans, party)
+      ));
   }
 
   getPlan(id: number): Observable<WeaponPlan> {
-    return this.plans.pipe(mergeMap(plans => {
-      const plan = plans[plans.findIndex(it => it.id === id)];
-      return iif(() => plan !== undefined, of(plan));
+    return this.activePlans.pipe(switchMap(plans => {
+      const index = plans.findIndex(it => it.plan.id === id);
+      const plan = plans[index];
+      return iif(() => plan !== undefined, of(plan.plan));
     }));
   }
 
@@ -36,5 +47,13 @@ export class WeaponPlanner {
       newPlans.push(plan);
       this.#plans.next(newPlans);
     });
+  }
+
+  plansCost(): Observable<ItemCostList> {
+    return this.activePlans.pipe(switchMap(it => iif(
+      () => it.length === 0,
+      of(new ItemCostList()),
+      this.weaponLevelup.totalCost(it)
+    )));
   }
 }

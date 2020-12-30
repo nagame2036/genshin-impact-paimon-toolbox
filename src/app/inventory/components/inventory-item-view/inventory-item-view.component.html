@@ -1,0 +1,23 @@
+<div fxLayout="column" style="margin: 4px; font-size: 8px">
+  <div fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div>
+      {{ i18n('need') | translate }}
+    </div>
+    <div style="text-align: right; margin-right: 2px">
+      {{ need | number: '1.0-0' }}
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngStyle]="{'color': lack > 0 ? 'red' : 'gray'}">
+    <div>
+      {{ i18n(lack > 0 ? 'lack' : 'overflow') | translate }}
+    </div>
+    <div style="text-align: right; margin-right: 2px">
+      {{ lack | number: '1.0-0' }}
+    </div>
+  </div>
+  <ng-template #overflow>溢出</ng-template>
+  <div (keydown.arrowUp)="inc()" (keydown.arrowDown)="dec()">
+    <input class="listening-input" [style]="{width: width + 'px'}"
+           [value]="have | number: '1.0-0'" (input)="correct($event)"/>
+  </div>
+</div>

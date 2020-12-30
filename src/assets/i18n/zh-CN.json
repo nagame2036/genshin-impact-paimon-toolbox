@@ -43,6 +43,11 @@
         "remove": "移除武器"
       }
     },
+    "inventory": {
+      "need": "需求",
+      "lack": "缺少",
+      "overflow": "溢出"
+    },
     "character-stat": {
       "title": "角色面板分析",
       "profile": {

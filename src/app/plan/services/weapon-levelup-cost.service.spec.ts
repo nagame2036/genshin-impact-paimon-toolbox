@@ -39,18 +39,18 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res[0]).toBe(503820);
-      expect(res[2]).toBe(3988200);
-      expect(res[4000]).toBe(2);
-      expect(res[4001]).toBe(6);
-      expect(res[4002]).toBe(6);
-      expect(res[4003]).toBe(3);
-      expect(res[8000]).toBe(6);
-      expect(res[8001]).toBe(10);
-      expect(res[8002]).toBe(12);
-      expect(res[9000]).toBe(10);
-      expect(res[9001]).toBe(12);
-      expect(res[9002]).toBe(18);
+      expect(res.get(0)).toBe(503820);
+      expect(res.get(2)).toBe(3988200);
+      expect(res.get(4000)).toBe(2);
+      expect(res.get(4001)).toBe(6);
+      expect(res.get(4002)).toBe(6);
+      expect(res.get(4003)).toBe(3);
+      expect(res.get(8000)).toBe(6);
+      expect(res.get(8001)).toBe(10);
+      expect(res.get(8002)).toBe(12);
+      expect(res.get(9000)).toBe(10);
+      expect(res.get(9001)).toBe(12);
+      expect(res.get(9002)).toBe(18);
       done();
     });
   });
@@ -68,12 +68,12 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
-      expect(res[0]).toBe(75382);
-      expect(res[2]).toBe(603825);
-      expect(res[4010]).toBe(2);
-      expect(res[4011]).toBe(2);
-      expect(res[8010]).toBe(6);
-      expect(res[9020]).toBe(10);
+      expect(res.get(0)).toBe(75382);
+      expect(res.get(2)).toBe(603825);
+      expect(res.get(4010)).toBe(2);
+      expect(res.get(4011)).toBe(2);
+      expect(res.get(8010)).toBe(6);
+      expect(res.get(9020)).toBe(10);
       done();
     });
   });
@@ -91,15 +91,15 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res[0]).toBe(428437);
-      expect(res[2]).toBe(3384375);
-      expect(res[4021]).toBe(4);
-      expect(res[4022]).toBe(6);
-      expect(res[4023]).toBe(3);
-      expect(res[8021]).toBe(10);
-      expect(res[8022]).toBe(12);
-      expect(res[9031]).toBe(12);
-      expect(res[9032]).toBe(18);
+      expect(res.get(0)).toBe(428437);
+      expect(res.get(2)).toBe(3384375);
+      expect(res.get(4021)).toBe(4);
+      expect(res.get(4022)).toBe(6);
+      expect(res.get(4023)).toBe(3);
+      expect(res.get(8021)).toBe(10);
+      expect(res.get(8022)).toBe(12);
+      expect(res.get(9031)).toBe(12);
+      expect(res.get(9032)).toBe(18);
       done();
     });
   });
@@ -117,18 +117,18 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res[0]).toBe(754265);
-      expect(res[2]).toBe(6042650);
-      expect(res[4030]).toBe(3);
-      expect(res[4031]).toBe(9);
-      expect(res[4032]).toBe(9);
-      expect(res[4033]).toBe(4);
-      expect(res[8030]).toBe(10);
-      expect(res[8031]).toBe(15);
-      expect(res[8032]).toBe(18);
-      expect(res[9040]).toBe(15);
-      expect(res[9041]).toBe(18);
-      expect(res[9042]).toBe(27);
+      expect(res.get(0)).toBe(754265);
+      expect(res.get(2)).toBe(6042650);
+      expect(res.get(4030)).toBe(3);
+      expect(res.get(4031)).toBe(9);
+      expect(res.get(4032)).toBe(9);
+      expect(res.get(4033)).toBe(4);
+      expect(res.get(8030)).toBe(10);
+      expect(res.get(8031)).toBe(15);
+      expect(res.get(8032)).toBe(18);
+      expect(res.get(9040)).toBe(15);
+      expect(res.get(9041)).toBe(18);
+      expect(res.get(9042)).toBe(27);
       done();
     });
   });
@@ -146,12 +146,12 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
-      expect(res[0]).toBe(111485);
-      expect(res[2]).toBe(914850);
-      expect(res[4040]).toBe(3);
-      expect(res[4041]).toBe(3);
-      expect(res[8050]).toBe(10);
-      expect(res[9050]).toBe(15);
+      expect(res.get(0)).toBe(111485);
+      expect(res.get(2)).toBe(914850);
+      expect(res.get(4040)).toBe(3);
+      expect(res.get(4041)).toBe(3);
+      expect(res.get(8050)).toBe(10);
+      expect(res.get(9050)).toBe(15);
       done();
     });
   });
@@ -169,15 +169,15 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res[0]).toBe(642780);
-      expect(res[2]).toBe(5127800);
-      expect(res[4051]).toBe(6);
-      expect(res[4052]).toBe(9);
-      expect(res[4053]).toBe(4);
-      expect(res[8061]).toBe(15);
-      expect(res[8062]).toBe(18);
-      expect(res[9061]).toBe(18);
-      expect(res[9062]).toBe(27);
+      expect(res.get(0)).toBe(642780);
+      expect(res.get(2)).toBe(5127800);
+      expect(res.get(4051)).toBe(6);
+      expect(res.get(4052)).toBe(9);
+      expect(res.get(4053)).toBe(4);
+      expect(res.get(8061)).toBe(15);
+      expect(res.get(8062)).toBe(18);
+      expect(res.get(9061)).toBe(18);
+      expect(res.get(9062)).toBe(27);
       done();
     });
   });
@@ -195,18 +195,18 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res[0]).toBe(1131445);
-      expect(res[2]).toBe(9064450);
-      expect(res[4030]).toBe(5);
-      expect(res[4031]).toBe(14);
-      expect(res[4032]).toBe(14);
-      expect(res[4033]).toBe(6);
-      expect(res[8070]).toBe(15);
-      expect(res[8071]).toBe(23);
-      expect(res[8072]).toBe(27);
-      expect(res[9040]).toBe(23);
-      expect(res[9041]).toBe(27);
-      expect(res[9042]).toBe(41);
+      expect(res.get(0)).toBe(1131445);
+      expect(res.get(2)).toBe(9064450);
+      expect(res.get(4030)).toBe(5);
+      expect(res.get(4031)).toBe(14);
+      expect(res.get(4032)).toBe(14);
+      expect(res.get(4033)).toBe(6);
+      expect(res.get(8070)).toBe(15);
+      expect(res.get(8071)).toBe(23);
+      expect(res.get(8072)).toBe(27);
+      expect(res.get(9040)).toBe(23);
+      expect(res.get(9041)).toBe(27);
+      expect(res.get(9042)).toBe(41);
       done();
     });
   });
@@ -224,12 +224,12 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
-      expect(res[0]).toBe(167250);
-      expect(res[2]).toBe(1372500);
-      expect(res[4030]).toBe(5);
-      expect(res[4031]).toBe(5);
-      expect(res[8070]).toBe(15);
-      expect(res[9040]).toBe(23);
+      expect(res.get(0)).toBe(167250);
+      expect(res.get(2)).toBe(1372500);
+      expect(res.get(4030)).toBe(5);
+      expect(res.get(4031)).toBe(5);
+      expect(res.get(8070)).toBe(15);
+      expect(res.get(9040)).toBe(23);
       done();
     });
   });
@@ -247,14 +247,14 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res[0]).toBe(964195);
-      expect(res[2]).toBe(7691950);
-      expect(res[4031]).toBe(9);
-      expect(res[4032]).toBe(14);
-      expect(res[8071]).toBe(23);
-      expect(res[8072]).toBe(27);
-      expect(res[9041]).toBe(27);
-      expect(res[9042]).toBe(41);
+      expect(res.get(0)).toBe(964195);
+      expect(res.get(2)).toBe(7691950);
+      expect(res.get(4031)).toBe(9);
+      expect(res.get(4032)).toBe(14);
+      expect(res.get(8071)).toBe(23);
+      expect(res.get(8072)).toBe(27);
+      expect(res.get(9041)).toBe(27);
+      expect(res.get(9042)).toBe(41);
       done();
     });
   });

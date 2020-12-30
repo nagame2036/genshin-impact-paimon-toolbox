@@ -1,28 +1,30 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AmountInputComponent} from './amount-input.component';
+import {InventoryItemViewComponent} from './inventory-item-view.component';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {HttpClientModule} from '@angular/common/http';
+import {AppTranslateModule} from '../../../app-translate.module';
 
-describe('AmountInputComponent', () => {
-  let component: AmountInputComponent;
-  let fixture: ComponentFixture<AmountInputComponent>;
+describe('InventoryItemViewComponent', () => {
+  let component: InventoryItemViewComponent;
+  let fixture: ComponentFixture<InventoryItemViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AmountInputComponent
+        InventoryItemViewComponent
       ],
       imports: [
         HttpClientModule,
-        AppIndexedDbModule
+        AppIndexedDbModule,
+        AppTranslateModule
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AmountInputComponent);
+    fixture = TestBed.createComponent(InventoryItemViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

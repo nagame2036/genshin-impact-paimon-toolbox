@@ -21,11 +21,15 @@ export class WeaponService {
 
   readonly party = this.#party.asObservable();
 
+  #partyMap = new ReplaySubject<Map<number, PartyWeapon>>(1);
+
+  readonly partyMap = this.#partyMap.asObservable();
+
   private readonly storeName = 'party-weapons';
 
   constructor(http: HttpClient, private database: NgxIndexedDBService) {
     http.get<Weapon[]>('assets/data/weapons.json').subscribe(res => this.#weapons.next(res));
-    database.getAll(this.storeName).subscribe(party => this.#party.next(party));
+    database.getAll(this.storeName).subscribe(party => this.cacheParty(party));
   }
 
   addPartyMember(id: number, level: AscensionLevel, refine: RefineRank): Observable<number> {
@@ -37,7 +41,7 @@ export class WeaponService {
       weapon.key = key;
       const newParty = party.filter(c => c.key !== key);
       newParty.push(weapon);
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
       return key;
     }));
   }
@@ -51,7 +55,7 @@ export class WeaponService {
     zip(update, this.party).subscribe(([_, party]) => {
       const newParty = party.filter(c => c.key !== key);
       newParty.push(weapon);
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
     });
   }
 
@@ -63,7 +67,7 @@ export class WeaponService {
     const remove = this.exists(weapon.id).pipe(mergeMap(_ => this.database.delete(this.storeName, key)));
     zip(remove, this.party).subscribe(([_, party]) => {
       const newParty = party.filter(c => c.key !== key);
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
     });
   }
 
@@ -71,8 +75,19 @@ export class WeaponService {
     const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
     zip(deleted, this.party).subscribe(([_, party]) => {
       const newParty = party.filter(c => !ids.includes(c.id));
-      this.#party.next(newParty);
+      this.cacheParty(newParty);
     });
+  }
+
+  private cacheParty(party: PartyWeapon[]): void {
+    this.#party.next(party);
+    const mapped = new Map<number, PartyWeapon>();
+    party.forEach(weapon => {
+      if (weapon.key) {
+        mapped.set(weapon.key, weapon);
+      }
+    });
+    this.#partyMap.next(mapped);
   }
 
   private exists(id: number): Observable<Weapon> {

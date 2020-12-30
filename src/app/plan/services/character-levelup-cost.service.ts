@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {HttpClient} from '@angular/common/http';
-import {Observable, ReplaySubject, zip} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
+import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
+import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
 import {ElementalMaterialService} from '../../material/services/elemental-material.service';
 import {CommonMaterialService} from '../../material/services/common-material.service';
 import {ItemCostList} from '../models/item-cost-list.model';
 import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
+import {CharacterPlan} from '../models/character-plan.model';
+import {toAscensionLevel} from '../models/levelup-plan.model';
+import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
+import {divideExps} from '../utils/divide-exps';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +33,29 @@ export class CharacterLevelupCostService {
     http.get<CharacterAscensionCost[]>('assets/data/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
   }
 
-  cost(character: PartyCharacter, to: AscensionLevel): Observable<ItemCostList> {
-    return zip(this.ascension(character, to.ascension), this.levelup(character.level, to.level)).pipe(
+  totalCost(plans: { plan: CharacterPlan, party: PartyCharacter }[]): Observable<ItemCostList> {
+    return from(plans).pipe(
+      switchMap(({party, plan}) => this.cost(party, toAscensionLevel(plan.levelup))),
+      take(plans.length),
+      reduce((acc, value) => acc.combine(value), new ItemCostList()),
+      switchMap(cost => this.exps.items.pipe(map(
+        exps => divideExps(cost.get(1), exps, cost)
+      )))
+    );
+  }
+
+  cost(character: PartyCharacter, goal: AscensionLevel): Observable<ItemCostList> {
+    return combineLatest([this.ascension(character, goal.ascension), this.levelup(character.level, goal.level)]).pipe(
       map(([ascension, levelup]) => ascension.combine(levelup))
     );
   }
 
-  private ascension(character: PartyCharacter, to: Ascension): Observable<ItemCostList> {
-    const cost = new ItemCostList();
+  private ascension(character: PartyCharacter, goal: Ascension): Observable<ItemCostList> {
     return zip(this.ascensions, this.elements.items, this.common.items).pipe(
       map(([ascensions, _, __]) => {
-        ascensions.slice(character.ascension, to).forEach(({mora, elemental, gem, local, enemy}) => {
+        const cost = new ItemCostList();
+        const range = ascensions.slice(character.ascension, goal);
+        range.forEach(({mora, elemental, gem, local, enemy}) => {
           cost.add(0, mora);
           if (character.elemental) {
             cost.add(character.elemental, elemental);
@@ -56,10 +71,10 @@ export class CharacterLevelupCostService {
     );
   }
 
-  private levelup(from: number, to: number): Observable<ItemCostList> {
-    const cost = new ItemCostList();
+  private levelup(start: number, goal: number): Observable<ItemCostList> {
     return this.levels.pipe(map(levels => {
-      const moraAmount = levels.slice(from, to).reduce((sum, curr) => sum + curr, 0);
+      const cost = new ItemCostList();
+      const moraAmount = levels.slice(start, goal).reduce((sum, curr) => sum + curr, 0);
       cost.add(0, moraAmount);
       const expAmount = moraAmount * 5;
       cost.add(1, expAmount);

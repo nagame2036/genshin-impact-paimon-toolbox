@@ -1,20 +1,20 @@
 <app-material-list [items]="moraItems">
   <ng-template let-item #bottom>
-    <app-amount-input [id]="item.id"></app-amount-input>
+    <app-inventory-item-view [id]="item.id"></app-inventory-item-view>
   </ng-template>
 </app-material-list>
 <app-material-list [items]="characterExpMaterials">
   <ng-template let-item #bottom>
-    <app-amount-input [id]="item.id"></app-amount-input>
+    <app-inventory-item-view [id]="item.id"></app-inventory-item-view>
   </ng-template>
 </app-material-list>
 <app-material-list [items]="weaponExpMaterials">
   <ng-template let-item #bottom>
-    <app-amount-input [id]="item.id"></app-amount-input>
+    <app-inventory-item-view [id]="item.id"></app-inventory-item-view>
   </ng-template>
 </app-material-list>
 <app-material-list [items]="oreMaterials">
   <ng-template let-item #bottom>
-    <app-amount-input [id]="item.id"></app-amount-input>
+    <app-inventory-item-view [id]="item.id"></app-inventory-item-view>
   </ng-template>
 </app-material-list>
