@@ -11,12 +11,11 @@ export class InventoryPageComponent extends AbstractTranslateComponent implement
   i18nKey = 'inventory';
 
   links = [
-    'mora-and-exp',
-    'elemental-materials',
+    'character-materials',
     'talent-materials',
     'weapon-materials',
     'common-materials',
-    'local-specialties'
+    'ingredients'
   ];
 
   constructor() {

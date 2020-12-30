@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MoraAndExpInventoryComponent} from './mora-and-exp-inventory.component';
+import {CharacterMaterialInventoryComponent} from './character-material-inventory.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('MoraAndExpInventoryComponent', () => {
-  let component: MoraAndExpInventoryComponent;
-  let fixture: ComponentFixture<MoraAndExpInventoryComponent>;
+describe('CharacterMaterialInventoryComponent', () => {
+  let component: CharacterMaterialInventoryComponent;
+  let fixture: ComponentFixture<CharacterMaterialInventoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        MoraAndExpInventoryComponent
+        CharacterMaterialInventoryComponent
       ],
       imports: [
         InventoryModule,
@@ -24,7 +24,7 @@ describe('MoraAndExpInventoryComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MoraAndExpInventoryComponent);
+    fixture = TestBed.createComponent(CharacterMaterialInventoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

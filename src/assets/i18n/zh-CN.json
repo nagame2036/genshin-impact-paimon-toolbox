@@ -285,12 +285,11 @@
       "84": "龙脊长枪",
       "85": "斫峰之刃"
     },
-    "mora-and-exp": "通用素材",
-    "elemental-materials": "角色突破素材",
+    "character-materials": "角色突破素材",
     "talent-materials": "天赋培养素材",
     "weapon-materials": "武器突破素材",
     "common-materials": "怪物掉落素材",
-    "local-specialties": "地区特产",
+    "ingredients": "特产及原料",
     "materials-groups": {
       "101": "蒙德特产",
       "102": "璃月特产",

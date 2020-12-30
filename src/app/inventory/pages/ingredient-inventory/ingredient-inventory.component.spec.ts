@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ElementalMaterialInventoryComponent} from './elemental-material-inventory.component';
+import {IngredientInventoryComponent} from './ingredient-inventory.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('ElementalMaterialInventoryComponent', () => {
-  let component: ElementalMaterialInventoryComponent;
-  let fixture: ComponentFixture<ElementalMaterialInventoryComponent>;
+describe('IngredientInventoryComponent', () => {
+  let component: IngredientInventoryComponent;
+  let fixture: ComponentFixture<IngredientInventoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        ElementalMaterialInventoryComponent
+        IngredientInventoryComponent
       ],
       imports: [
         InventoryModule,
@@ -24,7 +24,7 @@ describe('ElementalMaterialInventoryComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ElementalMaterialInventoryComponent);
+    fixture = TestBed.createComponent(IngredientInventoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

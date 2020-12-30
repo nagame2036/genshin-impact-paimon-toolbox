@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {WeaponMaterialItem} from '../../../material/models/weapon-material.model';
 import {WeaponMaterialService} from '../../../material/services/weapon-material.service';
+import {InventoryItem} from '../../../material/models/inventory-item.model';
+import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
+import {combineLatest} from 'rxjs';
+import {weaponExp} from '../../../material/models/mora-and-exp.model';
 
 @Component({
   selector: 'app-weapon-material-inventory',
@@ -9,13 +12,15 @@ import {WeaponMaterialService} from '../../../material/services/weapon-material.
 })
 export class WeaponMaterialInventoryComponent implements OnInit {
 
-  items: WeaponMaterialItem[] = [];
+  items: InventoryItem[] = [];
 
-  constructor(private materials: WeaponMaterialService) {
+  constructor(private exps: WeaponExpMaterialService, private materials: WeaponMaterialService) {
   }
 
   ngOnInit(): void {
-    this.materials.items.subscribe(res => this.items = res);
+    combineLatest([this.exps.items, this.materials.items])
+      .subscribe(([exps, materials]) => {
+        this.items = [weaponExp, ...exps, ...materials];
+      });
   }
-
 }
