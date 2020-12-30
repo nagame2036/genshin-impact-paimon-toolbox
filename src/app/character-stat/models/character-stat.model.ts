@@ -70,9 +70,9 @@ export class CharacterStat {
     const baseAtk = this.baseAtk.value;
     const plumeAtk = this.plumeAtk.value;
     const bonusAtk = this.bonusAtk.value;
-    const critRate = this.critRate.value / 100;
-    const critDmgBonus = this.critDmgBonus.value / 100;
-    const elementalDmgBonus = this.elementalDmgBonus.value / 100;
+    const critRate = this.critRate.value * .01;
+    const critDmgBonus = this.critDmgBonus.value * .01;
+    const elementalDmgBonus = this.elementalDmgBonus.value * .01;
     this.profile = new CharacterStatProfile(this.level, this.dmgType.value, baseAtk, plumeAtk, bonusAtk,
       critRate, critDmgBonus, elementalDmgBonus);
   }

@@ -56,7 +56,7 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
 
   get dmgFactor(): number {
     const res = this.enemyElementalRes.value;
-    const resFactor = 1 - (res < 0 ? (res / 2) : res) / 100;
+    const resFactor = 1 - (res < 0 ? (res * .5) : res) * .01;
     return Math.max(0, this.defFactor * resFactor);
   }
 

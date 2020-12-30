@@ -79,7 +79,7 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
 
   optimize(): void {
     // the weight of ATK : CRIT Rate : CRIT DMG = 1.5 : 1 : 2.
-    const points = this.atkPct / 1.5 + this.critRatePct + this.critDmgBonusPct / 2;
+    const points = this.atkPct / 1.5 + this.critRatePct + this.critDmgBonusPct * .5;
     const result = this.optimizer.optimize(this.profile.baseAtk, this.profile.plumeAtk, points);
     this.optimizedFields[0].value = result.atk;
     this.optimizedFields[1].value = result.critRate;
