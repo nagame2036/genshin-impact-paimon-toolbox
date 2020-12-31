@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from 'src/app/shared/components/abstract-translate.component';
 import {Weapon} from 'src/app/character-and-gear/models/weapon.model';
-import {AscensionLevel} from 'src/app/character-and-gear/models/ascension-level.model';
-import {AscensionLevelSelectComponent} from 'src/app/character-and-gear/components/ascension-level-select/ascension-level-select.component';
 import {WeaponService} from 'src/app/character-and-gear/services/weapon.service';
-import {RefineRank} from 'src/app/character-and-gear/models/refine-rank.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
+import {Ascension} from '../../../character-and-gear/models/ascension.enum';
+import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
+import {WeaponPlanDetail} from '../../../plan/models/weapon-plan-detail.model';
 
 @Component({
   selector: 'app-add-weapon-dialog',
@@ -23,45 +23,37 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   weapons: Weapon[] = [];
 
-  selected: Weapon | undefined;
+  selected = false;
 
-  refineOptions: RefineRank[] = [1, 2, 3, 4, 5];
+  selectedWeapon!: PartyWeapon;
 
-  refine: RefineRank = 1;
+  selectedPlanDetail!: WeaponPlanDetail;
 
-  @ViewChild('ascension')
-  ascensionLevel!: AscensionLevelSelectComponent;
-
-  level = new AscensionLevel();
-
-  constructor(private service: WeaponService, private planner: WeaponPlanner,
+  constructor(private weaponService: WeaponService, private planner: WeaponPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
   ngOnInit(): void {
-    this.service.weapons.subscribe(res => this.weapons = res);
+    this.weaponService.weapons.subscribe(res => this.weapons = res);
   }
 
   select(weapon: Weapon): void {
-    this.selected = weapon;
-  }
-
-  setLevel(level: AscensionLevel): void {
-    this.level = level;
+    this.selected = true;
+    this.selectedWeapon = {...weapon, refine: 1, ascension: Ascension.ZERO, level: 1};
+    this.selectedPlanDetail = {id: weapon.id, ascension: Ascension.ZERO, level: 1};
   }
 
   reset(): void {
-    this.selected = undefined;
-    this.ascensionLevel.reset();
-    this.refine = 1;
+    this.selected = false;
   }
 
   add(): void {
-    if (this.selected && this.level) {
-      const id = this.selected.id;
-      this.service.addPartyMember(id, this.level, this.refine).subscribe(key => {
-        this.planner.updatePlan(key, this.level.ascension, this.level.level);
+    if (this.selected) {
+      const id = this.selectedWeapon.id;
+      this.weaponService.addPartyMember(this.selectedWeapon).subscribe(key => {
+        this.selectedPlanDetail.id = key;
+        this.planner.updatePlan(this.selectedPlanDetail);
       });
       this.translator.get(this.i18nDict('weapons.' + id))
         .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))

@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CurrentTargetSelectComponent} from './current-target-select.component';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {CurrentGoalLevelSelectComponent} from './current-goal-level-select.component';
 import {PartyModule} from '../../party.module';
+import {AppTranslateModule} from '../../../app-translate.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('CurrentTargetSelectComponent', () => {
-  let component: CurrentTargetSelectComponent;
-  let fixture: ComponentFixture<CurrentTargetSelectComponent>;
+describe('CurrentGoalLevelSelectComponent', () => {
+  let component: CurrentGoalLevelSelectComponent;
+  let fixture: ComponentFixture<CurrentGoalLevelSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CurrentTargetSelectComponent
+        CurrentGoalLevelSelectComponent
       ],
       imports: [
         PartyModule,
@@ -24,7 +24,7 @@ describe('CurrentTargetSelectComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentTargetSelectComponent);
+    fixture = TestBed.createComponent(CurrentGoalLevelSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

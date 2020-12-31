@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
+  <mat-label>
+    {{ i18nDict('refine-rank') | translate }}
+  </mat-label>
+  <mat-select [value]="weapon.refine" (selectionChange)="setRefineRank($event.value)">
+    <mat-option *ngFor="let c of refineRanks" [value]="c">
+      {{ c }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<app-current-goal-level-select label="weapon" [ascension]="weapon.ascension" [goalAscension]="plan.ascension"
+                               [level]="weapon.level" [goalLevel]="plan.level"
+                               (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
+</app-current-goal-level-select>

@@ -4,11 +4,11 @@ import {Observable, of} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-current-target-select',
-  templateUrl: './current-target-select.component.html',
-  styleUrls: ['./current-target-select.component.sass']
+  selector: 'app-current-goal-select',
+  templateUrl: './current-goal-select.component.html',
+  styleUrls: ['./current-goal-select.component.sass']
 })
-export class CurrentTargetSelectComponent implements OnInit {
+export class CurrentGoalSelectComponent implements OnInit {
 
   @Input()
   currentOptions!: number[];
@@ -17,17 +17,18 @@ export class CurrentTargetSelectComponent implements OnInit {
   current!: number;
 
   @Input()
-  targetOptions!: number[];
+  goalOptions!: number[];
 
   @Input()
-  target = 0;
+  goal = 0;
 
   @Output()
-  currentChanged = new EventEmitter<number>();
+  currentChange = new EventEmitter<number>();
 
   @Output()
-  targetChanged = new EventEmitter<number>();
+  goalChange = new EventEmitter<number>();
 
+  // noinspection JSUnusedLocalSymbols
   constructor(
     /**
      * inject this translator to provide translation in valueDisplay().
@@ -41,17 +42,16 @@ export class CurrentTargetSelectComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeCurrent(value: number): void {
+  setCurrent(value: number): void {
     this.current = value;
-    if (this.target < value) {
-      this.changeTarget(value);
-      return;
+    this.currentChange.emit(value);
+    if (this.goal < value) {
+      this.setGoal(value);
     }
-    this.currentChanged.emit(value);
   }
 
-  changeTarget(value: number): void {
-    this.target = value;
-    this.targetChanged.emit(value);
+  setGoal(value: number): void {
+    this.goal = value;
+    this.goalChange.emit(value);
   }
 }

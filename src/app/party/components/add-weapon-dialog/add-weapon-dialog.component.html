@@ -9,22 +9,14 @@
   </div>
   <div *ngIf="selected" @formTrigger class="add-weapon-form" fxLayout="column" fxLayoutAlign="center center">
     <div style="width: 100px">
-      <app-item-view category="weapons" [id]="selected.id" [rarity]="selected.rarity"></app-item-view>
+      <app-item-view category="weapons" [id]="selectedWeapon.id" [rarity]="selectedWeapon.rarity"></app-item-view>
     </div>
-    <app-ascension-level-select #ascension label="weapon" [horizontal]="false" [width]="320"
-                                (levelChange)="setLevel($event)">
-    </app-ascension-level-select>
-    <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18nDict('refine-rank') | translate }}</mat-label>
-      <mat-select [(value)]="refine">
-        <mat-option *ngFor="let r of refineOptions" [value]="r">{{ r }}</mat-option>
-      </mat-select>
-      <div matSuffix>{{ i18nDict('refine-rank-unit') | translate }}</div>
-    </mat-form-field>
+    <app-weapon-detail-form [weapon]="selectedWeapon" [plan]="selectedPlanDetail">
+    </app-weapon-detail-form>
   </div>
 </div>
 <div *ngIf="selected" mat-dialog-actions>
-  <button mat-flat-button color="primary" [disabled]="!selected || !level " (click)="add()">
+  <button mat-flat-button color="primary" [disabled]="!selected" (click)="add()">
     {{ i18n('add') | translate }}
   </button>
 </div>

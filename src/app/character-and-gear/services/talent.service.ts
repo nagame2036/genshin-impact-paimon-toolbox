@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 import {TalentData, TalentDataGroup, TalentDataItem} from '../models/talent.model';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import {Ascension} from '../models/ascension.enum';
 import {TalentLevel} from '../models/talent-level.type';
 import {rangeList} from '../../shared/utils/range-list';
@@ -68,12 +67,13 @@ export class TalentService {
     return rangeList(min, this.maxLevel(ascension)) as TalentLevel[];
   }
 
-  getTalentsOfCharacter(id: number): Observable<TalentDataItem[]> {
-    return this.talents.pipe(map(it => it.filter(t => t.character === id)));
+  getTalentsOfCharacter(id: number): TalentDataItem[] {
+    const sql = 'SELECT * FROM ? WHERE character = ?';
+    return alasql(sql, [this.#talents, id]);
   }
 
   getGroupById(id: number): TalentDataGroup {
-    const sql = 'SELECT g.* FROM ? g JOIN ? t ON t.[group] = g.id WHERE t.id = ?';
+    const sql = 'SELECT TOP 1 g.* FROM ? g JOIN ? t ON t.[group] = g.id WHERE t.id = ?';
     const list = alasql(sql, [this.#groups, this.#talents, id]);
     return list.length > 0 ? list[0] : null;
   }

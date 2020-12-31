@@ -23,31 +23,12 @@
       </div>
     </div>
   </app-item-view>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
-    <mat-label>
-      {{ i18nDict('constellation') | translate }}
-      -
-      {{ i18nDict('constellations.' + data.character.id + '.name') | translate }}
-    </mat-label>
-    <mat-select [value]="constellation" (selectionChange)="setConstellation($event.value)">
-      <mat-option *ngFor="let c of constellations" [value]="c">
-        {{ c }} - {{ getConstellationText(c) | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <app-current-target-level-select label="character" [ascension]="ascension" [level]="level"
-                                   [targetAscension]="targetAscension" [targetLevel]="targetLevel"
-                                   (changed)="setLevel($event)">
-  </app-current-target-level-select>
-  <app-current-target-select *ngFor="let talent of talents; let i = index"
-                             [currentOptions]="talentLevels" [targetOptions]="targetTalentLevels[i]"
-                             [current]="talent.level" (currentChanged)="setTalent(i, $event)"
-                             [target]="targetTalents[i]?.level || 1" (targetChanged)="setTargetTalent(i, $event)">
-    {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
-  </app-current-target-select>
-  <div mat-dialog-actions>
-    <button mat-stroked-button (click)="remove(data.character.id)">
-      {{ i18n('remove') | translate }}
-    </button>
-  </div>
+  <app-character-detail-form [character]="data.character" [plan]="planDetail"
+                             (currentChange)="saveParty()" (goalChange)="savePlan()">
+  </app-character-detail-form>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button (click)="remove(data.character.id)">
+    {{ i18n('remove') | translate }}
+  </button>
 </div>

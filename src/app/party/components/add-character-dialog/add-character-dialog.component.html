@@ -9,38 +9,15 @@
   </div>
   <div *ngIf="selected" @formTrigger class="add-character-form" fxLayout="column" fxLayoutAlign="center center">
     <div style="width: 100px">
-      <app-item-view category="characters" [id]="selected.id" [rarity]="selected.rarity"></app-item-view>
+      <app-item-view category="characters" [id]="selectedCharacter.id" [rarity]="selectedCharacter.rarity">
+      </app-item-view>
     </div>
-    <mat-form-field class="app-form-field" appearance="outline" floatLabel="always">
-      <mat-label>
-        {{ i18nDict('constellation') | translate }}
-        -
-        {{ i18nDict('constellations.' + selected.id + '.name') | translate }}
-      </mat-label>
-      <mat-select [(value)]="constellation">
-        <mat-option *ngFor="let level of constellationLevels" [value]="level">
-          {{ level }} - {{ getConstellationText(level) | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <app-ascension-level-select #ascensionLevel label="character" [horizontal]="false" [width]="320"
-                                (levelChange)="setLevel($event)">
-    </app-ascension-level-select>
-    <mat-form-field *ngFor="let talent of talentsData; let i = index"
-                    class="app-form-field" appearance="outline" floatLabel="always">
-      <mat-label [translate]="i18nDict('talent-labels.' + talent.id % 10)"
-                 [translateParams]="{ name: i18nDict('talents.' + talent.id) | translate }">
-      </mat-label>
-      <mat-select [(value)]="talent.level">
-        <mat-option *ngFor="let level of talentService.levels(ascension)" [value]="level">
-          {{ level }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-character-detail-form [character]="selectedCharacter" [plan]="selectedPlanDetail">
+    </app-character-detail-form>
   </div>
 </div>
 <div *ngIf="selected" mat-dialog-actions>
-  <button mat-flat-button color="primary" [disabled]="!selected || !level " (click)="add()">
+  <button mat-flat-button color="primary" [disabled]="!selected" (click)="add()">
     {{ i18n('add') | translate }}
   </button>
 </div>

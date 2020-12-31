@@ -11,21 +11,12 @@
       </div>
     </div>
   </app-item-view>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
-    <mat-label>{{ i18nDict('refine-rank') | translate }}</mat-label>
-    <mat-select [value]="refine" (selectionChange)="setRefine($event.value)">
-      <mat-option *ngFor="let rank of refineRanks" [value]="rank">
-        {{ rank }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <app-current-target-level-select label="character" [ascension]="ascension" [level]="level"
-                                   [targetAscension]="targetAscension" [targetLevel]="targetLevel"
-                                   (changed)="setLevel($event)">
-  </app-current-target-level-select>
-  <div mat-dialog-actions>
-    <button mat-stroked-button (click)="remove(data.weapon)">
-      {{ i18n('remove') | translate }}
-    </button>
-  </div>
+  <app-weapon-detail-form [weapon]="data.weapon" [plan]="planDetail"
+                          (currentChange)="saveParty()" (goalChange)="savePlan()">
+  </app-weapon-detail-form>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button (click)="remove(data.weapon)">
+    {{ i18n('remove') | translate }}
+  </button>
 </div>

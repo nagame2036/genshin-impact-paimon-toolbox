@@ -1,0 +1,23 @@
+<fieldset class="current-goal-select-container" [style.width.px]="220"
+          fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
+  <legend>
+    <ng-content></ng-content>
+  </legend>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-goal-select-field-left">
+    <mat-select [value]="current" (selectionChange)="setCurrent($event.value)">
+      <mat-option *ngFor="let value of currentOptions; let i = index" [value]="value">
+        {{ valueDisplay(value) | async }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-icon fxFlex="auto" style="line-height: 20px">
+    chevron_right
+  </mat-icon>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-goal-select-field-right">
+    <mat-select [value]="goal" (selectionChange)="setGoal($event.value)">
+      <mat-option *ngFor="let value of goalOptions; let i = index" [value]="value">
+        {{ valueDisplay(value) | async }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</fieldset>

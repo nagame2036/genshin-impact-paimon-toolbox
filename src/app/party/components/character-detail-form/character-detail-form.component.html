@@ -1,0 +1,22 @@
+<mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
+  <mat-label>
+    {{ i18nDict('constellation') | translate }}
+    -
+    {{ i18nDict('constellations.' + character.id + '.name') | translate }}
+  </mat-label>
+  <mat-select [value]="character.constellation" (selectionChange)="setConstellation($event.value)">
+    <mat-option *ngFor="let c of constellations" [value]="c">
+      {{ c }} - {{ getConstellationText(c) | translate }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<app-current-goal-level-select label="character" [ascension]="character.ascension" [goalAscension]="plan.ascension"
+                               [level]="character.level" [goalLevel]="plan.level"
+                               (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
+</app-current-goal-level-select>
+<app-current-goal-select *ngFor="let talent of character.talents; let i = index"
+                         [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
+                         [current]="talent.level" (currentChange)="setTalent(i, $event)"
+                         [goal]="plan.talents[i]?.level || 1" (goalChange)="setGoalTalent(i, $event)">
+  {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
+</app-current-goal-select>

@@ -4,10 +4,7 @@ import {from, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character.model';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
-import {AscensionLevel} from '../models/ascension-level.model';
-import {Constellation} from '../models/constellation.type';
-import {TalentLevelData} from '../models/talent-level-data.model';
-import {map, mergeMap} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,12 +39,10 @@ export class CharacterService {
     });
   }
 
-  addPartyMember(id: number, level: AscensionLevel, constellation: Constellation, talents: TalentLevelData[]): void {
-    const newCharacter = this.exists(id).pipe(map(character => {
-      return {...character, ascension: level.ascension, level: level.level, constellation, talents} as PartyCharacter;
-    }));
-    const add = newCharacter.pipe(mergeMap(res => this.database.add(this.storeName, res)));
-    zip(add, this.party, this.nonParty, newCharacter).subscribe(([_, party, nonParty, character]) => {
+  addPartyMember(character: PartyCharacter): void {
+    const id = character.id;
+    const add = this.valid(id).pipe(switchMap(_ => this.database.add(this.storeName, character)));
+    zip(add, this.party, this.nonParty).subscribe(([_, party, nonParty]) => {
       const newParty = party.filter(c => c.id !== id);
       newParty.push(character);
       this.cacheParty(newParty);
@@ -58,7 +53,7 @@ export class CharacterService {
 
   updatePartyMember(character: PartyCharacter): void {
     const id = character.id;
-    const update = this.exists(id).pipe(mergeMap(_ => this.database.update(this.storeName, character)));
+    const update = this.valid(id).pipe(switchMap(_ => this.database.update(this.storeName, character)));
     zip(update, this.party).subscribe(([_, party]) => {
       const newParty = party.filter(c => c.id !== id);
       newParty.push(character);
@@ -67,9 +62,9 @@ export class CharacterService {
   }
 
   removePartyMember(id: number): void {
-    const exists = this.exists(id);
-    const remove = exists.pipe(mergeMap(_ => this.database.delete(this.storeName, id)));
-    zip(remove, this.party, this.nonParty, exists).subscribe(([_, party, nonParty, character]) => {
+    const valid = this.valid(id);
+    const remove = valid.pipe(switchMap(_ => this.database.delete(this.storeName, id)));
+    zip(remove, this.party, this.nonParty, valid).subscribe(([_, party, nonParty, character]) => {
       const newParty = party.filter(c => c.id !== id);
       this.cacheParty(newParty);
       const newNonParty = nonParty.filter(c => c.id !== id);
@@ -79,7 +74,7 @@ export class CharacterService {
   }
 
   removePartyMemberByList(ids: number[]): void {
-    const deleted = from(ids).pipe(mergeMap(it => this.database.delete(this.storeName, it)));
+    const deleted = from(ids).pipe(switchMap(it => this.database.delete(this.storeName, it)));
     zip(deleted, this.characters, this.party).subscribe(([_, characters, party]) => {
       const newParty = party.filter(c => !ids.includes(c.id));
       this.cacheParty(newParty);
@@ -96,8 +91,8 @@ export class CharacterService {
     this.#partyMap.next(mapped);
   }
 
-  private exists(id: number): Observable<Character> {
-    return this.characters.pipe(mergeMap(characters => {
+  private valid(id: number): Observable<Character> {
+    return this.characters.pipe(switchMap(characters => {
       const list = characters.filter(c => c.id === id);
       return iif(() => list.length > 0, of(list[0]));
     }));
