@@ -13,8 +13,8 @@ import {
 import {Character} from '../../models/character.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import alasql from 'alasql';
-import {ElementType} from '../../../shared/models/element-type.enum';
-import {WeaponType} from '../../models/weapon-type.enum';
+import {elementTypeList} from '../../../shared/models/element-type.enum';
+import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
 import {toggleItem} from '../../../shared/utils/collections';
@@ -62,11 +62,11 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   @Input()
   sort = 'rarity';
 
-  elementTypes = [ElementType.ANEMO, ElementType.GEO, ElementType.ELECTRO, ElementType.HYDRO, ElementType.PYRO, ElementType.CRYO];
+  elementTypes = elementTypeList;
 
   elementFilter = this.elementTypes;
 
-  weaponTypes = [WeaponType.SWORD, WeaponType.CLAYMORE, WeaponType.CATALYST, WeaponType.BOW, WeaponType.POLEARM];
+  weaponTypes = weaponTypeList;
 
   weaponFilter = this.weaponTypes;
 

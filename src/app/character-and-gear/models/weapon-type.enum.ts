@@ -14,6 +14,11 @@ export enum WeaponType {
   CLAYMORE,
 
   /**
+   * In chinese: 长柄武器.
+   */
+  POLEARM,
+
+  /**
    * In chinese: 法器.
    */
   CATALYST,
@@ -22,9 +27,12 @@ export enum WeaponType {
    * In chinese: 弓.
    */
   BOW,
-
-  /**
-   * In chinese: 长柄武器.
-   */
-  POLEARM
 }
+
+export const weaponTypeList = [
+  WeaponType.SWORD,
+  WeaponType.CLAYMORE,
+  WeaponType.POLEARM,
+  WeaponType.CATALYST,
+  WeaponType.BOW
+];

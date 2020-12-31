@@ -38,3 +38,12 @@ export enum ElementType {
    */
   CRYO
 }
+
+export const elementTypeList = [
+  ElementType.ANEMO,
+  ElementType.GEO,
+  ElementType.ELECTRO,
+  ElementType.HYDRO,
+  ElementType.PYRO,
+  ElementType.CRYO
+];

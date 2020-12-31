@@ -13,7 +13,7 @@ import {
 import alasql from 'alasql';
 import {Weapon} from '../../models/weapon.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {WeaponType} from '../../models/weapon-type.enum';
+import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
 import {toggleItem} from '../../../shared/utils/collections';
@@ -55,7 +55,7 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   @ViewChildren('list')
   list!: QueryList<ItemViewComponent>;
 
-  types = [WeaponType.SWORD, WeaponType.CLAYMORE, WeaponType.CATALYST, WeaponType.BOW, WeaponType.POLEARM];
+  types = weaponTypeList;
 
   typeFilter = this.types;
 
