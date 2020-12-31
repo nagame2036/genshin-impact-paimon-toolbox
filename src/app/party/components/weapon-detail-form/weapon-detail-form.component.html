@@ -12,3 +12,6 @@
                                [level]="weapon.level" [goalLevel]="plan.level"
                                (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
 </app-current-goal-level-select>
+<div *ngFor="let bonus of weapon.expBonus || []">
+  {{ i18n('exp-bonus') | translate: bonus }}
+</div>

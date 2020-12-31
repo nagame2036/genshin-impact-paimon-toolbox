@@ -1,5 +1,6 @@
 import {WeaponType} from './weapon-type.enum';
 import {Rarity} from '../../shared/models/rarity.enum';
+import {ExpBonus} from './levelup-exp-bonus.model';
 
 export interface Weapon {
 
@@ -14,4 +15,6 @@ export interface Weapon {
   elite: number;
 
   common: number;
+
+  expBonus?: ExpBonus[];
 }

@@ -645,7 +645,14 @@
     "rarity": 4,
     "domain": 402,
     "elite": 900,
-    "common": 805
+    "common": 805,
+    "expBonus": [
+      {
+        "factor": 1.5,
+        "startTime": "2020-12-23 11:00",
+        "endTime": "2021-01-05 04:00"
+      }
+    ]
   },
   {
     "id": 81,

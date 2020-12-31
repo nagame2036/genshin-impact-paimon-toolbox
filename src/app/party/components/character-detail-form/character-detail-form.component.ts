@@ -16,7 +16,7 @@ import {CharacterPlanDetail} from '../../../plan/models/character-plan-detail.mo
 })
 export class CharacterDetailFormComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.characters';
+  i18nKey = 'party';
 
   @Input()
   character!: PartyCharacter;

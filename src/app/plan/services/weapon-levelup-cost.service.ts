@@ -14,6 +14,7 @@ import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {toAscensionLevel} from '../models/levelup-plan.model';
 import {divideExps} from '../utils/divide-exps';
+import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,9 +71,9 @@ export class WeaponLevelupCostService {
     return this.levels.pipe(map(levels => {
       const cost = new ItemCostList();
       const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
-      cost.add(2, expAmount);
-      const mora = Math.floor(expAmount * .1);
+      const {mora, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
       cost.add(0, mora);
+      cost.add(2, exp);
       return cost;
     }));
   }

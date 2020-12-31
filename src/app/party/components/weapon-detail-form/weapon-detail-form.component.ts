@@ -13,7 +13,7 @@ import {AscensionLevel} from '../../../character-and-gear/models/ascension-level
 })
 export class WeaponDetailFormComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapons';
+  i18nKey = 'party';
 
   @Input()
   weapon!: PartyWeapon;

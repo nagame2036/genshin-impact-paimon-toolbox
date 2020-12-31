@@ -20,3 +20,6 @@
                          [goal]="plan.talents[i]?.level || 1" (goalChange)="setGoalTalent(i, $event)">
   {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
 </app-current-goal-select>
+<div *ngFor="let bonus of character.expBonus || []">
+  {{ i18n('exp-bonus') | translate: bonus }}
+</div>

@@ -2,6 +2,7 @@ import {Rarity} from '../../shared/models/rarity.enum';
 import {WeaponType} from './weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {Nation} from '../../shared/models/nation.enum';
+import {ExpBonus} from './levelup-exp-bonus.model';
 
 export interface Character {
 
@@ -22,4 +23,6 @@ export interface Character {
   common: number;
 
   local: number;
+
+  expBonus?: ExpBonus[];
 }

@@ -46,7 +46,7 @@ export class PartyWeaponListComponent extends AbstractTranslateComponent impleme
         map(it => it[0]),
         tap(party => this.weapons = party),
         switchMap(party => party),
-        mergeMap(character => this.planner.getPlan(character.id).pipe(first())),
+        mergeMap(weapon => this.planner.getPlan(weapon.key ?? -1).pipe(first())),
       )
       .subscribe(res => this.plans.set(res.id, this.planner.getPlanDetail(res)));
   }

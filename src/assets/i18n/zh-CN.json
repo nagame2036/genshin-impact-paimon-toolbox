@@ -28,6 +28,7 @@
     },
     "party": {
       "confirm-to-remove": "确定要将以下移出Box吗？",
+      "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
       "characters": {
         "title": "角色列表",
         "add": "添加角色",

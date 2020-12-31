@@ -13,6 +13,7 @@ import {CharacterPlan} from '../models/character-plan.model';
 import {toAscensionLevel} from '../models/levelup-plan.model';
 import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
 import {divideExps} from '../utils/divide-exps';
+import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class CharacterLevelupCostService {
   }
 
   cost(character: PartyCharacter, goal: AscensionLevel): Observable<ItemCostList> {
-    return combineLatest([this.ascension(character, goal.ascension), this.levelup(character.level, goal.level)]).pipe(
+    return combineLatest([this.ascension(character, goal.ascension), this.levelup(character, goal.level)]).pipe(
       map(([ascension, levelup]) => ascension.combine(levelup))
     );
   }
@@ -71,13 +72,13 @@ export class CharacterLevelupCostService {
     );
   }
 
-  private levelup(start: number, goal: number): Observable<ItemCostList> {
+  private levelup(character: PartyCharacter, goal: number): Observable<ItemCostList> {
     return this.levels.pipe(map(levels => {
       const cost = new ItemCostList();
-      const moraAmount = levels.slice(start, goal).reduce((sum, curr) => sum + curr, 0);
-      cost.add(0, moraAmount);
-      const expAmount = moraAmount * 5;
-      cost.add(1, expAmount);
+      const moraAmount = levels.slice(character.level, goal).reduce((sum, curr) => sum + curr, 0);
+      const {mora, exp} = processExpBonus(character, moraAmount, v => v * 5);
+      cost.add(0, mora);
+      cost.add(1, exp);
       return cost;
     }));
   }
