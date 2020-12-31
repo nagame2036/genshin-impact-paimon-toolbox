@@ -1,9 +1,0 @@
-<div fxLayout="row wrap" fxLayoutGap="16px">
-  <div *ngFor="let item of items" class="material-list-item">
-    <app-item-view category="materials" [id]="item.id" [rarity]="item.rarity">
-      <ng-container image-bottom *ngIf="bottomTemplateRef"
-                    [ngTemplateOutlet]="bottomTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-      </ng-container>
-    </app-item-view>
-  </div>
-</div>

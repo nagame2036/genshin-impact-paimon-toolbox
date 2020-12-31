@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" [style.width.px]="width"
      [ngClass]="{'item-container': true, 'item-container-active': active}">
   <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start center">
-    <div [class]="['img-container', 'item-rarity-' + rarity]">
+    <div [class]="['img-container', 'item-rarity-' + rarity]" [ngStyle]="{'width': (imgWidth - 2) + 'px'}">
       <div class="item-container-top-left">
         <ng-content select="[image-top-left]"></ng-content>
       </div>
@@ -18,7 +18,9 @@
         </path>
       </svg>
     </div>
-    <span>{{ i18nDict(itemKey) | translate }}</span>
+    <span style="font-size: 10px; text-align: center">
+      {{ i18nDict(itemKey) | translate }}
+    </span>
     <div class="item-container-bottom">
       <ng-content select="[image-bottom]"></ng-content>
     </div>

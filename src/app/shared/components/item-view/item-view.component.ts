@@ -14,6 +14,9 @@ export class ItemViewComponent extends AbstractTranslateComponent {
   width = 100;
 
   @Input()
+  imgWidth = 100;
+
+  @Input()
   category!: string;
 
   @Input()

@@ -6,10 +6,7 @@
       "source": [
         201
       ],
-      "weekday": [
-        1,
-        4
-      ]
+      "weekday": 14
     },
     {
       "id": 401,
@@ -17,10 +14,7 @@
       "source": [
         201
       ],
-      "weekday": [
-        2,
-        5
-      ]
+      "weekday": 25
     },
     {
       "id": 402,
@@ -28,10 +22,7 @@
       "source": [
         201
       ],
-      "weekday": [
-        3,
-        6
-      ]
+      "weekday": 36
     },
     {
       "id": 403,
@@ -39,10 +30,7 @@
       "source": [
         202
       ],
-      "weekday": [
-        1,
-        4
-      ]
+      "weekday": 14
     },
     {
       "id": 404,
@@ -50,10 +38,7 @@
       "source": [
         202
       ],
-      "weekday": [
-        2,
-        5
-      ]
+      "weekday": 25
     },
     {
       "id": 405,
@@ -61,10 +46,7 @@
       "source": [
         202
       ],
-      "weekday": [
-        3,
-        6
-      ]
+      "weekday": 36
     }
   ],
   "items": [

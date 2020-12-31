@@ -6,3 +6,18 @@ export function toggleItem(list: { id: number }[], item: { id: number }): any[] 
   }
   return result;
 }
+
+export function partitionArrays<T>(list: T[], conditions: ((item: T) => boolean)[]): T[][] {
+  const result = Array.from(new Array(conditions.length + 1), () => new Array<T>());
+  foreach:
+    for (const item of list) {
+      for (let i = 0; i < conditions.length; i++) {
+        if (conditions[i](item)) {
+          result[i].push(item);
+          continue foreach;
+        }
+      }
+      result[conditions.length].push(item);
+    }
+  return result;
+}

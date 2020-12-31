@@ -5,6 +5,7 @@ import {MaterialModule} from '../material/material.module';
 import {InventoryRoutingModule} from './inventory-routing.module';
 import {InventoryPageComponent} from './pages/inventory-page/inventory-page.component';
 import {InventoryItemViewComponent} from './components/inventory-item-view/inventory-item-view.component';
+import {MaterialListComponent} from './components/material-list/material-list.component';
 import {CharacterMaterialInventoryComponent} from './pages/character-material-inventory/character-material-inventory.component';
 import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-material-inventory.component';
 import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
@@ -18,6 +19,7 @@ import {FlexModule} from '@angular/flex-layout';
   declarations: [
     InventoryPageComponent,
     InventoryItemViewComponent,
+    MaterialListComponent,
     CharacterMaterialInventoryComponent,
     TalentMaterialInventoryComponent,
     WeaponMaterialInventoryComponent,

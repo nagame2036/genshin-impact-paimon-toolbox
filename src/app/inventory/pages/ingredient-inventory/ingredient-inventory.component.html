@@ -1,5 +1,8 @@
-<app-material-list [items]="items">
-  <ng-template let-item #bottom>
-    <app-inventory-item-view [id]="item.id"></app-inventory-item-view>
-  </ng-template>
-</app-material-list>
+<h4 class="inventory-subtitle">
+  {{ i18n('common') | translate }}
+</h4>
+<app-material-list [items]="common"></app-material-list>
+<h4 class="inventory-subtitle">
+  {{ i18n('local-specialty') | translate }}
+</h4>
+<app-material-list [items]="local"></app-material-list>

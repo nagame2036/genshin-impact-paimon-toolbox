@@ -8,7 +8,9 @@ describe('MaterialListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MaterialListComponent]
+      declarations: [
+        MaterialListComponent
+      ]
     })
       .compileComponents();
   });

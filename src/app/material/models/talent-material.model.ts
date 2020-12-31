@@ -18,7 +18,7 @@ export interface TalentMaterialGroup {
 
   source: number[];
 
-  weekday: number[];
+  weekday: number;
 }
 
 export interface TalentMaterialItem extends InventoryItem {

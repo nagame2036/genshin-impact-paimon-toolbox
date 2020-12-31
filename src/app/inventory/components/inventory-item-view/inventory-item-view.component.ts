@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {coerceIn} from '../../../shared/utils/coerce';
 import {InventoryService} from '../../services/inventory.service';
 import {PlanCostService} from '../../../plan/services/plan-cost.service';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
@@ -28,8 +27,6 @@ export class InventoryItemViewComponent extends AbstractTranslateComponent imple
   @Input()
   incStep = 1;
 
-  private numReg = /[0-9]*/;
-
   constructor(private inventory: InventoryService, private cost: PlanCostService) {
     super();
   }
@@ -47,7 +44,7 @@ export class InventoryItemViewComponent extends AbstractTranslateComponent imple
   }
 
   setValue(value: number): void {
-    this.have = coerceIn(value, 0, 9_999_999_999);
+    this.have = Math.max(value, 0);
     this.inventory.setAmount(this.id, this.have);
   }
 
@@ -62,10 +59,6 @@ export class InventoryItemViewComponent extends AbstractTranslateComponent imple
   correct(event: Event): void {
     const target = event.target as HTMLInputElement;
     const text = target.value.replace(/,/gi, '');
-    if (!this.numReg.test(text)) {
-      event.preventDefault();
-      return;
-    }
-    this.setValue(Number(text));
+    this.setValue(Number(text) || 0);
   }
 }

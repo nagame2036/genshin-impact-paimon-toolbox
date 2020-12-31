@@ -46,7 +46,17 @@
     "inventory": {
       "need": "需求",
       "lack": "缺少",
-      "overflow": "溢出"
+      "overflow": "溢出",
+      "have": "库存",
+      "common": "通用",
+      "elemental": "Boss掉落",
+      "gem": "宝石",
+      "1/4": "周一、四",
+      "2/5": "周二、五",
+      "3/6": "周三、六",
+      "mob": "小怪掉落",
+      "elite": "精英怪掉落",
+      "local-specialty": "地区特产"
     },
     "character-stat": {
       "title": "角色面板分析",

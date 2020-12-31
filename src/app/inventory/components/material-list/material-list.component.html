@@ -1,0 +1,7 @@
+<div fxLayout="row wrap" fxLayoutGap="16px">
+  <div *ngFor="let item of items" class="material-list-item">
+    <app-item-view category="materials" [width]="140" [imgWidth]="140" [id]="item.id" [rarity]="item.rarity">
+      <app-inventory-item-view image-bottom [id]="item.id"></app-inventory-item-view>
+    </app-item-view>
+  </div>
+</div>

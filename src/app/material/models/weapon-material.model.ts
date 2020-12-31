@@ -18,7 +18,7 @@ export interface WeaponMaterialGroup {
 
   source: number[];
 
-  weekday: number[];
+  weekday: number;
 }
 
 export interface WeaponMaterialItem extends InventoryItem {
