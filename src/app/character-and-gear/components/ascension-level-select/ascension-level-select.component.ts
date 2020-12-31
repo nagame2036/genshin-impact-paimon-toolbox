@@ -22,7 +22,7 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   @Input()
   label!: string;
 
-  ascensions = rangeList(Ascension.ZERO, Ascension.SIX);
+  ascensions = rangeList(Ascension.ZERO, Ascension.SIX, true);
 
   ascension: Ascension = Ascension.ZERO;
 

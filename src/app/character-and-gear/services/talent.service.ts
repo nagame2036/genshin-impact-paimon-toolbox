@@ -64,7 +64,7 @@ export class TalentService {
 
   levels(ascension: Ascension, start: number = 1): TalentLevel[] {
     const min = Math.max(1, start);
-    return rangeList(min, this.maxLevel(ascension)) as TalentLevel[];
+    return rangeList(min, this.maxLevel(ascension), true) as TalentLevel[];
   }
 
   getTalentsOfCharacter(id: number): TalentDataItem[] {

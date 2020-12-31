@@ -18,7 +18,7 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
   @Input()
   label!: string;
 
-  ascensions = rangeList(Ascension.ZERO, Ascension.SIX);
+  ascensions = rangeList(Ascension.ZERO, Ascension.SIX, true);
 
   @Input()
   ascension!: Ascension;
@@ -50,7 +50,7 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
 
   ngOnInit(): void {
     this.levels = AscensionLevel.levels(this.ascension);
-    this.goalAscensions = rangeList(this.ascension, Ascension.SIX);
+    this.goalAscensions = rangeList(this.ascension, Ascension.SIX, true);
     this.goalLevels = AscensionLevel.levels(this.goalAscension, this.level);
   }
 
@@ -63,7 +63,7 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
     this.levels = AscensionLevel.levels(this.ascension);
     this.level = AscensionLevel.correctLevel(this.ascension, this.level);
     this.emitCurrentChange();
-    this.goalAscensions = rangeList(this.ascension, Ascension.SIX);
+    this.goalAscensions = rangeList(this.ascension, Ascension.SIX, true);
     if (this.goalAscension < value) {
       this.setGoalAscension(value);
     }
