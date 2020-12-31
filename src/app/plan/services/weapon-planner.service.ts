@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map, switchMap} from 'rxjs/operators';
 import {getLevelupPlan, toAscensionLevel} from '../models/levelup-plan.model';
@@ -34,8 +34,7 @@ export class WeaponPlanner {
   getPlan(id: number): Observable<WeaponPlan> {
     return this.activePlans.pipe(switchMap(plans => {
       const index = plans.findIndex(it => it.plan.id === id);
-      const plan = plans[index];
-      return iif(() => plan !== undefined, of(plan.plan));
+      return iif(() => index !== -1, defer(() => of(plans[index].plan)));
     }));
   }
 

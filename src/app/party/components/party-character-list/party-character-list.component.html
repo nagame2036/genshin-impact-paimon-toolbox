@@ -1,4 +1,4 @@
-<app-character-list [party]="true" [characters]="characters" [itemWidth]="220"
+<app-character-list [party]="true" [characters]="characters" [itemWidth]="280"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
                     #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
@@ -10,43 +10,39 @@
   <ng-template let-item #right>
     <div class="party-item-overview" gdAlignColumns="space-around stretch"
          gdColumns="repeat(2, auto)" gdRows="repeat(6, 1fr)"
-         gdAreas="ascension ascension-data | level level-data | constellation constellation-data
-                      | talent1 talent1-data | talent2 talent2-data | talent3 talent3-data">
-      <div gdArea="ascension" class="party-item-overview-label party-item-overview-row-non-border-top">
+         gdAreas="constellation constellation-data | ascension ascension-data | level level-data
+                  | talent1 talent1-data | talent2 talent2-data | talent3 talent3-data">
+      <div gdArea="constellation" class="party-item-overview-label party-item-overview-row-non-border-top">
+        <b>{{ i18nDict('constellation') | translate }}</b>
+      </div>
+      <div gdArea="constellation-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+        {{ getConstellation(item) }}
+      </div>
+      <div gdArea="ascension" class="party-item-overview-label">
         <b>{{ i18nDict('ascension') | translate }}</b>
       </div>
-      <div gdArea="ascension-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+      <div gdArea="ascension-data" class="party-item-overview-data">
         {{ i18nDict('ascensions.' + getAscension(item)) | translate }}
+        →
+        {{ i18nDict('ascensions.' + getGoalAscension(item)) | translate }}
       </div>
       <div gdArea="level" class="party-item-overview-label">
         <b>{{ i18nDict('level') | translate }}</b>
       </div>
       <div gdArea="level-data" class="party-item-overview-data">
         {{ getLevel(item) }}
+        →
+        {{ getGoalLevel(item) }}
       </div>
-      <div gdArea="constellation" class="party-item-overview-label">
-        <b>{{ i18nDict('constellation') | translate }}</b>
+      <div *ngFor="let _ of getTalents(item); let i = index"
+           [gdArea]="'talent' + (i + 1)" class="party-item-overview-label">
+        <b>{{ i18nDict('talent-types.' + i) | translate }}</b>
       </div>
-      <div gdArea="constellation-data" class="party-item-overview-data">
-        {{ getConstellation(item) }}
-      </div>
-      <div gdArea="talent1" class="party-item-overview-label">
-        <b>{{ i18nDict('talent') | translate: {num: 1} }}</b>
-      </div>
-      <div gdArea="talent1-data" class="party-item-overview-data">
-        {{ getTalents(item)[0] }}
-      </div>
-      <div gdArea="talent2" class="party-item-overview-label">
-        <b>{{ i18nDict('talent') | translate: {num: 2} }}</b>
-      </div>
-      <div gdArea="talent2-data" class="party-item-overview-data">
-        {{ getTalents(item)[1] }}
-      </div>
-      <div gdArea="talent3" class="party-item-overview-label">
-        <b>{{ i18nDict('talent') | translate: {num: 3} }}</b>
-      </div>
-      <div gdArea="talent3-data" class="party-item-overview-data">
-        {{ getTalents(item)[2] }}
+      <div *ngFor="let talent of getTalents(item); let i = index"
+           [gdArea]="'talent' + (i + 1) + '-data'" class="party-item-overview-data">
+        {{ talent }}
+        →
+        {{ getGoalTalent(item, i) }}
       </div>
     </div>
   </ng-template>

@@ -7,6 +7,10 @@ import {TalentLevel} from '../../../character-and-gear/models/talent-level.type'
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterService} from '../../../character-and-gear/services/character.service';
 import {CharacterListComponent} from '../../../character-and-gear/components/character-list/character-list.component';
+import {CharacterPlanDetail} from '../../../plan/models/character-plan-detail.model';
+import {first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {CharacterPlanner} from '../../../plan/services/character-planner.service';
+import {combineLatest} from 'rxjs';
 
 @Component({
   selector: 'app-party-character-list',
@@ -18,6 +22,8 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
   i18nKey = 'party.characters';
 
   characters: Character[] = [];
+
+  plans = new Map<number, CharacterPlanDetail>();
 
   @Output()
   selected = new EventEmitter<Character>();
@@ -31,28 +37,47 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
   @ViewChild('list')
   list!: CharacterListComponent;
 
-  constructor(private service: CharacterService) {
+  constructor(private characterService: CharacterService, private planner: CharacterPlanner) {
     super();
   }
 
   ngOnInit(): void {
-    this.service.party.subscribe(res => this.characters = res);
-  }
-
-  getAscension(item: Character): Ascension {
-    return (item as PartyCharacter)?.ascension ?? Ascension.ZERO;
-  }
-
-  getLevel(item: Character): number {
-    return (item as PartyCharacter)?.level ?? 1;
+    combineLatest([this.characterService.party, this.planner.activePlans])
+      .pipe(
+        map(it => it[0]),
+        tap(party => this.characters = party),
+        switchMap(party => party),
+        mergeMap(character => this.planner.getPlan(character.id).pipe(first())),
+      )
+      .subscribe(res => this.plans.set(res.id, this.planner.getPlanDetail(res)));
   }
 
   getConstellation(item: Character): Constellation {
     return (item as PartyCharacter)?.constellation ?? 0;
   }
 
+  getAscension(item: Character): Ascension {
+    return (item as PartyCharacter)?.ascension ?? Ascension.ZERO;
+  }
+
+  getGoalAscension(item: Character): Ascension {
+    return this.plans.get(item.id)?.ascension ?? Ascension.ZERO;
+  }
+
+  getLevel(item: Character): number {
+    return (item as PartyCharacter)?.level ?? 1;
+  }
+
+  getGoalLevel(item: Character): number {
+    return this.plans.get(item.id)?.level ?? 1;
+  }
+
   getTalents(item: Character): TalentLevel[] {
     return (item as PartyCharacter)?.talents.map(it => it.level) ?? [1, 1, 1];
+  }
+
+  getGoalTalent(item: Character, num: number): TalentLevel {
+    return this.plans.get(item.id)?.talents[num].level ?? 1;
   }
 
   onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {

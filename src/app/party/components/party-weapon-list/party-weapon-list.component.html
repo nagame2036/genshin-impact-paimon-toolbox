@@ -1,4 +1,4 @@
-<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="220"
+<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="260"
                  #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
@@ -9,24 +9,28 @@
   <ng-template let-item #right>
     <div class="party-item-overview" gdAlignColumns="space-around stretch"
          gdColumns="repeat(2, auto)" gdRows="repeat(3, 1fr)"
-         gdAreas="ascension ascension-data | level level-data | refine-rank refine-rank-data">
-      <div gdArea="ascension" class="party-item-overview-label party-item-overview-row-non-border-top">
+         gdAreas="refine-rank refine-rank-data | ascension ascension-data | level level-data">
+      <div gdArea="refine-rank" class="party-item-overview-label party-item-overview-row-non-border-top">
+        <b>{{ i18nDict('refine') | translate }}</b>
+      </div>
+      <div gdArea="refine-rank-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+        {{ getRefineRank(item) }}
+      </div>
+      <div gdArea="ascension" class="party-item-overview-label">
         <b>{{ i18nDict('ascension') | translate }}</b>
       </div>
-      <div gdArea="ascension-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+      <div gdArea="ascension-data" class="party-item-overview-data">
         {{ i18nDict('ascensions.' + getAscension(item)) | translate }}
+        →
+        {{ i18nDict('ascensions.' + getGoalAscension(item)) | translate }}
       </div>
       <div gdArea="level" class="party-item-overview-label">
         <b>{{ i18nDict('level') | translate }}</b>
       </div>
       <div gdArea="level-data" class="party-item-overview-data">
         {{ getLevel(item) }}
-      </div>
-      <div gdArea="refine-rank" class="party-item-overview-label">
-        <b>{{ i18nDict('refine') | translate }}</b>
-      </div>
-      <div gdArea="refine-rank-data" class="party-item-overview-data">
-        {{ getRefineRank(item) }}
+        →
+        {{ getGoalLevel(item) }}
       </div>
     </div>
   </ng-template>

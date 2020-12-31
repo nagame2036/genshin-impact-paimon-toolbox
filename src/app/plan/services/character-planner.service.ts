@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterService} from '../../character-and-gear/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
@@ -37,8 +37,7 @@ export class CharacterPlanner {
   getPlan(id: number): Observable<CharacterPlan> {
     return this.activePlans.pipe(switchMap(plans => {
       const index = plans.findIndex(it => it.plan.id === id);
-      const plan = plans[index];
-      return iif(() => plan !== undefined, of(plan.plan));
+      return iif(() => index !== -1, defer(() => of(plans[index].plan)));
     }));
   }
 
