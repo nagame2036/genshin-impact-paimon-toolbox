@@ -55,6 +55,16 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   @ViewChildren('list')
   list!: QueryList<ItemViewComponent>;
 
+  @Input()
+  sortFields = ['rarity'];
+
+  @Input()
+  sort = 'rarity';
+
+  rarities = [5, 4, 3];
+
+  rarityFilter = this.rarities;
+
   types = weaponTypeList;
 
   typeFilter = this.types;
@@ -72,9 +82,16 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
+    const rarity = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
     const type = this.typeFilter.map(i => `type = ${i}`).join(' OR ');
-    const sql = `SELECT * FROM ? items WHERE ${type} ORDER BY rarity DESC, type, id DESC`;
+    const sql = `SELECT * FROM ? WHERE (${rarity}) AND (${type}) ORDER BY ${this.sort} DESC, type, id DESC`;
     this.items = alasql(sql, [this.weapons]);
+  }
+
+  changeRarityFilter(change: MatSelectChange): void {
+    const value = change.value;
+    this.rarityFilter = value.length > 0 ? value : [...this.rarityFilter];
+    this.update();
   }
 
   changeTypeFilter(change: MatSelectChange): void {

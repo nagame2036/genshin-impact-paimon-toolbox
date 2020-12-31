@@ -62,6 +62,10 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   @Input()
   sort = 'rarity';
 
+  rarities = [5, 4];
+
+  rarityFilter = this.rarities;
+
   elementTypes = elementTypeList;
 
   elementFilter = this.elementTypes;
@@ -83,10 +87,17 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
+    const rarity = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
     const element = this.elementFilter.map(i => `element = ${i}`).join(' OR ');
     const weapon = this.weaponFilter.map(i => `weapon = ${i}`).join(' OR ');
-    const sql = `SELECT * FROM ? items WHERE (${element}) AND (${weapon}) ORDER BY ${this.sort} DESC, id DESC`;
+    const sql = `SELECT * FROM ? WHERE (${rarity}) AND (${element}) AND (${weapon}) ORDER BY ${this.sort} DESC, id DESC`;
     this.items = alasql(sql, [this.characters]);
+  }
+
+  changeRarityFilter(change: MatSelectChange): void {
+    const value = change.value;
+    this.rarityFilter = value.length > 0 ? value : [...this.rarityFilter];
+    this.update();
   }
 
   changeElementFilter(change: MatSelectChange): void {

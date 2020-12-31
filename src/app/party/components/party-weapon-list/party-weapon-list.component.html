@@ -1,4 +1,5 @@
 <app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="260"
+                 [sortFields]="['level', 'rarity', 'refine']" sort="level"
                  #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
