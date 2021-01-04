@@ -1,12 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {TalentMaterial, TalentMaterialGroup, TalentMaterialItem} from '../models/talent-material.model';
 import alasql from 'alasql';
 import {Rarity} from '../../shared/models/rarity.enum';
-import {WeaponMaterialItem} from '../models/weapon-material.model';
-import {map} from 'rxjs/operators';
-import {partitionArrays} from '../../shared/utils/collections';
 
 @Injectable({
   providedIn: 'root'
@@ -31,20 +28,12 @@ export class TalentMaterialService {
     });
   }
 
-  partitionWeekday(): Observable<WeaponMaterialItem[][]> {
-    return this.items.pipe(map(res => partitionArrays(res, [
-      item => this.getWeekday(item) === 14,
-      item => this.getWeekday(item) === 25,
-      item => this.getWeekday(item) === 36,
-    ])));
-  }
-
   getByGroupAndRarity(group: number, rarity: Rarity): TalentMaterialItem {
-    const sql = 'SELECT * FROM ? WHERE [group] = ? AND rarity = ?';
-    return alasql(sql, [this.#items, group, rarity])[0];
+    const index = this.#items.findIndex(it => it.group === group && it.rarity === rarity);
+    return this.#items[index];
   }
 
-  private getWeekday(item: TalentMaterialItem): number {
+  getWeekday(item: TalentMaterialItem): number {
     return this.#groups.get(item.group)?.weekday ?? 0;
   }
 }

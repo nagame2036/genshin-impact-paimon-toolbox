@@ -1,16 +1,18 @@
-<h4 class="inventory-subtitle">
-  {{ i18n('common') | translate }}
-</h4>
-<app-material-list [items]="others"></app-material-list>
-<h4 class="inventory-subtitle">
-  {{ i18n('1/4') | translate }}
-</h4>
-<app-material-list [items]="monThu"></app-material-list>
-<h4 class="inventory-subtitle">
-  {{ i18n('2/5') | translate }}
-</h4>
-<app-material-list [items]="tueFri"></app-material-list>
-<h4 class="inventory-subtitle">
-  {{ i18n('3/6') | translate }}
-</h4>
-<app-material-list [items]="wedSat"></app-material-list>
+<div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+  <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
+    <mat-label>{{ i18nDict('rarity') | translate }}</mat-label>
+    <mat-select multiple [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)">
+      <mat-option *ngFor="let f of rarities" [value]="f">
+        {{ f }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-checkbox class="app-multi-select-checkbox" [checked]="displayOverflow"
+                (change)="displayOverflow = $event.checked">
+    {{ i18n('display-overflow') | translate }}
+  </mat-checkbox>
+</div>
+<app-inventory-list subtitle="common" [items]="common" [displayOverflow]="displayOverflow"></app-inventory-list>
+<app-inventory-list subtitle="1/4" [items]="monThu" [displayOverflow]="displayOverflow"></app-inventory-list>
+<app-inventory-list subtitle="2/5" [items]="tueFri" [displayOverflow]="displayOverflow"></app-inventory-list>
+<app-inventory-list subtitle="3/6" [items]="wedSat" [displayOverflow]="displayOverflow"></app-inventory-list>

@@ -4,6 +4,7 @@ import {IngredientInventoryComponent} from './ingredient-inventory.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('IngredientInventoryComponent', () => {
   let component: IngredientInventoryComponent;
@@ -16,6 +17,7 @@ describe('IngredientInventoryComponent', () => {
       ],
       imports: [
         InventoryModule,
+        BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
       ]

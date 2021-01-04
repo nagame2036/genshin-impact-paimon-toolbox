@@ -4,6 +4,7 @@ import {CommonMaterialInventoryComponent} from './common-material-inventory.comp
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CommonMaterialInventoryComponent', () => {
   let component: CommonMaterialInventoryComponent;
@@ -16,6 +17,7 @@ describe('CommonMaterialInventoryComponent', () => {
       ],
       imports: [
         InventoryModule,
+        BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
       ]

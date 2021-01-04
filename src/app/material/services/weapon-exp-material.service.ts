@@ -28,9 +28,7 @@ export class WeaponExpMaterialService {
     });
   }
 
-  getExp(inventory: Map<number, ItemAmount>): Observable<ItemAmount> {
-    return this.items.pipe(map(items => {
-      return {id: 2, amount: expAmount(inventory, items), readonly: true};
-    }));
+  getExp(inventory: Map<number, ItemAmount>): Observable<number> {
+    return this.items.pipe(map(items => expAmount(inventory, items)));
   }
 }

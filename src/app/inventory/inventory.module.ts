@@ -4,8 +4,7 @@ import {SharedModule} from '../shared/shared.module';
 import {MaterialModule} from '../material/material.module';
 import {InventoryRoutingModule} from './inventory-routing.module';
 import {InventoryPageComponent} from './pages/inventory-page/inventory-page.component';
-import {InventoryItemViewComponent} from './components/inventory-item-view/inventory-item-view.component';
-import {MaterialListComponent} from './components/material-list/material-list.component';
+import {InventoryListComponent} from './components/inventory-list/inventory-list.component';
 import {CharacterMaterialInventoryComponent} from './pages/character-material-inventory/character-material-inventory.component';
 import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-material-inventory.component';
 import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
@@ -14,12 +13,13 @@ import {IngredientInventoryComponent} from './pages/ingredient-inventory/ingredi
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {FlexModule} from '@angular/flex-layout';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     InventoryPageComponent,
-    InventoryItemViewComponent,
-    MaterialListComponent,
+    InventoryListComponent,
     CharacterMaterialInventoryComponent,
     TalentMaterialInventoryComponent,
     WeaponMaterialInventoryComponent,
@@ -31,7 +31,9 @@ import {FlexModule} from '@angular/flex-layout';
     MaterialModule,
     InventoryRoutingModule,
     MatTabsModule,
-    FlexModule
+    FlexModule,
+    MatSelectModule,
+    MatCheckboxModule
   ]
 })
 export class InventoryModule {

@@ -4,6 +4,7 @@ import {WeaponMaterialInventoryComponent} from './weapon-material-inventory.comp
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('WeaponMaterialInventoryComponent', () => {
   let component: WeaponMaterialInventoryComponent;
@@ -16,6 +17,7 @@ describe('WeaponMaterialInventoryComponent', () => {
       ],
       imports: [
         InventoryModule,
+        BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
       ]

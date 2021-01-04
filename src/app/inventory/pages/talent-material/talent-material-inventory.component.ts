@@ -1,36 +1,36 @@
 import {Component, OnInit} from '@angular/core';
-import {TalentMaterialItem} from '../../../material/models/talent-material.model';
+import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {TalentMaterialService} from '../../../material/services/talent-material.service';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
+import {partitionArrays} from '../../../shared/utils/collections';
 
 @Component({
   selector: 'app-talent-material-inventory',
   templateUrl: './talent-material-inventory.component.html',
   styleUrls: ['./talent-material-inventory.component.sass']
 })
-export class TalentMaterialInventoryComponent extends AbstractTranslateComponent implements OnInit {
+export class TalentMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  i18nKey = 'inventory';
+  common: InventoryItem[] = [];
 
-  others: TalentMaterialItem[] = [];
+  monThu: InventoryItem[] = [];
 
-  monThu: TalentMaterialItem[] = [];
+  tueFri: InventoryItem[] = [];
 
-  tueFri: TalentMaterialItem[] = [];
+  wedSat: InventoryItem[] = [];
 
-  wedSat: TalentMaterialItem[] = [];
+  rarities = [5, 4, 3, 2];
 
   constructor(private materials: TalentMaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.materials.partitionWeekday().subscribe(materials => {
-      const [monThu, tueFri, wedSat, others] = materials;
-      this.others = others;
-      this.monThu = monThu;
-      this.tueFri = tueFri;
-      this.wedSat = wedSat;
-    });
+    this.filterItems(this.materials.items)
+      .subscribe(items => [this.monThu, this.tueFri, this.wedSat, this.common] = partitionArrays(items, [
+        item => this.materials.getWeekday(item) === 14,
+        item => this.materials.getWeekday(item) === 25,
+        item => this.materials.getWeekday(item) === 36,
+      ]));
   }
 }

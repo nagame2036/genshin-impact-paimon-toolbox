@@ -1,0 +1,36 @@
+<h4 class="inventory-subtitle" *ngIf="details.length > 0">
+  {{ i18n(subtitle) | translate }}
+</h4>
+<div fxLayout="row wrap" fxLayoutGap="16px">
+  <div *ngFor="let detail of details; trackBy: trackItem" class="material-list-item">
+    <app-item-view category="materials" [width]="140" [imgWidth]="140" [id]="detail.id" [rarity]="detail.rarity">
+      <div image-bottom fxLayout="column" style="margin: 4px; font-size: 8px">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px">
+          <div>
+            {{ i18n('need') | translate }}
+          </div>
+          <div class="inventory-data">
+            {{ detail.need | number: '1.0-0' }}
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px"
+             [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
+          <div>
+            {{ i18n(detail.overflow ? 'overflow' : 'lack') | translate }}
+          </div>
+          <div *ngIf="!detail.overflow" class="inventory-data">
+            {{ detail.lack | number: '1.0-0' }}
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="4px">
+          <div>
+            {{ i18n('have') | translate }}
+          </div>
+          <input class="inventory-have" [disabled]="detail.readonly"
+                 [value]="detail.have | number: '1.0-0'" (change)="correct(detail, $event)"
+                 (keydown.arrowUp)="inc(detail)" (keydown.arrowDown)="dec(detail)"/>
+        </div>
+      </div>
+    </app-item-view>
+  </div>
+</div>

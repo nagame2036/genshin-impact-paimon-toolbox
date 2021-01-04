@@ -45,6 +45,7 @@
       }
     },
     "inventory": {
+      "display-overflow": "显示溢出",
       "need": "需求",
       "lack": "缺少",
       "overflow": "溢出",
@@ -295,10 +296,10 @@
       "83": "龙脊长枪",
       "84": "斫峰之刃"
     },
-    "character-materials": "角色突破素材",
-    "talent-materials": "天赋培养素材",
-    "weapon-materials": "武器突破素材",
-    "common-materials": "怪物掉落素材",
+    "character-materials": "角色素材",
+    "talent-materials": "天赋素材",
+    "weapon-materials": "武器素材",
+    "common-materials": "掉落素材",
     "ingredients": "特产及原料",
     "materials-groups": {
       "101": "蒙德特产",

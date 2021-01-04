@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMaterialItem} from '../../../material/models/common-material.model';
+import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {CommonMaterialService} from '../../../material/services/common-material.service';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {partitionArrays} from '../../../shared/utils/collections';
 
 @Component({
@@ -9,24 +9,21 @@ import {partitionArrays} from '../../../shared/utils/collections';
   templateUrl: './common-material-inventory.component.html',
   styleUrls: ['./common-material-inventory.component.sass']
 })
-export class CommonMaterialInventoryComponent extends AbstractTranslateComponent implements OnInit {
+export class CommonMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  i18nKey = 'inventory';
+  mobs: InventoryItem[] = [];
 
-  mobs: CommonMaterialItem[] = [];
+  elites: InventoryItem[] = [];
 
-  elites: CommonMaterialItem[] = [];
+  rarities = [4, 3, 2, 1];
 
   constructor(private materials: CommonMaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.materials.items.subscribe(res => {
-      const [mobs, elites] = partitionArrays(res, [item => item.id < 9000]);
-      this.mobs = mobs;
-      this.elites = elites;
-    });
+    this.filterItems(this.materials.items)
+      .subscribe(items => [this.mobs, this.elites] = partitionArrays(items, [item => item.id < 9000]));
   }
 
 }

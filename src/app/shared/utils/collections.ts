@@ -21,3 +21,7 @@ export function partitionArrays<T>(list: T[], conditions: ((item: T) => boolean)
     }
   return result;
 }
+
+export function ensureAtLeastOneElement<T>(current: T[], changed: T[]): T[] {
+  return changed.length > 0 ? changed : [...current];
+}

@@ -1,21 +1,21 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {InventoryItemViewComponent} from './inventory-item-view.component';
+import {InventoryListComponent} from './inventory-list.component';
+import {InventoryModule} from '../../inventory.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 
-describe('InventoryItemViewComponent', () => {
-  let component: InventoryItemViewComponent;
-  let fixture: ComponentFixture<InventoryItemViewComponent>;
+describe('InventoryListComponent', () => {
+  let component: InventoryListComponent;
+  let fixture: ComponentFixture<InventoryListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        InventoryItemViewComponent
+        InventoryListComponent,
       ],
       imports: [
-        HttpClientModule,
+        InventoryModule,
         AppIndexedDbModule,
         AppTranslateModule
       ]
@@ -24,7 +24,7 @@ describe('InventoryItemViewComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InventoryItemViewComponent);
+    fixture = TestBed.createComponent(InventoryListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

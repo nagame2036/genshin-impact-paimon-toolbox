@@ -1,8 +1,16 @@
-<h4 class="inventory-subtitle">
-  {{ i18n('mob') | translate }}
-</h4>
-<app-material-list [items]="mobs"></app-material-list>
-<h4 class="inventory-subtitle">
-  {{ i18n('elite') | translate }}
-</h4>
-<app-material-list [items]="elites"></app-material-list>
+<div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+  <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
+    <mat-label>{{ i18nDict('rarity') | translate }}</mat-label>
+    <mat-select multiple [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)">
+      <mat-option *ngFor="let f of rarities" [value]="f">
+        {{ f }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-checkbox class="app-multi-select-checkbox" [checked]="displayOverflow"
+                (change)="displayOverflow = $event.checked">
+    {{ i18n('display-overflow') | translate }}
+  </mat-checkbox>
+</div>
+<app-inventory-list subtitle="mob" [items]="mobs" [displayOverflow]="displayOverflow"></app-inventory-list>
+<app-inventory-list subtitle="elite" [items]="elites" [displayOverflow]="displayOverflow"></app-inventory-list>

@@ -1,12 +1,17 @@
-<h4 class="inventory-subtitle">
-  {{ i18n('common') | translate }}
-</h4>
-<app-material-list [items]="expMaterials"></app-material-list>
-<h4 class="inventory-subtitle">
-  {{ i18n('elemental') | translate }}
-</h4>
-<app-material-list [items]="elements"></app-material-list>
-<h4 class="inventory-subtitle">
-  {{ i18n('gem') | translate }}
-</h4>
-<app-material-list [items]="gems"></app-material-list>
+<div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+  <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
+    <mat-label>{{ i18nDict('rarity') | translate }}</mat-label>
+    <mat-select multiple [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)">
+      <mat-option *ngFor="let f of rarities" [value]="f">
+        {{ f }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-checkbox class="app-multi-select-checkbox" [checked]="displayOverflow"
+                (change)="displayOverflow = $event.checked">
+    {{ i18n('display-overflow') | translate }}
+  </mat-checkbox>
+</div>
+<app-inventory-list subtitle="common" [items]="common" [displayOverflow]="displayOverflow"></app-inventory-list>
+<app-inventory-list subtitle="elemental" [items]="elements" [displayOverflow]="displayOverflow"></app-inventory-list>
+<app-inventory-list subtitle="gem" [items]="gems" [displayOverflow]="displayOverflow"></app-inventory-list>

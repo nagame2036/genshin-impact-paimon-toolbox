@@ -4,6 +4,7 @@ import {TalentMaterialInventoryComponent} from './talent-material-inventory.comp
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TalentMaterialInventoryComponent', () => {
   let component: TalentMaterialInventoryComponent;
@@ -16,6 +17,7 @@ describe('TalentMaterialInventoryComponent', () => {
       ],
       imports: [
         InventoryModule,
+        BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule
       ]
