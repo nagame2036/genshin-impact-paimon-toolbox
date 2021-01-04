@@ -23,7 +23,7 @@ export function processExpBonus(
       }
     }
   }
-  mora = Math.round(mora);
-  const exp = Math.round(getExp(mora));
+  const exp = Math.ceil(getExp(mora));
+  mora = Math.ceil(mora);
   return {mora, exp};
 }

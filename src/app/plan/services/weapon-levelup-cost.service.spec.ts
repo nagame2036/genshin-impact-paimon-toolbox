@@ -68,7 +68,7 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
-      expect(res.get(0)).toBe(75382);
+      expect(res.get(0)).toBe(75383);
       expect(res.get(2)).toBe(603825);
       expect(res.get(4010)).toBe(2);
       expect(res.get(4011)).toBe(2);
@@ -91,7 +91,7 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
-      expect(res.get(0)).toBe(428437);
+      expect(res.get(0)).toBe(428438);
       expect(res.get(2)).toBe(3384375);
       expect(res.get(4021)).toBe(4);
       expect(res.get(4022)).toBe(6);
