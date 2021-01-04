@@ -16,7 +16,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
-import {toggleItem} from '../../../shared/utils/collections';
+import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
 
 @Component({
   selector: 'app-weapon-list',
@@ -65,9 +65,13 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
 
   rarityFilter = this.rarities;
 
+  rarityWhere = 'TRUE';
+
   types = weaponTypeList;
 
   typeFilter = this.types;
+
+  typeWhere = 'TURE';
 
   constructor() {
     super();
@@ -82,21 +86,19 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
-    const rarity = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
-    const type = this.typeFilter.map(i => `type = ${i}`).join(' OR ');
-    const sql = `SELECT * FROM ? WHERE (${rarity}) AND (${type}) ORDER BY ${this.sort} DESC, type, id DESC`;
+    const sql = `SELECT * FROM ? WHERE (${this.rarityWhere}) AND (${this.typeWhere}) ORDER BY ${this.sort} DESC, type, id DESC`;
     this.items = alasql(sql, [this.weapons]);
   }
 
   changeRarityFilter(change: MatSelectChange): void {
-    const value = change.value;
-    this.rarityFilter = value.length > 0 ? value : [...this.rarityFilter];
+    this.rarityFilter = ensureAtLeastOneElement(this.rarityFilter, change.value);
+    this.rarityWhere = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
     this.update();
   }
 
   changeTypeFilter(change: MatSelectChange): void {
-    const value = change.value;
-    this.typeFilter = value.length > 0 ? value : [...this.typeFilter];
+    this.typeFilter = ensureAtLeastOneElement(this.typeFilter, change.value);
+    this.typeWhere = this.typeFilter.map(i => `type = ${i}`).join(' OR ');
     this.update();
   }
 

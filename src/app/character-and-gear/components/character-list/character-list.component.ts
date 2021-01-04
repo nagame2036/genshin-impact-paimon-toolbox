@@ -17,7 +17,7 @@ import {elementTypeList} from '../../../shared/models/element-type.enum';
 import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
-import {toggleItem} from '../../../shared/utils/collections';
+import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
 
 @Component({
   selector: 'app-character-list',
@@ -66,13 +66,19 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
 
   rarityFilter = this.rarities;
 
+  rarityWhere = 'TRUE';
+
   elementTypes = elementTypeList;
 
   elementFilter = this.elementTypes;
 
+  elementWhere = 'TRUE';
+
   weaponTypes = weaponTypeList;
 
   weaponFilter = this.weaponTypes;
+
+  weaponWhere = 'TRUE';
 
   constructor() {
     super();
@@ -87,28 +93,26 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
-    const rarity = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
-    const element = this.elementFilter.map(i => `element = ${i}`).join(' OR ');
-    const weapon = this.weaponFilter.map(i => `weapon = ${i}`).join(' OR ');
-    const sql = `SELECT * FROM ? WHERE (${rarity}) AND (${element}) AND (${weapon}) ORDER BY ${this.sort} DESC, id DESC`;
+    const where = `(${this.rarityWhere}) AND (${this.elementWhere}) AND (${this.weaponWhere})`;
+    const sql = `SELECT * FROM ? WHERE ${where} ORDER BY ${this.sort} DESC, id DESC`;
     this.items = alasql(sql, [this.characters]);
   }
 
   changeRarityFilter(change: MatSelectChange): void {
-    const value = change.value;
-    this.rarityFilter = value.length > 0 ? value : [...this.rarityFilter];
+    this.rarityFilter = ensureAtLeastOneElement(this.rarityFilter, change.value);
+    this.rarityWhere = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
     this.update();
   }
 
   changeElementFilter(change: MatSelectChange): void {
-    const value = change.value;
-    this.elementFilter = value.length > 0 ? value : [...this.elementFilter];
+    this.elementFilter = ensureAtLeastOneElement(this.elementFilter, change.value);
+    this.elementWhere = this.elementFilter.map(i => `element = ${i}`).join(' OR ');
     this.update();
   }
 
   changeWeaponFilter(change: MatSelectChange): void {
-    const value = change.value;
-    this.weaponFilter = value.length > 0 ? value : [...this.weaponFilter];
+    this.weaponFilter = ensureAtLeastOneElement(this.weaponFilter, change.value);
+    this.weaponWhere = this.weaponFilter.map(i => `weapon = ${i}`).join(' OR ');
     this.update();
   }
 
