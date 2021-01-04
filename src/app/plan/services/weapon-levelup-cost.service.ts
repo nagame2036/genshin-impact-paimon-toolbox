@@ -7,13 +7,11 @@ import {AscensionLevel} from '../../character-and-gear/models/ascension-level.mo
 import {ItemCostList} from '../models/item-cost-list.model';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
-import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 import {WeaponMaterialService} from '../../material/services/weapon-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {toAscensionLevel} from '../models/levelup-plan.model';
-import {divideExps} from '../utils/divide-exps';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 
 @Injectable({
@@ -25,8 +23,7 @@ export class WeaponLevelupCostService {
 
   private ascensions = new ReplaySubject<WeaponAscensionCost>(1);
 
-  constructor(http: HttpClient, private exps: WeaponExpMaterialService, private domain: WeaponMaterialService,
-              private common: CommonMaterialService) {
+  constructor(http: HttpClient, private domain: WeaponMaterialService, private common: CommonMaterialService) {
     http.get<WeaponLevelupCost>('assets/data/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
     http.get<WeaponAscensionCost>('assets/data/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
   }
@@ -35,10 +32,7 @@ export class WeaponLevelupCostService {
     return from(plans).pipe(
       switchMap(({plan, party}) => this.cost(party, toAscensionLevel(plan.levelup))),
       take(plans.length),
-      reduce((acc, value) => acc.combine(value), new ItemCostList()),
-      switchMap(cost => this.exps.items.pipe(map(
-        exps => divideExps(cost.get(2), exps, cost)
-      )))
+      reduce((acc, value) => acc.combine(value), new ItemCostList())
     );
   }
 

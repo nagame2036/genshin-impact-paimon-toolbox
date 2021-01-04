@@ -26,10 +26,20 @@ export class InventoryService {
 
   readonly cost = this.#cost.asObservable();
 
-  private specificAmount = new Map<number, (inventory: Map<number, ItemAmount>) => Observable<number>>([
+  private readonly specificHave = new Map<number, (inventory: Map<number, ItemAmount>) => Observable<number>>([
     [1, inventory => this.characterExps.getExp(inventory)],
     [2, inventory => this.weaponExps.getExp(inventory)]
   ]);
+
+  private readonly overflowChecker =
+    new Map<number, (inventory: Map<number, ItemAmount>, cost: ItemCostList, lack: number) => Observable<boolean>>([
+      [100, (inventory, cost, lack) => this.characterExps.expHasOverflow(inventory, cost, lack)],
+      [101, (inventory, cost, lack) => this.characterExps.expHasOverflow(inventory, cost, lack)],
+      [102, (inventory, cost, lack) => this.characterExps.expHasOverflow(inventory, cost, lack)],
+      [200, (inventory, cost, lack) => this.weaponExps.expHasOverflow(inventory, cost, lack)],
+      [201, (inventory, cost, lack) => this.weaponExps.expHasOverflow(inventory, cost, lack)],
+      [202, (inventory, cost, lack) => this.weaponExps.expHasOverflow(inventory, cost, lack)]
+    ]);
 
   constructor(private database: NgxIndexedDBService,
               private characterPlanner: CharacterPlanner, private weaponPlanner: WeaponPlanner,
@@ -39,37 +49,50 @@ export class InventoryService {
       res.forEach(it => inventory.set(it.id, it));
       this.#inventory.next(inventory);
     });
-    combineLatest([characterPlanner.plansCost(), weaponPlanner.plansCost()])
-      .subscribe(([characterCost, weaponCost]) => {
+    combineLatest([this.inventory, characterPlanner.plansCost(), weaponPlanner.plansCost()])
+      .pipe(switchMap(([inventory, characterCost, weaponCost]) => {
         const cost = new ItemCostList().combine(characterCost).combine(weaponCost);
-        this.#cost.next(cost);
-      });
+        return this.characterExps.divideExpMaterials(inventory, cost)
+          .pipe(switchMap(res => this.weaponExps.divideExpMaterials(inventory, res)));
+      }))
+      .subscribe(cost => this.#cost.next(cost));
   }
 
   getDetails(items: InventoryItem[]): Observable<InventoryItemDetail[]> {
-    return combineLatest([this.inventory, this.cost]).pipe(
-      switchMap(([_, cost]) => from(items).pipe(
-        mergeMap(item => {
-          const id = item.id;
-          const isSpecific = this.specificAmount.has(id);
-          return this.getHave(id, isSpecific).pipe(map(have => {
-            const need = cost.get(id);
-            const lack = Math.max(0, need - have);
-            return {id, rarity: item.rarity, have, need, lack, overflow: lack === 0, readonly: isSpecific};
-          }));
-        }),
+    return this.cost.pipe(
+      switchMap(cost => from(items).pipe(
+        mergeMap(item => this.getDetail(item, cost)),
         take(items.length),
         toArray()
       ))
     );
   }
 
-  private getHave(id: number, isSpecific: boolean): Observable<number> {
-    return this.inventory.pipe(switchMap(inventory => iif(
-      () => isSpecific,
-      this.specificAmount?.get(id)?.(inventory),
-      of(inventory.get(id)?.amount ?? 0)
-    )));
+  private getDetail(item: InventoryItem, cost: ItemCostList): Observable<InventoryItemDetail> {
+    const id = item.id;
+    const isSpecific = this.specificHave.has(id);
+    return this.inventory.pipe(
+      switchMap(inventory => {
+        const haveObservable = iif(
+          () => isSpecific,
+          this.specificHave?.get(id)?.(inventory),
+          of(inventory.get(id)?.amount ?? 0)
+        );
+        return haveObservable.pipe(switchMap(have => {
+          const need = cost.get(id);
+          const lack = Math.max(0, need - have);
+          return this.checkOverflow(item, lack, inventory, cost).pipe(map(overflow => {
+            return {id, rarity: item.rarity, have, need, lack, overflow, readonly: isSpecific};
+          }));
+        }));
+      })
+    );
+  }
+
+  private checkOverflow(item: InventoryItem, lack: number, inventory: Map<number, ItemAmount>, cost: ItemCostList): Observable<boolean> {
+    const id = item.id;
+    const defaultResult = of(lack === 0);
+    return this.overflowChecker.has(id) ? this.overflowChecker?.get(id)?.(inventory, cost, lack) ?? defaultResult : defaultResult;
   }
 
   setItem(id: number, amount: number): void {

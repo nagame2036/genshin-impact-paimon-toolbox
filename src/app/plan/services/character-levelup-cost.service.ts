@@ -11,8 +11,6 @@ import {ItemCostList} from '../models/item-cost-list.model';
 import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
 import {toAscensionLevel} from '../models/levelup-plan.model';
-import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
-import {divideExps} from '../utils/divide-exps';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 
 @Injectable({
@@ -28,8 +26,7 @@ export class CharacterLevelupCostService {
 
   private ascensions = new ReplaySubject<CharacterAscensionCost[]>(1);
 
-  constructor(http: HttpClient, private exps: CharacterExpMaterialService, private elements: ElementalMaterialService,
-              private common: CommonMaterialService) {
+  constructor(http: HttpClient, private elements: ElementalMaterialService, private common: CommonMaterialService) {
     http.get<number[]>('assets/data/character-levelup-cost.json').subscribe(res => this.levels.next(res));
     http.get<CharacterAscensionCost[]>('assets/data/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
   }
@@ -38,10 +35,7 @@ export class CharacterLevelupCostService {
     return from(plans).pipe(
       switchMap(({party, plan}) => this.cost(party, toAscensionLevel(plan.levelup))),
       take(plans.length),
-      reduce((acc, value) => acc.combine(value), new ItemCostList()),
-      switchMap(cost => this.exps.items.pipe(map(
-        exps => divideExps(cost.get(1), exps, cost)
-      )))
+      reduce((acc, value) => acc.combine(value), new ItemCostList())
     );
   }
 

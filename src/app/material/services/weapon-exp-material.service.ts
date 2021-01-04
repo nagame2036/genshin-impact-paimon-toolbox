@@ -6,6 +6,8 @@ import alasql from 'alasql';
 import {ItemAmount} from '../models/item-amount.model';
 import {map} from 'rxjs/operators';
 import {expAmount} from '../utils/exp-amount';
+import {ItemCostList} from '../../plan/models/item-cost-list.model';
+import {divideExps} from '../../inventory/utils/divide-exps';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +32,13 @@ export class WeaponExpMaterialService {
 
   getExp(inventory: Map<number, ItemAmount>): Observable<number> {
     return this.items.pipe(map(items => expAmount(inventory, items)));
+  }
+
+  expHasOverflow(inventory: Map<number, ItemAmount>, cost: ItemCostList, lack: number): Observable<boolean> {
+    return this.getExp(inventory).pipe(map(expHad => lack === 0 || expHad >= cost.get(2)));
+  }
+
+  divideExpMaterials(inventory: Map<number, ItemAmount>, cost: ItemCostList): Observable<ItemCostList> {
+    return this.items.pipe(map(items => divideExps(cost.get(2), items, cost)));
   }
 }
