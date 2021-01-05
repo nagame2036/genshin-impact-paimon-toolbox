@@ -14,6 +14,15 @@
           </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px"
+             [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
+          <div>
+            {{ i18n('crafted') | translate }}
+          </div>
+          <div class="inventory-data">
+            {{ detail.crafted | number: '1.0-0' }}
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px"
              [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
           <div>
             {{ i18n(detail.overflow ? 'overflow' : 'lack') | translate }}

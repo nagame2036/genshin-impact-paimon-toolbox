@@ -1,20 +1,25 @@
-export class ItemCostList {
+export class ItemList {
 
   /**
    * item's id to it's amount.
    */
   private map = new Map<number, number>();
 
-  get(id: number): number {
+  getAmount(id: number): number {
     return this.map.get(id) ?? 0;
   }
 
-  add(id: number, amount: number): ItemCostList {
+  setAmount(id: number, amount: number): ItemList {
+    this.map.set(id, amount);
+    return this;
+  }
+
+  add(id: number, amount: number): ItemList {
     this.addAmount(id, amount);
     return this;
   }
 
-  combine(that: ItemCostList): ItemCostList {
+  combine(that: ItemList): ItemList {
     for (const [id, amount] of that.map.entries()) {
       this.addAmount(id, amount);
     }
@@ -22,7 +27,7 @@ export class ItemCostList {
   }
 
   private addAmount(id: number, amount: number): void {
-    const current = this.get(id);
-    this.map.set(id, current + amount);
+    const current = this.getAmount(id);
+    this.setAmount(id, current + amount);
   }
 }

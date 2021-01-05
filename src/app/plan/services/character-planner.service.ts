@@ -6,7 +6,7 @@ import {CharacterPlan} from '../models/character-plan.model';
 import {TalentService} from '../../character-and-gear/services/talent.service';
 import {getLevelupPlan, toAscensionLevel} from '../models/levelup-plan.model';
 import {map, switchMap} from 'rxjs/operators';
-import {ItemCostList} from '../models/item-cost-list.model';
+import {ItemList} from '../../material/models/item-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
@@ -50,10 +50,10 @@ export class CharacterPlanner {
     });
   }
 
-  plansCost(): Observable<ItemCostList> {
+  plansCost(): Observable<ItemList> {
     return this.activePlans.pipe(switchMap(it => iif(
       () => it.length === 0,
-      of(new ItemCostList()),
+      of(new ItemList()),
       this.characterLevelup.totalCost(it).pipe(
         switchMap(levelupCost => this.talentLevelup.totalCost(it).pipe(
           map(talentsCost => levelupCost.combine(talentsCost))

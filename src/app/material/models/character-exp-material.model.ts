@@ -1,4 +1,3 @@
-import {Rarity} from '../../shared/models/rarity.enum';
 import {InventoryItem} from './inventory-item.model';
 
 export interface CharacterExpMaterial {
@@ -15,11 +14,7 @@ export interface CharacterExpMaterialGroup {
 
 export interface CharacterExpMaterialItem extends InventoryItem {
 
-  id: number;
-
   group: number;
-
-  rarity: Rarity;
 
   exp: number;
 }

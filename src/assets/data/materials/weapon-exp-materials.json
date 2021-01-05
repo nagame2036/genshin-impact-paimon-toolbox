@@ -10,7 +10,7 @@
       "group": 2,
       "rarity": 1,
       "exp": 400,
-      "craft": {
+      "recipe": {
         "0": 5,
         "1000": 2
       }
@@ -20,7 +20,7 @@
       "group": 2,
       "rarity": 2,
       "exp": 2000,
-      "craft": {
+      "recipe": {
         "0": 10,
         "1001": 3
       }
@@ -30,7 +30,7 @@
       "group": 2,
       "rarity": 3,
       "exp": 10000,
-      "craft": {
+      "recipe": {
         "0": 50,
         "1002": 4
       }

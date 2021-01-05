@@ -4,7 +4,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map, switchMap} from 'rxjs/operators';
 import {getLevelupPlan, toAscensionLevel} from '../models/levelup-plan.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import {ItemCostList} from '../models/item-cost-list.model';
+import {ItemList} from '../../material/models/item-list.model';
 import {WeaponService} from '../../character-and-gear/services/weapon.service';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
 import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
@@ -47,10 +47,10 @@ export class WeaponPlanner {
     });
   }
 
-  plansCost(): Observable<ItemCostList> {
+  plansCost(): Observable<ItemList> {
     return this.activePlans.pipe(switchMap(it => iif(
       () => it.length === 0,
-      of(new ItemCostList()),
+      of(new ItemList()),
       this.weaponLevelup.totalCost(it)
     )));
   }

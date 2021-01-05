@@ -1,5 +1,3 @@
-import {Rarity} from '../../shared/models/rarity.enum';
-import {ItemAmount} from './item-amount.model';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {InventoryItem} from './inventory-item.model';
 
@@ -21,11 +19,5 @@ export interface ElementalMaterialGroup {
 
 export interface ElementalMaterialItem extends InventoryItem {
 
-  id: number;
-
   group: number;
-
-  rarity: Rarity;
-
-  craft?: ItemAmount[];
 }

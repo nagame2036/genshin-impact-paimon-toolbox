@@ -44,15 +44,15 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
-      expect(res.get(0)).toBe(1652500);
-      expect(res.get(5000)).toBe(3);
-      expect(res.get(5001)).toBe(21);
-      expect(res.get(5002)).toBe(38);
-      expect(res.get(6002)).toBe(6);
-      expect(res.get(7000)).toBe(1);
-      expect(res.get(8030)).toBe(6);
-      expect(res.get(8031)).toBe(22);
-      expect(res.get(8032)).toBe(31);
+      expect(res.getAmount(0)).toBe(1652500);
+      expect(res.getAmount(5000)).toBe(3);
+      expect(res.getAmount(5001)).toBe(21);
+      expect(res.getAmount(5002)).toBe(38);
+      expect(res.getAmount(6002)).toBe(6);
+      expect(res.getAmount(7000)).toBe(1);
+      expect(res.getAmount(8030)).toBe(6);
+      expect(res.getAmount(8031)).toBe(22);
+      expect(res.getAmount(8032)).toBe(31);
       done();
     });
   });
@@ -75,11 +75,11 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 6}]).subscribe(res => {
-      expect(res.get(0)).toBe(122500);
-      expect(res.get(5000)).toBe(3);
-      expect(res.get(5001)).toBe(21);
-      expect(res.get(8030)).toBe(6);
-      expect(res.get(8031)).toBe(22);
+      expect(res.getAmount(0)).toBe(122500);
+      expect(res.getAmount(5000)).toBe(3);
+      expect(res.getAmount(5001)).toBe(21);
+      expect(res.getAmount(8030)).toBe(6);
+      expect(res.getAmount(8031)).toBe(22);
       done();
     });
   });
@@ -102,11 +102,11 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
-      expect(res.get(0)).toBe(1530000);
-      expect(res.get(5002)).toBe(38);
-      expect(res.get(6002)).toBe(6);
-      expect(res.get(7000)).toBe(1);
-      expect(res.get(8032)).toBe(31);
+      expect(res.getAmount(0)).toBe(1530000);
+      expect(res.getAmount(5002)).toBe(38);
+      expect(res.getAmount(6002)).toBe(6);
+      expect(res.getAmount(7000)).toBe(1);
+      expect(res.getAmount(8032)).toBe(31);
       done();
     });
   });
@@ -128,19 +128,19 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10, level: 10}]).subscribe(res => {
-      expect(res.get(0)).toBe(1652500);
-      expect(res.get(5000)).toBe(3);
-      expect(res.get(5001)).toBe(6);
-      expect(res.get(5002)).toBe(6);
-      expect(res.get(5011)).toBe(11);
-      expect(res.get(5012)).toBe(12);
-      expect(res.get(5021)).toBe(4);
-      expect(res.get(5022)).toBe(20);
-      expect(res.get(6002)).toBe(6);
-      expect(res.get(7000)).toBe(1);
-      expect(res.get(8020)).toBe(6);
-      expect(res.get(8021)).toBe(22);
-      expect(res.get(8022)).toBe(31);
+      expect(res.getAmount(0)).toBe(1652500);
+      expect(res.getAmount(5000)).toBe(3);
+      expect(res.getAmount(5001)).toBe(6);
+      expect(res.getAmount(5002)).toBe(6);
+      expect(res.getAmount(5011)).toBe(11);
+      expect(res.getAmount(5012)).toBe(12);
+      expect(res.getAmount(5021)).toBe(4);
+      expect(res.getAmount(5022)).toBe(20);
+      expect(res.getAmount(6002)).toBe(6);
+      expect(res.getAmount(7000)).toBe(1);
+      expect(res.getAmount(8020)).toBe(6);
+      expect(res.getAmount(8021)).toBe(22);
+      expect(res.getAmount(8022)).toBe(31);
       done();
     });
   });

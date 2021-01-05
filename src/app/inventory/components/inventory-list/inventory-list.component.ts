@@ -1,7 +1,7 @@
 import {Component, ContentChild, Input, OnChanges, SimpleChanges, TemplateRef} from '@angular/core';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
+import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {InventoryService} from '../../services/inventory.service';
 import {Subscription} from 'rxjs';
 

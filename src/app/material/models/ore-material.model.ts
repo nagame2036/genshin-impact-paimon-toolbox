@@ -14,7 +14,5 @@ export interface OreMaterialGroup {
 
 export interface OreMaterialItem extends InventoryItem {
 
-  id: number;
-
   group: number;
 }

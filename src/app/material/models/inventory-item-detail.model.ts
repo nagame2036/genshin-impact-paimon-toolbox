@@ -10,6 +10,10 @@ export interface InventoryItemDetail {
 
   have: number;
 
+  crafted: number;
+
+  craftUsed: number;
+
   lack: number;
 
   overflow: boolean;

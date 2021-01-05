@@ -17,7 +17,5 @@ export interface LocalSpecialtyGroup {
 
 export interface LocalSpecialtyItem extends InventoryItem {
 
-  id: number;
-
   group: number;
 }

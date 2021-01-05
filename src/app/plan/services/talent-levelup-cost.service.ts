@@ -4,7 +4,7 @@ import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
 import {CommonMaterialService} from '../../material/services/common-material.service';
 import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
-import {ItemCostList} from '../models/item-cost-list.model';
+import {ItemList} from '../../material/models/item-list.model';
 import {TalentMaterialService} from '../../material/services/talent-material.service';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
@@ -25,26 +25,26 @@ export class TalentLevelupCostService {
     http.get<TalentLevelupCost[]>('assets/data/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
-  totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemCostList> {
+  totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemList> {
     return from(plans).pipe(
       switchMap(({party, plan}) => this.cost(party, plan.talents)),
       take(plans.length),
-      reduce((acc, value) => acc.combine(value), new ItemCostList())
+      reduce((acc, value) => acc.combine(value), new ItemList())
     );
   }
 
-  cost(character: PartyCharacter, goal: TalentLevelData[]): Observable<ItemCostList> {
+  cost(character: PartyCharacter, goal: TalentLevelData[]): Observable<ItemList> {
     return zip(this.levels, this.domain.items, this.common.items).pipe(
       map(([levels, _, __]) => {
         const plans = innerJoinTalentLevels(character.talents, goal);
-        const cost = new ItemCostList();
+        const cost = new ItemList();
         plans.forEach(it => this.levelup(it, levels, cost));
         return cost;
       })
     );
   }
 
-  private levelup(plan: TalentPlan, levels: TalentLevelupCost[], cost: ItemCostList): void {
+  private levelup(plan: TalentPlan, levels: TalentLevelupCost[], cost: ItemList): void {
     const {id, start, goal} = plan;
     const talent = this.talents.getGroupById(id);
     if (!talent) {
