@@ -15,7 +15,7 @@ export abstract class AbstractSubInventoryComponent extends AbstractTranslateCom
 
   rarityFilter = this.rarities;
 
-  displayOverflow = true;
+  showOverflow = true;
 
   filterItems<T extends InventoryItem>(items: Observable<T[]>): Observable<T[]> {
     return combineLatest([items, this.filter])

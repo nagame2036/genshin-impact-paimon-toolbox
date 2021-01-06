@@ -3,6 +3,8 @@ import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {TalentMaterialService} from '../../../material/services/talent-material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {partitionArrays} from '../../../shared/utils/collections';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-talent-material-inventory',
@@ -11,13 +13,7 @@ import {partitionArrays} from '../../../shared/utils/collections';
 })
 export class TalentMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  common: InventoryItem[] = [];
-
-  monThu: InventoryItem[] = [];
-
-  tueFri: InventoryItem[] = [];
-
-  wedSat: InventoryItem[] = [];
+  items$!: Observable<InventoryItem[][]>;
 
   rarities = [5, 4, 3, 2];
 
@@ -26,11 +22,10 @@ export class TalentMaterialInventoryComponent extends AbstractSubInventoryCompon
   }
 
   ngOnInit(): void {
-    this.filterItems(this.materials.items)
-      .subscribe(items => [this.monThu, this.tueFri, this.wedSat, this.common] = partitionArrays(items, [
-        item => this.materials.getWeekday(item) === 14,
-        item => this.materials.getWeekday(item) === 25,
-        item => this.materials.getWeekday(item) === 36,
-      ]));
+    this.items$ = this.filterItems(this.materials.items).pipe(map(items => partitionArrays(items, [
+      item => this.materials.getWeekday(item) === 14,
+      item => this.materials.getWeekday(item) === 25,
+      item => this.materials.getWeekday(item) === 36,
+    ])));
   }
 }

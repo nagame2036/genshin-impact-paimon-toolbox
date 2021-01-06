@@ -7,10 +7,13 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-checkbox class="app-multi-select-checkbox" [checked]="displayOverflow"
-                (change)="displayOverflow = $event.checked">
-    {{ i18n('display-overflow') | translate }}
+  <mat-checkbox class="app-multi-select-checkbox" [checked]="showOverflow" (change)="showOverflow = $event.checked">
+    {{ i18n('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<app-inventory-list subtitle="common" [items]="common" [displayOverflow]="displayOverflow"></app-inventory-list>
-<app-inventory-list subtitle="local-specialty" [items]="local" [displayOverflow]="displayOverflow"></app-inventory-list>
+<ng-container *ngIf="common$ | async as common">
+  <app-inventory-list subtitle="common" [items]="common" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="local$ | async as local">
+  <app-inventory-list subtitle="local-specialty" [items]="local" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>

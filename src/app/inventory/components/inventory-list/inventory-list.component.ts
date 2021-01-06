@@ -3,7 +3,8 @@ import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {InventoryService} from '../../services/inventory.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-inventory-list',
@@ -18,14 +19,12 @@ export class InventoryListComponent extends AbstractTranslateComponent implement
   subtitle!: string;
 
   @Input()
-  displayOverflow = true;
+  showOverflow = true;
 
   @Input()
   items: InventoryItem[] = [];
 
-  details: InventoryItemDetail[] = [];
-
-  subscription!: Subscription;
+  details$: Observable<InventoryItemDetail[]> = new Subject();
 
   @ContentChild('bottom', {static: false})
   bottomTemplateRef!: TemplateRef<any>;
@@ -35,10 +34,9 @@ export class InventoryListComponent extends AbstractTranslateComponent implement
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('items') || changes.hasOwnProperty('displayOverflow')) {
-      this.subscription?.unsubscribe();
-      this.subscription = this.inventory.getDetails(this.items)
-        .subscribe(res => this.details = res.filter(it => !it.overflow || this.displayOverflow));
+    if (changes.hasOwnProperty('items') || changes.hasOwnProperty('showOverflow')) {
+      this.details$ = this.inventory.getDetails(this.items)
+        .pipe(map(details => details.filter(it => !it.overflow || this.showOverflow)));
     }
   }
 

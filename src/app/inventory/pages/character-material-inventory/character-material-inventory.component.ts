@@ -5,6 +5,8 @@ import {characterExp} from '../../../material/models/mora-and-exp.model';
 import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
 import {partitionArrays} from '../../../shared/utils/collections';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-material-inventory',
@@ -13,11 +15,9 @@ import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component
 })
 export class CharacterMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  common: InventoryItem[] = [];
+  common$!: Observable<InventoryItem[]>;
 
-  elements: InventoryItem[] = [];
-
-  gems: InventoryItem[] = [];
+  elements$!: Observable<InventoryItem[][]>;
 
   rarities = [5, 4, 3, 2];
 
@@ -26,9 +26,8 @@ export class CharacterMaterialInventoryComponent extends AbstractSubInventoryCom
   }
 
   ngOnInit(): void {
-    this.filterItems(this.exps.items)
-      .subscribe(items => this.common = [characterExp, ...items]);
-    this.filterItems(this.materials.items)
-      .subscribe(items => [this.elements, this.gems] = partitionArrays(items, [item => item.id < 3000]));
+    this.common$ = this.filterItems(this.exps.items).pipe(map(items => [characterExp, ...items]));
+    this.elements$ = this.filterItems(this.materials.items)
+      .pipe(map(items => partitionArrays(items, [item => item.id < 3000])));
   }
 }

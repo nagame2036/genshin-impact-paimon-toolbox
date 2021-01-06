@@ -45,7 +45,7 @@
       }
     },
     "inventory": {
-      "display-overflow": "显示溢出",
+      "show-overflow": "显示溢出",
       "need": "需求",
       "crafted": "可合成",
       "lack": "缺少",

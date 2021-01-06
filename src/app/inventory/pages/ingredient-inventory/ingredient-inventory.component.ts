@@ -4,6 +4,8 @@ import {OreMaterialService} from '../../../material/services/ore-material.servic
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {mora} from '../../../material/models/mora-and-exp.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-ingredient-inventory',
@@ -12,9 +14,9 @@ import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component
 })
 export class IngredientInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  common: InventoryItem[] = [];
+  common$!: Observable<InventoryItem[]>;
 
-  local: InventoryItem[] = [];
+  local$!: Observable<InventoryItem[]>;
 
   rarities = [3, 2, 1];
 
@@ -23,10 +25,8 @@ export class IngredientInventoryComponent extends AbstractSubInventoryComponent 
   }
 
   ngOnInit(): void {
-    this.filterItems(this.ores.items)
-      .subscribe(items => this.common = [mora, ...items]);
-    this.filterItems(this.localSpecialties.items)
-      .subscribe(items => this.local = items);
+    this.common$ = this.filterItems(this.ores.items).pipe(map(items => [mora, ...items]));
+    this.local$ = this.filterItems(this.localSpecialties.items);
   }
 
 }

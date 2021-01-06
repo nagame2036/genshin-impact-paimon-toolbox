@@ -3,6 +3,8 @@ import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {CommonMaterialService} from '../../../material/services/common-material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {partitionArrays} from '../../../shared/utils/collections';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-common-material-inventory',
@@ -11,9 +13,7 @@ import {partitionArrays} from '../../../shared/utils/collections';
 })
 export class CommonMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  mobs: InventoryItem[] = [];
-
-  elites: InventoryItem[] = [];
+  items$!: Observable<InventoryItem[][]>;
 
   rarities = [4, 3, 2, 1];
 
@@ -22,8 +22,8 @@ export class CommonMaterialInventoryComponent extends AbstractSubInventoryCompon
   }
 
   ngOnInit(): void {
-    this.filterItems(this.materials.items)
-      .subscribe(items => [this.mobs, this.elites] = partitionArrays(items, [item => item.id < 9000]));
+    this.items$ = this.filterItems(this.materials.items)
+      .pipe(map(items => partitionArrays(items, [item => item.id < 9000])));
   }
 
 }

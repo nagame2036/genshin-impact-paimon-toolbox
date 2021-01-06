@@ -7,12 +7,15 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-checkbox class="app-multi-select-checkbox" [checked]="displayOverflow"
-                (change)="displayOverflow = $event.checked">
-    {{ i18n('display-overflow') | translate }}
+  <mat-checkbox class="app-multi-select-checkbox" [checked]="showOverflow" (change)="showOverflow = $event.checked">
+    {{ i18n('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<app-inventory-list subtitle="common" [items]="common" [displayOverflow]="displayOverflow"></app-inventory-list>
-<app-inventory-list subtitle="1/4" [items]="monThu" [displayOverflow]="displayOverflow"></app-inventory-list>
-<app-inventory-list subtitle="2/5" [items]="tueFri" [displayOverflow]="displayOverflow"></app-inventory-list>
-<app-inventory-list subtitle="3/6" [items]="wedSat" [displayOverflow]="displayOverflow"></app-inventory-list>
+<ng-container *ngIf="common$ | async as common">
+  <app-inventory-list subtitle="common" [items]="common" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="items$ | async as items">
+  <app-inventory-list subtitle="1/4" [items]="items[0]" [showOverflow]="showOverflow"></app-inventory-list>
+  <app-inventory-list subtitle="2/5" [items]="items[1]" [showOverflow]="showOverflow"></app-inventory-list>
+  <app-inventory-list subtitle="3/6" [items]="items[2]" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
