@@ -51,15 +51,15 @@ export class CharacterLevelupCostService {
         const cost = new ItemList();
         const range = ascensions.slice(character.ascension, goal);
         range.forEach(({mora, elemental, gem, local, enemy}) => {
-          cost.add(0, mora);
+          cost.change(0, mora);
           if (character.elemental) {
-            cost.add(character.elemental, elemental);
+            cost.change(character.elemental, elemental);
           }
           const gemItem = this.elements.getByGroupAndRarity(character.gem, gem.rarity);
-          cost.add(gemItem.id, gem.amount);
-          cost.add(character.local, local);
+          cost.change(gemItem.id, gem.amount);
+          cost.change(character.local, local);
           const common = this.common.getByGroupAndRarity(character.common, enemy.rarity);
-          cost.add(common.id, enemy.amount);
+          cost.change(common.id, enemy.amount);
         });
         return cost;
       })
@@ -71,8 +71,8 @@ export class CharacterLevelupCostService {
       const cost = new ItemList();
       const moraAmount = levels.slice(character.level, goal).reduce((sum, curr) => sum + curr, 0);
       const {mora, exp} = processExpBonus(character, moraAmount, v => v * 5);
-      cost.add(0, mora);
-      cost.add(1, exp);
+      cost.change(0, mora);
+      cost.change(1, exp);
       return cost;
     }));
   }

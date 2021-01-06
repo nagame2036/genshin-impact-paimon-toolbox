@@ -15,6 +15,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {FlexModule} from '@angular/flex-layout';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatTabsModule,
     FlexModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule
   ]
 })
 export class InventoryModule {

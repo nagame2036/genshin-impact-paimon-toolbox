@@ -14,20 +14,28 @@ export class ItemList {
     return this;
   }
 
-  add(id: number, amount: number): ItemList {
-    this.addAmount(id, amount);
+  change(id: number, amount: number): ItemList {
+    this.changeAmount(id, amount);
     return this;
   }
 
   combine(that: ItemList): ItemList {
     for (const [id, amount] of that.map.entries()) {
-      this.addAmount(id, amount);
+      this.changeAmount(id, amount);
     }
     return this;
   }
 
-  private addAmount(id: number, amount: number): void {
+  private changeAmount(id: number, amount: number): void {
     const current = this.getAmount(id);
     this.setAmount(id, current + amount);
+  }
+
+  entries(): [number, number][] {
+    const entries: [number, number][] = [];
+    for (const item of this.map.entries()) {
+      entries.push(item);
+    }
+    return entries;
   }
 }

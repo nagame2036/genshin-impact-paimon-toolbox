@@ -1,4 +1,5 @@
 import {Rarity} from '../../shared/models/rarity.enum';
+import {CraftRecipe} from './craft-recipe.model';
 
 export interface InventoryItemDetail {
 
@@ -10,9 +11,9 @@ export interface InventoryItemDetail {
 
   have: number;
 
-  crafted: number;
+  recipe?: CraftRecipe;
 
-  craftUsed: number;
+  crafted: number;
 
   lack: number;
 

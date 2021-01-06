@@ -48,13 +48,13 @@ export class WeaponLevelupCostService {
         const cost = new ItemList();
         const range = ascensions[weapon.rarity].slice(weapon.ascension, goal);
         range.forEach(({mora, domain, elite, common}) => {
-          cost.add(0, mora);
+          cost.change(0, mora);
           const domainItem = this.domain.getByGroupAndRarity(weapon.domain, domain.rarity);
-          cost.add(domainItem.id, domain.amount);
+          cost.change(domainItem.id, domain.amount);
           const eliteItem = this.common.getByGroupAndRarity(weapon.elite, elite.rarity);
-          cost.add(eliteItem.id, elite.amount);
+          cost.change(eliteItem.id, elite.amount);
           const commonItem = this.common.getByGroupAndRarity(weapon.common, common.rarity);
-          cost.add(commonItem.id, common.amount);
+          cost.change(commonItem.id, common.amount);
         });
         return cost;
       })
@@ -66,8 +66,8 @@ export class WeaponLevelupCostService {
       const cost = new ItemList();
       const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
       const {mora, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
-      cost.add(0, mora);
-      cost.add(2, exp);
+      cost.change(0, mora);
+      cost.change(2, exp);
       return cost;
     }));
   }

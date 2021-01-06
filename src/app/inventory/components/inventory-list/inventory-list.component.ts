@@ -64,4 +64,8 @@ export class InventoryListComponent extends AbstractTranslateComponent implement
   trackItem(index: number, item: InventoryItemDetail): number {
     return item.id;
   }
+
+  craft(detail: InventoryItemDetail, craftNeed: number): void {
+    this.inventory.craft(detail, craftNeed);
+  }
 }

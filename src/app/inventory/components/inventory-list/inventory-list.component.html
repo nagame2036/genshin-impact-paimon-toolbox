@@ -39,6 +39,14 @@
                  [value]="detail.have | number: '1.0-0'" (change)="correct(detail, $event)"
                  (keydown.arrowUp)="inc(detail)" (keydown.arrowDown)="dec(detail)"/>
         </div>
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="4px">
+          <button class="craft-button" (click)="craft(detail, 5)" [disabled]="detail.crafted < 5 || detail.readonly">
+            {{ i18n('craft-five') | translate }}
+          </button>
+          <button class="craft-button" (click)="craft(detail, 1)" [disabled]="detail.crafted < 1 || detail.readonly">
+            {{ i18n('craft-one') | translate }}
+          </button>
+        </div>
       </div>
     </app-item-view>
   </div>
