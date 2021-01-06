@@ -4,10 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-prod": "ng serve --prod",
     "build": "ng build",
+    "build-prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "bundle-analyze": "ng build --prod --stats-json && webpack-bundle-analyzer dist/genshin-impact-paimon-toolbox/stats.json"
   },
   "private": true,
   "dependencies": {
