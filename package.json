@@ -27,7 +27,6 @@
     "@angular/router": "~11.0.1",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
-    "alasql": "^0.6.5",
     "ngx-indexed-db": "^6.1.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

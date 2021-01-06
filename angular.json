@@ -32,10 +32,7 @@
             "styles": [
               "src/styles.sass"
             ],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "alasql"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
