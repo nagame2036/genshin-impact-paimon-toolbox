@@ -10,13 +10,14 @@ import {
   TemplateRef,
   ViewChildren
 } from '@angular/core';
-import alasql from 'alasql';
 import {Weapon} from '../../models/weapon.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
 import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
+import {WeaponFields} from '../../models/weapon-fields.model';
+import {PartyWeapon} from '../../models/party-weapon.model';
 
 @Component({
   selector: 'app-weapon-list',
@@ -56,29 +57,27 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   list!: QueryList<ItemViewComponent>;
 
   @Input()
-  sortFields = ['rarity'];
+  sortFields: WeaponFields[] = ['rarity'];
 
   @Input()
-  sort = 'rarity';
+  sort: WeaponFields = 'rarity';
 
   rarities = [5, 4, 3];
 
   rarityFilter = this.rarities;
 
-  rarityWhere = 'TRUE';
-
   types = weaponTypeList;
 
   typeFilter = this.types;
-
-  typeWhere = 'TURE';
 
   constructor() {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.update();
+    if (changes.hasOwnProperty('weapons')) {
+      this.update();
+    }
   }
 
   update(): void {
@@ -86,19 +85,18 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
-    const sql = `SELECT * FROM ? WHERE (${this.rarityWhere}) AND (${this.typeWhere}) ORDER BY ${this.sort} DESC, type, id DESC`;
-    this.items = alasql(sql, [this.weapons]);
+    this.items = this.weapons.map(it => it as PartyWeapon)
+      .filter(it => this.rarityFilter.includes(it.rarity) && this.typeFilter.includes(it.type))
+      .sort((a, b) => b[this.sort] - a[this.sort] || b.id - a.id);
   }
 
   changeRarityFilter(change: MatSelectChange): void {
     this.rarityFilter = ensureAtLeastOneElement(this.rarityFilter, change.value);
-    this.rarityWhere = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
     this.update();
   }
 
   changeTypeFilter(change: MatSelectChange): void {
     this.typeFilter = ensureAtLeastOneElement(this.typeFilter, change.value);
-    this.typeWhere = this.typeFilter.map(i => `type = ${i}`).join(' OR ');
     this.update();
   }
 

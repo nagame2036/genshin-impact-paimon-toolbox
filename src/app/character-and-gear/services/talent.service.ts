@@ -7,7 +7,6 @@ import {TalentLevel} from '../models/talent-level.type';
 import {rangeList} from '../../shared/utils/range-list';
 import {coerceIn} from '../../shared/utils/coerce';
 import {TalentLevelData} from '../models/talent-level-data.model';
-import alasql from 'alasql';
 
 @Injectable({
   providedIn: 'root'
@@ -68,13 +67,14 @@ export class TalentService {
   }
 
   getTalentsOfCharacter(id: number): TalentDataItem[] {
-    const sql = 'SELECT * FROM ? WHERE character = ?';
-    return alasql(sql, [this.#talents, id]);
+    return this.#talents.filter(it => it.character === id);
   }
 
-  getGroupById(id: number): TalentDataGroup {
-    const sql = 'SELECT TOP 1 g.* FROM ? g JOIN ? t ON t.[group] = g.id WHERE t.id = ?';
-    const list = alasql(sql, [this.#groups, this.#talents, id]);
-    return list.length > 0 ? list[0] : null;
+  getGroupById(id: number): TalentDataGroup | undefined {
+    const talent = this.#talents.find(it => it.id === id);
+    if (talent) {
+      return this.#groups.find(it => it.id === talent.group);
+    }
+    return undefined;
   }
 }

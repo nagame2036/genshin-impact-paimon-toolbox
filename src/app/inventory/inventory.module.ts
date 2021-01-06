@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
-import {MaterialModule} from '../material/material.module';
 import {InventoryRoutingModule} from './inventory-routing.module';
 import {InventoryPageComponent} from './pages/inventory-page/inventory-page.component';
 import {InventoryListComponent} from './components/inventory-list/inventory-list.component';
@@ -29,7 +28,6 @@ import {MatButtonModule} from '@angular/material/button';
   ],
   imports: [
     SharedModule,
-    MaterialModule,
     InventoryRoutingModule,
     MatTabsModule,
     FlexModule,

@@ -12,12 +12,13 @@ import {
 } from '@angular/core';
 import {Character} from '../../models/character.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import alasql from 'alasql';
 import {elementTypeList} from '../../../shared/models/element-type.enum';
 import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
 import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
+import {CharacterFields} from '../../models/character-fields.model';
+import {PartyCharacter} from '../../models/party-character.model';
 
 @Component({
   selector: 'app-character-list',
@@ -57,35 +58,31 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
   list!: QueryList<ItemViewComponent>;
 
   @Input()
-  sortFields = ['rarity'];
+  sortFields: CharacterFields[] = ['rarity'];
 
   @Input()
-  sort = 'rarity';
+  sort: CharacterFields = 'rarity';
 
   rarities = [5, 4];
 
   rarityFilter = this.rarities;
 
-  rarityWhere = 'TRUE';
-
   elementTypes = elementTypeList;
 
   elementFilter = this.elementTypes;
 
-  elementWhere = 'TRUE';
-
   weaponTypes = weaponTypeList;
 
   weaponFilter = this.weaponTypes;
-
-  weaponWhere = 'TRUE';
 
   constructor() {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.update();
+    if (changes.hasOwnProperty('characters')) {
+      this.update();
+    }
   }
 
   update(): void {
@@ -93,26 +90,24 @@ export class CharacterListComponent extends AbstractTranslateComponent implement
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
-    const where = `(${this.rarityWhere}) AND (${this.elementWhere}) AND (${this.weaponWhere})`;
-    const sql = `SELECT * FROM ? WHERE ${where} ORDER BY ${this.sort} DESC, id DESC`;
-    this.items = alasql(sql, [this.characters]);
+    this.items = this.characters.map(it => it as PartyCharacter)
+      .filter(it => this.rarityFilter.includes(it.rarity) && this.elementFilter.includes(it.element)
+        && this.weaponFilter.includes(it.weapon))
+      .sort((a, b) => b[this.sort] - a[this.sort] || b.id - a.id);
   }
 
   changeRarityFilter(change: MatSelectChange): void {
     this.rarityFilter = ensureAtLeastOneElement(this.rarityFilter, change.value);
-    this.rarityWhere = this.rarityFilter.map(i => `rarity = ${i}`).join(' OR ');
     this.update();
   }
 
   changeElementFilter(change: MatSelectChange): void {
     this.elementFilter = ensureAtLeastOneElement(this.elementFilter, change.value);
-    this.elementWhere = this.elementFilter.map(i => `element = ${i}`).join(' OR ');
     this.update();
   }
 
   changeWeaponFilter(change: MatSelectChange): void {
     this.weaponFilter = ensureAtLeastOneElement(this.weaponFilter, change.value);
-    this.weaponWhere = this.weaponFilter.map(i => `weapon = ${i}`).join(' OR ');
     this.update();
   }
 
