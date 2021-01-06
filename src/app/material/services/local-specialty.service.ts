@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {LocalSpecialty, LocalSpecialtyGroup, LocalSpecialtyItem} from '../models/local-specialty.model';
-import alasql from 'alasql';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +18,8 @@ export class LocalSpecialtyService {
 
   constructor(http: HttpClient) {
     http.get<LocalSpecialty>('assets/data/materials/local-specialties.json').subscribe(res => {
-      this.#groups.next(res.groups);
-      const sql = 'SELECT *, 1 rarity FROM ? ORDER BY [group], rarity DESC';
-      this.#items.next(alasql(sql, [res.items]));
+      const items = res.items.sort((a, b) => a.group - b.group);
+      this.#items.next(items);
     });
   }
 }

@@ -4,7 +4,7 @@
   </h4>
   <div fxLayout="row wrap" fxLayoutGap="16px">
     <div *ngFor="let detail of details; trackBy: trackItem" class="material-list-item">
-      <app-item-view category="materials" [width]="140" [imgWidth]="140" [id]="detail.id" [rarity]="detail.rarity">
+      <app-item-view category="materials" [width]="140" [imgWidth]="140" [id]="detail.id" [rarity]="detail.rarity || 1">
         <div image-bottom fxLayout="column" style="margin: 4px; font-size: 8px">
           <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px">
             <div>

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {WeaponMaterial, WeaponMaterialItem} from '../models/weapon-material.model';
-import alasql from 'alasql';
 import {Rarity} from '../../shared/models/rarity.enum';
 import {TalentMaterialGroup, TalentMaterialItem} from '../models/talent-material.model';
 
@@ -21,10 +20,9 @@ export class WeaponMaterialService {
 
   constructor(http: HttpClient) {
     http.get<WeaponMaterial>('assets/data/materials/weapon-materials.json').subscribe(res => {
-      const sql = 'SELECT * FROM ? ORDER BY [group], rarity DESC';
-      this.#items = alasql(sql, [res.items]);
       this.#groups = new Map();
       res.groups.forEach(it => this.#groups.set(it.id, it));
+      this.#items = res.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
       this.itemsSubject.next(this.#items);
     });
   }
