@@ -3,15 +3,15 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../character-and-gear/models/refine-rank.type';
-import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
+import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 
 @Component({
-  selector: 'app-weapon-detail-form',
-  templateUrl: './weapon-detail-form.component.html',
-  styleUrls: ['./weapon-detail-form.component.sass']
+  selector: 'app-weapon-plan-form',
+  templateUrl: './weapon-plan-form.component.html',
+  styleUrls: ['./weapon-plan-form.component.sass']
 })
-export class WeaponDetailFormComponent extends AbstractTranslateComponent implements OnInit {
+export class WeaponPlanFormComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'party';
 

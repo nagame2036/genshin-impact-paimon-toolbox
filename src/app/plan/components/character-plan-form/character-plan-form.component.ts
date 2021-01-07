@@ -7,14 +7,14 @@ import {TalentLevel} from '../../../character-and-gear/models/talent-level.type'
 import {TalentLevelData} from '../../../character-and-gear/models/talent-level-data.model';
 import {TalentService} from '../../../character-and-gear/services/talent.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
-import {CharacterPlan} from '../../../plan/models/character-plan.model';
+import {CharacterPlan} from '../../models/character-plan.model';
 
 @Component({
-  selector: 'app-character-detail-form',
-  templateUrl: './character-detail-form.component.html',
-  styleUrls: ['./character-detail-form.component.sass']
+  selector: 'app-character-plan-form',
+  templateUrl: './character-plan-form.component.html',
+  styleUrls: ['./character-plan-form.component.sass']
 })
-export class CharacterDetailFormComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterPlanFormComponent extends AbstractTranslateComponent implements OnInit {
 
   i18nKey = 'party';
 

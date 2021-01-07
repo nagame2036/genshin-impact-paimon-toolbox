@@ -11,9 +11,9 @@
       </div>
     </div>
   </app-item-view>
-  <app-weapon-detail-form [weapon]="data.weapon" [plan]="data.plan"
-                          (currentChange)="saveParty()" (goalChange)="savePlan()">
-  </app-weapon-detail-form>
+  <app-weapon-plan-form [weapon]="data.weapon" [plan]="data.plan"
+                        (currentChange)="saveParty()" (goalChange)="savePlan()">
+  </app-weapon-plan-form>
 </div>
 <div mat-dialog-actions>
   <button mat-stroked-button (click)="remove(data.weapon)">

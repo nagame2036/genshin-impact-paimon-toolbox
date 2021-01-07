@@ -12,8 +12,8 @@
       <app-item-view category="characters" [id]="selectedCharacter.id" [rarity]="selectedCharacter.rarity">
       </app-item-view>
     </div>
-    <app-character-detail-form [character]="selectedCharacter" [plan]="selectedPlan">
-    </app-character-detail-form>
+    <app-character-plan-form [character]="selectedCharacter" [plan]="selectedPlan">
+    </app-character-plan-form>
   </div>
 </div>
 <div *ngIf="selected" mat-dialog-actions>

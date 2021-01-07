@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CharacterDetailFormComponent} from './character-detail-form.component';
-import {PartyModule} from '../../party.module';
+import {WeaponPlanFormComponent} from './weapon-plan-form.component';
+import {PlanModule} from '../../plan.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
@@ -9,17 +9,17 @@ import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {WeaponType} from '../../../character-and-gear/models/weapon-type.enum';
 import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 
-describe('CharacterDetailFormComponent', () => {
-  let component: CharacterDetailFormComponent;
-  let fixture: ComponentFixture<CharacterDetailFormComponent>;
+describe('WeaponPlanFormComponent', () => {
+  let component: WeaponPlanFormComponent;
+  let fixture: ComponentFixture<WeaponPlanFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CharacterDetailFormComponent
+        WeaponPlanFormComponent
       ],
       imports: [
-        PartyModule,
+        PlanModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AppTranslateModule,
@@ -30,26 +30,23 @@ describe('CharacterDetailFormComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterDetailFormComponent);
+    fixture = TestBed.createComponent(WeaponPlanFormComponent);
     component = fixture.componentInstance;
-    component.character = {
+    component.weapon = {
       id: 1,
-      weapon: WeaponType.SWORD,
+      type: WeaponType.SWORD,
       rarity: 4,
       common: 1,
-      element: 1,
-      gem: 1,
-      local: 1,
-      constellation: 0,
+      domain: 1,
+      elite: 1,
+      refine: 1,
       ascension: Ascension.ZERO,
-      level: 1,
-      talents: []
+      level: 1
     };
     component.plan = {
       id: 1,
       ascension: Ascension.ZERO,
-      level: 1,
-      talents: []
+      level: 1
     };
     fixture.detectChanges();
   });

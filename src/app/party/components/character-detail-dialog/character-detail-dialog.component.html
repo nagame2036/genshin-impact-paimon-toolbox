@@ -23,9 +23,9 @@
       </div>
     </div>
   </app-item-view>
-  <app-character-detail-form [character]="data.character" [plan]="data.plan"
-                             (currentChange)="saveParty()" (goalChange)="savePlan()">
-  </app-character-detail-form>
+  <app-character-plan-form [character]="data.character" [plan]="data.plan"
+                           (currentChange)="saveParty()" (goalChange)="savePlan()">
+  </app-character-plan-form>
 </div>
 <div mat-dialog-actions>
   <button mat-stroked-button (click)="remove(data.character.id)">

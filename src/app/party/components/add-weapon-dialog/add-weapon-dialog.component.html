@@ -11,8 +11,8 @@
     <div style="width: 100px">
       <app-item-view category="weapons" [id]="selectedWeapon.id" [rarity]="selectedWeapon.rarity"></app-item-view>
     </div>
-    <app-weapon-detail-form [weapon]="selectedWeapon" [plan]="selectedPlan">
-    </app-weapon-detail-form>
+    <app-weapon-plan-form [weapon]="selectedWeapon" [plan]="selectedPlan">
+    </app-weapon-plan-form>
   </div>
 </div>
 <div *ngIf="selected" mat-dialog-actions>
