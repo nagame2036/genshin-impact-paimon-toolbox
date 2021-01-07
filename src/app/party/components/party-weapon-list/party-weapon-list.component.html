@@ -16,13 +16,13 @@
           <div gdArea="refine-rank" class="party-item-overview-label party-item-overview-row-non-border-top">
             <b>{{ i18nDict('refine') | translate }}</b>
           </div>
-          <div gdArea="refine-rank-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+          <div gdArea="refine-rank-data" class="party-item-overview-row party-item-overview-row-non-border-top">
             {{ party.refine }}
           </div>
           <div gdArea="ascension" class="party-item-overview-label">
             <b>{{ i18nDict('ascension') | translate }}</b>
           </div>
-          <div gdArea="ascension-data" class="party-item-overview-data">
+          <div gdArea="ascension-data" class="party-item-overview-row">
             {{ i18nDict('ascensions.' + party.ascension) | translate }}
             <ng-container *ngIf="party.ascension < plan.ascension">
               →
@@ -32,7 +32,7 @@
           <div gdArea="level" class="party-item-overview-label">
             <b>{{ i18nDict('level') | translate }}</b>
           </div>
-          <div gdArea="level-data" class="party-item-overview-data">
+          <div gdArea="level-data" class="party-item-overview-row">
             {{ party.level }}
             <ng-container *ngIf="party.level < plan.level">
               →

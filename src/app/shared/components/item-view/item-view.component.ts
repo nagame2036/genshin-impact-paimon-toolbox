@@ -4,7 +4,7 @@ import {AbstractTranslateComponent} from '../abstract-translate.component';
 @Component({
   selector: 'app-item-view',
   templateUrl: './item-view.component.html',
-  styleUrls: ['./item-view.component.sass']
+  styleUrls: ['./item-view.component.scss']
 })
 export class ItemViewComponent extends AbstractTranslateComponent {
 

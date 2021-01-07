@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-current-goal-select',
   templateUrl: './current-goal-select.component.html',
-  styleUrls: ['./current-goal-select.component.sass']
+  styleUrls: ['./current-goal-select.component.scss']
 })
 export class CurrentGoalSelectComponent implements OnInit {
 

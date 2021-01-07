@@ -12,7 +12,7 @@ import {combineLatest} from 'rxjs';
 @Component({
   selector: 'app-party-character-list',
   templateUrl: './party-character-list.component.html',
-  styleUrls: ['./party-character-list.component.sass']
+  styleUrls: ['./party-character-list.component.scss']
 })
 export class PartyCharacterListComponent extends AbstractTranslateComponent implements OnInit {
 

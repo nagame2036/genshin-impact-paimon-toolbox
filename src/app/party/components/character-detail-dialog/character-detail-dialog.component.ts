@@ -9,7 +9,7 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
 @Component({
   selector: 'app-character-detail-dialog',
   templateUrl: './character-detail-dialog.component.html',
-  styleUrls: ['./character-detail-dialog.component.sass']
+  styleUrls: ['./character-detail-dialog.component.scss']
 })
 export class CharacterDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
 

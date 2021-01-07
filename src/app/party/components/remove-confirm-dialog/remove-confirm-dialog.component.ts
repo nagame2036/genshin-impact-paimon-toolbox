@@ -5,7 +5,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 @Component({
   selector: 'app-remove-confirm-dialog',
   templateUrl: './remove-confirm-dialog.component.html',
-  styleUrls: ['./remove-confirm-dialog.component.sass']
+  styleUrls: ['./remove-confirm-dialog.component.scss']
 })
 export class RemoveConfirmDialogComponent extends AbstractTranslateComponent implements OnInit {
 

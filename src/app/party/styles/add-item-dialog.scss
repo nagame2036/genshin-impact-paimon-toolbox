@@ -1,0 +1,19 @@
+@import 'src/assets/styles/mat-dialog-actions';
+
+.expand-list-btn {
+  width: 128px;
+  height: 32px;
+  background-color: #7082dc;
+  color: white;
+  border: none;
+  border-radius: 0 0 16px 0;
+  font-size: 16px;
+}
+
+mat-form-field {
+  width: 320px;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}

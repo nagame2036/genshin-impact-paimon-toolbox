@@ -22,7 +22,7 @@ import {PartyWeapon} from '../../models/party-weapon.model';
 @Component({
   selector: 'app-weapon-list',
   templateUrl: './weapon-list.component.html',
-  styleUrls: ['./weapon-list.component.sass']
+  styleUrls: ['./weapon-list.component.scss']
 })
 export class WeaponListComponent extends AbstractTranslateComponent implements OnChanges {
 

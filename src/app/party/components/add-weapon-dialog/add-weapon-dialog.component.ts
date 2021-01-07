@@ -14,7 +14,7 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 @Component({
   selector: 'app-add-weapon-dialog',
   templateUrl: './add-weapon-dialog.component.html',
-  styleUrls: ['./add-weapon-dialog.component.sass'],
+  styleUrls: ['./add-weapon-dialog.component.scss'],
   animations: addItemDialogAnimation
 })
 export class AddWeaponDialogComponent extends AbstractTranslateComponent implements OnInit {

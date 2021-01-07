@@ -13,7 +13,7 @@ import {first} from 'rxjs/operators';
 @Component({
   selector: 'app-party-character',
   templateUrl: './party-character.component.html',
-  styleUrls: ['./party-character.component.sass']
+  styleUrls: ['./party-character.component.scss']
 })
 export class PartyCharacterComponent extends AbstractTranslateComponent implements OnInit {
 

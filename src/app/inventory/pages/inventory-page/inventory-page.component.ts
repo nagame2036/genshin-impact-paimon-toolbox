@@ -4,7 +4,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 @Component({
   selector: 'app-inventory-page',
   templateUrl: './inventory-page.component.html',
-  styleUrls: ['./inventory-page.component.sass']
+  styleUrls: ['./inventory-page.component.scss']
 })
 export class InventoryPageComponent extends AbstractTranslateComponent implements OnInit {
 

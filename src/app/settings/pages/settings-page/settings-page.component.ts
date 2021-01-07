@@ -6,7 +6,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
-  styleUrls: ['./settings-page.component.sass']
+  styleUrls: ['./settings-page.component.scss']
 })
 export class SettingsPageComponent extends AbstractTranslateComponent implements OnInit {
 

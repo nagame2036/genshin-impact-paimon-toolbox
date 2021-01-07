@@ -1,0 +1,24 @@
+.party-item-overview {
+  min-width: 72px;
+  height: 120px;
+  font-size: 12px;
+}
+
+.party-item-overview-row {
+  padding: 1px 8px;
+  border-left: solid 1px #e0e0e0;
+  border-top: solid 1px #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.party-item-overview-row-non-border-top {
+  border-top: none;
+}
+
+.party-item-overview-label {
+  @extend .party-item-overview-row;
+  color: #3f51b5;
+  background-color: #f0ece8;
+}

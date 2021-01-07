@@ -1,0 +1,13 @@
+.character-stat-page {
+  min-height: 88vh;
+  display: flex;
+}
+
+.character-stat-component {
+  margin: 0 4px;
+}
+
+.character-stat-tab-group {
+  @extend .character-stat-component;
+  flex: 1;
+}

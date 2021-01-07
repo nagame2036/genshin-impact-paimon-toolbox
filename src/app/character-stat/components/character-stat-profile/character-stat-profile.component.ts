@@ -10,7 +10,7 @@ import {CharacterStatProfileService} from '../../services/character-stat-profile
 @Component({
   selector: 'app-character-stat-profile',
   templateUrl: './character-stat-profile.component.html',
-  styleUrls: ['./character-stat-profile.component.sass']
+  styleUrls: ['./character-stat-profile.component.scss']
 })
 export class CharacterStatProfileComponent extends AbstractTranslateComponent implements OnInit {
 

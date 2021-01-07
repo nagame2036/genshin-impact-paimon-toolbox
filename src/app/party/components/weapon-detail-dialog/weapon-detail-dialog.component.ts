@@ -9,7 +9,7 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 @Component({
   selector: 'app-weapon-detail-dialog',
   templateUrl: './weapon-detail-dialog.component.html',
-  styleUrls: ['./weapon-detail-dialog.component.sass']
+  styleUrls: ['./weapon-detail-dialog.component.scss']
 })
 export class WeaponDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
 

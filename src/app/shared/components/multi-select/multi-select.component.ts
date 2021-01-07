@@ -4,7 +4,7 @@ import {AbstractTranslateComponent} from '../abstract-translate.component';
 @Component({
   selector: 'app-multi-select',
   templateUrl: './multi-select.component.html',
-  styleUrls: ['./multi-select.component.sass']
+  styleUrls: ['./multi-select.component.scss']
 })
 export class MultiSelectComponent extends AbstractTranslateComponent implements OnInit {
 

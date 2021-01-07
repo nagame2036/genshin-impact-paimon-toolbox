@@ -12,7 +12,7 @@ import {combineLatest} from 'rxjs';
 @Component({
   selector: 'app-party-weapon-list',
   templateUrl: './party-weapon-list.component.html',
-  styleUrls: ['./party-weapon-list.component.sass']
+  styleUrls: ['./party-weapon-list.component.scss']
 })
 export class PartyWeaponListComponent extends AbstractTranslateComponent implements OnInit {
 

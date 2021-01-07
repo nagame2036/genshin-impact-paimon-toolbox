@@ -12,7 +12,7 @@ import {CharacterPlan} from '../../models/character-plan.model';
 @Component({
   selector: 'app-character-plan-form',
   templateUrl: './character-plan-form.component.html',
-  styleUrls: ['./character-plan-form.component.sass']
+  styleUrls: ['./character-plan-form.component.scss']
 })
 export class CharacterPlanFormComponent extends AbstractTranslateComponent implements OnInit {
 

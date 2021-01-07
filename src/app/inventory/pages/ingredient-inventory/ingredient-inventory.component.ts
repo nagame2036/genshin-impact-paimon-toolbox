@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators';
 @Component({
   selector: 'app-ingredient-inventory',
   templateUrl: './ingredient-inventory.component.html',
-  styleUrls: ['./ingredient-inventory.component.sass']
+  styleUrls: ['./ingredient-inventory.component.scss']
 })
 export class IngredientInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 

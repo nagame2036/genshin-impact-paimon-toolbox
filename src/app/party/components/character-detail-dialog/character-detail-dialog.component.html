@@ -6,19 +6,19 @@
       <div gdArea="element" class="party-item-overview-label party-item-overview-row-non-border-top">
         <b>{{ i18nDict('element') | translate }}</b>
       </div>
-      <div gdArea="element-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+      <div gdArea="element-data" class="party-item-overview-row party-item-overview-row-non-border-top">
         {{ i18nDict('elements.' + data.character.element) | translate }}
       </div>
       <div gdArea="weapon" class="party-item-overview-label">
         <b>{{ i18nDict('weapon') | translate }}</b>
       </div>
-      <div gdArea="weapon-data" class="party-item-overview-data">
+      <div gdArea="weapon-data" class="party-item-overview-row">
         {{ i18nDict('weapon-types.' + data.character.weapon) | translate }}
       </div>
       <div gdArea="nation" class="party-item-overview-label">
         <b>{{ i18nDict('nation') | translate }}</b>
       </div>
-      <div gdArea="nation-data" class="party-item-overview-data">
+      <div gdArea="nation-data" class="party-item-overview-row">
         {{ i18nDict('nations.' + (data.character.nation || 0)) | translate }}
       </div>
     </div>

@@ -8,7 +8,7 @@ import {OptimizedStat} from '../../models/optimized-result.model';
 @Component({
   selector: 'app-character-stat-optimizer',
   templateUrl: './character-stat-optimizer.component.html',
-  styleUrls: ['./character-stat-optimizer.component.sass']
+  styleUrls: ['./character-stat-optimizer.component.scss']
 })
 export class CharacterStatOptimizerComponent extends AbstractTranslateComponent implements OnInit {
 

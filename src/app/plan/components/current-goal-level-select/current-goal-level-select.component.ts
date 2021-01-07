@@ -9,7 +9,7 @@ import {AscensionLevel} from '../../../character-and-gear/models/ascension-level
 @Component({
   selector: 'app-current-goal-level-select',
   templateUrl: './current-goal-level-select.component.html',
-  styleUrls: ['./current-goal-level-select.component.sass']
+  styleUrls: ['./current-goal-level-select.component.scss']
 })
 export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent implements OnInit {
 

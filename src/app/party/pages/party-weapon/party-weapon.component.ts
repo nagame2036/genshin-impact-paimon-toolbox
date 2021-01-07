@@ -14,7 +14,7 @@ import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model
 @Component({
   selector: 'app-party-weapon',
   templateUrl: './party-weapon.component.html',
-  styleUrls: ['./party-weapon.component.sass']
+  styleUrls: ['./party-weapon.component.scss']
 })
 export class PartyWeaponComponent extends AbstractTranslateComponent implements OnInit {
 

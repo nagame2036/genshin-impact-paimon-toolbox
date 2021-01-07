@@ -9,7 +9,7 @@ import {map} from 'rxjs/operators';
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
-  styleUrls: ['./inventory-list.component.sass']
+  styleUrls: ['./inventory-list.component.scss']
 })
 export class InventoryListComponent extends AbstractTranslateComponent implements OnChanges {
 

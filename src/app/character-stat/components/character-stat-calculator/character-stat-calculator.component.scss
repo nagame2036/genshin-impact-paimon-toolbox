@@ -1,0 +1,15 @@
+@import 'src/assets/styles/app-form-field';
+
+.character-stat-calculator-page {
+  margin-top: 7px;
+  min-height: 84vh;
+}
+
+.talent-grid {
+  display: flex;
+  margin-top: 8px;
+}
+
+mat-form-field {
+  width: 128px
+}

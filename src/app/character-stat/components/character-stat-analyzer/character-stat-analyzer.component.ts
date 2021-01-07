@@ -7,7 +7,7 @@ import {CharacterStatProfileService} from '../../services/character-stat-profile
 @Component({
   selector: 'app-character-stat-analyzer',
   templateUrl: './character-stat-analyzer.component.html',
-  styleUrls: ['./character-stat-analyzer.component.sass']
+  styleUrls: ['./character-stat-analyzer.component.scss']
 })
 export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent implements OnInit {
 

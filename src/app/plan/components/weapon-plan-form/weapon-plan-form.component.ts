@@ -9,7 +9,7 @@ import {AscensionLevel} from '../../../character-and-gear/models/ascension-level
 @Component({
   selector: 'app-weapon-plan-form',
   templateUrl: './weapon-plan-form.component.html',
-  styleUrls: ['./weapon-plan-form.component.sass']
+  styleUrls: ['./weapon-plan-form.component.scss']
 })
 export class WeaponPlanFormComponent extends AbstractTranslateComponent implements OnInit {
 

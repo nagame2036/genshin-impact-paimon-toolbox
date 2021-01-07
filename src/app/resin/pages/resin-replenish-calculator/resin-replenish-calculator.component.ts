@@ -7,7 +7,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 @Component({
   selector: 'app-resin-replenish-calculator',
   templateUrl: './resin-replenish-calculator.component.html',
-  styleUrls: ['./resin-replenish-calculator.component.sass']
+  styleUrls: ['./resin-replenish-calculator.component.scss']
 })
 export class ResinReplenishCalculatorComponent extends AbstractTranslateComponent implements OnInit {
 

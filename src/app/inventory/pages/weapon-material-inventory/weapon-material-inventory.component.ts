@@ -11,7 +11,7 @@ import {map} from 'rxjs/operators';
 @Component({
   selector: 'app-weapon-material-inventory',
   templateUrl: './weapon-material-inventory.component.html',
-  styleUrls: ['./weapon-material-inventory.component.sass']
+  styleUrls: ['./weapon-material-inventory.component.scss']
 })
 export class WeaponMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 

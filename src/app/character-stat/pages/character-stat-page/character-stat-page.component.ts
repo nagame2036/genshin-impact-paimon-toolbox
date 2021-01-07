@@ -4,7 +4,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 @Component({
   selector: 'app-character-stat-page',
   templateUrl: './character-stat-page.component.html',
-  styleUrls: ['./character-stat-page.component.sass']
+  styleUrls: ['./character-stat-page.component.scss']
 })
 export class CharacterStatPageComponent extends AbstractTranslateComponent implements OnInit {
 

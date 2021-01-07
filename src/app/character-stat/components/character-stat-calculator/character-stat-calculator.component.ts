@@ -8,7 +8,7 @@ import {CharacterStatProfileService} from '../../services/character-stat-profile
 @Component({
   selector: 'app-character-stat-calculator',
   templateUrl: './character-stat-calculator.component.html',
-  styleUrls: ['./character-stat-calculator.component.sass']
+  styleUrls: ['./character-stat-calculator.component.scss']
 })
 export class CharacterStatCalculatorComponent extends AbstractTranslateComponent implements OnInit {
 

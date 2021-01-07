@@ -17,7 +17,7 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
 @Component({
   selector: 'app-character-select-dialog',
   templateUrl: './add-character-dialog.component.html',
-  styleUrls: ['./add-character-dialog.component.sass'],
+  styleUrls: ['./add-character-dialog.component.scss'],
   animations: addItemDialogAnimation
 })
 export class AddCharacterDialogComponent extends AbstractTranslateComponent implements OnInit {

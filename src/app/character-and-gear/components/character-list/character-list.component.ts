@@ -23,7 +23,7 @@ import {PartyCharacter} from '../../models/party-character.model';
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
-  styleUrls: ['./character-list.component.sass']
+  styleUrls: ['./character-list.component.scss']
 })
 export class CharacterListComponent extends AbstractTranslateComponent implements OnChanges {
 

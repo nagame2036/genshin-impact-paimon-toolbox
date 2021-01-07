@@ -7,7 +7,7 @@ import {Ascension} from '../../models/ascension.enum';
 @Component({
   selector: 'app-ascension-level-select',
   templateUrl: './ascension-level-select.component.html',
-  styleUrls: ['./ascension-level-select.component.sass']
+  styleUrls: ['./ascension-level-select.component.scss']
 })
 export class AscensionLevelSelectComponent extends AbstractTranslateComponent implements OnInit {
 

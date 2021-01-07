@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'app-talent-material-inventory',
   templateUrl: './talent-material-inventory.component.html',
-  styleUrls: ['./talent-material-inventory.component.sass']
+  styleUrls: ['./talent-material-inventory.component.scss']
 })
 export class TalentMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
