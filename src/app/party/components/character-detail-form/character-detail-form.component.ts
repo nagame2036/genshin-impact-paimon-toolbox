@@ -7,7 +7,7 @@ import {TalentLevel} from '../../../character-and-gear/models/talent-level.type'
 import {TalentLevelData} from '../../../character-and-gear/models/talent-level-data.model';
 import {TalentService} from '../../../character-and-gear/services/talent.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
-import {CharacterPlanDetail} from '../../../plan/models/character-plan-detail.model';
+import {CharacterPlan} from '../../../plan/models/character-plan.model';
 
 @Component({
   selector: 'app-character-detail-form',
@@ -22,7 +22,7 @@ export class CharacterDetailFormComponent extends AbstractTranslateComponent imp
   character!: PartyCharacter;
 
   @Input()
-  plan!: CharacterPlanDetail;
+  plan!: CharacterPlan;
 
   constellations = rangeList(0, 6) as Constellation[];
 
@@ -34,7 +34,7 @@ export class CharacterDetailFormComponent extends AbstractTranslateComponent imp
   currentChange = new EventEmitter();
 
   @Output()
-  goalChange = new EventEmitter<CharacterPlanDetail>();
+  goalChange = new EventEmitter<CharacterPlan>();
 
   constructor(private talentService: TalentService) {
     super();

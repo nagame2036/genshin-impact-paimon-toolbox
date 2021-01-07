@@ -6,7 +6,7 @@ import {RefineRank} from '../../../character-and-gear/models/refine-rank.type';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {WeaponService} from '../../../character-and-gear/services/weapon.service';
 import {WeaponListComponent} from '../../../character-and-gear/components/weapon-list/weapon-list.component';
-import {WeaponPlanDetail} from '../../../plan/models/weapon-plan-detail.model';
+import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
@@ -22,7 +22,7 @@ export class PartyWeaponListComponent extends AbstractTranslateComponent impleme
 
   weapons: Weapon[] = [];
 
-  plans = new Map<number, WeaponPlanDetail>();
+  plans = new Map<number, WeaponPlan>();
 
   @Output()
   selected = new EventEmitter<Weapon>();
@@ -48,7 +48,7 @@ export class PartyWeaponListComponent extends AbstractTranslateComponent impleme
         switchMap(party => party),
         mergeMap(weapon => this.planner.getPlan(weapon.key ?? -1).pipe(first())),
       )
-      .subscribe(res => this.plans.set(res.id, this.planner.getPlanDetail(res)));
+      .subscribe(plan => this.plans.set(plan.id, plan));
   }
 
   getRefineRank(weapon: Weapon): RefineRank {

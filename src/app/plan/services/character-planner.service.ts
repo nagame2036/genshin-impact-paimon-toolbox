@@ -4,14 +4,12 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterService} from '../../character-and-gear/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {TalentService} from '../../character-and-gear/services/talent.service';
-import {getLevelupPlan, toAscensionLevel} from '../models/levelup-plan.model';
 import {map, switchMap} from 'rxjs/operators';
 import {ItemList} from '../../material/models/item-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
 import {activePlans} from '../utils/party-plans';
-import {CharacterPlanDetail} from '../models/character-plan-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,10 +39,9 @@ export class CharacterPlanner {
     }));
   }
 
-  updatePlan(detail: CharacterPlanDetail): void {
-    const plan = this.getPlanDTO(detail);
+  updatePlan(plan: CharacterPlan): void {
     zip(this.plans, this.database.update(this.storeName, plan)).subscribe(([plans, _]) => {
-      const newPlans = plans.filter(it => it.id !== detail.id);
+      const newPlans = plans.filter(it => it.id !== plan.id);
       newPlans.push(plan);
       this.#plans.next(newPlans);
     });
@@ -60,17 +57,5 @@ export class CharacterPlanner {
         ))
       )
     )));
-  }
-
-  getPlanDTO(detail: CharacterPlanDetail): CharacterPlan {
-    const {id, ascension, level, talents} = detail;
-    const levelup = getLevelupPlan(ascension, level);
-    return {id, levelup, talents};
-  }
-
-  getPlanDetail(plan: CharacterPlan): CharacterPlanDetail {
-    const {id, levelup, talents} = plan;
-    const {ascension, level} = toAscensionLevel(levelup);
-    return {id, ascension, level, talents};
   }
 }

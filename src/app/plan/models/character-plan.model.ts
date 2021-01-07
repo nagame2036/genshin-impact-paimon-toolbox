@@ -1,4 +1,4 @@
-import {LevelupPlan} from './levelup-plan.model';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
 
 export interface CharacterPlan {
@@ -8,7 +8,9 @@ export interface CharacterPlan {
    */
   id: number;
 
-  levelup: LevelupPlan;
+  ascension: Ascension;
+
+  level: number;
 
   talents: TalentLevelData[];
 }

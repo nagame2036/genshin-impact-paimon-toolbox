@@ -5,7 +5,6 @@ import {CharacterService} from '../../../character-and-gear/services/character.s
 import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
-import {CharacterPlanDetail} from '../../../plan/models/character-plan-detail.model';
 
 @Component({
   selector: 'app-character-detail-dialog',
@@ -16,13 +15,10 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
 
   i18nKey = 'party.characters';
 
-  planDetail: CharacterPlanDetail;
-
   constructor(public dialogRef: MatDialogRef<CharacterDetailDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { character: PartyCharacter, plan: CharacterPlan },
               private characterService: CharacterService, private planner: CharacterPlanner) {
     super();
-    this.planDetail = planner.getPlanDetail(data.plan);
   }
 
   ngOnInit(): void {
@@ -33,7 +29,7 @@ export class CharacterDetailDialogComponent extends AbstractTranslateComponent i
   }
 
   savePlan(): void {
-    this.planner.updatePlan(this.planDetail);
+    this.planner.updatePlan(this.data.plan);
   }
 
   remove(id: number): void {

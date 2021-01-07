@@ -7,7 +7,7 @@ import {TalentLevel} from '../../../character-and-gear/models/talent-level.type'
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterService} from '../../../character-and-gear/services/character.service';
 import {CharacterListComponent} from '../../../character-and-gear/components/character-list/character-list.component';
-import {CharacterPlanDetail} from '../../../plan/models/character-plan-detail.model';
+import {CharacterPlan} from '../../../plan/models/character-plan.model';
 import {first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
 import {combineLatest} from 'rxjs';
@@ -23,7 +23,7 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
 
   characters: Character[] = [];
 
-  plans = new Map<number, CharacterPlanDetail>();
+  plans = new Map<number, CharacterPlan>();
 
   @Output()
   selected = new EventEmitter<Character>();
@@ -49,7 +49,7 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
         switchMap(party => party),
         mergeMap(character => this.planner.getPlan(character.id).pipe(first())),
       )
-      .subscribe(res => this.plans.set(res.id, this.planner.getPlanDetail(res)));
+      .subscribe(plan => this.plans.set(plan.id, plan));
   }
 
   getConstellation(item: Character): Constellation {

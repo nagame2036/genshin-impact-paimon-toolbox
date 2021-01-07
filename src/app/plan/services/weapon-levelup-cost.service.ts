@@ -11,7 +11,6 @@ import {WeaponMaterialService} from '../../material/services/weapon-material.ser
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import {toAscensionLevel} from '../models/levelup-plan.model';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 
 @Injectable({
@@ -30,7 +29,7 @@ export class WeaponLevelupCostService {
 
   totalCost(plans: { plan: WeaponPlan, party: PartyWeapon }[]): Observable<ItemList> {
     return from(plans).pipe(
-      switchMap(({plan, party}) => this.cost(party, toAscensionLevel(plan.levelup))),
+      switchMap(({plan, party}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level))),
       take(plans.length),
       reduce((acc, value) => acc.combine(value), new ItemList())
     );

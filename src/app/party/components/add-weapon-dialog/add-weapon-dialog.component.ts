@@ -9,7 +9,7 @@ import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
-import {WeaponPlanDetail} from '../../../plan/models/weapon-plan-detail.model';
+import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 
 @Component({
   selector: 'app-add-weapon-dialog',
@@ -27,7 +27,7 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   selectedWeapon!: PartyWeapon;
 
-  selectedPlanDetail!: WeaponPlanDetail;
+  selectedPlan!: WeaponPlan;
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
@@ -41,7 +41,7 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
   select(weapon: Weapon): void {
     this.selected = true;
     this.selectedWeapon = {...weapon, refine: 1, ascension: Ascension.ZERO, level: 1};
-    this.selectedPlanDetail = {id: weapon.id, ascension: Ascension.ZERO, level: 1};
+    this.selectedPlan = {id: weapon.id, ascension: Ascension.ZERO, level: 1};
   }
 
   reset(): void {
@@ -52,8 +52,8 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
     if (this.selected) {
       const id = this.selectedWeapon.id;
       this.weaponService.addPartyMember(this.selectedWeapon).subscribe(key => {
-        this.selectedPlanDetail.id = key;
-        this.planner.updatePlan(this.selectedPlanDetail);
+        this.selectedPlan.id = key;
+        this.planner.updatePlan(this.selectedPlan);
       });
       this.translator.get(this.i18nDict('weapons.' + id))
         .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))

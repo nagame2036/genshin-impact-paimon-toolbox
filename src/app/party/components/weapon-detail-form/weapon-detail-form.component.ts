@@ -3,7 +3,7 @@ import {AbstractTranslateComponent} from '../../../shared/components/abstract-tr
 import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../character-and-gear/models/refine-rank.type';
-import {WeaponPlanDetail} from '../../../plan/models/weapon-plan-detail.model';
+import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class WeaponDetailFormComponent extends AbstractTranslateComponent implem
   weapon!: PartyWeapon;
 
   @Input()
-  plan!: WeaponPlanDetail;
+  plan!: WeaponPlan;
 
   refineRanks = rangeList(1, 5) as RefineRank[];
 
@@ -27,7 +27,7 @@ export class WeaponDetailFormComponent extends AbstractTranslateComponent implem
   currentChange = new EventEmitter();
 
   @Output()
-  goalChange = new EventEmitter<WeaponPlanDetail>();
+  goalChange = new EventEmitter<WeaponPlan>();
 
   constructor() {
     super();
@@ -37,18 +37,12 @@ export class WeaponDetailFormComponent extends AbstractTranslateComponent implem
   }
 
   setRefineRank(refine: RefineRank): void {
-    if (refine === this.weapon.refine) {
-      return;
-    }
     this.weapon.refine = refine;
     this.emitCurrentChange();
   }
 
   setCurrentLevel(ascensionLevel: AscensionLevel): void {
     const {ascension, level} = ascensionLevel;
-    if (ascension === this.weapon.ascension && level === this.weapon.level) {
-      return;
-    }
     this.weapon.ascension = ascension;
     this.weapon.level = level;
     this.emitCurrentChange();
@@ -56,9 +50,6 @@ export class WeaponDetailFormComponent extends AbstractTranslateComponent implem
 
   setGoalLevel(ascensionLevel: AscensionLevel): void {
     const {ascension, level} = ascensionLevel;
-    if (ascension === this.plan.ascension && level === this.plan.level) {
-      return;
-    }
     this.plan.ascension = ascension;
     this.plan.level = level;
     this.emitGoalChange();

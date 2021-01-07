@@ -5,7 +5,6 @@ import {WeaponService} from '../../../character-and-gear/services/weapon.service
 import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
-import {WeaponPlanDetail} from '../../../plan/models/weapon-plan-detail.model';
 
 @Component({
   selector: 'app-weapon-detail-dialog',
@@ -16,13 +15,10 @@ export class WeaponDetailDialogComponent extends AbstractTranslateComponent impl
 
   i18nKey = 'party.weapons';
 
-  planDetail!: WeaponPlanDetail;
-
   constructor(public dialogRef: MatDialogRef<WeaponDetailDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { weapon: PartyWeapon, plan: WeaponPlan },
               private weaponService: WeaponService, private planner: WeaponPlanner) {
     super();
-    this.planDetail = planner.getPlanDetail(data.plan);
   }
 
   ngOnInit(): void {
@@ -33,7 +29,7 @@ export class WeaponDetailDialogComponent extends AbstractTranslateComponent impl
   }
 
   savePlan(): void {
-    this.planner.updatePlan(this.planDetail);
+    this.planner.updatePlan(this.data.plan);
   }
 
   remove(weapon: PartyWeapon): void {

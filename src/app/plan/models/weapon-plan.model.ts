@@ -1,4 +1,4 @@
-import {LevelupPlan} from './levelup-plan.model';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
 
 export interface WeaponPlan {
 
@@ -7,5 +7,7 @@ export interface WeaponPlan {
    */
   id: number;
 
-  levelup: LevelupPlan;
+  ascension: Ascension;
+
+  level: number;
 }

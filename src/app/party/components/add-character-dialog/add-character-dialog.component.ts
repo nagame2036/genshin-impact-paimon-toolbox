@@ -12,7 +12,7 @@ import {TalentService} from 'src/app/character-and-gear/services/talent.service'
 import {Ascension} from 'src/app/character-and-gear/models/ascension.enum';
 import {CharacterPlanner} from 'src/app/plan/services/character-planner.service';
 import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
-import {CharacterPlanDetail} from '../../../plan/models/character-plan-detail.model';
+import {CharacterPlan} from '../../../plan/models/character-plan.model';
 
 @Component({
   selector: 'app-character-select-dialog',
@@ -30,7 +30,7 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
 
   selectedCharacter!: PartyCharacter;
 
-  selectedPlanDetail!: CharacterPlanDetail;
+  selectedPlan!: CharacterPlan;
 
   constructor(private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
@@ -47,7 +47,7 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
       .filter(it => it.level)
       .map(it => ({id: it.id, level: 1 as TalentLevel}));
     this.selectedCharacter = {...character, constellation: 0, ascension: Ascension.ZERO, level: 1, talents: this.copyTalents(talents)};
-    this.selectedPlanDetail = {id: character.id, ascension: Ascension.ZERO, level: 1, talents: this.copyTalents(talents)};
+    this.selectedPlan = {id: character.id, ascension: Ascension.ZERO, level: 1, talents: this.copyTalents(talents)};
   }
 
   copyTalents(talents: TalentLevelData[]): TalentLevelData[] {
@@ -61,7 +61,7 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
   add(): void {
     if (this.selected) {
       this.characterService.addPartyMember(this.selectedCharacter);
-      this.planner.updatePlan(this.selectedPlanDetail);
+      this.planner.updatePlan(this.selectedPlan);
       this.translator.get(this.i18nDict(`characters.${(this.selectedCharacter.id)}`))
         .pipe(switchMap(name => this.translator.get(this.i18n('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
