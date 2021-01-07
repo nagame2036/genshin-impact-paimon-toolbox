@@ -1,9 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from '../../../character-and-gear/models/character.model';
 import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
-import {Ascension} from '../../../character-and-gear/models/ascension.enum';
-import {Constellation} from '../../../character-and-gear/models/constellation.type';
-import {TalentLevel} from '../../../character-and-gear/models/talent-level.type';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {CharacterService} from '../../../character-and-gear/services/character.service';
 import {CharacterListComponent} from '../../../character-and-gear/components/character-list/character-list.component';
@@ -52,32 +49,12 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
       .subscribe(plan => this.plans.set(plan.id, plan));
   }
 
-  getConstellation(item: Character): Constellation {
-    return (item as PartyCharacter)?.constellation ?? 0;
+  getParty(character: Character): PartyCharacter {
+    return character as PartyCharacter;
   }
 
-  getAscension(item: Character): Ascension {
-    return (item as PartyCharacter)?.ascension ?? Ascension.ZERO;
-  }
-
-  getGoalAscension(item: Character): Ascension {
-    return this.plans.get(item.id)?.ascension ?? Ascension.ZERO;
-  }
-
-  getLevel(item: Character): number {
-    return (item as PartyCharacter)?.level ?? 1;
-  }
-
-  getGoalLevel(item: Character): number {
-    return this.plans.get(item.id)?.level ?? 1;
-  }
-
-  getTalents(item: Character): TalentLevel[] {
-    return (item as PartyCharacter)?.talents.map(it => it.level) ?? [1, 1, 1];
-  }
-
-  getGoalTalent(item: Character, num: number): TalentLevel {
-    return this.plans.get(item.id)?.talents[num].level ?? 1;
+  getPlan(character: PartyCharacter): CharacterPlan | undefined {
+    return this.plans.get(character.id);
   }
 
   onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {

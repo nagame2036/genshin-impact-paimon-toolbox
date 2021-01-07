@@ -8,31 +8,39 @@
     <ng-content select="[list-actions]"></ng-content>
   </div>
   <ng-template let-item #right>
-    <div class="party-item-overview" gdAlignColumns="space-around stretch"
-         gdColumns="repeat(2, auto)" gdRows="repeat(3, 1fr)"
-         gdAreas="refine-rank refine-rank-data | ascension ascension-data | level level-data">
-      <div gdArea="refine-rank" class="party-item-overview-label party-item-overview-row-non-border-top">
-        <b>{{ i18nDict('refine') | translate }}</b>
-      </div>
-      <div gdArea="refine-rank-data" class="party-item-overview-data party-item-overview-row-non-border-top">
-        {{ getRefineRank(item) }}
-      </div>
-      <div gdArea="ascension" class="party-item-overview-label">
-        <b>{{ i18nDict('ascension') | translate }}</b>
-      </div>
-      <div gdArea="ascension-data" class="party-item-overview-data">
-        {{ i18nDict('ascensions.' + getAscension(item)) | translate }}
-        →
-        {{ i18nDict('ascensions.' + getGoalAscension(item)) | translate }}
-      </div>
-      <div gdArea="level" class="party-item-overview-label">
-        <b>{{ i18nDict('level') | translate }}</b>
-      </div>
-      <div gdArea="level-data" class="party-item-overview-data">
-        {{ getLevel(item) }}
-        →
-        {{ getGoalLevel(item) }}
-      </div>
-    </div>
+    <ng-container *ngIf="getParty(item) as party">
+      <ng-container *ngIf="getPlan(party) as plan">
+        <div class="party-item-overview" gdAlignColumns="space-around stretch"
+             gdColumns="55% 45%" gdRows="repeat(3, 1fr)"
+             gdAreas="refine-rank refine-rank-data | ascension ascension-data | level level-data">
+          <div gdArea="refine-rank" class="party-item-overview-label party-item-overview-row-non-border-top">
+            <b>{{ i18nDict('refine') | translate }}</b>
+          </div>
+          <div gdArea="refine-rank-data" class="party-item-overview-data party-item-overview-row-non-border-top">
+            {{ party.refine }}
+          </div>
+          <div gdArea="ascension" class="party-item-overview-label">
+            <b>{{ i18nDict('ascension') | translate }}</b>
+          </div>
+          <div gdArea="ascension-data" class="party-item-overview-data">
+            {{ i18nDict('ascensions.' + party.ascension) | translate }}
+            <ng-container *ngIf="party.ascension < plan.ascension">
+              →
+              {{ i18nDict('ascensions.' + plan.ascension) | translate }}
+            </ng-container>
+          </div>
+          <div gdArea="level" class="party-item-overview-label">
+            <b>{{ i18nDict('level') | translate }}</b>
+          </div>
+          <div gdArea="level-data" class="party-item-overview-data">
+            {{ party.level }}
+            <ng-container *ngIf="party.level < plan.level">
+              →
+              {{ plan.level }}
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </ng-template>
 </app-weapon-list>
