@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
   selector: 'app-character-stat-page',
   templateUrl: './character-stat-page.component.html',
   styleUrls: ['./character-stat-page.component.scss']
 })
-export class CharacterStatPageComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterStatPageComponent implements OnInit {
 
-  i18nKey = 'character-stat';
+  i18n = new I18n('character-stat');
 
   constructor() {
-    super();
   }
 
   ngOnInit(): void {

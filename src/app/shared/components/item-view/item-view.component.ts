@@ -1,14 +1,14 @@
 import {Component, Input} from '@angular/core';
-import {AbstractTranslateComponent} from '../abstract-translate.component';
+import {I18n} from '../../models/i18n.model';
 
 @Component({
   selector: 'app-item-view',
   templateUrl: './item-view.component.html',
   styleUrls: ['./item-view.component.scss']
 })
-export class ItemViewComponent extends AbstractTranslateComponent {
+export class ItemViewComponent {
 
-  i18nKey = 'item-view';
+  i18n = new I18n('item-view');
 
   @Input()
   width = 100;
@@ -28,7 +28,6 @@ export class ItemViewComponent extends AbstractTranslateComponent {
   active = false;
 
   constructor() {
-    super();
   }
 
   get itemKey(): string {

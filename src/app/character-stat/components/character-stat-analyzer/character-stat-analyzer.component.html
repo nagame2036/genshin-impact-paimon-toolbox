@@ -1,17 +1,17 @@
 <div class="character-stat-analyzer-page">
-  <p [translate]="i18n('weight')"
-     [translateParams]="{weight: weight, type: i18nDict('elements.' + dmgType) | translate}">
+  <p [translate]="i18n.module('weight')"
+     [translateParams]="{weight: weight, type: i18n.dict('elements.' + dmgType) | translate}">
   </p>
   <div *ngFor="let f of fields" style="display: flex">
-    <p [translate]="i18n(f.text)" [translateParams]="{
+    <p [translate]="i18n.module(f.text)" [translateParams]="{
            dmgBonus: weight * 10,
-           type: i18nDict('elements.' + dmgType) | translate,
+           type: i18n.dict('elements.' + dmgType) | translate,
            dmg: f.value() | number: '1.1-1'
          }">
     </p>
     <button class="character-stat-analyzer-compare-button" mat-stroked-button (click)="copyAndCompare(f)"
             color="accent">
-      {{ i18n('copy-and-compare') | translate }}
+      {{ i18n.module('copy-and-compare') | translate }}
     </button>
   </div>
 </div>

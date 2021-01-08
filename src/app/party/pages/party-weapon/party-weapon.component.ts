@@ -3,7 +3,7 @@ import {Weapon} from '../../../weapon/models/weapon.model';
 import {MatDialog} from '@angular/material/dialog';
 import {AddWeaponDialogComponent} from '../../components/add-weapon-dialog/add-weapon-dialog.component';
 import {WeaponDetailDialogComponent} from '../../components/weapon-detail-dialog/weapon-detail-dialog.component';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyWeaponListComponent} from '../../../weapon/components/party-weapon-list/party-weapon-list.component';
@@ -16,9 +16,9 @@ import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
   templateUrl: './party-weapon.component.html',
   styleUrls: ['./party-weapon.component.scss']
 })
-export class PartyWeaponComponent extends AbstractTranslateComponent implements OnInit {
+export class PartyWeaponComponent implements OnInit {
 
-  i18nKey = 'weapons';
+  i18n = new I18n('weapons');
 
   multiSelect = false;
 
@@ -30,7 +30,6 @@ export class PartyWeaponComponent extends AbstractTranslateComponent implements 
   list!: PartyWeaponListComponent;
 
   constructor(private dialog: MatDialog, private service: WeaponService, private planner: WeaponPlanner) {
-    super();
   }
 
   ngOnInit(): void {

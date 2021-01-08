@@ -3,11 +3,11 @@ import {InventoryItem} from '../../material/models/inventory-item.model';
 import {MatSelectChange} from '@angular/material/select';
 import {ensureAtLeastOneElement} from '../../shared/utils/collections';
 import {map} from 'rxjs/operators';
-import {AbstractTranslateComponent} from '../../shared/components/abstract-translate.component';
+import {I18n} from '../../shared/models/i18n.model';
 
-export abstract class AbstractSubInventoryComponent extends AbstractTranslateComponent {
+export abstract class AbstractSubInventoryComponent {
 
-  i18nKey = 'inventory';
+  i18n = new I18n('inventory');
 
   filter = new BehaviorSubject<(item: InventoryItem) => boolean>(_ => true);
 

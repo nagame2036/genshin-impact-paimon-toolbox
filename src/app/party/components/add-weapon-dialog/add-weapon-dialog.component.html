@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>{{ i18n('add') | translate }}</h2>
+<h2 mat-dialog-title>{{ i18n.module('add') | translate }}</h2>
 <mat-divider></mat-divider>
 <div mat-dialog-content>
   <button *ngIf="selected" @formTrigger class="expand-list-btn" (click)="reset()">
-    {{ i18n('expand-list') | translate }}
+    {{ i18n.module('expand-list') | translate }}
   </button>
   <div *ngIf="!selected" @listTrigger>
     <app-weapon-list [weapons]="weapons" (selected)="select($event)"></app-weapon-list>
@@ -17,6 +17,6 @@
 </div>
 <div *ngIf="selected" mat-dialog-actions>
   <button mat-flat-button color="primary" [disabled]="!selected" (click)="add()">
-    {{ i18n('add') | translate }}
+    {{ i18n.module('add') | translate }}
   </button>
 </div>

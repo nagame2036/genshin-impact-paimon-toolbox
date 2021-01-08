@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from '../../models/character.model';
 import {PartyCharacter} from '../../models/party-character.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {CharacterService} from '../../services/character.service';
 import {CharacterListComponent} from '../character-list/character-list.component';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
@@ -14,9 +14,9 @@ import {combineLatest} from 'rxjs';
   templateUrl: './party-character-list.component.html',
   styleUrls: ['./party-character-list.component.scss']
 })
-export class PartyCharacterListComponent extends AbstractTranslateComponent implements OnInit {
+export class PartyCharacterListComponent implements OnInit {
 
-  i18nKey = 'characters';
+  i18n = new I18n('characters');
 
   characters: Character[] = [];
 
@@ -35,7 +35,6 @@ export class PartyCharacterListComponent extends AbstractTranslateComponent impl
   list!: CharacterListComponent;
 
   constructor(private characterService: CharacterService, private planner: CharacterPlanner) {
-    super();
   }
 
   ngOnInit(): void {

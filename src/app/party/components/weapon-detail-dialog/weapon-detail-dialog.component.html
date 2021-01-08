@@ -4,10 +4,10 @@
          gdColumns="repeat(2, auto)" gdRows="repeat(1, 1fr)"
          gdAreas="weapon weapon-data">
       <div gdArea="weapon" class="party-item-overview-label party-item-overview-row-non-border-top">
-        <b>{{ i18nDict('type') | translate }}</b>
+        <b>{{ i18n.dict('type') | translate }}</b>
       </div>
       <div gdArea="weapon-data" class="party-item-overview-row party-item-overview-row-non-border-top">
-        {{ i18nDict('weapon-types.' + data.weapon.type) | translate }}
+        {{ i18n.dict('weapon-types.' + data.weapon.type) | translate }}
       </div>
     </div>
   </app-item-view>
@@ -17,6 +17,6 @@
 </div>
 <div mat-dialog-actions>
   <button mat-stroked-button (click)="remove(data.weapon)">
-    {{ i18n('remove') | translate }}
+    {{ i18n.module('remove') | translate }}
   </button>
 </div>

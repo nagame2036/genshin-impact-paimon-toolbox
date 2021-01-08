@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
 import {PartyWeapon} from '../../models/party-weapon.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
@@ -14,9 +14,9 @@ import {combineLatest} from 'rxjs';
   templateUrl: './party-weapon-list.component.html',
   styleUrls: ['./party-weapon-list.component.scss']
 })
-export class PartyWeaponListComponent extends AbstractTranslateComponent implements OnInit {
+export class PartyWeaponListComponent implements OnInit {
 
-  i18nKey = 'weapons';
+  i18n = new I18n('weapons');
 
   weapons: Weapon[] = [];
 
@@ -35,7 +35,6 @@ export class PartyWeaponListComponent extends AbstractTranslateComponent impleme
   list!: WeaponListComponent;
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner) {
-    super();
   }
 
   ngOnInit(): void {

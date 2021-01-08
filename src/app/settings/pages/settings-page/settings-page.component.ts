@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
   styleUrls: ['./settings-page.component.scss']
 })
-export class SettingsPageComponent extends AbstractTranslateComponent implements OnInit {
+export class SettingsPageComponent implements OnInit {
 
-  i18nKey = 'settings';
+  i18n = new I18n('settings');
 
   currentLanguage = this.translator.defaultLang;
 
@@ -20,7 +20,6 @@ export class SettingsPageComponent extends AbstractTranslateComponent implements
   ];
 
   constructor(private translator: TranslateService) {
-    super();
   }
 
   ngOnInit(): void {

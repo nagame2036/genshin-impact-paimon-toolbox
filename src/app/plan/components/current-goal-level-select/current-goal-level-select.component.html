@@ -2,10 +2,10 @@
                          [current]="ascension" (currentChange)="setAscension($event)"
                          [goal]="goalAscension" (goalChange)="setGoalAscension($event)"
                          [valueDisplay]="getAscension">
-  {{ i18nDict(label + '-ascension-label') | translate }}
+  {{ i18n.dict(label + '-ascension-label') | translate }}
 </app-current-goal-select>
 <app-current-goal-select [currentOptions]="levels" [goalOptions]="goalLevels"
                          [current]="level" (currentChange)="setLevel($event)"
                          [goal]="goalLevel" (goalChange)="setGoalLevel($event)">
-  {{ i18nDict(label + '-level-label') | translate }}
+  {{ i18n.dict(label + '-level-label') | translate }}
 </app-current-goal-select>

@@ -2,14 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {coerceIn} from '../../../shared/utils/coerce';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
   selector: 'app-resin-replenish-calculator',
   templateUrl: './resin-replenish-calculator.component.html',
   styleUrls: ['./resin-replenish-calculator.component.scss']
 })
-export class ResinReplenishCalculatorComponent extends AbstractTranslateComponent implements OnInit {
+export class ResinReplenishCalculatorComponent implements OnInit {
 
   private static renderOptions = {
     hour12: false,
@@ -21,7 +21,7 @@ export class ResinReplenishCalculatorComponent extends AbstractTranslateComponen
     minute: 'numeric'
   };
 
-  i18nKey = 'resin.replenish';
+  i18n = new I18n('resin.replenish');
 
   resin = new FormControl(0, [Validators.min(0), Validators.max(160)]);
 
@@ -37,7 +37,6 @@ export class ResinReplenishCalculatorComponent extends AbstractTranslateComponen
   ];
 
   constructor(private translator: TranslateService) {
-    super();
   }
 
   ngOnInit(): void {

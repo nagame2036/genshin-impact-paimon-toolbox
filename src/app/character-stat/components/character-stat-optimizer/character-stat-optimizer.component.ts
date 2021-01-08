@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CharacterStatProfile} from '../../models/character-stat-profile.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {CharacterStatOptimizerService} from '../../services/character-stat-optimizer.service';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 import {OptimizedStat} from '../../models/optimized-result.model';
@@ -10,9 +10,9 @@ import {OptimizedStat} from '../../models/optimized-result.model';
   templateUrl: './character-stat-optimizer.component.html',
   styleUrls: ['./character-stat-optimizer.component.scss']
 })
-export class CharacterStatOptimizerComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterStatOptimizerComponent implements OnInit {
 
-  i18nKey = 'character-stat.optimizer';
+  i18n = new I18n('character-stat.optimizer');
 
   profile!: CharacterStatProfile;
 
@@ -52,7 +52,6 @@ export class CharacterStatOptimizerComponent extends AbstractTranslateComponent 
   ];
 
   constructor(private optimizer: CharacterStatOptimizerService, private profileService: CharacterStatProfileService) {
-    super();
   }
 
   get atkPct(): number {

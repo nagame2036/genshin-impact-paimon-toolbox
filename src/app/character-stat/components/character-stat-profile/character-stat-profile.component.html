@@ -3,11 +3,11 @@
     <app-ascension-level-select label="character" (levelChange)="level.copyFrom($event); calc(true)">
     </app-ascension-level-select>
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18n('dmg-type') | translate }}</mat-label>
+      <mat-label>{{ i18n.module('dmg-type') | translate }}</mat-label>
       <mat-select [formControl]="dmgType" (selectionChange)="calc(true)">
         <mat-option *ngFor="let t of dmgTypes" [value]="t">
-          <span [translate]="i18nDict('dmg')"
-                [translateParams]="{type: i18nDict('elements.' + t) | translate}">
+          <span [translate]="i18n.dict('dmg')"
+                [translateParams]="{type: i18n.dict('elements.' + t) | translate}">
           </span>
         </mat-option>
       </mat-select>
@@ -19,9 +19,9 @@
       <mat-form-field *ngFor="let f of s.fields, let i = index" class="app-form-field"
                       (change)="f.correct(); calc(s.label == 'current')"
                       (input)="calc(s.label == 'current')" appearance="outline" floatLabel="always">
-        <mat-label [translate]="i18n(s.labels[i])" [translateParams]="{
-                      label: i18n(s.label) | translate,
-                      type: i18nDict('elements.' + dmgType.value) | translate
+        <mat-label [translate]="i18n.module(s.labels[i])" [translateParams]="{
+                      label: i18n.module(s.label) | translate,
+                      type: i18n.dict('elements.' + dmgType.value) | translate
                    }">
         </mat-label>
         <input [formControl]="f.control" [max]="f.max" [min]="f.min" matInput required type="number"/>
@@ -29,18 +29,19 @@
       </mat-form-field>
       <mat-form-field *ngFor="let f of s.dmgFields, let i = index"
                       appearance="outline" floatLabel="always" class="app-form-field">
-        <mat-label [translate]="i18n(s.dmgLabels[i])" [translateParams]="{label: i18n(s.label) | translate}">
+        <mat-label [translate]="i18n.module(s.dmgLabels[i])"
+                   [translateParams]="{label: i18n.module(s.label) | translate}">
         </mat-label>
         <input [value]="f() | number: '1.1-1'" matInput/>
       </mat-form-field>
       <button mat-stroked-button class="copy-button" color="accent" (click)="copy(s)">
-        <span>{{ i18n('copy-to') | translate: {label: i18n(s.copyLabel) | translate} }}</span>
+        <span>{{ i18n.module('copy-to') | translate: {label: i18n.module(s.copyLabel) | translate} }}</span>
       </button>
     </div>
     <div fxLayout="column">
       <div *ngFor="let f of comparer.fields" class="app-form-field">
         <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>{{ i18n('change') | translate }}</mat-label>
+          <mat-label>{{ i18n.module('change') | translate }}</mat-label>
           <input [value]="comparer.calc(f) | number: '1.1-1'" matInput readonly/>
           <div matSuffix>%</div>
         </mat-form-field>

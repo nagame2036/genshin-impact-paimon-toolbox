@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from 'src/app/shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {Weapon} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -16,9 +16,9 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
   styleUrls: ['./add-weapon-dialog.component.scss'],
   animations: addItemDialogAnimation
 })
-export class AddWeaponDialogComponent extends AbstractTranslateComponent implements OnInit {
+export class AddWeaponDialogComponent implements OnInit {
 
-  i18nKey = 'weapons';
+  i18n = new I18n('weapons');
 
   weapons: Weapon[] = [];
 
@@ -30,7 +30,6 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
-    super();
   }
 
   ngOnInit(): void {
@@ -54,8 +53,8 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
         this.selectedPlan.id = key;
         this.planner.updatePlan(this.selectedPlan);
       });
-      this.translator.get(this.i18nDict('weapons.' + id))
-        .pipe(mergeMap(name => this.translator.get(this.i18n('add-success'), {name})))
+      this.translator.get(this.i18n.dict('weapons.' + id))
+        .pipe(mergeMap(name => this.translator.get(this.i18n.module('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
       this.reset();
     }

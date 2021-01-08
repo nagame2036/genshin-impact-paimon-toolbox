@@ -11,7 +11,7 @@ import {
   ViewChildren
 } from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {weaponTypeList} from '../../models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
@@ -24,9 +24,9 @@ import {PartyWeapon} from '../../models/party-weapon.model';
   templateUrl: './weapon-list.component.html',
   styleUrls: ['./weapon-list.component.scss']
 })
-export class WeaponListComponent extends AbstractTranslateComponent implements OnChanges {
+export class WeaponListComponent implements OnChanges {
 
-  i18nKey = 'weapons';
+  i18n = new I18n('weapons');
 
   @Input()
   party = false;
@@ -71,7 +71,6 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   typeFilter = this.types;
 
   constructor() {
-    super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

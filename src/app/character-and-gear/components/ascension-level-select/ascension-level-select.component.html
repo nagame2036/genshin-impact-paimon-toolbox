@@ -1,14 +1,14 @@
 <div [fxLayout]="horizontal ? 'row' : 'column'">
   <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
-    <mat-label>{{ i18nDict(label + '-ascension-label') | translate }}</mat-label>
+    <mat-label>{{ i18n.dict(label + '-ascension-label') | translate }}</mat-label>
     <mat-select [(value)]="ascension" (selectionChange)="change()">
       <mat-option *ngFor="let a of ascensions; let i = index" [value]="a">
-        {{ i18nDict('ascensions.' + i) | translate }}
+        {{ i18n.dict('ascensions.' + i) | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" [style.width.px]="width">
-    <mat-label>{{ i18nDict(label + '-level-label') | translate }}</mat-label>
+    <mat-label>{{ i18n.dict(label + '-level-label') | translate }}</mat-label>
     <mat-select [(value)]="level" (selectionChange)="change()">
       <mat-option *ngFor="let level of levels" [value]="level">
         {{ level }}

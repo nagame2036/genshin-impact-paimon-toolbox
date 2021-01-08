@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CharacterStat} from '../../models/character-stat.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {CharacterStatComparer} from '../../models/character-stat-comparer.model';
 import {FormControl} from '@angular/forms';
 import {DamageType} from '../../models/damage-type.enum';
@@ -12,9 +12,9 @@ import {CharacterStatProfileService} from '../../services/character-stat-profile
   templateUrl: './character-stat-profile.component.html',
   styleUrls: ['./character-stat-profile.component.scss']
 })
-export class CharacterStatProfileComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterStatProfileComponent implements OnInit {
 
-  i18nKey = 'character-stat.profile';
+  i18n = new I18n('character-stat.profile');
 
   level = new AscensionLevel();
 
@@ -39,7 +39,6 @@ export class CharacterStatProfileComponent extends AbstractTranslateComponent im
   comparer = new CharacterStatComparer(this.current, this.compared);
 
   constructor(private profileService: CharacterStatProfileService) {
-    super();
     this.current.copyTarget = this.compared;
     this.compared.copyTarget = this.current;
   }

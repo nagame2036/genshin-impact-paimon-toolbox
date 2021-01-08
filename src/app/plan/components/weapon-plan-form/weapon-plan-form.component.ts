@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../weapon/models/refine-rank.type';
@@ -11,9 +11,9 @@ import {AscensionLevel} from '../../../character-and-gear/models/ascension-level
   templateUrl: './weapon-plan-form.component.html',
   styleUrls: ['./weapon-plan-form.component.scss']
 })
-export class WeaponPlanFormComponent extends AbstractTranslateComponent implements OnInit {
+export class WeaponPlanFormComponent implements OnInit {
 
-  i18nKey = 'party';
+  i18n = new I18n('party');
 
   @Input()
   weapon!: PartyWeapon;
@@ -30,7 +30,6 @@ export class WeaponPlanFormComponent extends AbstractTranslateComponent implemen
   goalChange = new EventEmitter<WeaponPlan>();
 
   constructor() {
-    super();
   }
 
   ngOnInit(): void {

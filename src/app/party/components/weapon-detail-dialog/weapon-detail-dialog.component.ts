@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {WeaponService} from '../../../weapon/services/weapon.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
@@ -11,14 +11,13 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
   templateUrl: './weapon-detail-dialog.component.html',
   styleUrls: ['./weapon-detail-dialog.component.scss']
 })
-export class WeaponDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
+export class WeaponDetailDialogComponent implements OnInit {
 
-  i18nKey = 'weapons';
+  i18n = new I18n('weapons');
 
   constructor(public dialogRef: MatDialogRef<WeaponDetailDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { weapon: PartyWeapon, plan: WeaponPlan },
               private weaponService: WeaponService, private planner: WeaponPlanner) {
-    super();
   }
 
   ngOnInit(): void {

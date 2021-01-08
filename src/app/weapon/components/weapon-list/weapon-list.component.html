@@ -1,15 +1,15 @@
 <div style="display: block; margin-top: 12px">
   <div fxLayout="row" fxLayoutGap="4px">
     <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18nDict('sort') | translate }}</mat-label>
+      <mat-label>{{ i18n.dict('sort') | translate }}</mat-label>
       <mat-select [value]="sort" (selectionChange)="sort = $event.value; update()">
         <mat-option *ngFor="let f of sortFields" [value]="f">
-          {{ i18nDict(f) | translate }}
+          {{ i18n.dict(f) | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18nDict('rarity') | translate }}</mat-label>
+      <mat-label>{{ i18n.dict('rarity') | translate }}</mat-label>
       <mat-select [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)" multiple>
         <mat-option *ngFor="let rarity of rarities" [value]="rarity">
           {{ rarity }}
@@ -17,10 +17,10 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18nDict('type') | translate }}</mat-label>
+      <mat-label>{{ i18n.dict('type') | translate }}</mat-label>
       <mat-select [value]="typeFilter" (selectionChange)="changeTypeFilter($event)" multiple>
         <mat-option *ngFor="let t of types" [value]="t">
-          {{ i18nDict('weapon-types.' + t) | translate }}
+          {{ i18n.dict('weapon-types.' + t) | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -32,7 +32,7 @@
       <div image-top-left>
         <img class="weapon-type-hint"
              [src]="'assets/images/weapon-types/' + item.type + '.png'"
-             [alt]="i18nDict('weapon-types.' + item.type) | translate">
+             [alt]="i18n.dict('weapon-types.' + item.type) | translate">
       </div>
       <ng-container *ngIf="party && rightTemplateRef" container-right
                     [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">

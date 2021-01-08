@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../../character-and-gear/models/ascension.type';
 import {Observable} from 'rxjs';
@@ -11,9 +11,9 @@ import {AscensionLevel} from '../../../character-and-gear/models/ascension-level
   templateUrl: './current-goal-level-select.component.html',
   styleUrls: ['./current-goal-level-select.component.scss']
 })
-export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent implements OnInit {
+export class CurrentGoalLevelSelectComponent implements OnInit {
 
-  i18nKey = 'party.current-goal-level-select';
+  i18n = new I18n('party.current-goal-level-select');
 
   @Input()
   label!: string;
@@ -45,7 +45,6 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
   goalChange = new EventEmitter<AscensionLevel>();
 
   constructor(public translator: TranslateService) {
-    super();
   }
 
   ngOnInit(): void {

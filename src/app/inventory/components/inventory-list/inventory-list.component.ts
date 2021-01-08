@@ -1,6 +1,6 @@
 import {Component, ContentChild, Input, OnChanges, SimpleChanges, TemplateRef} from '@angular/core';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {InventoryService} from '../../services/inventory.service';
 import {Observable, Subject} from 'rxjs';
@@ -11,9 +11,9 @@ import {map} from 'rxjs/operators';
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss']
 })
-export class InventoryListComponent extends AbstractTranslateComponent implements OnChanges {
+export class InventoryListComponent implements OnChanges {
 
-  i18nKey = 'inventory';
+  i18n = new I18n('inventory');
 
   @Input()
   subtitle!: string;
@@ -30,7 +30,6 @@ export class InventoryListComponent extends AbstractTranslateComponent implement
   bottomTemplateRef!: TemplateRef<any>;
 
   constructor(private inventory: InventoryService) {
-    super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -2,17 +2,17 @@
   <div fxLayout="row">
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
                     (change)="enemyLevel.correct(); this.calc()" (input)="this.calc()">
-      <mat-label [translate]="i18nDict('level')"
-                 [translateParams]="{label: i18nDict('enemy') | translate}">
+      <mat-label [translate]="i18n.dict('level')"
+                 [translateParams]="{label: i18n.dict('enemy') | translate}">
       </mat-label>
       <input [formControl]="enemyLevel.control" [max]="enemyLevel.max" [min]="enemyLevel.min"
              matInput required type="number"/>
     </mat-form-field>
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
                     (change)="enemyElementalRes.correct(); this.calc()" (input)="this.calc()">
-      <mat-label [translate]="i18nDict('res')" [translateParams]="{
-                     label: i18nDict('enemy') | translate,
-                     type: i18nDict('elements.' + dmgType) | translate
+      <mat-label [translate]="i18n.dict('res')" [translateParams]="{
+                     label: i18n.dict('enemy') | translate,
+                     type: i18n.dict('elements.' + dmgType) | translate
                    }">
       </mat-label>
       <input [formControl]="enemyElementalRes.control" [max]="enemyElementalRes.max" [min]="enemyElementalRes.min"
@@ -20,9 +20,9 @@
       <div matSuffix>%</div>
     </mat-form-field>
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label [translate]="i18nDict('dmg-res')" [translateParams]="{
-                     label: i18nDict('enemy') | translate,
-                     type: i18nDict('elements.' + dmgType) | translate
+      <mat-label [translate]="i18n.dict('dmg-res')" [translateParams]="{
+                     label: i18n.dict('enemy') | translate,
+                     type: i18n.dict('elements.' + dmgType) | translate
                    }">
       </mat-label>
       <input [value]="enemyDmgRes | number: '1.1-1'" matInput readonly/>
@@ -34,13 +34,13 @@
     <div fxLayout="column" *ngFor="let t of talents, let i = index">
       <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
                       (change)="t.correct(); this.calc()" (input)="this.calc()">
-        <mat-label>{{ i18nDict('talent') | translate: {num: i + 1} }}</mat-label>
+        <mat-label>{{ i18n.dict('talent') | translate: {num: i + 1} }}</mat-label>
         <input [formControl]="t.control" [max]="t.max" [min]="t.min" matInput required type="number"/>
         <div matSuffix>%</div>
       </mat-form-field>
       <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
                       *ngFor="let dmg of dmgFields[i], let j = index">
-        <mat-label>{{ i18nDict(dmgLabels[j]) | translate: {num: i + 1} }}</mat-label>
+        <mat-label>{{ i18n.dict(dmgLabels[j]) | translate: {num: i + 1} }}</mat-label>
         <input [value]="dmg | number: '1.1-1'" matInput readonly/>
       </mat-form-field>
     </div>

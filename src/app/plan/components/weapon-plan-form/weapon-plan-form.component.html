@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
   <mat-label>
-    {{ i18nDict('refine-rank') | translate }}
+    {{ i18n.dict('refine-rank') | translate }}
   </mat-label>
   <mat-select [value]="weapon.refine" (selectionChange)="setRefineRank($event.value)">
     <mat-option *ngFor="let c of refineRanks" [value]="c">
@@ -13,5 +13,5 @@
                                (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
 </app-current-goal-level-select>
 <div *ngFor="let bonus of weapon.expBonus || []">
-  {{ i18n('exp-bonus') | translate: bonus }}
+  {{ i18n.module('exp-bonus') | translate: bonus }}
 </div>

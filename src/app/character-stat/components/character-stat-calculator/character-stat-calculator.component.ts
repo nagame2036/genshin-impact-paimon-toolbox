@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {CharacterStatProfile} from '../../models/character-stat-profile.model';
 import {StatField} from '../../models/stat-field.model';
 import {DamageType} from '../../models/damage-type.enum';
@@ -10,9 +10,9 @@ import {CharacterStatProfileService} from '../../services/character-stat-profile
   templateUrl: './character-stat-calculator.component.html',
   styleUrls: ['./character-stat-calculator.component.scss']
 })
-export class CharacterStatCalculatorComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterStatCalculatorComponent implements OnInit {
 
-  i18nKey = 'character-stat';
+  i18n = new I18n('character-stat');
 
   profile = new CharacterStatProfile();
 
@@ -41,7 +41,6 @@ export class CharacterStatCalculatorComponent extends AbstractTranslateComponent
   ];
 
   constructor(private profileService: CharacterStatProfileService) {
-    super();
   }
 
   get dmgType(): DamageType {

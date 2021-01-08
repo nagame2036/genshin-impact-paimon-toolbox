@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {DamageType} from '../../models/damage-type.enum';
 import {CharacterStatProfile} from '../../models/character-stat-profile.model';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
@@ -9,9 +9,9 @@ import {CharacterStatProfileService} from '../../services/character-stat-profile
   templateUrl: './character-stat-analyzer.component.html',
   styleUrls: ['./character-stat-analyzer.component.scss']
 })
-export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterStatAnalyzerComponent implements OnInit {
 
-  i18nKey = 'character-stat.analyzer';
+  i18n = new I18n('character-stat.analyzer');
 
   profile!: CharacterStatProfile;
 
@@ -25,7 +25,6 @@ export class CharacterStatAnalyzerComponent extends AbstractTranslateComponent i
   profiles = new Map<{ text: string, value: () => number }, CharacterStatProfile>();
 
   constructor(private profileService: CharacterStatProfileService) {
-    super();
   }
 
   get weight(): number {

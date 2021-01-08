@@ -1,14 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractTranslateComponent} from '../abstract-translate.component';
+import {I18n} from '../../models/i18n.model';
 
 @Component({
   selector: 'app-multi-select',
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss']
 })
-export class MultiSelectComponent extends AbstractTranslateComponent implements OnInit {
+export class MultiSelectComponent implements OnInit {
 
-  i18nKey = 'shared.multi-select';
+  i18n = new I18n('shared.multi-select');
 
   @Input()
   multiSelect = false;
@@ -20,7 +20,6 @@ export class MultiSelectComponent extends AbstractTranslateComponent implements 
   changed = new EventEmitter<{ multiSelect: boolean, selectAll: boolean }>();
 
   constructor() {
-    super();
   }
 
   ngOnInit(): void {

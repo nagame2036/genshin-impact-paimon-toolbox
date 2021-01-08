@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {AscensionLevel} from '../../models/ascension-level.model';
 import {Ascension} from '../../models/ascension.type';
@@ -9,9 +9,9 @@ import {Ascension} from '../../models/ascension.type';
   templateUrl: './ascension-level-select.component.html',
   styleUrls: ['./ascension-level-select.component.scss']
 })
-export class AscensionLevelSelectComponent extends AbstractTranslateComponent implements OnInit {
+export class AscensionLevelSelectComponent implements OnInit {
 
-  i18nKey = 'shared.ascension-level';
+  i18n = new I18n('shared.ascension-level');
 
   @Input()
   width = 128;
@@ -32,7 +32,6 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   levelChange = new EventEmitter<AscensionLevel>();
 
   constructor() {
-    super();
   }
 
   get levels(): number[] {

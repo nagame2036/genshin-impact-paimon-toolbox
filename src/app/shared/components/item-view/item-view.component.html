@@ -8,7 +8,7 @@
       <div class="item-container-top-right">
         <ng-content select="[image-top-right]"></ng-content>
       </div>
-      <img class="item-img" [src]="src" [alt]="i18nDict(itemKey) | translate"/>
+      <img class="item-img" [src]="src" [alt]="i18n.dict(itemKey) | translate"/>
     </div>
     <div class="item-container-stars">
       <svg *ngFor="let r of stars" width="16" height="16">
@@ -19,7 +19,7 @@
       </svg>
     </div>
     <span style="font-size: 10px; text-align: center">
-      {{ i18nDict(itemKey) | translate }}
+      {{ i18n.dict(itemKey) | translate }}
     </span>
     <div class="item-container-bottom">
       <ng-content select="[image-bottom]"></ng-content>

@@ -2,7 +2,7 @@
   <nav mat-tab-nav-bar>
     <a mat-tab-link *ngFor="let link of links"
        [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
-      {{ i18nDict(link) | translate }}
+      {{ i18n.dict(link) | translate }}
     </a>
   </nav>
   <router-outlet></router-outlet>

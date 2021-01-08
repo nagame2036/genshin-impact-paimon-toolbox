@@ -1,19 +1,18 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
   selector: 'app-remove-confirm-dialog',
   templateUrl: './remove-confirm-dialog.component.html',
   styleUrls: ['./remove-confirm-dialog.component.scss']
 })
-export class RemoveConfirmDialogComponent extends AbstractTranslateComponent implements OnInit {
+export class RemoveConfirmDialogComponent implements OnInit {
 
-  i18nKey = 'party';
+  i18n = new I18n('party');
 
   constructor(private dialog: MatDialogRef<RemoveConfirmDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { category: string, items: { id: number, rarity: number }[] }) {
-    super();
   }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@
     <app-multi-select [selectAll]="selectAll" (changed)="onMultiSelectChange($event)">
     </app-multi-select>
     <button *ngIf="selectedItems.length > 0" type="button" mat-stroked-button color="warn" (click)="openRemoveDialog()">
-      {{ i18n('remove') | translate }}
+      {{ i18n.module('remove') | translate }}
     </button>
   </div>
 </app-party-weapon-list>

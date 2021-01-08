@@ -3,7 +3,7 @@
                  #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
-      {{ i18n('add') | translate }}
+      {{ i18n.module('add') | translate }}
     </button>
     <ng-content select="[list-actions]"></ng-content>
   </div>
@@ -14,23 +14,23 @@
              gdColumns="55% 45%" gdRows="repeat(3, 1fr)"
              gdAreas="refine-rank refine-rank-data | ascension ascension-data | level level-data">
           <div gdArea="refine-rank" class="party-item-overview-label party-item-overview-row-non-border-top">
-            <b>{{ i18nDict('refine') | translate }}</b>
+            <b>{{ i18n.dict('refine') | translate }}</b>
           </div>
           <div gdArea="refine-rank-data" class="party-item-overview-row party-item-overview-row-non-border-top">
             {{ party.refine }}
           </div>
           <div gdArea="ascension" class="party-item-overview-label">
-            <b>{{ i18nDict('ascension') | translate }}</b>
+            <b>{{ i18n.dict('ascension') | translate }}</b>
           </div>
           <div gdArea="ascension-data" class="party-item-overview-row">
-            {{ i18nDict('ascensions.' + party.ascension) | translate }}
+            {{ i18n.dict('ascensions.' + party.ascension) | translate }}
             <ng-container *ngIf="party.ascension < plan.ascension">
               →
-              {{ i18nDict('ascensions.' + plan.ascension) | translate }}
+              {{ i18n.dict('ascensions.' + plan.ascension) | translate }}
             </ng-container>
           </div>
           <div gdArea="level" class="party-item-overview-label">
-            <b>{{ i18nDict('level') | translate }}</b>
+            <b>{{ i18n.dict('level') | translate }}</b>
           </div>
           <div gdArea="level-data" class="party-item-overview-row">
             {{ party.level }}

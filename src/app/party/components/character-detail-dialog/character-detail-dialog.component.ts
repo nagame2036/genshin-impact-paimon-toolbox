@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CharacterService} from '../../../character/services/character.service';
 import {PartyCharacter} from '../../../character/models/party-character.model';
@@ -11,14 +11,13 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
   templateUrl: './character-detail-dialog.component.html',
   styleUrls: ['./character-detail-dialog.component.scss']
 })
-export class CharacterDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterDetailDialogComponent implements OnInit {
 
-  i18nKey = 'characters';
+  i18n = new I18n('characters');
 
   constructor(public dialogRef: MatDialogRef<CharacterDetailDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { character: PartyCharacter, plan: CharacterPlan },
               private characterService: CharacterService, private planner: CharacterPlanner) {
-    super();
   }
 
   ngOnInit(): void {

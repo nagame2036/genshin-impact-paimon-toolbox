@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {PartyCharacter} from '../../../character/models/party-character.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Constellation} from '../../../character/models/constellation.type';
@@ -14,9 +14,9 @@ import {CharacterPlan} from '../../models/character-plan.model';
   templateUrl: './character-plan-form.component.html',
   styleUrls: ['./character-plan-form.component.scss']
 })
-export class CharacterPlanFormComponent extends AbstractTranslateComponent implements OnInit {
+export class CharacterPlanFormComponent implements OnInit {
 
-  i18nKey = 'party';
+  i18n = new I18n('party');
 
   @Input()
   character!: PartyCharacter;
@@ -37,7 +37,6 @@ export class CharacterPlanFormComponent extends AbstractTranslateComponent imple
   goalChange = new EventEmitter<CharacterPlan>();
 
   constructor(private talentService: TalentService) {
-    super();
   }
 
   ngOnInit(): void {
@@ -47,15 +46,15 @@ export class CharacterPlanFormComponent extends AbstractTranslateComponent imple
 
   getConstellationText(constellation: Constellation): string {
     const text = constellation === 0 ? 'none' : `constellations.${this.character.id}.${constellation}`;
-    return this.i18nDict(text);
+    return this.i18n.dict(text);
   }
 
   talentLabel(talent: TalentLevelData): string {
-    return this.i18nDict('talent-labels.' + talent.id % 10);
+    return this.i18n.dict('talent-labels.' + talent.id % 10);
   }
 
   talentName(talent: TalentLevelData): string {
-    return this.i18nDict('talents.' + talent.id);
+    return this.i18n.dict('talents.' + talent.id);
   }
 
   setConstellation(constellation: Constellation): void {

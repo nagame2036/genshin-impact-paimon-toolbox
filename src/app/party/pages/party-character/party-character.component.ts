@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddCharacterDialogComponent} from '../../components/add-character-dialog/add-character-dialog.component';
 import {CharacterDetailDialogComponent} from '../../components/character-detail-dialog/character-detail-dialog.component';
 import {Character} from '../../../character/models/character.model';
-import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {PartyCharacterListComponent} from '../../../character/components/party-character-list/party-character-list.component';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {CharacterService} from '../../../character/services/character.service';
@@ -15,9 +15,9 @@ import {first} from 'rxjs/operators';
   templateUrl: './party-character.component.html',
   styleUrls: ['./party-character.component.scss']
 })
-export class PartyCharacterComponent extends AbstractTranslateComponent implements OnInit {
+export class PartyCharacterComponent implements OnInit {
 
-  i18nKey = 'characters';
+  i18n = new I18n('characters');
 
   multiSelect = false;
 
@@ -29,7 +29,6 @@ export class PartyCharacterComponent extends AbstractTranslateComponent implemen
   list!: PartyCharacterListComponent;
 
   constructor(private dialog: MatDialog, private service: CharacterService, private planner: CharacterPlanner) {
-    super();
   }
 
   ngOnInit(): void {

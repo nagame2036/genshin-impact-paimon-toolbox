@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Character} from 'src/app/character/models/character.model';
-import {AbstractTranslateComponent} from 'src/app/shared/components/abstract-translate.component';
+import {I18n} from '../../../shared/models/i18n.model';
 import {CharacterService} from 'src/app/character/services/character.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,9 +19,9 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
   styleUrls: ['./add-character-dialog.component.scss'],
   animations: addItemDialogAnimation
 })
-export class AddCharacterDialogComponent extends AbstractTranslateComponent implements OnInit {
+export class AddCharacterDialogComponent implements OnInit {
 
-  i18nKey = 'characters';
+  i18n = new I18n('characters');
 
   characters: Character[] = [];
 
@@ -33,7 +33,6 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
 
   constructor(private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
-    super();
   }
 
   ngOnInit(): void {
@@ -61,8 +60,8 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
     if (this.selected) {
       this.characterService.addPartyMember(this.selectedCharacter);
       this.planner.updatePlan(this.selectedPlan);
-      this.translator.get(this.i18nDict(`characters.${(this.selectedCharacter.id)}`))
-        .pipe(switchMap(name => this.translator.get(this.i18n('add-success'), {name})))
+      this.translator.get(this.i18n.dict(`characters.${(this.selectedCharacter.id)}`))
+        .pipe(switchMap(name => this.translator.get(this.i18n.module('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
       this.reset();
     }

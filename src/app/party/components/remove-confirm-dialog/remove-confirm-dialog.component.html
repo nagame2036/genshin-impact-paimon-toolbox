@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ i18n('confirm-to-remove') | translate }}</h2>
+<h2 mat-dialog-title>{{ i18n.module('confirm-to-remove') | translate }}</h2>
 <mat-dialog-content fxLayout="row wrap">
   <app-item-view *ngFor="let item of data.items" [category]="data.category" [id]="item.id" [rarity]="item.rarity"
                  [style.width.px]="100" [style.margin-top.px]="16">
@@ -6,9 +6,9 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button type="button" mat-button color="warn" (click)="close(true)">
-    {{ i18nDict('confirm') | translate }}
+    {{ i18n.dict('confirm') | translate }}
   </button>
   <button type="button" mat-flat-button color="primary" mat-dialog-close>
-    {{ i18nDict('cancel') | translate }}
+    {{ i18n.dict('cancel') | translate }}
   </button>
 </mat-dialog-actions>
