@@ -1,4 +1,4 @@
-import {Rarity} from '../../shared/models/rarity.enum';
+import {Rarity} from '../../shared/models/rarity.type';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {Nation} from '../../shared/models/nation.enum';

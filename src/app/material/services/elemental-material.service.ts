@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ElementalMaterial, ElementalMaterialItem} from '../models/elemental-material.model';
-import {Rarity} from '../../shared/models/rarity.enum';
+import {Rarity} from '../../shared/models/rarity.type';
 
 @Injectable({
   providedIn: 'root'

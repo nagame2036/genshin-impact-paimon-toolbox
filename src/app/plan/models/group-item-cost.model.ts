@@ -1,4 +1,4 @@
-import {Rarity} from '../../shared/models/rarity.enum';
+import {Rarity} from '../../shared/models/rarity.type';
 
 export interface GroupItemCost {
 
