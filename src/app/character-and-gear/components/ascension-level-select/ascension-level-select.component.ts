@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {rangeList} from '../../../shared/utils/range-list';
 import {AscensionLevel} from '../../models/ascension-level.model';
-import {Ascension} from '../../models/ascension.enum';
+import {Ascension} from '../../models/ascension.type';
 
 @Component({
   selector: 'app-ascension-level-select',
@@ -22,9 +22,9 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   @Input()
   label!: string;
 
-  ascensions = rangeList(Ascension.ZERO, Ascension.SIX, true);
+  ascensions: Ascension[] = rangeList(0, 6, true) as Ascension[];
 
-  ascension: Ascension = Ascension.ZERO;
+  ascension: Ascension = 0;
 
   level = 1;
 
@@ -50,7 +50,7 @@ export class AscensionLevelSelectComponent extends AbstractTranslateComponent im
   }
 
   reset(): void {
-    this.ascension = Ascension.ZERO;
+    this.ascension = 0;
     this.level = 1;
   }
 }

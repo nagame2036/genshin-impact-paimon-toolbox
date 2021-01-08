@@ -9,7 +9,6 @@ import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation
 import {TalentLevelData} from 'src/app/character/models/talent-level-data.model';
 import {TalentLevel} from '../../../character/models/talent-level.type';
 import {TalentService} from 'src/app/character/services/talent.service';
-import {Ascension} from 'src/app/character-and-gear/models/ascension.enum';
 import {CharacterPlanner} from 'src/app/plan/services/character-planner.service';
 import {PartyCharacter} from '../../../character/models/party-character.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
@@ -46,8 +45,8 @@ export class AddCharacterDialogComponent extends AbstractTranslateComponent impl
     const talents = this.talentService.getTalentsOfCharacter(character.id)
       .filter(it => it.level)
       .map(it => ({id: it.id, level: 1 as TalentLevel}));
-    this.selectedCharacter = {...character, constellation: 0, ascension: Ascension.ZERO, level: 1, talents: this.copyTalents(talents)};
-    this.selectedPlan = {id: character.id, ascension: Ascension.ZERO, level: 1, talents: this.copyTalents(talents)};
+    this.selectedCharacter = {...character, constellation: 0, ascension: 0, level: 1, talents: this.copyTalents(talents)};
+    this.selectedPlan = {id: character.id, ascension: 0, level: 1, talents: this.copyTalents(talents)};
   }
 
   copyTalents(talents: TalentLevelData[]): TalentLevelData[] {

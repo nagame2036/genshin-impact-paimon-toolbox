@@ -6,7 +6,7 @@ import {CommonMaterialService} from '../../material/services/common-material.ser
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {ItemList} from '../../material/models/item-list.model';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
-import {Ascension} from '../../character-and-gear/models/ascension.enum';
+import {Ascension} from '../../character-and-gear/models/ascension.type';
 import {WeaponMaterialService} from '../../material/services/weapon-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {PartyWeapon} from '../../weapon/models/party-weapon.model';

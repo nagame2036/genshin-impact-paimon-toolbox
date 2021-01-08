@@ -7,7 +7,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {mergeMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
-import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 
@@ -40,8 +39,8 @@ export class AddWeaponDialogComponent extends AbstractTranslateComponent impleme
 
   select(weapon: Weapon): void {
     this.selected = true;
-    this.selectedWeapon = {...weapon, refine: 1, ascension: Ascension.ZERO, level: 1};
-    this.selectedPlan = {id: weapon.id, ascension: Ascension.ZERO, level: 1};
+    this.selectedWeapon = {...weapon, refine: 1, ascension: 0, level: 1};
+    this.selectedPlan = {id: weapon.id, ascension: 0, level: 1};
   }
 
   reset(): void {

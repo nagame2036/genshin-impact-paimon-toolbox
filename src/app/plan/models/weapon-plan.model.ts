@@ -1,4 +1,4 @@
-import {Ascension} from '../../character-and-gear/models/ascension.enum';
+import {Ascension} from '../../character-and-gear/models/ascension.type';
 
 export interface WeaponPlan {
 

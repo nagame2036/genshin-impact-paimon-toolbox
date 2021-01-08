@@ -7,7 +7,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {WeaponType} from '../../../weapon/models/weapon-type.enum';
-import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 
 describe('WeaponPlanFormComponent', () => {
   let component: WeaponPlanFormComponent;
@@ -40,12 +39,12 @@ describe('WeaponPlanFormComponent', () => {
       domain: 1,
       elite: 1,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
     component.plan = {
       id: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
     fixture.detectChanges();

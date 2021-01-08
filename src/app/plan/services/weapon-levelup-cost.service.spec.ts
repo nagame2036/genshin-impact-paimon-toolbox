@@ -3,7 +3,6 @@ import {TestBed} from '@angular/core/testing';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
 import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
-import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {PlanModule} from '../plan.module';
 import {HttpClientModule} from '@angular/common/http';
@@ -35,10 +34,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 900,
       common: 800,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
-    service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(503820);
       expect(res.getAmount(2)).toBe(3988200);
       expect(res.getAmount(4000)).toBe(2);
@@ -64,10 +63,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 902,
       common: 801,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
-    service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(2, 50)).subscribe(res => {
       expect(res.getAmount(0)).toBe(75383);
       expect(res.getAmount(2)).toBe(603825);
       expect(res.getAmount(4010)).toBe(2);
@@ -87,10 +86,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 903,
       common: 802,
       refine: 1,
-      ascension: Ascension.TWO,
+      ascension: 2,
       level: 50
     };
-    service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(428438);
       expect(res.getAmount(2)).toBe(3384375);
       expect(res.getAmount(4021)).toBe(4);
@@ -113,10 +112,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 904,
       common: 803,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
-    service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(754265);
       expect(res.getAmount(2)).toBe(6042650);
       expect(res.getAmount(4030)).toBe(3);
@@ -142,10 +141,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 905,
       common: 805,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
-    service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(2, 50)).subscribe(res => {
       expect(res.getAmount(0)).toBe(111485);
       expect(res.getAmount(2)).toBe(914850);
       expect(res.getAmount(4040)).toBe(3);
@@ -165,10 +164,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 906,
       common: 806,
       refine: 1,
-      ascension: Ascension.TWO,
+      ascension: 2,
       level: 50
     };
-    service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(642780);
       expect(res.getAmount(2)).toBe(5127800);
       expect(res.getAmount(4051)).toBe(6);
@@ -191,10 +190,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 904,
       common: 807,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
-    service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(1131445);
       expect(res.getAmount(2)).toBe(9064450);
       expect(res.getAmount(4030)).toBe(5);
@@ -220,10 +219,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 904,
       common: 807,
       refine: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1
     };
-    service.cost(weapon, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(2, 50)).subscribe(res => {
       expect(res.getAmount(0)).toBe(167250);
       expect(res.getAmount(2)).toBe(1372500);
       expect(res.getAmount(4030)).toBe(5);
@@ -243,10 +242,10 @@ describe('WeaponLevelupCostService', () => {
       elite: 904,
       common: 807,
       refine: 1,
-      ascension: Ascension.TWO,
+      ascension: 2,
       level: 50
     };
-    service.cost(weapon, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(964195);
       expect(res.getAmount(2)).toBe(7691950);
       expect(res.getAmount(4031)).toBe(9);

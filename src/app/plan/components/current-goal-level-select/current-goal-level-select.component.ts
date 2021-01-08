@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {rangeList} from '../../../shared/utils/range-list';
-import {Ascension} from '../../../character-and-gear/models/ascension.enum';
+import {Ascension} from '../../../character-and-gear/models/ascension.type';
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
@@ -18,7 +18,7 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
   @Input()
   label!: string;
 
-  ascensions = rangeList(Ascension.ZERO, Ascension.SIX, true);
+  ascensions: Ascension[] = rangeList(0, 6, true) as Ascension[];
 
   @Input()
   ascension!: Ascension;
@@ -50,7 +50,7 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
 
   ngOnInit(): void {
     this.levels = AscensionLevel.levels(this.ascension);
-    this.goalAscensions = rangeList(this.ascension, Ascension.SIX, true);
+    this.goalAscensions = rangeList(this.ascension, 6, true) as Ascension[];
     this.goalLevels = AscensionLevel.levels(this.goalAscension, this.level);
   }
 
@@ -59,18 +59,18 @@ export class CurrentGoalLevelSelectComponent extends AbstractTranslateComponent 
   }
 
   setAscension(value: number): void {
-    this.ascension = value;
+    this.ascension = value as Ascension;
     this.levels = AscensionLevel.levels(this.ascension);
     this.level = AscensionLevel.correctLevel(this.ascension, this.level);
     this.emitCurrentChange();
-    this.goalAscensions = rangeList(this.ascension, Ascension.SIX, true);
+    this.goalAscensions = rangeList(this.ascension, 6, true) as Ascension[];
     if (this.goalAscension < value) {
       this.setGoalAscension(value);
     }
   }
 
   setGoalAscension(value: number): void {
-    this.goalAscension = value;
+    this.goalAscension = value as Ascension;
     this.goalLevels = AscensionLevel.levels(this.goalAscension, this.level);
     this.goalLevel = AscensionLevel.correctLevel(this.goalAscension, this.goalLevel);
     this.emitGoalChange();

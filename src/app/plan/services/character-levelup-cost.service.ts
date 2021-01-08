@@ -3,7 +3,7 @@ import {AscensionLevel} from '../../character-and-gear/models/ascension-level.mo
 import {HttpClient} from '@angular/common/http';
 import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
-import {Ascension} from '../../character-and-gear/models/ascension.enum';
+import {Ascension} from '../../character-and-gear/models/ascension.type';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
 import {ElementalMaterialService} from '../../material/services/elemental-material.service';
 import {CommonMaterialService} from '../../material/services/common-material.service';

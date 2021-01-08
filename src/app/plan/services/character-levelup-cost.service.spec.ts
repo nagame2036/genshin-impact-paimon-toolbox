@@ -4,7 +4,6 @@ import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {HttpClientModule} from '@angular/common/http';
 import {PlanModule} from '../plan.module';
 import {PartyCharacter} from '../../character/models/party-character.model';
-import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
@@ -38,11 +37,11 @@ describe('CharacterLevelupService', () => {
       local: 10105,
       common: 803,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: []
     };
-    service.cost(character, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(character, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(2092530);
       expect(res.getAmount(1)).toBe(8362650);
       expect(res.getAmount(2060)).toBe(46);
@@ -68,11 +67,11 @@ describe('CharacterLevelupService', () => {
       local: 10105,
       common: 806,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: []
     };
-    service.cost(character, new AscensionLevel(Ascension.TWO, 50)).subscribe(res => {
+    service.cost(character, new AscensionLevel(2, 50)).subscribe(res => {
       expect(res.getAmount(0)).toBe(315520);
       expect(res.getAmount(1)).toBe(1277600);
       expect(res.getAmount(3000)).toBe(1);
@@ -94,11 +93,11 @@ describe('CharacterLevelupService', () => {
       local: 10105,
       common: 801,
       constellation: 0,
-      ascension: Ascension.TWO,
+      ascension: 2,
       level: 50,
       talents: []
     };
-    service.cost(character, new AscensionLevel(Ascension.SIX, 90)).subscribe(res => {
+    service.cost(character, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(0)).toBe(1777010);
       expect(res.getAmount(1)).toBe(7085050);
       expect(res.getAmount(2060)).toBe(44);

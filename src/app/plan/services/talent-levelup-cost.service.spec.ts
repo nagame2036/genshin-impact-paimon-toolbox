@@ -6,7 +6,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
-import {Ascension} from '../../character-and-gear/models/ascension.enum';
 
 describe('TalentLevelupCostService', () => {
   let service: TalentLevelupCostService;
@@ -37,7 +36,7 @@ describe('TalentLevelupCostService', () => {
       local: 10105,
       common: 803,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: [
         {id: 10001, level: 1},
@@ -68,7 +67,7 @@ describe('TalentLevelupCostService', () => {
       local: 10105,
       common: 803,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: [
         {id: 10001, level: 1},
@@ -95,7 +94,7 @@ describe('TalentLevelupCostService', () => {
       local: 10105,
       common: 803,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: [
         {id: 10001, level: 6},
@@ -121,7 +120,7 @@ describe('TalentLevelupCostService', () => {
       local: 10103,
       common: 802,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: [
         {id: 10, level: 1},

@@ -7,7 +7,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {WeaponType} from '../../../weapon/models/weapon-type.enum';
-import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 
 describe('CharacterPlanFormComponent', () => {
   let component: CharacterPlanFormComponent;
@@ -41,13 +40,13 @@ describe('CharacterPlanFormComponent', () => {
       gem: 1,
       local: 1,
       constellation: 0,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: []
     };
     component.plan = {
       id: 1,
-      ascension: Ascension.ZERO,
+      ascension: 0,
       level: 1,
       talents: []
     };

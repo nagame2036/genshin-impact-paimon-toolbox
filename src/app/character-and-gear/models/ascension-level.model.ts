@@ -1,5 +1,5 @@
 import {coerceIn} from '../../shared/utils/coerce';
-import {Ascension} from './ascension.enum';
+import {Ascension} from './ascension.type';
 import {rangeList} from '../../shared/utils/range-list';
 
 export class AscensionLevel {
@@ -16,7 +16,7 @@ export class AscensionLevel {
 
   #level = 1;
 
-  constructor(public ascension: Ascension = Ascension.ZERO, level: number = 1) {
+  constructor(public ascension: Ascension = 0, level: number = 1) {
     this.level = level;
   }
 
@@ -29,12 +29,12 @@ export class AscensionLevel {
   }
 
   static correctLevel(ascension: Ascension, level: number): number {
-    const limit = AscensionLevel.limit[ascension ?? Ascension.ZERO];
+    const limit = AscensionLevel.limit[ascension ?? 0];
     return coerceIn(level, limit.min, limit.max);
   }
 
   static levels(ascension: Ascension, start: number = -1): number[] {
-    const limit = AscensionLevel.limit[ascension ?? Ascension.ZERO];
+    const limit = AscensionLevel.limit[ascension ?? 0];
     const min = Math.max(start, limit.min);
     return rangeList(min, limit.max, true);
   }
