@@ -1,5 +1,5 @@
 import {Character} from './character.model';
-import {Ascension} from './ascension.enum';
+import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {TalentLevelData} from './talent-level-data.model';
 import {Constellation} from './constellation.type';
 

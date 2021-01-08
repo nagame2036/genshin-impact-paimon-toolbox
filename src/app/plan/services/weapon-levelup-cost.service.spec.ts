@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
-import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
-import {WeaponType} from '../../character-and-gear/models/weapon-type.enum';
+import {PartyWeapon} from '../../weapon/models/party-weapon.model';
+import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {PlanModule} from '../plan.module';

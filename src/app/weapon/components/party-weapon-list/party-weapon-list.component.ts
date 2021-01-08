@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Weapon} from '../../../character-and-gear/models/weapon.model';
-import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
+import {Weapon} from '../../models/weapon.model';
+import {PartyWeapon} from '../../models/party-weapon.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {WeaponService} from '../../../character-and-gear/services/weapon.service';
-import {WeaponListComponent} from '../../../character-and-gear/components/weapon-list/weapon-list.component';
+import {WeaponService} from '../../services/weapon.service';
+import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
@@ -16,7 +16,7 @@ import {combineLatest} from 'rxjs';
 })
 export class PartyWeaponListComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapons';
+  i18nKey = 'weapons';
 
   weapons: Weapon[] = [];
 

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
+import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
-import {RefineRank} from '../../../character-and-gear/models/refine-rank.type';
+import {RefineRank} from '../../../weapon/models/refine-rank.type';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 

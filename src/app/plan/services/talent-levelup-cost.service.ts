@@ -3,14 +3,14 @@ import {from, Observable, ReplaySubject, zip} from 'rxjs';
 import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
 import {CommonMaterialService} from '../../material/services/common-material.service';
-import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
+import {PartyCharacter} from '../../character/models/party-character.model';
 import {ItemList} from '../../material/models/item-list.model';
 import {TalentMaterialService} from '../../material/services/talent-material.service';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
-import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
-import {TalentLevel} from '../../character-and-gear/models/talent-level.type';
+import {TalentLevelData} from '../../character/models/talent-level-data.model';
+import {TalentLevel} from '../../character/models/talent-level.type';
 import {TalentPlan} from '../models/talent-plan.model';
-import {TalentService} from '../../character-and-gear/services/talent.service';
+import {TalentService} from '../../character/services/talent.service';
 import {CharacterPlan} from '../models/character-plan.model';
 
 @Injectable({

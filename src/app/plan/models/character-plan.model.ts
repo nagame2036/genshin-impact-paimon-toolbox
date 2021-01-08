@@ -1,5 +1,5 @@
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
-import {TalentLevelData} from '../../character-and-gear/models/talent-level-data.model';
+import {TalentLevelData} from '../../character/models/talent-level-data.model';
 
 export interface CharacterPlan {
 

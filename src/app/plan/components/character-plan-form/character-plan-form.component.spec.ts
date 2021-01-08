@@ -6,7 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {WeaponType} from '../../../character-and-gear/models/weapon-type.enum';
+import {WeaponType} from '../../../weapon/models/weapon-type.enum';
 import {Ascension} from '../../../character-and-gear/models/ascension.enum';
 
 describe('CharacterPlanFormComponent', () => {

@@ -28,21 +28,21 @@
     },
     "party": {
       "confirm-to-remove": "确定要将以下移出Box吗？",
-      "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
-      "characters": {
-        "title": "角色列表",
-        "add": "添加角色",
-        "add-success": "成功添加角色 - {{ name }}",
-        "expand-list": "展开角色列表",
-        "remove": "移除角色"
-      },
-      "weapons": {
-        "title": "武器列表",
-        "add": "添加武器",
-        "add-success": "成功添加武器 - {{ name }}",
-        "expand-list": "展开武器列表",
-        "remove": "移除武器"
-      }
+      "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成"
+    },
+    "characters": {
+      "title": "角色列表",
+      "add": "添加角色",
+      "add-success": "成功添加角色 - {{ name }}",
+      "expand-list": "展开角色列表",
+      "remove": "移除角色"
+    },
+    "weapons": {
+      "title": "武器列表",
+      "add": "添加武器",
+      "add-success": "成功添加武器 - {{ name }}",
+      "expand-list": "展开武器列表",
+      "remove": "移除武器"
     },
     "inventory": {
       "show-overflow": "显示溢出",

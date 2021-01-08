@@ -3,9 +3,9 @@ import {TestBed} from '@angular/core/testing';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PlanModule} from '../plan.module';
 import {HttpClientModule} from '@angular/common/http';
-import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
+import {PartyCharacter} from '../../character/models/party-character.model';
 import {ElementType} from '../../shared/models/element-type.enum';
-import {WeaponType} from '../../character-and-gear/models/weapon-type.enum';
+import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
 
 describe('TalentLevelupCostService', () => {

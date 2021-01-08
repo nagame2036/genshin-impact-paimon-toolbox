@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {Character} from 'src/app/character-and-gear/models/character.model';
+import {Character} from 'src/app/character/models/character.model';
 import {AbstractTranslateComponent} from 'src/app/shared/components/abstract-translate.component';
-import {CharacterService} from 'src/app/character-and-gear/services/character.service';
+import {CharacterService} from 'src/app/character/services/character.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {switchMap} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
-import {TalentLevelData} from 'src/app/character-and-gear/models/talent-level-data.model';
-import {TalentLevel} from '../../../character-and-gear/models/talent-level.type';
-import {TalentService} from 'src/app/character-and-gear/services/talent.service';
+import {TalentLevelData} from 'src/app/character/models/talent-level-data.model';
+import {TalentLevel} from '../../../character/models/talent-level.type';
+import {TalentService} from 'src/app/character/services/talent.service';
 import {Ascension} from 'src/app/character-and-gear/models/ascension.enum';
 import {CharacterPlanner} from 'src/app/plan/services/character-planner.service';
-import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
+import {PartyCharacter} from '../../../character/models/party-character.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
 
 @Component({
@@ -22,7 +22,7 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
 })
 export class AddCharacterDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.characters';
+  i18nKey = 'characters';
 
   characters: Character[] = [];
 

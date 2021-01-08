@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
+import {PartyCharacter} from '../../../character/models/party-character.model';
 import {rangeList} from '../../../shared/utils/range-list';
-import {Constellation} from '../../../character-and-gear/models/constellation.type';
-import {TalentLevel} from '../../../character-and-gear/models/talent-level.type';
-import {TalentLevelData} from '../../../character-and-gear/models/talent-level-data.model';
-import {TalentService} from '../../../character-and-gear/services/talent.service';
+import {Constellation} from '../../../character/models/constellation.type';
+import {TalentLevel} from '../../../character/models/talent-level.type';
+import {TalentLevelData} from '../../../character/models/talent-level-data.model';
+import {TalentService} from '../../../character/services/talent.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {CharacterPlan} from '../../models/character-plan.model';
 

@@ -4,9 +4,9 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map, switchMap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {ItemList} from '../../material/models/item-list.model';
-import {WeaponService} from '../../character-and-gear/services/weapon.service';
+import {WeaponService} from '../../weapon/services/weapon.service';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
-import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
+import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {activePlans} from '../utils/party-plans';
 
 @Injectable({

@@ -8,7 +8,7 @@ import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
 import {ElementalMaterialService} from '../../material/services/elemental-material.service';
 import {CommonMaterialService} from '../../material/services/common-material.service';
 import {ItemList} from '../../material/models/item-list.model';
-import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
+import {PartyCharacter} from '../../character/models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 

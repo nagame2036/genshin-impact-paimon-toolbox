@@ -9,7 +9,7 @@ import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.enum';
 import {WeaponMaterialService} from '../../material/services/weapon-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
-import {PartyWeapon} from '../../character-and-gear/models/party-weapon.model';
+import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 

@@ -1,8 +1,8 @@
 import {Rarity} from '../../shared/models/rarity.enum';
-import {WeaponType} from './weapon-type.enum';
+import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {Nation} from '../../shared/models/nation.enum';
-import {ExpBonus} from './levelup-exp-bonus.model';
+import {ExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 
 export interface Character {
 

@@ -1,30 +1,32 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CharacterListComponent} from './character-list.component';
+import {PartyCharacterListComponent} from './party-character-list.component';
+import {WeaponModule} from '../../../weapon/weapon.module';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {CharacterAndGearModule} from '../../character-and-gear.module';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('CharacterListComponent', () => {
-  let component: CharacterListComponent;
-  let fixture: ComponentFixture<CharacterListComponent>;
+describe('PartyCharacterListComponent', () => {
+  let component: PartyCharacterListComponent;
+  let fixture: ComponentFixture<PartyCharacterListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CharacterListComponent
+        PartyCharacterListComponent
       ],
       imports: [
-        CharacterAndGearModule,
+        WeaponModule,
         BrowserAnimationsModule,
-        AppTranslateModule
-      ]
+        AppTranslateModule,
+        AppIndexedDbModule
+      ],
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterListComponent);
+    fixture = TestBed.createComponent(PartyCharacterListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

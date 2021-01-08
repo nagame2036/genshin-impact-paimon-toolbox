@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Character} from '../../../character-and-gear/models/character.model';
-import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
+import {Character} from '../../models/character.model';
+import {PartyCharacter} from '../../models/party-character.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {CharacterService} from '../../../character-and-gear/services/character.service';
-import {CharacterListComponent} from '../../../character-and-gear/components/character-list/character-list.component';
+import {CharacterService} from '../../services/character.service';
+import {CharacterListComponent} from '../character-list/character-list.component';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
 import {first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
@@ -16,7 +16,7 @@ import {combineLatest} from 'rxjs';
 })
 export class PartyCharacterListComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.characters';
+  i18nKey = 'characters';
 
   characters: Character[] = [];
 

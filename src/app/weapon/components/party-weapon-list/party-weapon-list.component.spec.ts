@@ -1,30 +1,32 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WeaponListComponent} from './weapon-list.component';
+import {PartyWeaponListComponent} from './party-weapon-list.component';
+import {WeaponModule} from '../../weapon.module';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {CharacterAndGearModule} from '../../character-and-gear.module';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('WeaponListComponent', () => {
-  let component: WeaponListComponent;
-  let fixture: ComponentFixture<WeaponListComponent>;
+describe('PartyWeaponListComponent', () => {
+  let component: PartyWeaponListComponent;
+  let fixture: ComponentFixture<PartyWeaponListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        WeaponListComponent
+        PartyWeaponListComponent
       ],
       imports: [
-        CharacterAndGearModule,
+        WeaponModule,
         BrowserAnimationsModule,
-        AppTranslateModule
-      ]
+        AppTranslateModule,
+        AppIndexedDbModule
+      ],
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WeaponListComponent);
+    fixture = TestBed.createComponent(PartyWeaponListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

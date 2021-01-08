@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CharacterService} from '../../../character-and-gear/services/character.service';
-import {PartyCharacter} from '../../../character-and-gear/models/party-character.model';
+import {CharacterService} from '../../../character/services/character.service';
+import {PartyCharacter} from '../../../character/models/party-character.model';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
 
@@ -13,7 +13,7 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
 })
 export class CharacterDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.characters';
+  i18nKey = 'characters';
 
   constructor(public dialogRef: MatDialogRef<CharacterDetailDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { character: PartyCharacter, plan: CharacterPlan },

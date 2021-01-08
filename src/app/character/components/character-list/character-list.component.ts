@@ -10,23 +10,24 @@ import {
   TemplateRef,
   ViewChildren
 } from '@angular/core';
-import {Weapon} from '../../models/weapon.model';
+import {Character} from '../../models/character.model';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
-import {weaponTypeList} from '../../models/weapon-type.enum';
+import {elementTypeList} from '../../../shared/models/element-type.enum';
+import {weaponTypeList} from '../../../weapon/models/weapon-type.enum';
 import {MatSelectChange} from '@angular/material/select';
 import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
 import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
-import {WeaponFields} from '../../models/weapon-fields.model';
-import {PartyWeapon} from '../../models/party-weapon.model';
+import {CharacterFields} from '../../models/character-fields.types';
+import {PartyCharacter} from '../../models/party-character.model';
 
 @Component({
-  selector: 'app-weapon-list',
-  templateUrl: './weapon-list.component.html',
-  styleUrls: ['./weapon-list.component.scss']
+  selector: 'app-character-list',
+  templateUrl: './character-list.component.html',
+  styleUrls: ['./character-list.component.scss']
 })
-export class WeaponListComponent extends AbstractTranslateComponent implements OnChanges {
+export class CharacterListComponent extends AbstractTranslateComponent implements OnChanges {
 
-  i18nKey = 'party.weapons';
+  i18nKey = 'characters';
 
   @Input()
   party = false;
@@ -35,9 +36,9 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   itemWidth = 100;
 
   @Input()
-  weapons: Weapon[] = [];
+  characters: Character[] = [];
 
-  items!: Weapon[];
+  items!: Character[];
 
   @ContentChild('right', {static: false})
   rightTemplateRef!: TemplateRef<any>;
@@ -45,37 +46,41 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
   @Input()
   multiSelect = false;
 
-  private selectedItems: Weapon[] = [];
+  private selectedItems: Character[] = [];
 
   @Output()
-  selected = new EventEmitter<Weapon>();
+  selected = new EventEmitter<Character>();
 
   @Output()
-  multiSelected = new EventEmitter<Weapon[]>();
+  multiSelected = new EventEmitter<Character[]>();
 
   @ViewChildren('list')
   list!: QueryList<ItemViewComponent>;
 
   @Input()
-  sortFields: WeaponFields[] = ['rarity'];
+  sortFields: CharacterFields[] = ['rarity'];
 
   @Input()
-  sort: WeaponFields = 'rarity';
+  sort: CharacterFields = 'rarity';
 
-  rarities = [5, 4, 3];
+  rarities = [5, 4];
 
   rarityFilter = this.rarities;
 
-  types = weaponTypeList;
+  elementTypes = elementTypeList;
 
-  typeFilter = this.types;
+  elementFilter = this.elementTypes;
+
+  weaponTypes = weaponTypeList;
+
+  weaponFilter = this.weaponTypes;
 
   constructor() {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('weapons')) {
+    if (changes.hasOwnProperty('characters')) {
       this.update();
     }
   }
@@ -85,8 +90,9 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
       this.selectedItems = [];
       this.multiSelected.emit([]);
     }
-    this.items = this.weapons.map(it => it as PartyWeapon)
-      .filter(it => this.rarityFilter.includes(it.rarity) && this.typeFilter.includes(it.type))
+    this.items = this.characters.map(it => it as PartyCharacter)
+      .filter(it => this.rarityFilter.includes(it.rarity) && this.elementFilter.includes(it.element)
+        && this.weaponFilter.includes(it.weapon))
       .sort((a, b) => b[this.sort] - a[this.sort] || b.id - a.id);
   }
 
@@ -95,16 +101,21 @@ export class WeaponListComponent extends AbstractTranslateComponent implements O
     this.update();
   }
 
-  changeTypeFilter(change: MatSelectChange): void {
-    this.typeFilter = ensureAtLeastOneElement(this.typeFilter, change.value);
+  changeElementFilter(change: MatSelectChange): void {
+    this.elementFilter = ensureAtLeastOneElement(this.elementFilter, change.value);
     this.update();
   }
 
-  select(item: Weapon): void {
+  changeWeaponFilter(change: MatSelectChange): void {
+    this.weaponFilter = ensureAtLeastOneElement(this.weaponFilter, change.value);
+    this.update();
+  }
+
+  select(item: Character): void {
     this.multiSelect ? this.onMultiSelect(item) : this.selected.emit(item);
   }
 
-  onMultiSelect(item: Weapon): void {
+  onMultiSelect(item: Character): void {
     this.selectedItems = toggleItem(this.selectedItems, item);
     this.multiSelected.emit(this.selectedItems);
     this.list.filter(it => it.id === item.id).forEach(it => it.active = !it.active);

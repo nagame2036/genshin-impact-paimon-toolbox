@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractTranslateComponent} from '../../../shared/components/abstract-translate.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {WeaponService} from '../../../character-and-gear/services/weapon.service';
-import {PartyWeapon} from '../../../character-and-gear/models/party-weapon.model';
+import {WeaponService} from '../../../weapon/services/weapon.service';
+import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 
@@ -13,7 +13,7 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 })
 export class WeaponDetailDialogComponent extends AbstractTranslateComponent implements OnInit {
 
-  i18nKey = 'party.weapons';
+  i18nKey = 'weapons';
 
   constructor(public dialogRef: MatDialogRef<WeaponDetailDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { weapon: PartyWeapon, plan: WeaponPlan },

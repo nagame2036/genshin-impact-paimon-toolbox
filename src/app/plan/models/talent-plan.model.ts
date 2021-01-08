@@ -1,4 +1,4 @@
-import {TalentLevel} from '../../character-and-gear/models/talent-level.type';
+import {TalentLevel} from '../../character/models/talent-level.type';
 
 export interface TalentPlan {
 

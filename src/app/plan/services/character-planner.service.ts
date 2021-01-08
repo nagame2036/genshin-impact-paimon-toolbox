@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {CharacterService} from '../../character-and-gear/services/character.service';
+import {CharacterService} from '../../character/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
-import {TalentService} from '../../character-and-gear/services/talent.service';
+import {TalentService} from '../../character/services/talent.service';
 import {map, switchMap} from 'rxjs/operators';
 import {ItemList} from '../../material/models/item-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
-import {PartyCharacter} from '../../character-and-gear/models/party-character.model';
+import {PartyCharacter} from '../../character/models/party-character.model';
 import {activePlans} from '../utils/party-plans';
 
 @Injectable({
