@@ -46,7 +46,8 @@ export class CharacterListComponent implements OnChanges {
   @Input()
   multiSelect = false;
 
-  private selectedItems: Character[] = [];
+  @Input()
+  selectedItems: Character[] = [];
 
   @Output()
   selected = new EventEmitter<Character>();

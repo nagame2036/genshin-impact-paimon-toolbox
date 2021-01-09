@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
 import {PartyWeapon} from '../../models/party-weapon.model';
 import {I18n} from '../../../shared/models/i18n.model';
@@ -22,6 +22,9 @@ export class PartyWeaponListComponent extends AbstractObservableComponent implem
   weapons: Weapon[] = [];
 
   plans = new Map<number, WeaponPlan>();
+
+  @Input()
+  selectedItems: Weapon[] = [];
 
   @Output()
   selected = new EventEmitter<Weapon>();

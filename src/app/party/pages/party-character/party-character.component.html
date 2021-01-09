@@ -1,4 +1,4 @@
-<app-party-character-list #list (create)="openAddDialog()"
+<app-party-character-list #list (create)="openAddDialog()" [selectedItems]="selectedItems"
                           (selected)="openDetail($event)" (multiSelected)="updateSelected($event)">
   <div list-actions>
     <app-multi-select [multiSelect]="multiSelect" [selectAll]="selectAll" (changed)="onMultiSelectChange($event)">

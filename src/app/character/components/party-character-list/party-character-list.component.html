@@ -1,6 +1,7 @@
 <app-character-list [party]="true" [characters]="characters" [itemWidth]="260"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
-                    #list (selected)="selected.emit($event)" (multiSelected)="multiSelected.emit($event)">
+                    #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
+                    (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
     <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
       {{ i18n.module('add') | translate }}

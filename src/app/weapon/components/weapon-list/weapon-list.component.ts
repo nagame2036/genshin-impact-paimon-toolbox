@@ -45,7 +45,8 @@ export class WeaponListComponent implements OnChanges {
   @Input()
   multiSelect = false;
 
-  private selectedItems: Weapon[] = [];
+  @Input()
+  selectedItems: Weapon[] = [];
 
   @Output()
   selected = new EventEmitter<Weapon>();

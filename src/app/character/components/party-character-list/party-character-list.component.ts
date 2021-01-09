@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from '../../models/character.model';
 import {PartyCharacter} from '../../models/party-character.model';
 import {I18n} from '../../../shared/models/i18n.model';
@@ -22,6 +22,9 @@ export class PartyCharacterListComponent extends AbstractObservableComponent imp
   characters: Character[] = [];
 
   plans = new Map<number, CharacterPlan>();
+
+  @Input()
+  selectedItems: Character[] = [];
 
   @Output()
   selected = new EventEmitter<Character>();
