@@ -23,7 +23,7 @@ export class PartyWeaponComponent implements OnInit {
 
   selectAll = false;
 
-  selectedItems: Weapon[] = [];
+  selectedItems: PartyWeapon[] = [];
 
   @ViewChild('list')
   list!: PartyWeaponListComponent;
@@ -52,14 +52,14 @@ export class PartyWeaponComponent implements OnInit {
     this.dialog.open(RemoveConfirmDialogComponent, {data: {category: 'weapons', items: this.selectedItems}})
       .afterClosed().subscribe(remove => {
       if (remove) {
-        this.service.removePartyMemberByList(this.selectedItems.map(it => it.id));
+        this.service.removePartyMemberByList(this.selectedItems.map(it => it.key ?? -1));
         this.updateSelected([]);
       }
     });
   }
 
   updateSelected(selected: Weapon[]): void {
-    this.selectedItems = selected;
+    this.selectedItems = selected as PartyWeapon[];
     this.selectAll = this.multiSelect && selected.length > 0 && selected.length === this.list.weapons.length;
   }
 

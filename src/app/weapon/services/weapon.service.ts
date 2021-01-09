@@ -69,7 +69,7 @@ export class WeaponService {
   removePartyMemberByList(ids: number[]): void {
     const deleted = from(ids).pipe(switchMap(it => this.database.delete(this.storeName, it)));
     zip(deleted, this.party).subscribe(([_, party]) => {
-      const newParty = party.filter(c => !ids.includes(c.id));
+      const newParty = party.filter(c => !ids.includes(c.key ?? -1));
       this.cacheParty(newParty);
     });
   }
