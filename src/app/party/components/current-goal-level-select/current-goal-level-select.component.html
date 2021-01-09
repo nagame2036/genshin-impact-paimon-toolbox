@@ -4,6 +4,7 @@
                          [valueDisplay]="getAscension">
   {{ i18n.dict(label + '-ascension-label') | translate }}
 </app-current-goal-select>
+<div style="height: 2px"></div>
 <app-current-goal-select [currentOptions]="levels" [goalOptions]="goalLevels"
                          [current]="level" (currentChange)="setLevel($event)"
                          [goal]="goalLevel" (goalChange)="setGoalLevel($event)">

@@ -3,7 +3,8 @@
 .current-goal-select-container {
   margin: 4px;
   padding: 0 1px;
-  height: 48px;
+  width: 200px;
+  height: 42px;
   border: solid 1px #e0e0e0;
   border-radius: 4px;
 
@@ -14,8 +15,15 @@
   }
 }
 
+.current-goal-select-arrow {
+  margin-left: -12px;
+  margin-right: 0 !important;
+  line-height: 20px;
+}
+
 .current-goal-select-field {
-  margin: -8px 0 8px 0;
+  margin: -8px 0 2px 0;
+  width: 108px;
 
   ::ng-deep {
     .mat-form-field-outline-start {
