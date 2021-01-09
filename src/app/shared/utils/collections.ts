@@ -32,3 +32,14 @@ export function findObservable<T>(list: T[], predicate: (item: T) => boolean): O
   const index = list.findIndex(predicate);
   return iif(() => index !== -1, of(list[index]));
 }
+
+export function mapArrays<T, K, V, R>(items: T[], map: Map<K, V>, key: (item: T) => K, result: (item: T, mapItem: V) => R): R[] {
+  const results: R[] = [];
+  for (const item of items) {
+    const mapItem = map.get(key(item));
+    if (mapItem) {
+      results.push(result(item, mapItem));
+    }
+  }
+  return results;
+}
