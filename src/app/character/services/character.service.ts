@@ -4,7 +4,7 @@ import {from, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character.model';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
-import {switchMap} from 'rxjs/operators';
+import {first, switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -92,9 +92,12 @@ export class CharacterService {
   }
 
   private valid(id: number): Observable<Character> {
-    return this.characters.pipe(switchMap(characters => {
-      const list = characters.filter(c => c.id === id);
-      return iif(() => list.length > 0, of(list[0]));
-    }));
+    return this.characters.pipe(
+      switchMap(characters => {
+        const list = characters.filter(c => c.id === id);
+        return iif(() => list.length > 0, of(list[0]));
+      }),
+      first()
+    );
   }
 }

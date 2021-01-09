@@ -3,13 +3,15 @@ import {I18n} from '../../../shared/models/i18n.model';
 import {DamageType} from '../../models/damage-type.enum';
 import {CharacterStatProfile} from '../../models/character-stat-profile.model';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-stat-analyzer',
   templateUrl: './character-stat-analyzer.component.html',
   styleUrls: ['./character-stat-analyzer.component.scss']
 })
-export class CharacterStatAnalyzerComponent implements OnInit {
+export class CharacterStatAnalyzerComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('character-stat.analyzer');
 
@@ -25,6 +27,7 @@ export class CharacterStatAnalyzerComponent implements OnInit {
   profiles = new Map<{ text: string, value: () => number }, CharacterStatProfile>();
 
   constructor(private profileService: CharacterStatProfileService) {
+    super();
   }
 
   get weight(): number {
@@ -67,7 +70,9 @@ export class CharacterStatAnalyzerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profileService.current.subscribe(p => this.profile = p);
+    this.profileService.current
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(p => this.profile = p);
   }
 
   copyAndCompare(field: { text: string, value: () => number }): void {

@@ -4,11 +4,12 @@ import {Weapon} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
-import {mergeMap} from 'rxjs/operators';
+import {mergeMap, takeUntil} from 'rxjs/operators';
 import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 
 @Component({
   selector: 'app-add-weapon-dialog',
@@ -16,7 +17,7 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
   styleUrls: ['./add-weapon-dialog.component.scss'],
   animations: addItemDialogAnimation
 })
-export class AddWeaponDialogComponent implements OnInit {
+export class AddWeaponDialogComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('weapons');
 
@@ -30,10 +31,13 @@ export class AddWeaponDialogComponent implements OnInit {
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner,
               private snake: MatSnackBar, private translator: TranslateService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.weaponService.weapons.subscribe(res => this.weapons = res);
+    this.weaponService.weapons
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => this.weapons = res);
   }
 
   select(weapon: Weapon): void {

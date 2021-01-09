@@ -4,13 +4,15 @@ import {I18n} from '../../../shared/models/i18n.model';
 import {CharacterStatOptimizerService} from '../../services/character-stat-optimizer.service';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
 import {OptimizedStat} from '../../models/optimized-result.model';
+import {takeUntil} from 'rxjs/operators';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 
 @Component({
   selector: 'app-character-stat-optimizer',
   templateUrl: './character-stat-optimizer.component.html',
   styleUrls: ['./character-stat-optimizer.component.scss']
 })
-export class CharacterStatOptimizerComponent implements OnInit {
+export class CharacterStatOptimizerComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('character-stat.optimizer');
 
@@ -52,6 +54,7 @@ export class CharacterStatOptimizerComponent implements OnInit {
   ];
 
   constructor(private optimizer: CharacterStatOptimizerService, private profileService: CharacterStatProfileService) {
+    super();
   }
 
   get atkPct(): number {
@@ -67,13 +70,15 @@ export class CharacterStatOptimizerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profileService.current.subscribe(p => {
-      this.profile = p;
-      this.optimized = false;
-      this.statFields[0].value = this.atkPct;
-      this.statFields[1].value = this.critRatePct;
-      this.statFields[2].value = this.critDmgBonusPct;
-    });
+    this.profileService.current
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(p => {
+        this.profile = p;
+        this.optimized = false;
+        this.statFields[0].value = this.atkPct;
+        this.statFields[1].value = this.critRatePct;
+        this.statFields[2].value = this.critDmgBonusPct;
+      });
   }
 
   optimize(): void {

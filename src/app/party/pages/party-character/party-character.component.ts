@@ -8,7 +8,6 @@ import {PartyCharacterListComponent} from '../../../character/components/party-c
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {CharacterService} from '../../../character/services/character.service';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
-import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-party-character',
@@ -39,7 +38,7 @@ export class PartyCharacterComponent implements OnInit {
   }
 
   openDetail(character: Character): void {
-    this.planner.getPlan(character.id).pipe(first()).subscribe(plan => {
+    this.planner.getPlan(character.id).subscribe(plan => {
       this.dialog.open(CharacterDetailDialogComponent, {data: {character, plan}});
     });
   }

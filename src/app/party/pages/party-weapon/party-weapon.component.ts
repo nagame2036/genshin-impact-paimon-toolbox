@@ -7,7 +7,6 @@ import {I18n} from '../../../shared/models/i18n.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyWeaponListComponent} from '../../../weapon/components/party-weapon-list/party-weapon-list.component';
-import {first} from 'rxjs/operators';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 
@@ -44,7 +43,7 @@ export class PartyWeaponComponent implements OnInit {
     if (!party || !party.key) {
       return;
     }
-    this.planner.getPlan(party.key).pipe(first()).subscribe(plan => {
+    this.planner.getPlan(party.key).subscribe(plan => {
       this.dialog.open(WeaponDetailDialogComponent, {data: {weapon, plan}});
     });
   }

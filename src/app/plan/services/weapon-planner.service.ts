@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {map, switchMap} from 'rxjs/operators';
+import {first, map, switchMap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {ItemList} from '../../material/models/item-list.model';
 import {WeaponService} from '../../weapon/services/weapon.service';
@@ -30,10 +30,13 @@ export class WeaponPlanner {
   }
 
   getPlan(id: number): Observable<WeaponPlan> {
-    return this.activePlans.pipe(switchMap(plans => {
-      const index = plans.findIndex(it => it.plan.id === id);
-      return iif(() => index !== -1, defer(() => of(plans[index].plan)));
-    }));
+    return this.activePlans.pipe(
+      switchMap(plans => {
+        const index = plans.findIndex(it => it.plan.id === id);
+        return iif(() => index !== -1, defer(() => of(plans[index].plan)));
+      }),
+      first()
+    );
   }
 
   updatePlan(plan: WeaponPlan): void {

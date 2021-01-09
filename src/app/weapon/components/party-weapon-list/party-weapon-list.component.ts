@@ -6,15 +6,16 @@ import {WeaponService} from '../../services/weapon.service';
 import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
-import {first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 
 @Component({
   selector: 'app-party-weapon-list',
   templateUrl: './party-weapon-list.component.html',
   styleUrls: ['./party-weapon-list.component.scss']
 })
-export class PartyWeaponListComponent implements OnInit {
+export class PartyWeaponListComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('weapons');
 
@@ -35,6 +36,7 @@ export class PartyWeaponListComponent implements OnInit {
   list!: WeaponListComponent;
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner) {
+    super();
   }
 
   ngOnInit(): void {
@@ -43,7 +45,8 @@ export class PartyWeaponListComponent implements OnInit {
         map(it => it[0]),
         tap(party => this.weapons = party),
         switchMap(party => party),
-        mergeMap(weapon => this.planner.getPlan(weapon.key ?? -1).pipe(first())),
+        mergeMap(weapon => this.planner.getPlan(weapon.key ?? -1)),
+        takeUntil(this.destroy$)
       )
       .subscribe(plan => this.plans.set(plan.id, plan));
   }

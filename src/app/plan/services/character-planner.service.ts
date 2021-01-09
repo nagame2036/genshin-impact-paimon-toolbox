@@ -4,7 +4,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterService} from '../../character/services/character.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {TalentService} from '../../character/services/talent.service';
-import {map, switchMap} from 'rxjs/operators';
+import {first, map, switchMap} from 'rxjs/operators';
 import {ItemList} from '../../material/models/item-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
@@ -33,10 +33,13 @@ export class CharacterPlanner {
   }
 
   getPlan(id: number): Observable<CharacterPlan> {
-    return this.activePlans.pipe(switchMap(plans => {
-      const index = plans.findIndex(it => it.plan.id === id);
-      return iif(() => index !== -1, defer(() => of(plans[index].plan)));
-    }));
+    return this.activePlans.pipe(
+      switchMap(plans => {
+        const index = plans.findIndex(it => it.plan.id === id);
+        return iif(() => index !== -1, defer(() => of(plans[index].plan)));
+      }),
+      first()
+    );
   }
 
   updatePlan(plan: CharacterPlan): void {

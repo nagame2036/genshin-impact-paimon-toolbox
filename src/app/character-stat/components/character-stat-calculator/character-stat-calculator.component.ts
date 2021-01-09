@@ -4,13 +4,15 @@ import {CharacterStatProfile} from '../../models/character-stat-profile.model';
 import {StatField} from '../../models/stat-field.model';
 import {DamageType} from '../../models/damage-type.enum';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-stat-calculator',
   templateUrl: './character-stat-calculator.component.html',
   styleUrls: ['./character-stat-calculator.component.scss']
 })
-export class CharacterStatCalculatorComponent implements OnInit {
+export class CharacterStatCalculatorComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('character-stat');
 
@@ -41,6 +43,7 @@ export class CharacterStatCalculatorComponent implements OnInit {
   ];
 
   constructor(private profileService: CharacterStatProfileService) {
+    super();
   }
 
   get dmgType(): DamageType {
@@ -60,10 +63,12 @@ export class CharacterStatCalculatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profileService.current.subscribe(c => {
-      this.profile = c;
-      this.calc();
-    });
+    this.profileService.current
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(c => {
+        this.profile = c;
+        this.calc();
+      });
   }
 
   calc(): void {

@@ -6,13 +6,15 @@ import {FormControl} from '@angular/forms';
 import {DamageType} from '../../models/damage-type.enum';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {CharacterStatProfileService} from '../../services/character-stat-profile.service';
+import {takeUntil} from 'rxjs/operators';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 
 @Component({
   selector: 'app-character-stat-profile',
   templateUrl: './character-stat-profile.component.html',
   styleUrls: ['./character-stat-profile.component.scss']
 })
-export class CharacterStatProfileComponent implements OnInit {
+export class CharacterStatProfileComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('character-stat.profile');
 
@@ -39,12 +41,15 @@ export class CharacterStatProfileComponent implements OnInit {
   comparer = new CharacterStatComparer(this.current, this.compared);
 
   constructor(private profileService: CharacterStatProfileService) {
+    super();
     this.current.copyTarget = this.compared;
     this.compared.copyTarget = this.current;
   }
 
   ngOnInit(): void {
-    this.profileService.compared.subscribe(c => this.compared.copyFromProfile(c));
+    this.profileService.compared
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(c => this.compared.copyFromProfile(c));
     this.calc(true);
   }
 
