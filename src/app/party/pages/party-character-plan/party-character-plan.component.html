@@ -1,0 +1,4 @@
+<div fxLayout="row" *ngIf="party && plan">
+  <app-character-plan-form [character]="party" [plan]="plan" (currentChange)="saveParty()" (goalChange)="savePlan()">
+  </app-character-plan-form>
+</div>

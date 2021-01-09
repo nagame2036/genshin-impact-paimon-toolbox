@@ -1,26 +1,27 @@
 import {Component, OnInit} from '@angular/core';
-import {Character} from 'src/app/character/models/character.model';
 import {I18n} from '../../../shared/models/i18n.model';
-import {CharacterService} from 'src/app/character/services/character.service';
+import {Location} from '@angular/common';
+import {Character} from '../../../character/models/character.model';
+import {PartyCharacter} from '../../../character/models/party-character.model';
+import {CharacterPlan} from '../../../plan/models/character-plan.model';
+import {CharacterService} from '../../../character/services/character.service';
+import {TalentService} from '../../../character/services/talent.service';
+import {CharacterPlanner} from '../../../plan/services/character-planner.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {switchMap, takeUntil} from 'rxjs/operators';
-import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
-import {TalentLevelData} from 'src/app/character/models/talent-level-data.model';
 import {TalentLevel} from '../../../character/models/talent-level.type';
-import {TalentService} from 'src/app/character/services/talent.service';
-import {CharacterPlanner} from 'src/app/plan/services/character-planner.service';
-import {PartyCharacter} from '../../../character/models/party-character.model';
-import {CharacterPlan} from '../../../plan/models/character-plan.model';
+import {TalentLevelData} from '../../../character/models/talent-level-data.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {addPartyAnimation} from '../../animations/add-party.animation';
 
 @Component({
-  selector: 'app-character-select-dialog',
-  templateUrl: './add-character-dialog.component.html',
-  styleUrls: ['./add-character-dialog.component.scss'],
-  animations: addItemDialogAnimation
+  selector: 'app-party-character-add',
+  templateUrl: './party-character-add.component.html',
+  styleUrls: ['./party-character-add.component.scss'],
+  animations: addPartyAnimation
 })
-export class AddCharacterDialogComponent extends AbstractObservableComponent implements OnInit {
+export class PartyCharacterAddComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('characters');
 
@@ -33,7 +34,7 @@ export class AddCharacterDialogComponent extends AbstractObservableComponent imp
   selectedPlan!: CharacterPlan;
 
   constructor(private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner,
-              private snake: MatSnackBar, private translator: TranslateService) {
+              private location: Location, private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
@@ -41,6 +42,10 @@ export class AddCharacterDialogComponent extends AbstractObservableComponent imp
     this.characterService.nonParty
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => this.characters = res);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   select(character: Character): void {
@@ -64,10 +69,11 @@ export class AddCharacterDialogComponent extends AbstractObservableComponent imp
     if (this.selected) {
       this.characterService.addPartyMember(this.selectedCharacter);
       this.planner.updatePlan(this.selectedPlan);
-      this.translator.get(this.i18n.dict(`characters.${(this.selectedCharacter.id)}`))
+      this.translator.get(this.i18n.dict(`characters.${this.selectedCharacter.id}`))
         .pipe(switchMap(name => this.translator.get(this.i18n.module('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
       this.reset();
     }
   }
+
 }

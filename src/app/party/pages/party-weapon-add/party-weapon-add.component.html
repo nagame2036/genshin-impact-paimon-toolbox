@@ -1,0 +1,26 @@
+<mat-toolbar fxLayout="row">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  {{ i18n.module('add') | translate }}
+</mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="center center" class="subpage-padding">
+  <div *ngIf="!selected" @listTrigger>
+    <app-weapon-list [weapons]="weapons" (selected)="select($event)"></app-weapon-list>
+  </div>
+  <div *ngIf="selected" @formTrigger class="add-weapon-form" fxLayout="column" fxLayoutAlign="center center">
+    <div style="width: 100px">
+      <app-item-view category="weapons" [id]="selectedWeapon.id" [rarity]="selectedWeapon.rarity"></app-item-view>
+    </div>
+    <app-weapon-plan-form [weapon]="selectedWeapon" [plan]="selectedPlan">
+    </app-weapon-plan-form>
+  </div>
+  <div *ngIf="selected" fxLayout="row" fxLayoutGap="16px" style="width: 240px">
+    <button mat-stroked-button fxFlex="50%" color="warn" (click)="reset()">
+      {{ i18n.module('reset') | translate }}
+    </button>
+    <button mat-flat-button fxFlex="50%" color="primary" [disabled]="!selected" (click)="add()">
+      {{ i18n.module('add') | translate }}
+    </button>
+  </div>
+</div>

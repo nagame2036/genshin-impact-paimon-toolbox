@@ -1,24 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {PartyCharacterComponent} from './party-character.component';
+import {PartyCharacterDetailComponent} from './party-character-detail.component';
 import {PartyModule} from '../../party.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('PartyCharacterComponent', () => {
-  let component: PartyCharacterComponent;
-  let fixture: ComponentFixture<PartyCharacterComponent>;
+describe('PartyCharacterDetailComponent', () => {
+  let component: PartyCharacterDetailComponent;
+  let fixture: ComponentFixture<PartyCharacterDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        PartyCharacterComponent
+        PartyCharacterDetailComponent
       ],
       imports: [
         PartyModule,
-        BrowserAnimationsModule,
         AppIndexedDbModule,
         AppTranslateModule,
         RouterTestingModule,
@@ -28,7 +26,7 @@ describe('PartyCharacterComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartyCharacterComponent);
+    fixture = TestBed.createComponent(PartyCharacterDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AddCharacterDialogComponent} from './add-character-dialog.component';
+import {PartyWeaponAddComponent} from './party-weapon-add.component';
 import {PartyModule} from '../../party.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('AddCharacterDialogComponent', () => {
-  let component: AddCharacterDialogComponent;
-  let fixture: ComponentFixture<AddCharacterDialogComponent>;
+describe('AddWeaponDialogComponent', () => {
+  let component: PartyWeaponAddComponent;
+  let fixture: ComponentFixture<PartyWeaponAddComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AddCharacterDialogComponent
+        PartyWeaponAddComponent
       ],
       imports: [
         PartyModule,
@@ -26,7 +26,7 @@ describe('AddCharacterDialogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddCharacterDialogComponent);
+    fixture = TestBed.createComponent(PartyWeaponAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

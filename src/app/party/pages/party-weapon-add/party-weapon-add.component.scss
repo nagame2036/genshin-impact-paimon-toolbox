@@ -1,0 +1,7 @@
+@import '../../../../assets/styles/app-form-field';
+@import '../../styles/add-item-form';
+
+.add-weapon-form {
+  @extend .add-item-form;
+  height: 280px;
+}

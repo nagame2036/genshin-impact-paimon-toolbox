@@ -4,20 +4,21 @@ import {Weapon} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
-import {mergeMap, takeUntil} from 'rxjs/operators';
-import {addItemDialogAnimation} from '../../animations/add-item-dialog.animation';
+import {switchMap, takeUntil} from 'rxjs/operators';
+import {addPartyAnimation} from '../../animations/add-party.animation';
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {Location} from '@angular/common';
 
 @Component({
-  selector: 'app-add-weapon-dialog',
-  templateUrl: './add-weapon-dialog.component.html',
-  styleUrls: ['./add-weapon-dialog.component.scss'],
-  animations: addItemDialogAnimation
+  selector: 'app-party-weapon-add',
+  templateUrl: './party-weapon-add.component.html',
+  styleUrls: ['./party-weapon-add.component.scss'],
+  animations: addPartyAnimation
 })
-export class AddWeaponDialogComponent extends AbstractObservableComponent implements OnInit {
+export class PartyWeaponAddComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('weapons');
 
@@ -30,7 +31,7 @@ export class AddWeaponDialogComponent extends AbstractObservableComponent implem
   selectedPlan!: WeaponPlan;
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner,
-              private snake: MatSnackBar, private translator: TranslateService) {
+              private location: Location, private snake: MatSnackBar, private translator: TranslateService) {
     super();
   }
 
@@ -38,6 +39,10 @@ export class AddWeaponDialogComponent extends AbstractObservableComponent implem
     this.weaponService.weapons
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => this.weapons = res);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   select(weapon: Weapon): void {
@@ -52,13 +57,12 @@ export class AddWeaponDialogComponent extends AbstractObservableComponent implem
 
   add(): void {
     if (this.selected) {
-      const id = this.selectedWeapon.id;
       this.weaponService.addPartyMember(this.selectedWeapon).subscribe(key => {
         this.selectedPlan.id = key;
         this.planner.updatePlan(this.selectedPlan);
       });
-      this.translator.get(this.i18n.dict('weapons.' + id))
-        .pipe(mergeMap(name => this.translator.get(this.i18n.module('add-success'), {name})))
+      this.translator.get(this.i18n.dict(`weapons.${this.selectedWeapon.id}`))
+        .pipe(switchMap(name => this.translator.get(this.i18n.module('add-success'), {name})))
         .subscribe(res => this.snake.open(res.toString(), undefined, {duration: 2000}));
       this.reset();
     }

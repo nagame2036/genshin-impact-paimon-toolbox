@@ -1,0 +1,4 @@
+<div fxLayout="row" *ngIf="party && plan">
+  <app-weapon-plan-form [weapon]="party" [plan]="plan" (currentChange)="saveParty()" (goalChange)="savePlan()">
+  </app-weapon-plan-form>
+</div>

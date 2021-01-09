@@ -9,13 +9,15 @@ import {CurrentGoalSelectComponent} from './components/current-goal-select/curre
 import {CurrentGoalLevelSelectComponent} from './components/current-goal-level-select/current-goal-level-select.component';
 import {PartyPageComponent} from './pages/party-page/party-page.component';
 import {PartyCharacterComponent} from './pages/party-character/party-character.component';
+import {PartyCharacterAddComponent} from './pages/party-character-add/party-character-add.component';
+import {PartyCharacterDetailComponent} from './pages/party-character-detail/party-character-detail.component';
+import {PartyCharacterPlanComponent} from './pages/party-character-plan/party-character-plan.component';
 import {CharacterPlanFormComponent} from './components/character-plan-form/character-plan-form.component';
-import {AddCharacterDialogComponent} from './components/add-character-dialog/add-character-dialog.component';
-import {CharacterDetailDialogComponent} from './components/character-detail-dialog/character-detail-dialog.component';
 import {PartyWeaponComponent} from './pages/party-weapon/party-weapon.component';
+import {PartyWeaponAddComponent} from './pages/party-weapon-add/party-weapon-add.component';
+import {PartyWeaponDetailComponent} from './pages/party-weapon-detail/party-weapon-detail.component';
+import {PartyWeaponPlanComponent} from './pages/party-weapon-plan/party-weapon-plan.component';
 import {WeaponPlanFormComponent} from './components/weapon-plan-form/weapon-plan-form.component';
-import {AddWeaponDialogComponent} from './components/add-weapon-dialog/add-weapon-dialog.component';
-import {WeaponDetailDialogComponent} from './components/weapon-detail-dialog/weapon-detail-dialog.component';
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
@@ -26,6 +28,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -33,12 +37,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CurrentGoalSelectComponent,
     CurrentGoalLevelSelectComponent,
     PartyCharacterComponent,
+    PartyCharacterAddComponent,
+    PartyCharacterDetailComponent,
+    PartyCharacterPlanComponent,
     CharacterPlanFormComponent,
-    AddCharacterDialogComponent,
-    CharacterDetailDialogComponent,
     PartyWeaponComponent,
-    AddWeaponDialogComponent,
-    WeaponDetailDialogComponent,
+    PartyWeaponAddComponent,
+    PartyWeaponDetailComponent,
+    PartyWeaponPlanComponent,
     WeaponPlanFormComponent,
     RemoveConfirmDialogComponent,
   ],
@@ -57,6 +63,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSelectModule,
     MatSnackBarModule,
     MatCheckboxModule,
+    MatToolbarModule,
+    MatIconModule,
   ]
 })
 export class PartyModule {

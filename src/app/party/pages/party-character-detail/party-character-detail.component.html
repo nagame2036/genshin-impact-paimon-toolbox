@@ -1,0 +1,23 @@
+<mat-toolbar fxLayout="row">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  {{ i18n.module('detail') | translate }}
+  -
+  {{ i18n.dict('characters.' + characterId) | translate }}
+  <div fxFlex="1 1 auto"></div>
+  <button mat-icon-button color="warn" (click)="remove()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<div fxLayout="column">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of links"
+       [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      {{ i18n.module(link + '.title') | translate }}
+    </a>
+  </nav>
+  <div class="subpage-padding">
+    <router-outlet></router-outlet>
+  </div>
+</div>

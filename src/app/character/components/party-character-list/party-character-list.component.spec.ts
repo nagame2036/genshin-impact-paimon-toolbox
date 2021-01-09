@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PartyCharacterListComponent} from './party-character-list.component';
-import {WeaponModule} from '../../../weapon/weapon.module';
+import {CharacterModule} from '../../character.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -16,7 +16,7 @@ describe('PartyCharacterListComponent', () => {
         PartyCharacterListComponent
       ],
       imports: [
-        WeaponModule,
+        CharacterModule,
         BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule

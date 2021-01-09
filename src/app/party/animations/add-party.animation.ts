@@ -1,12 +1,12 @@
 import {animate, style, transition, trigger} from '@angular/animations';
 
-export const addItemDialogAnimation = [
+export const addPartyAnimation = [
   trigger('listTrigger', [
     transition(':leave', [
-      animate('400ms ease-in', style({transform: 'translate(-100%, -120%)'})),
+      animate('400ms ease-in', style({transform: 'translate(0, -100%)'})),
     ]),
     transition(':enter', [
-      style({transform: 'translate(-100%, -120%)'}),
+      style({transform: 'translate(0, -100%)'}),
       animate('400ms ease-out'), style({transform: 'translate(0, 0)'}),
     ])
   ]),

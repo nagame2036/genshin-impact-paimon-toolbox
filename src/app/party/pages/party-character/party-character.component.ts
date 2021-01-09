@@ -1,13 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {AddCharacterDialogComponent} from '../../components/add-character-dialog/add-character-dialog.component';
-import {CharacterDetailDialogComponent} from '../../components/character-detail-dialog/character-detail-dialog.component';
 import {Character} from '../../../character/models/character.model';
 import {I18n} from '../../../shared/models/i18n.model';
 import {PartyCharacterListComponent} from '../../../character/components/party-character-list/party-character-list.component';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {CharacterService} from '../../../character/services/character.service';
-import {CharacterPlanner} from '../../../plan/services/character-planner.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-party-character',
@@ -27,20 +25,18 @@ export class PartyCharacterComponent implements OnInit {
   @ViewChild('list')
   list!: PartyCharacterListComponent;
 
-  constructor(private dialog: MatDialog, private service: CharacterService, private planner: CharacterPlanner) {
+  constructor(private dialog: MatDialog, private router: Router, private service: CharacterService) {
   }
 
   ngOnInit(): void {
   }
 
-  openAddDialog(): void {
-    this.dialog.open(AddCharacterDialogComponent).afterClosed().subscribe(_ => this.updateSelected([]));
+  gotoAdd(): void {
+    this.router.navigate(['party/add-character']).then(_ => this.updateSelected([]));
   }
 
-  openDetail(character: Character): void {
-    this.planner.getPlan(character.id).subscribe(plan => {
-      this.dialog.open(CharacterDetailDialogComponent, {data: {character, plan}});
-    });
+  goToDetail(character: Character): void {
+    this.router.navigate(['party/characters', character.id]).then();
   }
 
   openRemoveDialog(): void {

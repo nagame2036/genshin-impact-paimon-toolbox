@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {from, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {from, Observable, ReplaySubject, zip} from 'rxjs';
 import {Character} from '../models/character.model';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
 import {first, switchMap} from 'rxjs/operators';
+import {findObservable} from '../../shared/utils/collections';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,13 @@ export class CharacterService {
     });
   }
 
+  getPartyCharacter(id: number): Observable<PartyCharacter> {
+    return this.party.pipe(
+      switchMap(party => findObservable(party, it => it.id === id)),
+      first()
+    );
+  }
+
   updatePartyMember(character: PartyCharacter): void {
     const id = character.id;
     const update = this.valid(id).pipe(switchMap(_ => this.database.update(this.storeName, character)));
@@ -93,10 +101,7 @@ export class CharacterService {
 
   private valid(id: number): Observable<Character> {
     return this.characters.pipe(
-      switchMap(characters => {
-        const list = characters.filter(c => c.id === id);
-        return iif(() => list.length > 0, of(list[0]));
-      }),
+      switchMap(characters => findObservable(characters, it => it.id === id)),
       first()
     );
   }

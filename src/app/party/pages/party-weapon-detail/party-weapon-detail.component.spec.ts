@@ -1,24 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {PartyCharacterComponent} from './party-character.component';
+import {PartyWeaponDetailComponent} from './party-weapon-detail.component';
 import {PartyModule} from '../../party.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('PartyCharacterComponent', () => {
-  let component: PartyCharacterComponent;
-  let fixture: ComponentFixture<PartyCharacterComponent>;
+describe('PartyWeaponDetailComponent', () => {
+  let component: PartyWeaponDetailComponent;
+  let fixture: ComponentFixture<PartyWeaponDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        PartyCharacterComponent
+        PartyWeaponDetailComponent
       ],
       imports: [
         PartyModule,
-        BrowserAnimationsModule,
         AppIndexedDbModule,
         AppTranslateModule,
         RouterTestingModule,
@@ -28,7 +26,7 @@ describe('PartyCharacterComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartyCharacterComponent);
+    fixture = TestBed.createComponent(PartyWeaponDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

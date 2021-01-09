@@ -14,12 +14,14 @@
                                [level]="character.level" [goalLevel]="plan.level"
                                (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
 </app-current-goal-level-select>
-<app-current-goal-select *ngFor="let talent of character.talents; let i = index"
-                         [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
-                         [current]="talent.level" (currentChange)="setTalent(i, $event)"
-                         [goal]="plan.talents[i]?.level || 1" (goalChange)="setGoalTalent(i, $event)">
-  {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
-</app-current-goal-select>
+<ng-container *ngFor="let talent of character.talents; let i = index">
+  <div style="height: 2px"></div>
+  <app-current-goal-select [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
+                           [current]="talent.level" (currentChange)="setTalent(i, $event)"
+                           [goal]="plan.talents[i]?.level || 1" (goalChange)="setGoalTalent(i, $event)">
+    {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
+  </app-current-goal-select>
+</ng-container>
 <div *ngFor="let bonus of character.expBonus || []">
   {{ i18n.module('exp-bonus') | translate: bonus }}
 </div>

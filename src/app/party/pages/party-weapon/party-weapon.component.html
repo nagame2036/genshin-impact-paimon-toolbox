@@ -1,5 +1,5 @@
-<app-party-weapon-list #list (create)="openAddDialog()" [selectedItems]="selectedItems"
-                       (selected)="openDetail($event)" (multiSelected)="updateSelected($event)">
+<app-party-weapon-list #list (add)="goToAdd()" [selectedItems]="selectedItems"
+                       (selected)="goToDetail($event)" (multiSelected)="updateSelected($event)">
   <div list-actions>
     <app-multi-select [multiSelect]="multiSelect" [selectAll]="selectAll" (changed)="onMultiSelectChange($event)">
     </app-multi-select>

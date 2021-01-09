@@ -3,7 +3,7 @@
                     #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                     (multiSelected)="multiSelected.emit($event)">
   <div fxLayout="row" fxLayoutAlign="center center" list-actions>
-    <button type="button" class="add-party-btn" mat-stroked-button (click)="create.emit($event)">
+    <button type="button" class="add-party-btn" mat-stroked-button (click)="add.emit($event)">
       {{ i18n.module('add') | translate }}
     </button>
     <ng-content select="[list-actions]"></ng-content>

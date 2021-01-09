@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {from, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {from, Observable, ReplaySubject, zip} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Weapon} from '../models/weapon.model';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {first, map, switchMap} from 'rxjs/operators';
+import {findObservable} from '../../shared/utils/collections';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,13 @@ export class WeaponService {
       this.cacheParty(newParty);
       return key;
     }));
+  }
+
+  getPartyWeapon(key: number): Observable<PartyWeapon> {
+    return this.party.pipe(
+      switchMap(party => findObservable(party, it => it.key === key)),
+      first()
+    );
   }
 
   updatePartyMember(weapon: PartyWeapon): void {
@@ -87,10 +95,7 @@ export class WeaponService {
 
   private valid(id: number): Observable<Weapon> {
     return this.weapons.pipe(
-      switchMap(weapons => {
-        const list = weapons.filter(c => c.id === id);
-        return iif(() => list.length > 0, of(list[0]));
-      }),
+      switchMap(weapons => findObservable(weapons, it => it.id === id)),
       first()
     );
   }

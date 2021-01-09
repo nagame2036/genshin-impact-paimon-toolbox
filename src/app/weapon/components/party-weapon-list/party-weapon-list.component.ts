@@ -33,7 +33,7 @@ export class PartyWeaponListComponent extends AbstractObservableComponent implem
   multiSelected = new EventEmitter<Weapon[]>();
 
   @Output()
-  create = new EventEmitter();
+  add = new EventEmitter();
 
   @ViewChild('list')
   list!: WeaponListComponent;

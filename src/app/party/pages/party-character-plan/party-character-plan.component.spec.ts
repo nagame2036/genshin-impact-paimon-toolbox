@@ -1,32 +1,32 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AddWeaponDialogComponent} from './add-weapon-dialog.component';
+import {PartyCharacterPlanComponent} from './party-character-plan.component';
 import {PartyModule} from '../../party.module';
-import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppTranslateModule} from '../../../app-translate.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
-describe('AddWeaponDialogComponent', () => {
-  let component: AddWeaponDialogComponent;
-  let fixture: ComponentFixture<AddWeaponDialogComponent>;
+describe('PartyCharacterPlanComponent', () => {
+  let component: PartyCharacterPlanComponent;
+  let fixture: ComponentFixture<PartyCharacterPlanComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AddWeaponDialogComponent
+        PartyCharacterPlanComponent
       ],
       imports: [
         PartyModule,
-        BrowserAnimationsModule,
+        AppIndexedDbModule,
         AppTranslateModule,
-        AppIndexedDbModule
+        RouterTestingModule,
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddWeaponDialogComponent);
+    fixture = TestBed.createComponent(PartyCharacterPlanComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

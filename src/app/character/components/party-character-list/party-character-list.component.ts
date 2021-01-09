@@ -33,7 +33,7 @@ export class PartyCharacterListComponent extends AbstractObservableComponent imp
   multiSelected = new EventEmitter<Character[]>();
 
   @Output()
-  create = new EventEmitter();
+  add = new EventEmitter();
 
   @ViewChild('list')
   list!: CharacterListComponent;

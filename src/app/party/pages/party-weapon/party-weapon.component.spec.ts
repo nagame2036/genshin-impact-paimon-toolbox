@@ -5,6 +5,7 @@ import {PartyModule} from '../../party.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('PartyWeaponComponent', () => {
   let component: PartyWeaponComponent;
@@ -19,7 +20,8 @@ describe('PartyWeaponComponent', () => {
         PartyModule,
         BrowserAnimationsModule,
         AppIndexedDbModule,
-        AppTranslateModule
+        AppTranslateModule,
+        RouterTestingModule,
       ]
     })
       .compileComponents();

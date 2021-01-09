@@ -1,14 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Weapon} from '../../../weapon/models/weapon.model';
 import {MatDialog} from '@angular/material/dialog';
-import {AddWeaponDialogComponent} from '../../components/add-weapon-dialog/add-weapon-dialog.component';
-import {WeaponDetailDialogComponent} from '../../components/weapon-detail-dialog/weapon-detail-dialog.component';
 import {I18n} from '../../../shared/models/i18n.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyWeaponListComponent} from '../../../weapon/components/party-weapon-list/party-weapon-list.component';
-import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-party-weapon',
@@ -28,24 +26,21 @@ export class PartyWeaponComponent implements OnInit {
   @ViewChild('list')
   list!: PartyWeaponListComponent;
 
-  constructor(private dialog: MatDialog, private service: WeaponService, private planner: WeaponPlanner) {
+  constructor(private dialog: MatDialog, private router: Router, private service: WeaponService) {
   }
 
   ngOnInit(): void {
   }
 
-  openAddDialog(): void {
-    this.dialog.open(AddWeaponDialogComponent).afterClosed().subscribe(_ => this.updateSelected([]));
+  goToAdd(): void {
+    this.router.navigate(['party/add-weapon']).then(_ => this.updateSelected([]));
   }
 
-  openDetail(weapon: Weapon): void {
+  goToDetail(weapon: Weapon): void {
     const party = weapon as PartyWeapon;
-    if (!party || !party.key) {
-      return;
+    if (party.key) {
+      this.router.navigate(['party/weapons', party.key]).then();
     }
-    this.planner.getPlan(party.key).subscribe(plan => {
-      this.dialog.open(WeaponDetailDialogComponent, {data: {weapon, plan}});
-    });
   }
 
   openRemoveDialog(): void {
