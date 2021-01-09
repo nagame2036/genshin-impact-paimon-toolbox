@@ -103,10 +103,20 @@ export class WeaponListComponent implements OnChanges {
     this.multiSelect ? this.onMultiSelect(item) : this.selected.emit(item);
   }
 
+  getKey(item: Weapon): number {
+    return this.party ? (item as PartyWeapon).key ?? -1 : 0;
+  }
+
   onMultiSelect(item: Weapon): void {
-    this.selectedItems = toggleItem(this.selectedItems, item);
+    if (this.party) {
+      const partyKey = (item as PartyWeapon).key ?? -1;
+      this.selectedItems = toggleItem(this.selectedItems, item, it => ((it as PartyWeapon).key ?? -1) === partyKey);
+      this.list.filter(it => it.key === partyKey).forEach(it => it.active = !it.active);
+    } else {
+      this.selectedItems = toggleItem(this.selectedItems, item);
+      this.list.filter(it => it.id === item.id).forEach(it => it.active = !it.active);
+    }
     this.multiSelected.emit(this.selectedItems);
-    this.list.filter(it => it.id === item.id).forEach(it => it.active = !it.active);
   }
 
   selectAll(checked: boolean): void {

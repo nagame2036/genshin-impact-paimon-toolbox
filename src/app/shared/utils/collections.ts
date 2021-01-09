@@ -1,6 +1,6 @@
-export function toggleItem(list: { id: number }[], item: { id: number }): any[] {
-  const notFound = list.findIndex(it => it.id === item.id) === -1;
-  const result = list.filter(it => it.id !== item.id);
+export function toggleItem<T extends { id: number }>(list: T[], item: T, equals: (a: T) => boolean = a => a.id === item.id): T[] {
+  const notFound = list.findIndex(it => equals(it)) === -1;
+  const result = list.filter(it => !equals(it));
   if (notFound) {
     result.push(item);
   }

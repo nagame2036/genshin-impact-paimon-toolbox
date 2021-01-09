@@ -64,6 +64,7 @@ export class PartyWeaponComponent implements OnInit {
   }
 
   onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {
+    this.multiSelect = event.multiSelect;
     this.selectAll = event.selectAll;
     this.list.onMultiSelectChange(event);
   }

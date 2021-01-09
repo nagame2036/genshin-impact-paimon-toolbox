@@ -28,7 +28,7 @@
   </div>
   <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
     <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
-                   category="weapons" [id]="item.id" [rarity]="item.rarity">
+                   category="weapons" [id]="item.id" [key]="getKey(item)" [rarity]="item.rarity">
       <div image-top-left>
         <img class="weapon-type-hint"
              [src]="'assets/images/weapon-types/' + item.type + '.png'"

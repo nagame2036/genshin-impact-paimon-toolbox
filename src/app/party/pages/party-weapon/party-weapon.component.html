@@ -1,7 +1,7 @@
 <app-party-weapon-list #list (create)="openAddDialog()"
                        (selected)="openDetail($event)" (multiSelected)="updateSelected($event)">
   <div list-actions>
-    <app-multi-select [selectAll]="selectAll" (changed)="onMultiSelectChange($event)">
+    <app-multi-select [multiSelect]="multiSelect" [selectAll]="selectAll" (changed)="onMultiSelectChange($event)">
     </app-multi-select>
     <button *ngIf="selectedItems.length > 0" type="button" mat-stroked-button color="warn" (click)="openRemoveDialog()">
       {{ i18n.module('remove') | translate }}

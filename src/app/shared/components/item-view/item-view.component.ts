@@ -23,6 +23,9 @@ export class ItemViewComponent {
   id!: number;
 
   @Input()
+  key = 0;
+
+  @Input()
   rarity = 1;
 
   active = false;
