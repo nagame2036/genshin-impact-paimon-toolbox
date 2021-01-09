@@ -87,7 +87,7 @@ export class WeaponListComponent implements OnChanges {
     }
     this.items = this.weapons.map(it => it as PartyWeapon)
       .filter(it => this.rarityFilter.includes(it.rarity) && this.typeFilter.includes(it.type))
-      .sort((a, b) => b[this.sort] - a[this.sort] || b.id - a.id);
+      .sort((a, b) => b[this.sort] - a[this.sort] || a.type - b.type || b.id - a.id);
   }
 
   changeRarityFilter(change: MatSelectChange): void {
