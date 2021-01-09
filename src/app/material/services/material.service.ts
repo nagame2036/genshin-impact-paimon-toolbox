@@ -3,7 +3,7 @@ import {combineLatest, ReplaySubject} from 'rxjs';
 import {InventoryItem} from '../models/inventory-item.model';
 import {CharacterExpMaterialService} from './character-exp-material.service';
 import {WeaponExpMaterialService} from './weapon-exp-material.service';
-import {ElementalMaterialService} from './elemental-material.service';
+import {CharacterMaterialService} from './character-material.service';
 import {TalentMaterialService} from './talent-material.service';
 import {WeaponMaterialService} from './weapon-material.service';
 import {CommonMaterialService} from './common-material.service';
@@ -21,13 +21,13 @@ export class MaterialService {
   readonly materials = this.#materials.asObservable();
 
   constructor(private characterExps: CharacterExpMaterialService, private weaponExps: WeaponExpMaterialService,
-              private ores: OreMaterialService, private elemental: ElementalMaterialService, private talents: TalentMaterialService,
+              private ores: OreMaterialService, private characters: CharacterMaterialService, private talents: TalentMaterialService,
               private weapons: WeaponMaterialService, private common: CommonMaterialService, private local: LocalSpecialtyService) {
     this.loadMaterials();
   }
 
   private loadMaterials(): void {
-    combineLatest([this.characterExps.items, this.weaponExps.items, this.ores.items, this.elemental.items, this.talents.items,
+    combineLatest([this.characterExps.items, this.weaponExps.items, this.ores.items, this.characters.items, this.talents.items,
       this.weapons.items, this.common.items, this.local.items]).subscribe(materials => {
       const totalMaterials = [mora, characterExp, weaponExp];
       for (const list of materials) {

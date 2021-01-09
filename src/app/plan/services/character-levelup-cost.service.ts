@@ -5,7 +5,7 @@ import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.type';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
-import {ElementalMaterialService} from '../../material/services/elemental-material.service';
+import {CharacterMaterialService} from '../../material/services/character-material.service';
 import {CommonMaterialService} from '../../material/services/common-material.service';
 import {ItemList} from '../../material/models/item-list.model';
 import {PartyCharacter} from '../../character/models/party-character.model';
@@ -25,7 +25,7 @@ export class CharacterLevelupCostService {
 
   private ascensions = new ReplaySubject<CharacterAscensionCost[]>(1);
 
-  constructor(http: HttpClient, private elements: ElementalMaterialService, private common: CommonMaterialService) {
+  constructor(http: HttpClient, private elements: CharacterMaterialService, private common: CommonMaterialService) {
     http.get<number[]>('assets/data/character-levelup-cost.json').subscribe(res => this.levels.next(res));
     http.get<CharacterAscensionCost[]>('assets/data/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
   }

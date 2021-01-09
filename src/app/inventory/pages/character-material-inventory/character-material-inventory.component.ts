@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ElementalMaterialService} from '../../../material/services/elemental-material.service';
+import {CharacterMaterialService} from '../../../material/services/character-material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {characterExp} from '../../../material/models/mora-and-exp.model';
 import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
@@ -21,7 +21,7 @@ export class CharacterMaterialInventoryComponent extends AbstractSubInventoryCom
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private exps: CharacterExpMaterialService, private materials: ElementalMaterialService) {
+  constructor(private exps: CharacterExpMaterialService, private materials: CharacterMaterialService) {
     super();
   }
 
