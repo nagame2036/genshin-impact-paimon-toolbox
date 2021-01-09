@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CurrentGoalSelectComponent} from './current-goal-select.component';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {PlanModule} from '../../plan.module';
+import {PartyModule} from '../../party.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CurrentTargetSelectComponent', () => {
@@ -15,7 +15,7 @@ describe('CurrentTargetSelectComponent', () => {
         CurrentGoalSelectComponent
       ],
       imports: [
-        PlanModule,
+        PartyModule,
         BrowserAnimationsModule,
         AppTranslateModule
       ]

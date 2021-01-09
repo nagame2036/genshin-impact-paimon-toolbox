@@ -7,7 +7,7 @@ import {TalentLevel} from '../../../character/models/talent-level.type';
 import {TalentLevelData} from '../../../character/models/talent-level-data.model';
 import {TalentService} from '../../../character/services/talent.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
-import {CharacterPlan} from '../../models/character-plan.model';
+import {CharacterPlan} from '../../../plan/models/character-plan.model';
 
 @Component({
   selector: 'app-character-plan-form',

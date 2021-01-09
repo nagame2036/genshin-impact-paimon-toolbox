@@ -1,24 +1,24 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CharacterPlanFormComponent} from './character-plan-form.component';
-import {PlanModule} from '../../plan.module';
+import {WeaponPlanFormComponent} from './weapon-plan-form.component';
+import {PartyModule} from '../../party.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {WeaponType} from '../../../weapon/models/weapon-type.enum';
 
-describe('CharacterPlanFormComponent', () => {
-  let component: CharacterPlanFormComponent;
-  let fixture: ComponentFixture<CharacterPlanFormComponent>;
+describe('WeaponPlanFormComponent', () => {
+  let component: WeaponPlanFormComponent;
+  let fixture: ComponentFixture<WeaponPlanFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CharacterPlanFormComponent
+        WeaponPlanFormComponent
       ],
       imports: [
-        PlanModule,
+        PartyModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AppTranslateModule,
@@ -29,26 +29,23 @@ describe('CharacterPlanFormComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterPlanFormComponent);
+    fixture = TestBed.createComponent(WeaponPlanFormComponent);
     component = fixture.componentInstance;
-    component.character = {
+    component.weapon = {
       id: 1,
-      weapon: WeaponType.SWORD,
+      type: WeaponType.SWORD,
       rarity: 4,
       common: 1,
-      element: 1,
-      gem: 1,
-      local: 1,
-      constellation: 0,
+      domain: 1,
+      elite: 1,
+      refine: 1,
       ascension: 0,
-      level: 1,
-      talents: []
+      level: 1
     };
     component.plan = {
       id: 1,
       ascension: 0,
-      level: 1,
-      talents: []
+      level: 1
     };
     fixture.detectChanges();
   });

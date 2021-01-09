@@ -3,7 +3,7 @@ import {I18n} from '../../../shared/models/i18n.model';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../weapon/models/refine-rank.type';
-import {WeaponPlan} from '../../models/weapon-plan.model';
+import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 
 @Component({
