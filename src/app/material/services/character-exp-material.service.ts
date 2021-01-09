@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
-import {CharacterExpMaterial, CharacterExpMaterialGroup, CharacterExpMaterialItem} from '../models/character-exp-material.model';
+import {CharacterExpMaterial} from '../models/character-exp-material.model';
 import {HttpClient} from '@angular/common/http';
 import {calculateExpNeed, processExpDetails} from '../utils/exp-details';
 import {InventoryItemDetail} from '../models/inventory-item-detail.model';
@@ -11,20 +11,15 @@ import {characterExp} from '../models/mora-and-exp.model';
 })
 export class CharacterExpMaterialService {
 
-  #groups = new ReplaySubject<CharacterExpMaterialGroup[]>(1);
+  #items: CharacterExpMaterial[] = [];
 
-  readonly groups = this.#groups.asObservable();
-
-  #items: CharacterExpMaterialItem[] = [];
-
-  private itemsSubject = new ReplaySubject<CharacterExpMaterialItem[]>(1);
+  private itemsSubject = new ReplaySubject<CharacterExpMaterial[]>(1);
 
   readonly items = this.itemsSubject.asObservable();
 
   constructor(http: HttpClient) {
-    http.get<CharacterExpMaterial>('assets/data/materials/character-exp-materials.json').subscribe(res => {
-      this.#groups.next(res.groups);
-      this.#items = res.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
+    http.get<CharacterExpMaterial[]>('assets/data/materials/character-exp-materials.json').subscribe(res => {
+      this.#items = res.sort((a, b) => b.rarity - a.rarity);
       this.itemsSubject.next(this.#items);
     });
   }
