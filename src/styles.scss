@@ -27,5 +27,15 @@ h1, h2 {
 }
 
 .subpage-padding {
-  padding: 0 16px;
+  @extend .subpage-top-padding;
+  @extend .subpage-horizontal-padding;
+}
+
+.subpage-top-padding {
+  padding-top: 16px;
+}
+
+.subpage-horizontal-padding {
+  padding-left: 16px;
+  padding-right: 16px;
 }

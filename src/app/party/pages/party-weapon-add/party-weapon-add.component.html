@@ -4,7 +4,7 @@
   </button>
   {{ i18n.module('add') | translate }}
 </mat-toolbar>
-<div fxLayout="column" fxLayoutAlign="center center" class="subpage-padding">
+<div fxLayout="column" fxLayoutAlign="center center" class="subpage-horizontal-padding">
   <div *ngIf="!selected" @listTrigger>
     <app-weapon-list [weapons]="weapons" (selected)="select($event)"></app-weapon-list>
   </div>

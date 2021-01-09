@@ -36,12 +36,16 @@ p {
   font-size: 21px;
 }
 
+mat-card {
+  padding: 0;
+}
+
 #content {
   height: 100%;
-  min-height: 91vh;
+  min-height: 92.5vh;
   padding: 1vh;
 }
 
 #subpage {
-  min-height: 88.5vh;
+  min-height: 91vh;
 }
