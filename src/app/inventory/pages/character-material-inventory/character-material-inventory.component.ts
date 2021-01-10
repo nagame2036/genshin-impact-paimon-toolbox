@@ -3,7 +3,7 @@ import {MaterialService} from '../../../material/services/material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
-import {MaterialTypes} from '../../../material/models/material-types.enum';
+import {MaterialType} from '../../../material/models/material-type.enum';
 
 @Component({
   selector: 'app-character-material-inventory',
@@ -25,8 +25,8 @@ export class CharacterMaterialInventoryComponent extends AbstractSubInventoryCom
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CHARACTER_EXP));
-    this.boss$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CHARACTER_BOSS));
-    this.gem$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CHARACTER_GEM));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.CHARACTER_EXP));
+    this.boss$ = this.filterItems(this.materials.getMaterials(MaterialType.CHARACTER_BOSS));
+    this.gem$ = this.filterItems(this.materials.getMaterials(MaterialType.CHARACTER_GEM));
   }
 }

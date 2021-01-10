@@ -3,7 +3,7 @@ import {MaterialService} from '../../../material/services/material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
-import {MaterialTypes} from '../../../material/models/material-types.enum';
+import {MaterialType} from '../../../material/models/material-type.enum';
 
 @Component({
   selector: 'app-weapon-material-inventory',
@@ -25,9 +25,9 @@ export class WeaponMaterialInventoryComponent extends AbstractSubInventoryCompon
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_EXP));
-    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_14));
-    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_25));
-    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_36));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_EXP));
+    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_14));
+    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_25));
+    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_36));
   }
 }

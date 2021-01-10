@@ -1,4 +1,4 @@
-export enum MaterialTypes {
+export enum MaterialType {
 
   CURRENCY,
 

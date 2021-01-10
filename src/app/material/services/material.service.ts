@@ -11,7 +11,7 @@ import {OreMaterialService} from './ore-material.service';
 import {LocalSpecialtyService} from './local-specialty.service';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
 import {partitionArrays} from '../../shared/utils/collections';
-import {MaterialTypes} from '../models/material-types.enum';
+import {MaterialType} from '../models/material-type.enum';
 import {first, map} from 'rxjs/operators';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class MaterialService {
     this.mapMaterials();
   }
 
-  getMaterials(...types: MaterialTypes[]): Observable<InventoryItem[]> {
+  getMaterials(...types: MaterialType[]): Observable<InventoryItem[]> {
     return this.#materialsMap.pipe(
       first(),
       map(materials => {
@@ -81,22 +81,22 @@ export class MaterialService {
         it => it.id < 11000,
       ]);
       const materialsMap = new Map<number, InventoryItem[]>();
-      materialsMap.set(MaterialTypes.CURRENCY, currency);
-      materialsMap.set(MaterialTypes.CHARACTER_EXP, characterExps);
-      materialsMap.set(MaterialTypes.WEAPON_EXP, weaponExps);
-      materialsMap.set(MaterialTypes.ORE, ores);
-      materialsMap.set(MaterialTypes.CHARACTER_BOSS, characterBoss);
-      materialsMap.set(MaterialTypes.CHARACTER_GEM, characterGem);
-      materialsMap.set(MaterialTypes.WEAPON_14, weapons14);
-      materialsMap.set(MaterialTypes.WEAPON_25, weapons25);
-      materialsMap.set(MaterialTypes.WEAPON_36, weapons36);
-      materialsMap.set(MaterialTypes.TALENT_14, talents14);
-      materialsMap.set(MaterialTypes.TALENT_25, talents25);
-      materialsMap.set(MaterialTypes.TALENT_36, talents36);
-      materialsMap.set(MaterialTypes.TALENT_COMMON, talentsCommon);
-      materialsMap.set(MaterialTypes.COMMON_MOB, commonMob);
-      materialsMap.set(MaterialTypes.COMMON_ELITE, commonElite);
-      materialsMap.set(MaterialTypes.LOCAL_SPECIALTY, localSpecialties);
+      materialsMap.set(MaterialType.CURRENCY, currency);
+      materialsMap.set(MaterialType.CHARACTER_EXP, characterExps);
+      materialsMap.set(MaterialType.WEAPON_EXP, weaponExps);
+      materialsMap.set(MaterialType.ORE, ores);
+      materialsMap.set(MaterialType.CHARACTER_BOSS, characterBoss);
+      materialsMap.set(MaterialType.CHARACTER_GEM, characterGem);
+      materialsMap.set(MaterialType.WEAPON_14, weapons14);
+      materialsMap.set(MaterialType.WEAPON_25, weapons25);
+      materialsMap.set(MaterialType.WEAPON_36, weapons36);
+      materialsMap.set(MaterialType.TALENT_14, talents14);
+      materialsMap.set(MaterialType.TALENT_25, talents25);
+      materialsMap.set(MaterialType.TALENT_36, talents36);
+      materialsMap.set(MaterialType.TALENT_COMMON, talentsCommon);
+      materialsMap.set(MaterialType.COMMON_MOB, commonMob);
+      materialsMap.set(MaterialType.COMMON_ELITE, commonElite);
+      materialsMap.set(MaterialType.LOCAL_SPECIALTY, localSpecialties);
       this.#materialsMap.next(materialsMap);
     });
   }

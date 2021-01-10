@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
-import {MaterialTypes} from '../../../material/models/material-types.enum';
+import {MaterialType} from '../../../material/models/material-type.enum';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -27,9 +27,9 @@ export class TalentMaterialInventoryComponent extends AbstractSubInventoryCompon
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_COMMON));
-    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_14));
-    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_25));
-    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_36));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_COMMON));
+    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_14));
+    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_25));
+    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_36));
   }
 }

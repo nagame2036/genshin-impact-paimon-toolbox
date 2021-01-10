@@ -3,7 +3,7 @@ import {MaterialService} from '../../../material/services/material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
-import {MaterialTypes} from '../../../material/models/material-types.enum';
+import {MaterialType} from '../../../material/models/material-type.enum';
 
 @Component({
   selector: 'app-ingredient-inventory',
@@ -23,8 +23,8 @@ export class IngredientInventoryComponent extends AbstractSubInventoryComponent 
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CURRENCY, MaterialTypes.ORE));
-    this.local$ = this.filterItems(this.materials.getMaterials(MaterialTypes.LOCAL_SPECIALTY));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.CURRENCY, MaterialType.ORE));
+    this.local$ = this.filterItems(this.materials.getMaterials(MaterialType.LOCAL_SPECIALTY));
   }
 
 }
