@@ -41,19 +41,19 @@
   },
   {
     "id": 5,
-    "type": 2,
-    "rarity": 3,
-    "domain": 400,
-    "elite": 900,
-    "common": 807
-  },
-  {
-    "id": 6,
     "type": 1,
     "rarity": 3,
     "domain": 403,
     "elite": 905,
     "common": 801
+  },
+  {
+    "id": 6,
+    "type": 2,
+    "rarity": 3,
+    "domain": 400,
+    "elite": 900,
+    "common": 807
   },
   {
     "id": 7,
