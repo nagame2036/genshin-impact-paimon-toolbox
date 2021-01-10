@@ -1,4 +1,4 @@
-<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="260"
+<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="360"
                  [sortFields]="['level', 'rarity', 'refine']" sort="level"
                  #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                  (multiSelected)="multiSelected.emit($event)">
@@ -12,7 +12,7 @@
     <ng-container *ngIf="getParty(item) as party">
       <ng-container *ngIf="getPlan(party) as plan">
         <div class="party-item-overview" gdAlignColumns="space-around stretch"
-             gdColumns="55% 45%" gdRows="repeat(3, 1fr)"
+             gdColumns="40% auto" gdRows="repeat(3, 1fr)"
              gdAreas="refine-rank refine-rank-data | ascension ascension-data | level level-data">
           <div gdArea="refine-rank" class="party-item-overview-label party-item-overview-row-non-border-top">
             <b>{{ i18n.dict('refine') | translate }}</b>

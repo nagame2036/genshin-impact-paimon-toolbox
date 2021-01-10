@@ -1,4 +1,4 @@
-<app-character-list [party]="true" [characters]="characters" [itemWidth]="260"
+<app-character-list [party]="true" [characters]="characters" [itemWidth]="360"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
                     #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                     (multiSelected)="multiSelected.emit($event)">
@@ -12,7 +12,7 @@
     <ng-container *ngIf="getParty(item) as party">
       <ng-container *ngIf="getPlan(party) as plan">
         <div class="party-item-overview" gdAlignColumns="space-around stretch"
-             gdColumns="55% 45%" gdRows="repeat(6, 1fr)"
+             gdColumns="40% auto" gdRows="repeat(6, 1fr)"
              gdAreas="constellation constellation-data | ascension ascension-data | level level-data
                   | talent1 talent1-data | talent2 talent2-data | talent3 talent3-data">
           <div gdArea="constellation" class="party-item-overview-label party-item-overview-row-non-border-top">
