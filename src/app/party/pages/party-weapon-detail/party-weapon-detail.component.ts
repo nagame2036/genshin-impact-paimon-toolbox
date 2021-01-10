@@ -6,6 +6,8 @@ import {WeaponService} from '../../../weapon/services/weapon.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {switchMap, takeUntil} from 'rxjs/operators';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
+import {MatDialog} from '@angular/material/dialog';
+import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 
 @Component({
   selector: 'app-party-weapon-detail',
@@ -26,7 +28,7 @@ export class PartyWeaponDetailComponent extends AbstractObservableComponent impl
     'plan',
   ];
 
-  constructor(private route: ActivatedRoute, private location: Location, private weapons: WeaponService) {
+  constructor(private route: ActivatedRoute, private location: Location, private weapons: WeaponService, private dialog: MatDialog) {
     super();
   }
 
@@ -48,8 +50,13 @@ export class PartyWeaponDetailComponent extends AbstractObservableComponent impl
   }
 
   remove(): void {
-    this.weapons.removePartyMember(this.weapon);
-    this.goBack();
+    this.dialog.open(RemoveConfirmDialogComponent, {data: {category: 'weapons', items: [this.weapon]}})
+      .afterClosed().subscribe(remove => {
+      if (remove) {
+        this.weapons.removePartyMember(this.weapon);
+        this.goBack();
+      }
+    });
   }
 
 }
