@@ -1,17 +1,20 @@
-<mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
-  <mat-label>
-    {{ i18n.dict('refine-rank') | translate }}
-  </mat-label>
-  <mat-select [value]="weapon.refine" (selectionChange)="setRefineRank($event.value)">
-    <mat-option *ngFor="let c of refineRanks" [value]="c">
-      {{ c }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<app-current-goal-level-select label="weapon" [ascension]="weapon.ascension" [goalAscension]="plan.ascension"
-                               [level]="weapon.level" [goalLevel]="plan.level"
-                               (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
-</app-current-goal-level-select>
-<div *ngFor="let bonus of weapon.expBonus || []">
-  {{ i18n.module('exp-bonus') | translate: bonus }}
+<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 40px">
+  <app-item-view category="weapons" [id]="weapon.id" [rarity]="weapon.rarity"></app-item-view>
+  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
+    <mat-label>
+      {{ i18n.dict('refine-rank') | translate }}
+    </mat-label>
+    <mat-select [value]="weapon.refine" (selectionChange)="setRefineRank($event.value)">
+      <mat-option *ngFor="let c of refineRanks" [value]="c">
+        {{ c }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <app-current-goal-level-select label="weapon" [ascension]="weapon.ascension" [goalAscension]="plan.ascension"
+                                 [level]="weapon.level" [goalLevel]="plan.level"
+                                 (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
+  </app-current-goal-level-select>
+  <div *ngFor="let bonus of weapon.expBonus || []">
+    {{ i18n.module('exp-bonus') | translate: bonus }}
+  </div>
 </div>
