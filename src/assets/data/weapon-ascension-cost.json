@@ -1,7 +1,6 @@
 {
   "3": [
     {
-      "level": 20,
       "mora": 5000,
       "domain": {
         "rarity": 2,
@@ -17,7 +16,6 @@
       }
     },
     {
-      "level": 40,
       "mora": 10000,
       "domain": {
         "rarity": 3,
@@ -33,7 +31,6 @@
       }
     },
     {
-      "level": 50,
       "mora": 15000,
       "domain": {
         "rarity": 3,
@@ -49,7 +46,6 @@
       }
     },
     {
-      "level": 60,
       "mora": 20000,
       "domain": {
         "rarity": 4,
@@ -65,7 +61,6 @@
       }
     },
     {
-      "level": 70,
       "mora": 25000,
       "domain": {
         "rarity": 4,
@@ -81,7 +76,6 @@
       }
     },
     {
-      "level": 80,
       "mora": 30000,
       "domain": {
         "rarity": 5,
@@ -99,7 +93,6 @@
   ],
   "4": [
     {
-      "level": 20,
       "mora": 5000,
       "domain": {
         "rarity": 2,
@@ -115,7 +108,6 @@
       }
     },
     {
-      "level": 40,
       "mora": 15000,
       "domain": {
         "rarity": 3,
@@ -131,7 +123,6 @@
       }
     },
     {
-      "level": 50,
       "mora": 20000,
       "domain": {
         "rarity": 3,
@@ -147,7 +138,6 @@
       }
     },
     {
-      "level": 60,
       "mora": 30000,
       "domain": {
         "rarity": 4,
@@ -163,7 +153,6 @@
       }
     },
     {
-      "level": 70,
       "mora": 35000,
       "domain": {
         "rarity": 4,
@@ -179,7 +168,6 @@
       }
     },
     {
-      "level": 80,
       "mora": 45000,
       "domain": {
         "rarity": 5,
@@ -197,7 +185,6 @@
   ],
   "5": [
     {
-      "level": 20,
       "mora": 10000,
       "domain": {
         "rarity": 2,
@@ -213,7 +200,6 @@
       }
     },
     {
-      "level": 40,
       "mora": 20000,
       "domain": {
         "rarity": 3,
@@ -229,7 +215,6 @@
       }
     },
     {
-      "level": 50,
       "mora": 30000,
       "domain": {
         "rarity": 3,
@@ -245,7 +230,6 @@
       }
     },
     {
-      "level": 60,
       "mora": 45000,
       "domain": {
         "rarity": 4,
@@ -261,7 +245,6 @@
       }
     },
     {
-      "level": 70,
       "mora": 55000,
       "domain": {
         "rarity": 4,
@@ -277,7 +260,6 @@
       }
     },
     {
-      "level": 80,
       "mora": 65000,
       "domain": {
         "rarity": 5,

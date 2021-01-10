@@ -51,20 +51,17 @@ export class TalentLevelupCostService {
       return;
     }
     const domainLen = talent.domain.length;
-    for (let i = start; i < goal; i++) {
+    const end = goal - 1;
+    for (let i = Math.max(0, start - 1); i < end; i++) {
       const {mora: moraCost, common, domain, boss, event} = levels[i];
       cost.change(mora.id, moraCost);
-      if (domain) {
-        // The travelers repeatedly use 3 types of talent domain materials for leveling up their talents
-        const group = (i - 1) % domainLen;
-        const domainGroup = talent.domain[group];
-        const domainItem = this.domain.getByGroupAndRarity(domainGroup, domain.rarity);
-        cost.change(domainItem.id, domain.amount);
-      }
-      if (common) {
-        const commonItem = this.common.getByGroupAndRarity(talent.common, common.rarity);
-        cost.change(commonItem.id, common.amount);
-      }
+      // The travelers repeatedly use 3 types of talent domain materials for leveling up their talents
+      const group = i % domainLen;
+      const domainGroup = talent.domain[group];
+      const domainItem = this.domain.getByGroupAndRarity(domainGroup, domain.rarity);
+      cost.change(domainItem.id, domain.amount);
+      const commonItem = this.common.getByGroupAndRarity(talent.common, common.rarity);
+      cost.change(commonItem.id, common.amount);
       if (boss) {
         cost.change(talent.boss, boss);
       }

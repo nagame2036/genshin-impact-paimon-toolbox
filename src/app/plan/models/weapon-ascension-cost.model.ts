@@ -10,8 +10,6 @@ export interface WeaponAscensionCost {
 
 export interface WeaponRarityAscensionCost {
 
-  level: number;
-
   mora: number;
 
   domain: GroupItemCost;

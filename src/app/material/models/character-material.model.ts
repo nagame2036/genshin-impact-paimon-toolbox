@@ -12,9 +12,9 @@ export interface CharacterMaterialGroup {
 
   id: number;
 
-  element: ElementType;
+  element?: ElementType;
 
-  source: number[];
+  source?: number[];
 }
 
 export interface CharacterMaterialItem extends InventoryItem {

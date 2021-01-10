@@ -12,11 +12,11 @@ export interface TalentMaterialGroup {
 
   id: number;
 
-  nation: Nation;
+  nation?: Nation;
 
-  source: number[];
+  source?: number[];
 
-  weekday: number;
+  weekday?: number;
 }
 
 export interface TalentMaterialItem extends InventoryItem {

@@ -4,9 +4,9 @@ export interface TalentLevelupCost {
 
   mora: number;
 
-  domain?: GroupItemCost;
+  domain: GroupItemCost;
 
-  common?: GroupItemCost;
+  common: GroupItemCost;
 
   boss?: number;
 

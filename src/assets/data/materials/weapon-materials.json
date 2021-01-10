@@ -3,50 +3,50 @@
     {
       "id": 400,
       "nation": 1,
+      "weekday": 14,
       "source": [
         201
-      ],
-      "weekday": 14
+      ]
     },
     {
       "id": 401,
       "nation": 1,
+      "weekday": 25,
       "source": [
         201
-      ],
-      "weekday": 25
+      ]
     },
     {
       "id": 402,
       "nation": 1,
+      "weekday": 36,
       "source": [
         201
-      ],
-      "weekday": 36
+      ]
     },
     {
       "id": 403,
       "nation": 2,
+      "weekday": 14,
       "source": [
         202
-      ],
-      "weekday": 14
+      ]
     },
     {
       "id": 404,
       "nation": 2,
+      "weekday": 25,
       "source": [
         202
-      ],
-      "weekday": 25
+      ]
     },
     {
       "id": 405,
       "nation": 2,
+      "weekday": 36,
       "source": [
         202
-      ],
-      "weekday": 36
+      ]
     }
   ],
   "items": [
