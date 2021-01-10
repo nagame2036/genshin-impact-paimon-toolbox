@@ -8,6 +8,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
 import {MatDialog} from '@angular/material/dialog';
 import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyCharacter} from '../../../character/models/party-character.model';
+import {ImageService} from '../../../image/services/image.service';
 
 @Component({
   selector: 'app-party-character-detail',
@@ -26,7 +27,13 @@ export class PartyCharacterDetailComponent extends AbstractObservableComponent i
     'plan',
   ];
 
-  constructor(private route: ActivatedRoute, private location: Location, private characters: CharacterService, private dialog: MatDialog) {
+  get background(): string {
+    const image = this.images.get('character-portraits', this.characterId);
+    return `background: url(${image}) no-repeat right bottom`;
+  }
+
+  constructor(private route: ActivatedRoute, private location: Location, private characters: CharacterService, private dialog: MatDialog,
+              public images: ImageService) {
     super();
   }
 
