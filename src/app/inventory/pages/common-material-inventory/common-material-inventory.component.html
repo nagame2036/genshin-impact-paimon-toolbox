@@ -7,7 +7,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-checkbox class="app-multi-select-checkbox" [checked]="showOverflow" (change)="showOverflow = $event.checked">
+  <mat-checkbox [checked]="showOverflow" (change)="showOverflow = $event.checked">
     {{ i18n.module('show-overflow') | translate }}
   </mat-checkbox>
 </div>
