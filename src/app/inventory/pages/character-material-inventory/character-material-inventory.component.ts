@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CharacterMaterialService} from '../../../material/services/character-material.service';
+import {MaterialService} from '../../../material/services/material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
-import {characterExp} from '../../../material/models/mora-and-exp.model';
-import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
-import {partitionArrays} from '../../../shared/utils/collections';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {MaterialTypes} from '../../../material/models/material-types.enum';
 
 @Component({
   selector: 'app-character-material-inventory',
@@ -17,17 +14,19 @@ export class CharacterMaterialInventoryComponent extends AbstractSubInventoryCom
 
   common$!: Observable<InventoryItem[]>;
 
-  elements$!: Observable<InventoryItem[][]>;
+  boss$!: Observable<InventoryItem[]>;
+
+  gem$!: Observable<InventoryItem[]>;
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private exps: CharacterExpMaterialService, private materials: CharacterMaterialService) {
+  constructor(private materials: MaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.exps.items).pipe(map(items => [characterExp, ...items]));
-    this.elements$ = this.filterItems(this.materials.items)
-      .pipe(map(items => partitionArrays(items, [item => item.id < 3000])));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CHARACTER_EXP));
+    this.boss$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CHARACTER_BOSS));
+    this.gem$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CHARACTER_GEM));
   }
 }

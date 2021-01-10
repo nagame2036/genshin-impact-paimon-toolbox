@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalSpecialtyService} from '../../../material/services/local-specialty.service';
-import {OreMaterialService} from '../../../material/services/ore-material.service';
+import {MaterialService} from '../../../material/services/material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
-import {mora} from '../../../material/models/mora-and-exp.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {MaterialTypes} from '../../../material/models/material-types.enum';
 
 @Component({
   selector: 'app-ingredient-inventory',
@@ -20,13 +18,13 @@ export class IngredientInventoryComponent extends AbstractSubInventoryComponent 
 
   rarities = [3, 2, 1];
 
-  constructor(private ores: OreMaterialService, private localSpecialties: LocalSpecialtyService) {
+  constructor(private materials: MaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.ores.items).pipe(map(items => [mora, ...items]));
-    this.local$ = this.filterItems(this.localSpecialties.items);
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.CURRENCY, MaterialTypes.ORE));
+    this.local$ = this.filterItems(this.materials.getMaterials(MaterialTypes.LOCAL_SPECIALTY));
   }
 
 }

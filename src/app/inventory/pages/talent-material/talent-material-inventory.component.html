@@ -11,9 +11,15 @@
     {{ i18n.module('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<ng-container *ngIf="items$ | async as items">
-  <app-inventory-list subtitle="common" [items]="items[3]" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="1/4" [items]="items[0]" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="2/5" [items]="items[1]" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="3/6" [items]="items[2]" [showOverflow]="showOverflow"></app-inventory-list>
+<ng-container *ngIf="common$ | async as common">
+  <app-inventory-list subtitle="common" [items]="common" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="monThu$ | async as monThu">
+  <app-inventory-list subtitle="1/4" [items]="monThu" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="tueFri$ | async as tueFri">
+  <app-inventory-list subtitle="2/5" [items]="tueFri" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="wedSat$ | async as wedSat">
+  <app-inventory-list subtitle="3/6" [items]="wedSat" [showOverflow]="showOverflow"></app-inventory-list>
 </ng-container>

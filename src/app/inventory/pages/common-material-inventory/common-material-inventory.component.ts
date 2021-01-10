@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
-import {CommonMaterialService} from '../../../material/services/common-material.service';
+import {MaterialService} from '../../../material/services/material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
-import {partitionArrays} from '../../../shared/utils/collections';
-import {map} from 'rxjs/operators';
+import {MaterialTypes} from '../../../material/models/material-types.enum';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -13,17 +12,19 @@ import {Observable} from 'rxjs';
 })
 export class CommonMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  items$!: Observable<InventoryItem[][]>;
+  mobs$!: Observable<InventoryItem[]>;
+
+  elites$!: Observable<InventoryItem[]>;
 
   rarities = [4, 3, 2, 1];
 
-  constructor(private materials: CommonMaterialService) {
+  constructor(private materials: MaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.items$ = this.filterItems(this.materials.items)
-      .pipe(map(items => partitionArrays(items, [item => item.id < 9000])));
+    this.mobs$ = this.filterItems(this.materials.getMaterials(MaterialTypes.COMMON_MOB));
+    this.elites$ = this.filterItems(this.materials.getMaterials(MaterialTypes.COMMON_ELITE));
   }
 
 }

@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {WeaponMaterialService} from '../../../material/services/weapon-material.service';
+import {MaterialService} from '../../../material/services/material.service';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
-import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
-import {weaponExp} from '../../../material/models/mora-and-exp.model';
-import {partitionArrays} from '../../../shared/utils/collections';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {MaterialTypes} from '../../../material/models/material-types.enum';
 
 @Component({
   selector: 'app-weapon-material-inventory',
@@ -17,18 +14,20 @@ export class WeaponMaterialInventoryComponent extends AbstractSubInventoryCompon
 
   common$!: Observable<InventoryItem[]>;
 
-  items$!: Observable<InventoryItem[][]>;
+  monThu$!: Observable<InventoryItem[]>;
 
-  constructor(private exps: WeaponExpMaterialService, private materials: WeaponMaterialService) {
+  tueFri$!: Observable<InventoryItem[]>;
+
+  wedSat$!: Observable<InventoryItem[]>;
+
+  constructor(private materials: MaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.exps.items).pipe(map(items => [weaponExp, ...items]));
-    this.items$ = this.filterItems(this.materials.items).pipe(map(items => partitionArrays(items, [
-      item => this.materials.getWeekday(item) === 14,
-      item => this.materials.getWeekday(item) === 25,
-      item => this.materials.getWeekday(item) === 36,
-    ])));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_EXP));
+    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_14));
+    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_25));
+    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialTypes.WEAPON_36));
   }
 }

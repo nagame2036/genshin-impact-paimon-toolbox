@@ -14,7 +14,9 @@
 <ng-container *ngIf="common$ | async as common">
   <app-inventory-list subtitle="common" [items]="common" [showOverflow]="showOverflow"></app-inventory-list>
 </ng-container>
-<ng-container *ngIf="elements$ | async as elements">
-  <app-inventory-list subtitle="elemental" [items]="elements[0]" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="gem" [items]="elements[1]" [showOverflow]="showOverflow"></app-inventory-list>
+<ng-container *ngIf="boss$ | async as boss">
+  <app-inventory-list subtitle="boss" [items]="boss" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="gem$ | async as gem">
+  <app-inventory-list subtitle="gem" [items]="gem" [showOverflow]="showOverflow"></app-inventory-list>
 </ng-container>

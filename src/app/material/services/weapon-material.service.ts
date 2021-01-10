@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {WeaponMaterial, WeaponMaterialItem} from '../models/weapon-material.model';
 import {Rarity} from '../../shared/models/rarity.type';
 import {TalentMaterialGroup, TalentMaterialItem} from '../models/talent-material.model';
+import {InventoryItem} from '../models/inventory-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class WeaponMaterialService {
     return this.#items[index];
   }
 
-  getWeekday(item: TalentMaterialItem): number {
-    return this.#groups.get(item.group)?.weekday ?? 0;
+  getWeekday(item: InventoryItem): number {
+    return this.#groups.get(item?.group ?? -1)?.weekday ?? 0;
   }
 }

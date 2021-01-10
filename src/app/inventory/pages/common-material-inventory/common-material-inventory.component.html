@@ -11,7 +11,9 @@
     {{ i18n.module('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<ng-container *ngIf="items$ | async as items">
-  <app-inventory-list subtitle="mob" [items]="items[0]" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="elite" [items]="items[1]" [showOverflow]="showOverflow"></app-inventory-list>
+<ng-container *ngIf="mobs$ | async as mobs">
+  <app-inventory-list subtitle="mob" [items]="mobs" [showOverflow]="showOverflow"></app-inventory-list>
+</ng-container>
+<ng-container *ngIf="elites$ | async as elites">
+  <app-inventory-list subtitle="elite" [items]="elites" [showOverflow]="showOverflow"></app-inventory-list>
 </ng-container>

@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {InventoryItem} from '../../../material/models/inventory-item.model';
-import {TalentMaterialService} from '../../../material/services/talent-material.service';
+import {MaterialService} from '../../../material/services/material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
-import {partitionArrays} from '../../../shared/utils/collections';
-import {map} from 'rxjs/operators';
+import {MaterialTypes} from '../../../material/models/material-types.enum';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -13,19 +12,24 @@ import {Observable} from 'rxjs';
 })
 export class TalentMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  items$!: Observable<InventoryItem[][]>;
+  common$!: Observable<InventoryItem[]>;
+
+  monThu$!: Observable<InventoryItem[]>;
+
+  tueFri$!: Observable<InventoryItem[]>;
+
+  wedSat$!: Observable<InventoryItem[]>;
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private materials: TalentMaterialService) {
+  constructor(private materials: MaterialService) {
     super();
   }
 
   ngOnInit(): void {
-    this.items$ = this.filterItems(this.materials.items).pipe(map(items => partitionArrays(items, [
-      item => this.materials.getWeekday(item) === 14,
-      item => this.materials.getWeekday(item) === 25,
-      item => this.materials.getWeekday(item) === 36,
-    ])));
+    this.common$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_COMMON));
+    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_14));
+    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_25));
+    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialTypes.TALENT_36));
   }
 }
