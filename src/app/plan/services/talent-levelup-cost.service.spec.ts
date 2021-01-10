@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
+import {mora} from '../../material/models/mora-and-exp.model';
 
 describe('TalentLevelupCostService', () => {
   let service: TalentLevelupCostService;
@@ -43,7 +44,7 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
-      expect(res.getAmount(0)).toBe(1652500);
+      expect(res.getAmount(mora.id)).toBe(1652500);
       expect(res.getAmount(5000)).toBe(3);
       expect(res.getAmount(5001)).toBe(21);
       expect(res.getAmount(5002)).toBe(38);
@@ -74,7 +75,7 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 6}]).subscribe(res => {
-      expect(res.getAmount(0)).toBe(122500);
+      expect(res.getAmount(mora.id)).toBe(122500);
       expect(res.getAmount(5000)).toBe(3);
       expect(res.getAmount(5001)).toBe(21);
       expect(res.getAmount(8030)).toBe(6);
@@ -101,7 +102,7 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
-      expect(res.getAmount(0)).toBe(1530000);
+      expect(res.getAmount(mora.id)).toBe(1530000);
       expect(res.getAmount(5002)).toBe(38);
       expect(res.getAmount(6002)).toBe(6);
       expect(res.getAmount(7000)).toBe(1);
@@ -127,7 +128,7 @@ describe('TalentLevelupCostService', () => {
       ]
     };
     service.cost(character, [{id: 10, level: 10}]).subscribe(res => {
-      expect(res.getAmount(0)).toBe(1652500);
+      expect(res.getAmount(mora.id)).toBe(1652500);
       expect(res.getAmount(5000)).toBe(3);
       expect(res.getAmount(5001)).toBe(6);
       expect(res.getAmount(5002)).toBe(6);

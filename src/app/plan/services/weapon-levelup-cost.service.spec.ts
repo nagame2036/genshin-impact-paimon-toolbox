@@ -6,6 +6,7 @@ import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {PlanModule} from '../plan.module';
 import {HttpClientModule} from '@angular/common/http';
+import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 
 describe('WeaponLevelupCostService', () => {
   let service: WeaponLevelupCostService;
@@ -38,8 +39,8 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(503820);
-      expect(res.getAmount(2)).toBe(3988200);
+      expect(res.getAmount(mora.id)).toBe(503820);
+      expect(res.getAmount(weaponExp.id)).toBe(3988200);
       expect(res.getAmount(4000)).toBe(2);
       expect(res.getAmount(4001)).toBe(6);
       expect(res.getAmount(4002)).toBe(6);
@@ -67,8 +68,8 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(2, 50)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(75383);
-      expect(res.getAmount(2)).toBe(603825);
+      expect(res.getAmount(mora.id)).toBe(75383);
+      expect(res.getAmount(weaponExp.id)).toBe(603825);
       expect(res.getAmount(4010)).toBe(2);
       expect(res.getAmount(4011)).toBe(2);
       expect(res.getAmount(8010)).toBe(6);
@@ -90,8 +91,8 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(428438);
-      expect(res.getAmount(2)).toBe(3384375);
+      expect(res.getAmount(mora.id)).toBe(428438);
+      expect(res.getAmount(weaponExp.id)).toBe(3384375);
       expect(res.getAmount(4021)).toBe(4);
       expect(res.getAmount(4022)).toBe(6);
       expect(res.getAmount(4023)).toBe(3);
@@ -116,8 +117,8 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(754265);
-      expect(res.getAmount(2)).toBe(6042650);
+      expect(res.getAmount(mora.id)).toBe(754265);
+      expect(res.getAmount(weaponExp.id)).toBe(6042650);
       expect(res.getAmount(4030)).toBe(3);
       expect(res.getAmount(4031)).toBe(9);
       expect(res.getAmount(4032)).toBe(9);
@@ -145,8 +146,8 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(2, 50)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(111485);
-      expect(res.getAmount(2)).toBe(914850);
+      expect(res.getAmount(mora.id)).toBe(111485);
+      expect(res.getAmount(weaponExp.id)).toBe(914850);
       expect(res.getAmount(4040)).toBe(3);
       expect(res.getAmount(4041)).toBe(3);
       expect(res.getAmount(8050)).toBe(10);
@@ -168,8 +169,8 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(642780);
-      expect(res.getAmount(2)).toBe(5127800);
+      expect(res.getAmount(mora.id)).toBe(642780);
+      expect(res.getAmount(weaponExp.id)).toBe(5127800);
       expect(res.getAmount(4051)).toBe(6);
       expect(res.getAmount(4052)).toBe(9);
       expect(res.getAmount(4053)).toBe(4);
@@ -194,8 +195,8 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(1131445);
-      expect(res.getAmount(2)).toBe(9064450);
+      expect(res.getAmount(mora.id)).toBe(1131445);
+      expect(res.getAmount(weaponExp.id)).toBe(9064450);
       expect(res.getAmount(4030)).toBe(5);
       expect(res.getAmount(4031)).toBe(14);
       expect(res.getAmount(4032)).toBe(14);
@@ -223,8 +224,8 @@ describe('WeaponLevelupCostService', () => {
       level: 1
     };
     service.cost(weapon, new AscensionLevel(2, 50)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(167250);
-      expect(res.getAmount(2)).toBe(1372500);
+      expect(res.getAmount(mora.id)).toBe(167250);
+      expect(res.getAmount(weaponExp.id)).toBe(1372500);
       expect(res.getAmount(4030)).toBe(5);
       expect(res.getAmount(4031)).toBe(5);
       expect(res.getAmount(8070)).toBe(15);
@@ -246,8 +247,8 @@ describe('WeaponLevelupCostService', () => {
       level: 50
     };
     service.cost(weapon, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(964195);
-      expect(res.getAmount(2)).toBe(7691950);
+      expect(res.getAmount(mora.id)).toBe(964195);
+      expect(res.getAmount(weaponExp.id)).toBe(7691950);
       expect(res.getAmount(4031)).toBe(9);
       expect(res.getAmount(4032)).toBe(14);
       expect(res.getAmount(8071)).toBe(23);

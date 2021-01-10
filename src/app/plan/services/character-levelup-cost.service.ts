@@ -11,6 +11,7 @@ import {ItemList} from '../../material/models/item-list.model';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
+import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,8 +50,8 @@ export class CharacterLevelupCostService {
       map(([ascensions, _, __]) => {
         const cost = new ItemList();
         const range = ascensions.slice(character.ascension, goal);
-        range.forEach(({mora, elemental, gem, local, enemy}) => {
-          cost.change(0, mora);
+        range.forEach(({mora: moraCost, elemental, gem, local, enemy}) => {
+          cost.change(mora.id, moraCost);
           if (character.elemental) {
             cost.change(character.elemental, elemental);
           }
@@ -69,9 +70,9 @@ export class CharacterLevelupCostService {
     return this.levels.pipe(map(levels => {
       const cost = new ItemList();
       const moraAmount = levels.slice(character.level, goal).reduce((sum, curr) => sum + curr, 0);
-      const {mora, exp} = processExpBonus(character, moraAmount, v => v * 5);
-      cost.change(0, mora);
-      cost.change(1, exp);
+      const {mora: moraCost, exp: expCost} = processExpBonus(character, moraAmount, v => v * 5);
+      cost.change(mora.id, moraCost);
+      cost.change(characterExp.id, expCost);
       return cost;
     }));
   }

@@ -12,6 +12,7 @@ import {TalentLevel} from '../../character/models/talent-level.type';
 import {TalentPlan} from '../models/talent-plan.model';
 import {TalentService} from '../../character/services/talent.service';
 import {CharacterPlan} from '../models/character-plan.model';
+import {mora} from '../../material/models/mora-and-exp.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,10 @@ export class TalentLevelupCostService {
     );
   }
 
-  cost(character: PartyCharacter, goal: TalentLevelData[]): Observable<ItemList> {
+  cost({talents}: PartyCharacter, goal: TalentLevelData[]): Observable<ItemList> {
     return zip(this.levels, this.domain.items, this.common.items).pipe(
       map(([levels, _, __]) => {
-        const plans = innerJoinTalentLevels(character.talents, goal);
+        const plans = innerJoinTalentLevels(talents, goal);
         const cost = new ItemList();
         plans.forEach(it => this.levelup(it, levels, cost));
         return cost;
@@ -44,16 +45,15 @@ export class TalentLevelupCostService {
     );
   }
 
-  private levelup(plan: TalentPlan, levels: TalentLevelupCost[], cost: ItemList): void {
-    const {id, start, goal} = plan;
+  private levelup({id, start, goal}: TalentPlan, levels: TalentLevelupCost[], cost: ItemList): void {
     const talent = this.talents.getGroupById(id);
     if (!talent) {
       return;
     }
     const domainLen = talent.domain.length;
     for (let i = start; i < goal; i++) {
-      const {mora, common, domain, boss, event} = levels[i];
-      cost.change(0, mora);
+      const {mora: moraCost, common, domain, boss, event} = levels[i];
+      cost.change(mora.id, moraCost);
       if (domain) {
         // The travelers repeatedly use 3 types of talent domain materials for leveling up their talents
         const group = (i - 1) % domainLen;

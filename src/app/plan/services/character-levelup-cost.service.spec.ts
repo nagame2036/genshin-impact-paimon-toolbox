@@ -7,6 +7,7 @@ import {PartyCharacter} from '../../character/models/party-character.model';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
+import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 
 describe('CharacterLevelupService', () => {
   let service: CharacterLevelupCostService;
@@ -42,8 +43,8 @@ describe('CharacterLevelupService', () => {
       talents: []
     };
     service.cost(character, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(2092530);
-      expect(res.getAmount(1)).toBe(8362650);
+      expect(res.getAmount(mora.id)).toBe(2092530);
+      expect(res.getAmount(characterExp.id)).toBe(8362650);
       expect(res.getAmount(2060)).toBe(46);
       expect(res.getAmount(3060)).toBe(1);
       expect(res.getAmount(3061)).toBe(9);
@@ -72,8 +73,8 @@ describe('CharacterLevelupService', () => {
       talents: []
     };
     service.cost(character, new AscensionLevel(2, 50)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(315520);
-      expect(res.getAmount(1)).toBe(1277600);
+      expect(res.getAmount(mora.id)).toBe(315520);
+      expect(res.getAmount(characterExp.id)).toBe(1277600);
       expect(res.getAmount(3000)).toBe(1);
       expect(res.getAmount(3001)).toBe(3);
       expect(res.getAmount(8060)).toBe(18);
@@ -98,8 +99,8 @@ describe('CharacterLevelupService', () => {
       talents: []
     };
     service.cost(character, new AscensionLevel(6, 90)).subscribe(res => {
-      expect(res.getAmount(0)).toBe(1777010);
-      expect(res.getAmount(1)).toBe(7085050);
+      expect(res.getAmount(mora.id)).toBe(1777010);
+      expect(res.getAmount(characterExp.id)).toBe(7085050);
       expect(res.getAmount(2060)).toBe(44);
       expect(res.getAmount(3031)).toBe(6);
       expect(res.getAmount(3032)).toBe(9);

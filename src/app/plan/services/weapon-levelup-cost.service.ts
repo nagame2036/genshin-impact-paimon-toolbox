@@ -12,6 +12,7 @@ import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
+import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,8 +47,8 @@ export class WeaponLevelupCostService {
       map(([ascensions, _, __]) => {
         const cost = new ItemList();
         const range = ascensions[weapon.rarity].slice(weapon.ascension, goal);
-        range.forEach(({mora, domain, elite, common}) => {
-          cost.change(0, mora);
+        range.forEach(({mora: moraCost, domain, elite, common}) => {
+          cost.change(mora.id, moraCost);
           const domainItem = this.domain.getByGroupAndRarity(weapon.domain, domain.rarity);
           cost.change(domainItem.id, domain.amount);
           const eliteItem = this.common.getByGroupAndRarity(weapon.elite, elite.rarity);
@@ -64,9 +65,9 @@ export class WeaponLevelupCostService {
     return this.levels.pipe(map(levels => {
       const cost = new ItemList();
       const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
-      const {mora, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
-      cost.change(0, mora);
-      cost.change(2, exp);
+      const {mora: moraCost, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
+      cost.change(mora.id, moraCost);
+      cost.change(weaponExp.id, exp);
       return cost;
     }));
   }
