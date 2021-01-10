@@ -19,6 +19,7 @@ import {ItemViewComponent} from '../../../shared/components/item-view/item-view.
 import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
 import {CharacterFields} from '../../models/character-fields.types';
 import {PartyCharacter} from '../../models/party-character.model';
+import {ImageService} from '../../../image/services/image.service';
 
 @Component({
   selector: 'app-character-list',
@@ -76,7 +77,7 @@ export class CharacterListComponent implements OnChanges {
 
   weaponFilter = this.weaponTypes;
 
-  constructor() {
+  constructor(public images: ImageService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {

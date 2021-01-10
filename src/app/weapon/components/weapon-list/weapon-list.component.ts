@@ -18,6 +18,7 @@ import {ItemViewComponent} from '../../../shared/components/item-view/item-view.
 import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
 import {WeaponFields} from '../../models/weapon-fields.type';
 import {PartyWeapon} from '../../models/party-weapon.model';
+import {ImageService} from '../../../image/services/image.service';
 
 @Component({
   selector: 'app-weapon-list',
@@ -71,7 +72,7 @@ export class WeaponListComponent implements OnChanges {
 
   typeFilter = this.types;
 
-  constructor() {
+  constructor(public images: ImageService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {

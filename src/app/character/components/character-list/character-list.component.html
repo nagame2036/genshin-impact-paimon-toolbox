@@ -38,13 +38,11 @@
     <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
                    category="characters" [id]="item.id" [rarity]="item.rarity">
       <div image-top-left>
-        <img class="character-list-element-hint"
-             [src]="'assets/images/elements/' + item.element + '.png'"
+        <img class="character-list-element-hint" [src]="images.get('elements', item.element)"
              [alt]="i18n.dict('elements.' + item.element) | translate">
       </div>
       <div image-top-right>
-        <img class="weapon-type-hint"
-             [src]="'assets/images/weapon-types/' + item.weapon + '.png'"
+        <img class="weapon-type-hint" [src]="images.get('weapon-types', item.weapon)"
              [alt]="i18n.dict('weapon-types.' + item.weapon) | translate">
       </div>
       <ng-container container-right *ngIf="party && rightTemplateRef"

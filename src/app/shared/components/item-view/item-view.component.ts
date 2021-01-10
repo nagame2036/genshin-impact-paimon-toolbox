@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {I18n} from '../../models/i18n.model';
+import {ImageService} from '../../../image/services/image.service';
 
 @Component({
   selector: 'app-item-view',
@@ -30,15 +31,11 @@ export class ItemViewComponent {
 
   active = false;
 
-  constructor() {
+  constructor(public images: ImageService) {
   }
 
   get itemKey(): string {
     return `${this.category}.${this.id}`;
-  }
-
-  get src(): string {
-    return `assets/images/${this.category}/${this.id}.png`;
   }
 
   get stars(): number[] {

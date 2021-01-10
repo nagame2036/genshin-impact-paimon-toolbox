@@ -30,8 +30,7 @@
     <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
                    category="weapons" [id]="item.id" [key]="getKey(item)" [rarity]="item.rarity">
       <div image-top-left>
-        <img class="weapon-type-hint"
-             [src]="'assets/images/weapon-types/' + item.type + '.png'"
+        <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
              [alt]="i18n.dict('weapon-types.' + item.type) | translate">
       </div>
       <ng-container *ngIf="party && rightTemplateRef" container-right
