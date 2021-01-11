@@ -27,11 +27,6 @@ export class PartyCharacterDetailComponent extends AbstractObservableComponent i
     'plan',
   ];
 
-  get background(): string {
-    const image = this.images.get('character-portraits', this.characterId);
-    return `background: url(${image}) no-repeat right bottom`;
-  }
-
   constructor(private route: ActivatedRoute, private location: Location, private characters: CharacterService, private dialog: MatDialog,
               public images: ImageService) {
     super();
@@ -55,7 +50,10 @@ export class PartyCharacterDetailComponent extends AbstractObservableComponent i
   }
 
   remove(): void {
-    this.dialog.open(RemoveConfirmDialogComponent, {data: {category: 'characters', items: [this.character]}})
+    this.dialog.open(RemoveConfirmDialogComponent, {
+      minWidth: '50vw',
+      data: {category: 'characters', items: [this.character]}
+    })
       .afterClosed().subscribe(remove => {
       if (remove) {
         this.characters.removePartyMember(this.characterId);

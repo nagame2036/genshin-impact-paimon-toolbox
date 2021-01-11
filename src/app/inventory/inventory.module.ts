@@ -12,7 +12,7 @@ import {CommonMaterialInventoryComponent} from './pages/common-material-inventor
 import {IngredientInventoryComponent} from './pages/ingredient-inventory/ingredient-inventory.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
-import {FlexModule} from '@angular/flex-layout';
+import {FlexModule, GridModule} from '@angular/flex-layout';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
@@ -37,7 +37,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,
-    ScrollingModule
+    ScrollingModule,
+    GridModule
   ],
   exports: [
     MaterialsCostListComponent,

@@ -2,37 +2,29 @@
   <h4 class="inventory-subtitle" *ngIf="details.length > 0">
     {{ i18n.module(subtitle) | translate }}
   </h4>
-  <div fxLayout="row wrap" fxLayoutGap="16px">
-    <div *ngFor="let detail of details; trackBy: trackItem" class="material-list-item">
+  <div gdColumns="repeat(auto-fill, 140px)" gdGap="16px" gdAlignRows="space-around center">
+    <div *ngFor="let detail of details; trackBy: trackItem" class="inventory-item">
       <app-item-view category="materials" [width]="140" [imgWidth]="140" [id]="detail.id" [rarity]="detail.rarity || 1">
-        <div image-bottom fxLayout="column" style="margin: 4px; font-size: 8px">
-          <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px">
+        <div image-bottom class="inventory-detail">
+          <div gdColumns="auto auto" gdRows="repeat(4, 1fr)" gdGap="4px">
             <div>
               {{ i18n.module('need') | translate }}
             </div>
             <div class="inventory-data">
               {{ detail.need | number: '1.0-0' }}
             </div>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px"
-               [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
-            <div>
+            <div [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
               {{ i18n.module('crafted') | translate }}
             </div>
-            <div class="inventory-data">
+            <div class="inventory-data" [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
               {{ detail.crafted | number: '1.0-0' }}
             </div>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px"
-               [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
-            <div>
+            <div [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
               {{ i18n.module(detail.overflow ? 'overflow' : 'lack') | translate }}
             </div>
-            <div *ngIf="!detail.overflow" class="inventory-data">
+            <div class="inventory-data" [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
               {{ detail.lack | number: '1.0-0' }}
             </div>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="4px">
             <div>
               {{ i18n.module('have') | translate }}
             </div>
@@ -40,7 +32,7 @@
                    [value]="detail.have | number: '1.0-0'" (change)="correct(detail, $event)"
                    (keydown.arrowUp)="inc(detail)" (keydown.arrowDown)="dec(detail)"/>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="4px">
+          <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="4px">
             <button class="craft-button" (click)="craft(detail, 5)" [disabled]="detail.crafted < 5 || detail.readonly">
               {{ i18n.module('craft-five') | translate }}
             </button>

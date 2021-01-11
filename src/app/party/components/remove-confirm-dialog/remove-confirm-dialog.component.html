@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>{{ i18n.module('confirm-to-remove') | translate }}</h2>
-<mat-dialog-content fxLayout="row wrap" fxLayoutAlign="center center">
+<mat-dialog-content gdColumns="repeat(auto-fill, 100px)" gdGap="16px" gdAlignRows="space-around center">
   <app-item-view *ngFor="let item of data.items" [category]="data.category" [id]="item.id" [rarity]="item.rarity"
                  [style.width.px]="100" [style.margin-top.px]="16">
   </app-item-view>

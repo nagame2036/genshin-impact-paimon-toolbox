@@ -40,7 +40,10 @@ export class PartyCharacterComponent implements OnInit {
   }
 
   openRemoveDialog(): void {
-    this.dialog.open(RemoveConfirmDialogComponent, {data: {category: 'characters', items: this.selectedItems}})
+    this.dialog.open(RemoveConfirmDialogComponent, {
+      minWidth: '50vw',
+      data: {category: 'characters', items: this.selectedItems}
+    })
       .afterClosed().subscribe(remove => {
       if (remove) {
         this.service.removePartyMemberByList(this.selectedItems.map(it => it.id));

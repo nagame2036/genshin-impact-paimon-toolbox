@@ -27,7 +27,8 @@
     <ng-content fxFlex="1 1 auto" select="[list-actions]"></ng-content>
   </div>
   <cdk-virtual-scroll-viewport [style]="'height: ' + height + 'vh'" itemSize="50">
-    <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
+    <div [gdColumns]="'repeat(auto-fill, ' + itemWidth + 'px)'" gdGap="24px" gdAlignRows="space-around center"
+         style="margin: 4px">
       <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
                      category="weapons" [id]="item.id" [key]="getKey(item)" [rarity]="item.rarity">
         <div image-top-left>
