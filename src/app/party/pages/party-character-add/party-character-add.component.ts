@@ -13,13 +13,11 @@ import {switchMap, takeUntil} from 'rxjs/operators';
 import {TalentLevel} from '../../../character/models/talent-level.type';
 import {TalentLevelData} from '../../../character/models/talent-level-data.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {addPartyAnimation} from '../../animations/add-party.animation';
 
 @Component({
   selector: 'app-party-character-add',
   templateUrl: './party-character-add.component.html',
-  styleUrls: ['./party-character-add.component.scss'],
-  animations: addPartyAnimation
+  styleUrls: ['./party-character-add.component.scss']
 })
 export class PartyCharacterAddComponent extends AbstractObservableComponent implements OnInit {
 

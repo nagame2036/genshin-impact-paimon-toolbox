@@ -5,7 +5,6 @@ import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 import {switchMap, takeUntil} from 'rxjs/operators';
-import {addPartyAnimation} from '../../animations/add-party.animation';
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
@@ -15,8 +14,7 @@ import {Location} from '@angular/common';
 @Component({
   selector: 'app-party-weapon-add',
   templateUrl: './party-weapon-add.component.html',
-  styleUrls: ['./party-weapon-add.component.scss'],
-  animations: addPartyAnimation
+  styleUrls: ['./party-weapon-add.component.scss']
 })
 export class PartyWeaponAddComponent extends AbstractObservableComponent implements OnInit {
 
