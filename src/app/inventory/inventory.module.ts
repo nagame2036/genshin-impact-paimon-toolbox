@@ -4,6 +4,7 @@ import {SharedModule} from '../shared/shared.module';
 import {InventoryRoutingModule} from './inventory-routing.module';
 import {InventoryPageComponent} from './pages/inventory-page/inventory-page.component';
 import {InventoryListComponent} from './components/inventory-list/inventory-list.component';
+import {MaterialsCostListComponent} from './components/materials-cost-list/materials-cost-list.component';
 import {CharacterMaterialInventoryComponent} from './pages/character-material-inventory/character-material-inventory.component';
 import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-material-inventory.component';
 import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
@@ -20,6 +21,7 @@ import {MatButtonModule} from '@angular/material/button';
   declarations: [
     InventoryPageComponent,
     InventoryListComponent,
+    MaterialsCostListComponent,
     CharacterMaterialInventoryComponent,
     TalentMaterialInventoryComponent,
     WeaponMaterialInventoryComponent,
@@ -34,6 +36,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule
+  ],
+  exports: [
+    MaterialsCostListComponent,
   ]
 })
 export class InventoryModule {

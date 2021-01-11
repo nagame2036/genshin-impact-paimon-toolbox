@@ -1,4 +1,5 @@
 import {InventoryItemDetail} from '../models/inventory-item-detail.model';
+import {ItemList} from '../models/item-list.model';
 
 export function processExpDetails(expId: number, exps: { id: number, exp: number }[], details: Map<number, InventoryItemDetail>): void {
   const expDetail = details.get(expId);
@@ -30,19 +31,30 @@ export function calculateExpNeed(expId: number, exps: { id: number, exp: number 
   if (!expDetail) {
     return;
   }
-  let expNeed = expDetail.need;
-  const expDetails = exps.map(({exp, id}) => ({detail: details.get(id), exp}));
-  for (const {detail, exp} of expDetails) {
+  const expNeed = expDetail.need;
+  if (expNeed <= 0) {
+    return;
+  }
+  const list = splitExpNeed(expNeed, exps);
+  for (const [id, need] of list.entries()) {
+    const detail = details.get(id);
     if (detail) {
-      const need = Math.floor(expNeed / exp);
       detail.need = need;
-      expNeed -= need * exp;
     }
   }
-  if (expNeed > 0) {
-    const {detail} = expDetails[exps.length - 1];
-    if (detail) {
-      detail.need += 1;
-    }
+}
+
+export function splitExpNeed(expNeed: number, exps: { id: number, exp: number }[]): ItemList {
+  const list = new ItemList();
+  for (const {id, exp} of exps) {
+    const need = Math.floor(expNeed / exp);
+    list.change(id, need);
+    expNeed -= need * exp;
   }
+  const length = exps.length;
+  if (expNeed > 0 && length > 0) {
+    const {id} = exps[length - 1];
+    list.change(id, 1);
+  }
+  return list;
 }

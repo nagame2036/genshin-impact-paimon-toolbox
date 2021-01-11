@@ -5,6 +5,10 @@ export class ItemList {
    */
   private map = new Map<number, number>();
 
+  has(id: number): boolean {
+    return this.map.has(id);
+  }
+
   getAmount(id: number): number {
     return this.map.get(id) ?? 0;
   }

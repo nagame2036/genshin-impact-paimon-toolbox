@@ -5,6 +5,7 @@ import {CharacterModule} from '../character/character.module';
 import {WeaponModule} from '../weapon/weapon.module';
 import {PlanModule} from '../plan/plan.module';
 import {PartyRoutingModule} from './party-routing.module';
+import {InventoryModule} from '../inventory/inventory.module';
 import {CurrentGoalSelectComponent} from './components/current-goal-select/current-goal-select.component';
 import {CurrentGoalLevelSelectComponent} from './components/current-goal-level-select/current-goal-level-select.component';
 import {PartyPageComponent} from './pages/party-page/party-page.component';
@@ -54,6 +55,7 @@ import {MatIconModule} from '@angular/material/icon';
     WeaponModule,
     PlanModule,
     PartyRoutingModule,
+    InventoryModule,
     MatTabsModule,
     MatButtonModule,
     MatDialogModule,

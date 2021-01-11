@@ -1,9 +1,8 @@
 import {Component, ContentChild, Input, OnChanges, SimpleChanges, TemplateRef} from '@angular/core';
-import {InventoryItem} from '../../../material/models/inventory-item.model';
 import {I18n} from '../../../shared/models/i18n.model';
 import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {InventoryService} from '../../services/inventory.service';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Component({
@@ -22,9 +21,7 @@ export class InventoryListComponent implements OnChanges {
   showOverflow = true;
 
   @Input()
-  items: InventoryItem[] = [];
-
-  details$: Observable<InventoryItemDetail[]> = new Subject();
+  items!: Observable<InventoryItemDetail[]>;
 
   @ContentChild('bottom', {static: false})
   bottomTemplateRef!: TemplateRef<any>;
@@ -34,8 +31,7 @@ export class InventoryListComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('items') || changes.hasOwnProperty('showOverflow')) {
-      this.details$ = this.inventory.getDetails(this.items)
-        .pipe(map(details => details.filter(it => !it.overflow || this.showOverflow)));
+      this.items = this.items.pipe(map(details => details.filter(it => !it.overflow || this.showOverflow)));
     }
   }
 

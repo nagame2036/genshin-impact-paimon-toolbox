@@ -17,7 +17,7 @@
       {{ i18n.module(link + '.title') | translate }}
     </a>
   </nav>
-  <div class="subpage-horizontal-padding party-item-detail-margin party-item-detail-subpage">
+  <div class="party-item-detail-subpage">
     <router-outlet></router-outlet>
     <img class="character-portrait" [src]="images.get('character-portraits', characterId)"
          [alt]="i18n.dict('characters.' + characterId) | translate">

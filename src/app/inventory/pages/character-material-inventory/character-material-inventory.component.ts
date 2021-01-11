@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MaterialService} from '../../../material/services/material.service';
-import {InventoryItem} from '../../../material/models/inventory-item.model';
+import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
+import {InventoryService} from '../../services/inventory.service';
 
 @Component({
   selector: 'app-character-material-inventory',
@@ -12,16 +13,16 @@ import {MaterialType} from '../../../material/models/material-type.enum';
 })
 export class CharacterMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  common$!: Observable<InventoryItem[]>;
+  common$!: Observable<InventoryItemDetail[]>;
 
-  boss$!: Observable<InventoryItem[]>;
+  boss$!: Observable<InventoryItemDetail[]>;
 
-  gem$!: Observable<InventoryItem[]>;
+  gem$!: Observable<InventoryItemDetail[]>;
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private materials: MaterialService) {
-    super();
+  constructor(private materials: MaterialService, inventory: InventoryService) {
+    super(inventory);
   }
 
   ngOnInit(): void {

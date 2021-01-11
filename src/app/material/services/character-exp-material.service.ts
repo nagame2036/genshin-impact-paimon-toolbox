@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {CharacterExpMaterial} from '../models/character-exp-material.model';
 import {HttpClient} from '@angular/common/http';
-import {calculateExpNeed, processExpDetails} from '../utils/exp-details';
+import {calculateExpNeed, processExpDetails, splitExpNeed} from '../utils/exp-details';
 import {InventoryItemDetail} from '../models/inventory-item-detail.model';
 import {characterExp} from '../models/mora-and-exp.model';
+import {ItemList} from '../models/item-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,12 @@ export class CharacterExpMaterialService {
       this.#items = res.sort((a, b) => b.rarity - a.rarity);
       this.itemsSubject.next(this.#items);
     });
+  }
+
+  splitExpNeed(cost: ItemList): ItemList {
+    const expNeed = cost.getAmount(characterExp.id);
+    const exps = splitExpNeed(expNeed, this.#items);
+    return cost.combine(exps);
   }
 
   calculateExpNeed(details: Map<number, InventoryItemDetail>): void {

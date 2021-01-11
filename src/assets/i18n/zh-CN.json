@@ -29,6 +29,13 @@
     "party": {
       "confirm-to-remove": "确定要将以下移出Box吗？",
       "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
+      "total-cost": "养成总消耗",
+      "levelup-cost": "升级消耗",
+      "talent-cost": {
+        "0": "普通攻击培养消耗",
+        "1": "元素战技培养消耗",
+        "2": "元素爆发培养消耗"
+      },
       "characters": {
         "detail": "角色详情",
         "plan": {
@@ -65,12 +72,14 @@
       "have": "库存",
       "craft-five": "合成五份",
       "craft-one": "合成一份",
+      "plan-cost": "养成消耗",
       "common": "通用",
       "boss": "Boss掉落",
       "gem": "宝石",
       "1/4": "周一、四",
       "2/5": "周二、五",
       "3/6": "周三、六",
+      "enemy": "怪物掉落",
       "mob": "小怪掉落",
       "elite": "精英怪掉落",
       "local-specialty": "地区特产"

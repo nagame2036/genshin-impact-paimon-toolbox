@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {InventoryItem} from '../../../material/models/inventory-item.model';
+import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {Observable} from 'rxjs';
+import {InventoryService} from '../../services/inventory.service';
 
 @Component({
   selector: 'app-talent-material-inventory',
@@ -12,18 +13,18 @@ import {Observable} from 'rxjs';
 })
 export class TalentMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  common$!: Observable<InventoryItem[]>;
+  common$!: Observable<InventoryItemDetail[]>;
 
-  monThu$!: Observable<InventoryItem[]>;
+  monThu$!: Observable<InventoryItemDetail[]>;
 
-  tueFri$!: Observable<InventoryItem[]>;
+  tueFri$!: Observable<InventoryItemDetail[]>;
 
-  wedSat$!: Observable<InventoryItem[]>;
+  wedSat$!: Observable<InventoryItemDetail[]>;
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private materials: MaterialService) {
-    super();
+  constructor(private materials: MaterialService, inventory: InventoryService) {
+    super(inventory);
   }
 
   ngOnInit(): void {

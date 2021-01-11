@@ -1,4 +1,4 @@
-<ng-container *ngIf="details$ | async as details">
+<ng-container *ngIf="items | async as details">
   <h4 class="inventory-subtitle" *ngIf="details.length > 0">
     {{ i18n.module(subtitle) | translate }}
   </h4>

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MaterialService} from '../../../material/services/material.service';
-import {InventoryItem} from '../../../material/models/inventory-item.model';
+import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
 import {Observable} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
+import {InventoryService} from '../../services/inventory.service';
 
 @Component({
   selector: 'app-weapon-material-inventory',
@@ -12,16 +13,16 @@ import {MaterialType} from '../../../material/models/material-type.enum';
 })
 export class WeaponMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
-  common$!: Observable<InventoryItem[]>;
+  common$!: Observable<InventoryItemDetail[]>;
 
-  monThu$!: Observable<InventoryItem[]>;
+  monThu$!: Observable<InventoryItemDetail[]>;
 
-  tueFri$!: Observable<InventoryItem[]>;
+  tueFri$!: Observable<InventoryItemDetail[]>;
 
-  wedSat$!: Observable<InventoryItem[]>;
+  wedSat$!: Observable<InventoryItemDetail[]>;
 
-  constructor(private materials: MaterialService) {
-    super();
+  constructor(private materials: MaterialService, inventory: InventoryService) {
+    super(inventory);
   }
 
   ngOnInit(): void {

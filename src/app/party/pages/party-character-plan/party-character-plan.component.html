@@ -1,4 +1,5 @@
-<div fxLayout="row" *ngIf="party && plan">
+<div *ngIf="party && plan" fxLayout="row" fxLayoutGap="40px">
   <app-character-plan-form [character]="party" [plan]="plan" (currentChange)="saveParty()" (goalChange)="savePlan()">
   </app-character-plan-form>
+  <app-materials-cost-list [costs]="costs" [subtitles]="subtitles" [types]="types"></app-materials-cost-list>
 </div>

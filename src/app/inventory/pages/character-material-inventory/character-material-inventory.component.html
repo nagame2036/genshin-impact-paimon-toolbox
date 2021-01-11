@@ -11,12 +11,6 @@
     {{ i18n.module('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<ng-container *ngIf="common$ | async as common">
-  <app-inventory-list subtitle="common" [items]="common" [showOverflow]="showOverflow"></app-inventory-list>
-</ng-container>
-<ng-container *ngIf="boss$ | async as boss">
-  <app-inventory-list subtitle="boss" [items]="boss" [showOverflow]="showOverflow"></app-inventory-list>
-</ng-container>
-<ng-container *ngIf="gem$ | async as gem">
-  <app-inventory-list subtitle="gem" [items]="gem" [showOverflow]="showOverflow"></app-inventory-list>
-</ng-container>
+<app-inventory-list subtitle="common" [items]="common$" [showOverflow]="showOverflow"></app-inventory-list>
+<app-inventory-list subtitle="boss" [items]="boss$" [showOverflow]="showOverflow"></app-inventory-list>
+<app-inventory-list subtitle="gem" [items]="gem$" [showOverflow]="showOverflow"></app-inventory-list>

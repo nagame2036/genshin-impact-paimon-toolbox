@@ -2,8 +2,10 @@ import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {InventoryItem} from '../../material/models/inventory-item.model';
 import {MatSelectChange} from '@angular/material/select';
 import {ensureAtLeastOneElement} from '../../shared/utils/collections';
-import {map} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {I18n} from '../../shared/models/i18n.model';
+import {InventoryService} from '../services/inventory.service';
+import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
 
 export abstract class AbstractSubInventoryComponent {
 
@@ -17,9 +19,14 @@ export abstract class AbstractSubInventoryComponent {
 
   showOverflow = true;
 
-  filterItems<T extends InventoryItem>(items: Observable<T[]>): Observable<T[]> {
-    return combineLatest([items, this.filter])
-      .pipe(map(([list, filter]) => list.filter(item => filter(item))));
+  protected constructor(private inventory: InventoryService) {
+  }
+
+  filterItems(items: Observable<InventoryItem[]>): Observable<InventoryItemDetail[]> {
+    return combineLatest([items, this.filter]).pipe(
+      map(([list, filter]) => list.filter(item => filter(item))),
+      switchMap(it => this.inventory.getDetails(it))
+    );
   }
 
   changeRarityFilter(change: MatSelectChange): void {
