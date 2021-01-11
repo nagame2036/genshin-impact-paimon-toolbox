@@ -18,6 +18,7 @@ export class LocalSpecialtyService {
 
   constructor(http: HttpClient) {
     http.get<LocalSpecialty>('assets/data/materials/local-specialties.json').subscribe(res => {
+      res.items.forEach(it => it.rarity = 1);
       const items = res.items.sort((a, b) => a.group - b.group);
       this.#items.next(items);
     });

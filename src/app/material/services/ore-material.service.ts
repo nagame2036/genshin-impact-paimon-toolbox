@@ -13,6 +13,9 @@ export class OreMaterialService {
   readonly items = this.#items.asObservable();
 
   constructor(http: HttpClient) {
-    http.get<OreMaterial[]>('assets/data/materials/ore-materials.json').subscribe(res => this.#items.next(res));
+    http.get<OreMaterial[]>('assets/data/materials/ore-materials.json').subscribe(res => {
+      res.forEach(it => it.rarity = 1);
+      this.#items.next(res);
+    });
   }
 }
