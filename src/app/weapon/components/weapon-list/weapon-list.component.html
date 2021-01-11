@@ -26,16 +26,18 @@
     </mat-form-field>
     <ng-content fxFlex="1 1 auto" select="[list-actions]"></ng-content>
   </div>
-  <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
-    <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
-                   category="weapons" [id]="item.id" [key]="getKey(item)" [rarity]="item.rarity">
-      <div image-top-left>
-        <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
-             [alt]="i18n.dict('weapon-types.' + item.type) | translate">
-      </div>
-      <ng-container *ngIf="party && rightTemplateRef" container-right
-                    [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-      </ng-container>
-    </app-item-view>
-  </div>
+  <cdk-virtual-scroll-viewport [style]="'height: ' + height + 'vh'" itemSize="50">
+    <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
+      <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
+                     category="weapons" [id]="item.id" [key]="getKey(item)" [rarity]="item.rarity">
+        <div image-top-left>
+          <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
+               [alt]="i18n.dict('weapon-types.' + item.type) | translate">
+        </div>
+        <ng-container *ngIf="party && rightTemplateRef" container-right
+                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+        </ng-container>
+      </app-item-view>
+    </div>
+  </cdk-virtual-scroll-viewport>
 </div>

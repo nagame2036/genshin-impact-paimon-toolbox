@@ -16,6 +16,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {MatButtonModule} from '@angular/material/button';
     FlexModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    ScrollingModule
   ],
   exports: [
     MaterialsCostListComponent,

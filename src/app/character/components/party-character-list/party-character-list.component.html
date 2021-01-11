@@ -1,4 +1,4 @@
-<app-character-list [party]="true" [characters]="characters" [itemWidth]="360"
+<app-character-list [party]="true" [characters]="characters" [height]="height" [itemWidth]="360"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
                     #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                     (multiSelected)="multiSelected.emit($event)">

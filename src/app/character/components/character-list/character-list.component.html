@@ -34,20 +34,22 @@
     </mat-form-field>
     <ng-content select="[list-actions]"></ng-content>
   </div>
-  <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
-    <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
-                   category="characters" [id]="item.id" [rarity]="item.rarity">
-      <div image-top-left>
-        <img class="character-list-element-hint" [src]="images.get('elements', item.element)"
-             [alt]="i18n.dict('elements.' + item.element) | translate">
-      </div>
-      <div image-top-right>
-        <img class="weapon-type-hint" [src]="images.get('weapon-types', item.weapon)"
-             [alt]="i18n.dict('weapon-types.' + item.weapon) | translate">
-      </div>
-      <ng-container container-right *ngIf="party && rightTemplateRef"
-                    [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-      </ng-container>
-    </app-item-view>
-  </div>
+  <cdk-virtual-scroll-viewport [style]="'height: ' + height + 'vh'" itemSize="50">
+    <div fxLayout="row wrap" fxLayoutGap="24px" style="margin: 4px">
+      <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
+                     category="characters" [id]="item.id" [rarity]="item.rarity">
+        <div image-top-left>
+          <img class="character-list-element-hint" [src]="images.get('elements', item.element)"
+               [alt]="i18n.dict('elements.' + item.element) | translate">
+        </div>
+        <div image-top-right>
+          <img class="weapon-type-hint" [src]="images.get('weapon-types', item.weapon)"
+               [alt]="i18n.dict('weapon-types.' + item.weapon) | translate">
+        </div>
+        <ng-container container-right *ngIf="party && rightTemplateRef"
+                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+        </ng-container>
+      </app-item-view>
+    </div>
+  </cdk-virtual-scroll-viewport>
 </div>

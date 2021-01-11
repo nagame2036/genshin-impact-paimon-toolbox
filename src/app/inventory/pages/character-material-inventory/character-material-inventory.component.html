@@ -11,6 +11,8 @@
     {{ i18n.module('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<app-inventory-list subtitle="common" [items]="common$" [showOverflow]="showOverflow"></app-inventory-list>
-<app-inventory-list subtitle="boss" [items]="boss$" [showOverflow]="showOverflow"></app-inventory-list>
-<app-inventory-list subtitle="gem" [items]="gem$" [showOverflow]="showOverflow"></app-inventory-list>
+<cdk-virtual-scroll-viewport style="height: 80vh" itemSize="50">
+  <app-inventory-list subtitle="common" [items]="common$" [showOverflow]="showOverflow"></app-inventory-list>
+  <app-inventory-list subtitle="boss" [items]="boss$" [showOverflow]="showOverflow"></app-inventory-list>
+  <app-inventory-list subtitle="gem" [items]="gem$" [showOverflow]="showOverflow"></app-inventory-list>
+</cdk-virtual-scroll-viewport>

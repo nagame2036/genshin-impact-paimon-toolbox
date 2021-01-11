@@ -1,4 +1,4 @@
-<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="360"
+<app-weapon-list [party]="true" [weapons]="weapons" [height]="80" [itemWidth]="360"
                  [sortFields]="['level', 'rarity', 'refine']" sort="level"
                  #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                  (multiSelected)="multiSelected.emit($event)">

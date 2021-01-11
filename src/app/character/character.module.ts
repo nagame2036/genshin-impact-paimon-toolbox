@@ -7,6 +7,7 @@ import {PartyCharacterListComponent} from './components/party-character-list/par
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {FlexModule, GridModule} from '@angular/flex-layout';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {FlexModule, GridModule} from '@angular/flex-layout';
     MatButtonModule,
     FlexModule,
     GridModule,
+    ScrollingModule,
   ],
   exports: [
     CharacterListComponent,

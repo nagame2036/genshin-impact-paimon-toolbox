@@ -33,6 +33,9 @@ export class WeaponListComponent implements OnChanges {
   party = false;
 
   @Input()
+  height = 80;
+
+  @Input()
   itemWidth = 100;
 
   @Input()

@@ -19,6 +19,9 @@ export class PartyCharacterListComponent extends AbstractObservableComponent imp
 
   i18n = new I18n('characters');
 
+  @Input()
+  height = 80;
+
   characters: Character[] = [];
 
   plans = new Map<number, CharacterPlan>();

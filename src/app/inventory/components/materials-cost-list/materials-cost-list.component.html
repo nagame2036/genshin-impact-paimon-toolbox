@@ -13,8 +13,8 @@
     {{ i18n.module('show-overflow') | translate }}
   </mat-checkbox>
 </div>
-<div fxLayout="column wrap">
+<cdk-virtual-scroll-viewport class="scrollable-material-cost-list" itemSize="50">
   <app-inventory-list *ngFor="let items$ of costMaterials; let i = index"
                       [subtitle]="subtitles[i]" [items]="items$" [showOverflow]="showOverflow">
   </app-inventory-list>
-</div>
+</cdk-virtual-scroll-viewport>
