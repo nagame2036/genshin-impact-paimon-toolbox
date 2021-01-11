@@ -6,6 +6,7 @@ import {map, switchMap} from 'rxjs/operators';
 import {I18n} from '../../shared/models/i18n.model';
 import {InventoryService} from '../services/inventory.service';
 import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
+import {characterExp, mora, weaponExp} from '../../material/models/mora-and-exp.model';
 
 export abstract class AbstractSubInventoryComponent {
 
@@ -17,6 +18,8 @@ export abstract class AbstractSubInventoryComponent {
 
   rarityFilter = this.rarities;
 
+  excludedIds = [mora.id, characterExp.id, weaponExp.id];
+
   showOverflow = true;
 
   protected constructor(private inventory: InventoryService) {
@@ -24,7 +27,7 @@ export abstract class AbstractSubInventoryComponent {
 
   filterItems(items: Observable<InventoryItem[]>): Observable<InventoryItemDetail[]> {
     return combineLatest([items, this.filter]).pipe(
-      map(([list, filter]) => list.filter(item => filter(item))),
+      map(([list, filter]) => list.filter(item => filter(item) || this.excludedIds.includes(item.id))),
       switchMap(it => this.inventory.getDetails(it))
     );
   }
