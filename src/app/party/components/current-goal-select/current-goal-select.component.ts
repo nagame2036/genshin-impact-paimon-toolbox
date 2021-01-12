@@ -1,6 +1,5 @@
 /* tslint:disable:semicolon */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable, of} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -37,7 +36,7 @@ export class CurrentGoalSelectComponent implements OnInit {
   }
 
   @Input()
-  valueDisplay: (value: number) => Observable<string> = (value: number) => of(value.toString());
+  valueDisplay: (value: number) => string = (value: number) => value.toString();
 
   ngOnInit(): void {
   }

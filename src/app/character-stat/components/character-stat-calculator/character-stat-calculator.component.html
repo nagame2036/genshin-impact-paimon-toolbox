@@ -2,28 +2,29 @@
   <div fxLayout="row">
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
                     (change)="enemyLevel.correct(); this.calc()" (input)="this.calc()">
-      <mat-label [translate]="i18n.dict('level')"
-                 [translateParams]="{label: i18n.dict('enemy') | translate}">
+      <mat-label>
+        {{ i18n.dict('level') | paramsTranslate: {label: i18n.pDict('enemy')} }}
       </mat-label>
       <input [formControl]="enemyLevel.control" [max]="enemyLevel.max" [min]="enemyLevel.min"
              matInput required type="number"/>
     </mat-form-field>
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field"
                     (change)="enemyElementalRes.correct(); this.calc()" (input)="this.calc()">
-      <mat-label [translate]="i18n.dict('res')" [translateParams]="{
-                     label: i18n.dict('enemy') | translate,
-                     type: i18n.dict('elements.' + dmgType) | translate
-                   }">
+      <mat-label>
+        {{ i18n.dict('res') | paramsTranslate: {label: i18n.pDict('enemy'), type: i18n.pDict('elements.' + dmgType)} }}
       </mat-label>
       <input [formControl]="enemyElementalRes.control" [max]="enemyElementalRes.max" [min]="enemyElementalRes.min"
              matInput required type="number"/>
       <div matSuffix>%</div>
     </mat-form-field>
     <mat-form-field appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label [translate]="i18n.dict('dmg-res')" [translateParams]="{
-                     label: i18n.dict('enemy') | translate,
-                     type: i18n.dict('elements.' + dmgType) | translate
-                   }">
+      <mat-label>
+        {{
+        i18n.dict('dmg-res') | paramsTranslate: {
+          label: i18n.pDict('enemy'),
+          type: i18n.pDict('elements.' + dmgType)
+        }
+        }}
       </mat-label>
       <input [value]="enemyDmgRes | number: '1.1-1'" matInput readonly/>
       <div matSuffix>%</div>

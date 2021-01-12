@@ -5,7 +5,7 @@
   <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-goal-select-field-left">
     <mat-select [value]="current" (selectionChange)="setCurrent($event.value)">
       <mat-option *ngFor="let value of currentOptions; let i = index" [value]="value">
-        {{ valueDisplay(value) | async }}
+        {{ valueDisplay(value) }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -15,7 +15,7 @@
   <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-goal-select-field-right">
     <mat-select [value]="goal" (selectionChange)="setGoal($event.value)">
       <mat-option *ngFor="let value of goalOptions; let i = index" [value]="value">
-        {{ valueDisplay(value) | async }}
+        {{ valueDisplay(value) }}
       </mat-option>
     </mat-select>
   </mat-form-field>

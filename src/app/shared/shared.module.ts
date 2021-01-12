@@ -6,6 +6,7 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {ItemViewComponent} from './components/item-view/item-view.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
+import {ParamsTranslatePipe} from './pipes/params-translate.pipe';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -17,7 +18,8 @@ import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     ItemViewComponent,
-    MultiSelectComponent
+    MultiSelectComponent,
+    ParamsTranslatePipe,
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import {MatIconModule} from '@angular/material/icon';
     TranslateModule,
     NgxIndexedDBModule,
     ItemViewComponent,
-    MultiSelectComponent
+    MultiSelectComponent,
+    ParamsTranslatePipe,
   ]
 })
 export class SharedModule {

@@ -3,8 +3,9 @@
     <div fxLayout="row" *ngIf="f.visible()" style="height: 48px">
       <div *ngFor="let s of f.fields" class="app-form-field">
         <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label [translate]="i18n.module(s.label)"
-                     [translateParams]="{label: i18n.module(f.label) | translate}"></mat-label>
+          <mat-label>
+            {{ i18n.module(s.label) | paramsTranslate: {label: i18n.pModule(f.label)} }}
+          </mat-label>
           <input [value]="s.value * 100 | number: '1.1-1'" matInput readonly/>
           <div matSuffix>%</div>
         </mat-form-field>
