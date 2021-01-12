@@ -17,6 +17,7 @@ import {MaterialCostMarker} from '../../material/services/material-cost-marker.s
 import {I18n} from '../../shared/models/i18n.model';
 import {TranslateService} from '@ngx-translate/core';
 import {ItemType} from '../../character-and-gear/models/item-type.enum';
+import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class WeaponLevelupCostService {
   private readonly levelupLabel = this.i18n.module('levelup');
 
   constructor(http: HttpClient, private domain: WeaponMaterialService, private common: CommonMaterialService,
-              private marker: MaterialCostMarker, private translator: TranslateService) {
+              private exps: WeaponExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
     http.get<WeaponAscensionCost>('assets/data/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<WeaponLevelupCost>('assets/data/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
@@ -89,7 +90,7 @@ export class WeaponLevelupCostService {
         const {mora: moraCost, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
         cost.change(mora.id, moraCost);
         cost.change(weaponExp.id, exp);
-        return cost;
+        return this.exps.splitExpNeed(cost);
       }),
       map(cost => this.mark(mark, weapon, cost, this.levelupLabel, [weapon.level.toString(), goal.toString()]))
     );

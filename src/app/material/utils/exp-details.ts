@@ -26,24 +26,6 @@ export function processExpDetails(expId: number, exps: { id: number, exp: number
   }
 }
 
-export function calculateExpNeed(expId: number, exps: { id: number, exp: number }[], details: Map<number, InventoryItemDetail>): void {
-  const expDetail = details.get(expId);
-  if (!expDetail) {
-    return;
-  }
-  const expNeed = expDetail.need;
-  if (expNeed <= 0) {
-    return;
-  }
-  const list = splitExpNeed(expNeed, exps);
-  for (const [id, need] of list.entries()) {
-    const detail = details.get(id);
-    if (detail) {
-      detail.need = need;
-    }
-  }
-}
-
 export function splitExpNeed(expNeed: number, exps: { id: number, exp: number }[]): ItemList {
   const list = new ItemList();
   for (const {id, exp} of exps) {

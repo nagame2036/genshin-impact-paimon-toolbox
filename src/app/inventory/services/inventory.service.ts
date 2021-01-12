@@ -80,8 +80,6 @@ export class InventoryService {
       detail.need = cost.getAmount(id);
       detail.crafted = 0;
     }
-    this.characterExps.calculateExpNeed(details);
-    this.weaponExps.calculateExpNeed(details);
     for (const [, detail] of details) {
       const needCraft = detail.need - detail.have;
       detail.crafted += getCrafted(detail, needCraft - detail.crafted, details);
