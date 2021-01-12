@@ -6,7 +6,7 @@ import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('AddWeaponDialogComponent', () => {
+describe('PartyWeaponAddComponent', () => {
   let component: PartyWeaponAddComponent;
   let fixture: ComponentFixture<PartyWeaponAddComponent>;
 

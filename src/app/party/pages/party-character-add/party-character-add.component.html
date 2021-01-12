@@ -5,10 +5,10 @@
   {{ i18n.module('add') | translate }}
 </mat-toolbar>
 <div fxLayout="column" fxLayoutAlign="center center" class="subpage-horizontal-padding">
-  <div *ngIf="!selected" @listTrigger style="width: 100%">
+  <div *ngIf="!selected" style="width: 100%">
     <app-character-list [characters]="characters" (selected)="select($event)"></app-character-list>
   </div>
-  <div *ngIf="selected" @formTrigger class="add-character-form" fxLayout="column" fxLayoutAlign="center center">
+  <div *ngIf="selected" class="add-character-form" fxLayout="column" fxLayoutAlign="center center">
     <app-character-plan-form [character]="selectedCharacter" [plan]="selectedPlan"></app-character-plan-form>
   </div>
   <div *ngIf="selected" fxLayout="row" fxLayoutGap="16px" style="width: 240px">
