@@ -6,6 +6,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
 import {first, switchMap} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
+import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +31,10 @@ export class CharacterService {
 
   private readonly storeName = 'party-characters';
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService) {
+  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialCostMarker) {
     http.get<Character[]>('assets/data/characters.json').subscribe(res => this.#characters.next(res));
     zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
-      this.cacheParty(party);
+      this.cacheParty(party, false);
       const partyIds = party.map(c => c.id);
       const nonParty = characters.filter(c => !partyIds.includes(c.id));
       this.#nonParty.next(nonParty);
@@ -92,7 +93,10 @@ export class CharacterService {
     });
   }
 
-  private cacheParty(party: PartyCharacter[]): void {
+  private cacheParty(party: PartyCharacter[], clear: boolean = true): void {
+    if (clear) {
+      this.marker.clear();
+    }
     this.#party.next(party);
     const mapped = new Map<number, PartyCharacter>();
     party.forEach(character => mapped.set(character.id, character));

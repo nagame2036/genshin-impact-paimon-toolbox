@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <h2 mat-dialog-title>
+    {{ i18n.dict('materials.' + id) | translate }}
+    -
+    {{ i18n.module('total-cost') | translate }}
+    {{ totalNeed | number: '1.0-0' }}
+  </h2>
+  <div fxFlex="1 1 auto"></div>
+  <button mat-icon-button (click)="close()" color="warn">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<cdk-virtual-scroll-viewport class="scrollable-material-cost-detail" itemSize="50">
+  <div gdColumns="repeat(8, auto)" gdAlignColumns="space-around stretch" gdGap="4px">
+    <ng-container *ngFor="let mark of marks">
+      <div style="text-align: center">
+        {{ i18n.dict(types[mark.type]) | translate }}
+      </div>
+      <div style="text-align: center">
+        {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
+      </div>
+      <div style="text-align: center">
+        {{ mark.use | translate }}
+      </div>
+      <div style="text-align: center">
+        {{ mark.start }}
+      </div>
+      <div style="text-align: center">
+        →
+      </div>
+      <div style="text-align: center">
+        {{ mark.goal }}
+      </div>
+      <div style="text-align: center">
+        {{ i18n.module('cost') | translate }}
+      </div>
+      <div style="text-align: right">
+        {{ mark.need | number: '1.0-0' }}
+      </div>
+    </ng-container>
+  </div>
+</cdk-virtual-scroll-viewport>

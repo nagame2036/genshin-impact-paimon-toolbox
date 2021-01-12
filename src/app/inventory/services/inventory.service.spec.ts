@@ -3,6 +3,7 @@ import {TestBed} from '@angular/core/testing';
 import {InventoryService} from './inventory.service';
 import {AppIndexedDbModule} from '../../app-indexed-db.module';
 import {HttpClientModule} from '@angular/common/http';
+import {AppTranslateModule} from '../../app-translate.module';
 
 describe('InventoryService', () => {
   let service: InventoryService;
@@ -11,6 +12,7 @@ describe('InventoryService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
+        AppTranslateModule,
         AppIndexedDbModule
       ]
     });

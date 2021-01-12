@@ -8,6 +8,7 @@ import {WeaponService} from '../../weapon/services/weapon.service';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
 import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {activePlans} from '../utils/party-plans';
+import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class WeaponPlanner {
 
   activePlans: Observable<{ plan: WeaponPlan, party: PartyWeapon }[]>;
 
-  constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService) {
+  constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
+              private marker: MaterialCostMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
     this.activePlans = combineLatest([this.plans, this.weapons.partyMap]).pipe(
       map(([plans, party]) => activePlans(plans, party))
@@ -41,6 +43,7 @@ export class WeaponPlanner {
 
   updatePlan(plan: WeaponPlan): void {
     zip(this.plans, this.database.update(this.storeName, plan)).subscribe(([plans, _]) => {
+      this.marker.clear();
       const newPlans = plans.filter(it => it.id !== plan.id);
       newPlans.push(plan);
       this.#plans.next(newPlans);

@@ -6,6 +6,7 @@ import {Weapon} from '../models/weapon.model';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {first, map, switchMap} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
+import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,9 @@ export class WeaponService {
 
   private readonly storeName = 'party-weapons';
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService) {
+  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialCostMarker) {
     http.get<Weapon[]>('assets/data/weapons.json').subscribe(res => this.#weapons.next(res));
-    database.getAll(this.storeName).subscribe(party => this.cacheParty(party));
+    database.getAll(this.storeName).subscribe(party => this.cacheParty(party, false));
   }
 
   addPartyMember(weapon: PartyWeapon): Observable<number> {
@@ -37,7 +38,7 @@ export class WeaponService {
       weapon.key = key;
       const newParty = party.filter(c => c.key !== key);
       newParty.push(weapon);
-      this.cacheParty(newParty);
+      this.cacheParty(newParty, false);
       return key;
     }));
   }
@@ -82,7 +83,10 @@ export class WeaponService {
     });
   }
 
-  private cacheParty(party: PartyWeapon[]): void {
+  private cacheParty(party: PartyWeapon[], clear: boolean = true): void {
+    if (clear) {
+      this.marker.clear();
+    }
     this.#party.next(party);
     const mapped = new Map<number, PartyWeapon>();
     party.forEach(weapon => {

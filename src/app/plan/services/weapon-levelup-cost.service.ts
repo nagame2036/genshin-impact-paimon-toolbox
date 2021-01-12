@@ -13,36 +13,51 @@ import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
+import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {I18n} from '../../shared/models/i18n.model';
+import {TranslateService} from '@ngx-translate/core';
+import {ItemType} from '../../character-and-gear/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeaponLevelupCostService {
 
-  private levels = new ReplaySubject<WeaponLevelupCost>(1);
+  i18n = new I18n('plan');
 
   private ascensions = new ReplaySubject<WeaponAscensionCost>(1);
 
-  constructor(http: HttpClient, private domain: WeaponMaterialService, private common: CommonMaterialService) {
-    http.get<WeaponLevelupCost>('assets/data/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
+  /**
+   * Stores the cost of exp per level for weapon level up.
+   * @private
+   */
+  private levels = new ReplaySubject<WeaponLevelupCost>(1);
+
+  private readonly ascensionLabel = this.i18n.module('ascension');
+
+  private readonly levelupLabel = this.i18n.module('levelup');
+
+  constructor(http: HttpClient, private domain: WeaponMaterialService, private common: CommonMaterialService,
+              private marker: MaterialCostMarker, private translator: TranslateService) {
     http.get<WeaponAscensionCost>('assets/data/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
+    http.get<WeaponLevelupCost>('assets/data/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
   totalCost(plans: { plan: WeaponPlan, party: PartyWeapon }[]): Observable<ItemList> {
     return from(plans).pipe(
-      switchMap(({plan, party}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level))),
+      switchMap(({plan, party}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level), true)),
       take(plans.length),
       reduce((acc, value) => acc.combine(value), new ItemList())
     );
   }
 
-  cost(weapon: PartyWeapon, goal: AscensionLevel): Observable<ItemList> {
-    return combineLatest([this.ascension(weapon, goal.ascension), this.levelup(weapon, goal.level)]).pipe(
+  cost(weapon: PartyWeapon, goal: AscensionLevel, mark: boolean = false): Observable<ItemList> {
+    return combineLatest([this.ascension(weapon, goal.ascension, mark), this.levelup(weapon, goal.level, mark)]).pipe(
       map(([ascension, levelup]) => ascension.combine(levelup))
     );
   }
 
-  private ascension(weapon: PartyWeapon, goal: Ascension): Observable<ItemList> {
+  private ascension(weapon: PartyWeapon, goal: Ascension, mark: boolean): Observable<ItemList> {
     return zip(this.ascensions, this.domain.items, this.common.items).pipe(
       map(([ascensions, _, __]) => {
         const cost = new ItemList();
@@ -57,19 +72,32 @@ export class WeaponLevelupCostService {
           cost.change(commonItem.id, common.amount);
         });
         return cost;
-      })
+      }),
+      map(cost => this.mark(mark, weapon, cost, this.ascensionLabel, this.ascensionParam(weapon.ascension, goal)))
     );
   }
 
-  private levelup(weapon: PartyWeapon, goal: number): Observable<ItemList> {
-    return this.levels.pipe(map(levels => {
-      const cost = new ItemList();
-      const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
-      const {mora: moraCost, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
-      cost.change(mora.id, moraCost);
-      cost.change(weaponExp.id, exp);
-      return cost;
-    }));
+  private ascensionParam(...ascensions: Ascension[]): string[] {
+    return ascensions.map(ascension => this.translator.instant(this.i18n.dict(`ascensions.${ascension}`)));
+  }
+
+  private levelup(weapon: PartyWeapon, goal: number, mark: boolean): Observable<ItemList> {
+    return this.levels.pipe(
+      map(levels => {
+        const cost = new ItemList();
+        const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
+        const {mora: moraCost, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
+        cost.change(mora.id, moraCost);
+        cost.change(weaponExp.id, exp);
+        return cost;
+      }),
+      map(cost => this.mark(mark, weapon, cost, this.levelupLabel, [weapon.level.toString(), goal.toString()]))
+    );
+  }
+
+  private mark(mark: boolean, party: PartyWeapon, cost: ItemList, use: string, [start, goal]: string[]): ItemList {
+    const type = ItemType.WEAPON;
+    return this.marker.mark(mark, cost, type, party.id, use, start, goal);
   }
 
 }

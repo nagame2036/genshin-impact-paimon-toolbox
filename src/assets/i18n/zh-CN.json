@@ -63,6 +63,15 @@
       "add-success": "成功添加武器 - {{ name }}",
       "remove": "移除武器"
     },
+    "plan": {
+      "ascension": "晋升",
+      "levelup": "升级",
+      "talents": {
+        "0": "普通攻击培养",
+        "1": "元素战技培养",
+        "2": "元素爆发培养"
+      }
+    },
     "inventory": {
       "show-overflow": "显示溢出",
       "need": "需求",
@@ -82,7 +91,9 @@
       "enemy": "怪物掉落",
       "mob": "小怪掉落",
       "elite": "精英怪掉落",
-      "local-specialty": "地区特产"
+      "local-specialty": "地区特产",
+      "total-cost": "总消耗: ",
+      "cost": "消耗: "
     },
     "character-stat": {
       "title": "角色面板分析",

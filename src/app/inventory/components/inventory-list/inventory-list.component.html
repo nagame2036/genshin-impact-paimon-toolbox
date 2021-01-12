@@ -5,8 +5,13 @@
   <div gdColumns="repeat(auto-fill, 140px)" gdGap="16px" gdAlignRows="space-around center">
     <div *ngFor="let detail of details; trackBy: trackItem" class="inventory-item">
       <app-item-view category="materials" [width]="140" [imgWidth]="140" [id]="detail.id" [rarity]="detail.rarity || 1">
+        <div *ngIf="showCostDetails" image-top-left>
+          <button mat-icon-button style="color: lawngreen" (click)="openCostDetailDialog(detail.id)">
+            <mat-icon>help</mat-icon>
+          </button>
+        </div>
         <div image-bottom class="inventory-detail">
-          <div gdColumns="auto auto" gdRows="repeat(4, 1fr)" gdGap="4px">
+          <div gdColumns="auto auto" gdRows="repeat(4, 1fr)">
             <div>
               {{ i18n.module('need') | translate }}
             </div>

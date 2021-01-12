@@ -13,42 +13,54 @@ import {TalentPlan} from '../models/talent-plan.model';
 import {TalentService} from '../../character/services/talent.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {mora} from '../../material/models/mora-and-exp.model';
+import {I18n} from '../../shared/models/i18n.model';
+import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {ItemType} from '../../character-and-gear/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TalentLevelupCostService {
 
+  i18n = new I18n('plan');
+
   private levels = new ReplaySubject<TalentLevelupCost[]>(1);
 
+  private readonly labels = [
+    this.i18n.module('talents.0'),
+    this.i18n.module('talents.1'),
+    this.i18n.module('talents.2'),
+  ];
+
   constructor(http: HttpClient, private talents: TalentService, private domain: TalentMaterialService,
-              private common: CommonMaterialService) {
+              private common: CommonMaterialService, private marker: MaterialCostMarker) {
     http.get<TalentLevelupCost[]>('assets/data/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
   totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemList> {
     return from(plans).pipe(
-      switchMap(({party, plan}) => this.cost(party, plan.talents)),
+      switchMap(({party, plan}) => this.cost(party, plan.talents, true)),
       take(plans.length),
       reduce((acc, value) => acc.combine(value), new ItemList())
     );
   }
 
-  cost({talents}: PartyCharacter, goal: TalentLevelData[]): Observable<ItemList> {
+  cost(character: PartyCharacter, goal: TalentLevelData[], mark: boolean = false): Observable<ItemList> {
     return zip(this.levels, this.domain.items, this.common.items).pipe(
       map(([levels, _, __]) => {
-        const plans = innerJoinTalentLevels(talents, goal);
+        const plans = innerJoinTalentLevels(character.talents, goal);
         const cost = new ItemList();
-        plans.forEach(it => this.levelup(it, levels, cost));
+        plans.forEach(it => cost.combine(this.levelup(mark, character, it, levels)));
         return cost;
-      })
+      }),
     );
   }
 
-  private levelup({id, start, goal}: TalentPlan, levels: TalentLevelupCost[], cost: ItemList): void {
+  private levelup(mark: boolean, character: PartyCharacter, {id, start, goal}: TalentPlan, levels: TalentLevelupCost[]): ItemList {
+    const cost = new ItemList();
     const talent = this.talents.getGroupById(id);
     if (!talent) {
-      return;
+      return cost;
     }
     const domainLen = talent.domain.length;
     const end = goal - 1;
@@ -69,6 +81,13 @@ export class TalentLevelupCostService {
         cost.change(talent.event, event);
       }
     }
+    this.mark(mark, character, cost, this.labels[id % 10], [start.toString(), goal.toString()]);
+    return cost;
+  }
+
+  private mark(mark: boolean, party: PartyCharacter, cost: ItemList, use: string, [start, goal]: string[]): ItemList {
+    const type = ItemType.CHARACTER;
+    return this.marker.mark(mark, cost, type, party.id, use, start, goal);
   }
 }
 

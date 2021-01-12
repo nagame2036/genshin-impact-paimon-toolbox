@@ -15,6 +15,7 @@
 </div>
 <cdk-virtual-scroll-viewport class="scrollable-material-cost-list" itemSize="50">
   <app-inventory-list *ngFor="let items$ of costMaterials; let i = index"
-                      [subtitle]="subtitles[i]" [items]="items$" [showOverflow]="showOverflow">
+                      [subtitle]="subtitles[i]" [items]="items$" [showOverflow]="showOverflow"
+                      [showCostDetails]="false">
   </app-inventory-list>
 </cdk-virtual-scroll-viewport>

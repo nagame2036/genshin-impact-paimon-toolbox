@@ -8,6 +8,7 @@ import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
+import {AppTranslateModule} from '../../app-translate.module';
 
 describe('CharacterLevelupService', () => {
   let service: CharacterLevelupCostService;
@@ -17,7 +18,8 @@ describe('CharacterLevelupService', () => {
     TestBed.configureTestingModule({
       imports: [
         PlanModule,
-        HttpClientModule
+        HttpClientModule,
+        AppTranslateModule,
       ]
     });
     service = TestBed.inject(CharacterLevelupCostService);

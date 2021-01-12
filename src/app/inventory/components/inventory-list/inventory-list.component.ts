@@ -4,6 +4,8 @@ import {InventoryItemDetail} from '../../../material/models/inventory-item-detai
 import {InventoryService} from '../../services/inventory.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
+import {MaterialCostDetailDialogComponent} from '../material-cost-detail-dialog/material-cost-detail-dialog.component';
 
 @Component({
   selector: 'app-inventory-list',
@@ -18,6 +20,9 @@ export class InventoryListComponent implements OnChanges {
   subtitle!: string;
 
   @Input()
+  showCostDetails = true;
+
+  @Input()
   showOverflow = true;
 
   @Input()
@@ -26,7 +31,7 @@ export class InventoryListComponent implements OnChanges {
   @ContentChild('bottom', {static: false})
   bottomTemplateRef!: TemplateRef<any>;
 
-  constructor(private inventory: InventoryService) {
+  constructor(private inventory: InventoryService, private dialog: MatDialog) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,5 +65,9 @@ export class InventoryListComponent implements OnChanges {
 
   craft(detail: InventoryItemDetail, craftNeed: number): void {
     this.inventory.craft(detail, craftNeed);
+  }
+
+  openCostDetailDialog(id: number): void {
+    this.dialog.open(MaterialCostDetailDialogComponent, {data: id});
   }
 }

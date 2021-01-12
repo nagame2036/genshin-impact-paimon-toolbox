@@ -7,6 +7,7 @@ import {AscensionLevel} from '../../character-and-gear/models/ascension-level.mo
 import {PlanModule} from '../plan.module';
 import {HttpClientModule} from '@angular/common/http';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
+import {AppTranslateModule} from '../../app-translate.module';
 
 describe('WeaponLevelupCostService', () => {
   let service: WeaponLevelupCostService;
@@ -16,6 +17,7 @@ describe('WeaponLevelupCostService', () => {
     TestBed.configureTestingModule({
       imports: [
         PlanModule,
+        AppTranslateModule,
         HttpClientModule
       ]
     });

@@ -4,6 +4,7 @@ import {WeaponPlanner} from './weapon-planner.service';
 import {PlanModule} from '../plan.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AppIndexedDbModule} from '../../app-indexed-db.module';
+import {AppTranslateModule} from '../../app-translate.module';
 
 describe('WeaponPlanner', () => {
   let service: WeaponPlanner;
@@ -13,6 +14,7 @@ describe('WeaponPlanner', () => {
       imports: [
         PlanModule,
         HttpClientModule,
+        AppTranslateModule,
         AppIndexedDbModule
       ]
     });

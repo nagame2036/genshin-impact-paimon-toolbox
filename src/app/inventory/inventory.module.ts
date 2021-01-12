@@ -10,6 +10,7 @@ import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-m
 import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
 import {CommonMaterialInventoryComponent} from './pages/common-material-inventory/common-material-inventory.component';
 import {IngredientInventoryComponent} from './pages/ingredient-inventory/ingredient-inventory.component';
+import {MaterialCostDetailDialogComponent} from './components/material-cost-detail-dialog/material-cost-detail-dialog.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {FlexModule, GridModule} from '@angular/flex-layout';
@@ -17,6 +18,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     WeaponMaterialInventoryComponent,
     CommonMaterialInventoryComponent,
     IngredientInventoryComponent,
+    MaterialCostDetailDialogComponent,
   ],
   imports: [
     SharedModule,
@@ -38,7 +42,9 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatCheckboxModule,
     MatButtonModule,
     ScrollingModule,
-    GridModule
+    GridModule,
+    MatIconModule,
+    MatDialogModule,
   ],
   exports: [
     MaterialsCostListComponent,
