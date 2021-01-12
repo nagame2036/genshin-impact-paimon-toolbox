@@ -23,14 +23,14 @@ export class TalentMaterialInventoryComponent extends AbstractSubInventoryCompon
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private materials: MaterialService, inventory: InventoryService) {
-    super(inventory);
+  constructor(materials: MaterialService, inventory: InventoryService) {
+    super(materials, inventory);
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_COMMON));
-    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_14));
-    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_25));
-    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialType.TALENT_36));
+    this.common$ = this.filterMaterials(MaterialType.TALENT_COMMON);
+    this.monThu$ = this.filterMaterials(MaterialType.TALENT_14);
+    this.tueFri$ = this.filterMaterials(MaterialType.TALENT_25);
+    this.wedSat$ = this.filterMaterials(MaterialType.TALENT_36);
   }
 }

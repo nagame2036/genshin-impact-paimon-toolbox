@@ -21,14 +21,14 @@ export class WeaponMaterialInventoryComponent extends AbstractSubInventoryCompon
 
   wedSat$!: Observable<InventoryItemDetail[]>;
 
-  constructor(private materials: MaterialService, inventory: InventoryService) {
-    super(inventory);
+  constructor(materials: MaterialService, inventory: InventoryService) {
+    super(materials, inventory);
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_EXP));
-    this.monThu$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_14));
-    this.tueFri$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_25));
-    this.wedSat$ = this.filterItems(this.materials.getMaterials(MaterialType.WEAPON_36));
+    this.common$ = this.filterMaterials(MaterialType.WEAPON_EXP);
+    this.monThu$ = this.filterMaterials(MaterialType.WEAPON_14);
+    this.tueFri$ = this.filterMaterials(MaterialType.WEAPON_25);
+    this.wedSat$ = this.filterMaterials(MaterialType.WEAPON_36);
   }
 }

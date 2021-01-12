@@ -21,13 +21,13 @@ export class CharacterMaterialInventoryComponent extends AbstractSubInventoryCom
 
   rarities = [5, 4, 3, 2];
 
-  constructor(private materials: MaterialService, inventory: InventoryService) {
-    super(inventory);
+  constructor(materials: MaterialService, inventory: InventoryService) {
+    super(materials, inventory);
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.CHARACTER_EXP));
-    this.boss$ = this.filterItems(this.materials.getMaterials(MaterialType.CHARACTER_BOSS));
-    this.gem$ = this.filterItems(this.materials.getMaterials(MaterialType.CHARACTER_GEM));
+    this.common$ = this.filterMaterials(MaterialType.CHARACTER_EXP);
+    this.boss$ = this.filterMaterials(MaterialType.CHARACTER_BOSS);
+    this.gem$ = this.filterMaterials(MaterialType.CHARACTER_GEM);
   }
 }

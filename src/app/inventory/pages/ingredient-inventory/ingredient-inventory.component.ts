@@ -19,13 +19,13 @@ export class IngredientInventoryComponent extends AbstractSubInventoryComponent 
 
   rarities = [3, 2, 1];
 
-  constructor(private materials: MaterialService, inventory: InventoryService) {
-    super(inventory);
+  constructor(materials: MaterialService, inventory: InventoryService) {
+    super(materials, inventory);
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterItems(this.materials.getMaterials(MaterialType.CURRENCY, MaterialType.ORE));
-    this.local$ = this.filterItems(this.materials.getMaterials(MaterialType.LOCAL_SPECIALTY));
+    this.common$ = this.filterMaterials(MaterialType.CURRENCY, MaterialType.ORE);
+    this.local$ = this.filterMaterials(MaterialType.LOCAL_SPECIALTY);
   }
 
 }

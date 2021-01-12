@@ -7,6 +7,8 @@ import {I18n} from '../../shared/models/i18n.model';
 import {InventoryService} from '../services/inventory.service';
 import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
 import {characterExp, mora, weaponExp} from '../../material/models/mora-and-exp.model';
+import {MaterialService} from '../../material/services/material.service';
+import {MaterialType} from '../../material/models/material-type.enum';
 
 export abstract class AbstractSubInventoryComponent {
 
@@ -22,11 +24,11 @@ export abstract class AbstractSubInventoryComponent {
 
   showOverflow = true;
 
-  protected constructor(private inventory: InventoryService) {
+  protected constructor(private materials: MaterialService, private inventory: InventoryService) {
   }
 
-  filterItems(items: Observable<InventoryItem[]>): Observable<InventoryItemDetail[]> {
-    return combineLatest([items, this.filter]).pipe(
+  filterMaterials(...types: MaterialType[]): Observable<InventoryItemDetail[]> {
+    return combineLatest([this.materials.getMaterials(...types), this.filter]).pipe(
       map(([list, filter]) => list.filter(item => filter(item) || this.excludedIds.includes(item.id))),
       switchMap(it => this.inventory.getDetails(it))
     );

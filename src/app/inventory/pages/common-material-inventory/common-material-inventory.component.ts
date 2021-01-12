@@ -19,13 +19,13 @@ export class CommonMaterialInventoryComponent extends AbstractSubInventoryCompon
 
   rarities = [4, 3, 2, 1];
 
-  constructor(private materials: MaterialService, inventory: InventoryService) {
-    super(inventory);
+  constructor(materials: MaterialService, inventory: InventoryService) {
+    super(materials, inventory);
   }
 
   ngOnInit(): void {
-    this.mobs$ = this.filterItems(this.materials.getMaterials(MaterialType.COMMON_MOB));
-    this.elites$ = this.filterItems(this.materials.getMaterials(MaterialType.COMMON_ELITE));
+    this.mobs$ = this.filterMaterials(MaterialType.COMMON_MOB);
+    this.elites$ = this.filterMaterials(MaterialType.COMMON_ELITE);
   }
 
 }
