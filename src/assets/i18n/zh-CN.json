@@ -31,7 +31,7 @@
       "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
       "execute-all-plan": "拉满",
       "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 扣除库存",
-      "total-cost": "养成总消耗",
+      "total-cost": "培养总消耗",
       "levelup-cost": "升级消耗",
       "talent-cost": {
         "0": "普通攻击培养消耗",
@@ -66,7 +66,7 @@
       "remove": "移除武器"
     },
     "plan": {
-      "ascension": "晋升",
+      "ascension": "突破",
       "levelup": "升级",
       "talents": {
         "0": "普通攻击培养",
@@ -83,7 +83,7 @@
       "have": "库存",
       "craft-five": "合成五份",
       "craft-one": "合成一份",
-      "plan-cost": "养成消耗",
+      "plan-cost": "培养消耗",
       "common": "通用",
       "boss": "Boss掉落",
       "gem": "宝石",
