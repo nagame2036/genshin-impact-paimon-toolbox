@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
@@ -13,6 +13,14 @@ export class RemoveConfirmDialogComponent implements OnInit {
 
   constructor(private dialog: MatDialogRef<RemoveConfirmDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { category: string, items: { id: number, rarity: number }[] }) {
+  }
+
+  static openBy(dialog: MatDialog, category: string, items: { id: number, rarity: number }[], onConfirm: () => void): void {
+    dialog.open(RemoveConfirmDialogComponent, {minWidth: '50vw', data: {category, items}}).afterClosed().subscribe(confirm => {
+      if (confirm) {
+        onConfirm();
+      }
+    });
   }
 
   ngOnInit(): void {

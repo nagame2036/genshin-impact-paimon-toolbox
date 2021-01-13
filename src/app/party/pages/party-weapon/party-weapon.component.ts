@@ -44,15 +44,9 @@ export class PartyWeaponComponent implements OnInit {
   }
 
   openRemoveDialog(): void {
-    this.dialog.open(RemoveConfirmDialogComponent, {
-      minWidth: '50vw',
-      data: {category: 'weapons', items: this.selectedItems}
-    })
-      .afterClosed().subscribe(remove => {
-      if (remove) {
-        this.service.removePartyMemberByList(this.selectedItems.map(it => it.key ?? -1));
-        this.updateSelected([]);
-      }
+    RemoveConfirmDialogComponent.openBy(this.dialog, 'weapons', this.selectedItems, () => {
+      this.service.removePartyMemberByList(this.selectedItems.map(it => it.key ?? -1));
+      this.updateSelected([]);
     });
   }
 

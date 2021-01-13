@@ -50,15 +50,9 @@ export class PartyCharacterDetailComponent extends AbstractObservableComponent i
   }
 
   remove(): void {
-    this.dialog.open(RemoveConfirmDialogComponent, {
-      minWidth: '50vw',
-      data: {category: 'characters', items: [this.character]}
-    })
-      .afterClosed().subscribe(remove => {
-      if (remove) {
-        this.characters.removePartyMember(this.characterId);
-        this.goBack();
-      }
+    RemoveConfirmDialogComponent.openBy(this.dialog, 'characters', [this.character], () => {
+      this.characters.removePartyMember(this.characterId);
+      this.goBack();
     });
   }
 }

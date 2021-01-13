@@ -50,15 +50,9 @@ export class PartyWeaponDetailComponent extends AbstractObservableComponent impl
   }
 
   remove(): void {
-    this.dialog.open(RemoveConfirmDialogComponent, {
-      minWidth: '50vw',
-      data: {category: 'weapons', items: [this.weapon]}
-    })
-      .afterClosed().subscribe(remove => {
-      if (remove) {
-        this.weapons.removePartyMember(this.weapon);
-        this.goBack();
-      }
+    RemoveConfirmDialogComponent.openBy(this.dialog, 'weapons', [this.weapon], () => {
+      this.weapons.removePartyMember(this.weapon);
+      this.goBack();
     });
   }
 
