@@ -63,8 +63,8 @@ export class InventoryListComponent implements OnChanges {
     return item.id;
   }
 
-  craft(detail: InventoryItemDetail, craftNeed: number): void {
-    this.inventory.craft(detail, craftNeed);
+  craft(detail: InventoryItemDetail, performedTimes: number): void {
+    this.inventory.craftItem(detail, performedTimes);
   }
 
   openCostDetailDialog(id: number): void {

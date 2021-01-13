@@ -77,7 +77,7 @@
     "inventory": {
       "show-overflow": "显示溢出",
       "need": "需求",
-      "crafted": "可合成",
+      "craftable": "可合成",
       "lack": "缺少",
       "overflow": "溢出",
       "have": "库存",

@@ -7,17 +7,17 @@ export function processExpDetails(expId: number, exps: { id: number, exp: number
     return;
   }
   expDetail.have = 0;
-  expDetail.crafted = 0;
+  expDetail.craftable = 0;
   expDetail.readonly = true;
   const expDetails = exps.map(({exp, id}) => ({detail: details.get(id), exp}));
   for (const {detail, exp} of expDetails) {
     if (detail) {
-      detail.lack = Math.max(0, detail.need - detail.have - detail.crafted);
+      detail.lack = Math.max(0, detail.need - detail.have - detail.craftable);
       expDetail.have += detail.have * exp;
-      expDetail.crafted += detail.crafted * exp;
+      expDetail.craftable += detail.craftable * exp;
     }
   }
-  expDetail.lack = Math.max(0, expDetail.need - expDetail.have - expDetail.crafted);
+  expDetail.lack = Math.max(0, expDetail.need - expDetail.have - expDetail.craftable);
   expDetail.overflow = expDetail.lack === 0;
   for (const {detail} of expDetails) {
     if (detail) {

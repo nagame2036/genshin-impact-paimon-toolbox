@@ -53,11 +53,11 @@ function processCostDetails(details: InventoryItemDetail[], cost: ItemList): Inv
     const id = detail.id;
     const need = cost.getAmount(id);
     if (cost.has(id) && need > 0) {
-      const needCraft = need - detail.have;
-      const crafted = Math.max(0, Math.min(needCraft, detail.crafted));
-      const lack = Math.max(0, needCraft - crafted);
+      let lack = need - detail.have;
+      const craftable = Math.max(0, Math.min(lack, detail.craftable));
+      lack = Math.max(0, lack - craftable);
       const overflow = lack <= 0;
-      results.push({...detail, need, lack, crafted, overflow});
+      results.push({...detail, need, lack, craftable, overflow});
     }
   }
   return results;

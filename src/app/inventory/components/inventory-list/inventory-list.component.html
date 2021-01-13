@@ -11,24 +11,24 @@
           </button>
         </div>
         <div image-bottom class="inventory-detail">
-          <div gdColumns="auto auto" gdRows="repeat(4, 1fr)">
+          <div gdColumns="auto auto">
             <div>
               {{ i18n.module('need') | translate }}
             </div>
             <div class="inventory-data">
               {{ detail.need | number: '1.0-0' }}
             </div>
-            <div [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
-              {{ i18n.module('crafted') | translate }}
-            </div>
-            <div class="inventory-data" [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
-              {{ detail.crafted | number: '1.0-0' }}
-            </div>
             <div [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
               {{ i18n.module(detail.overflow ? 'overflow' : 'lack') | translate }}
             </div>
             <div class="inventory-data" [ngStyle]="{'color': detail.overflow ? 'gray' : 'red'}">
               {{ detail.lack | number: '1.0-0' }}
+            </div>
+            <div [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
+              {{ i18n.module('craftable') | translate }}
+            </div>
+            <div class="inventory-data" [ngStyle]="{'color': detail.overflow ? 'gray' : 'black'}">
+              {{ detail.craftable | number: '1.0-0' }}
             </div>
             <div>
               {{ i18n.module('have') | translate }}
@@ -38,10 +38,12 @@
                    (keydown.arrowUp)="inc(detail)" (keydown.arrowDown)="dec(detail)"/>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="4px">
-            <button class="craft-button" (click)="craft(detail, 5)" [disabled]="detail.crafted < 5 || detail.readonly">
+            <button class="craft-button" (click)="craft(detail, 5)"
+                    [disabled]="detail.craftable < 5 || detail.readonly">
               {{ i18n.module('craft-five') | translate }}
             </button>
-            <button class="craft-button" (click)="craft(detail, 1)" [disabled]="detail.crafted < 1 || detail.readonly">
+            <button class="craft-button" (click)="craft(detail, 1)"
+                    [disabled]="detail.craftable < 1 || detail.readonly">
               {{ i18n.module('craft-one') | translate }}
             </button>
           </div>

@@ -13,7 +13,9 @@ export interface InventoryItemDetail {
 
   recipe?: CraftRecipe;
 
-  crafted: number;
+  craftable: number;
+
+  craftUsed: number;
 
   lack: number;
 
