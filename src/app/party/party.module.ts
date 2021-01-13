@@ -20,17 +20,17 @@ import {PartyWeaponDetailComponent} from './pages/party-weapon-detail/party-weap
 import {PartyWeaponPlanComponent} from './pages/party-weapon-plan/party-weapon-plan.component';
 import {WeaponPlanFormComponent} from './components/weapon-plan-form/weapon-plan-form.component';
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
+import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FlexModule, GridModule} from '@angular/flex-layout';
-import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -48,6 +48,7 @@ import {MatIconModule} from '@angular/material/icon';
     PartyWeaponPlanComponent,
     WeaponPlanFormComponent,
     RemoveConfirmDialogComponent,
+    ExecutePlanConfirmDialogComponent,
   ],
   imports: [
     SharedModule,
@@ -61,12 +62,11 @@ import {MatIconModule} from '@angular/material/icon';
     MatDialogModule,
     FlexModule,
     GridModule,
-    MatDividerModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatCheckboxModule,
     MatToolbarModule,
     MatIconModule,
+    ScrollingModule,
   ]
 })
 export class PartyModule {

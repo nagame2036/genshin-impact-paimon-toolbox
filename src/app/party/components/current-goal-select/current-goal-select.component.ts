@@ -1,6 +1,7 @@
 /* tslint:disable:semicolon */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-current-goal-select',
@@ -21,11 +22,17 @@ export class CurrentGoalSelectComponent implements OnInit {
   @Input()
   goal = 0;
 
+  @Input()
+  satisfied!: Observable<boolean>;
+
   @Output()
   currentChange = new EventEmitter<number>();
 
   @Output()
   goalChange = new EventEmitter<number>();
+
+  @Output()
+  executePlan = new EventEmitter();
 
   // noinspection JSUnusedLocalSymbols
   constructor(
@@ -52,5 +59,9 @@ export class CurrentGoalSelectComponent implements OnInit {
   setGoal(value: number): void {
     this.goal = value;
     this.goalChange.emit(value);
+  }
+
+  checkPlanAvailable(available: boolean | null): boolean {
+    return available === true && this.current !== this.goal && this.currentOptions.includes(this.goal);
   }
 }

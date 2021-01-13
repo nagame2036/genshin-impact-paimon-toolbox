@@ -1,9 +1,9 @@
 @import '../../../../assets/styles/app-form-field';
+@import '../../styles/satisfied';
 
 .current-goal-select-container {
   margin: 4px;
   padding: 0 1px;
-  width: 200px;
   height: 42px;
   border: solid 1px #e0e0e0;
   border-radius: 4px;
@@ -16,14 +16,22 @@
 }
 
 .current-goal-select-arrow {
-  margin-left: -12px;
+  margin-left: 4px;
   margin-right: 0 !important;
-  line-height: 20px;
+  line-height: 30px;
+}
+
+.current-goal-select-button-arrow {
+  @extend .satisfied;
+  margin-left: 0;
+  margin-right: 0 !important;
+  line-height: 12px;
 }
 
 .current-goal-select-field {
+  @extend .app-form-field;
   margin: -8px 0 2px 0;
-  width: 108px;
+  width: 120px;
 
   ::ng-deep {
     .mat-form-field-outline-start {

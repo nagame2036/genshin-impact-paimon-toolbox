@@ -2,21 +2,34 @@
   <legend>
     <ng-content></ng-content>
   </legend>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-goal-select-field-left">
-    <mat-select [value]="current" (selectionChange)="setCurrent($event.value)">
-      <mat-option *ngFor="let value of currentOptions; let i = index" [value]="value">
-        {{ valueDisplay(value) }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-icon fxFlex="auto" class="current-goal-select-arrow">
-    chevron_right
-  </mat-icon>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field current-goal-select-field-right">
-    <mat-select [value]="goal" (selectionChange)="setGoal($event.value)">
-      <mat-option *ngFor="let value of goalOptions; let i = index" [value]="value">
-        {{ valueDisplay(value) }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div fxLayout="row">
+    <mat-form-field appearance="outline" floatLabel="always" class="current-goal-select-field-left"
+                    fxFlex="45%">
+      <mat-select [value]="current" (selectionChange)="setCurrent($event.value)">
+        <mat-option *ngFor="let value of currentOptions" [value]="value">
+          {{ valueDisplay(value) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="checkPlanAvailable(satisfied | async) else disabled">
+      <button fxFlex="auto" mat-icon-button style="width: 28px; height: 28px" (click)="executePlan.emit()">
+        <mat-icon class="current-goal-select-button-arrow">
+          chevron_right
+        </mat-icon>
+      </button>
+    </ng-container>
+    <ng-template #disabled>
+      <mat-icon fxFlex="auto" class="current-goal-select-arrow">
+        chevron_right
+      </mat-icon>
+    </ng-template>
+    <mat-form-field appearance="outline" floatLabel="always" class="current-goal-select-field-right"
+                    fxFlex="45%">
+      <mat-select [value]="goal" (selectionChange)="setGoal($event.value)">
+        <mat-option *ngFor="let value of goalOptions" [value]="value">
+          {{ valueDisplay(value) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </fieldset>

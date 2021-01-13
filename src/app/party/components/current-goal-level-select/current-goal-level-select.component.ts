@@ -4,6 +4,7 @@ import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../../character-and-gear/models/ascension.type';
 import {TranslateService} from '@ngx-translate/core';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-current-goal-level-select',
@@ -37,11 +38,17 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
   @Input()
   goalLevel!: number;
 
+  @Input()
+  satisfied!: Observable<boolean>;
+
   @Output()
   currentChange = new EventEmitter<AscensionLevel>();
 
   @Output()
   goalChange = new EventEmitter<AscensionLevel>();
+
+  @Output()
+  executePlan = new EventEmitter();
 
   constructor(public translator: TranslateService) {
   }

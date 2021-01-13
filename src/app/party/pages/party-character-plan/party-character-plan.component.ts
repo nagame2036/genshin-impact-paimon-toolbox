@@ -11,9 +11,12 @@ import {ItemList} from '../../../material/models/item-list.model';
 import {CharacterLevelupCostService} from '../../../plan/services/character-levelup-cost.service';
 import {TalentLevelupCostService} from '../../../plan/services/talent-levelup-cost.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
-import {combineLatest, from, range, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, from, Observable, range, ReplaySubject, Subject, zip} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
+import {PartyPlanExecutor} from '../../services/party-plan-executor.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ExecutePlanConfirmDialogComponent} from '../../components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 
 @Component({
   selector: 'app-party-character-plan',
@@ -50,17 +53,22 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
 
   readonly #plan = new ReplaySubject<CharacterPlan>();
 
-  costs: { title: string, cost: ItemList }[] = [
-    {title: this.i18n.module('total-cost'), cost: new ItemList()},
-    {title: this.i18n.module('levelup-cost'), cost: new ItemList()},
-    {title: this.i18n.module('talent-cost.0'), cost: new ItemList()},
-    {title: this.i18n.module('talent-cost.1'), cost: new ItemList()},
-    {title: this.i18n.module('talent-cost.2'), cost: new ItemList()},
+  plans: { title: string, cost: ItemList, satisfied: Observable<boolean> }[] = [
+    {title: this.i18n.module('total-cost'), cost: new ItemList(), satisfied: new Subject()},
+    {title: this.i18n.module('levelup-cost'), cost: new ItemList(), satisfied: new Subject()},
+    {title: this.i18n.module('talent-cost.0'), cost: new ItemList(), satisfied: new Subject()},
+    {title: this.i18n.module('talent-cost.1'), cost: new ItemList(), satisfied: new Subject()},
+    {title: this.i18n.module('talent-cost.2'), cost: new ItemList(), satisfied: new Subject()},
+  ];
+
+  planExecution = [
+    this.executeAll,
+    this.executeLevelup,
   ];
 
   constructor(private characters: CharacterService, private planner: CharacterPlanner, private route: ActivatedRoute,
               private levelup: CharacterLevelupCostService, private talentUp: TalentLevelupCostService,
-              private characterExps: CharacterExpMaterialService) {
+              private characterExps: CharacterExpMaterialService, private executor: PartyPlanExecutor, private dialog: MatDialog) {
     super();
   }
 
@@ -78,6 +86,17 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
   savePlan(): void {
     this.planner.updatePlan(this.plan);
     this.#plan.next(this.plan);
+  }
+
+  executePlan(planIndex: number): void {
+    const plan = this.plans[planIndex];
+    const execution = this.planExecution[planIndex] ?? (() => this.executeTalentLevelup(planIndex - 2));
+    const data = {title: plan.title, cost: plan.cost, item: this.i18n.dict(`characters.${this.party.id}`)};
+    ExecutePlanConfirmDialogComponent.openBy(this.dialog, data, () => {
+      this.executor.consumeDemand(plan.cost);
+      execution();
+      this.saveParty();
+    });
   }
 
   private init(): void {
@@ -101,8 +120,7 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
     combineLatest([this.#party, this.#plan])
       .pipe(switchMap(([party, {ascension, level, talents}]) => {
         return this.levelup.cost(party, new AscensionLevel(ascension, level)).pipe(
-          map(it => this.characterExps.splitExpNeed(it)),
-          tap(cost => this.costs[1].cost = cost),
+          tap(cost => this.updatePlanDetail(1, cost)),
           switchMap(levelup => {
             return this.talentUp.cost(party, talents)
               .pipe(map(talentsUp => new ItemList().combine(levelup).combine(talentsUp)));
@@ -110,7 +128,7 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
         );
       }))
       .pipe(takeUntil(this.destroy$))
-      .subscribe(total => this.costs[0].cost = total);
+      .subscribe(total => this.updatePlanDetail(0, total));
   }
 
   private updateTalentsCost(): void {
@@ -119,11 +137,34 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
         return zip(from(talents), range(0, 100)).pipe(
           switchMap(([talent, index]) => {
             return this.talentUp.cost(party, [talent])
-              .pipe(tap(cost => this.costs[2 + index].cost = cost));
+              .pipe(tap(cost => this.updatePlanDetail(2 + index, cost)));
           })
         );
       }))
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+  }
+
+  private updatePlanDetail(planIndex: number, cost: ItemList): void {
+    const plan = this.plans[planIndex];
+    plan.cost = cost;
+    plan.satisfied = this.executor.checkDemandSatisfied(cost);
+  }
+
+  private executeAll(): void {
+    this.executeLevelup();
+    const talentsLength = this.plans.length - 2;
+    for (let i = 0; i < talentsLength; i++) {
+      this.executeTalentLevelup(i);
+    }
+  }
+
+  private executeLevelup(): void {
+    this.party.ascension = this.plan.ascension;
+    this.party.level = this.plan.level;
+  }
+
+  private executeTalentLevelup(index: number): void {
+    this.party.talents[index].level = this.plan.talents[index].level;
   }
 }

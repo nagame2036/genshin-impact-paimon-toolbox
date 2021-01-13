@@ -12,9 +12,16 @@
   </mat-form-field>
   <app-current-goal-level-select label="weapon" [ascension]="weapon.ascension" [goalAscension]="plan.ascension"
                                  [level]="weapon.level" [goalLevel]="plan.level"
+                                 [satisfied]="plans[0].satisfied" (executePlan)="executePlan.emit(0)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
   <div *ngFor="let bonus of weapon.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
+  <ng-container *ngIf="plans[0].hasOwnProperty('title')">
+    <button mat-stroked-button style="margin-top: 12px" [class.satisfied]="plans[0].satisfied | async"
+            [disabled]="!(plans[0].satisfied | async)" (click)="executePlan.emit(0)">
+      {{ i18n.module('execute-all-plan') | translate }}
+    </button>
+  </ng-container>
 </div>

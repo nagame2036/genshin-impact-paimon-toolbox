@@ -29,6 +29,8 @@
     "party": {
       "confirm-to-remove": "确定要将以下移出Box吗？",
       "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
+      "execute-all-plan": "拉满",
+      "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 扣除库存",
       "total-cost": "养成总消耗",
       "levelup-cost": "升级消耗",
       "talent-cost": {

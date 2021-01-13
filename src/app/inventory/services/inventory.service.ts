@@ -95,6 +95,19 @@ export class InventoryService {
     return this.details.pipe(map(details => mapArrays(items, details, it => it.id, (_, detail) => detail)));
   }
 
+  changeItem(id: number, change: number): void {
+    this.#inventory
+      .pipe(first(), map(inventory => {
+          const amount = inventory.getAmount(id) + change;
+          return this.database.update(this.storeName, {id, amount}).pipe(map(_ => {
+            inventory.change(id, change);
+            this.#inventory.next(inventory);
+          }));
+        })
+      )
+      .subscribe();
+  }
+
   setItem(id: number, amount: number): void {
     zip(this.#inventory, this.database.update(this.storeName, {id, amount})).subscribe(([inventory, _]) => {
       inventory.setAmount(id, amount);

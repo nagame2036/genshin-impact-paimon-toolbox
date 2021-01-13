@@ -5,6 +5,7 @@ import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../weapon/models/refine-rank.type';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {Observable, Subject} from 'rxjs';
 
 @Component({
   selector: 'app-weapon-plan-form',
@@ -21,6 +22,11 @@ export class WeaponPlanFormComponent implements OnInit {
   @Input()
   plan!: WeaponPlan;
 
+  @Input()
+  plans: { satisfied: Observable<boolean> }[] = [
+    {satisfied: new Subject()},
+  ];
+
   refineRanks = rangeList(1, 5) as RefineRank[];
 
   @Output()
@@ -28,6 +34,9 @@ export class WeaponPlanFormComponent implements OnInit {
 
   @Output()
   goalChange = new EventEmitter<WeaponPlan>();
+
+  @Output()
+  executePlan = new EventEmitter<number>();
 
   constructor() {
   }

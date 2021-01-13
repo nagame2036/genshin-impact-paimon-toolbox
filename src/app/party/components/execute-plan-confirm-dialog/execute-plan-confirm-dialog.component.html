@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>
+  {{ i18n.module('confirm-execute-plan') | translate: {item: data.item | translate, plan: data.title | translate} }}
+</h2>
+<mat-dialog-content>
+  <cdk-virtual-scroll-viewport style="height: 30vh" itemSize="50">
+    <div gdColumns="repeat(auto-fit, 100px)" gdGap="16px" gdAlignRows="space-around center">
+      <ng-container *ngIf="items$ | async as items">
+        <app-item-view *ngFor="let item of items" category="materials" [id]="item.id" [rarity]="item.rarity">
+          <div image-bottom>
+            {{ item.need }}
+          </div>
+        </app-item-view>
+      </ng-container>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-flat-button mat-dialog-close>
+    {{ i18n.dict('cancel') | translate }}
+  </button>
+  <button type="button" mat-flat-button color="primary" (click)="confirm()">
+    {{ i18n.dict('confirm') | translate }}
+  </button>
+</mat-dialog-actions>

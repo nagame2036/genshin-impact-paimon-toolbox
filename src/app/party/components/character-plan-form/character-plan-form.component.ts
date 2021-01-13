@@ -8,6 +8,7 @@ import {TalentLevelData} from '../../../character/models/talent-level-data.model
 import {TalentService} from '../../../character/services/talent.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
+import {Observable, Subject} from 'rxjs';
 
 @Component({
   selector: 'app-character-plan-form',
@@ -24,6 +25,15 @@ export class CharacterPlanFormComponent implements OnInit {
   @Input()
   plan!: CharacterPlan;
 
+  @Input()
+  plans: { satisfied: Observable<boolean> }[] = [
+    {satisfied: new Subject()},
+    {satisfied: new Subject()},
+    {satisfied: new Subject()},
+    {satisfied: new Subject()},
+    {satisfied: new Subject()},
+  ];
+
   constellations = rangeList(0, 6) as Constellation[];
 
   talentLevels!: TalentLevel[];
@@ -35,6 +45,9 @@ export class CharacterPlanFormComponent implements OnInit {
 
   @Output()
   goalChange = new EventEmitter<CharacterPlan>();
+
+  @Output()
+  executePlan = new EventEmitter<number>();
 
   constructor(private talentService: TalentService) {
   }

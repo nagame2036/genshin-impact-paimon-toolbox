@@ -6,13 +6,16 @@ import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';
 import {WeaponPlanner} from '../../../plan/services/weapon-planner.service';
 import {ActivatedRoute} from '@angular/router';
-import {first, map, switchMap, takeUntil} from 'rxjs/operators';
+import {first, switchMap, takeUntil} from 'rxjs/operators';
 import {MaterialType} from '../../../material/models/material-type.enum';
-import {combineLatest, ReplaySubject} from 'rxjs';
+import {combineLatest, Observable, ReplaySubject, Subject} from 'rxjs';
 import {ItemList} from '../../../material/models/item-list.model';
 import {WeaponLevelupCostService} from '../../../plan/services/weapon-levelup-cost.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
+import {PartyPlanExecutor} from '../../services/party-plan-executor.service';
+import {ExecutePlanConfirmDialogComponent} from '../../components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-party-weapon-plan',
@@ -39,8 +42,8 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
     'enemy',
   ];
 
-  costs = [
-    {title: this.i18n.module('total-cost'), cost: new ItemList()},
+  plans: { cost: ItemList; title: string; satisfied: Observable<boolean> }[] = [
+    {title: this.i18n.module('total-cost'), cost: new ItemList(), satisfied: new Subject()},
   ];
 
   party!: PartyWeapon;
@@ -52,7 +55,8 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
   readonly #plan = new ReplaySubject<WeaponPlan>(1);
 
   constructor(private weapons: WeaponService, private planner: WeaponPlanner, private route: ActivatedRoute,
-              private levelup: WeaponLevelupCostService, private weaponExps: WeaponExpMaterialService) {
+              private levelup: WeaponLevelupCostService, private weaponExps: WeaponExpMaterialService,
+              private executor: PartyPlanExecutor, private dialog: MatDialog) {
     super();
   }
 
@@ -69,6 +73,16 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
   savePlan(): void {
     this.planner.updatePlan(this.plan);
     this.#plan.next(this.plan);
+  }
+
+  executePlan(planIndex: number): void {
+    const plan = this.plans[planIndex];
+    const data = {title: plan.title, cost: plan.cost, item: this.i18n.dict(`weapons.${this.party.id}`)};
+    ExecutePlanConfirmDialogComponent.openBy(this.dialog, data, () => {
+      this.executor.consumeDemand(plan.cost);
+      this.executeLevelup();
+      this.saveParty();
+    });
   }
 
   private init(): void {
@@ -90,11 +104,19 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
 
   private updateTotalCost(): void {
     combineLatest([this.#party, this.#plan])
-      .pipe(switchMap(([party, {ascension, level}]) => {
-        return this.levelup.cost(party, new AscensionLevel(ascension, level))
-          .pipe(map(it => this.weaponExps.splitExpNeed(it)));
-      }))
+      .pipe(switchMap(([party, {ascension, level}]) => this.levelup.cost(party, new AscensionLevel(ascension, level))))
       .pipe(takeUntil(this.destroy$))
-      .subscribe(total => this.costs[0].cost = total);
+      .subscribe(total => this.updateCostDetail(0, total));
+  }
+
+  private updateCostDetail(index: number, cost: ItemList): void {
+    const detail = this.plans[index];
+    detail.cost = cost;
+    detail.satisfied = this.executor.checkDemandSatisfied(cost);
+  }
+
+  private executeLevelup(): void {
+    this.party.ascension = this.plan.ascension;
+    this.party.level = this.plan.level;
   }
 }
