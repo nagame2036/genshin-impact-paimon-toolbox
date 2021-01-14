@@ -24,7 +24,7 @@ export class ImageService {
   constructor(private http: HttpClient) {
     from(this.types)
       .pipe(
-        mergeMap(type => http.get<ImageMap>(`assets/images/${type}/map.json`).pipe(tap(res => this.maps.set(type, res))))
+        mergeMap(type => http.get<ImageMap>(`assets/images/${type}/mapping.json`).pipe(tap(res => this.maps.set(type, res))))
       )
       .subscribe();
   }
