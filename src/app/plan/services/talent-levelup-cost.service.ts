@@ -34,7 +34,7 @@ export class TalentLevelupCostService {
 
   constructor(http: HttpClient, private talents: TalentService, private domain: TalentMaterialService,
               private common: CommonMaterialService, private marker: MaterialCostMarker) {
-    http.get<TalentLevelupCost[]>('assets/data/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
+    http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
   totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemList> {

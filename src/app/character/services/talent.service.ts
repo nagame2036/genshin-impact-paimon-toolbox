@@ -26,7 +26,7 @@ export class TalentService {
   readonly talents = this.talentsSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this.http.get<TalentData>('assets/data/talents.json').subscribe(res => {
+    this.http.get<TalentData>('assets/data/characters/talents.json').subscribe(res => {
       const {groups: groups, items: items} = res;
       this.#groups = groups;
       this.groupsSubject.next(groups);

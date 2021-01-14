@@ -32,7 +32,7 @@ export class CharacterService {
   private readonly storeName = 'party-characters';
 
   constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialCostMarker) {
-    http.get<Character[]>('assets/data/characters.json').subscribe(res => this.#characters.next(res));
+    http.get<Character[]>('assets/data/characters/characters.json').subscribe(res => this.#characters.next(res));
     zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
       this.cacheParty(party, false);
       const partyIds = party.map(c => c.id);

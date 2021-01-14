@@ -28,7 +28,7 @@ export class WeaponService {
   private readonly storeName = 'party-weapons';
 
   constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialCostMarker) {
-    http.get<Weapon[]>('assets/data/weapons.json').subscribe(res => this.#weapons.next(res));
+    http.get<Weapon[]>('assets/data/weapons/weapons.json').subscribe(res => this.#weapons.next(res));
     database.getAll(this.storeName).subscribe(party => this.cacheParty(party, false));
   }
 

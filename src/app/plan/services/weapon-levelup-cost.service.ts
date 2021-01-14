@@ -40,8 +40,8 @@ export class WeaponLevelupCostService {
 
   constructor(http: HttpClient, private domain: WeaponMaterialService, private common: CommonMaterialService,
               private exps: WeaponExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
-    http.get<WeaponAscensionCost>('assets/data/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
-    http.get<WeaponLevelupCost>('assets/data/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
+    http.get<WeaponAscensionCost>('assets/data/weapons/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
+    http.get<WeaponLevelupCost>('assets/data/weapons/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
   totalCost(plans: { plan: WeaponPlan, party: PartyWeapon }[]): Observable<ItemList> {

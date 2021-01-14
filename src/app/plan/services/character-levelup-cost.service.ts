@@ -39,8 +39,8 @@ export class CharacterLevelupCostService {
 
   constructor(http: HttpClient, private elements: CharacterMaterialService, private common: CommonMaterialService,
               private exps: CharacterExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
-    http.get<CharacterAscensionCost[]>('assets/data/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
-    http.get<number[]>('assets/data/character-levelup-cost.json').subscribe(res => this.levels.next(res));
+    http.get<CharacterAscensionCost[]>('assets/data/characters/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
+    http.get<number[]>('assets/data/characters/character-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
   totalCost(plans: { plan: CharacterPlan, party: PartyCharacter }[]): Observable<ItemList> {
