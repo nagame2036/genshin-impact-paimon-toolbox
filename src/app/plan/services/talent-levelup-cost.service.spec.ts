@@ -28,22 +28,23 @@ describe('TalentLevelupCostService', () => {
 
   it('calculation of amber\'s talent levelup from 1 to 10', done => {
     character = {
-      id: 1000,
+      id: 4000,
       rarity: 4,
       element: ElementType.PYRO,
       weapon: WeaponType.BOW,
-      elemental: 2060,
+      boss: 2060,
       gem: 306,
       local: 10105,
-      common: 803,
+      mob: 803,
       constellation: 0,
       ascension: 0,
       level: 1,
+      skills: [40001],
       talents: [
-        {id: 10001, level: 1},
+        {id: 40001, level: 1},
       ]
     };
-    service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
+    service.cost(character, [{id: 40001, level: 10}]).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(1652500);
       expect(res.getAmount(5000)).toBe(3);
       expect(res.getAmount(5001)).toBe(21);
@@ -59,22 +60,23 @@ describe('TalentLevelupCostService', () => {
 
   it('calculation of amber\'s talent levelup from 1 to 6', done => {
     character = {
-      id: 1000,
+      id: 4000,
       rarity: 4,
       element: ElementType.PYRO,
       weapon: WeaponType.BOW,
-      elemental: 2060,
+      boss: 2060,
       gem: 306,
       local: 10105,
-      common: 803,
+      mob: 803,
       constellation: 0,
       ascension: 0,
       level: 1,
+      skills: [40001],
       talents: [
-        {id: 10001, level: 1},
+        {id: 40001, level: 1},
       ]
     };
-    service.cost(character, [{id: 10001, level: 6}]).subscribe(res => {
+    service.cost(character, [{id: 40001, level: 6}]).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(122500);
       expect(res.getAmount(5000)).toBe(3);
       expect(res.getAmount(5001)).toBe(21);
@@ -86,22 +88,23 @@ describe('TalentLevelupCostService', () => {
 
   it('calculation of amber\'s talent levelup from 6 to 10', done => {
     character = {
-      id: 1000,
+      id: 4000,
       rarity: 4,
       element: ElementType.PYRO,
       weapon: WeaponType.BOW,
-      elemental: 2060,
+      boss: 2060,
       gem: 306,
       local: 10105,
-      common: 803,
+      mob: 803,
       constellation: 0,
       ascension: 0,
       level: 1,
+      skills: [40001],
       talents: [
-        {id: 10001, level: 6},
+        {id: 40001, level: 6},
       ]
     };
-    service.cost(character, [{id: 10001, level: 10}]).subscribe(res => {
+    service.cost(character, [{id: 40001, level: 10}]).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(1530000);
       expect(res.getAmount(5002)).toBe(38);
       expect(res.getAmount(6002)).toBe(6);
@@ -113,21 +116,22 @@ describe('TalentLevelupCostService', () => {
 
   it('calculation of the traveler\'s talent levelup from 1 to 10', done => {
     character = {
-      id: 1,
+      id: 1001,
       rarity: 5,
       element: ElementType.ANEMO,
       weapon: WeaponType.SWORD,
       gem: 300,
       local: 10103,
-      common: 802,
+      mob: 802,
       constellation: 0,
       ascension: 0,
       level: 1,
+      skills: [10010],
       talents: [
-        {id: 10, level: 1},
+        {id: 10010, level: 1},
       ]
     };
-    service.cost(character, [{id: 10, level: 10}]).subscribe(res => {
+    service.cost(character, [{id: 10010, level: 10}]).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(1652500);
       expect(res.getAmount(5000)).toBe(3);
       expect(res.getAmount(5001)).toBe(6);

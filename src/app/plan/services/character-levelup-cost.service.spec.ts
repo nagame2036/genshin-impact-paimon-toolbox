@@ -29,20 +29,21 @@ describe('CharacterLevelupService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('calculation of levelup from (0, 1) to (6, 90) with gem = 306 and common = 803', done => {
+  it('calculation of levelup from (0, 1) to (6, 90) with gem = 306 and enemy = 803', done => {
     character = {
       id: 1,
       rarity: 4,
       element: ElementType.PYRO,
       weapon: WeaponType.BOW,
-      elemental: 2060,
+      boss: 2060,
       gem: 306,
       local: 10105,
-      common: 803,
+      mob: 803,
       constellation: 0,
       ascension: 0,
       level: 1,
-      talents: []
+      skills: [],
+      talents: [],
     };
     service.cost(character, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(2092530);
@@ -60,7 +61,7 @@ describe('CharacterLevelupService', () => {
     });
   });
 
-  it('calculation of levelup from (0, 1) to (2, 50) with none elemental and gem = 300 and common = 806', done => {
+  it('calculation of levelup from (0, 1) to (2, 50) with none elemental and gem = 300 and enemy = 806', done => {
     character = {
       id: 1,
       rarity: 4,
@@ -68,11 +69,12 @@ describe('CharacterLevelupService', () => {
       weapon: WeaponType.BOW,
       gem: 300,
       local: 10105,
-      common: 806,
+      mob: 806,
       constellation: 0,
       ascension: 0,
       level: 1,
-      talents: []
+      skills: [],
+      talents: [],
     };
     service.cost(character, new AscensionLevel(2, 50)).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(315520);
@@ -85,20 +87,21 @@ describe('CharacterLevelupService', () => {
     });
   });
 
-  it('calculation of levelup from (2, 50) to (6, 90) with gem = 303 and common = 801', done => {
+  it('calculation of levelup from (2, 50) to (6, 90) with gem = 303 and enemy = 801', done => {
     character = {
       id: 1,
       rarity: 4,
       element: ElementType.PYRO,
       weapon: WeaponType.BOW,
-      elemental: 2060,
+      boss: 2060,
       gem: 303,
       local: 10105,
-      common: 801,
+      mob: 801,
       constellation: 0,
       ascension: 2,
       level: 50,
-      talents: []
+      skills: [],
+      talents: [],
     };
     service.cost(character, new AscensionLevel(6, 90)).subscribe(res => {
       expect(res.getAmount(mora.id)).toBe(1777010);

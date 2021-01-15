@@ -35,20 +35,21 @@ describe('CharacterPlanFormComponent', () => {
       id: 1,
       weapon: WeaponType.SWORD,
       rarity: 4,
-      common: 1,
+      mob: 1,
       element: 1,
       gem: 1,
       local: 1,
       constellation: 0,
       ascension: 0,
       level: 1,
-      talents: []
+      skills: [],
+      talents: [],
     };
     component.plan = {
       id: 1,
       ascension: 0,
       level: 1,
-      talents: []
+      talents: [],
     };
     fixture.detectChanges();
   });

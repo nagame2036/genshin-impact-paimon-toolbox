@@ -14,7 +14,7 @@ export class InventoryPageComponent implements OnInit {
     'character-materials',
     'talent-materials',
     'weapon-materials',
-    'common-materials',
+    'enemies-materials',
     'ingredients'
   ];
 

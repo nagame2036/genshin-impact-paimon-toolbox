@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CommonMaterialInventoryComponent} from './common-material-inventory.component';
+import {EnemiesMaterialInventoryComponent} from './enemies-material-inventory.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('CommonMaterialInventoryComponent', () => {
-  let component: CommonMaterialInventoryComponent;
-  let fixture: ComponentFixture<CommonMaterialInventoryComponent>;
+describe('EnemiesMaterialInventoryComponent', () => {
+  let component: EnemiesMaterialInventoryComponent;
+  let fixture: ComponentFixture<EnemiesMaterialInventoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CommonMaterialInventoryComponent
+        EnemiesMaterialInventoryComponent
       ],
       imports: [
         InventoryModule,
@@ -26,7 +26,7 @@ describe('CommonMaterialInventoryComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommonMaterialInventoryComponent);
+    fixture = TestBed.createComponent(EnemiesMaterialInventoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

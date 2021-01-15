@@ -11,5 +11,8 @@ export interface PartyCharacter extends Character {
 
   constellation: Constellation;
 
+  /**
+   * Talent id and its level.
+   */
   talents: TalentLevelData[];
 }

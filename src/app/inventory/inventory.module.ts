@@ -8,7 +8,7 @@ import {MaterialsCostListComponent} from './components/materials-cost-list/mater
 import {CharacterMaterialInventoryComponent} from './pages/character-material-inventory/character-material-inventory.component';
 import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-material-inventory.component';
 import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
-import {CommonMaterialInventoryComponent} from './pages/common-material-inventory/common-material-inventory.component';
+import {EnemiesMaterialInventoryComponent} from './pages/enemies-material-inventory/enemies-material-inventory.component';
 import {IngredientInventoryComponent} from './pages/ingredient-inventory/ingredient-inventory.component';
 import {MaterialCostDetailDialogComponent} from './components/material-cost-detail-dialog/material-cost-detail-dialog.component';
 
@@ -29,7 +29,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     CharacterMaterialInventoryComponent,
     TalentMaterialInventoryComponent,
     WeaponMaterialInventoryComponent,
-    CommonMaterialInventoryComponent,
+    EnemiesMaterialInventoryComponent,
     IngredientInventoryComponent,
     MaterialCostDetailDialogComponent,
   ],

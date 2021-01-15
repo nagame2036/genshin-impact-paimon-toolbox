@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {WeaponLevelupCost} from '../models/weapon-levelup-cost.model';
 import {HttpClient} from '@angular/common/http';
-import {CommonMaterialService} from '../../material/services/common-material.service';
+import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {ItemList} from '../../material/models/item-list.model';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.type';
-import {WeaponMaterialService} from '../../material/services/weapon-material.service';
+import {WeaponAscensionMaterialService} from '../../material/services/weapon-ascension-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {PartyWeapon} from '../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
@@ -38,7 +38,7 @@ export class WeaponLevelupCostService {
 
   private readonly levelupLabel = this.i18n.module('levelup');
 
-  constructor(http: HttpClient, private domain: WeaponMaterialService, private common: CommonMaterialService,
+  constructor(http: HttpClient, private domain: WeaponAscensionMaterialService, private enemies: EnemiesMaterialService,
               private exps: WeaponExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
     http.get<WeaponAscensionCost>('assets/data/weapons/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<WeaponLevelupCost>('assets/data/weapons/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
@@ -59,18 +59,18 @@ export class WeaponLevelupCostService {
   }
 
   private ascension(weapon: PartyWeapon, goal: Ascension, mark: boolean): Observable<ItemList> {
-    return zip(this.ascensions, this.domain.items, this.common.items).pipe(
+    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(
       map(([ascensions, _, __]) => {
         const cost = new ItemList();
         const range = ascensions[weapon.rarity].slice(weapon.ascension, goal);
-        range.forEach(({mora: moraCost, domain, elite, common}) => {
+        range.forEach(({mora: moraCost, domain, elite, mob}) => {
           cost.change(mora.id, moraCost);
           const domainItem = this.domain.getByGroupAndRarity(weapon.domain, domain.rarity);
           cost.change(domainItem.id, domain.amount);
-          const eliteItem = this.common.getByGroupAndRarity(weapon.elite, elite.rarity);
+          const eliteItem = this.enemies.getByGroupAndRarity(weapon.elite, elite.rarity);
           cost.change(eliteItem.id, elite.amount);
-          const commonItem = this.common.getByGroupAndRarity(weapon.common, common.rarity);
-          cost.change(commonItem.id, common.amount);
+          const mobItem = this.enemies.getByGroupAndRarity(weapon.mob, mob.rarity);
+          cost.change(mobItem.id, mob.amount);
         });
         return cost;
       }),

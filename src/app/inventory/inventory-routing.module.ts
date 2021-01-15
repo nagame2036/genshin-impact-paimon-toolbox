@@ -4,7 +4,7 @@ import {InventoryPageComponent} from './pages/inventory-page/inventory-page.comp
 import {CharacterMaterialInventoryComponent} from './pages/character-material-inventory/character-material-inventory.component';
 import {TalentMaterialInventoryComponent} from './pages/talent-material/talent-material-inventory.component';
 import {WeaponMaterialInventoryComponent} from './pages/weapon-material-inventory/weapon-material-inventory.component';
-import {CommonMaterialInventoryComponent} from './pages/common-material-inventory/common-material-inventory.component';
+import {EnemiesMaterialInventoryComponent} from './pages/enemies-material-inventory/enemies-material-inventory.component';
 import {IngredientInventoryComponent} from './pages/ingredient-inventory/ingredient-inventory.component';
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
       {path: 'character-materials', component: CharacterMaterialInventoryComponent},
       {path: 'talent-materials', component: TalentMaterialInventoryComponent},
       {path: 'weapon-materials', component: WeaponMaterialInventoryComponent},
-      {path: 'common-materials', component: CommonMaterialInventoryComponent},
+      {path: 'enemies-materials', component: EnemiesMaterialInventoryComponent},
       {path: 'ingredients', component: IngredientInventoryComponent}
     ]
   }

@@ -16,5 +16,5 @@ export interface WeaponRarityAscensionCost {
 
   elite: GroupItemCost;
 
-  common: GroupItemCost;
+  mob: GroupItemCost;
 }

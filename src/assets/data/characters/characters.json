@@ -1,335 +1,580 @@
 [
   {
-    "id": 1,
-    "rarity": 5,
-    "element": 1,
-    "weapon": 1,
-    "gem": 300,
-    "common": 802,
-    "local": 10103
-  },
-  {
-    "id": 2,
-    "rarity": 5,
-    "element": 2,
-    "weapon": 1,
-    "gem": 300,
-    "common": 802,
-    "local": 10103
-  },
-  {
-    "id": 501,
-    "rarity": 5,
-    "element": 1,
-    "weapon": 1,
-    "gem": 300,
-    "common": 802,
-    "local": 10103
-  },
-  {
-    "id": 502,
-    "rarity": 5,
-    "element": 2,
-    "weapon": 1,
-    "gem": 300,
-    "common": 802,
-    "local": 10103
-  },
-  {
-    "id": 1000,
-    "rarity": 4,
-    "element": 6,
-    "weapon": 5,
-    "nation": 1,
-    "elemental": 2060,
-    "gem": 306,
-    "common": 803,
-    "local": 10105
-  },
-  {
     "id": 1001,
-    "rarity": 4,
-    "element": 7,
+    "rarity": 5,
+    "element": 1,
     "weapon": 1,
-    "nation": 1,
-    "elemental": 2070,
-    "gem": 307,
-    "common": 806,
-    "local": 10106
+    "skills": [
+      10010,
+      10011,
+      10014,
+      10015,
+      10016
+    ],
+    "gem": 300,
+    "mob": 801,
+    "local": 10103
   },
   {
     "id": 1002,
-    "rarity": 4,
-    "element": 3,
-    "weapon": 4,
-    "nation": 1,
-    "elemental": 2030,
-    "gem": 303,
-    "common": 800,
-    "local": 10101
-  },
-  {
-    "id": 1003,
-    "rarity": 4,
-    "element": 5,
-    "weapon": 4,
-    "nation": 1,
-    "elemental": 2050,
-    "gem": 305,
-    "common": 802,
-    "local": 10104
-  },
-  {
-    "id": 1004,
-    "rarity": 4,
-    "element": 3,
-    "weapon": 2,
-    "nation": 1,
-    "elemental": 2030,
-    "gem": 303,
-    "common": 801,
-    "local": 10100
-  },
-  {
-    "id": 1005,
-    "rarity": 4,
-    "element": 6,
-    "weapon": 3,
-    "nation": 2,
-    "elemental": 2060,
-    "gem": 306,
-    "common": 800,
-    "local": 10200
-  },
-  {
-    "id": 1006,
-    "rarity": 4,
-    "element": 3,
-    "weapon": 2,
-    "nation": 2,
-    "elemental": 2030,
-    "gem": 303,
-    "common": 806,
-    "local": 10201
-  },
-  {
-    "id": 1007,
-    "rarity": 4,
-    "element": 5,
-    "weapon": 1,
-    "nation": 2,
-    "elemental": 2050,
-    "gem": 305,
-    "common": 801,
-    "local": 10202
-  },
-  {
-    "id": 1008,
-    "rarity": 4,
+    "rarity": 5,
     "element": 2,
-    "weapon": 4,
-    "nation": 2,
-    "elemental": 2020,
-    "gem": 302,
-    "common": 805,
-    "local": 10203
-  },
-  {
-    "id": 1009,
-    "rarity": 4,
-    "element": 3,
-    "weapon": 5,
-    "nation": 1,
-    "elemental": 2030,
-    "gem": 303,
-    "common": 803,
-    "local": 10105
-  },
-  {
-    "id": 1010,
-    "rarity": 4,
-    "element": 6,
     "weapon": 1,
-    "nation": 1,
-    "elemental": 2060,
-    "gem": 306,
-    "common": 806,
+    "skills": [
+      10020,
+      10021,
+      10024,
+      10025,
+      10026
+    ],
+    "gem": 300,
+    "mob": 801,
     "local": 10103
   },
   {
     "id": 1011,
+    "rarity": 5,
+    "element": 1,
+    "weapon": 1,
+    "skills": [
+      10110,
+      10011,
+      10014,
+      10015,
+      10016
+    ],
+    "gem": 300,
+    "mob": 801,
+    "local": 10103
+  },
+  {
+    "id": 1012,
+    "rarity": 5,
+    "element": 2,
+    "weapon": 1,
+    "skills": [
+      10120,
+      10021,
+      10024,
+      10025,
+      10026
+    ],
+    "gem": 300,
+    "mob": 801,
+    "local": 10103
+  },
+  {
+    "id": 4000,
+    "rarity": 4,
+    "element": 6,
+    "weapon": 5,
+    "nation": 1,
+    "skills": [
+      40000,
+      40001,
+      40004,
+      40005,
+      40006,
+      40007
+    ],
+    "boss": 2006,
+    "gem": 306,
+    "mob": 803,
+    "local": 10105
+  },
+  {
+    "id": 4001,
+    "rarity": 4,
+    "element": 7,
+    "weapon": 1,
+    "nation": 1,
+    "skills": [
+      40010,
+      40011,
+      40014,
+      40015,
+      40016,
+      40017
+    ],
+    "boss": 2007,
+    "gem": 307,
+    "mob": 806,
+    "local": 10106
+  },
+  {
+    "id": 4002,
+    "rarity": 4,
+    "element": 3,
+    "weapon": 4,
+    "nation": 1,
+    "skills": [
+      40020,
+      40021,
+      40024,
+      40025,
+      40026,
+      40027
+    ],
+    "boss": 2003,
+    "gem": 303,
+    "mob": 800,
+    "local": 10101
+  },
+  {
+    "id": 4003,
+    "rarity": 4,
+    "element": 5,
+    "weapon": 4,
+    "nation": 1,
+    "skills": [
+      40030,
+      40031,
+      40034,
+      40035,
+      40036,
+      40037
+    ],
+    "boss": 2005,
+    "gem": 305,
+    "mob": 802,
+    "local": 10104
+  },
+  {
+    "id": 4004,
+    "rarity": 4,
+    "element": 3,
+    "weapon": 2,
+    "nation": 1,
+    "skills": [
+      40040,
+      40041,
+      40044,
+      40045,
+      40046,
+      40047
+    ],
+    "boss": 2003,
+    "gem": 303,
+    "mob": 801,
+    "local": 10100
+  },
+  {
+    "id": 4005,
+    "rarity": 4,
+    "element": 6,
+    "weapon": 3,
+    "nation": 2,
+    "skills": [
+      40050,
+      40051,
+      40054,
+      40055,
+      40056,
+      40057
+    ],
+    "boss": 2006,
+    "gem": 306,
+    "mob": 800,
+    "local": 10200
+  },
+  {
+    "id": 4006,
+    "rarity": 4,
+    "element": 3,
+    "weapon": 2,
+    "nation": 2,
+    "skills": [
+      40060,
+      40061,
+      40064,
+      40065,
+      40066,
+      40067
+    ],
+    "boss": 2003,
+    "gem": 303,
+    "mob": 806,
+    "local": 10201
+  },
+  {
+    "id": 4007,
+    "rarity": 4,
+    "element": 5,
+    "weapon": 1,
+    "nation": 2,
+    "skills": [
+      40070,
+      40071,
+      40074,
+      40075,
+      40076,
+      40077
+    ],
+    "boss": 2005,
+    "gem": 305,
+    "mob": 801,
+    "local": 10202
+  },
+  {
+    "id": 4008,
+    "rarity": 4,
+    "element": 2,
+    "weapon": 4,
+    "nation": 2,
+    "skills": [
+      40080,
+      40081,
+      40084,
+      40085,
+      40086,
+      40087
+    ],
+    "boss": 2002,
+    "gem": 302,
+    "mob": 805,
+    "local": 10203
+  },
+  {
+    "id": 4009,
+    "rarity": 4,
+    "element": 3,
+    "weapon": 5,
+    "nation": 1,
+    "skills": [
+      40090,
+      40091,
+      40094,
+      40095,
+      40096,
+      40097
+    ],
+    "boss": 2003,
+    "gem": 303,
+    "mob": 803,
+    "local": 10105
+  },
+  {
+    "id": 4010,
+    "rarity": 4,
+    "element": 6,
+    "weapon": 1,
+    "nation": 1,
+    "skills": [
+      40100,
+      40101,
+      40104,
+      40105,
+      40106,
+      40107
+    ],
+    "boss": 2006,
+    "gem": 306,
+    "mob": 806,
+    "local": 10103
+  },
+  {
+    "id": 4011,
     "rarity": 4,
     "element": 2,
     "weapon": 2,
     "nation": 1,
-    "elemental": 2020,
+    "skills": [
+      40110,
+      40111,
+      40114,
+      40115,
+      40116,
+      40117
+    ],
+    "boss": 2002,
     "gem": 302,
-    "common": 800,
+    "mob": 801,
     "local": 10101
   },
   {
-    "id": 1012,
+    "id": 4012,
     "rarity": 4,
     "element": 7,
     "weapon": 2,
     "nation": 2,
-    "elemental": 2070,
+    "skills": [
+      40120,
+      40121,
+      40124,
+      40125,
+      40126,
+      40127
+    ],
+    "boss": 2007,
     "gem": 307,
-    "common": 801,
+    "mob": 801,
     "local": 10207
   },
   {
-    "id": 1013,
+    "id": 4013,
     "rarity": 4,
     "element": 1,
     "weapon": 4,
     "nation": 1,
-    "elemental": 2010,
+    "skills": [
+      40130,
+      40131,
+      40134,
+      40135,
+      40136,
+      40137
+    ],
+    "boss": 2001,
     "gem": 301,
-    "common": 807,
+    "mob": 807,
     "local": 10103
   },
   {
-    "id": 1014,
+    "id": 4014,
+    "rarity": 4,
+    "element": 7,
+    "weapon": 5,
+    "nation": 1,
+    "skills": [
+      40140,
+      40141,
+      40144,
+      40145,
+      40146,
+      40147
+    ],
+    "boss": 2007,
+    "gem": 307,
+    "mob": 803,
+    "local": 10106
+  },
+  {
+    "id": 4015,
+    "rarity": 4,
+    "element": 6,
+    "weapon": 2,
+    "nation": 2,
+    "skills": [
+      40150,
+      40151,
+      40154,
+      40155,
+      40156,
+      40157
+    ],
+    "boss": 2006,
+    "gem": 306,
+    "mob": 806,
+    "local": 10206
+  },
+  {
+    "id": 5000,
     "rarity": 5,
     "element": 1,
     "weapon": 1,
     "nation": 1,
-    "elemental": 2010,
+    "skills": [
+      50000,
+      50001,
+      50004,
+      50005,
+      50006,
+      50007
+    ],
+    "boss": 2001,
     "gem": 301,
-    "common": 801,
+    "mob": 801,
     "local": 10107
   },
   {
-    "id": 1015,
+    "id": 5001,
     "rarity": 5,
     "element": 6,
     "weapon": 2,
     "nation": 1,
-    "elemental": 2060,
+    "skills": [
+      50010,
+      50011,
+      50014,
+      50015,
+      50016,
+      50017
+    ],
+    "boss": 2006,
     "gem": 306,
-    "common": 805,
+    "mob": 805,
     "local": 10105
   },
   {
-    "id": 1016,
+    "id": 5002,
     "rarity": 5,
     "element": 7,
     "weapon": 1,
     "nation": 2,
-    "elemental": 2070,
+    "skills": [
+      50020,
+      50021,
+      50024,
+      50025,
+      50026,
+      50027
+    ],
+    "boss": 2007,
     "gem": 307,
-    "common": 802,
+    "mob": 802,
     "local": 10206
   },
   {
-    "id": 1017,
+    "id": 5003,
     "rarity": 5,
     "element": 5,
     "weapon": 4,
     "nation": 1,
-    "elemental": 2050,
+    "skills": [
+      50030,
+      50031,
+      50032,
+      50034,
+      50035,
+      50036,
+      50037
+    ],
+    "boss": 2005,
     "gem": 305,
-    "common": 807,
+    "mob": 807,
     "local": 10104
   },
   {
-    "id": 1018,
+    "id": 5004,
     "rarity": 5,
     "element": 3,
     "weapon": 1,
     "nation": 2,
-    "elemental": 2030,
+    "skills": [
+      50040,
+      50041,
+      50044,
+      50045,
+      50046,
+      50047
+    ],
+    "boss": 2003,
     "gem": 303,
-    "common": 807,
+    "mob": 807,
     "local": 10207
   },
   {
-    "id": 1019,
+    "id": 5005,
     "rarity": 5,
     "element": 1,
     "weapon": 5,
     "nation": 1,
-    "elemental": 2010,
+    "skills": [
+      50050,
+      50051,
+      50054,
+      50055,
+      50056,
+      50057
+    ],
+    "boss": 2001,
     "gem": 301,
-    "common": 800,
+    "mob": 800,
     "local": 10102
   },
   {
-    "id": 1020,
+    "id": 5006,
     "rarity": 5,
     "element": 6,
     "weapon": 4,
     "nation": 1,
-    "elemental": 2060,
+    "skills": [
+      50060,
+      50061,
+      50064,
+      50065,
+      50066,
+      50067
+    ],
+    "boss": 2006,
     "gem": 306,
-    "common": 802,
+    "mob": 802,
     "local": 10104
   },
   {
-    "id": 1021,
-    "rarity": 4,
-    "element": 7,
-    "weapon": 5,
-    "nation": 1,
-    "elemental": 2070,
-    "gem": 307,
-    "common": 803,
-    "local": 10106
-  },
-  {
-    "id": 1022,
+    "id": 5007,
     "rarity": 5,
     "element": 5,
     "weapon": 5,
     "nation": 7,
-    "elemental": 2050,
+    "skills": [
+      50070,
+      50071,
+      50074,
+      50075,
+      50076,
+      50077
+    ],
+    "boss": 2005,
     "gem": 305,
-    "common": 805,
+    "mob": 805,
     "local": 10205
   },
   {
-    "id": 1023,
-    "rarity": 4,
-    "element": 6,
-    "weapon": 2,
-    "nation": 2,
-    "elemental": 2060,
-    "gem": 306,
-    "common": 806,
-    "local": 10206
-  },
-  {
-    "id": 1024,
+    "id": 5008,
     "rarity": 5,
     "element": 2,
     "weapon": 3,
     "nation": 2,
-    "elemental": 2020,
+    "skills": [
+      50080,
+      50081,
+      50084,
+      50085,
+      50086,
+      50087
+    ],
+    "boss": 2002,
     "gem": 302,
-    "common": 800,
+    "mob": 800,
     "local": 10207
   },
   {
-    "id": 1025,
+    "id": 5009,
     "rarity": 5,
     "element": 2,
     "weapon": 1,
     "nation": 1,
-    "elemental": 2020,
+    "skills": [
+      50090,
+      50091,
+      50094,
+      50095,
+      50096,
+      50097
+    ],
+    "boss": 2002,
     "gem": 302,
-    "common": 802,
+    "mob": 802,
     "local": 10102
   },
   {
-    "id": 1026,
+    "id": 5010,
     "rarity": 5,
     "element": 7,
     "weapon": 5,
     "nation": 2,
-    "elemental": 2070,
+    "skills": [
+      50100,
+      50101,
+      50104,
+      50105,
+      50106,
+      50107
+    ],
+    "boss": 2007,
     "gem": 307,
-    "common": 807,
+    "mob": 807,
     "local": 10204
   }
 ]

@@ -33,15 +33,15 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
     [MaterialType.TALENT_14],
     [MaterialType.TALENT_25],
     [MaterialType.TALENT_36],
-    [MaterialType.COMMON_MOB],
+    [MaterialType.ENEMY_MOB],
   ];
 
   readonly subtitles = [
     'common',
     'boss',
-    '1/4',
-    '2/5',
-    '3/6',
+    '1/4/7',
+    '2/5/7',
+    '3/6/7',
     'enemy',
   ];
 

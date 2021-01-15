@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {from, Observable, ReplaySubject, zip} from 'rxjs';
 import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
-import {CommonMaterialService} from '../../material/services/common-material.service';
+import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {ItemList} from '../../material/models/item-list.model';
-import {TalentMaterialService} from '../../material/services/talent-material.service';
+import {TalentLevelupMaterialService} from '../../material/services/talent-levelup-material.service';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {TalentLevelData} from '../../character/models/talent-level-data.model';
 import {TalentLevel} from '../../character/models/talent-level.type';
@@ -30,10 +30,12 @@ export class TalentLevelupCostService {
     this.i18n.module('talents.0'),
     this.i18n.module('talents.1'),
     this.i18n.module('talents.2'),
+    this.i18n.module('talents.3'),
+    this.i18n.module('talents.4'),
   ];
 
-  constructor(http: HttpClient, private talents: TalentService, private domain: TalentMaterialService,
-              private common: CommonMaterialService, private marker: MaterialCostMarker) {
+  constructor(http: HttpClient, private talents: TalentService, private domain: TalentLevelupMaterialService,
+              private enemies: EnemiesMaterialService, private marker: MaterialCostMarker) {
     http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
@@ -46,7 +48,7 @@ export class TalentLevelupCostService {
   }
 
   cost(character: PartyCharacter, goal: TalentLevelData[], mark: boolean = false): Observable<ItemList> {
-    return zip(this.levels, this.domain.items, this.common.items).pipe(
+    return zip(this.levels, this.domain.items, this.enemies.items).pipe(
       map(([levels, _, __]) => {
         const plans = innerJoinTalentLevels(character.talents, goal);
         const cost = new ItemList();
@@ -65,15 +67,15 @@ export class TalentLevelupCostService {
     const domainLen = talent.domain.length;
     const end = goal - 1;
     for (let i = Math.max(0, start - 1); i < end; i++) {
-      const {mora: moraCost, common, domain, boss, event} = levels[i];
+      const {mora: moraCost, mob, domain, boss, event} = levels[i];
       cost.change(mora.id, moraCost);
       // The travelers repeatedly use 3 types of talent domain materials for leveling up their talents
       const group = i % domainLen;
       const domainGroup = talent.domain[group];
       const domainItem = this.domain.getByGroupAndRarity(domainGroup, domain.rarity);
       cost.change(domainItem.id, domain.amount);
-      const commonItem = this.common.getByGroupAndRarity(talent.common, common.rarity);
-      cost.change(commonItem.id, common.amount);
+      const mobItem = this.enemies.getByGroupAndRarity(talent.mob, mob.rarity);
+      cost.change(mobItem.id, mob.amount);
       if (boss) {
         cost.change(talent.boss, boss);
       }

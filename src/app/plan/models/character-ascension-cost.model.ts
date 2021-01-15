@@ -4,11 +4,11 @@ export interface CharacterAscensionCost {
 
   mora: number;
 
-  elemental: number;
+  boss: number;
 
   gem: GroupItemCost;
 
   local: number;
 
-  enemy: GroupItemCost;
+  mob: GroupItemCost;
 }

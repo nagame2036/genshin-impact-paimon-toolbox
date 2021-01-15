@@ -31,14 +31,14 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
     [MaterialType.WEAPON_14],
     [MaterialType.WEAPON_25],
     [MaterialType.WEAPON_36],
-    [MaterialType.COMMON_ELITE, MaterialType.COMMON_MOB],
+    [MaterialType.ENEMY_ELITE, MaterialType.ENEMY_MOB],
   ];
 
   readonly subtitles = [
     'common',
-    '1/4',
-    '2/5',
-    '3/6',
+    '1/4/7',
+    '2/5/7',
+    '3/6/7',
     'enemy',
   ];
 

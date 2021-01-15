@@ -1,25 +1,25 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {TalentMaterial, TalentMaterialGroup, TalentMaterialItem} from '../models/talent-material.model';
+import {TalentLevelupMaterial, TalentLevelupMaterialGroup, TalentLevelupMaterialItem} from '../models/talent-levelup-material.model';
 import {Rarity} from '../../shared/models/rarity.type';
 import {InventoryItem} from '../models/inventory-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TalentMaterialService {
+export class TalentLevelupMaterialService {
 
-  #groups!: Map<number, TalentMaterialGroup>;
+  #groups!: Map<number, TalentLevelupMaterialGroup>;
 
-  #items!: TalentMaterialItem[];
+  #items!: TalentLevelupMaterialItem[];
 
-  private itemsSubject = new ReplaySubject<TalentMaterialItem[]>(1);
+  private itemsSubject = new ReplaySubject<TalentLevelupMaterialItem[]>(1);
 
   readonly items = this.itemsSubject.asObservable();
 
   constructor(http: HttpClient) {
-    http.get<TalentMaterial>('assets/data/materials/talent-materials.json').subscribe(res => {
+    http.get<TalentLevelupMaterial>('assets/data/materials/talent-levelup-materials.json').subscribe(res => {
       this.#groups = new Map();
       res.groups.forEach(it => this.#groups.set(it.id, it));
       this.#items = res.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
@@ -27,7 +27,7 @@ export class TalentMaterialService {
     });
   }
 
-  getByGroupAndRarity(group: number, rarity: Rarity): TalentMaterialItem {
+  getByGroupAndRarity(group: number, rarity: Rarity): TalentLevelupMaterialItem {
     const index = this.#items.findIndex(it => it.group === group && it.rarity === rarity);
     return this.#items[index];
   }

@@ -5,8 +5,8 @@ import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.type';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
-import {CharacterMaterialService} from '../../material/services/character-material.service';
-import {CommonMaterialService} from '../../material/services/common-material.service';
+import {CharacterAscensionMaterialService} from '../../material/services/character-ascension-material.service';
+import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
 import {ItemList} from '../../material/models/item-list.model';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
@@ -37,7 +37,7 @@ export class CharacterLevelupCostService {
 
   private readonly levelupLabel = this.i18n.module('levelup');
 
-  constructor(http: HttpClient, private elements: CharacterMaterialService, private common: CommonMaterialService,
+  constructor(http: HttpClient, private characters: CharacterAscensionMaterialService, private enemies: EnemiesMaterialService,
               private exps: CharacterExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
     http.get<CharacterAscensionCost[]>('assets/data/characters/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<number[]>('assets/data/characters/character-levelup-cost.json').subscribe(res => this.levels.next(res));
@@ -58,20 +58,20 @@ export class CharacterLevelupCostService {
   }
 
   private ascension(character: PartyCharacter, goal: Ascension, mark: boolean): Observable<ItemList> {
-    return zip(this.ascensions, this.elements.items, this.common.items).pipe(
+    return zip(this.ascensions, this.characters.items, this.enemies.items).pipe(
       map(([ascensions, _, __]) => {
         const cost = new ItemList();
         const range = ascensions.slice(character.ascension, goal);
-        range.forEach(({mora: moraCost, elemental, gem, local, enemy}) => {
+        range.forEach(({mora: moraCost, boss, gem, local, mob}) => {
           cost.change(mora.id, moraCost);
-          if (character.elemental) {
-            cost.change(character.elemental, elemental);
+          if (character.boss) {
+            cost.change(character.boss, boss);
           }
-          const gemItem = this.elements.getByGroupAndRarity(character.gem, gem.rarity);
+          const gemItem = this.characters.getByGroupAndRarity(character.gem, gem.rarity);
           cost.change(gemItem.id, gem.amount);
           cost.change(character.local, local);
-          const common = this.common.getByGroupAndRarity(character.common, enemy.rarity);
-          cost.change(common.id, enemy.amount);
+          const mobItem = this.enemies.getByGroupAndRarity(character.mob, mob.rarity);
+          cost.change(mobItem.id, mob.amount);
         });
         return cost;
       }),

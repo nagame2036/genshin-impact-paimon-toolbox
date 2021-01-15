@@ -1,78 +1,78 @@
 [
   {
     "mora": 20000,
-    "elemental": 0,
+    "boss": 0,
     "gem": {
       "rarity": 2,
       "amount": 1
     },
     "local": 3,
-    "enemy": {
+    "mob": {
       "rarity": 1,
       "amount": 3
     }
   },
   {
     "mora": 40000,
-    "elemental": 2,
+    "boss": 2,
     "gem": {
       "rarity": 3,
       "amount": 3
     },
     "local": 10,
-    "enemy": {
+    "mob": {
       "rarity": 1,
       "amount": 15
     }
   },
   {
     "mora": 60000,
-    "elemental": 4,
+    "boss": 4,
     "gem": {
       "rarity": 3,
       "amount": 6
     },
     "local": 20,
-    "enemy": {
+    "mob": {
       "rarity": 2,
       "amount": 12
     }
   },
   {
     "mora": 80000,
-    "elemental": 8,
+    "boss": 8,
     "gem": {
       "rarity": 4,
       "amount": 3
     },
     "local": 30,
-    "enemy": {
+    "mob": {
       "rarity": 2,
       "amount": 18
     }
   },
   {
     "mora": 100000,
-    "elemental": 12,
+    "boss": 12,
     "gem": {
       "rarity": 4,
       "amount": 6
     },
     "local": 45,
-    "enemy": {
+    "mob": {
       "rarity": 3,
       "amount": 12
     }
   },
   {
     "mora": 120000,
-    "elemental": 20,
+    "boss": 20,
     "gem": {
       "rarity": 5,
       "amount": 6
     },
     "local": 60,
-    "enemy": {
+    "mob": {
       "rarity": 3,
       "amount": 24
     }

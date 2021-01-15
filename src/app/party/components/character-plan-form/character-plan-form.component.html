@@ -23,7 +23,7 @@
                              [current]="talent.level" (currentChange)="setTalent(i, $event)"
                              [satisfied]="plans[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)"
                              [goal]="plan.talents[i]?.level || 1" (goalChange)="setGoalTalent(i, $event)">
-      {{ talentLabel(talent) | translate: {name: talentName(talent) | translate} }}
+      {{ talentLabel(talent) | translate }} - {{ talentName(talent) | translate }}
     </app-current-goal-select>
   </ng-container>
   <div *ngFor="let bonus of character.expBonus || []">

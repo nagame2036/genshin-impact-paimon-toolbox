@@ -9,5 +9,10 @@ export interface InventoryItem {
 
   rarity: Rarity;
 
+  /**
+   * Material source id.
+   */
+  source?: number[];
+
   recipe?: CraftRecipe;
 }

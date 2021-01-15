@@ -63,7 +63,7 @@ export class CharacterPlanFormComponent implements OnInit {
   }
 
   talentLabel(talent: TalentLevelData): string {
-    return this.i18n.dict('talent-labels.' + talent.id % 10);
+    return this.i18n.dict(`talent-types.${talent.id % 10}`);
   }
 
   talentName(talent: TalentLevelData): string {

@@ -10,7 +10,7 @@
         "rarity": 2,
         "amount": 2
       },
-      "common": {
+      "mob": {
         "rarity": 1,
         "amount": 1
       }
@@ -25,7 +25,7 @@
         "rarity": 2,
         "amount": 8
       },
-      "common": {
+      "mob": {
         "rarity": 1,
         "amount": 5
       }
@@ -40,7 +40,7 @@
         "rarity": 3,
         "amount": 4
       },
-      "common": {
+      "mob": {
         "rarity": 2,
         "amount": 4
       }
@@ -55,7 +55,7 @@
         "rarity": 3,
         "amount": 8
       },
-      "common": {
+      "mob": {
         "rarity": 2,
         "amount": 6
       }
@@ -70,7 +70,7 @@
         "rarity": 4,
         "amount": 6
       },
-      "common": {
+      "mob": {
         "rarity": 3,
         "amount": 4
       }
@@ -85,7 +85,7 @@
         "rarity": 4,
         "amount": 12
       },
-      "common": {
+      "mob": {
         "rarity": 3,
         "amount": 8
       }
@@ -102,7 +102,7 @@
         "rarity": 2,
         "amount": 3
       },
-      "common": {
+      "mob": {
         "rarity": 1,
         "amount": 2
       }
@@ -117,7 +117,7 @@
         "rarity": 2,
         "amount": 12
       },
-      "common": {
+      "mob": {
         "rarity": 1,
         "amount": 8
       }
@@ -132,7 +132,7 @@
         "rarity": 3,
         "amount": 6
       },
-      "common": {
+      "mob": {
         "rarity": 2,
         "amount": 6
       }
@@ -147,7 +147,7 @@
         "rarity": 3,
         "amount": 12
       },
-      "common": {
+      "mob": {
         "rarity": 2,
         "amount": 9
       }
@@ -162,7 +162,7 @@
         "rarity": 4,
         "amount": 9
       },
-      "common": {
+      "mob": {
         "rarity": 3,
         "amount": 6
       }
@@ -177,7 +177,7 @@
         "rarity": 4,
         "amount": 18
       },
-      "common": {
+      "mob": {
         "rarity": 3,
         "amount": 12
       }
@@ -194,7 +194,7 @@
         "rarity": 2,
         "amount": 5
       },
-      "common": {
+      "mob": {
         "rarity": 1,
         "amount": 3
       }
@@ -209,7 +209,7 @@
         "rarity": 2,
         "amount": 18
       },
-      "common": {
+      "mob": {
         "rarity": 1,
         "amount": 12
       }
@@ -224,7 +224,7 @@
         "rarity": 3,
         "amount": 9
       },
-      "common": {
+      "mob": {
         "rarity": 2,
         "amount": 9
       }
@@ -239,7 +239,7 @@
         "rarity": 3,
         "amount": 18
       },
-      "common": {
+      "mob": {
         "rarity": 2,
         "amount": 14
       }
@@ -254,7 +254,7 @@
         "rarity": 4,
         "amount": 14
       },
-      "common": {
+      "mob": {
         "rarity": 3,
         "amount": 9
       }
@@ -269,7 +269,7 @@
         "rarity": 4,
         "amount": 27
       },
-      "common": {
+      "mob": {
         "rarity": 3,
         "amount": 18
       }

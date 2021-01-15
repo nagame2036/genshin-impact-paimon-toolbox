@@ -35,7 +35,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 400,
       elite: 900,
-      common: 800,
+      mob: 800,
       refine: 1,
       ascension: 0,
       level: 1
@@ -64,7 +64,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 401,
       elite: 902,
-      common: 801,
+      mob: 801,
       refine: 1,
       ascension: 0,
       level: 1
@@ -87,7 +87,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 402,
       elite: 903,
-      common: 802,
+      mob: 802,
       refine: 1,
       ascension: 2,
       level: 50
@@ -113,7 +113,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 403,
       elite: 904,
-      common: 803,
+      mob: 803,
       refine: 1,
       ascension: 0,
       level: 1
@@ -142,7 +142,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 404,
       elite: 905,
-      common: 805,
+      mob: 805,
       refine: 1,
       ascension: 0,
       level: 1
@@ -165,7 +165,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 405,
       elite: 906,
-      common: 806,
+      mob: 806,
       refine: 1,
       ascension: 2,
       level: 50
@@ -191,7 +191,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 403,
       elite: 904,
-      common: 807,
+      mob: 807,
       refine: 1,
       ascension: 0,
       level: 1
@@ -220,7 +220,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 403,
       elite: 904,
-      common: 807,
+      mob: 807,
       refine: 1,
       ascension: 0,
       level: 1
@@ -243,7 +243,7 @@ describe('WeaponLevelupCostService', () => {
       type: WeaponType.SWORD,
       domain: 403,
       elite: 904,
-      common: 807,
+      mob: 807,
       refine: 1,
       ascension: 2,
       level: 50

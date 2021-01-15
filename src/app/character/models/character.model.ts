@@ -16,11 +16,16 @@ export interface Character {
 
   nation?: Nation;
 
-  elemental?: number;
+  /**
+   * Talent ids.
+   */
+  skills: number[];
+
+  boss?: number;
 
   gem: number;
 
-  common: number;
+  mob: number;
 
   local: number;
 

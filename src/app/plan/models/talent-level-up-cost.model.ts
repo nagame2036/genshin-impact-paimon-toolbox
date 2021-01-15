@@ -6,7 +6,7 @@ export interface TalentLevelupCost {
 
   domain: GroupItemCost;
 
-  common: GroupItemCost;
+  mob: GroupItemCost;
 
   boss?: number;
 

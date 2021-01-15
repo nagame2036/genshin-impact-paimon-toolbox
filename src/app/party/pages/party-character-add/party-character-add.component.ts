@@ -48,7 +48,7 @@ export class PartyCharacterAddComponent extends AbstractObservableComponent impl
 
   select(character: Character): void {
     this.selected = true;
-    const talents = this.talentService.getTalentsOfCharacter(character.id)
+    const talents = this.talentService.getTalents(character.skills)
       .filter(it => it.level)
       .map(it => ({id: it.id, level: 1 as TalentLevel}));
     this.selectedCharacter = {...character, constellation: 0, ascension: 0, level: 1, talents: this.copyTalents(talents)};

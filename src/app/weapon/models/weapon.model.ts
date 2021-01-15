@@ -12,9 +12,18 @@ export interface Weapon {
 
   domain: number;
 
+  /**
+   * Elite enemies material group used by weapon level-up.
+   */
   elite: number;
 
-  common: number;
+  /**
+   * Mob enemies material group used by weapon level-up.
+   */
+  mob: number;
 
+  /**
+   * Exp bonus when weapon level-up.
+   */
   expBonus?: ExpBonus[];
 }

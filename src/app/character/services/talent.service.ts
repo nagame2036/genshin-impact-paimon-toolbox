@@ -66,8 +66,8 @@ export class TalentService {
     return rangeList(min, this.maxLevel(ascension), true) as TalentLevel[];
   }
 
-  getTalentsOfCharacter(id: number): TalentDataItem[] {
-    return this.#talents.filter(it => it.character === id);
+  getTalents(talentIds: number[]): TalentDataItem[] {
+    return this.#talents.filter(it => talentIds.includes(it.id));
   }
 
   getGroupById(id: number): TalentDataGroup | undefined {

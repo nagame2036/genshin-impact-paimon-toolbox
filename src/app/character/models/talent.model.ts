@@ -15,7 +15,7 @@ export interface TalentDataGroup {
    */
   domain: number[];
 
-  common: number;
+  mob: number;
 
   boss: number;
 
@@ -27,14 +27,9 @@ export interface TalentDataItem {
   id: number;
 
   /**
-   * Id of character.
+   * Talent levelup cost group id.
    */
-  character: number;
-
-  /**
-   * Talent
-   */
-  group: number;
+  group?: number;
 
   /**
    * Defined when this talent is available for leveling up.

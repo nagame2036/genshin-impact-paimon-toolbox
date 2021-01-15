@@ -35,7 +35,7 @@ describe('WeaponPlanFormComponent', () => {
       id: 1,
       type: WeaponType.SWORD,
       rarity: 4,
-      common: 1,
+      mob: 1,
       domain: 1,
       elite: 1,
       refine: 1,

@@ -4,6 +4,8 @@ import {ExecutePlanConfirmDialogComponent} from './execute-plan-confirm-dialog.c
 import {PartyModule} from '../../party.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {ItemList} from '../../../material/models/item-list.model';
 
 describe('ExecutePlanConfirmDialogComponent', () => {
   let component: ExecutePlanConfirmDialogComponent;
@@ -16,7 +18,8 @@ describe('ExecutePlanConfirmDialogComponent', () => {
       ],
       imports: [
         PartyModule,
-        AppTranslateModule
+        AppTranslateModule,
+        AppIndexedDbModule,
       ],
       providers: [
         {
@@ -35,6 +38,11 @@ describe('ExecutePlanConfirmDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExecutePlanConfirmDialogComponent);
     component = fixture.componentInstance;
+    component.data = {
+      title: '',
+      item: '',
+      cost: new ItemList(),
+    };
     fixture.detectChanges();
   });
 

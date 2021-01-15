@@ -24,9 +24,9 @@ export enum MaterialType {
 
   WEAPON_36,
 
-  COMMON_MOB,
+  ENEMY_MOB,
 
-  COMMON_ELITE,
+  ENEMY_ELITE,
 
   ORE,
 

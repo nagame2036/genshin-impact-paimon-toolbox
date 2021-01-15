@@ -7,11 +7,11 @@ import {Observable} from 'rxjs';
 import {InventoryService} from '../../services/inventory.service';
 
 @Component({
-  selector: 'app-common-material-inventory',
-  templateUrl: './common-material-inventory.component.html',
-  styleUrls: ['./common-material-inventory.component.scss']
+  selector: 'app-enemies-material-inventory',
+  templateUrl: './enemies-material-inventory.component.html',
+  styleUrls: ['./enemies-material-inventory.component.scss']
 })
-export class CommonMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
+export class EnemiesMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
 
   mobs$!: Observable<InventoryItemDetail[]>;
 
@@ -24,8 +24,8 @@ export class CommonMaterialInventoryComponent extends AbstractSubInventoryCompon
   }
 
   ngOnInit(): void {
-    this.mobs$ = this.filterMaterials(MaterialType.COMMON_MOB);
-    this.elites$ = this.filterMaterials(MaterialType.COMMON_ELITE);
+    this.mobs$ = this.filterMaterials(MaterialType.ENEMY_MOB);
+    this.elites$ = this.filterMaterials(MaterialType.ENEMY_ELITE);
   }
 
 }

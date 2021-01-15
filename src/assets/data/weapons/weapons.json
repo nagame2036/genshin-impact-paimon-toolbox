@@ -1,697 +1,690 @@
 [
   {
-    "id": 0,
+    "id": 11301,
     "type": 1,
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "common": 803
+    "mob": 803
   },
   {
-    "id": 1,
+    "id": 11302,
     "type": 1,
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "common": 800
+    "mob": 800
   },
   {
-    "id": 2,
+    "id": 11303,
     "type": 1,
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "common": 802
+    "mob": 802
   },
   {
-    "id": 3,
-    "type": 1,
-    "rarity": 3,
-    "domain": 404,
-    "elite": 904,
-    "common": 806
-  },
-  {
-    "id": 4,
-    "type": 1,
-    "rarity": 3,
-    "domain": 405,
-    "elite": 906,
-    "common": 805
-  },
-  {
-    "id": 5,
+    "id": 11304,
     "type": 1,
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "common": 801
+    "mob": 801
   },
   {
-    "id": 6,
+    "id": 11305,
+    "type": 1,
+    "rarity": 3,
+    "domain": 404,
+    "elite": 904,
+    "mob": 806
+  },
+  {
+    "id": 11306,
+    "type": 1,
+    "rarity": 3,
+    "domain": 405,
+    "elite": 906,
+    "mob": 805
+  },
+  {
+    "id": 11401,
+    "type": 1,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "mob": 803
+  },
+  {
+    "id": 11402,
+    "type": 1,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 800
+  },
+  {
+    "id": 11403,
+    "type": 1,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 802
+  },
+  {
+    "id": 11404,
+    "type": 1,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "mob": 801
+  },
+  {
+    "id": 11405,
+    "type": 1,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "mob": 806
+  },
+  {
+    "id": 11406,
+    "type": 1,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 805
+  },
+  {
+    "id": 11407,
+    "type": 1,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "mob": 807
+  },
+  {
+    "id": 11408,
+    "type": 1,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "mob": 803
+  },
+  {
+    "id": 11409,
+    "type": 1,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 800
+  },
+  {
+    "id": 11412,
+    "type": 1,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 806
+  },
+  {
+    "id": 11413,
+    "type": 1,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 900,
+    "mob": 805
+  },
+  {
+    "id": 11501,
+    "type": 1,
+    "rarity": 5,
+    "domain": 400,
+    "elite": 900,
+    "mob": 803
+  },
+  {
+    "id": 11502,
+    "type": 1,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "mob": 800
+  },
+  {
+    "id": 11504,
+    "type": 1,
+    "rarity": 5,
+    "domain": 403,
+    "elite": 905,
+    "mob": 801
+  },
+  {
+    "id": 12301,
     "type": 2,
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "common": 807
+    "mob": 807
   },
   {
-    "id": 7,
+    "id": 12302,
     "type": 2,
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "common": 803
+    "mob": 803
   },
   {
-    "id": 8,
+    "id": 12303,
     "type": 2,
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "common": 800
+    "mob": 800
   },
   {
-    "id": 9,
+    "id": 12305,
     "type": 2,
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "common": 801
+    "mob": 801
   },
   {
-    "id": 10,
+    "id": 12306,
     "type": 2,
     "rarity": 3,
     "domain": 405,
     "elite": 906,
-    "common": 806
+    "mob": 806
   },
   {
-    "id": 11,
+    "id": 12401,
+    "type": 2,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 805
+  },
+  {
+    "id": 12402,
+    "type": 2,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "mob": 807
+  },
+  {
+    "id": 12403,
+    "type": 2,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 803
+  },
+  {
+    "id": 12404,
+    "type": 2,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 800
+  },
+  {
+    "id": 12405,
+    "type": 2,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 802
+  },
+  {
+    "id": 12406,
+    "type": 2,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "mob": 801
+  },
+  {
+    "id": 12407,
+    "type": 2,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "mob": 806
+  },
+  {
+    "id": 12408,
+    "type": 2,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 805
+  },
+  {
+    "id": 12409,
+    "type": 2,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "mob": 807
+  },
+  {
+    "id": 12411,
+    "type": 2,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "mob": 800
+  },
+  {
+    "id": 12501,
+    "type": 2,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "mob": 800
+  },
+  {
+    "id": 12502,
+    "type": 2,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "mob": 802
+  },
+  {
+    "id": 12504,
+    "type": 2,
+    "rarity": 5,
+    "domain": 404,
+    "elite": 904,
+    "mob": 806
+  },
+  {
+    "id": 13301,
     "type": 3,
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "common": 805
+    "mob": 805
   },
   {
-    "id": 12,
+    "id": 13302,
     "type": 3,
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "common": 807
+    "mob": 807
   },
   {
-    "id": 13,
+    "id": 13303,
     "type": 3,
     "rarity": 3,
     "domain": 405,
     "elite": 906,
-    "common": 803
+    "mob": 803
   },
   {
-    "id": 14,
+    "id": 13401,
+    "type": 3,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 802
+  },
+  {
+    "id": 13402,
+    "type": 3,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "mob": 801
+  },
+  {
+    "id": 13403,
+    "type": 3,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "mob": 806
+  },
+  {
+    "id": 13404,
+    "type": 3,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 805
+  },
+  {
+    "id": 13405,
+    "type": 3,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 807
+  },
+  {
+    "id": 13407,
+    "type": 3,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 800
+  },
+  {
+    "id": 13408,
+    "type": 3,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 805
+  },
+  {
+    "id": 13409,
+    "type": 3,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 904,
+    "mob": 805
+  },
+  {
+    "id": 13502,
+    "type": 3,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "mob": 802
+  },
+  {
+    "id": 13504,
+    "type": 3,
+    "rarity": 5,
+    "domain": 405,
+    "elite": 906,
+    "mob": 806
+  },
+  {
+    "id": 13505,
+    "type": 3,
+    "rarity": 5,
+    "domain": 403,
+    "elite": 905,
+    "mob": 805
+  },
+  {
+    "id": 14301,
     "type": 4,
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "common": 800
+    "mob": 800
   },
   {
-    "id": 15,
+    "id": 14302,
     "type": 4,
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "common": 802
+    "mob": 802
   },
   {
-    "id": 16,
+    "id": 14303,
     "type": 4,
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "common": 801
+    "mob": 801
   },
   {
-    "id": 17,
+    "id": 14304,
     "type": 4,
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "common": 806
+    "mob": 806
   },
   {
-    "id": 18,
+    "id": 14305,
     "type": 4,
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "common": 805
+    "mob": 805
   },
   {
-    "id": 19,
+    "id": 14401,
+    "type": 4,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "mob": 802
+  },
+  {
+    "id": 14402,
+    "type": 4,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 801
+  },
+  {
+    "id": 14403,
+    "type": 4,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 806
+  },
+  {
+    "id": 14404,
+    "type": 4,
+    "rarity": 4,
+    "domain": 400,
+    "elite": 900,
+    "mob": 805
+  },
+  {
+    "id": 14405,
+    "type": 4,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "mob": 807
+  },
+  {
+    "id": 14406,
+    "type": 4,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 803
+  },
+  {
+    "id": 14407,
+    "type": 4,
+    "rarity": 4,
+    "domain": 405,
+    "elite": 906,
+    "mob": 800
+  },
+  {
+    "id": 14408,
+    "type": 4,
+    "rarity": 4,
+    "domain": 403,
+    "elite": 905,
+    "mob": 802
+  },
+  {
+    "id": 14409,
+    "type": 4,
+    "rarity": 4,
+    "domain": 404,
+    "elite": 904,
+    "mob": 801
+  },
+  {
+    "id": 14412,
+    "type": 4,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 807
+  },
+  {
+    "id": 14501,
+    "type": 4,
+    "rarity": 5,
+    "domain": 401,
+    "elite": 902,
+    "mob": 803
+  },
+  {
+    "id": 14502,
+    "type": 4,
+    "rarity": 5,
+    "domain": 402,
+    "elite": 903,
+    "mob": 800
+  },
+  {
+    "id": 14504,
+    "type": 4,
+    "rarity": 5,
+    "domain": 405,
+    "elite": 906,
+    "mob": 801
+  },
+  {
+    "id": 15301,
     "type": 5,
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "common": 803
+    "mob": 803
   },
   {
-    "id": 20,
+    "id": 15302,
     "type": 5,
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "common": 800
+    "mob": 800
   },
   {
-    "id": 21,
+    "id": 15303,
     "type": 5,
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "common": 802
+    "mob": 802
   },
   {
-    "id": 22,
+    "id": 15304,
     "type": 5,
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "common": 801
+    "mob": 801
   },
   {
-    "id": 23,
+    "id": 15305,
     "type": 5,
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "common": 806
+    "mob": 806
   },
   {
-    "id": 24,
-    "type": 1,
-    "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "common": 803
-  },
-  {
-    "id": 25,
-    "type": 1,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 800
-  },
-  {
-    "id": 26,
-    "type": 1,
+    "id": 15401,
+    "type": 5,
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "common": 802
+    "mob": 807
   },
   {
-    "id": 27,
-    "type": 1,
+    "id": 15402,
+    "type": 5,
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "common": 801
+    "mob": 803
   },
   {
-    "id": 28,
-    "type": 1,
+    "id": 15403,
+    "type": 5,
+    "rarity": 4,
+    "domain": 401,
+    "elite": 902,
+    "mob": 800
+  },
+  {
+    "id": 15404,
+    "type": 5,
+    "rarity": 4,
+    "domain": 402,
+    "elite": 903,
+    "mob": 802
+  },
+  {
+    "id": 15405,
+    "type": 5,
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "common": 806
+    "mob": 801
   },
   {
-    "id": 29,
-    "type": 1,
+    "id": 15406,
+    "type": 5,
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "common": 805
+    "mob": 806
   },
   {
-    "id": 30,
-    "type": 1,
+    "id": 15407,
+    "type": 5,
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "common": 807
+    "mob": 805
   },
   {
-    "id": 31,
-    "type": 1,
+    "id": 15408,
+    "type": 5,
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "common": 803
+    "mob": 807
   },
   {
-    "id": 32,
-    "type": 1,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 800
-  },
-  {
-    "id": 33,
-    "type": 1,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 806
-  },
-  {
-    "id": 34,
-    "type": 2,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 805
-  },
-  {
-    "id": 35,
-    "type": 2,
+    "id": 15409,
+    "type": 5,
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "common": 807
+    "mob": 803
   },
   {
-    "id": 36,
-    "type": 2,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 803
-  },
-  {
-    "id": 37,
-    "type": 2,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 800
-  },
-  {
-    "id": 38,
-    "type": 2,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 802
-  },
-  {
-    "id": 39,
-    "type": 2,
-    "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "common": 801
-  },
-  {
-    "id": 40,
-    "type": 2,
-    "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "common": 806
-  },
-  {
-    "id": 41,
-    "type": 2,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 805
-  },
-  {
-    "id": 42,
-    "type": 2,
-    "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "common": 807
-  },
-  {
-    "id": 43,
-    "type": 3,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 802
-  },
-  {
-    "id": 44,
-    "type": 3,
-    "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "common": 801
-  },
-  {
-    "id": 45,
-    "type": 3,
-    "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "common": 806
-  },
-  {
-    "id": 46,
-    "type": 3,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 805
-  },
-  {
-    "id": 47,
-    "type": 3,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 807
-  },
-  {
-    "id": 48,
-    "type": 3,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 800
-  },
-  {
-    "id": 49,
-    "type": 3,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 805
-  },
-  {
-    "id": 50,
-    "type": 3,
-    "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "common": 802
-  },
-  {
-    "id": 51,
-    "type": 3,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 801
-  },
-  {
-    "id": 52,
-    "type": 3,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 806
-  },
-  {
-    "id": 53,
-    "type": 3,
-    "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "common": 805
-  },
-  {
-    "id": 54,
-    "type": 3,
-    "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "common": 807
-  },
-  {
-    "id": 55,
-    "type": 3,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 803
-  },
-  {
-    "id": 56,
-    "type": 3,
-    "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "common": 800
-  },
-  {
-    "id": 57,
-    "type": 3,
-    "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "common": 802
-  },
-  {
-    "id": 58,
-    "type": 3,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 801
-  },
-  {
-    "id": 59,
-    "type": 4,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 807
-  },
-  {
-    "id": 60,
-    "type": 4,
-    "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "common": 803
-  },
-  {
-    "id": 61,
-    "type": 4,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "common": 800
-  },
-  {
-    "id": 62,
-    "type": 4,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 802
-  },
-  {
-    "id": 63,
-    "type": 4,
-    "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "common": 801
-  },
-  {
-    "id": 64,
-    "type": 4,
-    "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "common": 806
-  },
-  {
-    "id": 65,
-    "type": 4,
-    "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "common": 805
-  },
-  {
-    "id": 66,
-    "type": 4,
-    "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "common": 807
-  },
-  {
-    "id": 67,
-    "type": 4,
-    "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "common": 803
-  },
-  {
-    "id": 68,
-    "type": 1,
+    "id": 15501,
+    "type": 5,
     "rarity": 5,
     "domain": 401,
     "elite": 902,
-    "common": 800
+    "mob": 803
   },
   {
-    "id": 69,
-    "type": 2,
-    "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "common": 800
-  },
-  {
-    "id": 70,
+    "id": 15502,
     "type": 5,
     "rarity": 5,
     "domain": 402,
     "elite": 903,
-    "common": 802
-  },
-  {
-    "id": 71,
-    "type": 3,
-    "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "common": 803
-  },
-  {
-    "id": 72,
-    "type": 4,
-    "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "common": 803
-  },
-  {
-    "id": 73,
-    "type": 1,
-    "rarity": 5,
-    "domain": 400,
-    "elite": 900,
-    "common": 803
-  },
-  {
-    "id": 74,
-    "type": 2,
-    "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "common": 802
-  },
-  {
-    "id": 75,
-    "type": 5,
-    "rarity": 5,
-    "domain": 403,
-    "elite": 905,
-    "common": 805
-  },
-  {
-    "id": 76,
-    "type": 3,
-    "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "common": 800
-  },
-  {
-    "id": 77,
-    "type": 4,
-    "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "common": 800
-  },
-  {
-    "id": 78,
-    "type": 2,
-    "rarity": 5,
-    "domain": 404,
-    "elite": 904,
-    "common": 806
-  },
-  {
-    "id": 79,
-    "type": 5,
-    "rarity": 5,
-    "domain": 405,
-    "elite": 906,
-    "common": 806
-  },
-  {
-    "id": 80,
-    "type": 3,
-    "rarity": 5,
-    "domain": 405,
-    "elite": 906,
-    "common": 801
-  },
-  {
-    "id": 81,
-    "type": 1,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 900,
-    "common": 805,
-    "expBonus": [
-      {
-        "factor": 1.5,
-        "startTime": "2020-12-23 11:00",
-        "endTime": "2021-01-05 04:00"
-      }
-    ]
-  },
-  {
-    "id": 82,
-    "type": 2,
-    "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "common": 800
-  },
-  {
-    "id": 83,
-    "type": 1,
-    "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "common": 807
-  },
-  {
-    "id": 84,
-    "type": 3,
-    "rarity": 4,
-    "domain": 401,
-    "elite": 904,
-    "common": 805
-  },
-  {
-    "id": 85,
-    "type": 1,
-    "rarity": 5,
-    "domain": 403,
-    "elite": 905,
-    "common": 801
+    "mob": 800
   }
 ]
