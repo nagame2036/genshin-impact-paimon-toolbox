@@ -3,7 +3,7 @@
     <mat-label>{{ i18n.dict('ascension-label') | translate }}</mat-label>
     <mat-select [(value)]="ascension" (selectionChange)="change()">
       <mat-option *ngFor="let a of ascensions; let i = index" [value]="a">
-        {{ i18n.dict('ascensions.' + i) | translate }}
+        ★{{ i }}
       </mat-option>
     </mat-select>
   </mat-form-field>

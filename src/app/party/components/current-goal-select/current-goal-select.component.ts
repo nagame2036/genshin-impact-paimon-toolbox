@@ -1,6 +1,5 @@
 /* tslint:disable:semicolon */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -34,12 +33,7 @@ export class CurrentGoalSelectComponent implements OnInit {
   @Output()
   executePlan = new EventEmitter();
 
-  // noinspection JSUnusedLocalSymbols
-  constructor(
-    /**
-     * inject this translator to provide translation in valueDisplay().
-     */
-    private translator: TranslateService) {
+  constructor() {
   }
 
   @Input()

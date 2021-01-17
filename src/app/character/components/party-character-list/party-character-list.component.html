@@ -1,4 +1,4 @@
-<app-character-list [party]="true" [characters]="characters" [height]="height" [itemWidth]="360"
+<app-character-list [party]="true" [characters]="characters" [height]="height" [itemWidth]="280"
                     [sortFields]="['level', 'rarity', 'constellation']" sort="level"
                     #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                     (multiSelected)="multiSelected.emit($event)">
@@ -12,7 +12,7 @@
     <ng-container *ngIf="getParty(item) as party">
       <ng-container *ngIf="getPlan(party) as plan">
         <div class="party-item-overview" gdAlignColumns="space-around stretch"
-             gdColumns="40% auto" gdRows="repeat(6, 1fr)">
+             gdColumns="auto 72px" gdRows="repeat(6, 1fr)">
           <div class="party-item-overview-label party-item-overview-row-non-border-top">
             <b>{{ i18n.dict('constellation') | translate }}</b>
           </div>
@@ -23,10 +23,9 @@
             <b>{{ i18n.dict('ascension') | translate }}</b>
           </div>
           <div class="party-item-overview-row">
-            {{ i18n.dict('ascensions.' + party.ascension) | translate }}
+            ★{{ party.ascension }}
             <ng-container *ngIf="party.ascension < plan.ascension">
-              →
-              {{ i18n.dict('ascensions.' + plan.ascension) | translate }}
+              → ★{{ plan.ascension }}
             </ng-container>
           </div>
           <div class="party-item-overview-label">
@@ -35,19 +34,17 @@
           <div class="party-item-overview-row">
             {{ party.level }}
             <ng-container *ngIf="party.level < plan.level">
-              →
-              {{ plan.level }}
+              → {{ plan.level }}
             </ng-container>
           </div>
           <ng-container *ngFor="let talent of party.talents; let i = index">
             <div class="party-item-overview-label">
-              <b>{{ i18n.dict('talent-types.' + i) | translate }}</b>
+              <b>{{ i18n.dict('talent-types.' + talent.id % 10) | translate }}</b>
             </div>
             <div class="party-item-overview-row">
               {{ talent.level }}
               <ng-container *ngIf="talent.level < plan.talents[i].level">
-                →
-                {{ plan.talents[i].level }}
+                → {{ plan.talents[i].level }}
               </ng-container>
             </div>
           </ng-container>

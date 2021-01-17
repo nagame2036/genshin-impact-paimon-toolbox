@@ -3,7 +3,7 @@
     <mat-label>{{ i18n.dict('rarity') | translate }}</mat-label>
     <mat-select multiple [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)">
       <mat-option *ngFor="let f of rarities" [value]="f">
-        {{ f }}
+        ★{{ f }}
       </mat-option>
     </mat-select>
   </mat-form-field>

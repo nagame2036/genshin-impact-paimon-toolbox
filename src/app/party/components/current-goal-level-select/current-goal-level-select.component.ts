@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../shared/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../../character-and-gear/models/ascension.type';
-import {TranslateService} from '@ngx-translate/core';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {Observable} from 'rxjs';
 
@@ -50,7 +49,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
   @Output()
   executePlan = new EventEmitter();
 
-  constructor(public translator: TranslateService) {
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -60,7 +59,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
   }
 
   getAscension(num: number): string {
-    return this.translator.instant(`dict.ascensions.${num}`);
+    return `★${num}`;
   }
 
   setAscension(value: number): void {

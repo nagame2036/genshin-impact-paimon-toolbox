@@ -1,4 +1,4 @@
-<app-weapon-list [party]="true" [weapons]="weapons" [height]="80" [itemWidth]="360"
+<app-weapon-list [party]="true" [weapons]="weapons" [height]="80" [itemWidth]="280"
                  [sortFields]="['level', 'rarity', 'refine']" sort="level"
                  #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                  (multiSelected)="multiSelected.emit($event)">
@@ -6,13 +6,14 @@
     <button type="button" class="add-party-btn" mat-stroked-button (click)="add.emit($event)">
       {{ i18n.module('add') | translate }}
     </button>
+    28
     <ng-content select="[list-actions]"></ng-content>
   </div>
   <ng-template let-item #right>
     <ng-container *ngIf="getParty(item) as party">
       <ng-container *ngIf="getPlan(party) as plan">
         <div class="party-item-overview" gdAlignColumns="space-around stretch"
-             gdColumns="40% auto" gdRows="repeat(3, 1fr)">
+             gdColumns="auto 72px" gdRows="repeat(3, 1fr)">
           <div class="party-item-overview-label party-item-overview-row-non-border-top">
             <b>{{ i18n.dict('refine') | translate }}</b>
           </div>
@@ -23,10 +24,9 @@
             <b>{{ i18n.dict('ascension') | translate }}</b>
           </div>
           <div class="party-item-overview-row">
-            {{ i18n.dict('ascensions.' + party.ascension) | translate }}
+            ★{{ party.ascension }}
             <ng-container *ngIf="party.ascension < plan.ascension">
-              →
-              {{ i18n.dict('ascensions.' + plan.ascension) | translate }}
+              → ★{{ plan.ascension }}
             </ng-container>
           </div>
           <div class="party-item-overview-label">
@@ -35,8 +35,7 @@
           <div class="party-item-overview-row">
             {{ party.level }}
             <ng-container *ngIf="party.level < plan.level">
-              →
-              {{ plan.level }}
+              → {{ plan.level }}
             </ng-container>
           </div>
         </div>
