@@ -15,7 +15,7 @@ export class SettingsPageComponent implements OnInit {
   currentLanguage = this.translator.defaultLang;
 
   languages: { name: string, value: string }[] = [
-    {name: '简体中文', value: 'zh-CN'},
+    {name: '简体中文', value: 'zh-hans'},
     {name: 'English', value: 'en'},
   ];
 

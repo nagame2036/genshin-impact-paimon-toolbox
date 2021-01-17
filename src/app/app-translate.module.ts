@@ -8,9 +8,9 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
 }
 
 const translateConfig = {
-  defaultLanguage: 'zh-CN',
+  defaultLanguage: 'zh-hans',
   languages: [
-    'zh-CN',
+    'zh-hans',
     'en'
   ],
   loader: {
