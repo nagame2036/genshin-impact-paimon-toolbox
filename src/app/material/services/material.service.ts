@@ -81,24 +81,24 @@ export class MaterialService {
         it => it.id < 10000,
         it => it.id < 11000,
       ]);
-      const materialsMap = new Map<number, InventoryItem[]>();
-      materialsMap.set(MaterialType.CURRENCY, currency);
-      materialsMap.set(MaterialType.CHARACTER_EXP, characterExps);
-      materialsMap.set(MaterialType.WEAPON_EXP, weaponExps);
-      materialsMap.set(MaterialType.ORE, ores);
-      materialsMap.set(MaterialType.CHARACTER_BOSS, characterBoss);
-      materialsMap.set(MaterialType.CHARACTER_GEM, characterGem);
-      materialsMap.set(MaterialType.WEAPON_14, weapons14);
-      materialsMap.set(MaterialType.WEAPON_25, weapons25);
-      materialsMap.set(MaterialType.WEAPON_36, weapons36);
-      materialsMap.set(MaterialType.TALENT_14, talents14);
-      materialsMap.set(MaterialType.TALENT_25, talents25);
-      materialsMap.set(MaterialType.TALENT_36, talents36);
-      materialsMap.set(MaterialType.TALENT_COMMON, talentsCommon);
-      materialsMap.set(MaterialType.ENEMY_MOB, mob);
-      materialsMap.set(MaterialType.ENEMY_ELITE, elite);
-      materialsMap.set(MaterialType.LOCAL_SPECIALTY, localSpecialties);
-      this.#materialsMap.next(materialsMap);
+      this.#materialsMap.next(new Map<number, InventoryItem[]>([
+        [MaterialType.CURRENCY, currency],
+        [MaterialType.CHARACTER_EXP, characterExps],
+        [MaterialType.WEAPON_EXP, weaponExps],
+        [MaterialType.ORE, ores],
+        [MaterialType.CHARACTER_BOSS, characterBoss],
+        [MaterialType.CHARACTER_GEM, characterGem],
+        [MaterialType.WEAPON_14, weapons14],
+        [MaterialType.WEAPON_25, weapons25],
+        [MaterialType.WEAPON_36, weapons36],
+        [MaterialType.TALENT_14, talents14],
+        [MaterialType.TALENT_25, talents25],
+        [MaterialType.TALENT_36, talents36],
+        [MaterialType.TALENT_COMMON, talentsCommon],
+        [MaterialType.ENEMY_MOB, mob],
+        [MaterialType.ENEMY_ELITE, elite],
+        [MaterialType.LOCAL_SPECIALTY, localSpecialties],
+      ]));
     });
   }
 }
