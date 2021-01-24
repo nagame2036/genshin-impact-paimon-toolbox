@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {Character} from '../../../character/models/character.model';
 import {I18n} from '../../../shared/models/i18n.model';
 import {PartyCharacterListComponent} from '../../../character/components/party-character-list/party-character-list.component';
-import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {CharacterService} from '../../../character/services/character.service';
 import {Router} from '@angular/router';
 
@@ -25,7 +23,7 @@ export class PartyCharacterComponent implements OnInit {
   @ViewChild('list')
   list!: PartyCharacterListComponent;
 
-  constructor(private dialog: MatDialog, private router: Router, private service: CharacterService) {
+  constructor(private router: Router, private service: CharacterService) {
   }
 
   ngOnInit(): void {
@@ -39,11 +37,9 @@ export class PartyCharacterComponent implements OnInit {
     this.router.navigate(['party/characters', character.id]).then();
   }
 
-  openRemoveDialog(): void {
-    RemoveConfirmDialogComponent.openBy(this.dialog, 'characters', this.selectedItems, () => {
-      this.service.removePartyMemberByList(this.selectedItems.map(it => it.id));
-      this.updateSelected([]);
-    });
+  remove(): void {
+    this.service.removePartyMemberByList(this.selectedItems.map(it => it.id));
+    this.updateSelected([]);
   }
 
   updateSelected(selected: Character[]): void {

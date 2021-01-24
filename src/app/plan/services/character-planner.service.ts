@@ -23,15 +23,15 @@ export class CharacterPlanner {
 
   readonly plans = this.#plans.asObservable();
 
-  activePlans: Observable<{ plan: CharacterPlan, party: PartyCharacter }[]>;
+  activePlans = new ReplaySubject<{ plan: CharacterPlan, party: PartyCharacter }[]>(1);
 
   constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
               private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
               private marker: MaterialCostMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
-    this.activePlans = combineLatest([this.plans, this.characters.partyMap]).pipe(
-      map(([plans, partyList]) => activePlans(plans, partyList))
-    );
+    combineLatest([this.plans, this.characters.partyMap]).subscribe(([plans, party]) => {
+      this.activePlans.next(activePlans(plans, party));
+    });
   }
 
   getPlan(id: number): Observable<CharacterPlan> {

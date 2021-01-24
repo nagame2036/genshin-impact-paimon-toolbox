@@ -1,38 +1,33 @@
-<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 40px">
+<div class="plan-form-container">
   <app-item-view category="characters" [id]="character.id" [rarity]="character.rarity"></app-item-view>
-  <mat-form-field appearance="outline" floatLabel="always" class="app-form-field" style="margin-top: 16px">
-    <mat-label>
+  <app-select class="attribute-select" [options]="constellations" [value]="character.constellation"
+              (changed)="setConstellation($event)">
+    <span form-label>
       {{ i18n.dict('constellation') | translate }}
       -
       {{ i18n.dict('constellations.' + character.id + '.name') | translate }}
-    </mat-label>
-    <mat-select [value]="character.constellation" (selectionChange)="setConstellation($event.value)">
-      <mat-option *ngFor="let c of constellations" [value]="c">
-        {{ c }} - {{ getConstellationText(c) | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    </span>
+  </app-select>
   <app-current-goal-level-select label="character" [ascension]="character.ascension" [goalAscension]="plan.ascension"
                                  [level]="character.level" [goalLevel]="plan.level"
                                  [satisfied]="plans[1].satisfied" (executePlan)="executePlan.emit(1)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
   <ng-container *ngFor="let talent of character.talents; let i = index">
-    <div style="height: 2px"></div>
     <app-current-goal-select [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
-                             [current]="talent.level" (currentChange)="setTalent(i, $event)"
-                             [satisfied]="plans[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)"
-                             [goal]="plan.talents[i]?.level || 1" (goalChange)="setGoalTalent(i, $event)">
+                             [current]="talent.level" [goal]="plan.talents[i]?.level || 1"
+                             (currentChange)="setTalent(i, $event)" (goalChange)="setGoalTalent(i, $event)"
+                             [satisfied]="plans[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)">
       {{ talentLabel(talent) | translate }} - {{ talentName(talent) | translate }}
     </app-current-goal-select>
   </ng-container>
   <div *ngFor="let bonus of character.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <ng-container *ngIf="plans[0].hasOwnProperty('title')">
-    <button mat-stroked-button style="margin-top: 12px" [class.satisfied]="plans[0].satisfied | async"
-            [disabled]="!(plans[0].satisfied | async)" (click)="executePlan.emit(0)">
+  <ng-container *ngIf="plans[0].hasOwnProperty('text')">
+    <app-ring-button class="execute-all-btn" [class.satisfied]="plans[0].satisfied | async"
+                     [disabled]="!(plans[0].satisfied | async)" (click)="executePlan.emit(0)">
       {{ i18n.module('execute-all-plan') | translate }}
-    </button>
+    </app-ring-button>
   </ng-container>
 </div>

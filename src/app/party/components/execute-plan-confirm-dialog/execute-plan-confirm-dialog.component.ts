@@ -1,17 +1,17 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {DialogComponent} from '../../../shared/components/dialog/dialog.component';
 import {I18n} from '../../../shared/models/i18n.model';
 import {ItemList} from '../../../material/models/item-list.model';
 import {InventoryService} from '../../../inventory/services/inventory.service';
 import {first, map} from 'rxjs/operators';
 import {Rarity} from '../../../shared/models/rarity.type';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 
 type PlanCostItem = { id: number, rarity: Rarity, need: number };
 
 @Component({
-  selector: 'app-complete-plan-confirm-dialog',
+  selector: 'app-execute-plan-confirm-dialog',
   templateUrl: './execute-plan-confirm-dialog.component.html',
   styleUrls: ['./execute-plan-confirm-dialog.component.scss']
 })
@@ -19,26 +19,38 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
 
   i18n = new I18n('party');
 
+  @Input()
+  data = {item: '', title: '', cost: new ItemList()};
+
+  confirmSubject = new Subject();
+
   items$!: Observable<PlanCostItem[]>;
 
-  constructor(private inventory: InventoryService, private dialog: MatDialogRef<ExecutePlanConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { item: string, title: string, cost: ItemList }) {
-  }
+  @ViewChild('dialog')
+  dialog!: DialogComponent;
 
-  static openBy(dialog: MatDialog, data: any, onConfirm: () => void): void {
-    dialog.open(ExecutePlanConfirmDialogComponent, {data}).afterClosed().subscribe(confirm => {
-      if (confirm) {
-        onConfirm();
-      }
-    });
+  constructor(private inventory: InventoryService) {
   }
 
   ngOnInit(): void {
+  }
+
+  open(data: { item: string, title: string, cost: ItemList }): ExecutePlanConfirmDialogComponent {
+    this.data = data;
     this.items$ = this.inventory.details.pipe(first(), map(details => this.processDetails(details)));
+    this.dialog.open();
+    this.confirmSubject = new Subject();
+    return this;
   }
 
   confirm(): void {
-    this.dialog.close(true);
+    this.confirmSubject.next();
+    this.confirmSubject.complete();
+    this.dialog.close();
+  }
+
+  afterConfirm(): Observable<any> {
+    return this.confirmSubject;
   }
 
   private processDetails(details: Map<number, InventoryItemDetail>): PlanCostItem[] {

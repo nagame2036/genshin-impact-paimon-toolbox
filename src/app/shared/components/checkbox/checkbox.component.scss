@@ -1,0 +1,67 @@
+.checkbox-container {
+  @apply flex;
+  @apply items-center;
+  @apply w-auto;
+  @apply m-2;
+  @apply pt-2;
+  @apply pl-7;
+  @apply relative;
+  @apply cursor-pointer;
+  @apply select-none;
+
+  input {
+    @apply absolute;
+    @apply opacity-0;
+    @apply h-0;
+    @apply w-0;
+    @apply cursor-pointer;
+
+    &:checked {
+
+      ~ .checkmark {
+        @apply bg-primary-500;
+        @apply border-0;
+      }
+
+      ~ .checkmark:after {
+        @apply block;
+      }
+    }
+  }
+
+  &:hover {
+    input ~ .checkmark {
+      @apply bg-gray-400;
+    }
+  }
+
+  .checkmark:after {
+    top: 0.15rem;
+    left: 0.45rem;
+    @apply w-1.5;
+    @apply h-3;
+    @apply border-r-2;
+    @apply border-b-2;
+    @apply border-white;
+    @apply transform;
+    @apply rotate-45;
+  }
+}
+
+.checkmark {
+  @apply absolute;
+  @apply top-2.5;
+  @apply left-0;
+  @apply h-5;
+  @apply w-5;
+  @apply bg-white;
+  @apply rounded;
+  @apply border;
+  @apply border-gray-400;
+
+  &:after {
+    content: '';
+    @apply hidden;
+    @apply absolute;
+  }
+}

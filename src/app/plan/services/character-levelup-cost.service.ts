@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
 import {HttpClient} from '@angular/common/http';
 import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
-import {map, reduce, switchMap, take} from 'rxjs/operators';
+import {map, mergeMap, reduce, take} from 'rxjs/operators';
 import {Ascension} from '../../character-and-gear/models/ascension.type';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
 import {CharacterAscensionMaterialService} from '../../material/services/character-ascension-material.service';
@@ -14,7 +14,6 @@ import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../shared/models/i18n.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
-import {TranslateService} from '@ngx-translate/core';
 import {ItemType} from '../../character-and-gear/models/item-type.enum';
 import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
 
@@ -38,16 +37,16 @@ export class CharacterLevelupCostService {
   private readonly levelupLabel = this.i18n.module('levelup');
 
   constructor(http: HttpClient, private characters: CharacterAscensionMaterialService, private enemies: EnemiesMaterialService,
-              private exps: CharacterExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
+              private exps: CharacterExpMaterialService, private marker: MaterialCostMarker) {
     http.get<CharacterAscensionCost[]>('assets/data/characters/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<number[]>('assets/data/characters/character-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 
   totalCost(plans: { plan: CharacterPlan, party: PartyCharacter }[]): Observable<ItemList> {
     return from(plans).pipe(
-      switchMap(({party, plan}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level), true)),
+      mergeMap(({party, plan}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level), true)),
       take(plans.length),
-      reduce((acc, value) => acc.combine(value), new ItemList())
+      reduce((acc, value) => acc.combine(value), new ItemList()),
     );
   }
 
@@ -75,12 +74,8 @@ export class CharacterLevelupCostService {
         });
         return cost;
       }),
-      map(cost => this.mark(mark, character, cost, this.ascensionLabel, this.ascensionParam(character.ascension, goal)))
+      map(cost => this.mark(mark, character, cost, this.ascensionLabel, [character.ascension, goal].map(it => `★${it}`)))
     );
-  }
-
-  private ascensionParam(...ascensions: Ascension[]): string[] {
-    return ascensions.map(ascension => this.translator.instant(this.i18n.dict(`ascensions.${ascension}`)));
   }
 
   private levelup(character: PartyCharacter, goal: number, mark: boolean): Observable<ItemList> {

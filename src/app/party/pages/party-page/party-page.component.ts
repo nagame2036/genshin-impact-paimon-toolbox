@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../shared/models/i18n.model';
+import {NavBarLink} from '../../../shared/components/nav-tabs/nav-tabs.component';
 
 @Component({
   selector: 'app-party-page',
@@ -10,9 +11,9 @@ export class PartyPageComponent implements OnInit {
 
   i18n = new I18n('party');
 
-  links = [
-    'characters',
-    'weapons'
+  links: NavBarLink[] = [
+    {path: 'characters', text: `modules.characters.title`},
+    {path: 'weapons', text: `modules.weapons.title`},
   ];
 
   constructor() {

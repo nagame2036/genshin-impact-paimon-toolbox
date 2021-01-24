@@ -1,59 +1,38 @@
-@import '../../../../assets/styles/app-form-field';
-@import '../../styles/satisfied';
+@import '../../../../assets/styles/form-field.scss';
+@import '../../styles/satisfied.scss';
 
-.current-goal-select-container {
-  margin: 4px;
-  padding: 0 1px;
-  height: 42px;
-  border: solid 1px #e0e0e0;
-  border-radius: 4px;
+.form {
+  @apply flex;
+  @apply flex-row;
+  @apply place-content-center;
 
-  legend {
-    margin-left: 9px;
-    font-size: 9px;
-    color: rgb(0, 0, 0, .6);
+  ::ng-deep .form-field-content {
+    @apply p-0;
   }
-}
 
-.current-goal-select-arrow {
-  margin-left: 4px;
-  margin-right: 0 !important;
-  line-height: 30px;
-}
+  app-select {
+    width: 5.5rem;
+    @apply flex-grow;
 
-.current-goal-select-button-arrow {
-  @extend .satisfied;
-  margin-left: 0;
-  margin-right: 0 !important;
-  line-height: 12px;
-}
-
-.current-goal-select-field {
-  @extend .app-form-field;
-  margin: -8px 0 2px 0;
-  width: 120px;
-
-  ::ng-deep {
-    .mat-form-field-outline-start {
-      border: none;
-    }
-
-    .mat-form-field-outline-gap {
-      border: none;
-    }
-
-    .mat-form-field-outline-end {
-      border: none;
+    ::ng-deep .form-field {
+      @apply border-0;
+      @apply m-0;
+      @apply p-0;
     }
   }
 }
 
-.current-goal-select-field-left {
-  @extend .current-goal-select-field;
-  margin-left: -2px;
+.execute-plan-btn {
+  @apply h-4;
+  @apply cursor-default;
+  @apply appearance-none;
+  @apply focus:outline-none;
+
+  &.satisfied {
+    @apply cursor-pointer;
+  }
 }
 
-.current-goal-select-field-right {
-  @extend .current-goal-select-field;
-  margin-right: -2px;
+.arrow {
+  @apply w-16;
 }

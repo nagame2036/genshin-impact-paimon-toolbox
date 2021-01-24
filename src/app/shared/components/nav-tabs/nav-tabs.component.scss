@@ -1,0 +1,34 @@
+@import '../../../../assets/styles/animated-underline.scss';
+
+.navbar {
+  @apply flex;
+  @apply flex-row;
+  @apply border-b;
+
+  a {
+    @apply block;
+    @apply relative;
+    @apply px-10;
+    @apply py-2;
+    @apply text-lg;
+    @apply text-gray-500;
+
+    &:hover {
+      @apply text-black;
+    }
+
+    &:before {
+      @extend .animated-underline;
+      height: 0.15rem;
+    }
+
+    &.active {
+      @apply text-black;
+      @apply border-b-0;
+
+      &:before {
+        @extend .animated-underline-after;
+      }
+    }
+  }
+}

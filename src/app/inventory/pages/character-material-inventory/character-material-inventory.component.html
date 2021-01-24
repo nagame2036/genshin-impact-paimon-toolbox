@@ -1,18 +1,3 @@
-<div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
-  <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-    <mat-label>{{ i18n.dict('rarity') | translate }}</mat-label>
-    <mat-select multiple [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)">
-      <mat-option *ngFor="let f of rarities" [value]="f">
-        ★{{ f }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-checkbox [checked]="showOverflow" (change)="showOverflow = $event.checked">
-    {{ i18n.module('show-overflow') | translate }}
-  </mat-checkbox>
-</div>
-<cdk-virtual-scroll-viewport style="height: 80vh" itemSize="50">
-  <app-inventory-list subtitle="common" [items]="common$" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="boss" [items]="boss$" [showOverflow]="showOverflow"></app-inventory-list>
-  <app-inventory-list subtitle="gem" [items]="gem$" [showOverflow]="showOverflow"></app-inventory-list>
-</cdk-virtual-scroll-viewport>
+<app-inventory-list subtitle="common" [items$]="common$"></app-inventory-list>
+<app-inventory-list subtitle="boss" [items$]="boss$"></app-inventory-list>
+<app-inventory-list subtitle="gem" [items$]="gem$"></app-inventory-list>

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
+import {BehaviorSubject, combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {concatMap, first, map, reduce, switchMap, take} from 'rxjs/operators';
 import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
 import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
@@ -28,6 +28,12 @@ export class InventoryService {
 
   readonly details = this.#details.asObservable();
 
+  readonly rarities = [5, 4, 3, 2, 1].map(it => ({value: it, text: `★${it}`}));
+
+  rarityFilter = new BehaviorSubject(this.rarities.map(it => it.value));
+
+  showOverflow = new BehaviorSubject(true);
+
   constructor(private database: NgxIndexedDBService, private characterPlanner: CharacterPlanner, private weaponPlanner: WeaponPlanner,
               private characterExps: CharacterExpMaterialService, private weaponExps: WeaponExpMaterialService,
               private materials: MaterialService) {
@@ -37,8 +43,25 @@ export class InventoryService {
     this.calculateDetails();
   }
 
+  isShowOverflow(): Observable<boolean> {
+    return this.showOverflow.asObservable();
+  }
+
+  setShowOverflow(value: boolean): void {
+    this.showOverflow.next(value);
+  }
+
+  setRarityFilter(rarityFilter: number[]): void {
+    this.rarityFilter.next(rarityFilter);
+  }
+
   getDetails(items: InventoryItem[]): Observable<InventoryItemDetail[]> {
-    return this.details.pipe(map(details => mapArrays(items, details, it => it.id, (_, detail) => detail)));
+    return combineLatest([this.details, this.rarityFilter, this.showOverflow]).pipe(
+      map(([details, rarityFilter, showOverflow]) => {
+        const itemDetails = mapArrays(items, details, it => it.id, (_, detail) => detail);
+        return itemDetails.filter(it => rarityFilter.includes(it.rarity) && (!it.overflow || showOverflow));
+      })
+    );
   }
 
   changeItem(id: number, change: number): void {

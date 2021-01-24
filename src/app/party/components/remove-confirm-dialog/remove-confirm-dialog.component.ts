@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {DialogComponent} from '../../../shared/components/dialog/dialog.component';
 import {I18n} from '../../../shared/models/i18n.model';
+import {Rarity} from '../../../shared/models/rarity.type';
 
 @Component({
   selector: 'app-remove-confirm-dialog',
@@ -11,23 +12,26 @@ export class RemoveConfirmDialogComponent implements OnInit {
 
   i18n = new I18n('party');
 
-  constructor(private dialog: MatDialogRef<RemoveConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { category: string, items: { id: number, rarity: number }[] }) {
-  }
+  @Input()
+  category!: string;
 
-  static openBy(dialog: MatDialog, category: string, items: { id: number, rarity: number }[], onConfirm: () => void): void {
-    dialog.open(RemoveConfirmDialogComponent, {minWidth: '50vw', data: {category, items}}).afterClosed().subscribe(confirm => {
-      if (confirm) {
-        onConfirm();
-      }
-    });
+  @Input()
+  items!: { id: number, rarity: Rarity }[];
+
+  @Output()
+  confirm = new EventEmitter();
+
+  @ViewChild('dialog')
+  dialog!: DialogComponent;
+
+  constructor() {
   }
 
   ngOnInit(): void {
   }
 
-  close(remove: boolean): void {
-    this.dialog.close(remove);
+  open(): void {
+    this.dialog.open();
   }
 
 }

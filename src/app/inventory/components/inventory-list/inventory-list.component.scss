@@ -1,36 +1,62 @@
-.inventory-subtitle {
-  margin: 4px 0;
+.title {
+  @apply text-lg;
+  @apply font-semibold;
 }
 
-.inventory-item {
-  margin: 8px 0;
+.list {
+  @apply grid;
+  @apply gap-x-3;
+  @apply gap-y-6;
+  grid-template-columns: repeat(auto-fill, 162px);
+  @apply place-content-around;
 }
 
-.inventory-detail {
-  margin: 4px;
-  font-size: 8px;
+.detail-container {
+  @apply relative;
+  @apply rounded;
+  @apply border-2;
 }
 
-.inventory-data {
-  text-align: right;
-  padding-right: 2px;
+.cost-detail-btn {
+  @apply absolute;
+  @apply top-1;
+  @apply right-1;
+  @apply text-secondary-200;
+  @apply cursor-pointer;
+  @apply appearance-none;
+  @apply focus:outline-none;
+  width: 32px;
+  height: 32px;
 }
 
-.inventory-have {
-  margin-left: 5px;
-  height: 16px;
-  width: 90%;
-  padding: 1px;
-  border: solid 1px #e0e0e0;
-  border-radius: 4px;
-  text-align: right;
-  font-size: 8px;
+.detail {
+  @apply flex;
+  @apply flex-col;
+  @apply px-1;
+  @apply text-xs;
+
+  &::ng-deep {
+    .form-field {
+      @apply my-0.5;
+    }
+
+    .form-field-content {
+      @apply text-right;
+    }
+
+    .input-field {
+      @apply text-right;
+    }
+  }
 }
 
-.craft-button {
-  margin-top: 4px;
-  padding: 1px;
-  width: 60px;
-  height: 20px;
-  font-size: 8px;
+.craft-btn {
+  @apply m-2;
+
+  ::ng-deep .ring-btn {
+    @apply w-full;
+    @apply h-full;
+    @apply mt-0;
+    @apply py-1.5;
+  }
 }

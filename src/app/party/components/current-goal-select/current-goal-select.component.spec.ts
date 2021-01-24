@@ -26,6 +26,8 @@ describe('CurrentTargetSelectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CurrentGoalSelectComponent);
     component = fixture.componentInstance;
+    component.currentOptions = [];
+    component.goalOptions = [];
     fixture.detectChanges();
   });
 

@@ -3,6 +3,10 @@ export class I18n {
   constructor(private moduleName: string) {
   }
 
+  path(key: string): string {
+    return `path.${key}`;
+  }
+
   module(key: string): string {
     return `modules.${this.moduleName}.${key}`;
   }

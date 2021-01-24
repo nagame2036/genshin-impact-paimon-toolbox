@@ -1,11 +1,6 @@
-<div class="party-page" fxLayout="column">
-  <nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let link of links"
-       [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
-      {{ ('modules.' + link + '.title') | translate }}
-    </a>
-  </nav>
-  <div class="subpage-horizontal-padding">
+<div class="party-page">
+  <app-nav-tabs [links]="links"></app-nav-tabs>
+  <div class="subpage-padding-x">
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -7,13 +7,11 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 
-  showMenu = true;
-
   routers = [
     {path: 'home'},
     {path: 'party'},
-    {path: 'character-stat'},
     {path: 'inventory'},
     {path: 'resin'},
+    {path: 'settings'},
   ];
 }

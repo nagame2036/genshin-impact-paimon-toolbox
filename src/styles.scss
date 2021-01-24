@@ -8,17 +8,16 @@ body {
 @tailwind components;
 
 .subpage-padding {
-  @extend .subpage-top-padding;
-  @extend .subpage-horizontal-padding;
+  @extend .subpage-padding-t;
+  @extend .subpage-padding-x;
 }
 
-.subpage-top-padding {
-  padding-top: 16px;
+.subpage-padding-t {
+  @apply pt-4;
 }
 
-.subpage-horizontal-padding {
-  padding-left: 16px;
-  padding-right: 16px;
+.subpage-padding-x {
+  @apply px-4;
 }
 
 @tailwind utilities;

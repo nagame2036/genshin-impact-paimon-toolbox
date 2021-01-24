@@ -3,7 +3,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ExecutePlanConfirmDialogComponent} from './execute-plan-confirm-dialog.component';
 import {PartyModule} from '../../party.module';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {ItemList} from '../../../material/models/item-list.model';
 
@@ -21,16 +20,6 @@ describe('ExecutePlanConfirmDialogComponent', () => {
         AppTranslateModule,
         AppIndexedDbModule,
       ],
-      providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        },
-        {
-          provide: MAT_DIALOG_DATA,
-          useValue: {}
-        }
-      ]
     })
       .compileComponents();
   });

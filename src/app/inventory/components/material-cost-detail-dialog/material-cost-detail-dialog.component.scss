@@ -1,4 +1,14 @@
-.scrollable-material-cost-detail {
-  min-width: 800px;
-  height: 32vh;
+.content {
+  @apply grid;
+  @apply gap-4;
+  grid-template-columns: repeat(8, auto);
+  max-height: 50vh;
+  @apply overflow-auto;
+}
+
+.close-btn ::ng-deep .ring-btn {
+  @apply block;
+  @apply m-auto;
+  @apply px-12;
+  @apply py-2;
 }

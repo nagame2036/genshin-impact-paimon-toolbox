@@ -1,0 +1,6 @@
+<nav class="navbar">
+  <a *ngFor="let link of links" [routerLink]="link.path"
+     routerLinkActive #rla="routerLinkActive" [ngClass]="{'active': rla.isActive}">
+    {{ link.text | translate }}
+  </a>
+</nav>

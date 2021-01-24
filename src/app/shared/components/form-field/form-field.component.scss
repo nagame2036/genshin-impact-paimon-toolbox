@@ -1,0 +1,18 @@
+.form-field {
+  min-width: inherit;
+  @apply m-2;
+  @apply p-0.5;
+  @apply border-2;
+  @apply rounded;
+}
+
+.form-field-label {
+  @apply text-xs;
+  @apply px-1;
+  @apply select-none;
+}
+
+.form-field-content {
+  @apply top-4;
+  @apply px-1;
+}

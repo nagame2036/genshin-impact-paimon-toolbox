@@ -1,23 +1,25 @@
-<mat-toolbar fxLayout="row">
-  <button mat-icon-button (click)="goBack()">
-    <mat-icon>chevron_left</mat-icon>
+<div class="sub-toolbar">
+  <button class="icon-btn" (click)="goBack()">
+    <span class="material-icons">
+      arrow_back
+    </span>
   </button>
-  {{ i18n.module('detail') | translate }}
-  -
-  {{ i18n.dict('weapons.' + weaponId) | translate }}
-  <div fxFlex="1 1 auto"></div>
-  <button mat-icon-button color="warn" (click)="remove()">
-    <mat-icon>close</mat-icon>
+  <div class="sub-toolbar-title">
+    {{ i18n.module('detail') | translate }}
+    -
+    {{ i18n.dict('weapons.' + weaponId) | translate }}
+  </div>
+  <button class="icon-btn remove-btn" (click)="removeConfirm.open()">
+    <span class="material-icons">
+      delete
+    </span>
   </button>
-</mat-toolbar>
-<div fxLayout="column">
-  <nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let link of links"
-       [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
-      {{ i18n.module(link + '.title') | translate }}
-    </a>
-  </nav>
-  <div class="party-item-detail-subpage">
+</div>
+<div class="detail-content">
+  <app-nav-tabs [links]="links"></app-nav-tabs>
+  <div class="detail-subpage">
     <router-outlet></router-outlet>
   </div>
 </div>
+<app-remove-confirm-dialog category="weapons" [items]="[weapon]" (confirm)="remove()" #removeConfirm>
+</app-remove-confirm-dialog>

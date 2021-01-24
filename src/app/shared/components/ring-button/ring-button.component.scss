@@ -1,0 +1,17 @@
+.ring-btn {
+  @apply mt-1.5;
+  @apply rounded;
+  @apply border-2;
+  @apply shadow;
+  @apply appearance-none;
+  @apply hover:bg-primary-200;
+  @apply focus:outline-none;
+  @apply focus:ring;
+
+  &.disabled {
+    @apply cursor-not-allowed;
+    @apply text-gray-400;
+    @apply hover:bg-white;
+    @apply focus:ring-0;
+  }
+}

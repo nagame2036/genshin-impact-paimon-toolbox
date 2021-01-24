@@ -1,2 +1,8 @@
-@import '../../../character-and-gear/styles/party-item-overview';
-@import '../../../character-and-gear/styles/add-party-btn';
+@import '../../../character-and-gear/styles/party-items-list.scss';
+
+.item-overview {
+
+  div {
+    @apply pt-3.5;
+  }
+}

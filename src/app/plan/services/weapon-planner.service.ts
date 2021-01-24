@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {first, map, switchMap} from 'rxjs/operators';
+import {first, switchMap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {ItemList} from '../../material/models/item-list.model';
 import {WeaponService} from '../../weapon/services/weapon.service';
@@ -21,14 +21,14 @@ export class WeaponPlanner {
 
   plans = this.#plans.asObservable();
 
-  activePlans: Observable<{ plan: WeaponPlan, party: PartyWeapon }[]>;
+  activePlans = new ReplaySubject<{ plan: WeaponPlan, party: PartyWeapon }[]>(1);
 
   constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
               private marker: MaterialCostMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
-    this.activePlans = combineLatest([this.plans, this.weapons.partyMap]).pipe(
-      map(([plans, party]) => activePlans(plans, party))
-    );
+    combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
+      this.activePlans.next(activePlans(plans, party));
+    });
   }
 
   getPlan(id: number): Observable<WeaponPlan> {

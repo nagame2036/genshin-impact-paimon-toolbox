@@ -6,7 +6,7 @@ import {EnemiesMaterialService} from '../../material/services/enemies-material.s
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {ItemList} from '../../material/models/item-list.model';
 import {TalentLevelupMaterialService} from '../../material/services/talent-levelup-material.service';
-import {map, reduce, switchMap, take} from 'rxjs/operators';
+import {map, mergeMap, reduce, take} from 'rxjs/operators';
 import {TalentLevelData} from '../../character/models/talent-level-data.model';
 import {TalentLevel} from '../../character/models/talent-level.type';
 import {TalentPlan} from '../models/talent-plan.model';
@@ -41,7 +41,7 @@ export class TalentLevelupCostService {
 
   totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemList> {
     return from(plans).pipe(
-      switchMap(({party, plan}) => this.cost(party, plan.talents, true)),
+      mergeMap(({party, plan}) => this.cost(party, plan.talents, true)),
       take(plans.length),
       reduce((acc, value) => acc.combine(value), new ItemList())
     );

@@ -1,6 +1,6 @@
-/* tslint:disable:semicolon */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
+import {SelectOption} from '../../../shared/models/select-option.model';
 
 @Component({
   selector: 'app-current-goal-select',
@@ -10,16 +10,16 @@ import {Observable} from 'rxjs';
 export class CurrentGoalSelectComponent implements OnInit {
 
   @Input()
-  currentOptions!: number[];
+  currentOptions!: SelectOption[];
 
   @Input()
-  current!: number;
+  current!: any;
 
   @Input()
-  goalOptions!: number[];
+  goalOptions!: SelectOption[];
 
   @Input()
-  goal = 0;
+  goal!: any;
 
   @Input()
   satisfied!: Observable<boolean>;
@@ -35,9 +35,6 @@ export class CurrentGoalSelectComponent implements OnInit {
 
   constructor() {
   }
-
-  @Input()
-  valueDisplay: (value: number) => string = (value: number) => value.toString();
 
   ngOnInit(): void {
   }
@@ -56,6 +53,6 @@ export class CurrentGoalSelectComponent implements OnInit {
   }
 
   checkPlanAvailable(available: boolean | null): boolean {
-    return available === true && this.current !== this.goal && this.currentOptions.includes(this.goal);
+    return available === true && this.current !== this.goal && this.currentOptions.find(it => it.value === this.goal) !== undefined;
   }
 }

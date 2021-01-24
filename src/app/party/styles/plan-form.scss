@@ -1,0 +1,44 @@
+@import 'satisfied.scss';
+
+.plan-form-container {
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply m-8;
+  @apply w-64;
+}
+
+app-item-view {
+  @apply rounded;
+  @apply border;
+  @apply mb-4;
+}
+
+.attribute-select {
+  @apply w-64;
+
+  ::ng-deep .form-field {
+    @apply mx-0;
+  }
+}
+
+.execute-all-btn {
+  @apply m-2;
+  @apply flex-grow;
+  @apply w-full;
+
+  &.satisfied {
+    ::ng-deep .ring-btn {
+      @apply border-green-300;
+      @apply hover:bg-green-100;
+      @apply focus:ring-green-300;
+      @apply focus:ring-offset-2;
+    }
+  }
+
+  ::ng-deep .ring-btn {
+    @apply w-full;
+    @apply py-2;
+    @apply hover:bg-white;
+  }
+}

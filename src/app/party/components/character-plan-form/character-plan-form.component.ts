@@ -9,6 +9,8 @@ import {TalentService} from '../../../character/services/talent.service';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
 import {Observable, Subject} from 'rxjs';
+import {SelectOption} from '../../../shared/models/select-option.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-character-plan-form',
@@ -34,30 +36,33 @@ export class CharacterPlanFormComponent implements OnInit {
     {satisfied: new Subject()},
   ];
 
-  constellations = rangeList(0, 6) as Constellation[];
+  constellations!: SelectOption[];
 
-  talentLevels!: TalentLevel[];
+  talentLevels!: SelectOption[];
 
-  goalTalentLevels!: TalentLevel[][];
+  goalTalentLevels!: SelectOption[][];
 
   @Output()
   currentChange = new EventEmitter();
 
   @Output()
-  goalChange = new EventEmitter<CharacterPlan>();
+  goalChange = new EventEmitter();
 
   @Output()
   executePlan = new EventEmitter<number>();
 
-  constructor(private talentService: TalentService) {
+  constructor(private talentService: TalentService, private translator: TranslateService) {
   }
 
   ngOnInit(): void {
-    this.talentLevels = this.talentService.levels(this.character.ascension);
-    this.goalTalentLevels = this.character.talents.map(it => this.talentService.levels(this.plan.ascension, it.level));
+    this.constellations = rangeList(0, 6).map(it => {
+      return {value: it, text: `${it} - ${this.translator.instant(this.getConstellationText(it))}`};
+    });
+    this.talentLevels = mapTalentLevels(this.talentService.levels(this.character.ascension));
+    this.goalTalentLevels = this.character.talents.map(it => mapTalentLevels(this.talentService.levels(this.plan.ascension, it.level)));
   }
 
-  getConstellationText(constellation: Constellation): string {
+  getConstellationText(constellation: number): string {
     const text = constellation === 0 ? 'none' : `constellations.${this.character.id}.${constellation}`;
     return this.i18n.dict(text);
   }
@@ -79,7 +84,7 @@ export class CharacterPlanFormComponent implements OnInit {
     const {ascension, level} = ascensionLevel;
     this.character.ascension = ascension;
     this.character.level = level;
-    this.talentLevels = this.talentService.levels(ascension);
+    this.talentLevels = mapTalentLevels(this.talentService.levels(ascension));
     this.character.talents = this.talentService.correctLevels(ascension, this.character.talents);
     this.emitCurrentChange();
   }
@@ -101,7 +106,7 @@ export class CharacterPlanFormComponent implements OnInit {
   correctGoalTalents(): void {
     const talents = this.character.talents;
     const goalAscension = this.plan.ascension;
-    this.goalTalentLevels = talents.map(it => this.talentService.levels(goalAscension, it.level));
+    this.goalTalentLevels = talents.map(it => mapTalentLevels(this.talentService.levels(goalAscension, it.level)));
     const starts = talents.map(it => it.level);
     this.plan.talents = this.talentService.correctLevels(goalAscension, this.plan.talents, starts);
     this.emitGoalChange();
@@ -117,6 +122,10 @@ export class CharacterPlanFormComponent implements OnInit {
   }
 
   private emitGoalChange(): void {
-    this.goalChange.emit(this.plan);
+    this.goalChange.emit();
   }
+}
+
+function mapTalentLevels(levels: TalentLevel[]): SelectOption[] {
+  return levels.map(it => ({value: it, text: `${it}`}));
 }

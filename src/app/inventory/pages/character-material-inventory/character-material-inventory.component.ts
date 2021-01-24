@@ -19,8 +19,6 @@ export class CharacterMaterialInventoryComponent extends AbstractSubInventoryCom
 
   gem$!: Observable<InventoryItemDetail[]>;
 
-  rarities = [5, 4, 3, 2];
-
   constructor(materials: MaterialService, inventory: InventoryService) {
     super(materials, inventory);
   }

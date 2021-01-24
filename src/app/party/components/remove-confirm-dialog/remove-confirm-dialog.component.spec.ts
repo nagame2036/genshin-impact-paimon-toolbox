@@ -2,7 +2,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RemoveConfirmDialogComponent} from './remove-confirm-dialog.component';
 import {PartyModule} from '../../party.module';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AppTranslateModule} from '../../../app-translate.module';
 
 describe('RemoveConfirmDialogComponent', () => {
@@ -18,16 +17,6 @@ describe('RemoveConfirmDialogComponent', () => {
         PartyModule,
         AppTranslateModule
       ],
-      providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        },
-        {
-          provide: MAT_DIALOG_DATA,
-          useValue: {}
-        }
-      ]
     })
       .compileComponents();
   });

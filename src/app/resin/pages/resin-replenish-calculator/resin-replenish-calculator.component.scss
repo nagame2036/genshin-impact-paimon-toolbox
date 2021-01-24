@@ -1,5 +1,30 @@
-@import 'src/assets/styles/app-form-field';
+.page {
+  @apply w-3/4;
+  @apply mt-8;
+  @apply mx-auto;
+  @apply flex;
+  @apply flex-col;
+}
 
-mat-form-field {
-  width: 240px;
+.title {
+  @apply mx-auto;
+  @apply text-xl;
+  @apply font-semibold;
+}
+
+.resin-inputs {
+  @apply grid;
+  @apply grid-cols-4;
+}
+
+.resin-field {
+  @apply col-span-2;
+}
+
+.result {
+  &.disabled ::ng-deep {
+    .form-field-label, .form-field-content {
+      @apply text-gray-300;
+    }
+  }
 }

@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Weapon} from '../../../weapon/models/weapon.model';
-import {MatDialog} from '@angular/material/dialog';
 import {I18n} from '../../../shared/models/i18n.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';
-import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyWeaponListComponent} from '../../../weapon/components/party-weapon-list/party-weapon-list.component';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {Router} from '@angular/router';
@@ -26,7 +24,7 @@ export class PartyWeaponComponent implements OnInit {
   @ViewChild('list')
   list!: PartyWeaponListComponent;
 
-  constructor(private dialog: MatDialog, private router: Router, private service: WeaponService) {
+  constructor(private router: Router, private service: WeaponService) {
   }
 
   ngOnInit(): void {
@@ -43,11 +41,9 @@ export class PartyWeaponComponent implements OnInit {
     }
   }
 
-  openRemoveDialog(): void {
-    RemoveConfirmDialogComponent.openBy(this.dialog, 'weapons', this.selectedItems, () => {
-      this.service.removePartyMemberByList(this.selectedItems.map(it => it.key ?? -1));
-      this.updateSelected([]);
-    });
+  remove(): void {
+    this.service.removePartyMemberByList(this.selectedItems.map(it => it.key ?? -1));
+    this.updateSelected([]);
   }
 
   updateSelected(selected: Weapon[]): void {

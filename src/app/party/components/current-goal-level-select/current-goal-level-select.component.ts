@@ -4,6 +4,7 @@ import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../../character-and-gear/models/ascension.type';
 import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
 import {Observable} from 'rxjs';
+import {SelectOption} from '../../../shared/models/select-option.model';
 
 @Component({
   selector: 'app-current-goal-level-select',
@@ -17,22 +18,22 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
   @Input()
   label!: string;
 
-  ascensions: Ascension[] = rangeList(0, 6, true) as Ascension[];
+  ascensions!: SelectOption[];
 
   @Input()
   ascension!: Ascension;
 
-  goalAscensions!: Ascension[];
+  goalAscensions!: SelectOption[];
 
   @Input()
   goalAscension!: Ascension;
 
-  levels!: number[];
+  levels!: SelectOption[];
 
   @Input()
   level!: number;
 
-  goalLevels!: number[];
+  goalLevels!: SelectOption[];
 
   @Input()
   goalLevel!: number;
@@ -53,21 +54,38 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.levels = AscensionLevel.levels(this.ascension);
-    this.goalAscensions = rangeList(this.ascension, 6, true) as Ascension[];
-    this.goalLevels = AscensionLevel.levels(this.goalAscension, this.level);
+    this.ascensions = (rangeList(0, 6, true) as Ascension[]).map(this.getAscension);
+    this.levels = this.getLevels();
+    this.goalAscensions = this.getGoalAscensions();
+    this.goalLevels = this.getGoalLevels();
   }
 
-  getAscension(num: number): string {
-    return `★${num}`;
+  getGoalAscensions(): SelectOption[] {
+    return (rangeList(this.ascension, 6, true) as Ascension[]).map(this.getAscension);
+  }
+
+  getLevels(): SelectOption[] {
+    return AscensionLevel.levels(this.ascension).map(this.getLevel);
+  }
+
+  getGoalLevels(): SelectOption[] {
+    return AscensionLevel.levels(this.goalAscension, this.level).map(this.getLevel);
+  }
+
+  getAscension(num: number): SelectOption {
+    return {value: num, text: `★${num}`};
+  }
+
+  getLevel(num: number): SelectOption {
+    return {value: num, text: `${num}`};
   }
 
   setAscension(value: number): void {
     this.ascension = value as Ascension;
-    this.levels = AscensionLevel.levels(this.ascension);
+    this.levels = this.getLevels();
     this.level = AscensionLevel.correctLevel(this.ascension, this.level);
     this.emitCurrentChange();
-    this.goalAscensions = rangeList(this.ascension, 6, true) as Ascension[];
+    this.goalAscensions = this.getGoalAscensions();
     if (this.goalAscension < value) {
       this.setGoalAscension(value);
     }
@@ -75,14 +93,14 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
 
   setGoalAscension(value: number): void {
     this.goalAscension = value as Ascension;
-    this.goalLevels = AscensionLevel.levels(this.goalAscension, this.level);
+    this.goalLevels = this.getGoalLevels();
     this.goalLevel = AscensionLevel.correctLevel(this.goalAscension, this.goalLevel);
     this.emitGoalChange();
   }
 
   setLevel(value: number): void {
     this.level = value;
-    this.goalLevels = AscensionLevel.levels(this.goalAscension, this.level);
+    this.goalLevels = this.getGoalLevels();
     this.emitCurrentChange();
     if (this.goalLevel < value) {
       this.setGoalLevel(value);

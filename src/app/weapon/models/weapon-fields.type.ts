@@ -1,1 +1,1 @@
-export type WeaponFields = 'rarity' | 'level' | 'refine';
+export type WeaponField = 'rarity' | 'level' | 'refine';

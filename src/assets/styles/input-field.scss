@@ -1,0 +1,15 @@
+@import './form-field.scss';
+@import './prefix-suffix.scss';
+
+.input-container {
+  @apply box-border;
+  @apply flex;
+  @apply flex-row;
+}
+
+.input-field {
+  @apply box-border;
+  @apply flex-grow;
+  @apply appearance-none;
+  @apply outline-none;
+}

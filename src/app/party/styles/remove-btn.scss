@@ -1,0 +1,12 @@
+.remove-btn {
+  ::ng-deep .ring-btn {
+    @apply px-3;
+    @apply py-1.5;
+    @apply text-red-500;
+    @apply border-red-500;
+    @apply hover:bg-red-300;
+    @apply hover:border-red-500;
+    @apply focus:ring-red-500;
+    @apply focus:ring-offset-2;
+  }
+}

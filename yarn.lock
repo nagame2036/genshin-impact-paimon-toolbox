@@ -238,27 +238,6 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/flex-layout@^11.0.0-beta.33":
-  version "11.0.0-beta.33"
-  resolved "https://registry.npm.taobao.org/@angular/flex-layout/download/@angular/flex-layout-11.0.0-beta.33.tgz#c2d08f90164701b66a62b8c4365b4e22c1e95789"
-  integrity sha1-wtCPkBZHAbZqYrjENltOIsHpV4k=
-  dependencies:
-    tslib "^2.0.0"
-
-"@angular/forms@~11.0.1":
-  version "11.0.9"
-  resolved "https://registry.npm.taobao.org/@angular/forms/download/@angular/forms-11.0.9.tgz#c7238af3d42e75f436840f5cf3002cbd41811d84"
-  integrity sha1-xyOK89QudfQ2hA9c8wAsvUGBHYQ=
-  dependencies:
-    tslib "^2.0.0"
-
-"@angular/material@^11.0.1":
-  version "11.0.4"
-  resolved "https://registry.npm.taobao.org/@angular/material/download/@angular/material-11.0.4.tgz#af7a8208800332dfba1dc5c8f1dbc0745f72da1f"
-  integrity sha1-r3qCCIADMt+6HcXI8dvAdF9y2h8=
-  dependencies:
-    tslib "^2.0.0"
-
 "@angular/platform-browser-dynamic@~11.0.1":
   version "11.0.9"
   resolved "https://registry.npm.taobao.org/@angular/platform-browser-dynamic/download/@angular/platform-browser-dynamic-11.0.9.tgz#280f5733ffd0135ad232d56022d445b57cee976d"

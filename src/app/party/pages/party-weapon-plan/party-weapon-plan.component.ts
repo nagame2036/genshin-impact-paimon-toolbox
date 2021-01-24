@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {I18n} from '../../../shared/models/i18n.model';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
@@ -15,7 +15,6 @@ import {AscensionLevel} from '../../../character-and-gear/models/ascension-level
 import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
 import {PartyPlanExecutor} from '../../services/party-plan-executor.service';
 import {ExecutePlanConfirmDialogComponent} from '../../components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-party-weapon-plan',
@@ -42,8 +41,8 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
     'enemy',
   ];
 
-  plans: { cost: ItemList; title: string; satisfied: Observable<boolean> }[] = [
-    {title: this.i18n.module('total-cost'), cost: new ItemList(), satisfied: new Subject()},
+  plans: { value: ItemList; text: string; satisfied: Observable<boolean> }[] = [
+    {text: this.i18n.module('total-cost'), value: new ItemList(), satisfied: new Subject()},
   ];
 
   party!: PartyWeapon;
@@ -54,9 +53,12 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
 
   readonly #plan = new ReplaySubject<WeaponPlan>(1);
 
+  @ViewChild('executePlanConfirm')
+  executePlanConfirm!: ExecutePlanConfirmDialogComponent;
+
   constructor(private weapons: WeaponService, private planner: WeaponPlanner, private route: ActivatedRoute,
               private levelup: WeaponLevelupCostService, private weaponExps: WeaponExpMaterialService,
-              private executor: PartyPlanExecutor, private dialog: MatDialog) {
+              private executor: PartyPlanExecutor) {
     super();
   }
 
@@ -77,9 +79,9 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
 
   executePlan(planIndex: number): void {
     const plan = this.plans[planIndex];
-    const data = {title: plan.title, cost: plan.cost, item: this.i18n.dict(`weapons.${this.party.id}`)};
-    ExecutePlanConfirmDialogComponent.openBy(this.dialog, data, () => {
-      this.executor.consumeDemand(plan.cost);
+    const data = {title: plan.text, cost: plan.value, item: this.i18n.dict(`weapons.${this.party.id}`)};
+    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
+      this.executor.consumeDemand(plan.value);
       this.executeLevelup();
       this.saveParty();
     });
@@ -111,7 +113,7 @@ export class PartyWeaponPlanComponent extends AbstractObservableComponent implem
 
   private updateCostDetail(index: number, cost: ItemList): void {
     const detail = this.plans[index];
-    detail.cost = cost;
+    detail.value = cost;
     detail.satisfied = this.executor.checkDemandSatisfied(cost);
   }
 

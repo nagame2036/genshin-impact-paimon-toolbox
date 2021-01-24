@@ -1,24 +1,14 @@
-import {
-  Component,
-  ContentChild,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  QueryList,
-  SimpleChanges,
-  TemplateRef,
-  ViewChildren
-} from '@angular/core';
+import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
 import {I18n} from '../../../shared/models/i18n.model';
-import {weaponTypeList} from '../../models/weapon-type.enum';
-import {MatSelectChange} from '@angular/material/select';
-import {ItemViewComponent} from '../../../shared/components/item-view/item-view.component';
-import {ensureAtLeastOneElement, toggleItem} from '../../../shared/utils/collections';
-import {WeaponFields} from '../../models/weapon-fields.type';
+import {WeaponType, weaponTypeList} from '../../models/weapon-type.enum';
+import {toggleItem} from '../../../shared/utils/collections';
+import {WeaponField} from '../../models/weapon-fields.type';
 import {PartyWeapon} from '../../models/party-weapon.model';
 import {ImageService} from '../../../image/services/image.service';
+import {SelectOption} from '../../../shared/models/select-option.model';
+
+const weaponRarities = [5, 4, 3];
 
 @Component({
   selector: 'app-weapon-list',
@@ -33,10 +23,7 @@ export class WeaponListComponent implements OnChanges {
   party = false;
 
   @Input()
-  height = 80;
-
-  @Input()
-  itemWidth = 100;
+  itemWidth = 102;
 
   @Input()
   weapons: Weapon[] = [];
@@ -58,27 +45,29 @@ export class WeaponListComponent implements OnChanges {
   @Output()
   multiSelected = new EventEmitter<Weapon[]>();
 
-  @ViewChildren('list')
-  list!: QueryList<ItemViewComponent>;
+  @Input()
+  sortFields: WeaponField[] = ['rarity'];
+
+  sorts: SelectOption[] = this.sortFields.map(it => ({value: it, text: this.i18n.dict(it)}));
 
   @Input()
-  sortFields: WeaponFields[] = ['rarity'];
+  sort: WeaponField = 'rarity';
 
-  @Input()
-  sort: WeaponFields = 'rarity';
+  rarities = weaponRarities.map(it => ({value: it, text: `★${it}`}));
 
-  rarities = [5, 4, 3];
+  rarityFilter = weaponRarities;
 
-  rarityFilter = this.rarities;
+  types = weaponTypeList.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
 
-  types = weaponTypeList;
-
-  typeFilter = this.types;
+  typeFilter = weaponTypeList;
 
   constructor(public images: ImageService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('sortFields')) {
+      this.sorts = changes.sortFields.currentValue.map((it: string) => ({value: it, text: this.i18n.dict(it)}));
+    }
     if (changes.hasOwnProperty('weapons')) {
       this.update();
     }
@@ -94,13 +83,18 @@ export class WeaponListComponent implements OnChanges {
       .sort((a, b) => b[this.sort] - a[this.sort] || a.type - b.type || b.id - a.id);
   }
 
-  changeRarityFilter(change: MatSelectChange): void {
-    this.rarityFilter = ensureAtLeastOneElement(this.rarityFilter, change.value);
+  changeSort(sort: WeaponField): void {
+    this.sort = sort;
     this.update();
   }
 
-  changeTypeFilter(change: MatSelectChange): void {
-    this.typeFilter = ensureAtLeastOneElement(this.typeFilter, change.value);
+  filterRarity(value: number[]): void {
+    this.rarityFilter = value;
+    this.update();
+  }
+
+  filterType(value: WeaponType[]): void {
+    this.typeFilter = value;
     this.update();
   }
 
@@ -108,25 +102,18 @@ export class WeaponListComponent implements OnChanges {
     this.multiSelect ? this.onMultiSelect(item) : this.selected.emit(item);
   }
 
-  getKey(item: Weapon): number {
-    return this.party ? (item as PartyWeapon).key ?? -1 : 0;
-  }
-
   onMultiSelect(item: Weapon): void {
     if (this.party) {
       const partyKey = (item as PartyWeapon).key ?? -1;
       this.selectedItems = toggleItem(this.selectedItems, item, it => ((it as PartyWeapon).key ?? -1) === partyKey);
-      this.list.filter(it => it.key === partyKey).forEach(it => it.active = !it.active);
     } else {
       this.selectedItems = toggleItem(this.selectedItems, item);
-      this.list.filter(it => it.id === item.id).forEach(it => it.active = !it.active);
     }
     this.multiSelected.emit(this.selectedItems);
   }
 
   selectAll(checked: boolean): void {
     this.selectedItems = checked ? this.items : [];
-    this.list.forEach(it => it.active = checked);
     this.multiSelected.emit(this.selectedItems);
   }
 }

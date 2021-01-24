@@ -1,11 +1,9 @@
-<div class="inventory-page" fxLayout="column">
-  <nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let link of links"
-       [routerLink]="link" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
-      {{ i18n.dict(link) | translate }}
-    </a>
-  </nav>
-  <div class="subpage-padding">
-    <router-outlet></router-outlet>
+<div class="page">
+  <app-nav-tabs [links]="links"></app-nav-tabs>
+  <div class="subpage">
+    <app-inventory-header></app-inventory-header>
+    <div class="list">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

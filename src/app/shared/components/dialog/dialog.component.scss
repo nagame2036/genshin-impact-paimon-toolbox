@@ -1,0 +1,47 @@
+.outside {
+  background: rgb(0, 0, 0, 0.6);
+  @apply hidden;
+  @apply fixed;
+  @apply top-0;
+  @apply left-0;
+  @apply w-full;
+  @apply h-full;
+  @apply overflow-auto;
+  @apply z-50;
+
+  &.opened {
+    @apply flex;
+    @apply flex-col;
+    @apply place-content-center;
+  }
+}
+
+.dialog {
+  @apply relative;
+  @apply m-auto;
+  max-height: 50%;
+  max-width: 50%;
+  @apply flex;
+  @apply flex-col;
+  @apply px-8;
+  @apply py-4;
+  @apply bg-white;
+  @apply rounded;
+  @apply shadow-xl;
+}
+
+.title {
+  @apply text-xl;
+  @apply font-semibold;
+  @apply my-2;
+}
+
+.content {
+  @apply flex-grow;
+  @apply my-2;
+}
+
+.actions {
+  @apply mt-2;
+  @apply mb-1;
+}

@@ -1,14 +1,21 @@
-<h2 mat-dialog-title>{{ i18n.module('confirm-to-remove') | translate }}</h2>
-<mat-dialog-content gdColumns="repeat(auto-fill, 100px)" gdGap="16px" gdAlignRows="space-around center">
-  <app-item-view *ngFor="let item of data.items" [category]="data.category" [id]="item.id" [rarity]="item.rarity"
-                 [style.width.px]="100" [style.margin-top.px]="16">
-  </app-item-view>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button type="button" mat-button color="warn" (click)="close(true)">
-    {{ i18n.dict('confirm') | translate }}
-  </button>
-  <button type="button" mat-flat-button color="primary" mat-dialog-close>
-    {{ i18n.dict('cancel') | translate }}
-  </button>
-</mat-dialog-actions>
+<app-dialog #dialog>
+  <h2 title>
+    {{ i18n.module('confirm-to-remove') | translate }}
+  </h2>
+  <div class="remove-list-container">
+    <div class="remove-list">
+      <div *ngFor="let item of items" class="remove-item-view">
+        <app-item-view *ngIf="item" [category]="category" [id]="item.id" [rarity]="item.rarity">
+        </app-item-view>
+      </div>
+    </div>
+  </div>
+  <div actions class="remove-confirm-actions">
+    <app-ring-button class="remove-confirm-actions-btn cancel-btn" (click)="dialog.close()">
+      {{ i18n.dict('cancel') | translate }}
+    </app-ring-button>
+    <app-ring-button class="remove-confirm-actions-btn confirm-btn" (click)="confirm.emit()">
+      {{ i18n.dict('confirm') | translate }}
+    </app-ring-button>
+  </div>
+</app-dialog>

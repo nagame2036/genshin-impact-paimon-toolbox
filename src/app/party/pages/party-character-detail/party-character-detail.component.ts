@@ -5,8 +5,6 @@ import {Location} from '@angular/common';
 import {CharacterService} from '../../../character/services/character.service';
 import {map, switchMap, takeUntil} from 'rxjs/operators';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {MatDialog} from '@angular/material/dialog';
-import {RemoveConfirmDialogComponent} from '../../components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {PartyCharacter} from '../../../character/models/party-character.model';
 import {ImageService} from '../../../image/services/image.service';
 
@@ -24,10 +22,10 @@ export class PartyCharacterDetailComponent extends AbstractObservableComponent i
   character!: PartyCharacter;
 
   links = [
-    'plan',
+    {path: 'plan', text: this.i18n.module('plan.title')},
   ];
 
-  constructor(private route: ActivatedRoute, private location: Location, private characters: CharacterService, private dialog: MatDialog,
+  constructor(private route: ActivatedRoute, private location: Location, private characters: CharacterService,
               public images: ImageService) {
     super();
   }
@@ -50,9 +48,7 @@ export class PartyCharacterDetailComponent extends AbstractObservableComponent i
   }
 
   remove(): void {
-    RemoveConfirmDialogComponent.openBy(this.dialog, 'characters', [this.character], () => {
-      this.characters.removePartyMember(this.characterId);
-      this.goBack();
-    });
+    this.characters.removePartyMember(this.characterId);
+    this.goBack();
   }
 }

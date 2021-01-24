@@ -15,7 +15,6 @@ import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
 import {I18n} from '../../shared/models/i18n.model';
-import {TranslateService} from '@ngx-translate/core';
 import {ItemType} from '../../character-and-gear/models/item-type.enum';
 import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 
@@ -39,7 +38,7 @@ export class WeaponLevelupCostService {
   private readonly levelupLabel = this.i18n.module('levelup');
 
   constructor(http: HttpClient, private domain: WeaponAscensionMaterialService, private enemies: EnemiesMaterialService,
-              private exps: WeaponExpMaterialService, private marker: MaterialCostMarker, private translator: TranslateService) {
+              private exps: WeaponExpMaterialService, private marker: MaterialCostMarker) {
     http.get<WeaponAscensionCost>('assets/data/weapons/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<WeaponLevelupCost>('assets/data/weapons/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
@@ -74,12 +73,8 @@ export class WeaponLevelupCostService {
         });
         return cost;
       }),
-      map(cost => this.mark(mark, weapon, cost, this.ascensionLabel, this.ascensionParam(weapon.ascension, goal)))
+      map(cost => this.mark(mark, weapon, cost, this.ascensionLabel, [weapon.ascension, goal].map(it => `★${it}`)))
     );
-  }
-
-  private ascensionParam(...ascensions: Ascension[]): string[] {
-    return ascensions.map(ascension => this.translator.instant(this.i18n.dict(`ascensions.${ascension}`)));
   }
 
   private levelup(weapon: PartyWeapon, goal: number, mark: boolean): Observable<ItemList> {

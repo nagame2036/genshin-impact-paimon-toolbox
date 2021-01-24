@@ -1,22 +1,26 @@
-<mat-toolbar fxLayout="row">
-  <button mat-icon-button (click)="goBack()">
-    <mat-icon>chevron_left</mat-icon>
+<div class="sub-toolbar">
+  <button class="icon-btn" (click)="goBack()">
+    <span class="material-icons">
+      arrow_back
+    </span>
   </button>
-  {{ i18n.module('add') | translate }}
-</mat-toolbar>
-<div fxLayout="column" fxLayoutAlign="center center" class="subpage-horizontal-padding">
-  <div *ngIf="!selected" style="width: 100%">
+  <div class="sub-toolbar-title">
+    {{ i18n.module('add') | translate }}
+  </div>
+</div>
+<div class="add-content subpage-padding-x">
+  <div *ngIf="!selected">
     <app-character-list [characters]="characters" (selected)="select($event)"></app-character-list>
   </div>
-  <div *ngIf="selected" class="add-character-form" fxLayout="column" fxLayoutAlign="center center">
+  <div class="add-form" *ngIf="selected">
     <app-character-plan-form [character]="selectedCharacter" [plan]="selectedPlan"></app-character-plan-form>
-  </div>
-  <div *ngIf="selected" fxLayout="row" fxLayoutGap="16px" style="width: 240px">
-    <button mat-stroked-button fxFlex="50%" color="warn" (click)="reset()">
-      {{ i18n.module('reset') | translate }}
-    </button>
-    <button mat-flat-button fxFlex="50%" color="primary" [disabled]="!selected" (click)="add()">
-      {{ i18n.module('add') | translate }}
-    </button>
+    <div *ngIf="selected" class="add-actions">
+      <app-ring-button class="add-actions-btn reset-btn" (click)="reset()">
+        {{ i18n.module('reset') | translate }}
+      </app-ring-button>
+      <app-ring-button class="add-actions-btn add-btn" [disabled]="!selected" (click)="add()">
+        {{ i18n.module('add') | translate }}
+      </app-ring-button>
+    </div>
   </div>
 </div>

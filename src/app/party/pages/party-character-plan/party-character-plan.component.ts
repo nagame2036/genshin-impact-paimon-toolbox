@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../shared/models/i18n.model';
 import {PartyCharacter} from '../../../character/models/party-character.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
@@ -15,7 +15,6 @@ import {combineLatest, from, Observable, range, ReplaySubject, Subject, zip} fro
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
 import {PartyPlanExecutor} from '../../services/party-plan-executor.service';
-import {MatDialog} from '@angular/material/dialog';
 import {ExecutePlanConfirmDialogComponent} from '../../components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 
 @Component({
@@ -53,22 +52,20 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
 
   readonly #plan = new ReplaySubject<CharacterPlan>();
 
-  plans: { title: string, cost: ItemList, satisfied: Observable<boolean> }[] = [
-    {title: this.i18n.module('total-cost'), cost: new ItemList(), satisfied: new Subject()},
-    {title: this.i18n.module('levelup-cost'), cost: new ItemList(), satisfied: new Subject()},
-    {title: this.i18n.module('talent-cost.0'), cost: new ItemList(), satisfied: new Subject()},
-    {title: this.i18n.module('talent-cost.1'), cost: new ItemList(), satisfied: new Subject()},
-    {title: this.i18n.module('talent-cost.2'), cost: new ItemList(), satisfied: new Subject()},
+  plans: { text: string, value: ItemList, satisfied: Observable<boolean> }[] = [
+    {text: this.i18n.module('total-cost'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('levelup-cost'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('talent-cost.0'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('talent-cost.1'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('talent-cost.2'), value: new ItemList(), satisfied: new Subject()},
   ];
 
-  planExecution = [
-    this.executeAll,
-    this.executeLevelup,
-  ];
+  @ViewChild('executePlanConfirm')
+  executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
   constructor(private characters: CharacterService, private planner: CharacterPlanner, private route: ActivatedRoute,
               private levelup: CharacterLevelupCostService, private talentUp: TalentLevelupCostService,
-              private characterExps: CharacterExpMaterialService, private executor: PartyPlanExecutor, private dialog: MatDialog) {
+              private characterExps: CharacterExpMaterialService, private executor: PartyPlanExecutor) {
     super();
   }
 
@@ -88,14 +85,11 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
     this.#plan.next(this.plan);
   }
 
-  executePlan(planIndex: number): void {
+  executePlanAndSave(planIndex: number): void {
     const plan = this.plans[planIndex];
-    const execution = this.planExecution[planIndex] ?? (() => this.executeTalentLevelup(planIndex - 2));
-    const data = {title: plan.title, cost: plan.cost, item: this.i18n.dict(`characters.${this.party.id}`)};
-    ExecutePlanConfirmDialogComponent.openBy(this.dialog, data, () => {
-      this.executor.consumeDemand(plan.cost);
-      execution();
-      this.saveParty();
+    const data = {title: plan.text, cost: plan.value, item: this.i18n.dict(`characters.${this.party.id}`)};
+    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
+      this.executePlan(plan, planIndex);
     });
   }
 
@@ -147,8 +141,24 @@ export class PartyCharacterPlanComponent extends AbstractObservableComponent imp
 
   private updatePlanDetail(planIndex: number, cost: ItemList): void {
     const plan = this.plans[planIndex];
-    plan.cost = cost;
+    plan.value = cost;
     plan.satisfied = this.executor.checkDemandSatisfied(cost);
+  }
+
+  private executePlan(plan: { text: string; value: ItemList; satisfied: Observable<boolean> }, planIndex: number): void {
+    this.executor.consumeDemand(plan.value);
+    switch (planIndex) {
+      case 0:
+        this.executeAll();
+        break;
+      case 1:
+        this.executeLevelup();
+        break;
+      default:
+        this.executeTalentLevelup(planIndex - 2);
+        break;
+    }
+    this.saveParty();
   }
 
   private executeAll(): void {

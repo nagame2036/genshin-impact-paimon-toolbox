@@ -15,7 +15,7 @@ describe('MultiSelectComponent', () => {
       ],
       imports: [
         SharedModule,
-        AppTranslateModule
+        AppTranslateModule,
       ]
     })
       .compileComponents();
@@ -24,6 +24,8 @@ describe('MultiSelectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiSelectComponent);
     component = fixture.componentInstance;
+    component.options = [];
+    component.values = [];
     fixture.detectChanges();
   });
 

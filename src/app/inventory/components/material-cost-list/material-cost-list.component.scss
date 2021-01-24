@@ -1,0 +1,10 @@
+.list-options {
+  @apply flex;
+  @apply flex-row;
+  @apply items-center;
+}
+
+.list {
+  height: 72vh;
+  @apply overflow-auto;
+}

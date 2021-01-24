@@ -1,47 +1,61 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule} from '@ngx-translate/core';
 
 import {ItemViewComponent} from './components/item-view/item-view.component';
-import {MultiSelectComponent} from './components/multi-select/multi-select.component';
+import {MultiSelectAndSelectAllComponent} from './components/multi-select-and-select-all/multi-select-and-select-all.component';
 import {ParamsTranslatePipe} from './pipes/params-translate.pipe';
+import {CheckboxComponent} from './components/checkbox/checkbox.component';
+import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
+import {FormFieldComponent} from './components/form-field/form-field.component';
+import {TextFieldComponent} from './components/text-field/text-field.component';
+import {NumberFieldComponent} from './components/number-field/number-field.component';
+import {SelectComponent} from './components/select/select.component';
+import {MultiSelectComponent} from './components/multi-select/multi-select.component';
+import {DialogComponent} from './components/dialog/dialog.component';
+import {RingButtonComponent} from './components/ring-button/ring-button.component';
 
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import {TranslateModule} from '@ngx-translate/core';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
-import {FlexModule} from '@angular/flex-layout';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     ItemViewComponent,
-    MultiSelectComponent,
+    MultiSelectAndSelectAllComponent,
     ParamsTranslatePipe,
+    CheckboxComponent,
+    NavTabsComponent,
+    FormFieldComponent,
+    TextFieldComponent,
+    NumberFieldComponent,
+    SelectComponent,
+    MultiSelectComponent,
+    DialogComponent,
+    RingButtonComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule,
     TranslateModule,
     NgxIndexedDBModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    FlexModule,
-    MatCheckboxModule
   ],
   exports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule,
     TranslateModule,
     NgxIndexedDBModule,
     ItemViewComponent,
-    MultiSelectComponent,
+    MultiSelectAndSelectAllComponent,
     ParamsTranslatePipe,
+    CheckboxComponent,
+    NavTabsComponent,
+    FormFieldComponent,
+    TextFieldComponent,
+    NumberFieldComponent,
+    SelectComponent,
+    MultiSelectComponent,
+    DialogComponent,
+    RingButtonComponent,
   ]
 })
 export class SharedModule {

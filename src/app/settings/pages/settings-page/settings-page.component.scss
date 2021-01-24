@@ -1,8 +1,20 @@
-.settings-item {
-  margin: 16px 0;
+.page {
+  @apply mt-8;
+  @apply flex;
+  @apply flex-col;
+  @apply divide-y;
+  @apply divide-gray-400;
+  @apply tracking-wide;
 }
 
-.settings-label {
-  margin-right: 16px;
-  font-size: 22px;
+.title {
+  @apply text-2xl;
+  @apply font-bold;
+  @apply mb-2;
+}
+
+.settings {
+  @apply flex;
+  @apply flex-col;
+  @apply gap-4;
 }

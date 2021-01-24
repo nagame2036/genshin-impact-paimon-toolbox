@@ -1,17 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-  <h2 mat-dialog-title>
+<app-dialog #dialog>
+  <h1 title>
     {{ i18n.dict('materials.' + id) | translate }}
     -
     {{ i18n.module('total-cost') | translate }}
     {{ totalNeed | number: '1.0-0' }}
-  </h2>
-  <div fxFlex="1 1 auto"></div>
-  <button mat-icon-button (click)="close()" color="warn">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
-<cdk-virtual-scroll-viewport class="scrollable-material-cost-detail" itemSize="50">
-  <div gdColumns="repeat(8, auto)" gdAlignColumns="space-around stretch" gdGap="4px">
+  </h1>
+  <div class="content">
     <ng-container *ngFor="let mark of marks">
       <div style="text-align: center">
         {{ i18n.dict(types[mark.type]) | translate }}
@@ -39,4 +33,9 @@
       </div>
     </ng-container>
   </div>
-</cdk-virtual-scroll-viewport>
+  <div actions>
+    <app-ring-button class="close-btn" (click)="dialog.close()">
+      {{ i18n.dict('close') | translate }}
+    </app-ring-button>
+  </div>
+</app-dialog>

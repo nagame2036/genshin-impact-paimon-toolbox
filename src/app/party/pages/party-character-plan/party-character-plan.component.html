@@ -1,7 +1,8 @@
-<div *ngIf="party && plan" fxLayout="row" fxLayoutGap="40px">
-  <app-character-plan-form [character]="party" [plan]="plan" [plans]="plans" (executePlan)="executePlan($event)"
+<div *ngIf="party && plan" class="plan-content">
+  <app-character-plan-form [character]="party" [plan]="plan" [plans]="plans" (executePlan)="executePlanAndSave($event)"
                            (currentChange)="saveParty()" (goalChange)="savePlan()">
   </app-character-plan-form>
-  <app-materials-cost-list fxFlex="auto" [costs]="plans" [subtitles]="subtitles" [types]="types">
-  </app-materials-cost-list>
+  <app-material-cost-list class="cost-list" [costs]="plans" [subtitles]="subtitles" [types]="types">
+  </app-material-cost-list>
 </div>
+<app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

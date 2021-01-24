@@ -1,7 +1,2 @@
-@import 'src/assets/styles/app-form-field';
-@import '../../styles/add-item-form';
-
-.add-character-form {
-  @extend .add-item-form;
-  height: 480px;
-}
+@import '../../../../assets/styles/icon-btn.scss';
+@import '../../styles/add-subpage.scss';

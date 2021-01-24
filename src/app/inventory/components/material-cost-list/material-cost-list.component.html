@@ -1,0 +1,17 @@
+<div class="list-options">
+  <ng-container *ngIf="costs.length > 0">
+    <app-select [value]="costs[0].value" [options]="costs" (changed)="changeCost($event)">
+      <span form-label>
+        {{ i18n.module('plan-cost') | translate }}
+      </span>
+    </app-select>
+  </ng-container>
+  <app-checkbox [label]="i18n.module('show-overflow') | translate"
+                [value]="(inventory.isShowOverflow() | async) || true" (checked)="inventory.setShowOverflow($event)">
+  </app-checkbox>
+</div>
+<div class="list">
+  <app-inventory-list *ngFor="let items$ of costMaterials; let i = index"
+                      [subtitle]="subtitles[i]" [items$]="items$" [showCostDetails]="false">
+  </app-inventory-list>
+</div>

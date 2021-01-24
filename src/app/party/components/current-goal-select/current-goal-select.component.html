@@ -1,35 +1,18 @@
-<fieldset class="current-goal-select-container" fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
-  <legend>
+<app-form-field class="form-container"
+                [ngClass]="{'hover': left.hover || right.hover, 'focus': left.focus || right.focus}">
+  <span form-label>
     <ng-content></ng-content>
-  </legend>
-  <div fxLayout="row">
-    <mat-form-field appearance="outline" floatLabel="always" class="current-goal-select-field-left"
-                    fxFlex="45%">
-      <mat-select [value]="current" (selectionChange)="setCurrent($event.value)">
-        <mat-option *ngFor="let value of currentOptions" [value]="value">
-          {{ valueDisplay(value) }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-container *ngIf="checkPlanAvailable(satisfied | async) else disabled">
-      <button fxFlex="auto" mat-icon-button style="width: 28px; height: 28px" (click)="executePlan.emit()">
-        <mat-icon class="current-goal-select-button-arrow">
-          chevron_right
-        </mat-icon>
-      </button>
-    </ng-container>
-    <ng-template #disabled>
-      <mat-icon fxFlex="auto" class="current-goal-select-arrow">
+  </span>
+  <div class="form">
+    <app-select class="value" [options]="currentOptions" [value]="current" (changed)="setCurrent($event)" #left>
+    </app-select>
+    <button class="execute-plan-btn" [class.satisfied]="checkPlanAvailable(satisfied | async)"
+            [disabled]="!(checkPlanAvailable(satisfied | async))" (click)="executePlan.emit()">
+      <span class="material-icons arrow">
         chevron_right
-      </mat-icon>
-    </ng-template>
-    <mat-form-field appearance="outline" floatLabel="always" class="current-goal-select-field-right"
-                    fxFlex="45%">
-      <mat-select [value]="goal" (selectionChange)="setGoal($event.value)">
-        <mat-option *ngFor="let value of goalOptions" [value]="value">
-          {{ valueDisplay(value) }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      </span>
+    </button>
+    <app-select class="value" [options]="goalOptions" [value]="goal" (changed)="setGoal($event)" #right>
+    </app-select>
   </div>
-</fieldset>
+</app-form-field>

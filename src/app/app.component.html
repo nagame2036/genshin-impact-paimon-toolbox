@@ -1,5 +1,4 @@
-<app-header (showMenu)="showMenu = !showMenu">
-</app-header>
-<app-sidenav [routers]="routers" [showMenu]="showMenu">
+<app-header (showMenu)="nav.showMenu = $event"></app-header>
+<app-sidenav [routers]="routers" #nav>
   <router-outlet></router-outlet>
 </app-sidenav>

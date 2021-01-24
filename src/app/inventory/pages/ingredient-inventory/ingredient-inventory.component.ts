@@ -17,8 +17,6 @@ export class IngredientInventoryComponent extends AbstractSubInventoryComponent 
 
   local$!: Observable<InventoryItemDetail[]>;
 
-  rarities = [3, 2, 1];
-
   constructor(materials: MaterialService, inventory: InventoryService) {
     super(materials, inventory);
   }

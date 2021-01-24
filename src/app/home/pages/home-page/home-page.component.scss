@@ -1,4 +1,53 @@
+@import '../../../../assets/styles/animated-underline.scss';
+
+.page {
+  @apply mt-8;
+  @apply tracking-wide;
+  @apply flex;
+  @apply flex-col;
+  @apply divide-y;
+  @apply divide-gray-400;
+}
+
+section {
+  @apply pt-2;
+  @apply mb-2;
+}
+
+h1 {
+  @apply text-2xl;
+  @apply font-bold;
+  @apply mb-2;
+}
+
+h2 {
+  @apply text-lg;
+  @apply font-semibold;
+  @apply mb-1;
+}
+
 p {
-  text-indent: 2em;
-  margin: 14px 16px;
+  @apply my-2;
+}
+
+a {
+  @apply inline-block;
+  @apply relative;
+  @apply text-blue-500;
+
+  &:before {
+    @extend .animated-underline;
+    height: 0.1rem;
+  }
+
+  &:hover {
+    &:before {
+      @extend .animated-underline-after;
+    }
+  }
+}
+
+ul {
+  @apply list-disc;
+  @apply list-inside;
 }

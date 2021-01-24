@@ -1,1 +1,9 @@
+.subpage {
+  @apply h-full;
+  @apply mx-4;
+}
 
+.list {
+  height: 84vh;
+  @apply overflow-auto;
+}

@@ -16,6 +16,9 @@ export class MaterialCostMarker {
   mark(mark: boolean, cost: ItemList, type: ItemType, id: number, use: string, start: string, goal: string): ItemList {
     if (mark) {
       for (const [itemId, need] of cost.entries()) {
+        if (need <= 0) {
+          continue;
+        }
         const marks = this.marks.get(itemId) ?? [];
         marks.push({need, type, id, use, start, goal});
         this.marks.set(itemId, marks);

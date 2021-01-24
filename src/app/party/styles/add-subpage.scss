@@ -1,0 +1,45 @@
+@import '../../../assets/styles/icon-btn.scss';
+@import 'sub-toolbar.scss';
+
+.add-form {
+  @apply mx-auto;
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+}
+
+.add-actions {
+  @apply flex;
+  @apply flex-row;
+  @apply items-center;
+  @apply gap-4;
+}
+
+.add-actions-btn {
+  @apply flex-grow;
+
+  ::ng-deep .ring-btn {
+    @apply px-4;
+    @apply py-2;
+  }
+}
+
+.reset-btn {
+  ::ng-deep .ring-btn {
+    @apply text-red-500;
+    @apply hover:bg-red-200;
+    @apply hover:border-red-500;
+    @apply focus:ring-red-500;
+  }
+}
+
+.add-btn {
+  ::ng-deep .ring-btn {
+    @apply text-white;
+    @apply bg-primary-500;
+    @apply border-primary-500;
+    @apply hover:bg-primary-300;
+    @apply hover:border-primary-300;
+    @apply focus:ring-primary-500;
+  }
+}

@@ -27,7 +27,7 @@ export class WeaponPlanFormComponent implements OnInit {
     {satisfied: new Subject()},
   ];
 
-  refineRanks = rangeList(1, 5) as RefineRank[];
+  refineRanks = (rangeList(1, 5) as RefineRank[]).map(it => ({value: it, text: `${it}`}));
 
   @Output()
   currentChange = new EventEmitter();

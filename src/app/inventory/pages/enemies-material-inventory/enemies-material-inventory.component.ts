@@ -17,8 +17,6 @@ export class EnemiesMaterialInventoryComponent extends AbstractSubInventoryCompo
 
   elites$!: Observable<InventoryItemDetail[]>;
 
-  rarities = [4, 3, 2, 1];
-
   constructor(materials: MaterialService, inventory: InventoryService) {
     super(materials, inventory);
   }

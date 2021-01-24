@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,6 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+
+  i18n = new I18n('core');
 
   @Input()
   showMenu!: boolean;

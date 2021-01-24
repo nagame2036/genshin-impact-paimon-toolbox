@@ -7,8 +7,6 @@ import {CharacterPlan} from '../../../plan/models/character-plan.model';
 import {CharacterService} from '../../../character/services/character.service';
 import {TalentService} from '../../../character/services/talent.service';
 import {CharacterPlanner} from '../../../plan/services/character-planner.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {TranslateService} from '@ngx-translate/core';
 import {takeUntil} from 'rxjs/operators';
 import {TalentLevel} from '../../../character/models/talent-level.type';
 import {TalentLevelData} from '../../../character/models/talent-level-data.model';
@@ -32,7 +30,7 @@ export class PartyCharacterAddComponent extends AbstractObservableComponent impl
   selectedPlan!: CharacterPlan;
 
   constructor(private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner,
-              private location: Location, private snake: MatSnackBar, private translator: TranslateService) {
+              private location: Location) {
     super();
   }
 
@@ -67,9 +65,6 @@ export class PartyCharacterAddComponent extends AbstractObservableComponent impl
     if (this.selected) {
       this.characterService.addPartyMember(this.selectedCharacter);
       this.planner.updatePlan(this.selectedPlan);
-      const name = this.translator.instant(this.i18n.dict(`characters.${this.selectedCharacter.id}`));
-      const text = this.translator.instant(this.i18n.module('add-success'), {name}).toString();
-      this.snake.open(text, undefined, {duration: 2000});
       this.reset();
     }
   }

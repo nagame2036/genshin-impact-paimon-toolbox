@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./party/party.module').then(m => m.PartyModule)
   },
   {
-    path: 'character-stat',
-    loadChildren: () => import('./character-stat/character-stat.module').then(m => m.CharacterStatModule)
-  },
-  {
     path: 'inventory',
     loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule)
   },

@@ -1,12 +1,16 @@
 import {iif, Observable, of} from 'rxjs';
 
-export function toggleItem<T extends { id: number }>(list: T[], item: T, equals: (a: T) => boolean = a => a.id === item.id): T[] {
+export function toggleListItem<T>(list: T[], item: T, equals: (a: T) => boolean): T[] {
   const notFound = list.findIndex(it => equals(it)) === -1;
   const result = list.filter(it => !equals(it));
   if (notFound) {
     result.push(item);
   }
   return result;
+}
+
+export function toggleItem<T extends { id: number }>(list: T[], item: T, equals: (a: T) => boolean = a => a.id === item.id): T[] {
+  return toggleListItem(list, item, equals);
 }
 
 export function partitionArrays<T>(list: T[], conditions: ((item: T) => boolean)[]): T[][] {
@@ -22,10 +26,6 @@ export function partitionArrays<T>(list: T[], conditions: ((item: T) => boolean)
       result[conditions.length].push(item);
     }
   return result;
-}
-
-export function ensureAtLeastOneElement<T>(current: T[], changed: T[]): T[] {
-  return changed.length > 0 ? changed : [...current];
 }
 
 export function findObservable<T>(list: T[], predicate: (item: T) => boolean): Observable<T> {

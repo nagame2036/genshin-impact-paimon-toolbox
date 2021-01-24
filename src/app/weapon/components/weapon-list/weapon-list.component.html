@@ -1,44 +1,31 @@
-<div style="display: block; margin-top: 12px">
-  <div fxLayout="row" fxLayoutGap="4px">
-    <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18n.dict('sort') | translate }}</mat-label>
-      <mat-select [value]="sort" (selectionChange)="sort = $event.value; update()">
-        <mat-option *ngFor="let f of sortFields" [value]="f">
-          {{ i18n.dict(f) | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18n.dict('rarity') | translate }}</mat-label>
-      <mat-select [value]="rarityFilter" (selectionChange)="changeRarityFilter($event)" multiple>
-        <mat-option *ngFor="let rarity of rarities" [value]="rarity">
-          ★{{ rarity }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field fxFlex="1 1 12%" appearance="outline" floatLabel="always" class="app-form-field">
-      <mat-label>{{ i18n.dict('type') | translate }}</mat-label>
-      <mat-select [value]="typeFilter" (selectionChange)="changeTypeFilter($event)" multiple>
-        <mat-option *ngFor="let t of types" [value]="t">
-          {{ i18n.dict('weapon-types.' + t) | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-content fxFlex="1 1 auto" select="[list-actions]"></ng-content>
+<div class="options">
+  <app-select class="option" [options]="sorts" [value]="sort" (changed)="changeSort($event)">
+    <span form-label>
+      {{ i18n.dict('sort') | translate }}
+    </span>
+  </app-select>
+  <app-multi-select class="option" [options]="rarities" [values]="rarityFilter" (changed)="filterRarity($event)">
+    <span form-label>
+      {{ i18n.dict('rarity') | translate }}
+    </span>
+  </app-multi-select>
+  <app-multi-select class="option" [options]="types" [values]="typeFilter" (changed)="filterType($event)">
+    <span form-label>
+      {{ i18n.dict('type') | translate }}
+    </span>
+  </app-multi-select>
+  <div>
+    <ng-content select="[actions]"></ng-content>
   </div>
-  <cdk-virtual-scroll-viewport [style]="'height: ' + height + 'vh'" itemSize="50">
-    <div [gdColumns]="'repeat(auto-fill, ' + itemWidth + 'px)'" gdGap="24px" gdAlignRows="space-around center"
-         style="margin: 4px">
-      <app-item-view *ngFor="let item of items" class="items-list-item" [width]="itemWidth" #list (click)="select(item)"
-                     category="weapons" [id]="item.id" [key]="getKey(item)" [rarity]="item.rarity">
-        <div image-top-left>
-          <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
-               [alt]="i18n.dict('weapon-types.' + item.type) | translate">
-        </div>
-        <ng-container *ngIf="party && rightTemplateRef" container-right
-                      [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-        </ng-container>
-      </app-item-view>
-    </div>
-  </cdk-virtual-scroll-viewport>
+</div>
+<div class="list" [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, ' + itemWidth + 'px)'}">
+  <div *ngFor="let item of items" class="overview" [class.selected]="selectedItems.includes(item)"
+       (click)="select(item)">
+    <app-item-view category="weapons" [id]="item.id" [rarity]="item.rarity"></app-item-view>
+    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
+         [alt]="i18n.dict('weapon-types.' + item.type) | translate">
+    <ng-container *ngIf="party && rightTemplateRef"
+                  [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
+    </ng-container>
+  </div>
 </div>

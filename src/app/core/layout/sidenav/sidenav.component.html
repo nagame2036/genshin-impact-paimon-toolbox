@@ -1,17 +1,20 @@
-<mat-sidenav-container id="container">
-  <mat-sidenav [(opened)]="showMenu" id="nav" mode="side">
-    <mat-nav-list>
-      <a *ngFor="let item of routers" [routerLink]="item.path" class="route-link"
-         mat-list-item routerLinkActive="active">
-        {{ 'path.' + item.path | translate }}
-      </a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content id="content">
-    <mat-card>
-      <mat-card-content class="page-one-col-center" id="subpage">
-        <ng-content></ng-content>
-      </mat-card-content>
-    </mat-card>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<nav class="menu" [ngClass]="{'opened': showMenu}">
+  <h1 class="menu-title">
+    {{ i18n.dict('title') | translate }}
+  </h1>
+  <button class="menu-close-btn" (click)="showMenu = false">
+    <span class="material-icons">
+      close
+    </span>
+  </button>
+  <div class="menu-links">
+    <a *ngFor="let router of routers" class="menu-link" routerLinkActive="active" [routerLink]="router.path">
+      {{ i18n.path(router.path) | translate }}
+    </a>
+  </div>
+</nav>
+<main class="main" (click)="showMenu = false">
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</main>

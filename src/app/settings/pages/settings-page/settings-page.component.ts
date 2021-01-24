@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import {supportedLanguages} from '../../../app-translate.module';
 import {I18n} from '../../../shared/models/i18n.model';
 
 @Component({
@@ -12,21 +12,22 @@ export class SettingsPageComponent implements OnInit {
 
   i18n = new I18n('settings');
 
-  currentLanguage = this.translator.defaultLang;
+  currentLanguage = '';
 
-  languages: { name: string, value: string }[] = [
-    {name: '简体中文', value: 'zh-hans'},
-    {name: 'English', value: 'en'},
-  ];
+  languages = supportedLanguages;
 
   constructor(private translator: TranslateService) {
+    this.currentLanguage = translator.currentLang;
+    translator.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.currentLanguage = event.lang;
+    });
   }
 
   ngOnInit(): void {
   }
 
-  changeLanguage($event: MatButtonToggleChange): void {
-    this.currentLanguage = $event.value;
-    this.translator.use(this.currentLanguage);
+  switchLanguage(language: string): void {
+    this.currentLanguage = language;
+    this.translator.use(language);
   }
 }

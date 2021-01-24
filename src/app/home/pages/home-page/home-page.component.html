@@ -1,16 +1,28 @@
-<div class="page-one-col-center">
-  <div class="page-one-col-width">
-    <h1 class="header">{{ 'title' | translate }}</h1>
-    <mat-divider inset></mat-divider>
+<article class="page">
+  <section>
+    <h1>
+      {{ i18n.dict('title') | translate }}
+    </h1>
     <p>
-      Github: <a href="https://github.com/nagame2036/genshin-impact-paimon-toolbox">
-      nagame2036/genshin-impact-paimon-toolbox</a>
+      {{ i18n.module('introduction') | translate }}
+      <a href="https://github.com/nagame2036/genshin-impact-paimon-toolbox/issues">issue</a>
+      {{ i18n.dict('and') | translate }}
+      <a href="https://github.com/nagame2036/genshin-impact-paimon-toolbox/pulls">pull request</a>
     </p>
-
-    <h2 class="header">{{ i18n.module('thanks') | translate }}</h2>
-    <mat-divider inset></mat-divider>
-    <p>{{ i18n.module('mihoyo-copyright') | translate }}</p>
-    <p>鸣谢以下内容及其作者所提供的数据及帮助:</p>
+    <p>
+      Github:
+      <a href="https://github.com/nagame2036/genshin-impact-paimon-toolbox">
+        nagame2036/genshin-impact-paimon-toolbox
+      </a>
+    </p>
+    <p>
+      {{ i18n.module('mihoyo-copyright') | translate }}
+    </p>
+  </section>
+  <section>
+    <h2>
+      {{ i18n.module('thanks') | translate }}
+    </h2>
     <ul>
       <li>
         <a href="https://bbs.mihoyo.com/ys/obc/encyc">
@@ -43,5 +55,5 @@
         </a>
       </li>
     </ul>
-  </div>
-</div>
+  </section>
+</article>

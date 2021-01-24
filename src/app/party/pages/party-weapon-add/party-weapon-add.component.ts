@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../shared/models/i18n.model';
 import {Weapon} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {TranslateService} from '@ngx-translate/core';
 import {takeUntil} from 'rxjs/operators';
 import {WeaponPlanner} from 'src/app/plan/services/weapon-planner.service';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
@@ -28,8 +26,7 @@ export class PartyWeaponAddComponent extends AbstractObservableComponent impleme
 
   selectedPlan!: WeaponPlan;
 
-  constructor(private weaponService: WeaponService, private planner: WeaponPlanner,
-              private location: Location, private snake: MatSnackBar, private translator: TranslateService) {
+  constructor(private weaponService: WeaponService, private planner: WeaponPlanner, private location: Location) {
     super();
   }
 
@@ -59,9 +56,6 @@ export class PartyWeaponAddComponent extends AbstractObservableComponent impleme
         this.selectedPlan.id = key;
         this.planner.updatePlan(this.selectedPlan);
       });
-      const name = this.translator.instant(this.i18n.dict(`weapons.${this.selectedWeapon.id}`));
-      const text = this.translator.instant(this.i18n.module('add-success'), {name}).toString();
-      this.snake.open(text, undefined, {duration: 2000});
       this.reset();
     }
   }

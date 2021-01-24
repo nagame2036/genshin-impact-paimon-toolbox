@@ -19,9 +19,6 @@ export class PartyWeaponListComponent extends AbstractObservableComponent implem
 
   i18n = new I18n('weapons');
 
-  @Input()
-  height = 80;
-
   weapons: Weapon[] = [];
 
   plans = new Map<number, WeaponPlan>();

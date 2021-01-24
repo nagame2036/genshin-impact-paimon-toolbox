@@ -1,31 +1,8 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" [style.width.px]="width"
-     [ngClass]="{'item-container': true, 'item-container-active': active}">
-  <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start center">
-    <div [class]="['img-container', 'item-rarity-' + rarity]" [ngStyle]="{'width': (imgWidth - 2) + 'px'}">
-      <div class="item-container-top-left">
-        <ng-content select="[image-top-left]"></ng-content>
-      </div>
-      <div class="item-container-top-right">
-        <ng-content select="[image-top-right]"></ng-content>
-      </div>
-      <img class="item-img" [src]="images.get(category, id)" [alt]="i18n.dict(itemKey) | translate"/>
-    </div>
-    <div class="item-container-stars">
-      <svg *ngFor="let r of stars" width="16" height="16">
-        <path d="M 8.000 12.000 L 12.114 13.663 L 11.804 9.236 L 14.657
-         5.837 L 10.351 4.764 L 8.000 1.000 L 5.649 4.764 L 1.343 5.837 L 4.196 9.236 L 3.886 13.663 L 8.000 12.000"
-              stroke="#000" stroke-width="1" fill="yellow">
-        </path>
-      </svg>
-    </div>
-    <span style="font-size: 10px; text-align: center">
-      {{ i18n.dict(itemKey) | translate }}
-    </span>
-    <div class="item-container-bottom">
-      <ng-content select="[image-bottom]"></ng-content>
-    </div>
+<div class="view-container" [style.width.px]="width">
+  <div class="image-container" [class]="'rarity-' + rarity">
+    <img class="image" [src]="images.get(category, id)" [alt]="i18n.dict(itemKey) | translate">
   </div>
-  <div fxFlex="auto">
-    <ng-content select="[container-right]"></ng-content>
+  <div class="name">
+    {{ i18n.dict(itemKey) | translate }}
   </div>
 </div>

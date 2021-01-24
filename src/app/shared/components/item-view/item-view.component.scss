@@ -1,57 +1,35 @@
-.item-container {
-  min-height: 100px;
-  border: solid 1px #e0e0e0;
-  border-radius: 4px;
+.view-container {
+  @apply rounded;
 }
 
-.item-container-active {
-  border: solid 1px #7082dc;
-}
-
-.img-container {
-  position: relative;
-  height: 98px;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  overflow: hidden;
-  border-radius: 4px 4px 16px 0;
+.image-container {
+  height: 100px;
+  @apply relative;
+  @apply flex;
+  @apply items-center;
+  @apply justify-items-center;
+  @apply overflow-hidden;
+  @apply rounded-t;
+  @apply rounded-br-2xl;
 }
 
 $rarities: (1: #676f7c, 2: #4f7d6b, 3: #4b94aa, 4: #a27bba, 5: #d59e4f);
 
 @each $rarity, $color in $rarities {
-  .item-rarity-#{$rarity} {
+  .rarity-#{$rarity} {
     background: $color;
   }
 }
 
-.item-img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  margin: auto;
+.image {
+  width: 100px;
+  height: 100px;
+  @apply block;
+  @apply m-auto;
 }
 
-.item-container-stars {
-  display: flex;
-  flex-direction: row;
-  margin-top: -16px;
-  z-index: 1;
-}
-
-.item-container-top-left {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-}
-
-.item-container-top-right {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
+.name {
+  @apply p-0.5;
+  @apply text-center;
+  @apply truncate;
 }
