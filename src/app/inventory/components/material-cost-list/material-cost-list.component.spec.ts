@@ -4,7 +4,7 @@ import {MaterialCostListComponent} from './material-cost-list.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {ItemList} from '../../../material/models/item-list.model';
+import {ItemList} from '../../models/item-list.model';
 
 describe('MaterialsCostListComponent', () => {
   let component: MaterialCostListComponent;

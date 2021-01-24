@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {PartyCharacter} from '../models/party-character.model';
 import {ElementType} from '../../game-common/models/element-type.enum';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
-import {mora} from '../../material/models/mora-and-exp.model';
+import {mora} from '../../inventory/models/mora-and-exp.model';
 
 describe('TalentLevelupCostService', () => {
   let service: TalentLevelupCostService;

@@ -3,12 +3,12 @@ import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxj
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {first, switchMap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import {ItemList} from '../../material/models/item-list.model';
+import {ItemList} from '../../inventory/models/item-list.model';
 import {WeaponService} from './weapon.service';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {activePlans} from '../../game-common/utils/party-plans';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'

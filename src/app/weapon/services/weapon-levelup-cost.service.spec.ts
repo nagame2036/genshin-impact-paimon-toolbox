@@ -6,7 +6,7 @@ import {WeaponType} from '../models/weapon-type.enum';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {WeaponModule} from '../weapon.module';
 import {HttpClientModule} from '@angular/common/http';
-import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
+import {mora, weaponExp} from '../../inventory/models/mora-and-exp.model';
 import {AppTranslateModule} from '../../app-translate.module';
 
 describe('WeaponLevelupCostService', () => {

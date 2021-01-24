@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {InventoryService} from '../../inventory/services/inventory.service';
-import {ItemList} from '../../material/models/item-list.model';
+import {ItemList} from '../../inventory/models/item-list.model';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 

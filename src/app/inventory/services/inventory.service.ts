@@ -2,15 +2,15 @@ import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {BehaviorSubject, combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {concatMap, first, map, reduce, switchMap, take} from 'rxjs/operators';
-import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
-import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
-import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
-import {InventoryItem} from '../../material/models/inventory-item.model';
+import {CharacterExpMaterialService} from './character-exp-material.service';
+import {WeaponExpMaterialService} from './weapon-exp-material.service';
+import {InventoryItemDetail} from '../models/inventory-item-detail.model';
+import {InventoryItem} from '../models/inventory-item.model';
 import {CharacterPlanner} from '../../character/services/character-planner.service';
 import {WeaponPlanner} from '../../weapon/services/weapon-planner.service';
-import {ItemList} from '../../material/models/item-list.model';
+import {ItemList} from '../models/item-list.model';
 import {craftItem, getCraftableAmount} from '../utils/craft';
-import {MaterialService} from '../../material/services/material.service';
+import {MaterialService} from './material.service';
 import {mapArrays} from '../../shared/utils/collections';
 
 @Injectable({

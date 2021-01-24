@@ -5,12 +5,12 @@ import {CharacterService} from './character.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {TalentService} from './talent.service';
 import {first, map, switchMap} from 'rxjs/operators';
-import {ItemList} from '../../material/models/item-list.model';
+import {ItemList} from '../../inventory/models/item-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PartyCharacter} from '../models/party-character.model';
 import {activePlans} from '../../game-common/utils/party-plans';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'

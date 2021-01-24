@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
-import {MaterialCostMarker} from '../../../material/services/material-cost-marker.service';
-import {MaterialCostMark} from '../../../material/models/material-cost-mark.model';
+import {MaterialCostMarker} from '../../services/material-cost-marker.service';
+import {MaterialCostMark} from '../../models/material-cost-mark.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {itemTypeNames} from '../../../game-common/models/item-type.enum';
 

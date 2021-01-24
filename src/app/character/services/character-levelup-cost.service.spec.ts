@@ -7,7 +7,7 @@ import {PartyCharacter} from '../models/party-character.model';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../game-common/models/element-type.enum';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
-import {characterExp, mora} from '../../material/models/mora-and-exp.model';
+import {characterExp, mora} from '../../inventory/models/mora-and-exp.model';
 import {AppTranslateModule} from '../../app-translate.module';
 
 describe('CharacterLevelupService', () => {

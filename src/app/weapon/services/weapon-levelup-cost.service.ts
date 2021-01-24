@@ -2,21 +2,21 @@ import {Injectable} from '@angular/core';
 import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {WeaponLevelupCost} from '../models/weapon-levelup-cost.model';
 import {HttpClient} from '@angular/common/http';
-import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
+import {EnemiesMaterialService} from '../../inventory/services/enemies-material.service';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
-import {ItemList} from '../../material/models/item-list.model';
+import {ItemList} from '../../inventory/models/item-list.model';
 import {map, reduce, switchMap, take} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
-import {WeaponAscensionMaterialService} from '../../material/services/weapon-ascension-material.service';
+import {WeaponAscensionMaterialService} from '../../inventory/services/weapon-ascension-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
-import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {mora, weaponExp} from '../../inventory/models/mora-and-exp.model';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
-import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
+import {WeaponExpMaterialService} from '../../inventory/services/weapon-exp-material.service';
 
 @Injectable({
   providedIn: 'root'

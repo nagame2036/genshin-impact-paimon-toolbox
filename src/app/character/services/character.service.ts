@@ -6,7 +6,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
 import {first, switchMap} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'

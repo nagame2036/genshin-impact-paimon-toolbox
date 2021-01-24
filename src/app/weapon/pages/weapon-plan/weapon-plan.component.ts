@@ -7,12 +7,12 @@ import {WeaponService} from '../../services/weapon.service';
 import {WeaponPlanner} from '../../services/weapon-planner.service';
 import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, takeUntil} from 'rxjs/operators';
-import {MaterialType} from '../../../material/models/material-type.enum';
+import {MaterialType} from '../../../inventory/models/material-type.enum';
 import {combineLatest, Observable, ReplaySubject, Subject} from 'rxjs';
-import {ItemList} from '../../../material/models/item-list.model';
+import {ItemList} from '../../../inventory/models/item-list.model';
 import {WeaponLevelupCostService} from '../../services/weapon-levelup-cost.service';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
-import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
+import {WeaponExpMaterialService} from '../../../inventory/services/weapon-exp-material.service';
 import {PlanExecutor} from '../../../game-common/services/plan-executor.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 

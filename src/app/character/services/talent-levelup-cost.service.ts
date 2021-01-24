@@ -2,19 +2,19 @@ import {Injectable} from '@angular/core';
 import {from, Observable, ReplaySubject, zip} from 'rxjs';
 import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
-import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
+import {EnemiesMaterialService} from '../../inventory/services/enemies-material.service';
 import {PartyCharacter} from '../models/party-character.model';
-import {ItemList} from '../../material/models/item-list.model';
-import {TalentLevelupMaterialService} from '../../material/services/talent-levelup-material.service';
+import {ItemList} from '../../inventory/models/item-list.model';
+import {TalentLevelupMaterialService} from '../../inventory/services/talent-levelup-material.service';
 import {map, mergeMap, reduce, take} from 'rxjs/operators';
 import {TalentLevelData} from '../models/talent-level-data.model';
 import {TalentLevel} from '../models/talent-level.type';
 import {TalentPlan} from '../models/talent-plan.model';
 import {TalentService} from './talent.service';
 import {CharacterPlan} from '../models/character-plan.model';
-import {mora} from '../../material/models/mora-and-exp.model';
+import {mora} from '../../inventory/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({

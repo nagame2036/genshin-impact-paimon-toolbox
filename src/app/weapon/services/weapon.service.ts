@@ -6,7 +6,7 @@ import {Weapon} from '../models/weapon.model';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {first, map, switchMap} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 
 @Injectable({
   providedIn: 'root'

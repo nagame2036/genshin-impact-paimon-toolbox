@@ -5,17 +5,17 @@ import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {map, mergeMap, reduce, take} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
-import {CharacterAscensionMaterialService} from '../../material/services/character-ascension-material.service';
-import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
-import {ItemList} from '../../material/models/item-list.model';
+import {CharacterAscensionMaterialService} from '../../inventory/services/character-ascension-material.service';
+import {EnemiesMaterialService} from '../../inventory/services/enemies-material.service';
+import {ItemList} from '../../inventory/models/item-list.model';
 import {PartyCharacter} from '../models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
-import {characterExp, mora} from '../../material/models/mora-and-exp.model';
+import {characterExp, mora} from '../../inventory/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
+import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
-import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
+import {CharacterExpMaterialService} from '../../inventory/services/character-exp-material.service';
 
 @Injectable({
   providedIn: 'root'

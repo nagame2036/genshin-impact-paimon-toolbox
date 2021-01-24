@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
+import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
 import {InventoryService} from '../../services/inventory.service';
 import {Observable} from 'rxjs';
 

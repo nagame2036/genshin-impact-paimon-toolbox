@@ -1,7 +1,7 @@
-import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
-import {mora} from '../../material/models/mora-and-exp.model';
-import {ItemList} from '../../material/models/item-list.model';
-import {CraftRecipe} from '../../material/models/craft-recipe.model';
+import {InventoryItemDetail} from '../models/inventory-item-detail.model';
+import {mora} from '../models/mora-and-exp.model';
+import {ItemList} from '../models/item-list.model';
+import {CraftRecipe} from '../models/craft-recipe.model';
 import {mapArrays} from '../../shared/utils/collections';
 
 export function getCraftableAmount(detail: InventoryItemDetail, needCraft: number, details: Map<number, InventoryItemDetail>): number {

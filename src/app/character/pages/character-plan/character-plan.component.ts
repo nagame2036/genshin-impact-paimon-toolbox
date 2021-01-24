@@ -7,13 +7,13 @@ import {CharacterPlanner} from '../../services/character-planner.service';
 import {ActivatedRoute} from '@angular/router';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {first, map, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {ItemList} from '../../../material/models/item-list.model';
+import {ItemList} from '../../../inventory/models/item-list.model';
 import {CharacterLevelupCostService} from '../../services/character-levelup-cost.service';
 import {TalentLevelupCostService} from '../../services/talent-levelup-cost.service';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {combineLatest, from, Observable, range, ReplaySubject, Subject, zip} from 'rxjs';
-import {MaterialType} from '../../../material/models/material-type.enum';
-import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';
+import {MaterialType} from '../../../inventory/models/material-type.enum';
+import {CharacterExpMaterialService} from '../../../inventory/services/character-exp-material.service';
 import {PlanExecutor} from '../../../game-common/services/plan-executor.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 

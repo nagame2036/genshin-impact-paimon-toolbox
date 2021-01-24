@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {InventoryService} from '../../services/inventory.service';
-import {ItemList} from '../../../material/models/item-list.model';
-import {MaterialService} from '../../../material/services/material.service';
-import {MaterialType} from '../../../material/models/material-type.enum';
+import {ItemList} from '../../models/item-list.model';
+import {MaterialService} from '../../services/material.service';
+import {MaterialType} from '../../models/material-type.enum';
 import {map, switchMap} from 'rxjs/operators';
-import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
+import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
 import {Observable} from 'rxjs';
 import {I18n} from '../../../widget/models/i18n.model';
 

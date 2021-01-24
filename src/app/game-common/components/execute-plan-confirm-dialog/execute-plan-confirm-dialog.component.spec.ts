@@ -4,7 +4,7 @@ import {ExecutePlanConfirmDialogComponent} from './execute-plan-confirm-dialog.c
 import {GameCommonModule} from '../../game-common.module';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {ItemList} from '../../../material/models/item-list.model';
+import {ItemList} from '../../../inventory/models/item-list.model';
 
 describe('ExecutePlanConfirmDialogComponent', () => {
   let component: ExecutePlanConfirmDialogComponent;

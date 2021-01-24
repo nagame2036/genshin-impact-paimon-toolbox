@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
-import {MaterialService} from '../../../material/services/material.service';
+import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
+import {MaterialService} from '../../services/material.service';
 import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
-import {MaterialType} from '../../../material/models/material-type.enum';
+import {MaterialType} from '../../models/material-type.enum';
 import {Observable} from 'rxjs';
 import {InventoryService} from '../../services/inventory.service';
 
