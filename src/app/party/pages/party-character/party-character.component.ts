@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Character} from '../../../character/models/character.model';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {PartyCharacterListComponent} from '../../../character/components/party-character-list/party-character-list.component';
 import {CharacterService} from '../../../character/services/character.service';
 import {Router} from '@angular/router';

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {I18n} from '../../models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 
 @Component({
   selector: 'app-multi-select-and-select-all',

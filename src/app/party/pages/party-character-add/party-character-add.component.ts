@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {Location} from '@angular/common';
 import {Character} from '../../../character/models/character.model';
 import {PartyCharacter} from '../../../character/models/party-character.model';

@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {SelectOption} from '../../models/select-option.model';
-import {toggleListItem} from '../../utils/collections';
+import {toggleListItem} from '../../../shared/utils/collections';
 import {TranslateService} from '@ngx-translate/core';
 import {I18n} from '../../models/i18n.model';
 

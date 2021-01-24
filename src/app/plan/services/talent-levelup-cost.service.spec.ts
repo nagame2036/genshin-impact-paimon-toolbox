@@ -4,7 +4,7 @@ import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PlanModule} from '../plan.module';
 import {HttpClientModule} from '@angular/common/http';
 import {PartyCharacter} from '../../character/models/party-character.model';
-import {ElementType} from '../../shared/models/element-type.enum';
+import {ElementType} from '../../game-common/models/element-type.enum';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {mora} from '../../material/models/mora-and-exp.model';
 

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {PartyCharacter} from '../../../character/models/party-character.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Constellation} from '../../../character/models/constellation.type';
@@ -9,7 +9,7 @@ import {TalentService} from '../../../character/services/talent.service';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
 import {Observable, Subject} from 'rxjs';
-import {SelectOption} from '../../../shared/models/select-option.model';
+import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

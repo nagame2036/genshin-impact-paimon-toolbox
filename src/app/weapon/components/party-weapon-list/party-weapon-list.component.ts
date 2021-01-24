@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
 import {PartyWeapon} from '../../models/party-weapon.model';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';

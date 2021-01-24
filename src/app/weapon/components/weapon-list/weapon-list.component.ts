@@ -1,12 +1,12 @@
 import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponType, weaponTypeList} from '../../models/weapon-type.enum';
 import {toggleItem} from '../../../shared/utils/collections';
 import {WeaponField} from '../../models/weapon-fields.type';
 import {PartyWeapon} from '../../models/party-weapon.model';
 import {ImageService} from '../../../image/services/image.service';
-import {SelectOption} from '../../../shared/models/select-option.model';
+import {SelectOption} from '../../../widget/models/select-option.model';
 
 const weaponRarities = [5, 4, 3];
 

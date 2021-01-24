@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../shared/shared.module';
+import {WidgetModule} from '../widget/widget.module';
+import {GameCommonModule} from '../game-common/game-common.module';
 import {InventoryRoutingModule} from './inventory-routing.module';
 import {InventoryPageComponent} from './pages/inventory-page/inventory-page.component';
 import {InventoryListComponent} from './components/inventory-list/inventory-list.component';
@@ -27,7 +28,8 @@ import {InventoryHeaderComponent} from './components/inventory-header/inventory-
     InventoryHeaderComponent,
   ],
   imports: [
-    SharedModule,
+    WidgetModule,
+    GameCommonModule,
     InventoryRoutingModule,
   ],
   exports: [

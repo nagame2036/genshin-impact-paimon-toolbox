@@ -1,8 +1,8 @@
 <div class="field-container">
   <app-checkbox [label]="i18n.dict('multi-select') | translate" [value]="multiSelect"
-                (change)="setMultiSelect(multiSelect = !multiSelect)">
+                (checked)="setMultiSelect(multiSelect = !multiSelect)">
   </app-checkbox>
   <app-checkbox [label]="i18n.dict('select-all') | translate" [value]="selectAll"
-                (change)="setSelectAll(selectAll = !selectAll)">
+                (checked)="setSelectAll(selectAll = !selectAll)">
   </app-checkbox>
 </div>

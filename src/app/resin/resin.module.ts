@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../shared/shared.module';
+import {WidgetModule} from '../widget/widget.module';
 import {ResinRoutingModule} from './resin-routing.module';
 import {ResinPageComponent} from './pages/resin-page/resin-page.component';
 import {ResinReplenishCalculatorComponent} from './pages/resin-replenish-calculator/resin-replenish-calculator.component';
@@ -11,7 +11,7 @@ import {ResinReplenishCalculatorComponent} from './pages/resin-replenish-calcula
     ResinReplenishCalculatorComponent
   ],
   imports: [
-    SharedModule,
+    WidgetModule,
     ResinRoutingModule,
   ]
 })

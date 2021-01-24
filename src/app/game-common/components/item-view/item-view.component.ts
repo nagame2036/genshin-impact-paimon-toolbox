@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {I18n} from '../../models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {ImageService} from '../../../image/services/image.service';
 
 @Component({

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../shared/shared.module';
+import {WidgetModule} from '../widget/widget.module';
 import {HeaderComponent} from './layout/header/header.component';
 import {SidenavComponent} from './layout/sidenav/sidenav.component';
 
@@ -11,7 +11,7 @@ import {SidenavComponent} from './layout/sidenav/sidenav.component';
     SidenavComponent
   ],
   imports: [
-    SharedModule,
+    WidgetModule,
   ]
 })
 export class CoreModule {

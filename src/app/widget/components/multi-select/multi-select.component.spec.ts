@@ -1,29 +1,31 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MultiSelectAndSelectAllComponent} from './multi-select-and-select-all.component';
+import {MultiSelectComponent} from './multi-select.component';
 import {AppTranslateModule} from '../../../app-translate.module';
-import {SharedModule} from '../../shared.module';
+import {WidgetModule} from '../../widget.module';
 
-describe('MultiSelectAndSelectAllComponent', () => {
-  let component: MultiSelectAndSelectAllComponent;
-  let fixture: ComponentFixture<MultiSelectAndSelectAllComponent>;
+describe('MultiSelectComponent', () => {
+  let component: MultiSelectComponent;
+  let fixture: ComponentFixture<MultiSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        MultiSelectAndSelectAllComponent
+        MultiSelectComponent
       ],
       imports: [
-        SharedModule,
-        AppTranslateModule
+        WidgetModule,
+        AppTranslateModule,
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MultiSelectAndSelectAllComponent);
+    fixture = TestBed.createComponent(MultiSelectComponent);
     component = fixture.componentInstance;
+    component.options = [];
+    component.values = [];
     fixture.detectChanges();
   });
 

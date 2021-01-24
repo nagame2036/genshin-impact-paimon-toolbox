@@ -1,13 +1,13 @@
 import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {Character} from '../../models/character.model';
-import {I18n} from '../../../shared/models/i18n.model';
-import {ElementType, elementTypeList} from '../../../shared/models/element-type.enum';
+import {I18n} from '../../../widget/models/i18n.model';
+import {ElementType, elementTypeList} from '../../../game-common/models/element-type.enum';
 import {WeaponType, weaponTypeList} from '../../../weapon/models/weapon-type.enum';
 import {toggleItem} from '../../../shared/utils/collections';
 import {CharacterField} from '../../models/character-field.type';
 import {PartyCharacter} from '../../models/party-character.model';
 import {ImageService} from '../../../image/services/image.service';
-import {SelectOption} from '../../../shared/models/select-option.model';
+import {SelectOption} from '../../../widget/models/select-option.model';
 
 const characterRarities = [5, 4];
 

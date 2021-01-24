@@ -1,4 +1,4 @@
-import {Rarity} from '../../shared/models/rarity.type';
+import {Rarity} from '../../game-common/models/rarity.type';
 import {CraftRecipe} from './craft-recipe.model';
 
 export interface InventoryItemDetail {

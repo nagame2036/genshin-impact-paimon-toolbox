@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {Weapon} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {takeUntil} from 'rxjs/operators';

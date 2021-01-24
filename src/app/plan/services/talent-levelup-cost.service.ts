@@ -13,7 +13,7 @@ import {TalentPlan} from '../models/talent-plan.model';
 import {TalentService} from '../../character/services/talent.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {mora} from '../../material/models/mora-and-exp.model';
-import {I18n} from '../../shared/models/i18n.model';
+import {I18n} from '../../widget/models/i18n.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 

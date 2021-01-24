@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
-import {SelectOption} from '../../../shared/models/select-option.model';
+import {SelectOption} from '../../../widget/models/select-option.model';
 
 @Component({
   selector: 'app-current-goal-select',

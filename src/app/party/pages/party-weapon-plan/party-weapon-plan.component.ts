@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';

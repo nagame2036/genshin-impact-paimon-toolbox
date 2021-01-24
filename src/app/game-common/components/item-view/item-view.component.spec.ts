@@ -1,12 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ItemViewComponent} from './item-view.component';
-import {InventoryModule} from '../../../inventory/inventory.module';
+import {GameCommonModule} from '../../game-common.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppTranslateModule} from '../../../app-translate.module';
 import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 
-describe('ItemImageContainerComponent', () => {
+describe('ItemViewComponent', () => {
   let component: ItemViewComponent;
   let fixture: ComponentFixture<ItemViewComponent>;
 
@@ -16,7 +16,7 @@ describe('ItemImageContainerComponent', () => {
         ItemViewComponent
       ],
       imports: [
-        InventoryModule,
+        GameCommonModule,
         BrowserAnimationsModule,
         AppTranslateModule,
         AppIndexedDbModule

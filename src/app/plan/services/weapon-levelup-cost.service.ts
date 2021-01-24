@@ -14,7 +14,7 @@ import {WeaponPlan} from '../models/weapon-plan.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
-import {I18n} from '../../shared/models/i18n.model';
+import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 

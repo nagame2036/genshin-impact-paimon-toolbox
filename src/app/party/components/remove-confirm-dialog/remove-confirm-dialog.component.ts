@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {DialogComponent} from '../../../shared/components/dialog/dialog.component';
-import {I18n} from '../../../shared/models/i18n.model';
-import {Rarity} from '../../../shared/models/rarity.type';
+import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
+import {I18n} from '../../../widget/models/i18n.model';
+import {Rarity} from '../../../game-common/models/rarity.type';
 
 @Component({
   selector: 'app-remove-confirm-dialog',

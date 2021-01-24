@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../weapon/models/refine-rank.type';

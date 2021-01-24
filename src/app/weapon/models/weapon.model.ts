@@ -1,5 +1,5 @@
 import {WeaponType} from './weapon-type.enum';
-import {Rarity} from '../../shared/models/rarity.type';
+import {Rarity} from '../../game-common/models/rarity.type';
 import {ExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 
 export interface Weapon {

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {WeaponAscensionMaterial, WeaponAscensionMaterialItem} from '../models/weapon-ascension-material.model';
-import {Rarity} from '../../shared/models/rarity.type';
+import {Rarity} from '../../game-common/models/rarity.type';
 import {TalentLevelupMaterialGroup, TalentLevelupMaterialItem} from '../models/talent-levelup-material.model';
 import {InventoryItem} from '../models/inventory-item.model';
 

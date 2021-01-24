@@ -1,4 +1,4 @@
-import {Nation} from '../../shared/models/nation.enum';
+import {Nation} from '../../game-common/models/nation.enum';
 import {InventoryItem} from './inventory-item.model';
 
 export interface WeaponAscensionMaterial {

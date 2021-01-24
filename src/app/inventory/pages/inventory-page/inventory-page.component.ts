@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {I18n} from '../../../shared/models/i18n.model';
-import {NavBarLink} from '../../../shared/components/nav-tabs/nav-tabs.component';
+import {I18n} from '../../../widget/models/i18n.model';
+import {NavBarLink} from '../../../widget/components/nav-tabs/nav-tabs.component';
 
 @Component({
   selector: 'app-inventory-page',

@@ -6,7 +6,7 @@ import {MaterialType} from '../../../material/models/material-type.enum';
 import {map, switchMap} from 'rxjs/operators';
 import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 import {Observable} from 'rxjs';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 
 @Component({
   selector: 'app-material-cost-list',

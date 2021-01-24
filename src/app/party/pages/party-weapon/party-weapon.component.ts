@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Weapon} from '../../../weapon/models/weapon.model';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../../weapon/services/weapon.service';
 import {PartyWeaponListComponent} from '../../../weapon/components/party-weapon-list/party-weapon-list.component';
 import {PartyWeapon} from '../../../weapon/models/party-weapon.model';

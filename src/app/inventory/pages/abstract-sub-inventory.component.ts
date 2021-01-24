@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {I18n} from '../../shared/models/i18n.model';
+import {I18n} from '../../widget/models/i18n.model';
 import {InventoryService} from '../services/inventory.service';
 import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
 import {MaterialService} from '../../material/services/material.service';

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from '../../models/character.model';
 import {PartyCharacter} from '../../models/party-character.model';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterService} from '../../services/character.service';
 import {CharacterListComponent} from '../character-list/character-list.component';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';

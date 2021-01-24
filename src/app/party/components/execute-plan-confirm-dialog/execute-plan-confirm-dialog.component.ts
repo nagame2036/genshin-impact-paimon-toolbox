@@ -1,10 +1,10 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {DialogComponent} from '../../../shared/components/dialog/dialog.component';
-import {I18n} from '../../../shared/models/i18n.model';
+import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
+import {I18n} from '../../../widget/models/i18n.model';
 import {ItemList} from '../../../material/models/item-list.model';
 import {InventoryService} from '../../../inventory/services/inventory.service';
 import {first, map} from 'rxjs/operators';
-import {Rarity} from '../../../shared/models/rarity.type';
+import {Rarity} from '../../../game-common/models/rarity.type';
 import {Observable, Subject} from 'rxjs';
 import {InventoryItemDetail} from '../../../material/models/inventory-item-detail.model';
 

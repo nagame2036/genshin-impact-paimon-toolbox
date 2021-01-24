@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../shared/shared.module';
+import {WidgetModule} from '../widget/widget.module';
 import {CharacterModule} from '../character/character.module';
 import {WeaponModule} from '../weapon/weapon.module';
 import {PlanModule} from '../plan/plan.module';
@@ -21,6 +21,7 @@ import {PartyWeaponPlanComponent} from './pages/party-weapon-plan/party-weapon-p
 import {WeaponPlanFormComponent} from './components/weapon-plan-form/weapon-plan-form.component';
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
+import {GameCommonModule} from '../game-common/game-common.module';
 
 @NgModule({
   declarations: [
@@ -41,11 +42,12 @@ import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confi
     ExecutePlanConfirmDialogComponent,
   ],
   imports: [
-    SharedModule,
+    WidgetModule,
+    PartyRoutingModule,
+    GameCommonModule,
     CharacterModule,
     WeaponModule,
     PlanModule,
-    PartyRoutingModule,
     InventoryModule,
   ]
 })

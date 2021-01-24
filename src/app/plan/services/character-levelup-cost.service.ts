@@ -12,7 +12,7 @@ import {PartyCharacter} from '../../character/models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
-import {I18n} from '../../shared/models/i18n.model';
+import {I18n} from '../../widget/models/i18n.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';

@@ -4,7 +4,7 @@
   </span>
   <div class="list">
     <div *ngFor="let item of items; trackBy: trackItem" class="detail-container">
-      <app-item-view category="materials" [width]="160" [id]="item.id" [rarity]="item.rarity || 1">
+      <app-item-view category="materials" [width]="140" [id]="item.id" [rarity]="item.rarity || 1">
       </app-item-view>
       <button *ngIf="showCostDetails" class="cost-detail-btn" (click)="dialog.open(item.id)">
         <span class="material-icons">

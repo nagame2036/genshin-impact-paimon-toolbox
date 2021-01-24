@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {I18n} from '../../../shared/models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 import {supportedLanguages} from '../../../app-translate.module';
 

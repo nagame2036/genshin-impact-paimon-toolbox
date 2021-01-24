@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../shared/shared.module';
+import {WidgetModule} from '../widget/widget.module';
+import {GameCommonModule} from '../game-common/game-common.module';
 import {WeaponListComponent} from './components/weapon-list/weapon-list.component';
 import {PartyWeaponListComponent} from './components/party-weapon-list/party-weapon-list.component';
 
@@ -10,7 +11,8 @@ import {PartyWeaponListComponent} from './components/party-weapon-list/party-wea
     PartyWeaponListComponent,
   ],
   imports: [
-    SharedModule,
+    WidgetModule,
+    GameCommonModule,
   ],
   exports: [
     WeaponListComponent,

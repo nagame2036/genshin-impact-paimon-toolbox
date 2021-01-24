@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {EnemiesMaterial, EnemiesMaterialItem} from '../models/enemies-material.model';
-import {Rarity} from '../../shared/models/rarity.type';
+import {Rarity} from '../../game-common/models/rarity.type';
 
 @Injectable({
   providedIn: 'root'
