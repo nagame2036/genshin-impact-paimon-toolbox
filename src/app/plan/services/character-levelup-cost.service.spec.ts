@@ -6,7 +6,7 @@ import {PlanModule} from '../plan.module';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../shared/models/element-type.enum';
-import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
+import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 import {AppTranslateModule} from '../../app-translate.module';
 

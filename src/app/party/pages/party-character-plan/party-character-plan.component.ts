@@ -10,7 +10,7 @@ import {first, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {ItemList} from '../../../material/models/item-list.model';
 import {CharacterLevelupCostService} from '../../../plan/services/character-levelup-cost.service';
 import {TalentLevelupCostService} from '../../../plan/services/talent-levelup-cost.service';
-import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {combineLatest, from, Observable, range, ReplaySubject, Subject, zip} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {CharacterExpMaterialService} from '../../../material/services/character-exp-material.service';

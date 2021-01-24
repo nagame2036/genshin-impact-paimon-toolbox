@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
-import {CharacterAndGearModule} from '../character-and-gear/character-and-gear.module';
+import {GameCommonModule} from '../game-common/game-common.module';
 
 @NgModule({
   declarations: [],
   imports: [
     SharedModule,
-    CharacterAndGearModule,
+    GameCommonModule,
   ],
 })
 export class PlanModule {

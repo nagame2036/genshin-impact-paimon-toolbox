@@ -11,7 +11,7 @@ import {MaterialType} from '../../../material/models/material-type.enum';
 import {combineLatest, Observable, ReplaySubject, Subject} from 'rxjs';
 import {ItemList} from '../../../material/models/item-list.model';
 import {WeaponLevelupCostService} from '../../../plan/services/weapon-levelup-cost.service';
-import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {WeaponExpMaterialService} from '../../../material/services/weapon-exp-material.service';
 import {PartyPlanExecutor} from '../../services/party-plan-executor.service';
 import {ExecutePlanConfirmDialogComponent} from '../../components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';

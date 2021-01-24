@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
-import {AscensionLevel} from '../../character-and-gear/models/ascension-level.model';
+import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {HttpClient} from '@angular/common/http';
 import {combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {map, mergeMap, reduce, take} from 'rxjs/operators';
-import {Ascension} from '../../character-and-gear/models/ascension.type';
+import {Ascension} from '../../game-common/models/ascension.type';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
 import {CharacterAscensionMaterialService} from '../../material/services/character-ascension-material.service';
 import {EnemiesMaterialService} from '../../material/services/enemies-material.service';
 import {ItemList} from '../../material/models/item-list.model';
 import {PartyCharacter} from '../../character/models/party-character.model';
 import {CharacterPlan} from '../models/character-plan.model';
-import {processExpBonus} from '../../character-and-gear/models/levelup-exp-bonus.model';
+import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../shared/models/i18n.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
-import {ItemType} from '../../character-and-gear/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.enum';
 import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import {Weapon} from './weapon.model';
-import {Ascension} from '../../character-and-gear/models/ascension.type';
+import {Ascension} from '../../game-common/models/ascension.type';
 import {RefineRank} from './refine-rank.type';
 
 export interface PartyWeapon extends Weapon {

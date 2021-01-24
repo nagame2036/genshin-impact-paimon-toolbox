@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../shared/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
-import {Ascension} from '../../../character-and-gear/models/ascension.type';
-import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {Ascension} from '../../../game-common/models/ascension.type';
+import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {Observable} from 'rxjs';
 import {SelectOption} from '../../../shared/models/select-option.model';
 

@@ -1,4 +1,4 @@
-import {ItemType} from '../../character-and-gear/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 export interface MaterialCostMark {
 

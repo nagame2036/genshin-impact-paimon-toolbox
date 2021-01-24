@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {MaterialCostMark} from '../models/material-cost-mark.model';
 import {ItemList} from '../models/item-list.model';
-import {ItemType} from '../../character-and-gear/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root'

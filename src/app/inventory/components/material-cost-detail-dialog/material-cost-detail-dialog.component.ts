@@ -3,7 +3,7 @@ import {DialogComponent} from '../../../shared/components/dialog/dialog.componen
 import {MaterialCostMarker} from '../../../material/services/material-cost-marker.service';
 import {MaterialCostMark} from '../../../material/models/material-cost-mark.model';
 import {I18n} from '../../../shared/models/i18n.model';
-import {itemTypeNames} from '../../../character-and-gear/models/item-type.enum';
+import {itemTypeNames} from '../../../game-common/models/item-type.enum';
 
 @Component({
   selector: 'app-material-cost-detail-dialog',

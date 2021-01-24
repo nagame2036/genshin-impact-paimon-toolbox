@@ -1,4 +1,4 @@
-import {Ascension} from '../../character-and-gear/models/ascension.type';
+import {Ascension} from '../../game-common/models/ascension.type';
 
 export interface WeaponPlan {
 

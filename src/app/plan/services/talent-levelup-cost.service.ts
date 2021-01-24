@@ -15,7 +15,7 @@ import {CharacterPlan} from '../models/character-plan.model';
 import {mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../shared/models/i18n.model';
 import {MaterialCostMarker} from '../../material/services/material-cost-marker.service';
-import {ItemType} from '../../character-and-gear/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root'

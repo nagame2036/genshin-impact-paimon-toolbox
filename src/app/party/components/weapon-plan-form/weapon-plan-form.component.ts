@@ -4,7 +4,7 @@ import {PartyWeapon} from '../../../weapon/models/party-weapon.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {RefineRank} from '../../../weapon/models/refine-rank.type';
 import {WeaponPlan} from '../../../plan/models/weapon-plan.model';
-import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {Observable, Subject} from 'rxjs';
 
 @Component({

@@ -6,7 +6,7 @@ import {Constellation} from '../../../character/models/constellation.type';
 import {TalentLevel} from '../../../character/models/talent-level.type';
 import {TalentLevelData} from '../../../character/models/talent-level-data.model';
 import {TalentService} from '../../../character/services/talent.service';
-import {AscensionLevel} from '../../../character-and-gear/models/ascension-level.model';
+import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {CharacterPlan} from '../../../plan/models/character-plan.model';
 import {Observable, Subject} from 'rxjs';
 import {SelectOption} from '../../../shared/models/select-option.model';

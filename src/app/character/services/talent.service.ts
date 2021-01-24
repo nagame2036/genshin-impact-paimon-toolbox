@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {TalentData, TalentDataGroup, TalentDataItem} from '../models/talent.model';
 import {HttpClient} from '@angular/common/http';
-import {Ascension} from '../../character-and-gear/models/ascension.type';
+import {Ascension} from '../../game-common/models/ascension.type';
 import {TalentLevel} from '../models/talent-level.type';
 import {rangeList} from '../../shared/utils/range-list';
 import {coerceIn} from '../../shared/utils/coerce';
