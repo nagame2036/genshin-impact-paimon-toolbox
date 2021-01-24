@@ -1,0 +1,9 @@
+@import '../../../game-common/styles/detail-subpage.scss';
+
+.character-portrait {
+  @apply w-80;
+  @apply opacity-50;
+  @apply absolute;
+  @apply right-16;
+  @apply bottom-16;
+}

@@ -16,8 +16,12 @@ const routes: Routes = [
     loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
   },
   {
-    path: 'party',
-    loadChildren: () => import('./party/party.module').then(m => m.PartyModule)
+    path: 'characters',
+    loadChildren: () => import('./character/character.module').then(m => m.CharacterModule)
+  },
+  {
+    path: 'weapons',
+    loadChildren: () => import('./weapon/weapon.module').then(m => m.WeaponModule)
   },
   {
     path: 'inventory',

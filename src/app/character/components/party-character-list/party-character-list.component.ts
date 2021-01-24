@@ -4,9 +4,9 @@ import {PartyCharacter} from '../../models/party-character.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterService} from '../../services/character.service';
 import {CharacterListComponent} from '../character-list/character-list.component';
-import {CharacterPlan} from '../../../plan/models/character-plan.model';
+import {CharacterPlan} from '../../models/character-plan.model';
 import {first, map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {CharacterPlanner} from '../../../plan/services/character-planner.service';
+import {CharacterPlanner} from '../../services/character-planner.service';
 import {combineLatest} from 'rxjs';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 

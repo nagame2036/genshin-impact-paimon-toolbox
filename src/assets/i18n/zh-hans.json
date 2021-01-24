@@ -1,8 +1,8 @@
 {
   "path": {
     "home": "首页",
-    "party": "Box",
-    "character-stat": "角色面板",
+    "characters": "角色",
+    "weapons": "武器",
     "inventory": "背包",
     "resin": "树脂",
     "settings": "设置"
@@ -28,29 +28,24 @@
         "now": "现在"
       }
     },
-    "party": {
+    "game-common": {
       "confirm-to-remove": "确定要将以下移出Box吗？",
       "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
       "execute-all-plan": "拉满",
       "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 扣除库存",
       "total-cost": "培养总消耗",
       "levelup-cost": "升级消耗",
+      "talent-levelup": {
+        "0": "普通攻击培养",
+        "1": "元素战技培养",
+        "2": "战斗天赋培养",
+        "3": "战斗天赋培养",
+        "4": "元素爆发培养"
+      },
       "talent-cost": {
         "0": "普通攻击培养消耗",
         "1": "元素战技培养消耗",
         "2": "元素爆发培养消耗"
-      },
-      "characters": {
-        "detail": "角色详情",
-        "plan": {
-          "title": "状态与规划"
-        }
-      },
-      "weapons": {
-        "detail": "武器详情",
-        "plan": {
-          "title": "状态与规划"
-        }
       }
     },
     "characters": {
@@ -58,24 +53,21 @@
       "reset": "重选角色",
       "add": "添加角色",
       "add-success": "成功添加角色 - {{ name }}",
-      "remove": "移除角色"
+      "remove": "移除角色",
+      "detail": "角色详情",
+      "plan": {
+        "title": "状态与规划"
+      }
     },
     "weapons": {
       "title": "武器列表",
       "reset": "重选武器",
       "add": "添加武器",
       "add-success": "成功添加武器 - {{ name }}",
-      "remove": "移除武器"
-    },
-    "plan": {
-      "ascension": "突破",
-      "levelup": "升级",
-      "talents": {
-        "0": "普通攻击培养",
-        "1": "元素战技培养",
-        "2": "战斗天赋培养",
-        "3": "战斗天赋培养",
-        "4": "元素爆发培养"
+      "remove": "移除武器",
+      "detail": "武器详情",
+      "plan": {
+        "title": "状态与规划"
       }
     },
     "inventory": {
@@ -169,6 +161,7 @@
     "ascension-label": "突破阶段",
     "level": "等级",
     "level-label": "等级",
+    "levelup": "升级",
     "res": "{{ type }}抗",
     "dmg": "{{ type }}伤",
     "dmg-res": "{{ type }}伤减伤",

@@ -23,7 +23,6 @@ export class CheckboxComponent implements OnInit {
   }
 
   emitChange(): void {
-    console.log(this.value);
     this.value = !this.value;
     this.checked.emit(this.value);
   }

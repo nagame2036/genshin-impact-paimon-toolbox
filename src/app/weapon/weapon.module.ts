@@ -2,17 +2,31 @@ import {NgModule} from '@angular/core';
 
 import {WidgetModule} from '../widget/widget.module';
 import {GameCommonModule} from '../game-common/game-common.module';
+import {WeaponRoutingModule} from './weapon-routing.module';
+import {InventoryModule} from '../inventory/inventory.module';
+import {AddWeaponComponent} from './pages/add-weapon/add-weapon.component';
 import {WeaponListComponent} from './components/weapon-list/weapon-list.component';
 import {PartyWeaponListComponent} from './components/party-weapon-list/party-weapon-list.component';
+import {WeaponPageComponent} from './pages/weapon-page/weapon-page.component';
+import {WeaponDetailComponent} from './pages/weapon-detail/weapon-detail.component';
+import {WeaponPlanComponent} from './pages/weapon-plan/weapon-plan.component';
+import {WeaponPlanFormComponent} from './components/weapon-plan-form/weapon-plan-form.component';
 
 @NgModule({
   declarations: [
+    AddWeaponComponent,
     WeaponListComponent,
     PartyWeaponListComponent,
+    WeaponPageComponent,
+    WeaponDetailComponent,
+    WeaponPlanComponent,
+    WeaponPlanFormComponent,
   ],
   imports: [
     WidgetModule,
     GameCommonModule,
+    WeaponRoutingModule,
+    InventoryModule,
   ],
   exports: [
     WeaponListComponent,

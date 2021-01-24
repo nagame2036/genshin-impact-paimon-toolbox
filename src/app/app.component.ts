@@ -9,7 +9,8 @@ export class AppComponent {
 
   routers = [
     {path: 'home'},
-    {path: 'party'},
+    {path: 'characters'},
+    {path: 'weapons'},
     {path: 'inventory'},
     {path: 'resin'},
     {path: 'settings'},

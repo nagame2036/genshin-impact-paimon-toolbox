@@ -6,8 +6,8 @@ import {CharacterExpMaterialService} from '../../material/services/character-exp
 import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 import {InventoryItemDetail} from '../../material/models/inventory-item-detail.model';
 import {InventoryItem} from '../../material/models/inventory-item.model';
-import {CharacterPlanner} from '../../plan/services/character-planner.service';
-import {WeaponPlanner} from '../../plan/services/weapon-planner.service';
+import {CharacterPlanner} from '../../character/services/character-planner.service';
+import {WeaponPlanner} from '../../weapon/services/weapon-planner.service';
 import {ItemList} from '../../material/models/item-list.model';
 import {craftItem, getCraftableAmount} from '../utils/craft';
 import {MaterialService} from '../../material/services/material.service';
