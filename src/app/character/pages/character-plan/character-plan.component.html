@@ -2,7 +2,7 @@
   <app-character-plan-form [character]="party" [plan]="plan" [plans]="plans" (executePlan)="executePlanAndSave($event)"
                            (currentChange)="saveParty()" (goalChange)="savePlan()">
   </app-character-plan-form>
-  <app-material-cost-list class="cost-list" [costs]="plans" [subtitles]="subtitles" [types]="types">
-  </app-material-cost-list>
+  <app-material-requirement class="cost-list" [requirements]="plans" [subtitles]="subtitles" [types]="types">
+  </app-material-requirement>
 </div>
 <app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

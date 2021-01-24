@@ -53,11 +53,11 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
   readonly #plan = new ReplaySubject<CharacterPlan>();
 
   plans: { text: string, value: ItemList, satisfied: Observable<boolean> }[] = [
-    {text: this.i18n.module('total-cost'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('levelup-cost'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('talent-cost.0'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('talent-cost.1'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('talent-cost.2'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('total-requirement'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('levelup-requirement'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('talent-requirement.0'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('talent-requirement.1'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('talent-requirement.2'), value: new ItemList(), satisfied: new Subject()},
   ];
 
   @ViewChild('executePlanConfirm')

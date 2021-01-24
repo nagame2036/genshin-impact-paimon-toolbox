@@ -1,29 +1,35 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MaterialCostDetailDialogComponent} from './material-cost-detail-dialog.component';
+import {MaterialRequirementComponent} from './material-requirement.component';
 import {InventoryModule} from '../../inventory.module';
 import {AppTranslateModule} from '../../../app-translate.module';
+import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {ItemList} from '../../models/item-list.model';
 
-describe('MaterialCostDetailDialogComponent', () => {
-  let component: MaterialCostDetailDialogComponent;
-  let fixture: ComponentFixture<MaterialCostDetailDialogComponent>;
+describe('MaterialRequirementComponent', () => {
+  let component: MaterialRequirementComponent;
+  let fixture: ComponentFixture<MaterialRequirementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        MaterialCostDetailDialogComponent
+        MaterialRequirementComponent
       ],
       imports: [
         InventoryModule,
         AppTranslateModule,
+        AppIndexedDbModule
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MaterialCostDetailDialogComponent);
+    fixture = TestBed.createComponent(MaterialRequirementComponent);
     component = fixture.componentInstance;
+    component.requirements = [
+      {text: '', value: new ItemList()}
+    ];
     fixture.detectChanges();
   });
 

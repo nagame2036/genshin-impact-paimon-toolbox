@@ -1,6 +1,6 @@
 import {ItemType} from '../../game-common/models/item-type.enum';
 
-export interface MaterialCostMark {
+export interface MaterialRequireMark {
 
   need: number;
 

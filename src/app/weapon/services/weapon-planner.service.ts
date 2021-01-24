@@ -8,7 +8,7 @@ import {WeaponService} from './weapon.service';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {activePlans} from '../../game-common/utils/party-plans';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class WeaponPlanner {
   activePlans = new ReplaySubject<{ plan: WeaponPlan, party: PartyWeapon }[]>(1);
 
   constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
-              private marker: MaterialCostMarker) {
+              private marker: MaterialRequireMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
     combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
       this.activePlans.next(activePlans(plans, party));
@@ -50,7 +50,7 @@ export class WeaponPlanner {
     });
   }
 
-  plansCost(): Observable<ItemList> {
+  allPlansCost(): Observable<ItemList> {
     return this.activePlans.pipe(switchMap(it => iif(
       () => it.length === 0,
       of(new ItemList()),

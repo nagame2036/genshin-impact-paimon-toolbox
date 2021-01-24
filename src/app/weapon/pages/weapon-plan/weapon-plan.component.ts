@@ -42,7 +42,7 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
   ];
 
   plans: { value: ItemList; text: string; satisfied: Observable<boolean> }[] = [
-    {text: this.i18n.module('total-cost'), value: new ItemList(), satisfied: new Subject()},
+    {text: this.i18n.module('total-requirement'), value: new ItemList(), satisfied: new Subject()},
   ];
 
   party!: PartyWeapon;

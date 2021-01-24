@@ -10,7 +10,7 @@ import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PartyCharacter} from '../models/party-character.model';
 import {activePlans} from '../../game-common/utils/party-plans';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class CharacterPlanner {
 
   constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
               private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
-              private marker: MaterialCostMarker) {
+              private marker: MaterialRequireMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
     combineLatest([this.plans, this.characters.partyMap]).subscribe(([plans, party]) => {
       this.activePlans.next(activePlans(plans, party));
@@ -53,7 +53,7 @@ export class CharacterPlanner {
     });
   }
 
-  plansCost(): Observable<ItemList> {
+  allPlansCost(): Observable<ItemList> {
     return this.activePlans.pipe(switchMap(it => iif(
       () => it.length === 0,
       of(new ItemList()),

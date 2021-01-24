@@ -2,7 +2,7 @@
   <h1 title>
     {{ i18n.dict('materials.' + id) | translate }}
     -
-    {{ i18n.module('total-cost') | translate }}
+    {{ i18n.module('total-requirement') | translate }}
     {{ totalNeed | number: '1.0-0' }}
   </h1>
   <div class="content">
@@ -26,7 +26,7 @@
         {{ mark.goal }}
       </div>
       <div style="text-align: center">
-        {{ i18n.module('cost') | translate }}
+        {{ i18n.module('requirement') | translate }}
       </div>
       <div style="text-align: right">
         {{ mark.need | number: '1.0-0' }}

@@ -13,7 +13,7 @@ import {CharacterPlan} from '../models/character-plan.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {characterExp, mora} from '../../inventory/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {CharacterExpMaterialService} from '../../inventory/services/character-exp-material.service';
 
@@ -37,7 +37,7 @@ export class CharacterLevelupCostService {
   private readonly levelupLabel = this.i18n.dict('levelup');
 
   constructor(http: HttpClient, private characters: CharacterAscensionMaterialService, private enemies: EnemiesMaterialService,
-              private exps: CharacterExpMaterialService, private marker: MaterialCostMarker) {
+              private exps: CharacterExpMaterialService, private marker: MaterialRequireMarker) {
     http.get<CharacterAscensionCost[]>('assets/data/characters/character-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<number[]>('assets/data/characters/character-levelup-cost.json').subscribe(res => this.levels.next(res));
   }

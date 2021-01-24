@@ -14,7 +14,7 @@ import {TalentService} from './talent.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {mora} from '../../inventory/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class TalentLevelupCostService {
   ];
 
   constructor(http: HttpClient, private talents: TalentService, private domain: TalentLevelupMaterialService,
-              private enemies: EnemiesMaterialService, private marker: MaterialCostMarker) {
+              private enemies: EnemiesMaterialService, private marker: MaterialRequireMarker) {
     http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
   }
 

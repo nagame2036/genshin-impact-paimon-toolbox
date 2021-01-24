@@ -33,8 +33,8 @@
       "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
       "execute-all-plan": "拉满",
       "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 扣除库存",
-      "total-cost": "培养总消耗",
-      "levelup-cost": "升级消耗",
+      "total-requirement": "培养总需求",
+      "levelup-requirement": "升级需求",
       "talent-levelup": {
         "0": "普通攻击培养",
         "1": "元素战技培养",
@@ -42,10 +42,10 @@
         "3": "战斗天赋培养",
         "4": "元素爆发培养"
       },
-      "talent-cost": {
-        "0": "普通攻击培养消耗",
-        "1": "元素战技培养消耗",
-        "2": "元素爆发培养消耗"
+      "talent-requirement": {
+        "0": "普通攻击培养需求",
+        "1": "元素战技培养需求",
+        "2": "元素爆发培养需求"
       }
     },
     "characters": {
@@ -56,7 +56,7 @@
       "remove": "移除角色",
       "detail": "角色详情",
       "plan": {
-        "title": "状态与规划"
+        "title": "规划"
       }
     },
     "weapons": {
@@ -67,7 +67,7 @@
       "remove": "移除武器",
       "detail": "武器详情",
       "plan": {
-        "title": "状态与规划"
+        "title": "规划"
       }
     },
     "inventory": {
@@ -78,7 +78,7 @@
       "overflow": "溢出",
       "have": "库存",
       "craft-one": "合成一份",
-      "plan-cost": "培养消耗",
+      "plan-requirement": "培养需求",
       "common": "通用",
       "boss": "Boss掉落",
       "gem": "宝石",
@@ -89,8 +89,8 @@
       "mob": "小怪掉落",
       "elite": "精英怪掉落",
       "local-specialty": "地区特产",
-      "total-cost": "总消耗: ",
-      "cost": "消耗: "
+      "total-requirement": "总消耗: ",
+      "requirement": "消耗: "
     },
     "character-stat": {
       "title": "角色面板分析",

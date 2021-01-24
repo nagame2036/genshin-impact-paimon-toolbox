@@ -9,11 +9,11 @@ import {Observable} from 'rxjs';
 import {I18n} from '../../../widget/models/i18n.model';
 
 @Component({
-  selector: 'app-material-cost-list',
-  templateUrl: './material-cost-list.component.html',
-  styleUrls: ['./material-cost-list.component.scss']
+  selector: 'app-material-requirement',
+  templateUrl: './material-requirement.component.html',
+  styleUrls: ['./material-requirement.component.scss']
 })
-export class MaterialCostListComponent implements OnInit {
+export class MaterialRequirementComponent implements OnInit {
 
   i18n = new I18n('inventory');
 
@@ -24,11 +24,11 @@ export class MaterialCostListComponent implements OnInit {
   types: MaterialType[][] = [];
 
   @Input()
-  costs: { text: string, value: ItemList }[] = [];
+  requirements: { text: string, value: ItemList }[] = [];
 
   details!: Observable<InventoryItemDetail[]>[];
 
-  costMaterials!: Observable<InventoryItemDetail[]>[];
+  requireDetails!: Observable<InventoryItemDetail[]>[];
 
   constructor(public inventory: InventoryService, private materials: MaterialService) {
   }
@@ -37,20 +37,20 @@ export class MaterialCostListComponent implements OnInit {
     this.details = this.types.map(type => {
       return this.materials.getMaterials(...type).pipe(switchMap(items => this.inventory.getDetails(items)));
     });
-    this.changeCost(this.costs[0].value);
+    this.changeCost(this.requirements[0].value);
   }
 
   changeCost(cost: ItemList): void {
-    this.costMaterials = this.details.map(details => details.pipe(map(it => processCostDetails(it, cost))));
+    this.requireDetails = this.details.map(details => details.pipe(map(it => selectRequire(it, cost))));
   }
 }
 
-function processCostDetails(details: InventoryItemDetail[], cost: ItemList): InventoryItemDetail[] {
+function selectRequire(details: InventoryItemDetail[], requirement: ItemList): InventoryItemDetail[] {
   const results: InventoryItemDetail[] = [];
   for (const detail of details) {
     const id = detail.id;
-    const need = cost.getAmount(id);
-    if (cost.has(id) && need > 0) {
+    const need = requirement.getAmount(id);
+    if (requirement.has(id) && need > 0) {
       let lack = need - detail.have;
       const craftable = Math.max(0, Math.min(lack, detail.craftable));
       lack = Math.max(0, lack - craftable);

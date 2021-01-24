@@ -1,22 +1,22 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
-import {MaterialCostMarker} from '../../services/material-cost-marker.service';
-import {MaterialCostMark} from '../../models/material-cost-mark.model';
+import {MaterialRequireMarker} from '../../services/material-require-marker.service';
+import {MaterialRequireMark} from '../../models/material-require-mark.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {itemTypeNames} from '../../../game-common/models/item-type.enum';
 
 @Component({
-  selector: 'app-material-cost-detail-dialog',
-  templateUrl: './material-cost-detail-dialog.component.html',
-  styleUrls: ['./material-cost-detail-dialog.component.scss']
+  selector: 'app-material-requirement-dialog',
+  templateUrl: './material-requirement-dialog.component.html',
+  styleUrls: ['./material-requirement-dialog.component.scss']
 })
-export class MaterialCostDetailDialogComponent implements OnInit {
+export class MaterialRequirementDialogComponent implements OnInit {
 
   i18n = new I18n('inventory');
 
   id = 0;
 
-  marks: MaterialCostMark[] = [];
+  marks: MaterialRequireMark[] = [];
 
   totalNeed = 0;
 
@@ -25,7 +25,7 @@ export class MaterialCostDetailDialogComponent implements OnInit {
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private marker: MaterialCostMarker) {
+  constructor(private marker: MaterialRequireMarker) {
   }
 
   ngOnInit(): void {

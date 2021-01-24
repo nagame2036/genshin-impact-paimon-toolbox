@@ -1,8 +1,8 @@
 <div class="list-options">
-  <ng-container *ngIf="costs.length > 0">
-    <app-select [value]="costs[0].value" [options]="costs" (changed)="changeCost($event)">
+  <ng-container *ngIf="requirements.length > 0">
+    <app-select [value]="requirements[0].value" [options]="requirements" (changed)="changeCost($event)">
       <span form-label>
-        {{ i18n.module('plan-cost') | translate }}
+        {{ i18n.module('plan-requirement') | translate }}
       </span>
     </app-select>
   </ng-container>
@@ -11,7 +11,7 @@
   </app-checkbox>
 </div>
 <div class="list">
-  <app-inventory-list *ngFor="let items$ of costMaterials; let i = index"
+  <app-inventory-list *ngFor="let items$ of requireDetails; let i = index"
                       [subtitle]="subtitles[i]" [items$]="items$" [showCostDetails]="false">
   </app-inventory-list>
 </div>

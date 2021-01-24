@@ -6,7 +6,7 @@ import {Weapon} from '../models/weapon.model';
 import {PartyWeapon} from '../models/party-weapon.model';
 import {first, map, switchMap} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class WeaponService {
 
   private readonly storeName = 'party-weapons';
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialCostMarker) {
+  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialRequireMarker) {
     http.get<Weapon[]>('assets/data/weapons/weapons.json').subscribe(res => this.#weapons.next(res));
     database.getAll(this.storeName).subscribe(party => this.cacheParty(party, false));
   }

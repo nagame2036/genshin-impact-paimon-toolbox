@@ -6,7 +6,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {PartyCharacter} from '../models/party-character.model';
 import {first, switchMap} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class CharacterService {
 
   private readonly storeName = 'party-characters';
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialCostMarker) {
+  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialRequireMarker) {
     http.get<Character[]>('assets/data/characters/characters.json').subscribe(res => this.#characters.next(res));
     zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
       this.cacheParty(party, false);

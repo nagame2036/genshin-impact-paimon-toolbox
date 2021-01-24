@@ -13,7 +13,7 @@ import {PartyWeapon} from '../models/party-weapon.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {mora, weaponExp} from '../../inventory/models/mora-and-exp.model';
-import {MaterialCostMarker} from '../../inventory/services/material-cost-marker.service';
+import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponExpMaterialService} from '../../inventory/services/weapon-exp-material.service';
@@ -38,7 +38,7 @@ export class WeaponLevelupCostService {
   private readonly levelupLabel = this.i18n.dict('levelup');
 
   constructor(http: HttpClient, private domain: WeaponAscensionMaterialService, private enemies: EnemiesMaterialService,
-              private exps: WeaponExpMaterialService, private marker: MaterialCostMarker) {
+              private exps: WeaponExpMaterialService, private marker: MaterialRequireMarker) {
     http.get<WeaponAscensionCost>('assets/data/weapons/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
     http.get<WeaponLevelupCost>('assets/data/weapons/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
   }

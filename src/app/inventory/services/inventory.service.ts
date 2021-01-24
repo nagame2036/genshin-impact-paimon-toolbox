@@ -120,7 +120,7 @@ export class InventoryService {
   }
 
   private calculateNeed(): void {
-    combineLatest([this.characterPlanner.plansCost(), this.weaponPlanner.plansCost()])
+    combineLatest([this.characterPlanner.allPlansCost(), this.weaponPlanner.allPlansCost()])
       .subscribe(([characterCost, weaponCost]) => {
         const cost = new ItemList().combine(characterCost).combine(weaponCost);
         this.#cost.next(cost);
