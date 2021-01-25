@@ -1,17 +1,18 @@
 import {NgModule} from '@angular/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-
-export type Language = { value: string, text: string };
 
 export const supportedLanguages = [
   {value: 'zh-hans', text: '简体中文'},
   {value: 'en', text: 'English'},
 ];
 
-export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
+  return new MultiTranslateHttpLoader(http, [
+    {prefix: './assets/i18n/core/', suffix: '.json'},
+    {prefix: './assets/i18n/data/', suffix: '.json'},
+  ]);
 }
 
 const translateConfig = {

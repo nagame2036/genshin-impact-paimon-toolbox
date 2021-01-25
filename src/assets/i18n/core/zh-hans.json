@@ -1,0 +1,239 @@
+{
+  "path": {
+    "home": "首页",
+    "characters": "角色",
+    "weapons": "武器",
+    "inventory": "背包",
+    "resin": "树脂",
+    "settings": "设置"
+  },
+  "modules": {
+    "home": {
+      "introduction": "本网站是原神的一些小工具集合，如果有想法、建议、想要的功能，或者发现了 bug，欢迎讨论，或者提",
+      "mihoyo-copyright": "本项目所使用的游戏资源（包括但不限于：游戏图片、数据等），其版权属于上海米哈游网络科技股份有限公司和（或）其关联公司。",
+      "thanks": "数据源及鸣谢"
+    },
+    "settings": {
+      "title": "设置",
+      "language": "语言"
+    },
+    "resin": {
+      "replenish": {
+        "title": "树脂恢复计算器",
+        "resin": "树脂",
+        "minutes": "分钟",
+        "current": "当前剩余树脂",
+        "replenished-in": "下次恢复时间",
+        "replenished-to": "恢复到",
+        "now": "现在"
+      }
+    },
+    "game-common": {
+      "confirm-to-remove": "确定要将以下移出Box吗？",
+      "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ factor }}倍经验加成",
+      "execute-all-plan": "拉满",
+      "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 扣除库存",
+      "total-requirement": "培养总需求",
+      "levelup-requirement": "升级需求",
+      "talent-levelup": {
+        "0": "普通攻击培养",
+        "1": "元素战技培养",
+        "2": "战斗天赋培养",
+        "3": "战斗天赋培养",
+        "4": "元素爆发培养"
+      },
+      "talent-requirement": {
+        "0": "普通攻击培养需求",
+        "1": "元素战技培养需求",
+        "2": "元素爆发培养需求"
+      }
+    },
+    "characters": {
+      "title": "角色列表",
+      "reset": "重选角色",
+      "add": "添加角色",
+      "add-success": "成功添加角色 - {{ name }}",
+      "remove": "移除角色",
+      "detail": "角色详情",
+      "plan": {
+        "title": "规划"
+      }
+    },
+    "weapons": {
+      "title": "武器列表",
+      "reset": "重选武器",
+      "add": "添加武器",
+      "add-success": "成功添加武器 - {{ name }}",
+      "remove": "移除武器",
+      "detail": "武器详情",
+      "plan": {
+        "title": "规划"
+      }
+    },
+    "inventory": {
+      "show-overflow": "显示溢出",
+      "need": "需求",
+      "craftable": "可合成",
+      "lack": "缺少",
+      "overflow": "溢出",
+      "have": "库存",
+      "craft-one": "合成一份",
+      "plan-requirement": "培养需求",
+      "common": "通用",
+      "boss": "Boss掉落",
+      "gem": "宝石",
+      "1/4/7": "周一、四、日",
+      "2/5/7": "周二、五、日",
+      "3/6/7": "周三、六、日",
+      "enemy": "怪物掉落",
+      "mob": "小怪掉落",
+      "elite": "精英怪掉落",
+      "local-specialty": "地区特产",
+      "total-requirement": "总消耗: ",
+      "requirement": "消耗: "
+    },
+    "character-stat": {
+      "title": "角色面板分析",
+      "profile": {
+        "dmg-type": "伤害类型",
+        "current": "当前",
+        "compared": "对比",
+        "change": "变化",
+        "base-atk": "{{ label }}基础攻击力",
+        "plume-atk": "{{ label }}羽毛攻击力",
+        "bonus-atk": "{{ label }}额外攻击力",
+        "atk-inc-pct": "{{ label }}攻击力加成",
+        "atk": "{{ label }}攻击力",
+        "crit-rate": "{{ label }}暴击率",
+        "crit-dmg-bonus": "{{ label }}暴击伤害",
+        "elemental-dmg-bonus": "{{ label }}{{ type }}伤加成",
+        "no-crit-dmg": "{{ label }}未暴击伤害",
+        "crit-dmg": "{{ label }}暴击伤害",
+        "mean-dmg": "{{ label }}期望伤害",
+        "copy-to": "复制到{{ label }}",
+        "left": "左侧",
+        "right": "右侧"
+      },
+      "optimizer": {
+        "current": "当前",
+        "optimized": "最优",
+        "atk-pct": "{{ label }}攻击力加成",
+        "crit-rate-pct": "{{ label }}暴击率加成",
+        "crit-dmg-bonus-pct": "{{ label }}暴击伤害加成",
+        "optimize": "优化属性点数",
+        "copy-and-compare": "对比当前面板"
+      },
+      "analyzer": {
+        "title": "面板分析",
+        "weight": "角色面板属性权重为攻击力 : 暴击率 : 暴击伤害 : {{ type }}伤加成 = 1.5 : 1 : 2 : {{ weight }}",
+        "atk-inc": "当前面板提升10点数（15%）攻击力可提升期望伤害 {{ dmg }}",
+        "crit-rate-inc": "当前面板提升10点数（10%）暴击率可提升期望伤害 {{ dmg }}",
+        "crit-dmg-bonus-inc": "当前面板提升10点数（20%）暴击伤害可提升期望伤害 {{ dmg }}",
+        "elemental-dmg-bonus-inc": "当前面板提升10点数（{{ dmgBonus }}%）{{ type }}伤加成可提升期望伤害 {{ dmg }}",
+        "copy-and-compare": "对比当前面板"
+      },
+      "calculator": {
+        "title": "伤害计算"
+      }
+    }
+  },
+  "dict": {
+    "title": "派蒙工具箱",
+    "menu": "菜单",
+    "and": "和",
+    "close": "关闭",
+    "resin": "树脂",
+    "none": "无",
+    "sort": "排序",
+    "minutes": "分钟",
+    "multi-select": "多选",
+    "select-all": "全选",
+    "confirm": "我已确定",
+    "cancel": "我再想想",
+    "rarity": "稀有度",
+    "type": "类型",
+    "character": "角色",
+    "weapon": "武器",
+    "constellation": "命之座",
+    "refine": "精炼",
+    "refine-rank": "精炼阶段",
+    "ascension": "突破",
+    "ascension-label": "突破阶段",
+    "level": "等级",
+    "level-label": "等级",
+    "levelup": "升级",
+    "res": "{{ type }}抗",
+    "dmg": "{{ type }}伤",
+    "dmg-res": "{{ type }}伤减伤",
+    "element": "神之眼",
+    "elements": {
+      "0": "物",
+      "1": "风",
+      "2": "岩",
+      "3": "雷",
+      "4": "草",
+      "5": "水",
+      "6": "火",
+      "7": "冰"
+    },
+    "nation": "国家",
+    "nations": {
+      "0": "未知",
+      "1": "蒙德",
+      "2": "璃月",
+      "3": "稻妻",
+      "4": "须弥",
+      "5": "枫丹",
+      "6": "穆纳塔",
+      "7": "至冬"
+    },
+    "no-crit-hit-dmg": "技能{{ num }}未暴击伤害",
+    "crit-hit-dmg": "技能{{ num }}暴击伤害",
+    "avg-hit-dmg": "技能{{ num }}平均伤害",
+    "enemy": "怪物",
+    "weapon-types": {
+      "1": "单手剑",
+      "2": "双手剑",
+      "3": "长柄武器",
+      "4": "法器",
+      "5": "弓"
+    },
+    "character-materials": "角色素材",
+    "talent-materials": "天赋素材",
+    "weapon-materials": "武器素材",
+    "enemies-materials": "掉落素材",
+    "ingredients": "特产及原料",
+    "talent": "天赋",
+    "talent-types": {
+      "0": "普通攻击",
+      "1": "元素战技",
+      "2": "战斗天赋",
+      "3": "战斗天赋",
+      "4": "元素爆发",
+      "5": "固有天赋",
+      "6": "固有天赋",
+      "7": "固有天赋",
+      "8": "固有天赋"
+    },
+    "enemy-groups": {
+      "500": "史莱姆",
+      "501": "丘丘人",
+      "502": "丘丘萨满",
+      "503": "射手丘丘人",
+      "504": "飞萤",
+      "505": "愚人众先遣队",
+      "506": "盗宝团",
+      "507": "骗骗花",
+      "999": "彩蛋",
+      "1000": "丘丘暴徒",
+      "1001": "丘丘王",
+      "1002": "深渊法师",
+      "1003": "遗迹守卫",
+      "1004": "愚人众·飞萤术士",
+      "1005": "愚人众·债务处理人",
+      "1006": "幼岩龙蜥",
+      "1007": "元素之核",
+      "1008": "大雪猪王"
+    }
+  }
+}
