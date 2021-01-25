@@ -6,32 +6,50 @@
     {{ totalNeed | number: '1.0-0' }}
   </h1>
   <div class="content">
-    <ng-container *ngFor="let mark of marks">
-      <div style="text-align: center">
-        {{ i18n.dict(types[mark.type]) | translate }}
-      </div>
-      <div style="text-align: center">
-        {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
-      </div>
-      <div style="text-align: center">
-        {{ mark.use | translate }}
-      </div>
-      <div style="text-align: center">
-        {{ mark.start }}
-      </div>
-      <div style="text-align: center">
-        →
-      </div>
-      <div style="text-align: center">
-        {{ mark.goal }}
-      </div>
-      <div style="text-align: center">
-        {{ i18n.module('requirement') | translate }}
-      </div>
-      <div style="text-align: right">
-        {{ mark.need | number: '1.0-0' }}
-      </div>
-    </ng-container>
+    <table class="requirement-table">
+      <thead>
+      <tr class="bg-primary-200">
+        <th class="requirement-cell cell-border-b">
+          {{ i18n.module('name') | translate }}
+        </th>
+        <th class="requirement-cell cell-border-b">
+          {{ i18n.module('purpose') | translate }}
+        </th>
+        <th class="requirement-cell cell-border-b">
+          {{ i18n.module('detail') | translate }}
+        </th>
+        <th class="requirement-cell cell-border-b">
+          {{ i18n.module('requirement') | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let mark of marks">
+        <tr *ngFor="let detail of mark.details; let i = index">
+          <td class="requirement-cell cell-border-b text-center" *ngIf="i === 0" [rowSpan]="mark.details.length">
+            {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
+          </td>
+          <td class="requirement-cell text-center" [class.cell-border-b]="i === mark.details.length - 1">
+            {{ detail.purpose | translate }}
+          </td>
+          <td class="requirement-cell" [class.cell-border-b]="i === mark.details.length - 1">
+            <div class="detail-cell">
+              <span>
+                {{ detail.start }}
+              </span>
+              →
+              <span>
+                {{ detail.goal }}
+              </span>
+            </div>
+          </td>
+          <td class="requirement-cell text-right" [class.cell-border-b]="i === mark.details.length - 1">
+            {{ detail.need | number: '1.0-0' }}
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
   </div>
   <div actions>
     <app-ring-button class="close-btn" (click)="dialog.close()">

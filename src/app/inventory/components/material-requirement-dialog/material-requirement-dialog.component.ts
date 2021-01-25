@@ -34,9 +34,13 @@ export class MaterialRequirementDialogComponent implements OnInit {
   open(id: number): void {
     this.dialog.open();
     this.id = id;
-    this.marks = this.marker.getMarks(id).filter(it => it.need !== 0)
-      .sort((a, b) => a.type - b.type || b.id - a.id);
-    this.totalNeed = this.marks.reduce((acc, curr) => acc + curr.need, 0);
+    this.marks = this.marker.getMarks(id).sort((a, b) => a.type - b.type || b.id - a.id);
+    this.totalNeed = 0;
+    for (const mark of this.marks) {
+      for (const detail of mark.details) {
+        this.totalNeed += detail.need;
+      }
+    }
   }
 
 }

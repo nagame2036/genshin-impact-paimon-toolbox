@@ -13,15 +13,20 @@ export class MaterialRequireMarker {
   constructor() {
   }
 
-  mark(mark: boolean, requirement: ItemList, type: ItemType, id: number, use: string, start: string, goal: string): ItemList {
+  mark(mark: boolean, requirement: ItemList, type: ItemType, id: number, key: number, purpose: string, [start, goal]: string[]): ItemList {
     if (mark) {
       for (const [itemId, need] of requirement.entries()) {
         if (need <= 0) {
           continue;
         }
-        const marks = this.marks.get(itemId) ?? [];
-        marks.push({need, type, id, use, start, goal});
-        this.marks.set(itemId, marks);
+        const reqMarks = this.marks.get(itemId) ?? [];
+        const index = reqMarks.findIndex(it => it.type === type && it.id === id && it.key === key);
+        const reqMark = index !== -1 ? reqMarks[index] : {type, id, key, details: []};
+        if (index === -1) {
+          reqMarks.push(reqMark);
+        }
+        reqMark.details.push({purpose, start, goal, need});
+        this.marks.set(itemId, reqMarks);
       }
     }
     return requirement;

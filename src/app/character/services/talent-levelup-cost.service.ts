@@ -87,9 +87,10 @@ export class TalentLevelupCostService {
     return cost;
   }
 
-  private mark(mark: boolean, party: PartyCharacter, cost: ItemList, use: string, [start, goal]: string[]): ItemList {
+  private mark(mark: boolean, party: PartyCharacter, cost: ItemList, purpose: string, [start, goal]: string[]): ItemList {
     const type = ItemType.CHARACTER;
-    return this.marker.mark(mark, cost, type, party.id, use, start, goal);
+    const id = party.id;
+    return this.marker.mark(mark, cost, type, id, id, purpose, [start, goal]);
   }
 }
 

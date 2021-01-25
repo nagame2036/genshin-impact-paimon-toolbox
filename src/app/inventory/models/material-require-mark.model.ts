@@ -2,15 +2,25 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 
 export interface MaterialRequireMark {
 
-  need: number;
-
   type: ItemType;
 
   id: number;
 
-  use: string;
+  /**
+   * Used to identify if it is the same item.
+   */
+  key: number;
+
+  details: MaterialRequireMarkDetail[];
+}
+
+export interface MaterialRequireMarkDetail {
+
+  purpose: string;
 
   start: string;
 
   goal: string;
+
+  need: number;
 }

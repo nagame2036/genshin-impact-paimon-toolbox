@@ -1,9 +1,44 @@
 .content {
-  @apply grid;
-  @apply gap-4;
-  grid-template-columns: repeat(8, auto);
-  max-height: 50vh;
+  max-height: 36vh;
+  min-width: 20vw;
   @apply overflow-auto;
+}
+
+.requirement-table {
+  @apply w-full;
+  @apply table-auto;
+  @apply border-2;
+  @apply border-collapse;
+  @apply border-primary-600;
+}
+
+.requirement-cell {
+  @apply px-2;
+  @apply py-1;
+  @apply border;
+  @apply border-primary-600;
+}
+
+.cell-border-b {
+  @apply border-b-2;
+}
+
+.detail-cell {
+  @apply flex;
+
+  & > span {
+    @apply flex-1;
+
+    &:first-of-type {
+      @apply text-right;
+      @apply pr-2;
+    }
+
+    &:last-of-type {
+      @apply text-left;
+      @apply pl-2;
+    }
+  }
 }
 
 .close-btn ::ng-deep .ring-btn {

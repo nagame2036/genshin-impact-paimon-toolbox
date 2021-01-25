@@ -91,9 +91,9 @@ export class WeaponLevelupCostService {
     );
   }
 
-  private mark(mark: boolean, party: PartyWeapon, cost: ItemList, use: string, [start, goal]: string[]): ItemList {
+  private mark(mark: boolean, party: PartyWeapon, cost: ItemList, purpose: string, [start, goal]: string[]): ItemList {
     const type = ItemType.WEAPON;
-    return this.marker.mark(mark, cost, type, party.id, use, start, goal);
+    return this.marker.mark(mark, cost, type, party.id, party.key ?? -1, purpose, [start, goal]);
   }
 
 }
