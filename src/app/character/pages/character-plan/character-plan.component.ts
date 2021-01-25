@@ -6,15 +6,11 @@ import {CharacterService} from '../../services/character.service';
 import {CharacterPlanner} from '../../services/character-planner.service';
 import {ActivatedRoute} from '@angular/router';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {first, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {first, switchMap, takeUntil} from 'rxjs/operators';
 import {ItemList} from '../../../inventory/models/item-list.model';
-import {CharacterLevelupCostService} from '../../services/character-levelup-cost.service';
-import {TalentLevelupCostService} from '../../services/talent-levelup-cost.service';
-import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
-import {combineLatest, from, Observable, range, ReplaySubject, Subject, zip} from 'rxjs';
+import {Observable} from 'rxjs';
 import {MaterialType} from '../../../inventory/models/material-type.enum';
-import {CharacterExpMaterialService} from '../../../inventory/services/character-exp-material.service';
-import {PlanExecutor} from '../../../game-common/services/plan-executor.service';
+import {CharacterRequirementService} from '../../services/character-requirement.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 
 @Component({
@@ -46,43 +42,41 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
 
   party!: PartyCharacter;
 
-  readonly #party = new ReplaySubject<PartyCharacter>();
-
   plan!: CharacterPlan;
 
-  readonly #plan = new ReplaySubject<CharacterPlan>();
-
-  plans: { text: string, value: ItemList, satisfied: Observable<boolean> }[] = [
-    {text: this.i18n.module('total-requirement'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('levelup-requirement'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('talent-requirement.0'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('talent-requirement.1'), value: new ItemList(), satisfied: new Subject()},
-    {text: this.i18n.module('talent-requirement.2'), value: new ItemList(), satisfied: new Subject()},
-  ];
+  plans!: { text: string, value: Observable<ItemList>, satisfied: Observable<boolean> }[];
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
-  constructor(private characters: CharacterService, private planner: CharacterPlanner, private route: ActivatedRoute,
-              private levelup: CharacterLevelupCostService, private talentUp: TalentLevelupCostService,
-              private characterExps: CharacterExpMaterialService, private executor: PlanExecutor) {
+  constructor(private characters: CharacterService, private planner: CharacterPlanner, private requirement: CharacterRequirementService,
+              private route: ActivatedRoute) {
     super();
   }
 
   ngOnInit(): void {
-    this.init();
-    this.updateLevelUpAndTotalCost();
-    this.updateTalentsCost();
+    this.route.parent?.params
+      .pipe(first())
+      .pipe(switchMap(params => {
+        const id = Number(params.id);
+        return this.characters.getPartyCharacter(id).pipe(switchMap(character => {
+          this.party = character;
+          return this.planner.getPlan(id).pipe(switchMap(plan => {
+            this.plan = plan;
+            return this.requirement.getRequirements(id);
+          }));
+        }));
+      }))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(requirements => this.plans = requirements);
   }
 
   saveParty(): void {
     this.characters.updatePartyMember(this.party);
-    this.#party.next(this.party);
   }
 
   savePlan(): void {
     this.planner.updatePlan(this.plan);
-    this.#plan.next(this.plan);
   }
 
   executePlanAndSave(planIndex: number): void {
@@ -93,60 +87,8 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
     });
   }
 
-  private init(): void {
-    this.route.parent?.params
-      .pipe(first())
-      .pipe(switchMap(params => {
-        const id = Number(params.id);
-        return this.characters.getPartyCharacter(id).pipe(switchMap(character => {
-          this.party = character;
-          this.#party.next(character);
-          return this.planner.getPlan(id);
-        }));
-      }))
-      .subscribe(plan => {
-        this.plan = plan;
-        this.#plan.next(plan);
-      });
-  }
-
-  private updateLevelUpAndTotalCost(): void {
-    combineLatest([this.#party, this.#plan])
-      .pipe(switchMap(([party, {ascension, level, talents}]) => {
-        return this.levelup.cost(party, new AscensionLevel(ascension, level)).pipe(
-          tap(cost => this.updatePlanDetail(1, cost)),
-          switchMap(levelup => {
-            return this.talentUp.cost(party, talents)
-              .pipe(map(talentsUp => new ItemList().combine(levelup).combine(talentsUp)));
-          })
-        );
-      }))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(total => this.updatePlanDetail(0, total));
-  }
-
-  private updateTalentsCost(): void {
-    combineLatest([this.#party, this.#plan])
-      .pipe(switchMap(([party, {talents}]) => {
-        return zip(from(talents), range(0, 100)).pipe(
-          switchMap(([talent, index]) => {
-            return this.talentUp.cost(party, [talent])
-              .pipe(tap(cost => this.updatePlanDetail(2 + index, cost)));
-          })
-        );
-      }))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-  }
-
-  private updatePlanDetail(planIndex: number, cost: ItemList): void {
-    const plan = this.plans[planIndex];
-    plan.value = cost;
-    plan.satisfied = this.executor.checkDemandSatisfied(cost);
-  }
-
-  private executePlan(plan: { text: string; value: ItemList; satisfied: Observable<boolean> }, planIndex: number): void {
-    this.executor.consumeDemand(plan.value);
+  private executePlan(plan: { text: string; value: Observable<ItemList>; satisfied: Observable<boolean> }, planIndex: number): void {
+    this.requirement.consumeMaterial(plan.value);
     switch (planIndex) {
       case 0:
         this.executeAll();
@@ -163,7 +105,7 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
 
   private executeAll(): void {
     this.executeLevelup();
-    const talentsLength = this.plans.length - 2;
+    const talentsLength = this.party.talents.length;
     for (let i = 0; i < talentsLength; i++) {
       this.executeTalentLevelup(i);
     }

@@ -53,6 +53,6 @@ export class CurrentGoalSelectComponent implements OnInit {
   }
 
   checkPlanAvailable(available: boolean | null): boolean {
-    return available === true && this.current !== this.goal && this.currentOptions.find(it => it.value === this.goal) !== undefined;
+    return available === true && this.current !== this.goal;
   }
 }

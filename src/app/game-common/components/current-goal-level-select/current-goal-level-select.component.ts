@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../models/ascension.type';
@@ -11,7 +11,7 @@ import {SelectOption} from '../../../widget/models/select-option.model';
   templateUrl: './current-goal-level-select.component.html',
   styleUrls: ['./current-goal-level-select.component.scss']
 })
-export class CurrentGoalLevelSelectComponent implements OnInit {
+export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
 
   i18n = new I18n('game-common');
 
@@ -58,6 +58,12 @@ export class CurrentGoalLevelSelectComponent implements OnInit {
     this.levels = this.getLevels();
     this.goalAscensions = this.getGoalAscensions();
     this.goalLevels = this.getGoalLevels();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('ascension')) {
+      this.setAscension(this.ascension);
+    }
   }
 
   getGoalAscensions(): SelectOption[] {

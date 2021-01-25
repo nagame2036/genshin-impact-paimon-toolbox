@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {InventoryService} from '../../services/inventory.service';
 import {ItemList} from '../../models/item-list.model';
 import {MaterialService} from '../../services/material.service';
@@ -7,13 +7,14 @@ import {map, switchMap} from 'rxjs/operators';
 import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
 import {Observable} from 'rxjs';
 import {I18n} from '../../../widget/models/i18n.model';
+import {SelectOption} from '../../../widget/models/select-option.model';
 
 @Component({
   selector: 'app-material-requirement',
   templateUrl: './material-requirement.component.html',
   styleUrls: ['./material-requirement.component.scss']
 })
-export class MaterialRequirementComponent implements OnInit {
+export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   i18n = new I18n('inventory');
 
@@ -24,11 +25,15 @@ export class MaterialRequirementComponent implements OnInit {
   types: MaterialType[][] = [];
 
   @Input()
-  requirements: { text: string, value: ItemList }[] = [];
+  requirements: { text: string, value: Observable<ItemList> }[] = [];
+
+  requirementOptions!: SelectOption[];
+
+  currentIndex = 0;
 
   details!: Observable<InventoryItemDetail[]>[];
 
-  requireDetails!: Observable<InventoryItemDetail[]>[];
+  requireDetails$!: Observable<Observable<InventoryItemDetail[]>[]>;
 
   constructor(public inventory: InventoryService, private materials: MaterialService) {
   }
@@ -37,11 +42,25 @@ export class MaterialRequirementComponent implements OnInit {
     this.details = this.types.map(type => {
       return this.materials.getMaterials(...type).pipe(switchMap(items => this.inventory.getDetails(items)));
     });
-    this.changeCost(this.requirements[0].value);
+    this.requirementOptions = this.requirements.map((it, index) => ({text: it.text, value: index}));
   }
 
-  changeCost(cost: ItemList): void {
-    this.requireDetails = this.details.map(details => details.pipe(map(it => selectRequire(it, cost))));
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('requirements')) {
+      this.update();
+    }
+  }
+
+  changeRequirement(index: number): void {
+    this.currentIndex = index;
+    this.update();
+  }
+
+  private update(): void {
+    const requirement = this.requirements[this.currentIndex];
+    this.requireDetails$ = requirement.value.pipe(map(req => {
+      return this.details.map(details => details.pipe(map(it => selectRequire(it, req))));
+    }));
   }
 }
 

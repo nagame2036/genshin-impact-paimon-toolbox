@@ -1,4 +1,4 @@
-<div *ngIf="party && plan" class="plan-content">
+<div *ngIf="party && plan && plans" class="plan-content">
   <app-weapon-plan-form [weapon]="party" [plan]="plan" [plans]="plans" (executePlan)="executePlan($event)"
                         (currentChange)="saveParty()" (goalChange)="savePlan()">
   </app-weapon-plan-form>

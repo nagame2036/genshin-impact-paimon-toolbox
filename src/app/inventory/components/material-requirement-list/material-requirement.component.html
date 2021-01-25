@@ -1,6 +1,6 @@
 <div class="list-options">
   <ng-container *ngIf="requirements.length > 0">
-    <app-select [value]="requirements[0].value" [options]="requirements" (changed)="changeCost($event)">
+    <app-select [value]="currentIndex" [options]="requirementOptions" (changed)="changeRequirement($event)">
       <span form-label>
         {{ i18n.module('plan-requirement') | translate }}
       </span>
@@ -10,7 +10,7 @@
                 [value]="(inventory.isShowOverflow() | async) || true" (checked)="inventory.setShowOverflow($event)">
   </app-checkbox>
 </div>
-<div class="list">
+<div class="list" *ngIf="requireDetails$ | async as requireDetails">
   <app-inventory-list *ngFor="let items$ of requireDetails; let i = index"
                       [subtitle]="subtitles[i]" [items$]="items$" [showCostDetails]="false">
   </app-inventory-list>

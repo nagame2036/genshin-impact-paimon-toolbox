@@ -13,14 +13,13 @@
                                  [satisfied]="plans[1].satisfied" (executePlan)="executePlan.emit(1)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
-  <ng-container *ngFor="let talent of character.talents; let i = index">
-    <app-current-goal-select [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
-                             [current]="talent.level" [goal]="plan.talents[i]?.level || 1"
-                             (currentChange)="setTalent(i, $event)" (goalChange)="setGoalTalent(i, $event)"
-                             [satisfied]="plans[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)">
-      {{ talentLabel(talent) | translate }} - {{ talentName(talent) | translate }}
-    </app-current-goal-select>
-  </ng-container>
+  <app-current-goal-select *ngFor="let talent of character.talents; let i = index"
+                           [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
+                           [current]="talent.level" [goal]="plan.talents[i]?.level || 1"
+                           (currentChange)="setTalent(i, $event)" (goalChange)="setGoalTalent(i, $event)"
+                           [satisfied]="plans[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)">
+    {{ talentLabel(talent) | translate }} - {{ talentName(talent) | translate }}
+  </app-current-goal-select>
   <div *ngFor="let bonus of character.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>

@@ -8,12 +8,9 @@ import {WeaponPlanner} from '../../services/weapon-planner.service';
 import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, takeUntil} from 'rxjs/operators';
 import {MaterialType} from '../../../inventory/models/material-type.enum';
-import {combineLatest, Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {ItemList} from '../../../inventory/models/item-list.model';
-import {WeaponLevelupCostService} from '../../services/weapon-levelup-cost.service';
-import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
-import {WeaponExpMaterialService} from '../../../inventory/services/weapon-exp-material.service';
-import {PlanExecutor} from '../../../game-common/services/plan-executor.service';
+import {WeaponRequirementService} from '../../services/weapon-requirement.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 
 @Component({
@@ -41,9 +38,7 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
     'enemy',
   ];
 
-  plans: { value: ItemList; text: string; satisfied: Observable<boolean> }[] = [
-    {text: this.i18n.module('total-requirement'), value: new ItemList(), satisfied: new Subject()},
-  ];
+  plans!: { text: string; value: Observable<ItemList>; satisfied: Observable<boolean> }[];
 
   party!: PartyWeapon;
 
@@ -56,15 +51,26 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
-  constructor(private weapons: WeaponService, private planner: WeaponPlanner, private route: ActivatedRoute,
-              private levelup: WeaponLevelupCostService, private weaponExps: WeaponExpMaterialService,
-              private executor: PlanExecutor) {
+  constructor(private weapons: WeaponService, private planner: WeaponPlanner, private requirement: WeaponRequirementService,
+              private route: ActivatedRoute) {
     super();
   }
 
   ngOnInit(): void {
-    this.init();
-    this.updateTotalCost();
+    this.route.parent?.params
+      .pipe(first())
+      .pipe(switchMap(params => {
+        const id = Number(params.id);
+        return this.weapons.getPartyWeapon(id).pipe(switchMap(weapon => {
+          this.party = weapon;
+          return this.planner.getPlan(id).pipe(switchMap(plan => {
+            this.plan = plan;
+            return this.requirement.getRequirements(id);
+          }));
+        }));
+      }))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(requirements => this.plans = requirements);
   }
 
   saveParty(): void {
@@ -81,40 +87,10 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
     const plan = this.plans[planIndex];
     const data = {title: plan.text, cost: plan.value, item: this.i18n.dict(`weapons.${this.party.id}`)};
     this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
-      this.executor.consumeDemand(plan.value);
+      this.requirement.consumeMaterial(plan.value);
       this.executeLevelup();
       this.saveParty();
     });
-  }
-
-  private init(): void {
-    this.route.parent?.params
-      .pipe(first())
-      .pipe(switchMap(params => {
-        const id = Number(params.id);
-        return this.weapons.getPartyWeapon(id).pipe(switchMap(weapon => {
-          this.party = weapon;
-          this.#party.next(this.party);
-          return this.planner.getPlan(id);
-        }));
-      }))
-      .subscribe(plan => {
-        this.plan = plan;
-        this.#plan.next(this.plan);
-      });
-  }
-
-  private updateTotalCost(): void {
-    combineLatest([this.#party, this.#plan])
-      .pipe(switchMap(([party, {ascension, level}]) => this.levelup.cost(party, new AscensionLevel(ascension, level))))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(total => this.updateCostDetail(0, total));
-  }
-
-  private updateCostDetail(index: number, cost: ItemList): void {
-    const detail = this.plans[index];
-    detail.value = cost;
-    detail.satisfied = this.executor.checkDemandSatisfied(cost);
   }
 
   private executeLevelup(): void {

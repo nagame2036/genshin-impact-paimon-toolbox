@@ -3,9 +3,9 @@ import {DialogComponent} from '../../../widget/components/dialog/dialog.componen
 import {I18n} from '../../../widget/models/i18n.model';
 import {ItemList} from '../../../inventory/models/item-list.model';
 import {InventoryService} from '../../../inventory/services/inventory.service';
-import {first, map} from 'rxjs/operators';
+import {first, map, switchMap} from 'rxjs/operators';
 import {Rarity} from '../../models/rarity.type';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {InventoryItemDetail} from '../../../inventory/models/inventory-item-detail.model';
 
 type PlanCostItem = { id: number, rarity: Rarity, need: number };
@@ -20,7 +20,7 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
   i18n = new I18n('game-common');
 
   @Input()
-  data = {item: '', title: '', cost: new ItemList()};
+  data = {item: '', title: '', cost: new BehaviorSubject(new ItemList()).asObservable()};
 
   confirmSubject = new Subject();
 
@@ -35,9 +35,9 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  open(data: { item: string, title: string, cost: ItemList }): ExecutePlanConfirmDialogComponent {
+  open(data: { item: string, title: string, cost: Observable<ItemList> }): ExecutePlanConfirmDialogComponent {
     this.data = data;
-    this.items$ = this.inventory.details.pipe(first(), map(details => this.processDetails(details)));
+    this.items$ = this.inventory.details.pipe(first(), switchMap(it => this.processDetails(it)));
     this.dialog.open();
     this.confirmSubject = new Subject();
     return this;
@@ -53,9 +53,11 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
     return this.confirmSubject;
   }
 
-  private processDetails(details: Map<number, InventoryItemDetail>): PlanCostItem[] {
-    return this.data.cost.entries().filter(it => it[1] > 0)
-      .map(([id, need]) => ({id, need, rarity: details.get(id)?.rarity ?? 1}));
+  private processDetails(details: Map<number, InventoryItemDetail>): Observable<PlanCostItem[]> {
+    return this.data.cost.pipe(map(cost => {
+      return cost.entries().filter(([_, need]) => need > 0)
+        .map(([id, need]) => ({id, need, rarity: details.get(id)?.rarity ?? 1}));
+    }));
   }
 
 }

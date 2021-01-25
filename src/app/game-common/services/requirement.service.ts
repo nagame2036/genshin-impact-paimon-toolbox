@@ -2,21 +2,17 @@ import {Injectable} from '@angular/core';
 import {InventoryService} from '../../inventory/services/inventory.service';
 import {ItemList} from '../../inventory/models/item-list.model';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlanExecutor {
-
-  item = '';
-
-  plan = '';
+export class RequirementService {
 
   constructor(private inventory: InventoryService) {
   }
 
-  checkDemandSatisfied(cost: ItemList): Observable<boolean> {
+  checkRequirementSatisfied(cost: ItemList): Observable<boolean> {
     return this.inventory.details.pipe(map(details => {
       let nonEmpty = false;
       for (const [id, need] of cost.entries()) {
@@ -30,9 +26,11 @@ export class PlanExecutor {
     }));
   }
 
-  consumeDemand(cost: ItemList): void {
-    for (const [id, need] of cost.entries()) {
-      this.inventory.changeItem(id, -need);
-    }
+  consumeMaterial(requirement: Observable<ItemList>): void {
+    requirement.pipe(first()).subscribe(req => {
+      for (const [id, need] of req.entries()) {
+        this.inventory.changeItem(id, -need);
+      }
+    });
   }
 }

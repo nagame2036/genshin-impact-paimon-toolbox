@@ -11,11 +11,17 @@ import {TalentLevelupCostService} from './talent-levelup-cost.service';
 import {PartyCharacter} from '../models/party-character.model';
 import {activePlans} from '../../game-common/utils/party-plans';
 import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
+import {I18n} from '../../widget/models/i18n.model';
+import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+
+type ActivePlan = { plan: CharacterPlan, party: PartyCharacter };
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharacterPlanner {
+
+  i18n = new I18n('game-common');
 
   private storeName = 'character-plans';
 
@@ -23,7 +29,7 @@ export class CharacterPlanner {
 
   readonly plans = this.#plans.asObservable();
 
-  activePlans = new ReplaySubject<{ plan: CharacterPlan, party: PartyCharacter }[]>(1);
+  activePlans = new ReplaySubject<ActivePlan[]>(1);
 
   constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
               private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
@@ -35,13 +41,7 @@ export class CharacterPlanner {
   }
 
   getPlan(id: number): Observable<CharacterPlan> {
-    return this.activePlans.pipe(
-      switchMap(plans => {
-        const index = plans.findIndex(it => it.plan.id === id);
-        return iif(() => index !== -1, defer(() => of(plans[index].plan)));
-      }),
-      first()
-    );
+    return this.getActivePlan(id).pipe(first(), map(it => it.plan));
   }
 
   updatePlan(plan: CharacterPlan): void {
@@ -63,5 +63,27 @@ export class CharacterPlanner {
         ))
       )
     )));
+  }
+
+  specificPlanCost(id: number): Observable<{ text: string, value: Observable<ItemList> }[]> {
+    return this.getActivePlan(id).pipe(map(({party, plan}) => {
+      const levelup = this.characterLevelup.cost(party, new AscensionLevel(plan.ascension, plan.level), false);
+      const talents = plan.talents.map(goalTalent => this.talentLevelup.cost(party, [goalTalent]));
+      const total = combineLatest([levelup, ...talents]).pipe(map(list => {
+        return list.reduce((acc, curr) => acc.combine(curr), new ItemList());
+      }));
+      return [
+        {text: this.i18n.module('total-requirement'), value: total},
+        {text: this.i18n.module('levelup-requirement'), value: levelup},
+        ...talents.map((it, index) => ({text: this.i18n.module(`talent-requirement.${index}`), value: it})),
+      ];
+    }));
+  }
+
+  private getActivePlan(id: number): Observable<ActivePlan> {
+    return this.activePlans.pipe(switchMap(plans => {
+      const index = plans.findIndex(it => it.plan.id === id);
+      return iif(() => index !== -1, defer(() => of(plans[index])));
+    }));
   }
 }
