@@ -5,7 +5,7 @@
     {{ i18n.module('total-requirement') | translate }}
     {{ totalNeed | number: '1.0-0' }}
   </h1>
-  <div class="content">
+  <div class="content" *ngIf="marks.length > 0">
     <table class="requirement-table">
       <thead>
       <tr class="bg-primary-200">
