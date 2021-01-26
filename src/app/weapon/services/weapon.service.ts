@@ -38,7 +38,7 @@ export class WeaponService {
       weapon.key = key;
       const newParty = party.filter(c => c.key !== key);
       newParty.push(weapon);
-      this.cacheParty(newParty, false);
+      this.cacheParty(newParty);
       return key;
     }));
   }

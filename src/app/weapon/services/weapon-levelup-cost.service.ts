@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {EnemiesMaterialService} from '../../inventory/services/enemies-material.service';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {ItemList} from '../../inventory/models/item-list.model';
-import {map, reduce, switchMap, take} from 'rxjs/operators';
+import {map, mergeMap, reduce, take} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {WeaponAscensionMaterialService} from '../../inventory/services/weapon-ascension-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
@@ -45,7 +45,7 @@ export class WeaponLevelupCostService {
 
   totalCost(plans: { plan: WeaponPlan, party: PartyWeapon }[]): Observable<ItemList> {
     return from(plans).pipe(
-      switchMap(({plan, party}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level), true)),
+      mergeMap(({plan, party}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level), true)),
       take(plans.length),
       reduce((acc, value) => acc.combine(value), new ItemList())
     );

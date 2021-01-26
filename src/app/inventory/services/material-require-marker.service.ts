@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
 import {ItemList} from '../models/item-list.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,10 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 export class MaterialRequireMarker {
 
   private marks = new Map<number, MaterialRequireMark[]>();
+
+  #cleared = new Subject();
+
+  cleared = this.#cleared.asObservable();
 
   constructor() {
   }
@@ -38,5 +43,6 @@ export class MaterialRequireMarker {
 
   clear(): void {
     this.marks.clear();
+    this.#cleared.next();
   }
 }

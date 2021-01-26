@@ -27,7 +27,7 @@ export class WeaponPlanner {
 
   plans = this.#plans.asObservable();
 
-  activePlans = new ReplaySubject<{ plan: WeaponPlan, party: PartyWeapon }[]>(1);
+  activePlans = new ReplaySubject<ActivePlan[]>(1);
 
   constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
               private marker: MaterialRequireMarker) {
@@ -35,6 +35,8 @@ export class WeaponPlanner {
     combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
       this.activePlans.next(activePlans(plans, party));
     });
+    this.marker.cleared.pipe(switchMap(_ => this.activePlans))
+      .subscribe(plans => this.activePlans.next(plans));
   }
 
   getPlan(id: number): Observable<WeaponPlan> {
