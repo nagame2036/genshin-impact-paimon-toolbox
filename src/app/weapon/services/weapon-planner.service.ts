@@ -35,7 +35,11 @@ export class WeaponPlanner {
     combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
       this.activePlans.next(activePlans(plans, party));
     });
-    this.marker.cleared.pipe(switchMap(_ => this.activePlans))
+    this.marker.cleared
+      .pipe(
+        switchMap(_ => this.activePlans),
+        first()
+      )
       .subscribe(plans => this.activePlans.next(plans));
   }
 
