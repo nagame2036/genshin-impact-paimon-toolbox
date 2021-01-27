@@ -64,6 +64,7 @@ export class MultiSelectComponent implements OnInit {
   clickOutside(event: Event): void {
     if (!this.self.nativeElement.contains(event.target)) {
       this.opened = false;
+      this.focus = false;
     }
   }
 
