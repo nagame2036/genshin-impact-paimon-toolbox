@@ -14,7 +14,7 @@
     <app-ring-button class="remove-confirm-actions-btn cancel-btn" (click)="dialog.close()">
       {{ i18n.dict('cancel') | translate }}
     </app-ring-button>
-    <app-ring-button class="remove-confirm-actions-btn confirm-btn" (click)="confirm.emit()">
+    <app-ring-button class="remove-confirm-actions-btn confirm-btn" (click)="emitConfirm()">
       {{ i18n.dict('confirm') | translate }}
     </app-ring-button>
   </div>

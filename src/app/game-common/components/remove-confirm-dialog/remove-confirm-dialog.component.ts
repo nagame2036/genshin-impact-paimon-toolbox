@@ -34,4 +34,9 @@ export class RemoveConfirmDialogComponent implements OnInit {
     this.dialog.open();
   }
 
+  emitConfirm(): void {
+    this.confirm.emit();
+    this.dialog.close();
+  }
+
 }
