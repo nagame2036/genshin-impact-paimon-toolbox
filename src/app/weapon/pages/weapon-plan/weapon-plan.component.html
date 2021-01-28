@@ -1,5 +1,5 @@
 <div *ngIf="party && plan && plans" class="plan-content">
-  <app-weapon-plan-form [weapon]="party" [plan]="plan" [plans]="plans" (executePlan)="executePlan($event)"
+  <app-weapon-plan-form [weapon]="party" [plan]="plan" [requirements]="plans" (executePlan)="executePlan($event)"
                         (currentChange)="saveParty()" (goalChange)="savePlan()">
   </app-weapon-plan-form>
   <app-material-requirement class="cost-list" [requirements]="plans" [subtitles]="subtitles" [types]="types">

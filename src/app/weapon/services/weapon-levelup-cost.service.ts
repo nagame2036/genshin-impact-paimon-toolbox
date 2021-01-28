@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {EnemiesMaterialService} from '../../inventory/services/enemies-material.service';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {ItemList} from '../../inventory/models/item-list.model';
-import {map, mergeMap, reduce, take} from 'rxjs/operators';
+import {map, mergeMap, reduce, take, tap} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {WeaponAscensionMaterialService} from '../../inventory/services/weapon-ascension-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
@@ -17,6 +17,7 @@ import {MaterialRequireMarker} from '../../inventory/services/material-require-m
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponExpMaterialService} from '../../inventory/services/weapon-exp-material.service';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -38,16 +39,23 @@ export class WeaponLevelupCostService {
   private readonly levelupLabel = this.i18n.dict('levelup');
 
   constructor(http: HttpClient, private domain: WeaponAscensionMaterialService, private enemies: EnemiesMaterialService,
-              private exps: WeaponExpMaterialService, private marker: MaterialRequireMarker) {
-    http.get<WeaponAscensionCost>('assets/data/weapons/weapon-ascension-cost.json').subscribe(res => this.ascensions.next(res));
-    http.get<WeaponLevelupCost>('assets/data/weapons/weapon-levelup-cost.json').subscribe(res => this.levels.next(res));
+              private exps: WeaponExpMaterialService, private marker: MaterialRequireMarker, private logger: NGXLogger) {
+    http.get<WeaponAscensionCost>('assets/data/weapons/weapon-ascension-cost.json').subscribe(data => {
+      this.logger.info('loaded weapon ascension cost data', data);
+      this.ascensions.next(data);
+    });
+    http.get<WeaponLevelupCost>('assets/data/weapons/weapon-levelup-cost.json').subscribe(data => {
+      this.logger.info('loaded character levelup cost data', data);
+      this.levels.next(data);
+    });
   }
 
   totalCost(plans: { plan: WeaponPlan, party: PartyWeapon }[]): Observable<ItemList> {
     return from(plans).pipe(
       mergeMap(({plan, party}) => this.cost(party, new AscensionLevel(plan.ascension, plan.level), true)),
       take(plans.length),
-      reduce((acc, value) => acc.combine(value), new ItemList())
+      reduce((acc, value) => acc.combine(value), new ItemList()),
+      tap(cost => this.logger.info('sent total cost of weapon plans', cost)),
     );
   }
 
@@ -58,42 +66,40 @@ export class WeaponLevelupCostService {
   }
 
   private ascension(weapon: PartyWeapon, goal: Ascension, mark: boolean): Observable<ItemList> {
-    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(
-      map(([ascensions, _, __]) => {
-        const cost = new ItemList();
-        const range = ascensions[weapon.rarity].slice(weapon.ascension, goal);
-        range.forEach(({mora: moraCost, domain, elite, mob}) => {
-          cost.change(mora.id, moraCost);
-          const domainItem = this.domain.getByGroupAndRarity(weapon.domain, domain.rarity);
-          cost.change(domainItem.id, domain.amount);
-          const eliteItem = this.enemies.getByGroupAndRarity(weapon.elite, elite.rarity);
-          cost.change(eliteItem.id, elite.amount);
-          const mobItem = this.enemies.getByGroupAndRarity(weapon.mob, mob.rarity);
-          cost.change(mobItem.id, mob.amount);
-        });
-        return cost;
-      }),
-      map(cost => this.mark(mark, weapon, cost, this.ascensionLabel, [weapon.ascension, goal].map(it => `★${it}`)))
-    );
+    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(map(([ascensions]) => {
+      const cost = new ItemList();
+      const range = ascensions[weapon.rarity].slice(weapon.ascension, goal);
+      range.forEach(({mora: moraCost, domain, elite, mob}) => {
+        cost.change(mora.id, moraCost);
+        const domainItem = this.domain.getByGroupAndRarity(weapon.domain, domain.rarity);
+        cost.change(domainItem.id, domain.amount);
+        const eliteItem = this.enemies.getByGroupAndRarity(weapon.elite, elite.rarity);
+        cost.change(eliteItem.id, elite.amount);
+        const mobItem = this.enemies.getByGroupAndRarity(weapon.mob, mob.rarity);
+        cost.change(mobItem.id, mob.amount);
+      });
+      return this.mark(mark, weapon, cost, this.ascensionLabel, [weapon.ascension, goal].map(it => `★${it}`));
+    }));
   }
 
   private levelup(weapon: PartyWeapon, goal: number, mark: boolean): Observable<ItemList> {
-    return this.levels.pipe(
-      map(levels => {
-        const cost = new ItemList();
-        const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
-        const {mora: moraCost, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
-        cost.change(mora.id, moraCost);
-        cost.change(weaponExp.id, exp);
-        return this.exps.splitExpNeed(cost);
-      }),
-      map(cost => this.mark(mark, weapon, cost, this.levelupLabel, [weapon.level.toString(), goal.toString()]))
-    );
+    return this.levels.pipe(map(levels => {
+      const cost = new ItemList();
+      const expAmount = levels[weapon.rarity].slice(weapon.level, goal).reduce((sum, curr) => sum + curr, 0);
+      const {mora: moraCost, exp} = processExpBonus(weapon, expAmount * .1, v => v * 10);
+      cost.change(mora.id, moraCost);
+      cost.change(weaponExp.id, exp);
+      const result = this.exps.splitExpNeed(cost);
+      return this.mark(mark, weapon, result, this.levelupLabel, [weapon.level.toString(), goal.toString()]);
+    }));
   }
 
   private mark(mark: boolean, party: PartyWeapon, cost: ItemList, purpose: string, [start, goal]: string[]): ItemList {
-    const type = ItemType.WEAPON;
-    return this.marker.mark(mark, cost, type, party.id, party.key ?? -1, purpose, [start, goal]);
+    if (mark) {
+      const type = ItemType.WEAPON;
+      this.marker.mark(mark, cost, type, party.id, party.key ?? -1, purpose, [start, goal]);
+    }
+    return cost;
   }
 
 }

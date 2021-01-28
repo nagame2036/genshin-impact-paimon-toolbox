@@ -10,6 +10,9 @@ export interface Weapon {
 
   rarity: Rarity;
 
+  /**
+   * Domain material group used by weapon level-up.
+   */
   domain: number;
 
   /**

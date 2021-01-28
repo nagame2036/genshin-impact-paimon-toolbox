@@ -1,4 +1,5 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-dialog',
@@ -12,7 +13,7 @@ export class DialogComponent implements OnInit {
   @ViewChild('outside')
   outside!: ElementRef;
 
-  constructor() {
+  constructor(private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
@@ -20,10 +21,12 @@ export class DialogComponent implements OnInit {
 
   open(): void {
     this.opened = true;
+    this.logger.info('open');
   }
 
   close(): void {
     this.opened = false;
+    this.logger.info('close');
   }
 
   @HostListener('document:click', ['$event'])

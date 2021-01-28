@@ -8,6 +8,7 @@ import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
 import {Observable} from 'rxjs';
 import {I18n} from '../../../widget/models/i18n.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-material-requirement',
@@ -35,10 +36,11 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   requireDetails$!: Observable<Observable<InventoryItemDetail[]>[]>;
 
-  constructor(public inventory: InventoryService, private materials: MaterialService) {
+  constructor(public inventory: InventoryService, private materials: MaterialService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.details = this.types.map(type => {
       return this.materials.getMaterials(...type).pipe(switchMap(items => this.inventory.getDetails(items)));
     });
@@ -47,6 +49,7 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('requirements')) {
+      this.logger.info('requirements updated', this.requirements);
       this.update();
     }
   }

@@ -8,10 +8,11 @@ import {WeaponPlanner} from '../../services/weapon-planner.service';
 import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, takeUntil} from 'rxjs/operators';
 import {MaterialType} from '../../../inventory/models/material-type.enum';
-import {Observable, ReplaySubject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ItemList} from '../../../inventory/models/item-list.model';
 import {WeaponRequirementService} from '../../services/weapon-requirement.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-weapon-plan',
@@ -42,45 +43,49 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
 
   party!: PartyWeapon;
 
-  readonly #party = new ReplaySubject<PartyWeapon>(1);
-
   plan!: WeaponPlan;
-
-  readonly #plan = new ReplaySubject<WeaponPlan>(1);
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
   constructor(private weapons: WeaponService, private planner: WeaponPlanner, private requirement: WeaponRequirementService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.route.parent?.params
-      .pipe(first())
-      .pipe(switchMap(params => {
-        const id = Number(params.id);
-        return this.weapons.getPartyWeapon(id).pipe(switchMap(weapon => {
-          this.party = weapon;
-          return this.planner.getPlan(id).pipe(switchMap(plan => {
-            this.plan = plan;
-            return this.requirement.getRequirements(id);
+      .pipe(
+        first(),
+        switchMap(params => {
+          const id = Number(params.id);
+          return this.weapons.getPartyWeapon(id).pipe(switchMap(weapon => {
+            this.logger.info('received weapon', weapon);
+            this.party = weapon;
+            return this.planner.getPlan(id).pipe(switchMap(plan => {
+              this.logger.info('received weapon plan', plan);
+              this.plan = plan;
+              return this.requirement.getRequirements(id);
+            }));
           }));
-        }));
-      }))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(requirements => this.plans = requirements);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(requirements => {
+        this.logger.info('received weapon requirements', requirements);
+        return this.plans = requirements;
+      });
   }
 
   saveParty(): void {
     this.weapons.updatePartyMember(this.party);
-    this.#party.next(this.party);
+    this.logger.info('character saved', this.party);
   }
 
   savePlan(): void {
     this.planner.updatePlan(this.plan);
-    this.#plan.next(this.plan);
+    this.logger.info('plan saved', this.plan);
   }
 
   executePlan(planIndex: number): void {
@@ -89,6 +94,7 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
     this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
       this.requirement.consumeMaterial(plan.value);
       this.executeLevelup();
+      this.logger.info('executed all plan');
       this.saveParty();
     });
   }

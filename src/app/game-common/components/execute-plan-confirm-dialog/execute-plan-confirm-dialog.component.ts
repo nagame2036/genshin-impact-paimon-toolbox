@@ -7,6 +7,7 @@ import {first, map, switchMap} from 'rxjs/operators';
 import {Rarity} from '../../models/rarity.type';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {InventoryItemDetail} from '../../../inventory/models/inventory-item-detail.model';
+import {NGXLogger} from 'ngx-logger';
 
 type PlanCostItem = { id: number, rarity: Rarity, need: number };
 
@@ -22,20 +23,22 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
   @Input()
   data = {item: '', title: '', cost: new BehaviorSubject(new ItemList()).asObservable()};
 
-  confirmSubject = new Subject();
+  private confirmSubject = new Subject();
 
   items$!: Observable<PlanCostItem[]>;
 
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private inventory: InventoryService) {
+  constructor(private inventory: InventoryService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
   }
 
   open(data: { item: string, title: string, cost: Observable<ItemList> }): ExecutePlanConfirmDialogComponent {
+    this.logger.info('open with data', data);
     this.data = data;
     this.items$ = this.inventory.details.pipe(first(), switchMap(it => this.processDetails(it)));
     this.dialog.open();
@@ -44,6 +47,7 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
   }
 
   confirm(): void {
+    this.logger.info('confirmed');
     this.confirmSubject.next();
     this.confirmSubject.complete();
     this.dialog.close();

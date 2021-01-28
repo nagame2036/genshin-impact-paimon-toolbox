@@ -6,9 +6,10 @@ import {WeaponService} from '../../services/weapon.service';
 import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {WeaponPlanner} from '../../services/weapon-planner.service';
-import {map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-party-weapon-list',
@@ -38,20 +39,25 @@ export class PartyWeaponListComponent extends AbstractObservableComponent implem
   @ViewChild('list')
   list!: WeaponListComponent;
 
-  constructor(private weaponService: WeaponService, private planner: WeaponPlanner) {
+  constructor(private weaponService: WeaponService, private planner: WeaponPlanner, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
     combineLatest([this.weaponService.party, this.planner.activePlans])
       .pipe(
-        map(it => it[0]),
-        tap(party => this.weapons = party),
-        switchMap(party => party),
+        tap(([party]) => {
+          this.logger.info('received party weapon', party);
+          this.weapons = party;
+        }),
+        switchMap(([party]) => party),
         mergeMap(weapon => this.planner.getPlan(weapon.key ?? -1)),
         takeUntil(this.destroy$)
       )
-      .subscribe(plan => this.plans.set(plan.id, plan));
+      .subscribe(plan => {
+        this.plans.set(plan.id, plan);
+        this.logger.info('received weapon plan', plan);
+      });
   }
 
   getParty(weapon: Weapon): PartyWeapon {

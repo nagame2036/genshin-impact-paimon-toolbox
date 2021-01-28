@@ -62,7 +62,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('ascension')) {
-      this.setAscension(this.ascension);
+      this.setAscension(this.ascension, false);
     }
   }
 
@@ -86,22 +86,26 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
     return {value: num, text: `${num}`};
   }
 
-  setAscension(value: number): void {
+  setAscension(value: number, emit: boolean = true): void {
     this.ascension = value as Ascension;
     this.levels = this.getLevels();
     this.level = AscensionLevel.correctLevel(this.ascension, this.level);
-    this.emitCurrentChange();
+    if (emit) {
+      this.emitCurrentChange();
+    }
     this.goalAscensions = this.getGoalAscensions();
     if (this.goalAscension < value) {
-      this.setGoalAscension(value);
+      this.setGoalAscension(value, emit);
     }
   }
 
-  setGoalAscension(value: number): void {
+  setGoalAscension(value: number, emit: boolean = true): void {
     this.goalAscension = value as Ascension;
     this.goalLevels = this.getGoalLevels();
     this.goalLevel = AscensionLevel.correctLevel(this.goalAscension, this.goalLevel);
-    this.emitGoalChange();
+    if (emit) {
+      this.emitGoalChange();
+    }
   }
 
   setLevel(value: number): void {

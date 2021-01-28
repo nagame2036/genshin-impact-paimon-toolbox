@@ -4,6 +4,7 @@ import {MaterialRequireMarker} from '../../services/material-require-marker.serv
 import {MaterialRequireMark} from '../../models/material-require-mark.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {itemTypeNames} from '../../../game-common/models/item-type.enum';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-material-requirement-dialog',
@@ -25,13 +26,15 @@ export class MaterialRequirementDialogComponent implements OnInit {
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private marker: MaterialRequireMarker) {
+  constructor(private marker: MaterialRequireMarker, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
   }
 
   open(id: number): void {
+    this.logger.info('open with id', id);
     this.dialog.open();
     this.id = id;
     this.marks = this.marker.getMarks(id).sort((a, b) => a.type - b.type || b.id - a.id);

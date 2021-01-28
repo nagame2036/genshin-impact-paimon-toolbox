@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {BehaviorSubject, combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
-import {concatMap, first, map, reduce, switchMap, take} from 'rxjs/operators';
+import {concatMap, first, map, reduce, switchMap, take, tap} from 'rxjs/operators';
 import {CharacterExpMaterialService} from './character-exp-material.service';
 import {WeaponExpMaterialService} from './weapon-exp-material.service';
 import {InventoryItemDetail} from '../models/inventory-item-detail.model';
@@ -12,6 +12,7 @@ import {ItemList} from '../models/item-list.model';
 import {craftItem, getCraftableAmount} from '../utils/craft';
 import {MaterialService} from './material.service';
 import {mapArrays} from '../../shared/utils/collections';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -36,11 +37,11 @@ export class InventoryService {
 
   constructor(private database: NgxIndexedDBService, private characterPlanner: CharacterPlanner, private weaponPlanner: WeaponPlanner,
               private characterExps: CharacterExpMaterialService, private weaponExps: WeaponExpMaterialService,
-              private materials: MaterialService) {
+              private materials: MaterialService, private logger: NGXLogger) {
     this.loadDatabase();
     this.loadMaterials();
-    this.calculateNeed();
-    this.calculateDetails();
+    this.updateNeed();
+    this.updateDetails();
   }
 
   isShowOverflow(): Observable<boolean> {
@@ -48,10 +49,12 @@ export class InventoryService {
   }
 
   setShowOverflow(value: boolean): void {
+    this.logger.info('set show overflow', value);
     this.showOverflow.next(value);
   }
 
   setRarityFilter(rarityFilter: number[]): void {
+    this.logger.info('set rarity filter', rarityFilter);
     this.rarityFilter.next(rarityFilter);
   }
 
@@ -60,7 +63,8 @@ export class InventoryService {
       map(([details, rarityFilter, showOverflow]) => {
         const itemDetails = mapArrays(items, details, it => it.id, (_, detail) => detail);
         return itemDetails.filter(it => rarityFilter.includes(it.rarity) && (!it.overflow || showOverflow));
-      })
+      }),
+      tap(details => this.logger.info('sent inventory details', details)),
     );
   }
 
@@ -69,6 +73,7 @@ export class InventoryService {
       .pipe(first(), map(inventory => {
         const amount = inventory.getAmount(id) + change;
         return this.database.update(this.storeName, {id, amount}).pipe(map(_ => {
+          this.logger.info('change item have', id, change);
           inventory.change(id, change);
           this.#inventory.next(inventory);
         }));
@@ -78,6 +83,7 @@ export class InventoryService {
 
   setItem(id: number, amount: number): void {
     zip(this.#inventory, this.updateDatabaseInventory(id, amount)).subscribe(([inventory, _]) => {
+      this.logger.info('set item have', id, amount);
       inventory.setAmount(id, amount);
       this.#inventory.next(inventory);
     });
@@ -88,6 +94,7 @@ export class InventoryService {
       .pipe(
         first(),
         switchMap(([details, inventory]) => {
+          this.logger.info('craft item', performedTimes, detail);
           const change = craftItem(detail, performedTimes, details);
           inventory.combine(change);
           const changeEntries = change.entries();
@@ -102,15 +109,17 @@ export class InventoryService {
   }
 
   private loadDatabase(): void {
-    this.database.getAll(this.storeName).subscribe(res => {
+    this.database.getAll(this.storeName).subscribe(data => {
+      this.logger.info('fetched inventory data from indexed db', data);
       const inventory = new ItemList();
-      res.forEach(it => inventory.change(it.id, it.amount));
+      data.forEach(it => inventory.change(it.id, it.amount));
       this.#inventory.next(inventory);
     });
   }
 
   private loadMaterials(): void {
     this.materials.materials.subscribe(materials => {
+      this.logger.info('received materials', materials);
       const details = new Map<number, InventoryItemDetail>();
       for (const {id, rarity, recipe} of materials) {
         details.set(id, {id, rarity, need: 0, have: 0, recipe, craftable: 0, craftUsed: 0, lack: 0, overflow: true, readonly: false});
@@ -119,26 +128,30 @@ export class InventoryService {
     });
   }
 
-  private calculateNeed(): void {
+  private updateNeed(): void {
     combineLatest([this.characterPlanner.allPlansCost(), this.weaponPlanner.allPlansCost()])
       .subscribe(([characterCost, weaponCost]) => {
         const cost = new ItemList().combine(characterCost).combine(weaponCost);
+        this.logger.info('update materials need', cost);
         this.#cost.next(cost);
       });
   }
 
-  private calculateDetails(): void {
+  private updateDetails(): void {
     combineLatest([this.#inventory, this.#cost])
       .pipe(switchMap(([inventory, cost]) =>
         this.details.pipe(
           first(),
-          map(details => this.updateDetails(details, inventory, cost))
+          map(details => this.processDetails(details, inventory, cost))
         )
       ))
-      .subscribe(details => this.#details.next(details));
+      .subscribe(details => {
+        this.logger.info('updated inventory details', details);
+        this.#details.next(details);
+      });
   }
 
-  private updateDetails(details: Map<number, InventoryItemDetail>, inventory: ItemList, cost: ItemList): Map<number, InventoryItemDetail> {
+  private processDetails(details: Map<number, InventoryItemDetail>, inventory: ItemList, cost: ItemList): Map<number, InventoryItemDetail> {
     for (const [id, detail] of details) {
       detail.have = inventory.getAmount(id);
       detail.need = cost.getAmount(id);

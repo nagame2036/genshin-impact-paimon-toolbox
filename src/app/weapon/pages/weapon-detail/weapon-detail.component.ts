@@ -4,8 +4,9 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {WeaponService} from '../../services/weapon.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {first, switchMap, takeUntil} from 'rxjs/operators';
 import {PartyWeapon} from '../../models/party-weapon.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-weapon-detail',
@@ -26,18 +27,23 @@ export class WeaponDetailComponent extends AbstractObservableComponent implement
     {path: 'plan', text: this.i18n.module('plan.title')},
   ];
 
-  constructor(private route: ActivatedRoute, private location: Location, private weapons: WeaponService) {
+  constructor(private weapons: WeaponService, private route: ActivatedRoute, private location: Location, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.route.params
-      .pipe(switchMap(params => {
-        this.weaponKey = Number(params.id);
-        return this.weapons.getPartyWeapon(this.weaponKey);
-      }))
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        first(),
+        switchMap(params => {
+          this.weaponKey = Number(params.id);
+          return this.weapons.getPartyWeapon(this.weaponKey);
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe(weapon => {
+        this.logger.info('received weapon detail', weapon);
         this.weapon = weapon;
         this.weaponId = weapon.id;
       });

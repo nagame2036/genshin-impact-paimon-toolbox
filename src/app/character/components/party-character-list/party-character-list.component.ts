@@ -9,6 +9,7 @@ import {first, map, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {CharacterPlanner} from '../../services/character-planner.service';
 import {combineLatest} from 'rxjs';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-party-character-list',
@@ -41,20 +42,27 @@ export class PartyCharacterListComponent extends AbstractObservableComponent imp
   @ViewChild('list')
   list!: CharacterListComponent;
 
-  constructor(private characterService: CharacterService, private planner: CharacterPlanner) {
+  constructor(private characterService: CharacterService, private planner: CharacterPlanner, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     combineLatest([this.characterService.party, this.planner.activePlans])
       .pipe(
         map(it => it[0]),
-        tap(party => this.characters = party),
+        tap(party => {
+          this.logger.info('received party characters', party);
+          this.characters = party;
+        }),
         switchMap(party => party),
         mergeMap(character => this.planner.getPlan(character.id).pipe(first())),
         takeUntil(this.destroy$)
       )
-      .subscribe(plan => this.plans.set(plan.id, plan));
+      .subscribe(plan => {
+        this.plans.set(plan.id, plan);
+        this.logger.info('received character plan', plan);
+      });
   }
 
   getParty(character: Character): PartyCharacter {

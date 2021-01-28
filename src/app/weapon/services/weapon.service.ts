@@ -4,9 +4,10 @@ import {HttpClient} from '@angular/common/http';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {Weapon} from '../models/weapon.model';
 import {PartyWeapon} from '../models/party-weapon.model';
-import {first, map, switchMap} from 'rxjs/operators';
+import {first, map, switchMap, toArray} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
-import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
+import {WeaponStatCurve} from '../models/weapon-stat-curve.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,24 @@ export class WeaponService {
 
   private readonly storeName = 'party-weapons';
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialRequireMarker) {
-    http.get<Weapon[]>('assets/data/weapons/weapons.json').subscribe(res => this.#weapons.next(res));
-    database.getAll(this.storeName).subscribe(party => this.cacheParty(party, false));
+  private readonly dataPrefix = 'assets/data/weapons';
+
+  constructor(http: HttpClient, private database: NgxIndexedDBService, private logger: NGXLogger) {
+    http.get<Weapon[]>(`${this.dataPrefix}/weapons.json`).subscribe(data => {
+      this.logger.info('loaded weapon data', data);
+      this.#weapons.next(data);
+    });
+    database.getAll(this.storeName).subscribe(party => {
+      this.logger.info('fetched party weapons from indexed db', party);
+      this.cacheParty(party);
+    });
   }
 
   addPartyMember(weapon: PartyWeapon): Observable<number> {
     const add = this.valid(weapon.id).pipe(switchMap(_ => this.database.add(this.storeName, weapon)));
     return zip(add, this.party).pipe(map(([key, party]) => {
       weapon.key = key;
+      this.logger.info('added weapon', weapon);
       const newParty = party.filter(c => c.key !== key);
       newParty.push(weapon);
       this.cacheParty(newParty);
@@ -56,7 +66,8 @@ export class WeaponService {
       return;
     }
     const update = this.valid(weapon.id).pipe(switchMap(_ => this.database.update(this.storeName, weapon)));
-    zip(update, this.party).subscribe(([_, party]) => {
+    zip(update, this.party).subscribe(([, party]) => {
+      this.logger.info('weapon updated', weapon);
       const newParty = party.filter(c => c.key !== key);
       newParty.push(weapon);
       this.cacheParty(newParty);
@@ -70,14 +81,19 @@ export class WeaponService {
     }
     const remove = this.valid(weapon.id).pipe(switchMap(_ => this.database.delete(this.storeName, key)));
     zip(remove, this.party).subscribe(([_, party]) => {
+      this.logger.info('weapon removed', weapon);
       const newParty = party.filter(c => c.key !== key);
       this.cacheParty(newParty);
     });
   }
 
   removePartyMemberByList(ids: number[]): void {
-    const deleted = from(ids).pipe(switchMap(it => this.database.delete(this.storeName, it)));
+    const deleted = from(ids).pipe(
+      switchMap(it => this.database.delete(this.storeName, it)),
+      toArray(),
+    );
     zip(deleted, this.party).subscribe(([_, party]) => {
+      this.logger.info('weapons removed', ids);
       const newParty = party.filter(c => !ids.includes(c.key ?? -1));
       this.cacheParty(newParty);
     });

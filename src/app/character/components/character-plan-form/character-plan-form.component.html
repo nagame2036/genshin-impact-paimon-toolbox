@@ -10,22 +10,22 @@
   </app-select>
   <app-current-goal-level-select label="character" [ascension]="character.ascension" [goalAscension]="plan.ascension"
                                  [level]="character.level" [goalLevel]="plan.level"
-                                 [satisfied]="plans[1].satisfied" (executePlan)="executePlan.emit(1)"
+                                 [satisfied]="requirements[1].satisfied" (executePlan)="executePlan.emit(1)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
   <app-current-goal-select *ngFor="let talent of character.talents; let i = index"
                            [currentOptions]="talentLevels" [goalOptions]="goalTalentLevels[i]"
                            [current]="talent.level" [goal]="plan.talents[i]?.level || 1"
                            (currentChange)="setTalent(i, $event)" (goalChange)="setGoalTalent(i, $event)"
-                           [satisfied]="plans[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)">
+                           [satisfied]="requirements[2 + i].satisfied" (executePlan)="executePlan.emit(2 + i)">
     {{ talentLabel(talent) | translate }} - {{ talentName(talent) | translate }}
   </app-current-goal-select>
   <div *ngFor="let bonus of character.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <ng-container *ngIf="plans[0].hasOwnProperty('text')">
-    <app-ring-button class="execute-all-btn" [class.satisfied]="plans[0].satisfied | async"
-                     [disabled]="!(plans[0].satisfied | async)" (click)="executePlan.emit(0)">
+  <ng-container *ngIf="requirements[0].hasOwnProperty('text')">
+    <app-ring-button class="execute-all-btn" [class.satisfied]="requirements[0].satisfied | async"
+                     [disabled]="!(requirements[0].satisfied | async)" (click)="executePlan.emit(0)">
       {{ i18n.module('execute-all-plan') | translate }}
     </app-ring-button>
   </ng-container>

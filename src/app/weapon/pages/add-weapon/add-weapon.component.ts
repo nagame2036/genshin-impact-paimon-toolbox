@@ -8,6 +8,7 @@ import {PartyWeapon} from '../../models/party-weapon.model';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {Location} from '@angular/common';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-add-weapon',
@@ -26,14 +27,18 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
 
   selectedPlan!: WeaponPlan;
 
-  constructor(private weaponService: WeaponService, private planner: WeaponPlanner, private location: Location) {
+  constructor(private weaponService: WeaponService, private planner: WeaponPlanner, private location: Location, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.weaponService.weapons
       .pipe(takeUntil(this.destroy$))
-      .subscribe(res => this.weapons = res);
+      .subscribe(weapons => {
+        this.logger.info('received non-party weapons', weapons);
+        this.weapons = weapons;
+      });
   }
 
   goBack(): void {
@@ -44,10 +49,12 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
     this.selected = true;
     this.selectedWeapon = {...weapon, refine: 1, ascension: 0, level: 1};
     this.selectedPlan = {id: weapon.id, ascension: 0, level: 1};
+    this.logger.info('select weapon', weapon);
   }
 
   reset(): void {
     this.selected = false;
+    this.logger.info('reset');
   }
 
   add(): void {
@@ -55,6 +62,7 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
       this.weaponService.addPartyMember(this.selectedWeapon).subscribe(key => {
         this.selectedPlan.id = key;
         this.planner.updatePlan(this.selectedPlan);
+        this.logger.info('added weapon', this.selectedWeapon);
       });
       this.reset();
     }

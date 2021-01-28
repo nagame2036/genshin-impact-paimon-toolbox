@@ -14,6 +14,7 @@ import {MaterialRequireMarker} from '../../inventory/services/material-require-m
 import {I18n} from '../../widget/models/i18n.model';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
+import {NGXLogger} from 'ngx-logger';
 
 type ActivePlan = { plan: CharacterPlan, party: PartyCharacter };
 
@@ -36,22 +37,30 @@ export class CharacterPlanner {
 
   constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
               private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
-              private marker: MaterialRequireMarker) {
-    this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
+              private marker: MaterialRequireMarker, private logger: NGXLogger) {
+    this.database.getAll(this.storeName).subscribe(plans => {
+      this.logger.info('loaded character plans', plans);
+      this.#plans.next(plans);
+    });
     combineLatest([this.plans, this.characters.partyMap]).subscribe(([plans, party]) => {
       const active = activePlans(plans, party);
       this.marker.clear(this.type);
+      this.logger.info('updated active plans', active);
       this.activePlans.next(active);
     });
   }
 
   getPlan(id: number): Observable<CharacterPlan> {
-    return this.getActivePlan(id).pipe(first(), map(it => it.plan));
+    return this.getActivePlan(id).pipe(
+      first(),
+      map(active => active.plan),
+      tap(plan => this.logger.info('sent character plan', plan)),
+    );
   }
 
   updatePlan(plan: CharacterPlan): void {
     zip(this.plans, this.database.update(this.storeName, plan)).subscribe(([plans, _]) => {
-      this.marker.clear();
+      this.logger.info('updated character plan', plan);
       const newPlans = plans.filter(it => it.id !== plan.id);
       newPlans.push(plan);
       this.#plans.next(newPlans);
@@ -59,20 +68,27 @@ export class CharacterPlanner {
   }
 
   allPlansCost(): Observable<ItemList> {
-    return this.activePlans.pipe(switchMap(it => iif(
-      () => it.length === 0,
-      of(new ItemList()),
-      this.characterLevelup.totalCost(it).pipe(
-        switchMap(levelupCost => this.talentLevelup.totalCost(it).pipe(
-          map(talentsCost => levelupCost.combine(talentsCost))
-        ))
-      )
-    )));
+    return this.activePlans.pipe(
+      switchMap(plans => {
+        const costs = [this.characterLevelup.totalCost(plans), this.talentLevelup.totalCost(plans)];
+        return iif(
+          () => plans.length === 0,
+          of(new ItemList()),
+          combineLatest(costs).pipe(
+            switchMap(it => it),
+            take(costs.length),
+            reduce((total, curr) => total.combine(curr), new ItemList()),
+          )
+        );
+      }),
+      tap(cost => this.logger.info('sent total cost of character plans', cost)),
+    );
   }
 
   specificPlanCost(id: number): Observable<{ text: string, value: Observable<ItemList> }[]> {
     return this.getActivePlan(id).pipe(map(({party, plan}) => {
-      const levelup = this.characterLevelup.cost(party, new AscensionLevel(plan.ascension, plan.level), false);
+      this.logger.info('sent the cost of character plan', id);
+      const levelup = this.characterLevelup.cost(party, new AscensionLevel(plan.ascension, plan.level));
       const talents = plan.talents.map(goalTalent => this.talentLevelup.cost(party, [goalTalent]));
       const total = combineLatest([levelup, ...talents]).pipe(map(list => {
         return list.reduce((acc, curr) => acc.combine(curr), new ItemList());

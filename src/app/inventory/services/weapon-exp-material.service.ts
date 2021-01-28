@@ -6,6 +6,7 @@ import {processExpDetails, splitExpNeed} from '../utils/exp-details';
 import {InventoryItemDetail} from '../models/inventory-item-detail.model';
 import {weaponExp} from '../models/mora-and-exp.model';
 import {ItemList} from '../models/item-list.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,10 @@ export class WeaponExpMaterialService {
 
   readonly items = this.itemsSubject.asObservable();
 
-  constructor(http: HttpClient) {
-    http.get<WeaponExpMaterial[]>('assets/data/materials/weapon-exp-materials.json').subscribe(res => {
-      this.#items = res.sort((a, b) => b.rarity - a.rarity);
+  constructor(http: HttpClient, private logger: NGXLogger) {
+    http.get<WeaponExpMaterial[]>('assets/data/materials/weapon-exp-materials.json').subscribe(data => {
+      this.logger.info('loaded weapon exp materials', data);
+      this.#items = data.sort((a, b) => b.rarity - a.rarity);
       this.itemsSubject.next(this.#items);
     });
   }

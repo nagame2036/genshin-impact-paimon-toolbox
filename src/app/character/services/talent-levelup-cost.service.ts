@@ -6,7 +6,7 @@ import {EnemiesMaterialService} from '../../inventory/services/enemies-material.
 import {PartyCharacter} from '../models/party-character.model';
 import {ItemList} from '../../inventory/models/item-list.model';
 import {TalentLevelupMaterialService} from '../../inventory/services/talent-levelup-material.service';
-import {map, mergeMap, reduce, take} from 'rxjs/operators';
+import {map, mergeMap, reduce, take, tap} from 'rxjs/operators';
 import {TalentLevelData} from '../models/talent-level-data.model';
 import {TalentLevel} from '../models/talent-level.type';
 import {TalentPlan} from '../models/talent-plan.model';
@@ -16,6 +16,7 @@ import {mora} from '../../inventory/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -35,15 +36,19 @@ export class TalentLevelupCostService {
   ];
 
   constructor(http: HttpClient, private talents: TalentService, private domain: TalentLevelupMaterialService,
-              private enemies: EnemiesMaterialService, private marker: MaterialRequireMarker) {
-    http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(res => this.levels.next(res));
+              private enemies: EnemiesMaterialService, private marker: MaterialRequireMarker, private logger: NGXLogger) {
+    http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(data => {
+      this.logger.info('loaded talent levelup cost data', data);
+      this.levels.next(data);
+    });
   }
 
   totalCost(plans: { plan: CharacterPlan; party: PartyCharacter }[]): Observable<ItemList> {
     return from(plans).pipe(
       mergeMap(({party, plan}) => this.cost(party, plan.talents, true)),
       take(plans.length),
-      reduce((acc, value) => acc.combine(value), new ItemList())
+      reduce((acc, value) => acc.combine(value), new ItemList()),
+      tap(cost => this.logger.info('sent total cost of talent plans', cost)),
     );
   }
 
@@ -83,14 +88,16 @@ export class TalentLevelupCostService {
         cost.change(talent.event, event);
       }
     }
-    this.mark(mark, character, cost, this.labels[id % 10], [start.toString(), goal.toString()]);
-    return cost;
+    return this.mark(mark, character, cost, this.labels[id % 10], [start.toString(), goal.toString()]);
   }
 
   private mark(mark: boolean, party: PartyCharacter, cost: ItemList, purpose: string, [start, goal]: string[]): ItemList {
-    const type = ItemType.CHARACTER;
-    const id = party.id;
-    return this.marker.mark(mark, cost, type, id, id, purpose, [start, goal]);
+    if (mark) {
+      const type = ItemType.CHARACTER;
+      const id = party.id;
+      this.marker.mark(mark, cost, type, id, id, purpose, [start, goal]);
+    }
+    return cost;
   }
 }
 

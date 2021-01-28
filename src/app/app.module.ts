@@ -7,6 +7,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {CoreModule} from './core/core.module';
 import {AppTranslateModule} from './app-translate.module';
 import {AppIndexedDbModule} from './app-indexed-db.module';
+import {AppLoggerModule} from './app-logger.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {AppIndexedDbModule} from './app-indexed-db.module';
     AppRoutingModule,
     AppTranslateModule,
     AppIndexedDbModule,
-    CoreModule
+    AppLoggerModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

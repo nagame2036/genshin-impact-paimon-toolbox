@@ -11,6 +11,7 @@ import {CharacterPlan} from '../../models/character-plan.model';
 import {Observable, Subject} from 'rxjs';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-character-plan-form',
@@ -28,7 +29,7 @@ export class CharacterPlanFormComponent implements OnInit {
   plan!: CharacterPlan;
 
   @Input()
-  plans: { satisfied: Observable<boolean> }[] = [
+  requirements: { satisfied: Observable<boolean> }[] = [
     {satisfied: new Subject()},
     {satisfied: new Subject()},
     {satisfied: new Subject()},
@@ -51,10 +52,11 @@ export class CharacterPlanFormComponent implements OnInit {
   @Output()
   executePlan = new EventEmitter<number>();
 
-  constructor(private talentService: TalentService, private translator: TranslateService) {
+  constructor(private talentService: TalentService, private translator: TranslateService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.constellations = rangeList(0, 6).map(it => {
       return {value: it, text: `${it} - ${this.translator.instant(this.getConstellationText(it))}`};
     });
@@ -72,16 +74,18 @@ export class CharacterPlanFormComponent implements OnInit {
   }
 
   talentName(talent: TalentLevelData): string {
-    return this.i18n.dict('talents.' + talent.id);
+    return this.i18n.dict(`talents.${talent.id}`);
   }
 
   setConstellation(constellation: Constellation): void {
+    this.logger.info(`constellation from ${this.character.constellation} to ${constellation}`);
     this.character.constellation = constellation;
     this.emitCurrentChange();
   }
 
   setCurrentLevel(ascensionLevel: AscensionLevel): void {
     const {ascension, level} = ascensionLevel;
+    this.logger.info(`character ascension-level from ${this.character.ascension}, ${this.character.level} to ${ascension}, ${level}`);
     this.character.ascension = ascension;
     this.character.level = level;
     this.talentLevels = mapTalentLevels(this.talentService.levels(ascension));
@@ -91,6 +95,7 @@ export class CharacterPlanFormComponent implements OnInit {
 
   setGoalLevel(ascensionLevel: AscensionLevel): void {
     const {ascension, level} = ascensionLevel;
+    this.logger.info(`plan ascension-level from ${this.plan.ascension}, ${this.plan.level} to ${ascension}, ${level}`);
     this.plan.ascension = ascension;
     this.plan.level = level;
     this.correctGoalTalents();
@@ -98,12 +103,19 @@ export class CharacterPlanFormComponent implements OnInit {
   }
 
   setTalent(num: number, level: number): void {
+    this.logger.info(`character talent level from ${this.character.talents[num].level} to ${level}`);
     this.character.talents[num].level = this.talentService.correctLevel(this.character.ascension, level);
     this.correctGoalTalents();
     this.emitCurrentChange();
   }
 
-  correctGoalTalents(): void {
+  setGoalTalent(num: number, level: number): void {
+    this.logger.info(`plan talent level from ${this.plan.talents[num].level} to ${level}`);
+    this.plan.talents[num].level = this.talentService.correctLevel(this.plan.ascension, level);
+    this.emitGoalChange();
+  }
+
+  private correctGoalTalents(): void {
     const talents = this.character.talents;
     const goalAscension = this.plan.ascension;
     this.goalTalentLevels = talents.map(it => mapTalentLevels(this.talentService.levels(goalAscension, it.level)));
@@ -112,16 +124,13 @@ export class CharacterPlanFormComponent implements OnInit {
     this.emitGoalChange();
   }
 
-  setGoalTalent(num: number, level: number): void {
-    this.plan.talents[num].level = this.talentService.correctLevel(this.plan.ascension, level);
-    this.emitGoalChange();
-  }
-
   private emitCurrentChange(): void {
+    this.logger.info('current changed');
     this.currentChange.emit();
   }
 
   private emitGoalChange(): void {
+    this.logger.info('goal changed');
     this.goalChange.emit();
   }
 }

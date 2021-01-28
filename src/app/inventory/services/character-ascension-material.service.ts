@@ -3,6 +3,7 @@ import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {CharacterAscensionMaterial, CharacterAscensionMaterialItem} from '../models/character-ascension-material.model';
 import {Rarity} from '../../game-common/models/rarity.type';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,10 @@ export class CharacterAscensionMaterialService {
 
   readonly items = this.itemsSubject.asObservable();
 
-  constructor(http: HttpClient) {
-    http.get<CharacterAscensionMaterial>('assets/data/materials/character-ascension-materials.json').subscribe(res => {
-      this.#items = res.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
+  constructor(http: HttpClient, private logger: NGXLogger) {
+    http.get<CharacterAscensionMaterial>('assets/data/materials/character-ascension-materials.json').subscribe(data => {
+      this.logger.info('loaded character ascension materials', data);
+      this.#items = data.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
       this.itemsSubject.next(this.#items);
     });
   }

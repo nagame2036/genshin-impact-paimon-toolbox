@@ -12,6 +12,7 @@ import {Observable} from 'rxjs';
 import {MaterialType} from '../../../inventory/models/material-type.enum';
 import {CharacterRequirementService} from '../../services/character-requirement.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-character-plan',
@@ -44,63 +45,73 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
 
   plan!: CharacterPlan;
 
-  plans!: { text: string, value: Observable<ItemList>, satisfied: Observable<boolean> }[];
+  requirements!: { text: string, value: Observable<ItemList>, satisfied: Observable<boolean> }[];
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
   constructor(private characters: CharacterService, private planner: CharacterPlanner, private requirement: CharacterRequirementService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.route.parent?.params
-      .pipe(first())
-      .pipe(switchMap(params => {
-        const id = Number(params.id);
-        return this.characters.getPartyCharacter(id).pipe(switchMap(character => {
-          this.party = character;
-          return this.planner.getPlan(id).pipe(switchMap(plan => {
-            this.plan = plan;
-            return this.requirement.getRequirements(id);
+      .pipe(
+        first(),
+        switchMap(params => {
+          const id = Number(params.id);
+          return this.characters.getPartyCharacter(id).pipe(switchMap(character => {
+            this.logger.info('received character', character);
+            this.party = character;
+            return this.planner.getPlan(id).pipe(switchMap(plan => {
+              this.logger.info('received character plan', plan);
+              this.plan = plan;
+              return this.requirement.getRequirements(id);
+            }));
           }));
-        }));
-      }))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(requirements => this.plans = requirements);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(requirements => {
+        this.logger.info('received character requirements', requirements);
+        return this.requirements = requirements;
+      });
   }
 
   saveParty(): void {
     this.characters.updatePartyMember(this.party);
+    this.logger.info('character saved', this.party);
   }
 
   savePlan(): void {
     this.planner.updatePlan(this.plan);
+    this.logger.info('plan saved', this.plan);
   }
 
   executePlanAndSave(planIndex: number): void {
-    const plan = this.plans[planIndex];
+    const plan = this.requirements[planIndex];
     const data = {title: plan.text, cost: plan.value, item: this.i18n.dict(`characters.${this.party.id}`)};
     this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
-      this.executePlan(plan, planIndex);
+      this.requirement.consumeMaterial(plan.value);
+      switch (planIndex) {
+        case 0:
+          this.executeAll();
+          this.logger.info('executed all plan');
+          break;
+        case 1:
+          this.executeLevelup();
+          this.logger.info('executed levelup plan');
+          break;
+        default:
+          const talentIndex = planIndex - 2;
+          this.executeTalentLevelup(talentIndex);
+          this.logger.info(`executed talent ${talentIndex} plan`);
+          break;
+      }
+      this.saveParty();
     });
-  }
-
-  private executePlan(plan: { text: string; value: Observable<ItemList>; satisfied: Observable<boolean> }, planIndex: number): void {
-    this.requirement.consumeMaterial(plan.value);
-    switch (planIndex) {
-      case 0:
-        this.executeAll();
-        break;
-      case 1:
-        this.executeLevelup();
-        break;
-      default:
-        this.executeTalentLevelup(planIndex - 2);
-        break;
-    }
-    this.saveParty();
   }
 
   private executeAll(): void {

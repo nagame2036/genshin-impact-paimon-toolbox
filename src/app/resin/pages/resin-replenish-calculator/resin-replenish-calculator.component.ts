@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 import {I18n} from '../../../widget/models/i18n.model';
+import {NGXLogger} from 'ngx-logger';
 
 const timeFormat = {
   hour12: false,
@@ -37,7 +38,7 @@ export class ResinReplenishCalculatorComponent implements OnInit {
     {target: 160, time: ''}
   ];
 
-  constructor(private translator: TranslateService) {
+  constructor(private translator: TranslateService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
@@ -49,11 +50,13 @@ export class ResinReplenishCalculatorComponent implements OnInit {
 
   setResin(value: number): void {
     this.resin = value;
+    this.logger.info('set current resin', value);
     this.renderResult();
   }
 
   setMinutes(value: number): void {
     this.minutes = value;
+    this.logger.info('set replenish in minutes', value);
     this.renderResult();
   }
 

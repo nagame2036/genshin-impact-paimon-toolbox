@@ -12,7 +12,8 @@ import {LocalSpecialtyService} from './local-specialty.service';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
 import {partitionArrays} from '../../shared/utils/collections';
 import {MaterialType} from '../models/material-type.enum';
-import {first, map} from 'rxjs/operators';
+import {first, map, tap} from 'rxjs/operators';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,8 @@ export class MaterialService {
   constructor(private characterExps: CharacterExpMaterialService, private weaponExps: WeaponExpMaterialService,
               private ores: OreMaterialService, private characters: CharacterAscensionMaterialService,
               private talents: TalentLevelupMaterialService, private weapons: WeaponAscensionMaterialService,
-              private enemies: EnemiesMaterialService, private local: LocalSpecialtyService) {
+              private enemies: EnemiesMaterialService, private local: LocalSpecialtyService,
+              private logger: NGXLogger) {
     this.loadMaterials();
     this.mapMaterials();
   }
@@ -43,7 +45,8 @@ export class MaterialService {
           results.push(...items);
         }
         return results;
-      })
+      }),
+      tap(materials => this.logger.info('sent materials', types, materials)),
     );
   }
 
@@ -56,6 +59,7 @@ export class MaterialService {
           totalMaterials.push(item);
         }
       }
+      this.logger.info('loaded materials', totalMaterials);
       this.#materials.next(totalMaterials);
     });
   }

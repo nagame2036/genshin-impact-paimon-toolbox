@@ -7,6 +7,7 @@ import {WeaponField} from '../../models/weapon-fields.type';
 import {PartyWeapon} from '../../models/party-weapon.model';
 import {ImageService} from '../../../image/services/image.service';
 import {SelectOption} from '../../../widget/models/select-option.model';
+import {NGXLogger} from 'ngx-logger';
 
 const weaponRarities = [5, 4, 3];
 
@@ -61,15 +62,17 @@ export class WeaponListComponent implements OnChanges {
 
   typeFilter = weaponTypeList;
 
-  constructor(public images: ImageService) {
+  constructor(public images: ImageService, private logger: NGXLogger) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('weapons')) {
+      this.logger.info('received weapons', this.weapons);
+      this.update();
+    }
     if (changes.hasOwnProperty('sortFields')) {
       this.sorts = changes.sortFields.currentValue.map((it: string) => ({value: it, text: this.i18n.dict(it)}));
-    }
-    if (changes.hasOwnProperty('weapons')) {
-      this.update();
+      this.logger.info('updated sorts', this.sorts);
     }
   }
 
@@ -81,20 +84,24 @@ export class WeaponListComponent implements OnChanges {
     this.items = this.weapons.map(it => it as PartyWeapon)
       .filter(it => this.rarityFilter.includes(it.rarity) && this.typeFilter.includes(it.type))
       .sort((a, b) => b[this.sort] - a[this.sort] || a.type - b.type || b.id - a.id);
+    this.logger.info('updated items', this.items);
   }
 
   changeSort(sort: WeaponField): void {
     this.sort = sort;
+    this.logger.info('updated sort', sort);
     this.update();
   }
 
   filterRarity(value: number[]): void {
     this.rarityFilter = value;
+    this.logger.info('updated rarityFilter', value);
     this.update();
   }
 
   filterType(value: WeaponType[]): void {
     this.typeFilter = value;
+    this.logger.info('updated typeFilter', value);
     this.update();
   }
 
@@ -109,11 +116,13 @@ export class WeaponListComponent implements OnChanges {
     } else {
       this.selectedItems = toggleItem(this.selectedItems, item);
     }
+    this.logger.info('multi-selected', this.selectedItems);
     this.multiSelected.emit(this.selectedItems);
   }
 
   selectAll(checked: boolean): void {
     this.selectedItems = checked ? this.items : [];
+    this.logger.info('selected all', checked);
     this.multiSelected.emit(this.selectedItems);
   }
 }

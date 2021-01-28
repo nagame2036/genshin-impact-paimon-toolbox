@@ -4,6 +4,7 @@ import {RouterModule} from '@angular/router';
 
 import {TranslateModule} from '@ngx-translate/core';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
+import {LoggerModule} from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -13,12 +14,14 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
     RouterModule,
     TranslateModule,
     NgxIndexedDBModule,
+    LoggerModule,
   ],
   exports: [
     CommonModule,
     RouterModule,
     TranslateModule,
     NgxIndexedDBModule,
+    LoggerModule,
   ]
 })
 export class SharedModule {

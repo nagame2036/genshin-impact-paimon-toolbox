@@ -12,6 +12,7 @@ import {MaterialRequireMarker} from '../../inventory/services/material-require-m
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
+import {NGXLogger} from 'ngx-logger';
 
 type ActivePlan = { plan: WeaponPlan, party: PartyWeapon };
 
@@ -33,22 +34,30 @@ export class WeaponPlanner {
   private readonly type = ItemType.WEAPON;
 
   constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
-              private marker: MaterialRequireMarker) {
-    this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
+              private marker: MaterialRequireMarker, private logger: NGXLogger) {
+    this.database.getAll(this.storeName).subscribe(plans => {
+      this.logger.info('loaded weapon plans', plans);
+      this.#plans.next(plans);
+    });
     combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
-      const active = activePlans(plans, party);
       this.marker.clear(this.type);
+      const active = activePlans(plans, party);
+      this.logger.info('updated active plans', active);
       this.activePlans.next(active);
     });
   }
 
   getPlan(id: number): Observable<WeaponPlan> {
-    return this.getActivePlan(id).pipe(first(), map(it => it.plan));
+    return this.getActivePlan(id).pipe(
+      first(),
+      map(it => it.plan),
+      tap(plan => this.logger.info('sent weapon plan', plan)),
+    );
   }
 
   updatePlan(plan: WeaponPlan): void {
     zip(this.plans, this.database.update(this.storeName, plan)).subscribe(([plans, _]) => {
-      this.marker.clear();
+      this.logger.info('updated weapon plan', plan);
       const newPlans = plans.filter(it => it.id !== plan.id);
       newPlans.push(plan);
       this.#plans.next(newPlans);
@@ -56,15 +65,19 @@ export class WeaponPlanner {
   }
 
   allPlansCost(): Observable<ItemList> {
-    return this.activePlans.pipe(switchMap(it => iif(
-      () => it.length === 0,
-      of(new ItemList()),
-      this.weaponLevelup.totalCost(it)
-    )));
+    return this.activePlans.pipe(
+      switchMap(it => iif(
+        () => it.length === 0,
+        of(new ItemList()),
+        this.weaponLevelup.totalCost(it)
+      )),
+      tap(cost => this.logger.info('sent total cost of weapon plans', cost)),
+    );
   }
 
   specificPlanCost(id: number): Observable<{ text: string, value: Observable<ItemList> }[]> {
     return this.getActivePlan(id).pipe(map(({party, plan}) => {
+      this.logger.info('sent the cost of weapon plan', id);
       const levelup = this.weaponLevelup.cost(party, new AscensionLevel(plan.ascension, plan.level), false);
       return [
         {text: this.i18n.module('total-requirement'), value: levelup},

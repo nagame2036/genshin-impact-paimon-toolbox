@@ -8,6 +8,7 @@ import {CharacterField} from '../../models/character-field.type';
 import {PartyCharacter} from '../../models/party-character.model';
 import {ImageService} from '../../../image/services/image.service';
 import {SelectOption} from '../../../widget/models/select-option.model';
+import {NGXLogger} from 'ngx-logger';
 
 const characterRarities = [5, 4];
 
@@ -66,15 +67,17 @@ export class CharacterListComponent implements OnChanges {
 
   weaponFilter = weaponTypeList;
 
-  constructor(public images: ImageService) {
+  constructor(public images: ImageService, private logger: NGXLogger) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('sortFields')) {
-      this.sorts = changes.sortFields.currentValue.map((it: string) => ({value: it, text: this.i18n.dict(it)}));
-    }
     if (changes.hasOwnProperty('characters')) {
+      this.logger.info('received characters', this.characters);
       this.update();
+    }
+    if (changes.hasOwnProperty('sortFields')) {
+      this.sorts = this.sortFields.map((it: string) => ({value: it, text: this.i18n.dict(it)}));
+      this.logger.info('updated sorts', this.sorts);
     }
   }
 
@@ -87,25 +90,30 @@ export class CharacterListComponent implements OnChanges {
       .filter(it => this.rarityFilter.includes(it.rarity) && this.elementFilter.includes(it.element)
         && this.weaponFilter.includes(it.weapon))
       .sort((a, b) => b[this.sort] - a[this.sort] || b.id - a.id);
+    this.logger.info('updated items', this.items);
   }
 
   changeSort(sort: CharacterField): void {
     this.sort = sort;
+    this.logger.info('updated sort', sort);
     this.update();
   }
 
   filterRarity(value: number[]): void {
     this.rarityFilter = value;
+    this.logger.info('updated rarityFilter', value);
     this.update();
   }
 
   filterElement(value: ElementType[]): void {
     this.elementFilter = value;
+    this.logger.info('updated elementFilter', value);
     this.update();
   }
 
   filterWeapon(value: WeaponType[]): void {
     this.weaponFilter = value;
+    this.logger.info('updated weaponFilter', value);
     this.update();
   }
 
@@ -115,11 +123,13 @@ export class CharacterListComponent implements OnChanges {
 
   onMultiSelect(item: Character): void {
     this.selectedItems = toggleItem(this.selectedItems, item);
+    this.logger.info('multi-selected', this.selectedItems);
     this.multiSelected.emit(this.selectedItems);
   }
 
   selectAll(checked: boolean): void {
     this.selectedItems = checked ? this.items : [];
+    this.logger.info('selected all', checked);
     this.multiSelected.emit(this.selectedItems);
   }
 }

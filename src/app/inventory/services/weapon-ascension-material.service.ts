@@ -5,6 +5,7 @@ import {WeaponAscensionMaterial, WeaponAscensionMaterialItem} from '../models/we
 import {Rarity} from '../../game-common/models/rarity.type';
 import {TalentLevelupMaterialGroup, TalentLevelupMaterialItem} from '../models/talent-levelup-material.model';
 import {InventoryItem} from '../models/inventory-item.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,12 @@ export class WeaponAscensionMaterialService {
 
   readonly items = this.itemsSubject.asObservable();
 
-  constructor(http: HttpClient) {
-    http.get<WeaponAscensionMaterial>('assets/data/materials/weapon-ascension-materials.json').subscribe(res => {
+  constructor(http: HttpClient, private logger: NGXLogger) {
+    http.get<WeaponAscensionMaterial>('assets/data/materials/weapon-ascension-materials.json').subscribe(data => {
+      this.logger.info('loaded weapon ascension materials', data);
       this.#groups = new Map();
-      res.groups.forEach(it => this.#groups.set(it.id, it));
-      this.#items = res.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
+      data.groups.forEach(it => this.#groups.set(it.id, it));
+      this.#items = data.items.sort((a, b) => a.group - b.group || b.rarity - a.rarity);
       this.itemsSubject.next(this.#items);
     });
   }

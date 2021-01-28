@@ -11,6 +11,7 @@ import {takeUntil} from 'rxjs/operators';
 import {TalentLevel} from '../../models/talent-level.type';
 import {TalentLevelData} from '../../models/talent-level-data.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-add-character',
@@ -30,14 +31,18 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
   selectedPlan!: CharacterPlan;
 
   constructor(private characterService: CharacterService, public talentService: TalentService, private planner: CharacterPlanner,
-              private location: Location) {
+              private location: Location, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
     this.characterService.nonParty
       .pipe(takeUntil(this.destroy$))
-      .subscribe(res => this.characters = res);
+      .subscribe(characters => {
+        this.logger.info('received non-party characters', characters);
+        this.characters = characters;
+      });
   }
 
   goBack(): void {
@@ -51,6 +56,7 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
       .map(it => ({id: it.id, level: 1 as TalentLevel}));
     this.selectedCharacter = {...character, constellation: 0, ascension: 0, level: 1, talents: this.copyTalents(talents)};
     this.selectedPlan = {id: character.id, ascension: 0, level: 1, talents: this.copyTalents(talents)};
+    this.logger.info('select character', character);
   }
 
   copyTalents(talents: TalentLevelData[]): TalentLevelData[] {
@@ -59,12 +65,14 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
 
   reset(): void {
     this.selected = false;
+    this.logger.info('reset');
   }
 
   add(): void {
     if (this.selected) {
       this.characterService.addPartyMember(this.selectedCharacter);
       this.planner.updatePlan(this.selectedPlan);
+      this.logger.info('added character', this.selectedCharacter);
       this.reset();
     }
   }

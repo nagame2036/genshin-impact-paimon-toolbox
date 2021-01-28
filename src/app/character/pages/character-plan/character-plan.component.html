@@ -1,8 +1,9 @@
-<div *ngIf="party && plan && plans" class="plan-content">
-  <app-character-plan-form [character]="party" [plan]="plan" [plans]="plans" (executePlan)="executePlanAndSave($event)"
+<div *ngIf="party && plan && requirements" class="plan-content">
+  <app-character-plan-form [character]="party" [plan]="plan" [requirements]="requirements"
+                           (executePlan)="executePlanAndSave($event)"
                            (currentChange)="saveParty()" (goalChange)="savePlan()">
   </app-character-plan-form>
-  <app-material-requirement class="cost-list" [requirements]="plans" [subtitles]="subtitles" [types]="types">
+  <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
   </app-material-requirement>
 </div>
 <app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

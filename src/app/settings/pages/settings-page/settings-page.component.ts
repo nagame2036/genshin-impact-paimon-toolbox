@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 import {supportedLanguages} from '../../../app-translate.module';
 import {I18n} from '../../../widget/models/i18n.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-settings-page',
@@ -16,7 +17,7 @@ export class SettingsPageComponent implements OnInit {
 
   languages = supportedLanguages;
 
-  constructor(private translator: TranslateService) {
+  constructor(private translator: TranslateService, private logger: NGXLogger) {
     this.currentLanguage = translator.currentLang;
     translator.onLangChange.subscribe((event: LangChangeEvent) => {
       this.currentLanguage = event.lang;
@@ -28,6 +29,7 @@ export class SettingsPageComponent implements OnInit {
 
   switchLanguage(language: string): void {
     this.currentLanguage = language;
+    this.logger.info('switch language', language);
     this.translator.use(language);
   }
 }

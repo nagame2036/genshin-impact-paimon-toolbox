@@ -7,6 +7,7 @@ import {TalentLevel} from '../models/talent-level.type';
 import {rangeList} from '../../shared/utils/range-list';
 import {coerceIn} from '../../shared/utils/coerce';
 import {TalentLevelData} from '../models/talent-level-data.model';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +26,10 @@ export class TalentService {
 
   readonly talents = this.talentsSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.http.get<TalentData>('assets/data/characters/talents.json').subscribe(res => {
-      const {groups: groups, items: items} = res;
+  constructor(private http: HttpClient, private logger: NGXLogger) {
+    this.http.get<TalentData>('assets/data/characters/talents.json').subscribe(data => {
+      this.logger.info('loaded talents data', data);
+      const {groups, items} = data;
       this.#groups = groups;
       this.groupsSubject.next(groups);
       this.#talents = items;

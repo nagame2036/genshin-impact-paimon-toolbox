@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {I18n} from '../../../widget/models/i18n.model';
 import {Rarity} from '../../models/rarity.type';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-remove-confirm-dialog',
@@ -24,10 +25,11 @@ export class RemoveConfirmDialogComponent implements OnInit {
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor() {
+  constructor(private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
+    this.logger.info('init');
   }
 
   open(): void {
@@ -35,6 +37,7 @@ export class RemoveConfirmDialogComponent implements OnInit {
   }
 
   emitConfirm(): void {
+    this.logger.info('confirmed');
     this.confirm.emit();
     this.dialog.close();
   }
