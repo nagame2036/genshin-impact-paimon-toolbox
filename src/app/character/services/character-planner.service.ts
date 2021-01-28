@@ -4,7 +4,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterService} from './character.service';
 import {CharacterPlan} from '../models/character-plan.model';
 import {TalentService} from './talent.service';
-import {first, map, switchMap} from 'rxjs/operators';
+import {first, map, reduce, switchMap, take, tap} from 'rxjs/operators';
 import {ItemList} from '../../inventory/models/item-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
@@ -13,6 +13,7 @@ import {activePlans} from '../../game-common/utils/party-plans';
 import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 import {I18n} from '../../widget/models/i18n.model';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 type ActivePlan = { plan: CharacterPlan, party: PartyCharacter };
 
@@ -31,19 +32,17 @@ export class CharacterPlanner {
 
   activePlans = new ReplaySubject<ActivePlan[]>(1);
 
+  private readonly type = ItemType.CHARACTER;
+
   constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
               private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
               private marker: MaterialRequireMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
     combineLatest([this.plans, this.characters.partyMap]).subscribe(([plans, party]) => {
-      this.activePlans.next(activePlans(plans, party));
+      const active = activePlans(plans, party);
+      this.marker.clear(this.type);
+      this.activePlans.next(active);
     });
-    this.marker.cleared
-      .pipe(
-        switchMap(_ => this.activePlans),
-        first()
-      )
-      .subscribe(plans => this.activePlans.next(plans));
   }
 
   getPlan(id: number): Observable<CharacterPlan> {

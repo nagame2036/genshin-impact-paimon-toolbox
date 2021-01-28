@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {first, map, switchMap} from 'rxjs/operators';
+import {first, map, switchMap, tap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {ItemList} from '../../inventory/models/item-list.model';
 import {WeaponService} from './weapon.service';
@@ -11,6 +11,7 @@ import {activePlans} from '../../game-common/utils/party-plans';
 import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {I18n} from '../../widget/models/i18n.model';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 type ActivePlan = { plan: WeaponPlan, party: PartyWeapon };
 
@@ -29,18 +30,16 @@ export class WeaponPlanner {
 
   activePlans = new ReplaySubject<ActivePlan[]>(1);
 
+  private readonly type = ItemType.WEAPON;
+
   constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
               private marker: MaterialRequireMarker) {
     this.database.getAll(this.storeName).subscribe(res => this.#plans.next(res));
     combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
-      this.activePlans.next(activePlans(plans, party));
+      const active = activePlans(plans, party);
+      this.marker.clear(this.type);
+      this.activePlans.next(active);
     });
-    this.marker.cleared
-      .pipe(
-        switchMap(_ => this.activePlans),
-        first()
-      )
-      .subscribe(plans => this.activePlans.next(plans));
   }
 
   getPlan(id: number): Observable<WeaponPlan> {

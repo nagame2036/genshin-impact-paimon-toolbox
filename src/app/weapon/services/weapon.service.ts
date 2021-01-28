@@ -83,10 +83,7 @@ export class WeaponService {
     });
   }
 
-  private cacheParty(party: PartyWeapon[], clear: boolean = true): void {
-    if (clear) {
-      this.marker.clear();
-    }
+  private cacheParty(party: PartyWeapon[]): void {
     this.#party.next(party);
     const mapped = new Map<number, PartyWeapon>();
     party.forEach(weapon => {

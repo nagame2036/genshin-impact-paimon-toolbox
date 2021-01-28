@@ -34,7 +34,7 @@ export class CharacterService {
   constructor(http: HttpClient, private database: NgxIndexedDBService, private marker: MaterialRequireMarker) {
     http.get<Character[]>('assets/data/characters/characters.json').subscribe(res => this.#characters.next(res));
     zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
-      this.cacheParty(party, false);
+      this.cacheParty(party);
       const partyIds = party.map(c => c.id);
       const nonParty = characters.filter(c => !partyIds.includes(c.id));
       this.#nonParty.next(nonParty);
@@ -93,10 +93,7 @@ export class CharacterService {
     });
   }
 
-  private cacheParty(party: PartyCharacter[], clear: boolean = true): void {
-    if (clear) {
-      this.marker.clear();
-    }
+  private cacheParty(party: PartyCharacter[]): void {
     this.#party.next(party);
     const mapped = new Map<number, PartyCharacter>();
     party.forEach(character => mapped.set(character.id, character));
