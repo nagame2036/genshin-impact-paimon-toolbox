@@ -13,21 +13,6 @@ export function toggleItem<T extends { id: number }>(list: T[], item: T, equals:
   return toggleListItem(list, item, equals);
 }
 
-export function partitionArrays<T>(list: T[], conditions: ((item: T) => boolean)[]): T[][] {
-  const result = Array.from(new Array(conditions.length + 1), () => new Array<T>());
-  foreach:
-    for (const item of list) {
-      for (let i = 0; i < conditions.length; i++) {
-        if (conditions[i](item)) {
-          result[i].push(item);
-          continue foreach;
-        }
-      }
-      result[conditions.length].push(item);
-    }
-  return result;
-}
-
 export function findObservable<T>(list: T[], predicate: (item: T) => boolean): Observable<T> {
   const index = list.findIndex(predicate);
   return iif(() => index !== -1, of(list[index]));

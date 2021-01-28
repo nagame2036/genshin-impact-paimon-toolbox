@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {BehaviorSubject, combineLatest, from, Observable, ReplaySubject, zip} from 'rxjs';
 import {concatMap, first, map, reduce, switchMap, take, tap} from 'rxjs/operators';
-import {CharacterExpMaterialService} from './character-exp-material.service';
-import {WeaponExpMaterialService} from './weapon-exp-material.service';
 import {InventoryItemDetail} from '../models/inventory-item-detail.model';
 import {InventoryItem} from '../models/inventory-item.model';
 import {CharacterPlanner} from '../../character/services/character-planner.service';
@@ -36,7 +34,6 @@ export class InventoryService {
   showOverflow = new BehaviorSubject(true);
 
   constructor(private database: NgxIndexedDBService, private characterPlanner: CharacterPlanner, private weaponPlanner: WeaponPlanner,
-              private characterExps: CharacterExpMaterialService, private weaponExps: WeaponExpMaterialService,
               private materials: MaterialService, private logger: NGXLogger) {
     this.loadDatabase();
     this.loadMaterials();
@@ -164,9 +161,7 @@ export class InventoryService {
       detail.lack = Math.max(0, lack - detail.craftable);
       detail.overflow = detail.lack <= 0;
     }
-    this.characterExps.processExpDetails(details);
-    this.weaponExps.processExpDetails(details);
-    return details;
+    return this.materials.processSpecialDetails(details);
   }
 
   private updateDatabaseInventory(id: number, amount: number): Observable<any[]> {

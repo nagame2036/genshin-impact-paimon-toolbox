@@ -10,10 +10,10 @@ import {EnemiesMaterialService} from './enemies-material.service';
 import {OreMaterialService} from './ore-material.service';
 import {LocalSpecialtyService} from './local-specialty.service';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
-import {partitionArrays} from '../../shared/utils/collections';
 import {MaterialType} from '../models/material-type.enum';
 import {first, map, tap} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
+import {InventoryItemDetail} from '../models/inventory-item-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +50,12 @@ export class MaterialService {
     );
   }
 
+  processSpecialDetails(details: Map<number, InventoryItemDetail>): Map<number, InventoryItemDetail> {
+    this.characterExps.processExpDetails(details);
+    this.weaponExps.processExpDetails(details);
+    return details;
+  }
+
   private loadMaterials(): void {
     combineLatest([this.characterExps.items, this.weaponExps.items, this.ores.items, this.characters.items, this.talents.items,
       this.weapons.items, this.enemies.items, this.local.items]).subscribe(materials => {
@@ -66,43 +72,41 @@ export class MaterialService {
 
   private mapMaterials(): void {
     this.materials.subscribe(materials => {
-      const [currency, characterExps, weaponExps, ores, characterBoss, characterGem, weapons14, weapons25, weapons36,
-        talents14, talents25, talents36, talentsCommon, mob, elite, localSpecialties] = partitionArrays(materials, [
-        it => it.id < 100,
-        it => it.id < 200,
-        it => it.id < 300,
-        it => it.id < 2000,
-        it => it.id < 3000,
-        it => it.id < 4000,
-        it => it.id < 5000 && this.weapons.getWeekday(it) === 147,
-        it => it.id < 5000 && this.weapons.getWeekday(it) === 257,
-        it => it.id < 5000 && this.weapons.getWeekday(it) === 367,
-        it => it.id < 6000 && this.talents.getWeekday(it) === 147,
-        it => it.id < 6000 && this.talents.getWeekday(it) === 257,
-        it => it.id < 6000 && this.talents.getWeekday(it) === 367,
-        it => it.id < 8000,
-        it => it.id < 9000,
-        it => it.id < 10000,
-        it => it.id < 11000,
-      ]);
-      this.#materialsMap.next(new Map<number, InventoryItem[]>([
-        [MaterialType.CURRENCY, currency],
-        [MaterialType.CHARACTER_EXP, characterExps],
-        [MaterialType.WEAPON_EXP, weaponExps],
-        [MaterialType.ORE, ores],
-        [MaterialType.CHARACTER_BOSS, characterBoss],
-        [MaterialType.CHARACTER_GEM, characterGem],
-        [MaterialType.WEAPON_14, weapons14],
-        [MaterialType.WEAPON_25, weapons25],
-        [MaterialType.WEAPON_36, weapons36],
-        [MaterialType.TALENT_14, talents14],
-        [MaterialType.TALENT_25, talents25],
-        [MaterialType.TALENT_36, talents36],
-        [MaterialType.TALENT_COMMON, talentsCommon],
-        [MaterialType.ENEMY_MOB, mob],
-        [MaterialType.ENEMY_ELITE, elite],
-        [MaterialType.LOCAL_SPECIALTY, localSpecialties],
+      this.#materialsMap.next(mapTypes(materials, [
+        [MaterialType.CURRENCY, it => it.id < 100],
+        [MaterialType.CHARACTER_EXP, it => it.id < 200],
+        [MaterialType.WEAPON_EXP, it => it.id < 300],
+        [MaterialType.ORE, it => it.id < 2000],
+        [MaterialType.CHARACTER_BOSS, it => it.id < 3000],
+        [MaterialType.CHARACTER_GEM, it => it.id < 4000],
+        [MaterialType.WEAPON_14, it => it.id < 5000 && this.weapons.getWeekday(it) === 147],
+        [MaterialType.WEAPON_25, it => it.id < 5000 && this.weapons.getWeekday(it) === 257],
+        [MaterialType.WEAPON_36, it => it.id < 5000 && this.weapons.getWeekday(it) === 367],
+        [MaterialType.TALENT_14, it => it.id < 6000 && this.talents.getWeekday(it) === 147],
+        [MaterialType.TALENT_25, it => it.id < 6000 && this.talents.getWeekday(it) === 257],
+        [MaterialType.TALENT_36, it => it.id < 6000 && this.talents.getWeekday(it) === 367],
+        [MaterialType.TALENT_COMMON, it => it.id < 8000],
+        [MaterialType.ENEMY_MOB, it => it.id < 9000],
+        [MaterialType.ENEMY_ELITE, it => it.id < 10000],
+        [MaterialType.LOCAL_SPECIALTY, it => it.id < 11000],
       ]));
     });
   }
+}
+
+function mapTypes(list: InventoryItem[], parts: [MaterialType, (item: InventoryItem) => boolean][]): Map<MaterialType, InventoryItem[]> {
+  const result = new Map<MaterialType, InventoryItem[]>();
+  const distinct = new Map<number, number>();
+  for (const [type, condition] of parts) {
+    const materials = [];
+    for (const item of list) {
+      const id = item.id;
+      if (!distinct.has(id) && condition(item)) {
+        materials.push(item);
+        distinct.set(id, id);
+      }
+    }
+    result.set(type, materials);
+  }
+  return result;
 }
