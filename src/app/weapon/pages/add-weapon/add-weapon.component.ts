@@ -9,6 +9,7 @@ import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {Location} from '@angular/common';
 import {NGXLogger} from 'ngx-logger';
+import {WeaponStats} from '../../models/weapon-stats.model';
 
 @Component({
   selector: 'app-add-weapon',
@@ -26,6 +27,8 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
   selectedWeapon!: PartyWeapon;
 
   selectedPlan!: WeaponPlan;
+
+  goalStats!: WeaponStats;
 
   constructor(private weaponService: WeaponService, private planner: WeaponPlanner, private location: Location, private logger: NGXLogger) {
     super();
@@ -47,9 +50,22 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
 
   select(weapon: Weapon): void {
     this.selected = true;
-    this.selectedWeapon = {...weapon, refine: 1, ascension: 0, level: 1};
+    this.selectedWeapon = this.weaponService.createPartyWeapon(weapon);
     this.selectedPlan = {id: weapon.id, ascension: 0, level: 1};
+    this.goalStats = {atk: this.selectedWeapon.atk, subStat: this.selectedWeapon.subStat};
     this.logger.info('select weapon', weapon);
+  }
+
+  updateStats(): void {
+    const plan = this.selectedPlan;
+    const weapon = this.selectedWeapon;
+    this.weaponService.getWeaponStats(weapon, weapon.ascension, weapon.level).subscribe(stats => {
+      weapon.atk = stats.atk;
+      weapon.subStat = stats.subStat;
+    });
+    this.weaponService.getWeaponStats(weapon, plan.ascension, plan.level).subscribe(stats => {
+      this.goalStats = stats;
+    });
   }
 
   reset(): void {

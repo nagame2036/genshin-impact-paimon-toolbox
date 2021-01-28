@@ -7,9 +7,10 @@ import {WeaponListComponent} from '../weapon-list/weapon-list.component';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {WeaponPlanner} from '../../services/weapon-planner.service';
 import {mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {combineLatest} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {NGXLogger} from 'ngx-logger';
+import {WeaponStats} from '../../models/weapon-stats.model';
 
 @Component({
   selector: 'app-party-weapon-list',
@@ -71,5 +72,9 @@ export class PartyWeaponListComponent extends AbstractObservableComponent implem
   onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {
     this.list.multiSelect = event.multiSelect;
     this.list.selectAll(event.selectAll);
+  }
+
+  getGoalStats(party: PartyWeapon, plan: WeaponPlan): Observable<WeaponStats> {
+    return this.weaponService.getWeaponStats(party, plan.ascension, plan.level);
   }
 }

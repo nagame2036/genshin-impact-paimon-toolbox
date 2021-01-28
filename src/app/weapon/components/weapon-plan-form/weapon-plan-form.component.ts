@@ -7,6 +7,7 @@ import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {Observable, Subject} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
+import {WeaponStats} from '../../models/weapon-stats.model';
 
 @Component({
   selector: 'app-weapon-plan-form',
@@ -22,6 +23,9 @@ export class WeaponPlanFormComponent implements OnInit {
 
   @Input()
   plan!: WeaponPlan;
+
+  @Input()
+  goalStats!: WeaponStats;
 
   @Input()
   requirements: { satisfied: Observable<boolean> }[] = [

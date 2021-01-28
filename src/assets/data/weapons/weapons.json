@@ -5,7 +5,12 @@
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "ATK%",
+    "subStatBase": 0.07660000026226044,
+    "subStatCurve": 101
   },
   {
     "id": 11302,
@@ -13,7 +18,12 @@
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "CHD%",
+    "subStatBase": 0.10199999809265137,
+    "subStatCurve": 101
   },
   {
     "id": 11303,
@@ -21,7 +31,12 @@
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 39.875099182128906,
+    "atkCurve": 102,
+    "subStatType": "DEF%",
+    "subStatBase": 0.06373299658298492,
+    "subStatCurve": 101
   },
   {
     "id": 11304,
@@ -29,7 +44,12 @@
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "EM",
+    "subStatBase": 30.600000381469727,
+    "subStatCurve": 101
   },
   {
     "id": 11305,
@@ -37,7 +57,12 @@
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "ATK%",
+    "subStatBase": 0.07660000026226044,
+    "subStatCurve": 101
   },
   {
     "id": 11306,
@@ -45,7 +70,12 @@
     "rarity": 3,
     "domain": 405,
     "elite": 906,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 37.60749816894531,
+    "atkCurve": 104,
+    "subStatType": "ER%",
+    "subStatBase": 0.11333300173282623,
+    "subStatCurve": 101
   },
   {
     "id": 11401,
@@ -53,7 +83,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "ER%",
+    "subStatBase": 0.1333329975605011,
+    "subStatCurve": 201
   },
   {
     "id": 11402,
@@ -61,7 +96,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 11403,
@@ -69,7 +109,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "ER%",
+    "subStatBase": 0.1333329975605011,
+    "subStatCurve": 201
   },
   {
     "id": 11404,
@@ -77,7 +122,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 11405,
@@ -85,7 +135,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 11406,
@@ -93,7 +148,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.07506699860095978,
+    "subStatCurve": 201
   },
   {
     "id": 11407,
@@ -101,7 +161,12 @@
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "EM",
+    "subStatBase": 36.0,
+    "subStatCurve": 201
   },
   {
     "id": 11408,
@@ -109,7 +174,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "CHD%",
+    "subStatBase": 0.07999999821186066,
+    "subStatCurve": 201
   },
   {
     "id": 11409,
@@ -117,7 +187,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHC%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 11412,
@@ -125,7 +200,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "ATK%",
+    "subStatBase": 0.07660000026226044,
+    "subStatCurve": 101
   },
   {
     "id": 11413,
@@ -133,7 +213,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 900,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ER%",
+    "subStatBase": 0.10000000149011612,
+    "subStatCurve": 201
   },
   {
     "id": 11501,
@@ -141,7 +226,12 @@
     "rarity": 5,
     "domain": 400,
     "elite": 900,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 47.5369987487793,
+    "atkCurve": 302,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 301
   },
   {
     "id": 11502,
@@ -149,7 +239,12 @@
     "rarity": 5,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ER%",
+    "subStatBase": 0.11999999731779099,
+    "subStatCurve": 301
   },
   {
     "id": 11504,
@@ -157,7 +252,12 @@
     "rarity": 5,
     "domain": 403,
     "elite": 905,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ATK%",
+    "subStatBase": 0.1080000028014183,
+    "subStatCurve": 301
   },
   {
     "id": 12301,
@@ -165,7 +265,12 @@
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "HP%",
+    "subStatBase": 0.07660000026226044,
+    "subStatCurve": 101
   },
   {
     "id": 12302,
@@ -173,7 +278,12 @@
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 37.60749816894531,
+    "atkCurve": 104,
+    "subStatType": "EM",
+    "subStatBase": 40.79999923706055,
+    "subStatCurve": 101
   },
   {
     "id": 12303,
@@ -181,7 +291,12 @@
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "DEF%",
+    "subStatBase": 0.09560000151395798,
+    "subStatCurve": 101
   },
   {
     "id": 12305,
@@ -189,7 +304,12 @@
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "ATK%",
+    "subStatBase": 0.07660000026226044,
+    "subStatCurve": 101
   },
   {
     "id": 12306,
@@ -197,7 +317,12 @@
     "rarity": 3,
     "domain": 405,
     "elite": 906,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.09560000151395798,
+    "subStatCurve": 101
   },
   {
     "id": 12401,
@@ -205,7 +330,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "ER%",
+    "subStatBase": 0.1333329975605011,
+    "subStatCurve": 201
   },
   {
     "id": 12402,
@@ -213,7 +343,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "HP%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 12403,
@@ -221,7 +356,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ER%",
+    "subStatBase": 0.06666699796915054,
+    "subStatCurve": 201
   },
   {
     "id": 12404,
@@ -229,7 +369,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ATK%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 12405,
@@ -237,7 +382,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "EM",
+    "subStatBase": 36.0,
+    "subStatCurve": 201
   },
   {
     "id": 12406,
@@ -245,7 +395,12 @@
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ATK%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 12407,
@@ -253,7 +408,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "DEF%",
+    "subStatBase": 0.11259999871253967,
+    "subStatCurve": 201
   },
   {
     "id": 12408,
@@ -261,7 +421,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHD%",
+    "subStatBase": 0.11999999731779099,
+    "subStatCurve": 201
   },
   {
     "id": 12409,
@@ -269,7 +434,12 @@
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHC%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 12411,
@@ -277,7 +447,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.07506699860095978,
+    "subStatCurve": 201
   },
   {
     "id": 12501,
@@ -285,7 +460,12 @@
     "rarity": 5,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 47.5369987487793,
+    "atkCurve": 302,
+    "subStatType": "ER%",
+    "subStatBase": 0.07999999821186066,
+    "subStatCurve": 301
   },
   {
     "id": 12502,
@@ -293,7 +473,12 @@
     "rarity": 5,
     "domain": 402,
     "elite": 903,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ATK%",
+    "subStatBase": 0.1080000028014183,
+    "subStatCurve": 301
   },
   {
     "id": 12504,
@@ -301,7 +486,12 @@
     "rarity": 5,
     "domain": 404,
     "elite": 904,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ATK%",
+    "subStatBase": 0.1080000028014183,
+    "subStatCurve": 301
   },
   {
     "id": 13301,
@@ -309,7 +499,12 @@
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "CHC%",
+    "subStatBase": 0.050999999046325684,
+    "subStatCurve": 101
   },
   {
     "id": 13302,
@@ -317,7 +512,12 @@
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 39.875099182128906,
+    "atkCurve": 102,
+    "subStatType": "ATK%",
+    "subStatBase": 0.05106699839234352,
+    "subStatCurve": 101
   },
   {
     "id": 13303,
@@ -325,7 +525,12 @@
     "rarity": 3,
     "domain": 405,
     "elite": 906,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 37.60749816894531,
+    "atkCurve": 104,
+    "subStatType": "HP%",
+    "subStatBase": 0.10213299840688705,
+    "subStatCurve": 101
   },
   {
     "id": 13401,
@@ -333,7 +538,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "EM",
+    "subStatBase": 48.0,
+    "subStatCurve": 201
   },
   {
     "id": 13402,
@@ -341,7 +551,12 @@
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ER%",
+    "subStatBase": 0.10000000149011612,
+    "subStatCurve": 201
   },
   {
     "id": 13403,
@@ -349,7 +564,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.07506699860095978,
+    "subStatCurve": 201
   },
   {
     "id": 13404,
@@ -357,7 +577,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHD%",
+    "subStatBase": 0.11999999731779099,
+    "subStatCurve": 201
   },
   {
     "id": 13405,
@@ -365,7 +590,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "CHC%",
+    "subStatBase": 0.07999999821186066,
+    "subStatCurve": 201
   },
   {
     "id": 13407,
@@ -373,7 +603,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ER%",
+    "subStatBase": 0.06666699796915054,
+    "subStatCurve": 201
   },
   {
     "id": 13408,
@@ -381,7 +616,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ATK%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 13409,
@@ -389,7 +629,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 904,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.15013299882411957,
+    "subStatCurve": 201
   },
   {
     "id": 13502,
@@ -397,7 +642,12 @@
     "rarity": 5,
     "domain": 402,
     "elite": 903,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 47.5369987487793,
+    "atkCurve": 302,
+    "subStatType": "ER%",
+    "subStatBase": 0.07999999821186066,
+    "subStatCurve": 301
   },
   {
     "id": 13504,
@@ -405,7 +655,12 @@
     "rarity": 5,
     "domain": 405,
     "elite": 906,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ATK%",
+    "subStatBase": 0.1080000028014183,
+    "subStatCurve": 301
   },
   {
     "id": 13505,
@@ -413,7 +668,12 @@
     "rarity": 5,
     "domain": 403,
     "elite": 905,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 47.5369987487793,
+    "atkCurve": 302,
+    "subStatType": "CHC%",
+    "subStatBase": 0.04800000041723251,
+    "subStatCurve": 301
   },
   {
     "id": 14301,
@@ -421,7 +681,12 @@
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 37.60749816894531,
+    "atkCurve": 104,
+    "subStatType": "EM",
+    "subStatBase": 40.79999923706055,
+    "subStatCurve": 101
   },
   {
     "id": 14302,
@@ -429,7 +694,12 @@
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "HP%",
+    "subStatBase": 0.07660000026226044,
+    "subStatCurve": 101
   },
   {
     "id": 14303,
@@ -437,7 +707,12 @@
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "ER%",
+    "subStatBase": 0.08500000089406967,
+    "subStatCurve": 101
   },
   {
     "id": 14304,
@@ -445,7 +720,12 @@
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 39.875099182128906,
+    "atkCurve": 102,
+    "subStatType": "EM",
+    "subStatBase": 20.399999618530273,
+    "subStatCurve": 101
   },
   {
     "id": 14305,
@@ -453,7 +733,12 @@
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 39.875099182128906,
+    "atkCurve": 102,
+    "subStatType": "CHC%",
+    "subStatBase": 0.03400000184774399,
+    "subStatCurve": 101
   },
   {
     "id": 14401,
@@ -461,7 +746,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ER%",
+    "subStatBase": 0.10000000149011612,
+    "subStatCurve": 201
   },
   {
     "id": 14402,
@@ -469,7 +759,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHD%",
+    "subStatBase": 0.11999999731779099,
+    "subStatCurve": 201
   },
   {
     "id": 14403,
@@ -477,7 +772,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "EM",
+    "subStatBase": 48.0,
+    "subStatCurve": 201
   },
   {
     "id": 14404,
@@ -485,7 +785,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ATK%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 14405,
@@ -493,7 +798,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHC%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 14406,
@@ -501,7 +811,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "HP%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 14407,
@@ -509,7 +824,12 @@
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "EM",
+    "subStatBase": 24.0,
+    "subStatCurve": 201
   },
   {
     "id": 14408,
@@ -517,7 +837,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHD%",
+    "subStatBase": 0.11999999731779099,
+    "subStatCurve": 201
   },
   {
     "id": 14409,
@@ -525,7 +850,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "ATK%",
+    "subStatBase": 0.11999999731779099,
+    "subStatCurve": 201
   },
   {
     "id": 14412,
@@ -533,7 +863,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 14501,
@@ -541,7 +876,12 @@
     "rarity": 5,
     "domain": 401,
     "elite": 902,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 47.5369987487793,
+    "atkCurve": 302,
+    "subStatType": "ATK%",
+    "subStatBase": 0.07199999690055847,
+    "subStatCurve": 301
   },
   {
     "id": 14502,
@@ -549,7 +889,12 @@
     "rarity": 5,
     "domain": 402,
     "elite": 903,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "CHC%",
+    "subStatBase": 0.07199999690055847,
+    "subStatCurve": 301
   },
   {
     "id": 14504,
@@ -557,7 +902,12 @@
     "rarity": 5,
     "domain": 405,
     "elite": 906,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ATK%",
+    "subStatBase": 0.1080000028014183,
+    "subStatCurve": 301
   },
   {
     "id": 15301,
@@ -565,7 +915,12 @@
     "rarity": 3,
     "domain": 400,
     "elite": 900,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 39.875099182128906,
+    "atkCurve": 102,
+    "subStatType": "EM",
+    "subStatBase": 20.399999618530273,
+    "subStatCurve": 101
   },
   {
     "id": 15302,
@@ -573,7 +928,12 @@
     "rarity": 3,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 38.74129867553711,
+    "atkCurve": 101,
+    "subStatType": "CHD%",
+    "subStatBase": 0.10199999809265137,
+    "subStatCurve": 101
   },
   {
     "id": 15303,
@@ -581,7 +941,12 @@
     "rarity": 3,
     "domain": 402,
     "elite": 903,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 37.60749816894531,
+    "atkCurve": 104,
+    "subStatType": "HP%",
+    "subStatBase": 0.10213299840688705,
+    "subStatCurve": 101
   },
   {
     "id": 15304,
@@ -589,7 +954,12 @@
     "rarity": 3,
     "domain": 403,
     "elite": 905,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 37.60749816894531,
+    "atkCurve": 104,
+    "subStatType": "CHC%",
+    "subStatBase": 0.06800000369548798,
+    "subStatCurve": 101
   },
   {
     "id": 15305,
@@ -597,7 +967,12 @@
     "rarity": 3,
     "domain": 404,
     "elite": 904,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 39.875099182128906,
+    "atkCurve": 102,
+    "subStatType": "CHD%",
+    "subStatBase": 0.06800000369548798,
+    "subStatCurve": 101
   },
   {
     "id": 15401,
@@ -605,7 +980,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "ER%",
+    "subStatBase": 0.1333329975605011,
+    "subStatCurve": 201
   },
   {
     "id": 15402,
@@ -613,7 +993,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "EM",
+    "subStatBase": 36.0,
+    "subStatCurve": 201
   },
   {
     "id": 15403,
@@ -621,7 +1006,12 @@
     "rarity": 4,
     "domain": 401,
     "elite": 902,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "ER%",
+    "subStatBase": 0.06666699796915054,
+    "subStatCurve": 201
   },
   {
     "id": 15404,
@@ -629,7 +1019,12 @@
     "rarity": 4,
     "domain": 402,
     "elite": 903,
-    "mob": 802
+    "mob": 802,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 15405,
@@ -637,7 +1032,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 801
+    "mob": 801,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 15406,
@@ -645,7 +1045,12 @@
     "rarity": 4,
     "domain": 404,
     "elite": 904,
-    "mob": 806
+    "mob": 806,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "ATK%",
+    "subStatBase": 0.09000000357627869,
+    "subStatCurve": 201
   },
   {
     "id": 15407,
@@ -653,7 +1058,12 @@
     "rarity": 4,
     "domain": 405,
     "elite": 906,
-    "mob": 805
+    "mob": 805,
+    "atkBase": 41.067100524902344,
+    "atkCurve": 204,
+    "subStatType": "PHY DMG%",
+    "subStatBase": 0.15013299882411957,
+    "subStatCurve": 201
   },
   {
     "id": 15408,
@@ -661,7 +1071,12 @@
     "rarity": 4,
     "domain": 403,
     "elite": 905,
-    "mob": 807
+    "mob": 807,
+    "atkBase": 43.734901428222656,
+    "atkCurve": 202,
+    "subStatType": "CHD%",
+    "subStatBase": 0.07999999821186066,
+    "subStatCurve": 201
   },
   {
     "id": 15409,
@@ -669,7 +1084,12 @@
     "rarity": 4,
     "domain": 400,
     "elite": 900,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 42.4010009765625,
+    "atkCurve": 201,
+    "subStatType": "CHC%",
+    "subStatBase": 0.05999999865889549,
+    "subStatCurve": 201
   },
   {
     "id": 15501,
@@ -677,7 +1097,12 @@
     "rarity": 5,
     "domain": 401,
     "elite": 902,
-    "mob": 803
+    "mob": 803,
+    "atkBase": 47.5369987487793,
+    "atkCurve": 302,
+    "subStatType": "CHC%",
+    "subStatBase": 0.04800000041723251,
+    "subStatCurve": 301
   },
   {
     "id": 15502,
@@ -685,6 +1110,11 @@
     "rarity": 5,
     "domain": 402,
     "elite": 903,
-    "mob": 800
+    "mob": 800,
+    "atkBase": 45.9364013671875,
+    "atkCurve": 301,
+    "subStatType": "ATK%",
+    "subStatBase": 0.1080000028014183,
+    "subStatCurve": 301
   }
 ]

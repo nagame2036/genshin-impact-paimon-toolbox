@@ -13,7 +13,9 @@
     <app-weapon-list [weapons]="weapons" (selected)="select($event)"></app-weapon-list>
   </div>
   <div class="add-form" *ngIf="selected">
-    <app-weapon-plan-form [weapon]="selectedWeapon" [plan]="selectedPlan"></app-weapon-plan-form>
+    <app-weapon-plan-form [weapon]="selectedWeapon" [plan]="selectedPlan" [goalStats]="goalStats"
+                          (currentChange)="updateStats()" (goalChange)="updateStats()">
+    </app-weapon-plan-form>
     <div *ngIf="selected" class="add-actions">
       <app-ring-button class="add-actions-btn reset-btn" (click)="reset()">
         {{ i18n.module('reset') | translate }}

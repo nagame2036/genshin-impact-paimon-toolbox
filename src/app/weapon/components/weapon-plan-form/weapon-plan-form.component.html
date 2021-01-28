@@ -11,6 +11,22 @@
                                  [satisfied]="requirements[0].satisfied" (executePlan)="executePlan.emit(0)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
+  <app-current-goal-comparator [current]="weapon.atk | number: '1.0-0'"
+                               [goal]="goalStats.atk | number: '1.0-0'">
+    {{ i18n.dict('attributes.ATK') | translate }}
+  </app-current-goal-comparator>
+  <ng-container *ngIf="weapon.subStatType.endsWith('%') else numeric">
+    <app-current-goal-comparator [current]="weapon.subStat | percent: '1.0-1'"
+                                 [goal]="goalStats.subStat | percent: '1.0-1'">
+      {{ i18n.dict('attributes.' + weapon.subStatType) | translate }}
+    </app-current-goal-comparator>
+  </ng-container>
+  <ng-template #numeric>
+    <app-current-goal-comparator [current]="weapon.subStat | number: '1.0-0'"
+                                 [goal]="goalStats.subStat | number: '1.0-0'">
+      {{ i18n.dict('attributes.' + weapon.subStatType) | translate }}
+    </app-current-goal-comparator>
+  </ng-template>
   <div *ngFor="let bonus of weapon.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>

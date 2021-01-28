@@ -8,6 +8,8 @@ import {first, map, switchMap, toArray} from 'rxjs/operators';
 import {findObservable} from '../../shared/utils/collections';
 import {WeaponStatCurve} from '../models/weapon-stat-curve.model';
 import {NGXLogger} from 'ngx-logger';
+import {Ascension} from '../../game-common/models/ascension.type';
+import {WeaponStats} from '../models/weapon-stats.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,12 @@ export class WeaponService {
 
   readonly partyMap = this.#partyMap.asObservable();
 
+  private atkCurves = new ReplaySubject<WeaponStatCurve>(1);
+
+  private atkAscensions = new ReplaySubject<WeaponStatCurve>(1);
+
+  private subStatCurves = new ReplaySubject<WeaponStatCurve>(1);
+
   private readonly storeName = 'party-weapons';
 
   private readonly dataPrefix = 'assets/data/weapons';
@@ -34,6 +42,18 @@ export class WeaponService {
     http.get<Weapon[]>(`${this.dataPrefix}/weapons.json`).subscribe(data => {
       this.logger.info('loaded weapon data', data);
       this.#weapons.next(data);
+    });
+    http.get<WeaponStatCurve>(`${this.dataPrefix}/weapon-atk-grow-curve.json`).subscribe(data => {
+      this.logger.info('loaded weapon ATK grow curve data', data);
+      this.atkCurves.next(data);
+    });
+    http.get<WeaponStatCurve>(`${this.dataPrefix}/weapon-atk-grow-ascension.json`).subscribe(data => {
+      this.logger.info('loaded weapon ATK grow by ascension data', data);
+      this.atkAscensions.next(data);
+    });
+    http.get<WeaponStatCurve>(`${this.dataPrefix}/weapon-sub-stat-grow-curve.json`).subscribe(data => {
+      this.logger.info('loaded weapon sub-stat grow curve data', data);
+      this.subStatCurves.next(data);
     });
     database.getAll(this.storeName).subscribe(party => {
       this.logger.info('fetched party weapons from indexed db', party);
@@ -56,6 +76,11 @@ export class WeaponService {
   getPartyWeapon(key: number): Observable<PartyWeapon> {
     return this.party.pipe(
       switchMap(party => findObservable(party, it => it.key === key)),
+      switchMap(party => this.getWeaponStats(party, party.ascension, party.level).pipe(map(stats => {
+        party.atk = stats.atk;
+        party.subStat = stats.subStat;
+        return party;
+      }))),
       first()
     );
   }
@@ -97,6 +122,21 @@ export class WeaponService {
       const newParty = party.filter(c => !ids.includes(c.key ?? -1));
       this.cacheParty(newParty);
     });
+  }
+
+  createPartyWeapon(weapon: Weapon): PartyWeapon {
+    return {...weapon, refine: 1, ascension: 0, level: 1, atk: weapon.atkBase, subStat: weapon.subStatBase};
+  }
+
+  getWeaponStats(weapon: Weapon, ascension: Ascension, level: number): Observable<WeaponStats> {
+    return zip(this.atkCurves, this.atkAscensions, this.subStatCurves).pipe(
+      first(),
+      map(([atkCurves, atkAscensions, subStatCurves]) => {
+        const atk = weapon.atkBase * atkCurves[weapon.atkCurve][level] + atkAscensions[weapon.rarity][ascension];
+        const subStat = weapon.subStatBase * subStatCurves[weapon.subStatCurve][level];
+        return {atk, subStat};
+      })
+    );
   }
 
   private cacheParty(party: PartyWeapon[]): void {

@@ -9,9 +9,13 @@ export interface PartyWeapon extends Weapon {
    */
   key?: number;
 
+  refine: RefineRank;
+
   ascension: Ascension;
 
   level: number;
 
-  refine: RefineRank;
+  atk: number;
+
+  subStat: number;
 }

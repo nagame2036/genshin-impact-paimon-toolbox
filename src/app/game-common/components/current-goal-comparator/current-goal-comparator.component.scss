@@ -1,0 +1,17 @@
+@import '../../../widget/styles/form-field.scss';
+
+.form {
+  @apply flex;
+  @apply flex-row;
+  @apply place-content-center;
+}
+
+.value {
+  width: 5.5rem;
+  @apply flex-grow;
+}
+
+.arrow {
+  @apply text-center;
+  @apply w-16;
+}

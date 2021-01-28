@@ -1,4 +1,4 @@
-<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="300"
+<app-weapon-list [party]="true" [weapons]="weapons" [itemWidth]="360"
                  [sortFields]="['level', 'rarity', 'refine']" sort="level"
                  #list (selected)="selected.emit($event)" [selectedItems]="selectedItems"
                  (multiSelected)="multiSelected.emit($event)">
@@ -24,24 +24,73 @@
           <div class="item-overview-odd" [class.col-span-3]="party.ascension >= plan.ascension">
             ★{{ party.ascension }}
           </div>
-          <div class="item-overview-odd" *ngIf="party.ascension < plan.ascension">
-            →
-          </div>
-          <div class="item-overview-odd" *ngIf="party.ascension < plan.ascension">
-            ★{{ plan.ascension }}
-          </div>
+          <ng-container *ngIf="party.ascension < plan.ascension">
+            <div class="item-overview-odd">
+              →
+            </div>
+            <div class="item-overview-odd">
+              ★{{ plan.ascension }}
+            </div>
+          </ng-container>
           <div>
             <b>{{ i18n.dict('level') | translate }}</b>
           </div>
           <div [class.col-span-3]="party.level >= plan.level">
             {{ party.level }}
           </div>
-          <div *ngIf="party.level < plan.level">
-            →
-          </div>
-          <div *ngIf="party.level < plan.level">
-            {{ plan.level }}
-          </div>
+          <ng-container *ngIf="party.level < plan.level">
+            <div>
+              →
+            </div>
+            <div>
+              {{ plan.level }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="getGoalStats(party, plan) | async as goalStats">
+            <div class="item-overview-odd">
+              <b>{{ i18n.dict('attributes.ATK') | translate }}</b>
+            </div>
+            <div class="item-overview-odd" [class.col-span-3]="party.atk >= goalStats.atk">
+              {{ party.atk | number: '1.0-0' }}
+            </div>
+            <ng-container *ngIf="party.level < plan.level">
+              <div class="item-overview-odd">
+                →
+              </div>
+              <div class="item-overview-odd">
+                {{ goalStats.atk | number: '1.0-0' }}
+              </div>
+            </ng-container>
+            <div>
+              <b>{{ i18n.dict('attributes.' + party.subStatType) | translate }}</b>
+            </div>
+            <ng-container *ngIf="party.subStatType.endsWith('%') else numeric">
+              <div [class.col-span-3]="party.subStat >= goalStats.subStat">
+                {{ party.subStat | percent: '1.0-1' }}
+              </div>
+              <ng-container *ngIf="party.subStat < goalStats.subStat">
+                <div>
+                  →
+                </div>
+                <div>
+                  {{ goalStats.subStat | percent: '1.0-1' }}
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-template #numeric>
+              <div [class.col-span-3]="party.subStat >= goalStats.subStat">
+                {{ party.subStat | number: '1.0-0' }}
+              </div>
+              <ng-container *ngIf="party.subStat < goalStats.subStat">
+                <div>
+                  →
+                </div>
+                <div>
+                  {{ goalStats.subStat | number: '1.0-0' }}
+                </div>
+              </ng-container>
+            </ng-template>
+          </ng-container>
         </div>
       </ng-container>
     </ng-container>
