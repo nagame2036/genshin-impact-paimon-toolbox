@@ -1,0 +1,5 @@
+@import '../../styles/character-list.scss';
+
+.list {
+  grid-template-columns: repeat(auto-fill, 102px);
+}

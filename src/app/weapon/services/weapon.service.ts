@@ -1,159 +1,161 @@
 import {Injectable} from '@angular/core';
-import {from, Observable, ReplaySubject, zip} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {NgxIndexedDBService} from 'ngx-indexed-db';
+import {I18n} from '../../widget/models/i18n.model';
+import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
 import {Weapon} from '../models/weapon.model';
-import {PartyWeapon} from '../models/party-weapon.model';
-import {first, map, switchMap, toArray} from 'rxjs/operators';
-import {findObservable} from '../../shared/utils/collections';
-import {WeaponStatCurve} from '../models/weapon-stat-curve.model';
+import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
+import {weaponTypeList} from '../models/weapon-type.enum';
+import {WeaponInfoService, WeaponStatsDependency} from './weapon-info.service';
+import {WeaponProgressService} from './weapon-progress.service';
+import {WeaponPlanner} from './weapon-planner.service';
+import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {Ascension} from '../../game-common/models/ascension.type';
-import {WeaponStats} from '../models/weapon-stats.model';
+import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {MaterialList} from '../../material/models/material-list.model';
+import {ItemType} from '../../game-common/models/item-type.enum';
+import {WeaponPlan} from '../models/weapon-plan.model';
+import {WeaponProgress} from '../models/weapon-progress.model';
+import {WeaponStatsType, WeaponStatsValue} from '../models/weapon-stats.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeaponService {
 
-  #weapons = new ReplaySubject<Weapon[]>(1);
+  private readonly i18n = new I18n('weapons');
 
-  readonly weapons = this.#weapons.asObservable();
+  private synced = false;
 
-  #party = new ReplaySubject<PartyWeapon[]>(1);
+  private readonly weapons$ = new ReplaySubject<Map<number, Weapon>>(1);
 
-  readonly party = this.#party.asObservable();
+  readonly weapons = this.weapons$.asObservable();
 
-  #partyMap = new ReplaySubject<Map<number, PartyWeapon>>(1);
+  readonly nonParty = this.progressor.noProgress.pipe(map(infos => [...infos.values()]));
 
-  readonly partyMap = this.#partyMap.asObservable();
+  readonly sorts: { text: string, value: (a: Weapon, b: Weapon) => number }[] = [
+    {text: this.i18n.dict('level'), value: (a, b) => b.progress.level - a.progress.level},
+    {text: this.i18n.dict('rarity'), value: (a, b) => b.info.rarity - a.info.rarity},
+    {text: this.i18n.dict('refine-rank'), value: (a, b) => b.progress.refine - a.progress.refine},
+  ];
 
-  private atkCurves = new ReplaySubject<WeaponStatCurve>(1);
+  sort = this.sorts[0].value;
 
-  private atkAscensions = new ReplaySubject<WeaponStatCurve>(1);
+  readonly infoSorts: { text: string, value: (a: WeaponInfo, b: WeaponInfo) => number }[] = [
+    {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
+  ];
 
-  private subStatCurves = new ReplaySubject<WeaponStatCurve>(1);
+  infoSort = this.infoSorts[0].value;
 
-  private readonly storeName = 'party-weapons';
+  readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
 
-  private readonly dataPrefix = 'assets/data/weapons';
+  rarityFilter = allWeaponRarities;
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService, private logger: NGXLogger) {
-    http.get<Weapon[]>(`${this.dataPrefix}/weapons.json`).subscribe(data => {
-      this.logger.info('loaded weapon data', data);
-      this.#weapons.next(data);
-    });
-    http.get<WeaponStatCurve>(`${this.dataPrefix}/weapon-atk-grow-curve.json`).subscribe(data => {
-      this.logger.info('loaded weapon ATK grow curve data', data);
-      this.atkCurves.next(data);
-    });
-    http.get<WeaponStatCurve>(`${this.dataPrefix}/weapon-atk-grow-ascension.json`).subscribe(data => {
-      this.logger.info('loaded weapon ATK grow by ascension data', data);
-      this.atkAscensions.next(data);
-    });
-    http.get<WeaponStatCurve>(`${this.dataPrefix}/weapon-sub-stat-grow-curve.json`).subscribe(data => {
-      this.logger.info('loaded weapon sub-stat grow curve data', data);
-      this.subStatCurves.next(data);
-    });
-    database.getAll(this.storeName).subscribe(party => {
-      this.logger.info('fetched party weapons from indexed db', party);
-      this.cacheParty(party);
-    });
+  readonly types = weaponTypeList.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
+
+  typeFilter = weaponTypeList;
+
+  constructor(private information: WeaponInfoService, private progressor: WeaponProgressService,
+              private planner: WeaponPlanner, private materials: MaterialService, private logger: NGXLogger) {
+    this.sync();
   }
 
-  addPartyMember(weapon: PartyWeapon): Observable<number> {
-    const add = this.valid(weapon.id).pipe(switchMap(_ => this.database.add(this.storeName, weapon)));
-    return zip(add, this.party).pipe(map(([key, party]) => {
-      weapon.key = key;
-      this.logger.info('added weapon', weapon);
-      const newParty = party.filter(c => c.key !== key);
-      newParty.push(weapon);
-      this.cacheParty(newParty);
-      return key;
-    }));
-  }
-
-  getPartyWeapon(key: number): Observable<PartyWeapon> {
-    return this.party.pipe(
-      switchMap(party => findObservable(party, it => it.key === key)),
-      switchMap(party => this.getWeaponStats(party, party.ascension, party.level).pipe(map(stats => {
-        party.atk = stats.atk;
-        party.subStat = stats.subStat;
-        return party;
-      }))),
-      first()
-    );
-  }
-
-  updatePartyMember(weapon: PartyWeapon): void {
-    const key = weapon.key;
-    if (!key) {
+  sync(): void {
+    if (this.synced) {
       return;
     }
-    const update = this.valid(weapon.id).pipe(switchMap(_ => this.database.update(this.storeName, weapon)));
-    zip(update, this.party).subscribe(([, party]) => {
-      this.logger.info('weapon updated', weapon);
-      const newParty = party.filter(c => c.key !== key);
-      newParty.push(weapon);
-      this.cacheParty(newParty);
-    });
+    this.synced = true;
+    combineLatest([this.information.items, this.progressor.inProgress, this.planner.plans])
+      .subscribe(([infos, inProgress, plans]) => {
+        this.syncWeapons(infos, inProgress, plans);
+        this.syncTotalRequirements();
+      });
   }
 
-  removePartyMember(weapon: PartyWeapon): void {
-    const key = weapon.key;
-    if (!key) {
-      return;
-    }
-    const remove = this.valid(weapon.id).pipe(switchMap(_ => this.database.delete(this.storeName, key)));
-    zip(remove, this.party).subscribe(([_, party]) => {
-      this.logger.info('weapon removed', weapon);
-      const newParty = party.filter(c => c.key !== key);
-      this.cacheParty(newParty);
-    });
+  create(info: WeaponInfo): Weapon {
+    const id = new Date().getTime();
+    const progress = this.progressor.create(info, id);
+    const plan = this.planner.create(info, id);
+    return {info, progress, plan};
   }
 
-  removePartyMemberByList(ids: number[]): void {
-    const deleted = from(ids).pipe(
-      switchMap(it => this.database.delete(this.storeName, it)),
-      toArray(),
-    );
-    zip(deleted, this.party).subscribe(([_, party]) => {
-      this.logger.info('weapons removed', ids);
-      const newParty = party.filter(c => !ids.includes(c.key ?? -1));
-      this.cacheParty(newParty);
-    });
-  }
-
-  createPartyWeapon(weapon: Weapon): PartyWeapon {
-    return {...weapon, refine: 1, ascension: 0, level: 1, atk: weapon.atkBase, subStat: weapon.subStatBase};
-  }
-
-  getWeaponStats(weapon: Weapon, ascension: Ascension, level: number): Observable<WeaponStats> {
-    return zip(this.atkCurves, this.atkAscensions, this.subStatCurves).pipe(
-      first(),
-      map(([atkCurves, atkAscensions, subStatCurves]) => {
-        const atk = weapon.atkBase * atkCurves[weapon.atkCurve][level] + atkAscensions[weapon.rarity][ascension];
-        const subStat = weapon.subStatBase * subStatCurves[weapon.subStatCurve][level];
-        return {atk, subStat};
-      })
-    );
-  }
-
-  private cacheParty(party: PartyWeapon[]): void {
-    this.#party.next(party);
-    const mapped = new Map<number, PartyWeapon>();
-    party.forEach(weapon => {
-      if (weapon.key) {
-        mapped.set(weapon.key, weapon);
-      }
-    });
-    this.#partyMap.next(mapped);
-  }
-
-  private valid(id: number): Observable<Weapon> {
+  get(id: number): Observable<Weapon> {
     return this.weapons.pipe(
-      switchMap(weapons => findObservable(weapons, it => it.id === id)),
-      first()
+      switchMap(weapons => {
+        const weapon = weapons.get(id);
+        return weapon ? of(weapon) : EMPTY;
+      }),
+      throwIfEmpty(),
+      tap(weapon => this.logger.info('sent weapon', weapon)),
     );
+  }
+
+  getStats({info, progress, plan}: Weapon): Observable<[WeaponStatsValue, WeaponStatsValue]> {
+    return forkJoin([this.getSpecificStats(info, progress), this.getSpecificStats(info, plan)]);
+  }
+
+  getSpecificStats(info: WeaponInfo, dependency: WeaponStatsDependency): Observable<WeaponStatsValue> {
+    return this.information.getStats(info, dependency);
+  }
+
+  getStatsTypes(stats: WeaponStatsValue): WeaponStatsType[] {
+    return Object.keys(stats).filter(it => stats.hasOwnProperty(it)) as WeaponStatsType[];
+  }
+
+  getAll(): Observable<Weapon[]> {
+    return this.weapons.pipe(
+      map(weapons => [...weapons.values()]),
+      tap(weapons => this.logger.info('sent weapons', weapons)),
+    );
+  }
+
+  view(weapons: Weapon[]): Weapon[] {
+    return weapons.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
+  }
+
+  viewInfos(weapons: WeaponInfo[]): WeaponInfo[] {
+    return weapons.filter(c => this.filterInfo(c)).sort((a, b) => this.infoSort(a, b) || b.id - a.id);
+  }
+
+  update(weapon: Weapon): void {
+    this.progressor.update(weapon);
+    this.planner.update(weapon);
+    this.logger.info('updated weapon', weapon);
+  }
+
+  remove(weapon: Weapon): void {
+    this.progressor.remove(weapon);
+    this.planner.remove(weapon);
+    this.logger.info('removed weapon', weapon);
+  }
+
+  removeAll(weapons: Weapon[]): void {
+    this.progressor.removeAll(weapons);
+    this.planner.removeAll(weapons);
+    this.logger.info('removed weapons', weapons);
+  }
+
+  specificRequirement(weapon: Weapon): Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] {
+    return this.planner.specificRequirements(weapon);
+  }
+
+  private syncWeapons(infos: Map<number, WeaponInfo>, inProgress: Map<number, WeaponProgress>, plans: Map<number, WeaponPlan>): void {
+    const weapons = new Map<number, Weapon>();
+    for (const [id, progress] of inProgress) {
+      const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
+      if (info && plan) {
+        weapons.set(id, {info, progress, plan});
+      }
+    }
+    this.logger.info('updated weapons', weapons);
+    this.weapons$.next(weapons);
+  }
+
+  private syncTotalRequirements(): void {
+    this.weapons
+      .pipe(switchMap(weapons => this.planner.totalRequirements([...weapons.values()])))
+      .subscribe(requirements => this.materials.updateRequirement(ItemType.WEAPON, requirements));
+  }
+
+  private filterInfo({rarity, type}: WeaponInfo): boolean {
+    return this.rarityFilter.includes(rarity) && this.typeFilter.includes(type);
   }
 }

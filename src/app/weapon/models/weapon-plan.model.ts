@@ -1,11 +1,13 @@
 import {Ascension} from '../../game-common/models/ascension.type';
 
+/**
+ * Represents the levelup goal of a weapon.
+ */
 export interface WeaponPlan {
 
-  /**
-   * Key of party weapon.
-   */
   id: number;
+
+  weaponId: number;
 
   ascension: Ascension;
 

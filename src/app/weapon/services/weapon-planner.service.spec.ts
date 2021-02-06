@@ -2,9 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {WeaponPlanner} from './weapon-planner.service';
 import {WeaponModule} from '../weapon.module';
-import {HttpClientModule} from '@angular/common/http';
-import {AppIndexedDbModule} from '../../app-indexed-db.module';
-import {AppTranslateModule} from '../../app-translate.module';
+import {AppTestingModule} from '../../app-testing.module';
 
 describe('WeaponPlanner', () => {
   let service: WeaponPlanner;
@@ -13,9 +11,7 @@ describe('WeaponPlanner', () => {
     TestBed.configureTestingModule({
       imports: [
         WeaponModule,
-        HttpClientModule,
-        AppTranslateModule,
-        AppIndexedDbModule
+        AppTestingModule,
       ]
     });
     service = TestBed.inject(WeaponPlanner);

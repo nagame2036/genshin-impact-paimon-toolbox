@@ -2,9 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AddCharacterComponent} from './add-character.component';
 import {CharacterModule} from '../../character.module';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('AddCharacterComponent', () => {
   let component: AddCharacterComponent;
@@ -17,9 +15,7 @@ describe('AddCharacterComponent', () => {
       ],
       imports: [
         CharacterModule,
-        BrowserAnimationsModule,
-        AppTranslateModule,
-        AppIndexedDbModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

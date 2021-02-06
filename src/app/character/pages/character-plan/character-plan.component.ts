@@ -1,17 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {PartyCharacter} from '../../models/party-character.model';
-import {CharacterPlan} from '../../models/character-plan.model';
+import {Character} from '../../models/character.model';
 import {CharacterService} from '../../services/character.service';
-import {CharacterPlanner} from '../../services/character-planner.service';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {first, switchMap, takeUntil} from 'rxjs/operators';
-import {ItemList} from '../../../inventory/models/item-list.model';
+import {first, switchMap, tap} from 'rxjs/operators';
+import {MaterialList} from '../../../material/models/material-list.model';
 import {Observable} from 'rxjs';
-import {MaterialType} from '../../../inventory/models/material-type.enum';
-import {CharacterRequirementService} from '../../services/character-requirement.service';
-import {ExecutePlanConfirmDialogComponent} from '../../../game-common/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
+import {MaterialType} from '../../../material/models/material-type.enum';
+import {MaterialService} from '../../../material/services/material.service';
+import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
 
 @Component({
@@ -19,9 +16,9 @@ import {NGXLogger} from 'ngx-logger';
   templateUrl: './character-plan.component.html',
   styleUrls: ['./character-plan.component.scss']
 })
-export class CharacterPlanComponent extends AbstractObservableComponent implements OnInit {
+export class CharacterPlanComponent implements OnInit {
 
-  i18n = new I18n('game-common');
+  readonly i18n = new I18n('game-common');
 
   readonly types = [
     [MaterialType.CURRENCY, MaterialType.LOCAL_SPECIALTY, MaterialType.CHARACTER_EXP],
@@ -41,93 +38,86 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
     'enemy',
   ];
 
-  party!: PartyCharacter;
+  character!: Character;
 
-  plan!: CharacterPlan;
-
-  requirements!: { text: string, value: Observable<ItemList>, satisfied: Observable<boolean> }[];
+  requirements: Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] = [];
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
-  constructor(private characters: CharacterService, private planner: CharacterPlanner, private requirement: CharacterRequirementService,
+  constructor(private service: CharacterService, private materials: MaterialService,
               private route: ActivatedRoute, private logger: NGXLogger) {
-    super();
   }
 
   ngOnInit(): void {
     this.logger.info('init');
     this.route.parent?.params
       .pipe(
+        switchMap(params => this.service.get(Number(params.id))),
         first(),
-        switchMap(params => {
-          const id = Number(params.id);
-          return this.characters.getPartyCharacter(id).pipe(switchMap(character => {
-            this.logger.info('received character', character);
-            this.party = character;
-            return this.planner.getPlan(id).pipe(switchMap(plan => {
-              this.logger.info('received character plan', plan);
-              this.plan = plan;
-              return this.requirement.getRequirements(id);
-            }));
-          }));
-        }),
-        takeUntil(this.destroy$)
       )
-      .subscribe(requirements => {
-        this.logger.info('received character requirements', requirements);
-        return this.requirements = requirements;
+      .subscribe(character => {
+        this.logger.info('received character', character);
+        this.character = character;
+        this.requirements = this.service.specificRequirement(character);
       });
   }
 
-  saveParty(): void {
-    this.characters.updatePartyMember(this.party);
-    this.logger.info('character saved', this.party);
+  save(): void {
+    this.service.update(this.character);
+    this.logger.info('character saved', this.character);
   }
 
-  savePlan(): void {
-    this.planner.updatePlan(this.plan);
-    this.logger.info('plan saved', this.plan);
+  executePlan(planIndex: number): void {
+    this.logger.info('clicked to execute plan', planIndex);
+    this.requirements[planIndex].pipe(
+      first(),
+      switchMap(plan => {
+        const {text: title, value: cost} = plan;
+        const data = {title, cost, item: this.i18n.dict(`characters.${this.character.info.id}`)};
+        return this.executePlanConfirm.open(data).afterConfirm().pipe(tap(_ => {
+          this.materials.consumeRequire(cost);
+          this.executePlanByIndex(planIndex);
+          this.save();
+        }));
+      })
+    ).subscribe();
   }
 
-  executePlanAndSave(planIndex: number): void {
-    const plan = this.requirements[planIndex];
-    const data = {title: plan.text, cost: plan.value, item: this.i18n.dict(`characters.${this.party.id}`)};
-    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
-      this.requirement.consumeMaterial(plan.value);
-      switch (planIndex) {
-        case 0:
-          this.executeAll();
-          this.logger.info('executed all plan');
-          break;
-        case 1:
-          this.executeLevelup();
-          this.logger.info('executed levelup plan');
-          break;
-        default:
-          const talentIndex = planIndex - 2;
-          this.executeTalentLevelup(talentIndex);
-          this.logger.info(`executed talent ${talentIndex} plan`);
-          break;
-      }
-      this.saveParty();
-    });
+  private executePlanByIndex(planIndex: number): void {
+    switch (planIndex) {
+      case 0:
+        this.executeAll();
+        this.logger.info('executed all plan');
+        break;
+      case 1:
+        this.executeLevelup();
+        this.logger.info('executed levelup plan');
+        break;
+      default:
+        const talentIndex = planIndex - 2;
+        this.executeTalentLevelup(talentIndex);
+        this.logger.info(`executed talent ${talentIndex} plan`);
+        break;
+    }
   }
 
   private executeAll(): void {
     this.executeLevelup();
-    const talentsLength = this.party.talents.length;
+    const talentsLength = this.character.info.talentsUpgradable.length;
     for (let i = 0; i < talentsLength; i++) {
       this.executeTalentLevelup(i);
     }
   }
 
   private executeLevelup(): void {
-    this.party.ascension = this.plan.ascension;
-    this.party.level = this.plan.level;
+    const {progress, plan} = this.character;
+    progress.ascension = plan.ascension;
+    progress.level = plan.level;
   }
 
   private executeTalentLevelup(index: number): void {
-    this.party.talents[index].level = this.plan.talents[index].level;
+    const talentId = this.character.info.talentsUpgradable[index];
+    this.character.progress.talents[talentId] = this.character.plan.talents[talentId];
   }
 }

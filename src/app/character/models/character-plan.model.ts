@@ -1,16 +1,16 @@
 import {Ascension} from '../../game-common/models/ascension.type';
-import {TalentLevelData} from './talent-level-data.model';
+import {TalentProgress} from './talent-progress.model';
 
+/**
+ * Represents the levelup goal of a character.
+ */
 export interface CharacterPlan {
 
-  /**
-   * Id of party character.
-   */
   id: number;
 
   ascension: Ascension;
 
   level: number;
 
-  talents: TalentLevelData[];
+  talents: TalentProgress;
 }

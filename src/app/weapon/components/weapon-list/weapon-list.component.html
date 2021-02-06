@@ -1,31 +1,106 @@
 <div class="options">
-  <app-select class="option" [options]="sorts" [value]="sort" (changed)="changeSort($event)">
+  <app-select class="option" [options]="service.sorts" [value]="service.sort" (changed)="changeSort($event)">
     <span form-label>
       {{ i18n.dict('sort') | translate }}
     </span>
   </app-select>
-  <app-multi-select class="option" [options]="rarities" [values]="rarityFilter" (changed)="filterRarity($event)">
+  <app-multi-select class="option" [options]="service.rarities" [values]="service.rarityFilter"
+                    (changed)="filterRarity($event)">
     <span form-label>
       {{ i18n.dict('rarity') | translate }}
     </span>
   </app-multi-select>
-  <app-multi-select class="option" [options]="types" [values]="typeFilter" (changed)="filterType($event)">
+  <app-multi-select class="option" [options]="service.types" [values]="service.typeFilter"
+                    (changed)="filterType($event)">
     <span form-label>
-      {{ i18n.dict('type') | translate }}
+      {{ i18n.dict('weapon') | translate }}
     </span>
   </app-multi-select>
-  <div>
+  <div class="actions">
+    <app-ring-button class="add-btn" (click)="add.emit($event)">
+      {{ i18n.module('add') | translate }}
+    </app-ring-button>
     <ng-content select="[actions]"></ng-content>
   </div>
 </div>
-<div class="list" [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, ' + itemWidth + 'px)'}">
-  <div *ngFor="let item of items" class="overview" [class.selected]="selectedItems.includes(item)"
+<div class="list">
+  <div *ngFor="let item of items; trackBy: trackItem" class="overview" [class.selected]="selectedItems.includes(item)"
        (click)="select(item)">
-    <app-item-view category="weapons" [id]="item.id" [rarity]="item.rarity"></app-item-view>
-    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
-         [alt]="i18n.dict('weapon-types.' + item.type) | translate">
-    <ng-container *ngIf="party && rightTemplateRef"
-                  [ngTemplateOutlet]="rightTemplateRef" [ngTemplateOutletContext]="{$implicit: item}">
-    </ng-container>
+    <app-item-view category="weapons" [id]="item.info.id" [rarity]="item.info.rarity"></app-item-view>
+    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.info.type)"
+         [alt]="i18n.dict('weapon-types.' + item.info.type) | translate">
+    <div class="item-overview">
+      <div>
+        <b>{{ i18n.dict('refine-rank') | translate }}</b>
+      </div>
+      <div class="col-span-3">
+        {{ item.progress.refine }}
+      </div>
+      <div class="item-overview-odd">
+        <b>{{ i18n.dict('ascension') | translate }}</b>
+      </div>
+      <div class="item-overview-odd" [class.col-span-3]="item.progress.ascension >= item.plan.ascension">
+        ★{{ item.progress.ascension }}
+      </div>
+      <ng-container *ngIf="item.progress.ascension < item.plan.ascension">
+        <div class="item-overview-odd">
+          →
+        </div>
+        <div class="item-overview-odd">
+          ★{{ item.plan.ascension }}
+        </div>
+      </ng-container>
+      <div>
+        <b>{{ i18n.dict('level') | translate }}</b>
+      </div>
+      <div [class.col-span-3]="item.progress.level >= item.plan.level">
+        {{ item.progress.level }}
+      </div>
+      <ng-container *ngIf="item.progress.level < item.plan.level">
+        <div>
+          →
+        </div>
+        <div>
+          {{ item.plan.level }}
+        </div>
+      </ng-container>
+      <ng-container *ngIf="itemsStats.get(item.progress.id) as stats">
+        <ng-container *ngFor="let type of service.getStatsTypes(stats[0]); let i = index">
+          <ng-container *ngIf="stats[0][type] as statsValue">
+            <ng-container *ngIf="stats[1][type] as goalStatsValue">
+              <div [class.item-overview-odd]="i % 2 == 0">
+                <b>{{ i18n.dict('attributes.' + type) | translate }}</b>
+              </div>
+              <ng-container *ngIf="type.endsWith('%') else numeric">
+                <div [class.item-overview-odd]="i % 2 == 0" [class.col-span-3]="statsValue >= goalStatsValue">
+                  {{ statsValue | percent: '1.0-1' }}
+                </div>
+                <ng-container *ngIf="statsValue < goalStatsValue">
+                  <div [class.item-overview-odd]="i % 2 == 0">
+                    →
+                  </div>
+                  <div [class.item-overview-odd]="i % 2 == 0">
+                    {{ goalStatsValue | percent: '1.0-1' }}
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-template #numeric>
+                <div [class.item-overview-odd]="i % 2 == 0" [class.col-span-3]="statsValue >= goalStatsValue">
+                  {{ statsValue | number: '1.0-0' }}
+                </div>
+                <ng-container *ngIf="statsValue < goalStatsValue">
+                  <div [class.item-overview-odd]="i % 2 == 0">
+                    →
+                  </div>
+                  <div [class.item-overview-odd]="i % 2 == 0">
+                    {{ goalStatsValue | number: '1.0-0' }}
+                  </div>
+                </ng-container>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
   </div>
 </div>

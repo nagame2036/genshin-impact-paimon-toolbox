@@ -6,19 +6,12 @@ const config: DBConfig = {
   version: 1,
   objectStoresMeta: [
     {
-      store: 'party-characters',
+      store: 'materials',
       storeConfig: {keyPath: 'id', autoIncrement: false},
       storeSchema: []
     },
     {
-      store: 'party-weapons',
-      storeConfig: {keyPath: 'key', autoIncrement: true},
-      storeSchema: [
-        {name: 'id', keypath: 'id', options: {unique: false}}
-      ]
-    },
-    {
-      store: 'materials',
+      store: 'character-progresses',
       storeConfig: {keyPath: 'id', autoIncrement: false},
       storeSchema: []
     },
@@ -28,10 +21,15 @@ const config: DBConfig = {
       storeSchema: []
     },
     {
+      store: 'weapon-progresses',
+      storeConfig: {keyPath: 'id', autoIncrement: false},
+      storeSchema: []
+    },
+    {
       store: 'weapon-plans',
       storeConfig: {keyPath: 'id', autoIncrement: false},
       storeSchema: []
-    }
+    },
   ]
 };
 

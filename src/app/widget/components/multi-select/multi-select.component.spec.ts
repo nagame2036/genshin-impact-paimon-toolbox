@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultiSelectComponent} from './multi-select.component';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 import {WidgetModule} from '../../widget.module';
 
 describe('MultiSelectComponent', () => {
@@ -15,7 +15,7 @@ describe('MultiSelectComponent', () => {
       ],
       imports: [
         WidgetModule,
-        AppTranslateModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

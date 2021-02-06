@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {NavBarLink} from '../../../widget/components/nav-tabs/nav-tabs.component';
+import {CharacterService} from '../../../character/services/character.service';
+import {WeaponService} from '../../../weapon/services/weapon.service';
 
 @Component({
   selector: 'app-inventory-page',
@@ -19,7 +21,10 @@ export class InventoryPageComponent implements OnInit {
     {path: 'ingredients', text: this.i18n.dict('ingredients')},
   ];
 
-  constructor() {
+  constructor(characters: CharacterService, weapons: WeaponService) {
+    // sync items material requirements
+    characters.sync();
+    weapons.sync();
   }
 
   ngOnInit(): void {

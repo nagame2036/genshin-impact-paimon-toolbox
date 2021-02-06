@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultiSelectAndSelectAllComponent} from './multi-select-and-select-all.component';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 import {GameCommonModule} from '../../game-common.module';
 
 describe('MultiSelectAndSelectAllComponent', () => {
@@ -15,7 +15,7 @@ describe('MultiSelectAndSelectAllComponent', () => {
       ],
       imports: [
         GameCommonModule,
-        AppTranslateModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

@@ -2,10 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponPageComponent} from './weapon-page.component';
 import {WeaponModule} from '../../weapon.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterTestingModule} from '@angular/router/testing';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('WeaponPageComponent', () => {
   let component: WeaponPageComponent;
@@ -18,10 +15,7 @@ describe('WeaponPageComponent', () => {
       ],
       imports: [
         WeaponModule,
-        BrowserAnimationsModule,
-        AppIndexedDbModule,
-        AppTranslateModule,
-        RouterTestingModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

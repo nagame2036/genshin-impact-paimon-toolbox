@@ -2,9 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponMaterialInventoryComponent} from './weapon-material-inventory.component';
 import {InventoryModule} from '../../inventory.module';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('WeaponMaterialInventoryComponent', () => {
   let component: WeaponMaterialInventoryComponent;
@@ -17,9 +15,7 @@ describe('WeaponMaterialInventoryComponent', () => {
       ],
       imports: [
         InventoryModule,
-        BrowserAnimationsModule,
-        AppTranslateModule,
-        AppIndexedDbModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CurrentGoalComparatorComponent} from './current-goal-comparator.component';
 import {GameCommonModule} from '../../game-common.module';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('CurrentGoalComparatorComponent', () => {
   let component: CurrentGoalComparatorComponent;
@@ -14,6 +15,7 @@ describe('CurrentGoalComparatorComponent', () => {
       ],
       imports: [
         GameCommonModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

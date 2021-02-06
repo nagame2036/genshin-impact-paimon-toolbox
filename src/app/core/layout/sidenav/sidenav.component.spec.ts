@@ -2,8 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SidenavComponent} from './sidenav.component';
 import {CoreModule} from '../../core.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -16,8 +15,7 @@ describe('SidenavComponent', () => {
       ],
       imports: [
         CoreModule,
-        BrowserAnimationsModule,
-        AppTranslateModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

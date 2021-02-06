@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomePageComponent} from './home-page.component';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 import {HomeModule} from '../../home.module';
 
 describe('HomePageComponent', () => {
@@ -15,7 +15,7 @@ describe('HomePageComponent', () => {
       ],
       imports: [
         HomeModule,
-        AppTranslateModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

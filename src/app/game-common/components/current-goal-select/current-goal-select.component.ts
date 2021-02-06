@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
 import {SelectOption} from '../../../widget/models/select-option.model';
 
 @Component({
@@ -22,7 +21,7 @@ export class CurrentGoalSelectComponent implements OnInit {
   goal!: any;
 
   @Input()
-  satisfied!: Observable<boolean>;
+  satisfied!: boolean;
 
   @Output()
   currentChange = new EventEmitter<number>();

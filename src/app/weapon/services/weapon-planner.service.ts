@@ -1,94 +1,102 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {first, map, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import {ItemList} from '../../inventory/models/item-list.model';
-import {WeaponService} from './weapon.service';
+import {MaterialList} from '../../material/models/material-list.model';
 import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
-import {PartyWeapon} from '../models/party-weapon.model';
-import {activePlans} from '../../game-common/utils/party-plans';
-import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
-import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+import {Weapon} from '../models/weapon.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
-
-type ActivePlan = { plan: WeaponPlan, party: PartyWeapon };
+import {MaterialService} from '../../material/services/material.service';
+import {WeaponInfo} from '../models/weapon-info.model';
+import {MaterialRequireList} from '../../material/models/material-require-list.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeaponPlanner {
 
-  i18n = new I18n('game-common');
+  private readonly i18n = new I18n('game-common');
 
-  private storeName = 'weapon-plans';
+  private readonly store = 'weapon-plans';
 
-  #plans = new ReplaySubject<WeaponPlan[]>(1);
+  private readonly plans$ = new ReplaySubject<Map<number, WeaponPlan>>(1);
 
-  plans = this.#plans.asObservable();
+  readonly plans = this.plans$.asObservable();
 
-  activePlans = new ReplaySubject<ActivePlan[]>(1);
-
-  private readonly type = ItemType.WEAPON;
-
-  constructor(private database: NgxIndexedDBService, private weapons: WeaponService, private weaponLevelup: WeaponLevelupCostService,
-              private marker: MaterialRequireMarker, private logger: NGXLogger) {
-    this.database.getAll(this.storeName).subscribe(plans => {
-      this.logger.info('loaded weapon plans', plans);
-      this.#plans.next(plans);
-    });
-    combineLatest([this.plans, this.weapons.partyMap]).subscribe(([plans, party]) => {
-      this.marker.clear(this.type);
-      const active = activePlans(plans, party);
-      this.logger.info('updated active plans', active);
-      this.activePlans.next(active);
+  constructor(private weaponLevelup: WeaponLevelupCostService, private materials: MaterialService,
+              private database: NgxIndexedDBService, private logger: NGXLogger) {
+    this.database.getAll(this.store).subscribe(persisted => {
+      this.logger.info('fetched character plans', persisted);
+      const plans = new Map<number, WeaponPlan>();
+      persisted.forEach(p => plans.set(p.id, p));
+      this.plans$.next(plans);
     });
   }
 
-  getPlan(id: number): Observable<WeaponPlan> {
-    return this.getActivePlan(id).pipe(
-      first(),
-      map(it => it.plan),
-      tap(plan => this.logger.info('sent weapon plan', plan)),
+  create(info: WeaponInfo, id: number): WeaponPlan {
+    return {id, weaponId: info.id, ascension: 0, level: 1};
+  }
+
+  get(id: number): Observable<WeaponPlan> {
+    return this.plans.pipe(
+      switchMap(plans => {
+        const plan = plans.get(id);
+        return plan ? of(plan) : EMPTY;
+      }),
+      throwIfEmpty()
     );
   }
 
-  updatePlan(plan: WeaponPlan): void {
-    zip(this.plans, this.database.update(this.storeName, plan)).subscribe(([plans, _]) => {
+  update({plan}: Weapon): void {
+    const update = this.database.update(this.store, plan);
+    zip(update, this.plans).subscribe(([, plans]) => {
       this.logger.info('updated weapon plan', plan);
-      const newPlans = plans.filter(it => it.id !== plan.id);
-      newPlans.push(plan);
-      this.#plans.next(newPlans);
+      plans.set(plan.id, plan);
+      this.plans$.next(plans);
     });
   }
 
-  allPlansCost(): Observable<ItemList> {
-    return this.activePlans.pipe(
-      switchMap(it => iif(
-        () => it.length === 0,
-        of(new ItemList()),
-        this.weaponLevelup.totalCost(it)
-      )),
-      tap(cost => this.logger.info('sent total cost of weapon plans', cost)),
+  remove({plan}: Weapon): void {
+    const id = plan.id;
+    const remove = this.database.delete(this.store, id);
+    zip(remove, this.plans).subscribe(([, plans]) => {
+      this.logger.info('removed weapon plan', plan);
+      plans.delete(id);
+      this.plans$.next(plans);
+    });
+  }
+
+  removeAll(weapons: Weapon[]): void {
+    const remove = weapons.map(it => this.database.delete(this.store, it.plan.id));
+    zip(forkJoin(remove), this.plans).subscribe(([, plans]) => {
+      this.logger.info('removed weapon plans', weapons);
+      weapons.forEach(it => plans.delete(it.plan.id));
+      this.plans$.next(plans);
+    });
+  }
+
+  totalRequirements(weapons: Weapon[]): Observable<MaterialRequireList> {
+    const subRequirements = [
+      this.weaponLevelup.totalRequirements(weapons),
+    ];
+    return combineLatest(subRequirements).pipe(
+      map(requirements => new MaterialRequireList(requirements)),
+      tap(requirements => this.logger.info('sent total material requirements of all weapon plans', requirements))
     );
   }
 
-  specificPlanCost(id: number): Observable<{ text: string, value: Observable<ItemList> }[]> {
-    return this.getActivePlan(id).pipe(map(({party, plan}) => {
-      this.logger.info('sent the cost of weapon plan', id);
-      const levelup = this.weaponLevelup.cost(party, new AscensionLevel(plan.ascension, plan.level), false);
-      return [
-        {text: this.i18n.module('total-requirement'), value: levelup},
-      ];
-    }));
-  }
-
-  private getActivePlan(id: number): Observable<ActivePlan> {
-    return this.activePlans.pipe(switchMap(plans => {
-      const index = plans.findIndex(it => it.plan.id === id);
-      return iif(() => index !== -1, defer(() => of(plans[index])));
-    }));
+  specificRequirements(weapon: Weapon): Observable<{ text: string, value: MaterialList, satisfied: boolean }>[] {
+    const levelupTexts = [this.weaponLevelup.levelupLabel, this.weaponLevelup.ascensionLabel];
+    const texts = [
+      [
+        this.i18n.module('total-requirement'),
+        ...levelupTexts
+      ],
+    ];
+    this.logger.info('sent specific material requirements of weapon', weapon, texts);
+    return texts.map(it => this.materials.getRequirements(ItemType.WEAPON, weapon.plan.id, it));
   }
 }

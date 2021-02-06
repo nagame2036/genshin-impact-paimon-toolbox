@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SelectComponent} from './select.component';
 import {WidgetModule} from '../../widget.module';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('SelectComponent', () => {
   let component: SelectComponent;
@@ -15,7 +15,7 @@ describe('SelectComponent', () => {
       ],
       imports: [
         WidgetModule,
-        AppTranslateModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

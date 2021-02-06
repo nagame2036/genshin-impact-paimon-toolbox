@@ -3,7 +3,6 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../models/ascension.type';
 import {AscensionLevel} from '../../models/ascension-level.model';
-import {Observable} from 'rxjs';
 import {SelectOption} from '../../../widget/models/select-option.model';
 
 @Component({
@@ -39,7 +38,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   goalLevel!: number;
 
   @Input()
-  satisfied!: Observable<boolean>;
+  satisfied!: boolean;
 
   @Output()
   currentChange = new EventEmitter<AscensionLevel>();

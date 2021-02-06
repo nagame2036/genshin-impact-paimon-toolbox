@@ -2,8 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ResinPageComponent} from './resin-page.component';
 import {ResinModule} from '../../resin.module';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('ResinPageComponent', () => {
   let component: ResinPageComponent;
@@ -16,8 +15,7 @@ describe('ResinPageComponent', () => {
       ],
       imports: [
         ResinModule,
-        AppTranslateModule,
-        BrowserAnimationsModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

@@ -6,7 +6,6 @@ import {MultiSelectAndSelectAllComponent} from './components/multi-select-and-se
 import {CurrentGoalSelectComponent} from './components/current-goal-select/current-goal-select.component';
 import {CurrentGoalLevelSelectComponent} from './components/current-goal-level-select/current-goal-level-select.component';
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
-import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {CurrentGoalComparatorComponent} from './components/current-goal-comparator/current-goal-comparator.component';
 
 @NgModule({
@@ -16,7 +15,6 @@ import {CurrentGoalComparatorComponent} from './components/current-goal-comparat
     CurrentGoalSelectComponent,
     CurrentGoalLevelSelectComponent,
     RemoveConfirmDialogComponent,
-    ExecutePlanConfirmDialogComponent,
     CurrentGoalComparatorComponent,
   ],
   imports: [
@@ -28,7 +26,6 @@ import {CurrentGoalComparatorComponent} from './components/current-goal-comparat
     CurrentGoalSelectComponent,
     CurrentGoalLevelSelectComponent,
     RemoveConfirmDialogComponent,
-    ExecutePlanConfirmDialogComponent,
     CurrentGoalComparatorComponent,
   ]
 })

@@ -1,10 +1,10 @@
 <div class="inventory-header">
-  <app-multi-select [values]="rarityFilter" [options]="inventory.rarities" (changed)="changeRarityFilter($event)">
+  <app-multi-select [values]="rarityFilter" [options]="materials.rarityOptions" (changed)="changeRarityFilter($event)">
     <span form-label>
       {{ i18n.dict('rarity') | translate }}
     </span>
   </app-multi-select>
   <app-checkbox [label]="i18n.module('show-overflow') | translate"
-                [value]="(inventory.isShowOverflow() | async) || true" (checked)="inventory.setShowOverflow($event)">
+                [value]="(materials.showOverflow | async) || true" (checked)="materials.showOverflow.next($event)">
   </app-checkbox>
 </div>

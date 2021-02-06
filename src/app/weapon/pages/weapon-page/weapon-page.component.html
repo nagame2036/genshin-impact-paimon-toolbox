@@ -1,13 +1,15 @@
-<app-party-weapon-list #list (add)="goToAdd()" [selectedItems]="selectedItems"
-                       (selected)="goToDetail($event)" (multiSelected)="updateSelected($event)">
-  <div actions>
-    <app-multi-select-and-select-all [multiSelect]="multiSelect" [selectAll]="selectAll"
-                                     (changed)="onMultiSelectChange($event)">
-    </app-multi-select-and-select-all>
-    <app-ring-button *ngIf="selectedItems.length > 0" class="remove-btn" (click)="removeConfirm.open()">
-      {{ i18n.module('remove') | translate }}
-    </app-ring-button>
-  </div>
-</app-party-weapon-list>
+<ng-container *ngIf="weapons$ | async as weapons">
+  <app-weapon-list #list [weapons]="weapons" [selectedItems]="selectedItems"
+                   (add)="goToAdd()" (selected)="goToDetail($event)" (multiSelected)="updateSelected($event)">
+    <div actions>
+      <app-multi-select-and-select-all [multiSelect]="multiSelect" [selectAll]="selectAll"
+                                       (changed)="onMultiSelectChange($event)">
+      </app-multi-select-and-select-all>
+      <app-ring-button *ngIf="selectedItems.length > 0" class="remove-btn" (click)="removeConfirm.open()">
+        {{ i18n.module('remove') | translate }}
+      </app-ring-button>
+    </div>
+  </app-weapon-list>
+</ng-container>
 <app-remove-confirm-dialog category="weapons" [items]="selectedItems" (confirm)="remove()" #removeConfirm>
 </app-remove-confirm-dialog>

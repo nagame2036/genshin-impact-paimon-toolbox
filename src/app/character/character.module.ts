@@ -3,10 +3,10 @@ import {NgModule} from '@angular/core';
 import {WidgetModule} from '../widget/widget.module';
 import {GameCommonModule} from '../game-common/game-common.module';
 import {CharacterRoutingModule} from './character-routing.module';
-import {InventoryModule} from '../inventory/inventory.module';
+import {MaterialModule} from '../material/material.module';
 import {AddCharacterComponent} from './pages/add-character/add-character.component';
 import {CharacterListComponent} from './components/character-list/character-list.component';
-import {PartyCharacterListComponent} from './components/party-character-list/party-character-list.component';
+import {CharacterInfoListComponent} from './components/character-info-list/character-info-list.component';
 import {CharacterPageComponent} from './pages/character-page/character-page.component';
 import {CharacterDetailComponent} from './pages/character-detail/character-detail.component';
 import {CharacterPlanComponent} from './pages/character-plan/character-plan.component';
@@ -16,7 +16,7 @@ import {CharacterPlanFormComponent} from './components/character-plan-form/chara
   declarations: [
     AddCharacterComponent,
     CharacterListComponent,
-    PartyCharacterListComponent,
+    CharacterInfoListComponent,
     CharacterPageComponent,
     CharacterDetailComponent,
     CharacterPlanComponent,
@@ -25,12 +25,10 @@ import {CharacterPlanFormComponent} from './components/character-plan-form/chara
   imports: [
     WidgetModule,
     GameCommonModule,
+    MaterialModule,
     CharacterRoutingModule,
-    InventoryModule,
   ],
   exports: [
-    CharacterListComponent,
-    PartyCharacterListComponent,
   ]
 })
 export class CharacterModule {

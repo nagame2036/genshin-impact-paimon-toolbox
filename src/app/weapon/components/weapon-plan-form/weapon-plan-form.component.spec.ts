@@ -2,11 +2,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponPlanFormComponent} from './weapon-plan-form.component';
 import {WeaponModule} from '../../weapon.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
 import {WeaponType} from '../../models/weapon-type.enum';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('WeaponPlanFormComponent', () => {
   let component: WeaponPlanFormComponent;
@@ -19,10 +16,7 @@ describe('WeaponPlanFormComponent', () => {
       ],
       imports: [
         WeaponModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppTranslateModule,
-        AppIndexedDbModule
+        AppTestingModule,
       ]
     })
       .compileComponents();
@@ -32,28 +26,34 @@ describe('WeaponPlanFormComponent', () => {
     fixture = TestBed.createComponent(WeaponPlanFormComponent);
     component = fixture.componentInstance;
     component.weapon = {
-      id: 1,
-      type: WeaponType.SWORD,
-      rarity: 4,
-      atk: 23,
-      atkBase: 23,
-      atkCurve: 101,
-      subStat: 0.5,
-      subStatBase: 0.5,
-      subStatType: 'HP%',
-      subStatCurve: 101,
-      mob: 1,
-      domain: 1,
-      elite: 1,
-      refine: 1,
-      ascension: 0,
-      level: 1
+      info: {
+        id: 1,
+        rarity: 3,
+        type: WeaponType.SWORD,
+        materials: {
+          domain: 404,
+          elite: 905,
+          mob: 805,
+        },
+        stats: {}
+      },
+      progress: {
+        id: 10000,
+        weaponId: 1,
+        refine: 1,
+        ascension: 0,
+        level: 1,
+      },
+      plan: {
+        id: 10000,
+        weaponId: 1,
+        ascension: 2,
+        level: 50,
+      },
     };
-    component.plan = {
-      id: 1,
-      ascension: 0,
-      level: 1
-    };
+    component.info = component.weapon.info;
+    component.progress = component.weapon.progress;
+    component.plan = component.weapon.plan;
     fixture.detectChanges();
   });
 

@@ -1,41 +1,30 @@
-import {Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Weapon} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
-import {WeaponType, weaponTypeList} from '../../models/weapon-type.enum';
-import {toggleItem} from '../../../shared/utils/collections';
-import {WeaponField} from '../../models/weapon-fields.type';
-import {PartyWeapon} from '../../models/party-weapon.model';
-import {ImageService} from '../../../image/services/image.service';
-import {SelectOption} from '../../../widget/models/select-option.model';
+import {WeaponService} from '../../services/weapon.service';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {NGXLogger} from 'ngx-logger';
-
-const weaponRarities = [5, 4, 3];
+import {WeaponType} from '../../models/weapon-type.enum';
+import {ImageService} from '../../../image/services/image.service';
+import {toggleListItem} from '../../../shared/utils/collections';
+import {WeaponStatsValue} from '../../models/weapon-stats.model';
+import {Rarity} from '../../../game-common/models/rarity.type';
 
 @Component({
   selector: 'app-weapon-list',
   templateUrl: './weapon-list.component.html',
   styleUrls: ['./weapon-list.component.scss']
 })
-export class WeaponListComponent implements OnChanges {
+export class WeaponListComponent extends AbstractObservableComponent implements OnChanges {
 
   i18n = new I18n('weapons');
-
-  @Input()
-  party = false;
-
-  @Input()
-  itemWidth = 102;
 
   @Input()
   weapons: Weapon[] = [];
 
   items!: Weapon[];
 
-  @ContentChild('right', {static: false})
-  rightTemplateRef!: TemplateRef<any>;
-
-  @Input()
-  multiSelect = false;
+  itemsStats = new Map<number, [WeaponStatsValue, WeaponStatsValue]>();
 
   @Input()
   selectedItems: Weapon[] = [];
@@ -43,26 +32,16 @@ export class WeaponListComponent implements OnChanges {
   @Output()
   selected = new EventEmitter<Weapon>();
 
+  multiSelect = false;
+
   @Output()
   multiSelected = new EventEmitter<Weapon[]>();
 
-  @Input()
-  sortFields: WeaponField[] = ['rarity'];
+  @Output()
+  add = new EventEmitter();
 
-  sorts: SelectOption[] = this.sortFields.map(it => ({value: it, text: this.i18n.dict(it)}));
-
-  @Input()
-  sort: WeaponField = 'rarity';
-
-  rarities = weaponRarities.map(it => ({value: it, text: `★${it}`}));
-
-  rarityFilter = weaponRarities;
-
-  types = weaponTypeList.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
-
-  typeFilter = weaponTypeList;
-
-  constructor(public images: ImageService, private logger: NGXLogger) {
+  constructor(public service: WeaponService, public images: ImageService, private logger: NGXLogger) {
+    super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,59 +49,52 @@ export class WeaponListComponent implements OnChanges {
       this.logger.info('received weapons', this.weapons);
       this.update();
     }
-    if (changes.hasOwnProperty('sortFields')) {
-      this.sorts = changes.sortFields.currentValue.map((it: string) => ({value: it, text: this.i18n.dict(it)}));
-      this.logger.info('updated sorts', this.sorts);
-    }
   }
 
   update(): void {
-    if (!this.multiSelect) {
-      this.selectedItems = [];
-      this.multiSelected.emit([]);
-    }
-    this.items = this.weapons.map(it => it as PartyWeapon)
-      .filter(it => this.rarityFilter.includes(it.rarity) && this.typeFilter.includes(it.type))
-      .sort((a, b) => b[this.sort] - a[this.sort] || a.type - b.type || b.id - a.id);
+    this.items = this.service.view(this.weapons);
+    this.items.forEach(item => {
+      this.service.getStats(item).subscribe(stats => this.itemsStats.set(item.progress.id, stats));
+    });
     this.logger.info('updated items', this.items);
   }
 
-  changeSort(sort: WeaponField): void {
-    this.sort = sort;
-    this.logger.info('updated sort', sort);
+  changeSort(sort: (a: Weapon, b: Weapon) => number): void {
+    this.service.sort = sort;
+    this.logger.info('updated sort', this.service.sorts.find(it => it.value === sort)?.text);
     this.update();
   }
 
-  filterRarity(value: number[]): void {
-    this.rarityFilter = value;
+  filterRarity(value: Rarity[]): void {
+    this.service.rarityFilter = value;
     this.logger.info('updated rarityFilter', value);
     this.update();
   }
 
   filterType(value: WeaponType[]): void {
-    this.typeFilter = value;
+    this.service.typeFilter = value;
     this.logger.info('updated typeFilter', value);
     this.update();
   }
 
-  select(item: Weapon): void {
-    this.multiSelect ? this.onMultiSelect(item) : this.selected.emit(item);
-  }
-
-  onMultiSelect(item: Weapon): void {
-    if (this.party) {
-      const partyKey = (item as PartyWeapon).key ?? -1;
-      this.selectedItems = toggleItem(this.selectedItems, item, it => ((it as PartyWeapon).key ?? -1) === partyKey);
+  select(weapon: Weapon): void {
+    this.logger.info('selected weapon', weapon);
+    if (this.multiSelect) {
+      this.selectedItems = toggleListItem(this.selectedItems, weapon, it => it.progress.id === weapon.progress.id);
+      this.multiSelected.emit(this.selectedItems);
     } else {
-      this.selectedItems = toggleItem(this.selectedItems, item);
+      this.selected.emit(weapon);
     }
-    this.logger.info('multi-selected', this.selectedItems);
+  }
+
+  onMultiSelectChange({multiSelect, selectAll}: { multiSelect: boolean; selectAll: boolean }): void {
+    this.multiSelect = multiSelect;
+    this.logger.info('select all', selectAll);
+    this.selectedItems = selectAll ? this.weapons : [];
     this.multiSelected.emit(this.selectedItems);
   }
 
-  selectAll(checked: boolean): void {
-    this.selectedItems = checked ? this.items : [];
-    this.logger.info('selected all', checked);
-    this.multiSelected.emit(this.selectedItems);
+  trackItem(index: number, item: Weapon): number {
+    return item.progress.id;
   }
 }

@@ -1,39 +1,37 @@
-<div class="plan-form-container">
-  <app-item-view category="weapons" [id]="weapon.id" [rarity]="weapon.rarity"></app-item-view>
-  <app-select class="attribute-select" [options]="refineRanks" [value]="weapon.refine"
+<div *ngIf="weapon" class="plan-form-container">
+  <app-item-view category="weapons" [id]="info.id" [rarity]="info.rarity"></app-item-view>
+  <app-select class="attribute-select" [options]="refineRanks" [value]="progress.refine"
               (changed)="setRefineRank($event)">
     <span form-label>
       {{ i18n.dict('refine-rank') | translate }}
     </span>
   </app-select>
-  <app-current-goal-level-select label="weapon" [ascension]="weapon.ascension" [goalAscension]="plan.ascension"
-                                 [level]="weapon.level" [goalLevel]="plan.level"
-                                 [satisfied]="requirements[0].satisfied" (executePlan)="executePlan.emit(0)"
+  <app-current-goal-level-select label="weapon" [ascension]="progress.ascension" [goalAscension]="plan.ascension"
+                                 [level]="progress.level" [goalLevel]="plan.level"
+                                 [satisfied]="satisfied[0]" (executePlan)="executePlan.emit(0)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
-  <app-current-goal-comparator [current]="weapon.atk | number: '1.0-0'"
-                               [goal]="goalStats.atk | number: '1.0-0'">
-    {{ i18n.dict('attributes.ATK') | translate }}
-  </app-current-goal-comparator>
-  <ng-container *ngIf="weapon.subStatType.endsWith('%') else numeric">
-    <app-current-goal-comparator [current]="weapon.subStat | percent: '1.0-1'"
-                                 [goal]="goalStats.subStat | percent: '1.0-1'">
-      {{ i18n.dict('attributes.' + weapon.subStatType) | translate }}
-    </app-current-goal-comparator>
+  <ng-container *ngIf="stats$ | async as stats">
+    <ng-container *ngFor="let type of service.getStatsTypes(stats[0]); let i = index">
+      <ng-container *ngIf="type.endsWith('%') else numeric">
+        <app-current-goal-comparator [current]="stats[0][type] | percent: '1.0-1'"
+                                     [goal]="stats[1][type] | percent: '1.0-1'">
+          {{ i18n.dict('attributes.' + type) | translate }}
+        </app-current-goal-comparator>
+      </ng-container>
+      <ng-template #numeric>
+        <app-current-goal-comparator [current]="stats[0][type] | number: '1.0-0'"
+                                     [goal]="stats[1][type] | number: '1.0-0'">
+          {{ i18n.dict('attributes.' + type) | translate }}
+        </app-current-goal-comparator>
+      </ng-template>
+    </ng-container>
   </ng-container>
-  <ng-template #numeric>
-    <app-current-goal-comparator [current]="weapon.subStat | number: '1.0-0'"
-                                 [goal]="goalStats.subStat | number: '1.0-0'">
-      {{ i18n.dict('attributes.' + weapon.subStatType) | translate }}
-    </app-current-goal-comparator>
-  </ng-template>
-  <div *ngFor="let bonus of weapon.expBonus || []">
+  <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <ng-container *ngIf="requirements[0].hasOwnProperty('text')">
-    <app-ring-button class="execute-all-btn" [class.satisfied]="requirements[0].satisfied | async"
-                     [disabled]="!(requirements[0].satisfied | async)" (click)="executePlan.emit(0)">
-      {{ i18n.module('execute-all-plan') | translate }}
-    </app-ring-button>
-  </ng-container>
+  <app-ring-button *ngIf="planMode" class="execute-all-btn" [class.satisfied]="satisfied[0]"
+                   [disabled]="!satisfied[0]" (click)="executePlan.emit(0)">
+    {{ i18n.module('execute-all-plan') | translate }}
+  </app-ring-button>
 </div>

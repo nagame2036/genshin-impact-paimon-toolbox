@@ -1,0 +1,38 @@
+<div class="options">
+  <app-select class="option" [options]="service.infoSorts" [value]="service.infoSort"
+              (changed)="changeSort($event)">
+    <span form-label>
+      {{ i18n.dict('sort') | translate }}
+    </span>
+  </app-select>
+  <app-multi-select class="option" [options]="service.rarities" [values]="service.rarityFilter"
+                    (changed)="filterRarity($event)">
+    <span form-label>
+      {{ i18n.dict('rarity') | translate }}
+    </span>
+  </app-multi-select>
+  <app-multi-select class="option" [options]="service.elements" [values]="service.elementFilter"
+                    (changed)="filterElement($event)">
+    <span form-label>
+      {{ i18n.dict('element') | translate }}
+    </span>
+  </app-multi-select>
+  <app-multi-select class="option" [options]="service.weapons" [values]="service.weaponFilter"
+                    (changed)="filterWeapon($event)">
+    <span form-label>
+      {{ i18n.dict('weapon') | translate }}
+    </span>
+  </app-multi-select>
+  <div>
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</div>
+<div class="list">
+  <div *ngFor="let item of items" class="overview" (click)="select(item)">
+    <app-item-view category="characters" [id]="item.id" [rarity]="item.rarity"></app-item-view>
+    <img class="element-hint" [src]="images.get('elements', item.element)"
+         [alt]="i18n.dict('elements.' + item.element) | translate">
+    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.weapon)"
+         [alt]="i18n.dict('weapon-types.' + item.weapon) | translate">
+  </div>
+</div>

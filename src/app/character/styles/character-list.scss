@@ -1,0 +1,15 @@
+@import '../../game-common/styles/item-info-list.scss';
+
+.element-hint {
+  @apply absolute;
+  @apply top-1;
+  @apply left-1;
+  @apply h-8;
+  @apply w-8;
+  @apply rounded-full;
+  background: #474747;
+}
+
+.weapon-type-hint {
+  @apply left-16;
+}

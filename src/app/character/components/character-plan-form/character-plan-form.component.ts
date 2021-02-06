@@ -1,137 +1,151 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {PartyCharacter} from '../../models/party-character.model';
-import {rangeList} from '../../../shared/utils/range-list';
-import {Constellation} from '../../models/constellation.type';
-import {TalentLevel} from '../../models/talent-level.type';
-import {TalentLevelData} from '../../models/talent-level-data.model';
-import {TalentService} from '../../services/talent.service';
+import {Character} from '../../models/character.model';
+import {allConstellations, CharacterProgress, Constellation} from '../../models/character-progress.model';
+import {TalentInformationService} from '../../services/talent-information.service';
+import {TalentLevel} from '../../models/talent-info.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {CharacterPlan} from '../../models/character-plan.model';
-import {Observable, Subject} from 'rxjs';
+import {combineLatest} from 'rxjs';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
+import {CharacterService} from '../../services/character.service';
+import {MaterialService} from '../../../material/services/material.service';
+import {CharacterInfo} from '../../models/character-info.model';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-plan-form',
   templateUrl: './character-plan-form.component.html',
   styleUrls: ['./character-plan-form.component.scss']
 })
-export class CharacterPlanFormComponent implements OnInit {
+export class CharacterPlanFormComponent extends AbstractObservableComponent implements OnInit {
 
   i18n = new I18n('game-common');
 
   @Input()
-  character!: PartyCharacter;
+  character!: Character;
 
-  @Input()
+  info!: CharacterInfo;
+
+  progress!: CharacterProgress;
+
   plan!: CharacterPlan;
 
+  satisfied: boolean[] = [];
+
   @Input()
-  requirements: { satisfied: Observable<boolean> }[] = [
-    {satisfied: new Subject()},
-    {satisfied: new Subject()},
-    {satisfied: new Subject()},
-    {satisfied: new Subject()},
-    {satisfied: new Subject()},
-  ];
+  planMode = false;
 
   constellations!: SelectOption[];
 
-  talentLevels!: SelectOption[];
+  talentLevels: { [id: number]: SelectOption[] } = {};
 
-  goalTalentLevels!: SelectOption[][];
-
-  @Output()
-  currentChange = new EventEmitter();
+  goalTalentLevels: { [id: number]: SelectOption[] } = {};
 
   @Output()
-  goalChange = new EventEmitter();
+  changed = new EventEmitter();
 
   @Output()
   executePlan = new EventEmitter<number>();
 
-  constructor(private talentService: TalentService, private translator: TranslateService, private logger: NGXLogger) {
+  constructor(public service: CharacterService, public talents: TalentInformationService, public materials: MaterialService,
+              private translator: TranslateService, private logger: NGXLogger) {
+    super();
   }
 
   ngOnInit(): void {
-    this.logger.info('init');
-    this.constellations = rangeList(0, 6).map(it => {
+    this.logger.info('init with character', this.character);
+    this.info = this.character.info;
+    this.progress = this.character.progress;
+    this.plan = this.character.plan;
+    this.constellations = allConstellations.map(it => {
       return {value: it, text: `${it} - ${this.translator.instant(this.getConstellationText(it))}`};
     });
-    this.talentLevels = mapTalentLevels(this.talentService.levels(this.character.ascension));
-    this.goalTalentLevels = this.character.talents.map(it => mapTalentLevels(this.talentService.levels(this.plan.ascension, it.level)));
+    this.updateTalentLevels();
+    this.updateGoalTalentLevels();
+    if (this.planMode) {
+      combineLatest(this.service.specificRequirement(this.character))
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(requirements => {
+          this.satisfied = requirements.map(it => it.satisfied);
+          this.logger.info('updated character plans is satisfied?', this.satisfied);
+        });
+    }
   }
 
-  getConstellationText(constellation: number): string {
-    const text = constellation === 0 ? 'none' : `constellations.${this.character.id}.${constellation}`;
-    return this.i18n.dict(text);
-  }
-
-  talentLabel(talent: TalentLevelData): string {
-    return this.i18n.dict(`talent-types.${talent.id % 10}`);
-  }
-
-  talentName(talent: TalentLevelData): string {
-    return this.i18n.dict(`talents.${talent.id}`);
+  getConstellationText(constellation: Constellation): string {
+    return this.i18n.dict(constellation === 0 ? 'none' : `constellations.${this.character.info.id}.${constellation}`);
   }
 
   setConstellation(constellation: Constellation): void {
-    this.logger.info(`constellation from ${this.character.constellation} to ${constellation}`);
-    this.character.constellation = constellation;
-    this.emitCurrentChange();
+    const progress = this.progress;
+    this.logger.info(`character change constellation from ${progress.constellation} to ${constellation}`);
+    progress.constellation = constellation;
+    this.emitChange();
   }
 
-  setCurrentLevel(ascensionLevel: AscensionLevel): void {
-    const {ascension, level} = ascensionLevel;
-    this.logger.info(`character ascension-level from ${this.character.ascension}, ${this.character.level} to ${ascension}, ${level}`);
-    this.character.ascension = ascension;
-    this.character.level = level;
-    this.talentLevels = mapTalentLevels(this.talentService.levels(ascension));
-    this.character.talents = this.talentService.correctLevels(ascension, this.character.talents);
-    this.emitCurrentChange();
+  setCurrentLevel({ascension, level}: AscensionLevel): void {
+    const progress = this.progress;
+    this.logger.info(`character change ascension-level from (${progress.ascension}, ${progress.level}) to (${ascension}, ${level})`);
+    progress.ascension = ascension;
+    progress.level = level;
+    this.talents.correctLevels(progress.talents, ascension);
+    this.updateTalentLevels();
+    this.emitChange();
   }
 
-  setGoalLevel(ascensionLevel: AscensionLevel): void {
-    const {ascension, level} = ascensionLevel;
-    this.logger.info(`plan ascension-level from ${this.plan.ascension}, ${this.plan.level} to ${ascension}, ${level}`);
-    this.plan.ascension = ascension;
-    this.plan.level = level;
+  setGoalLevel({ascension, level}: AscensionLevel): void {
+    const plan = this.plan;
+    this.logger.info(`character change plan ascension-level from (${plan.ascension}, ${plan.level}) to (${ascension}, ${level})`);
+    plan.ascension = ascension;
+    plan.level = level;
     this.correctGoalTalents();
-    this.emitGoalChange();
+    this.emitChange();
   }
 
-  setTalent(num: number, level: number): void {
-    this.logger.info(`character talent level from ${this.character.talents[num].level} to ${level}`);
-    this.character.talents[num].level = this.talentService.correctLevel(this.character.ascension, level);
+  setTalent(id: number, level: number): void {
+    const progress = this.progress;
+    this.logger.info(`character change talent level from ${progress.talents[id]} to ${level}`);
+    progress.talents[id] = this.talents.correctLevel(progress.ascension, level);
     this.correctGoalTalents();
-    this.emitCurrentChange();
+    this.emitChange();
   }
 
-  setGoalTalent(num: number, level: number): void {
-    this.logger.info(`plan talent level from ${this.plan.talents[num].level} to ${level}`);
-    this.plan.talents[num].level = this.talentService.correctLevel(this.plan.ascension, level);
-    this.emitGoalChange();
+  setGoalTalent(id: number, level: number): void {
+    const plan = this.plan;
+    this.logger.info(`character change plan talent level from ${plan.talents[id]} to ${level}`);
+    plan.talents[id] = this.talents.correctLevel(plan.ascension, level);
+    this.emitChange();
+  }
+
+  private updateTalentLevels(): void {
+    for (const talent of this.info.talentsUpgradable) {
+      const levels = this.talents.levels(this.progress.ascension);
+      this.talentLevels[talent] = mapTalentLevels(levels);
+    }
+  }
+
+  private updateGoalTalentLevels(): void {
+    for (const talent of this.info.talentsUpgradable) {
+      const levels = this.talents.levels(this.plan.ascension, this.progress.talents[talent] ?? 1);
+      this.goalTalentLevels[talent] = mapTalentLevels(levels);
+    }
   }
 
   private correctGoalTalents(): void {
-    const talents = this.character.talents;
-    const goalAscension = this.plan.ascension;
-    this.goalTalentLevels = talents.map(it => mapTalentLevels(this.talentService.levels(goalAscension, it.level)));
-    const starts = talents.map(it => it.level);
-    this.plan.talents = this.talentService.correctLevels(goalAscension, this.plan.talents, starts);
-    this.emitGoalChange();
+    const talents = this.progress.talents;
+    const {ascension, talents: goalTalents} = this.plan;
+    this.talents.correctLevels(goalTalents, ascension, talents);
+    this.updateGoalTalentLevels();
+    this.emitChange();
   }
 
-  private emitCurrentChange(): void {
-    this.logger.info('current changed');
-    this.currentChange.emit();
-  }
-
-  private emitGoalChange(): void {
-    this.logger.info('goal changed');
-    this.goalChange.emit();
+  private emitChange(): void {
+    this.logger.info('character changed');
+    this.changed.emit();
   }
 }
 

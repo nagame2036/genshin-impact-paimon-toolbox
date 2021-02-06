@@ -1,9 +1,12 @@
-<div *ngIf="party && plan && requirements" class="plan-content">
-  <app-character-plan-form [character]="party" [plan]="plan" [requirements]="requirements"
-                           (executePlan)="executePlanAndSave($event)"
-                           (currentChange)="saveParty()" (goalChange)="savePlan()">
-  </app-character-plan-form>
-  <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
-  </app-material-requirement>
+<div class="plan-content">
+  <ng-container *ngIf="character">
+    <app-character-plan-form [character]="character" [planMode]="true"
+                             (executePlan)="executePlan($event)" (changed)="save()">
+    </app-character-plan-form>
+  </ng-container>
+  <ng-container *ngIf="requirements.length > 0">
+    <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
+    </app-material-requirement>
+  </ng-container>
 </div>
 <app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

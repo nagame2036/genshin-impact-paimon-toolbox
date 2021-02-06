@@ -2,8 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HeaderComponent} from './header.component';
 import {CoreModule} from '../../core.module';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {AppRoutingModule} from '../../../app-routing.module';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -16,8 +15,7 @@ describe('HeaderComponent', () => {
       ],
       imports: [
         CoreModule,
-        AppRoutingModule,
-        AppTranslateModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

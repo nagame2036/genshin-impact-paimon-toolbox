@@ -1,9 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterDetailComponent} from './character-detail.component';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {RouterTestingModule} from '@angular/router/testing';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {AppTestingModule} from '../../../app-testing.module';
 import {CharacterModule} from '../../character.module';
 
 describe('CharacterDetailComponent', () => {
@@ -17,9 +15,7 @@ describe('CharacterDetailComponent', () => {
       ],
       imports: [
         CharacterModule,
-        AppIndexedDbModule,
-        AppTranslateModule,
-        RouterTestingModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

@@ -1,33 +1,15 @@
-import {Rarity} from '../../game-common/models/rarity.type';
-import {WeaponType} from '../../weapon/models/weapon-type.enum';
-import {ElementType} from '../../game-common/models/element-type.enum';
-import {Nation} from '../../game-common/models/nation.enum';
-import {ExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
+import {CharacterInfo} from './character-info.model';
+import {CharacterProgress} from './character-progress.model';
+import {CharacterPlan} from './character-plan.model';
 
+/**
+ * Represents the details of a character.
+ */
 export interface Character {
 
-  id: number;
+  info: CharacterInfo;
 
-  rarity: Rarity;
+  progress: CharacterProgress;
 
-  element: ElementType;
-
-  weapon: WeaponType;
-
-  nation?: Nation;
-
-  /**
-   * Talent ids.
-   */
-  skills: number[];
-
-  boss?: number;
-
-  gem: number;
-
-  mob: number;
-
-  local: number;
-
-  expBonus?: ExpBonus[];
+  plan: CharacterPlan;
 }

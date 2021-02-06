@@ -1,31 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {MaterialService} from '../../services/material.service';
-import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
-import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
+import {MaterialService} from '../../../material/services/material.service';
+import {MaterialDetail} from '../../../material/models/material.model';
 import {Observable} from 'rxjs';
-import {MaterialType} from '../../models/material-type.enum';
-import {InventoryService} from '../../services/inventory.service';
+import {MaterialType} from '../../../material/models/material-type.enum';
 
 @Component({
   selector: 'app-character-material-inventory',
   templateUrl: './character-material-inventory.component.html',
   styleUrls: ['./character-material-inventory.component.scss']
 })
-export class CharacterMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
+export class CharacterMaterialInventoryComponent implements OnInit {
 
-  common$!: Observable<InventoryItemDetail[]>;
+  common$!: Observable<MaterialDetail[]>;
 
-  boss$!: Observable<InventoryItemDetail[]>;
+  boss$!: Observable<MaterialDetail[]>;
 
-  gem$!: Observable<InventoryItemDetail[]>;
+  gem$!: Observable<MaterialDetail[]>;
 
-  constructor(materials: MaterialService, inventory: InventoryService) {
-    super(materials, inventory);
+  constructor(private materials: MaterialService) {
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterMaterials(MaterialType.CHARACTER_EXP);
-    this.boss$ = this.filterMaterials(MaterialType.CHARACTER_BOSS);
-    this.gem$ = this.filterMaterials(MaterialType.CHARACTER_GEM);
+    this.common$ = this.materials.getTypes(MaterialType.CHARACTER_EXP);
+    this.boss$ = this.materials.getTypes(MaterialType.CHARACTER_BOSS);
+    this.gem$ = this.materials.getTypes(MaterialType.CHARACTER_GEM);
   }
 }

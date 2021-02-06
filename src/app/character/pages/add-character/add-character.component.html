@@ -8,12 +8,12 @@
     {{ i18n.module('add') | translate }}
   </div>
 </div>
-<div class="add-content subpage-padding-x">
+<div class="subpage-padding-x">
   <div *ngIf="!selected">
-    <app-character-list [characters]="characters" (selected)="select($event)"></app-character-list>
+    <app-character-info-list [characters]="characters" (selected)="select($event)"></app-character-info-list>
   </div>
   <div class="add-form" *ngIf="selected">
-    <app-character-plan-form [character]="selectedCharacter" [plan]="selectedPlan"></app-character-plan-form>
+    <app-character-plan-form [character]="selectedCharacter"></app-character-plan-form>
     <div *ngIf="selected" class="add-actions">
       <app-ring-button class="add-actions-btn reset-btn" (click)="reset()">
         {{ i18n.module('reset') | translate }}

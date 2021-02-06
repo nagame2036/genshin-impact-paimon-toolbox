@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RemoveConfirmDialogComponent} from './remove-confirm-dialog.component';
 import {GameCommonModule} from '../../game-common.module';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('RemoveConfirmDialogComponent', () => {
   let component: RemoveConfirmDialogComponent;
@@ -15,7 +15,7 @@ describe('RemoveConfirmDialogComponent', () => {
       ],
       imports: [
         GameCommonModule,
-        AppTranslateModule
+        AppTestingModule,
       ],
     })
       .compileComponents();

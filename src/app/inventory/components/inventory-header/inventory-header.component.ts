@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {InventoryService} from '../../services/inventory.service';
+import {MaterialService} from '../../../material/services/material.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {takeUntil} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
+import {Rarity} from '../../../game-common/models/rarity.type';
 
 @Component({
   selector: 'app-inventory-header',
@@ -16,22 +17,21 @@ export class InventoryHeaderComponent extends AbstractObservableComponent implem
 
   rarityFilter!: number[];
 
-  constructor(public inventory: InventoryService, private logger: NGXLogger) {
+  constructor(public materials: MaterialService, private logger: NGXLogger) {
     super();
   }
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.inventory.rarityFilter.pipe(takeUntil(this.destroy$))
-      .subscribe(rarities => {
-        this.logger.info('received rarity filter', rarities);
-        return this.rarityFilter = rarities;
-      });
+    this.materials.rarityFilter.pipe(takeUntil(this.destroy$)).subscribe(rarities => {
+      this.logger.info('received rarity filter', rarities);
+      return this.rarityFilter = rarities;
+    });
   }
 
-  changeRarityFilter(rarities: number[]): void {
+  changeRarityFilter(rarities: Rarity[]): void {
     this.logger.info('set rarity filter', rarities);
-    this.inventory.setRarityFilter(rarities);
+    this.materials.rarityFilter.next(rarities);
   }
 
 }

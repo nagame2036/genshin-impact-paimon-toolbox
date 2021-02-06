@@ -1,4 +1,4 @@
-import {GroupItemCost} from '../../game-common/models/group-item-cost.model';
+import {MaterialGroupCost} from '../../material/models/material-group-cost.model';
 
 export interface WeaponAscensionCost {
 
@@ -12,9 +12,9 @@ export interface WeaponRarityAscensionCost {
 
   mora: number;
 
-  domain: GroupItemCost;
+  domain: MaterialGroupCost;
 
-  elite: GroupItemCost;
+  elite: MaterialGroupCost;
 
-  mob: GroupItemCost;
+  mob: MaterialGroupCost;
 }

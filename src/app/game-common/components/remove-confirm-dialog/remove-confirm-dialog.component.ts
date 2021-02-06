@@ -3,6 +3,7 @@ import {DialogComponent} from '../../../widget/components/dialog/dialog.componen
 import {I18n} from '../../../widget/models/i18n.model';
 import {Rarity} from '../../models/rarity.type';
 import {NGXLogger} from 'ngx-logger';
+import {ImageType} from '../../../image/services/image.service';
 
 @Component({
   selector: 'app-remove-confirm-dialog',
@@ -14,10 +15,10 @@ export class RemoveConfirmDialogComponent implements OnInit {
   i18n = new I18n('game-common');
 
   @Input()
-  category!: string;
+  category!: ImageType;
 
   @Input()
-  items!: { id: number, rarity: Rarity }[];
+  items!: { info: { id: number, rarity: Rarity } }[];
 
   @Output()
   confirm = new EventEmitter();
@@ -41,5 +42,4 @@ export class RemoveConfirmDialogComponent implements OnInit {
     this.confirm.emit();
     this.dialog.close();
   }
-
 }

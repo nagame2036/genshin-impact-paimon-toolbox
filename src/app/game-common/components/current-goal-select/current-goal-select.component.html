@@ -6,8 +6,8 @@
   <div class="form">
     <app-select class="value" [options]="currentOptions" [value]="current" (changed)="setCurrent($event)" #left>
     </app-select>
-    <button class="execute-plan-btn" [class.satisfied]="checkPlanAvailable(satisfied | async)"
-            [disabled]="!(checkPlanAvailable(satisfied | async))" (click)="executePlan.emit()">
+    <button class="execute-plan-btn" [class.satisfied]="checkPlanAvailable(satisfied)"
+            [disabled]="!checkPlanAvailable(satisfied)" (click)="executePlan.emit()">
       <span class="material-icons arrow">
         chevron_right
       </span>

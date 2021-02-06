@@ -1,8 +1,12 @@
-<div *ngIf="party && plan && plans" class="plan-content">
-  <app-weapon-plan-form [weapon]="party" [plan]="plan" [goalStats]="goalStats" [requirements]="plans"
-                        (executePlan)="executePlan($event)" (currentChange)="saveParty()" (goalChange)="savePlan()">
-  </app-weapon-plan-form>
-  <app-material-requirement class="cost-list" [requirements]="plans" [subtitles]="subtitles" [types]="types">
-  </app-material-requirement>
+<div class="plan-content">
+  <ng-container *ngIf="weapon">
+    <app-weapon-plan-form [weapon]="weapon" [planMode]="true"
+                          (executePlan)="executePlan($event)" (changed)="save()">
+    </app-weapon-plan-form>
+  </ng-container>
+  <ng-container *ngIf="requirements.length > 0">
+    <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
+    </app-material-requirement>
+  </ng-container>
 </div>
 <app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

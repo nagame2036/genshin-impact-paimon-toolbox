@@ -1,120 +1,156 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {from, Observable, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, EMPTY, Observable, of, ReplaySubject} from 'rxjs';
 import {Character} from '../models/character.model';
-import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {PartyCharacter} from '../models/party-character.model';
-import {first, mergeMap, switchMap, toArray} from 'rxjs/operators';
-import {findObservable} from '../../shared/utils/collections';
+import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
+import {CharacterProgress} from '../models/character-progress.model';
+import {CharacterPlan} from '../models/character-plan.model';
+import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
+import {CharacterInfoService} from './character-info.service';
+import {CharacterProgressService} from './character-progress.service';
+import {CharacterPlanner} from './character-planner.service';
+import {MaterialList} from '../../material/models/material-list.model';
+import {MaterialService} from '../../material/services/material.service';
+import {ItemType} from '../../game-common/models/item-type.enum';
+import {elementTypeList} from '../../game-common/models/element-type.enum';
+import {weaponTypeList} from '../../weapon/models/weapon-type.enum';
+import {I18n} from '../../widget/models/i18n.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharacterService {
 
-  #characters = new ReplaySubject<Character[]>(1);
+  private readonly i18n = new I18n('characters');
 
-  readonly characters = this.#characters.asObservable();
+  private synced = false;
 
-  #party = new ReplaySubject<PartyCharacter[]>(1);
+  private readonly characters$ = new ReplaySubject<Map<number, Character>>(1);
 
-  readonly party = this.#party.asObservable();
+  readonly characters = this.characters$.asObservable();
 
-  #partyMap = new ReplaySubject<Map<number, PartyCharacter>>(1);
+  readonly nonParty = this.progressor.noProgress.pipe(map(infos => [...infos.values()]));
 
-  readonly partyMap = this.#partyMap.asObservable();
+  readonly sorts: { text: string, value: (a: Character, b: Character) => number }[] = [
+    {text: this.i18n.dict('level'), value: (a, b) => b.progress.level - a.progress.level},
+    {text: this.i18n.dict('rarity'), value: (a, b) => b.info.rarity - a.info.rarity},
+    {text: this.i18n.dict('constellation'), value: (a, b) => b.progress.constellation - a.progress.constellation},
+  ];
 
-  #nonParty = new ReplaySubject<Character[]>(1);
+  sort = this.sorts[0].value;
 
-  readonly nonParty = this.#nonParty.asObservable();
+  readonly infoSorts: { text: string, value: (a: CharacterInfo, b: CharacterInfo) => number }[] = [
+    {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
+  ];
 
-  private readonly storeName = 'party-characters';
+  infoSort = this.infoSorts[0].value;
 
-  constructor(http: HttpClient, private database: NgxIndexedDBService, private logger: NGXLogger) {
-    http.get<Character[]>('assets/data/characters/characters.json').subscribe(data => {
-      this.logger.info('loaded character data', data);
-      this.#characters.next(data);
-    });
-    zip(database.getAll(this.storeName), this.characters).subscribe(([party, characters]) => {
-      this.logger.info('fetched party characters from indexed db', party);
-      this.cacheParty(party);
-      const partyIds = party.map(c => c.id);
-      const nonParty = characters.filter(c => !partyIds.includes(c.id));
-      this.#nonParty.next(nonParty);
-    });
+  readonly rarities = allCharacterRarities.map(it => ({value: it, text: `★${it}`}));
+
+  rarityFilter = allCharacterRarities;
+
+  readonly elements = elementTypeList.map(it => ({value: it, text: this.i18n.dict(`elements.${it}`)}));
+
+  elementFilter = elementTypeList;
+
+  readonly weapons = weaponTypeList.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
+
+  weaponFilter = weaponTypeList;
+
+  constructor(private information: CharacterInfoService, private progressor: CharacterProgressService,
+              private planner: CharacterPlanner, private materials: MaterialService, private logger: NGXLogger) {
+    this.sync();
   }
 
-  addPartyMember(character: PartyCharacter): void {
-    const id = character.id;
-    const add = this.valid(id).pipe(switchMap(_ => this.database.add(this.storeName, character)));
-    zip(add, this.party, this.nonParty).subscribe(([_, party, nonParty]) => {
-      this.logger.info('added character', character);
-      const newParty = party.filter(c => c.id !== id);
-      newParty.push(character);
-      this.cacheParty(newParty);
-      const newNonParty = nonParty.filter(c => c.id !== id);
-      this.#nonParty.next(newNonParty);
-    });
+  sync(): void {
+    if (this.synced) {
+      return;
+    }
+    this.synced = true;
+    combineLatest([this.information.items, this.progressor.inProgress, this.planner.plans])
+      .subscribe(([infos, inProgress, plans]) => {
+        this.syncCharacters(infos, inProgress, plans);
+        this.syncTotalRequirements();
+      });
   }
 
-  getPartyCharacter(id: number): Observable<PartyCharacter> {
-    return this.party.pipe(
-      switchMap(party => findObservable(party, it => it.id === id)),
-      first()
-    );
+  create(info: CharacterInfo): Character {
+    const id = info.id;
+    const progress = this.progressor.create(info, id);
+    const plan = this.planner.create(info, id);
+    return {info, progress, plan};
   }
 
-  updatePartyMember(character: PartyCharacter): void {
-    const id = character.id;
-    const update = this.valid(id).pipe(switchMap(_ => this.database.update(this.storeName, character)));
-    zip(update, this.party).subscribe(([_, party]) => {
-      this.logger.info('character updated', character);
-      const newParty = party.filter(c => c.id !== id);
-      newParty.push(character);
-      this.cacheParty(newParty);
-    });
-  }
-
-  removePartyMember(id: number): void {
-    const valid = this.valid(id);
-    const remove = valid.pipe(switchMap(_ => this.database.delete(this.storeName, id)));
-    zip(remove, this.party, this.nonParty, valid).subscribe(([_, party, nonParty, character]) => {
-      this.logger.info('character removed', character);
-      const newParty = party.filter(c => c.id !== id);
-      this.cacheParty(newParty);
-      const newNonParty = nonParty.filter(c => c.id !== id);
-      newNonParty.push(character);
-      this.#nonParty.next(newNonParty);
-    });
-  }
-
-  removePartyMemberByList(ids: number[]): void {
-    const deleted = from(ids).pipe(
-      mergeMap(it => this.database.delete(this.storeName, it)),
-      toArray(),
-    );
-    zip(deleted, this.characters, this.party).subscribe(([, characters, party]) => {
-      this.logger.info('characters removed', ids);
-      const newParty = party.filter(c => !ids.includes(c.id));
-      this.cacheParty(newParty);
-      const partyIds = newParty.map(it => it.id);
-      const newNonParty = characters.filter(c => !partyIds.includes(c.id));
-      this.#nonParty.next(newNonParty);
-    });
-  }
-
-  private cacheParty(party: PartyCharacter[]): void {
-    this.#party.next(party);
-    const mapped = new Map<number, PartyCharacter>();
-    party.forEach(character => mapped.set(character.id, character));
-    this.#partyMap.next(mapped);
-  }
-
-  private valid(id: number): Observable<Character> {
+  get(id: number): Observable<Character> {
     return this.characters.pipe(
-      switchMap(characters => findObservable(characters, it => it.id === id)),
-      first()
+      switchMap(characters => {
+        const character = characters.get(id);
+        return character ? of(character) : EMPTY;
+      }),
+      throwIfEmpty(),
+      tap(character => this.logger.info('sent character', character)),
     );
+  }
+
+  getAll(): Observable<Character[]> {
+    return this.characters.pipe(
+      map(characters => [...characters.values()]),
+      tap(characters => this.logger.info('sent characters', characters)),
+    );
+  }
+
+  view(characters: Character[]): Character[] {
+    return characters.filter(c => this.filterInfo(c.info))
+      .sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
+  }
+
+  viewInfos(characters: CharacterInfo[]): CharacterInfo[] {
+    return characters.filter(c => this.filterInfo(c))
+      .sort((a, b) => this.infoSort(a, b) || b.id - a.id);
+  }
+
+  update(character: Character): void {
+    this.progressor.update(character);
+    this.planner.update(character);
+    this.logger.info('updated character', character);
+  }
+
+  remove(character: Character): void {
+    this.progressor.remove(character);
+    this.planner.remove(character);
+    this.logger.info('removed character', character);
+  }
+
+  removeAll(characters: Character[]): void {
+    this.progressor.removeAll(characters);
+    this.planner.removeAll(characters);
+    this.logger.info('removed characters', characters);
+  }
+
+  specificRequirement(character: Character): Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] {
+    return this.planner.specificRequirements(character);
+  }
+
+  private syncCharacters(infos: Map<number, CharacterInfo>, inProgress: Map<number, CharacterProgress>,
+                         plans: Map<number, CharacterPlan>): void {
+    const characters = new Map<number, Character>();
+    for (const [id, progress] of inProgress) {
+      const [info, plan] = [infos.get(id), plans.get(id)];
+      if (info && plan) {
+        characters.set(id, {info, progress, plan});
+      }
+    }
+    this.logger.info('updated characters', characters);
+    this.characters$.next(characters);
+  }
+
+  private syncTotalRequirements(): void {
+    this.characters
+      .pipe(switchMap(characters => this.planner.totalRequirements([...characters.values()])))
+      .subscribe(requirements => this.materials.updateRequirement(ItemType.CHARACTER, requirements));
+  }
+
+  private filterInfo({element, rarity, weapon}: CharacterInfo): boolean {
+    return this.rarityFilter.includes(rarity) && this.elementFilter.includes(element) && this.weaponFilter.includes(weapon);
   }
 }

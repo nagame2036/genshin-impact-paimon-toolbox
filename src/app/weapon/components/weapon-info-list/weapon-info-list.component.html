@@ -1,0 +1,30 @@
+<div class="options">
+  <app-select class="option" [options]="service.infoSorts" [value]="service.infoSort"
+              (changed)="changeSort($event)">
+    <span form-label>
+      {{ i18n.dict('sort') | translate }}
+    </span>
+  </app-select>
+  <app-multi-select class="option" [options]="service.rarities" [values]="service.rarityFilter"
+                    (changed)="filterRarity($event)">
+    <span form-label>
+      {{ i18n.dict('rarity') | translate }}
+    </span>
+  </app-multi-select>
+  <app-multi-select class="option" [options]="service.types" [values]="service.typeFilter"
+                    (changed)="filterType($event)">
+    <span form-label>
+      {{ i18n.dict('weapon') | translate }}
+    </span>
+  </app-multi-select>
+  <div>
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</div>
+<div class="list">
+  <div *ngFor="let item of items" class="overview" (click)="select(item)">
+    <app-item-view category="weapons" [id]="item.id" [rarity]="item.rarity"></app-item-view>
+    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
+         [alt]="i18n.dict('weapon-types.' + item.type) | translate">
+  </div>
+</div>

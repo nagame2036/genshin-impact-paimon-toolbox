@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SettingsPageComponent} from './settings-page.component';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 import {SettingsModule} from '../../settings.module';
 
 describe('SettingsPageComponent', () => {
@@ -15,7 +15,7 @@ describe('SettingsPageComponent', () => {
       ],
       imports: [
         SettingsModule,
-        AppTranslateModule
+        AppTestingModule,
       ]
     })
       .compileComponents();

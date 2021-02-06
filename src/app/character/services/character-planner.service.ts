@@ -1,110 +1,111 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, defer, iif, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {CharacterService} from './character.service';
 import {CharacterPlan} from '../models/character-plan.model';
-import {TalentService} from './talent.service';
-import {first, map, reduce, switchMap, take, tap} from 'rxjs/operators';
-import {ItemList} from '../../inventory/models/item-list.model';
+import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {MaterialList} from '../../material/models/material-list.model';
 import {CharacterLevelupCostService} from './character-levelup-cost.service';
 import {TalentLevelupCostService} from './talent-levelup-cost.service';
-import {PartyCharacter} from '../models/party-character.model';
-import {activePlans} from '../../game-common/utils/party-plans';
-import {MaterialRequireMarker} from '../../inventory/services/material-require-marker.service';
+import {Character} from '../models/character.model';
+import {CharacterInfo} from '../models/character-info.model';
+import {TalentProgress} from '../models/talent-progress.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+import {MaterialRequireList} from '../../material/models/material-require-list.model';
+import {MaterialService} from '../../material/services/material.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
-
-type ActivePlan = { plan: CharacterPlan, party: PartyCharacter };
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharacterPlanner {
 
-  i18n = new I18n('game-common');
+  private readonly i18n = new I18n('game-common');
 
-  private storeName = 'character-plans';
+  private readonly store = 'character-plans';
 
-  #plans = new ReplaySubject<CharacterPlan[]>(1);
+  private plans$ = new ReplaySubject<Map<number, CharacterPlan>>(1);
 
-  readonly plans = this.#plans.asObservable();
+  readonly plans = this.plans$.asObservable();
 
-  activePlans = new ReplaySubject<ActivePlan[]>(1);
-
-  private readonly type = ItemType.CHARACTER;
-
-  constructor(private database: NgxIndexedDBService, private characters: CharacterService, private talents: TalentService,
-              private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
-              private marker: MaterialRequireMarker, private logger: NGXLogger) {
-    this.database.getAll(this.storeName).subscribe(plans => {
-      this.logger.info('loaded character plans', plans);
-      this.#plans.next(plans);
-    });
-    combineLatest([this.plans, this.characters.partyMap]).subscribe(([plans, party]) => {
-      const active = activePlans(plans, party);
-      this.marker.clear(this.type);
-      this.logger.info('updated active plans', active);
-      this.activePlans.next(active);
+  constructor(private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
+              private materials: MaterialService, private database: NgxIndexedDBService, private logger: NGXLogger) {
+    this.database.getAll(this.store).subscribe(persisted => {
+      this.logger.info('fetched character plans', persisted);
+      const plans = new Map<number, CharacterPlan>();
+      persisted.forEach(p => plans.set(p.id, p));
+      this.plans$.next(plans);
     });
   }
 
-  getPlan(id: number): Observable<CharacterPlan> {
-    return this.getActivePlan(id).pipe(
-      first(),
-      map(active => active.plan),
-      tap(plan => this.logger.info('sent character plan', plan)),
-    );
+  create(info: CharacterInfo, id: number): CharacterPlan {
+    const talents: TalentProgress = {};
+    info.talentsUpgradable.forEach(t => talents[t] = 1);
+    return {id, ascension: 0, level: 1, talents};
   }
 
-  updatePlan(plan: CharacterPlan): void {
-    zip(this.plans, this.database.update(this.storeName, plan)).subscribe(([plans, _]) => {
-      this.logger.info('updated character plan', plan);
-      const newPlans = plans.filter(it => it.id !== plan.id);
-      newPlans.push(plan);
-      this.#plans.next(newPlans);
-    });
-  }
-
-  allPlansCost(): Observable<ItemList> {
-    return this.activePlans.pipe(
+  get(id: number): Observable<CharacterPlan> {
+    return this.plans.pipe(
       switchMap(plans => {
-        const costs = [this.characterLevelup.totalCost(plans), this.talentLevelup.totalCost(plans)];
-        return iif(
-          () => plans.length === 0,
-          of(new ItemList()),
-          combineLatest(costs).pipe(
-            switchMap(it => it),
-            take(costs.length),
-            reduce((total, curr) => total.combine(curr), new ItemList()),
-          )
-        );
+        const plan = plans.get(id);
+        return plan ? of(plan) : EMPTY;
       }),
-      tap(cost => this.logger.info('sent total cost of character plans', cost)),
+      throwIfEmpty()
     );
   }
 
-  specificPlanCost(id: number): Observable<{ text: string, value: Observable<ItemList> }[]> {
-    return this.getActivePlan(id).pipe(map(({party, plan}) => {
-      this.logger.info('sent the cost of character plan', id);
-      const levelup = this.characterLevelup.cost(party, new AscensionLevel(plan.ascension, plan.level));
-      const talents = plan.talents.map(goalTalent => this.talentLevelup.cost(party, [goalTalent]));
-      const total = combineLatest([levelup, ...talents]).pipe(map(list => {
-        return list.reduce((acc, curr) => acc.combine(curr), new ItemList());
-      }));
-      return [
-        {text: this.i18n.module('total-requirement'), value: total},
-        {text: this.i18n.module('levelup-requirement'), value: levelup},
-        ...talents.map((it, index) => ({text: this.i18n.module(`talent-requirement.${index}`), value: it})),
-      ];
-    }));
+  update({plan}: Character): void {
+    const update = this.database.update(this.store, plan);
+    zip(update, this.plans).subscribe(([, plans]) => {
+      this.logger.info('updated character plan', plan);
+      plans.set(plan.id, plan);
+      this.plans$.next(plans);
+    });
   }
 
-  private getActivePlan(id: number): Observable<ActivePlan> {
-    return this.activePlans.pipe(switchMap(plans => {
-      const index = plans.findIndex(it => it.plan.id === id);
-      return iif(() => index !== -1, defer(() => of(plans[index])));
-    }));
+  remove({plan}: Character): void {
+    const id = plan.id;
+    const remove = this.database.delete(this.store, id);
+    zip(remove, this.plans).subscribe(([, plans]) => {
+      this.logger.info('removed character plan', plan);
+      plans.delete(id);
+      this.plans$.next(plans);
+    });
+  }
+
+  removeAll(characters: Character[]): void {
+    const remove = characters.map(it => this.database.delete(this.store, it.plan.id));
+    zip(forkJoin(remove), this.plans).subscribe(([, plans]) => {
+      this.logger.info('removed character plans', characters);
+      characters.forEach(it => plans.delete(it.plan.id));
+      this.plans$.next(plans);
+    });
+  }
+
+  totalRequirements(characters: Character[]): Observable<MaterialRequireList> {
+    const subRequirements = [
+      this.characterLevelup.totalRequirements(characters),
+      this.talentLevelup.totalRequirements(characters),
+    ];
+    return combineLatest(subRequirements).pipe(
+      map(requirements => new MaterialRequireList(requirements)),
+      tap(requirements => this.logger.info('sent total material requirements of all character plans', requirements))
+    );
+  }
+
+  specificRequirements(character: Character): Observable<{ text: string, value: MaterialList, satisfied: boolean }>[] {
+    const levelupTexts = [this.characterLevelup.levelupLabel, this.characterLevelup.ascensionLabel];
+    const talentsTexts = character.info.talentsUpgradable.map(it => this.talentLevelup.getLabel(it));
+    const texts = [
+      [
+        this.i18n.module('total-requirement'),
+        ...levelupTexts,
+        ...talentsTexts
+      ],
+      levelupTexts,
+      ...talentsTexts.map(it => [it])
+    ];
+    this.logger.info('sent specific material requirements of character', character, texts);
+    return texts.map(it => this.materials.getRequirements(ItemType.CHARACTER, character.plan.id, it));
   }
 }

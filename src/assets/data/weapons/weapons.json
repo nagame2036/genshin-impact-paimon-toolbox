@@ -1,1120 +1,1722 @@
-[
-  {
+{
+  "11301": {
     "id": 11301,
     "type": 1,
     "rarity": 3,
-    "domain": 400,
-    "elite": 900,
-    "mob": 803,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "ATK%",
-    "subStatBase": 0.07660000026226044,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "ATK%": {
+        "initial": 0.07660000026226044,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11302": {
     "id": 11302,
     "type": 1,
     "rarity": 3,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "CHD%",
-    "subStatBase": 0.10199999809265137,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "CHD%": {
+        "initial": 0.10199999809265137,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11303": {
     "id": 11303,
     "type": 1,
     "rarity": 3,
-    "domain": 402,
-    "elite": 903,
-    "mob": 802,
-    "atkBase": 39.875099182128906,
-    "atkCurve": 102,
-    "subStatType": "DEF%",
-    "subStatBase": 0.06373299658298492,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 39.875099182128906,
+        "curve": "ATK-102"
+      },
+      "DEF%": {
+        "initial": 0.06373299658298492,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11304": {
     "id": 11304,
     "type": 1,
     "rarity": 3,
-    "domain": 403,
-    "elite": 905,
-    "mob": 801,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "EM",
-    "subStatBase": 30.600000381469727,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "EM": {
+        "initial": 30.600000381469727,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11305": {
     "id": 11305,
     "type": 1,
     "rarity": 3,
-    "domain": 404,
-    "elite": 904,
-    "mob": 806,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "ATK%",
-    "subStatBase": 0.07660000026226044,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "ATK%": {
+        "initial": 0.07660000026226044,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11306": {
     "id": 11306,
     "type": 1,
     "rarity": 3,
-    "domain": 405,
-    "elite": 906,
-    "mob": 805,
-    "atkBase": 37.60749816894531,
-    "atkCurve": 104,
-    "subStatType": "ER%",
-    "subStatBase": 0.11333300173282623,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 37.60749816894531,
+        "curve": "ATK-104"
+      },
+      "ER%": {
+        "initial": 0.11333300173282623,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11401": {
     "id": 11401,
     "type": 1,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 803,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "ER%",
-    "subStatBase": 0.1333329975605011,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "ER%": {
+        "initial": 0.1333329975605011,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11402": {
     "id": 11402,
     "type": 1,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11403": {
     "id": 11403,
     "type": 1,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 802,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "ER%",
-    "subStatBase": 0.1333329975605011,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "ER%": {
+        "initial": 0.1333329975605011,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11404": {
     "id": 11404,
     "type": 1,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 801,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11405": {
     "id": 11405,
     "type": 1,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 806,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11406": {
     "id": 11406,
     "type": 1,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 805,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.07506699860095978,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "PHY DMG%": {
+        "initial": 0.07506699860095978,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11407": {
     "id": 11407,
     "type": 1,
     "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "mob": 807,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "EM",
-    "subStatBase": 36.0,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "EM": {
+        "initial": 36.0,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11408": {
     "id": 11408,
     "type": 1,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 803,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "CHD%",
-    "subStatBase": 0.07999999821186066,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "CHD%": {
+        "initial": 0.07999999821186066,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11409": {
     "id": 11409,
     "type": 1,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHC%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHC%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11412": {
     "id": 11412,
     "type": 1,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 806,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "ATK%",
-    "subStatBase": 0.07660000026226044,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "ATK%": {
+        "initial": 0.07660000026226044,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "11413": {
     "id": 11413,
     "type": 1,
     "rarity": 4,
-    "domain": 402,
-    "elite": 900,
-    "mob": 805,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ER%",
-    "subStatBase": 0.10000000149011612,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 900,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ER%": {
+        "initial": 0.10000000149011612,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "11501": {
     "id": 11501,
     "type": 1,
     "rarity": 5,
-    "domain": 400,
-    "elite": 900,
-    "mob": 803,
-    "atkBase": 47.5369987487793,
-    "atkCurve": 302,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 47.5369987487793,
+        "curve": "ATK-302"
+      },
+      "PHY DMG%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "11502": {
     "id": 11502,
     "type": 1,
     "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ER%",
-    "subStatBase": 0.11999999731779099,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ER%": {
+        "initial": 0.11999999731779099,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "11504": {
     "id": 11504,
     "type": 1,
     "rarity": 5,
-    "domain": 403,
-    "elite": 905,
-    "mob": 801,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ATK%",
-    "subStatBase": 0.1080000028014183,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ATK%": {
+        "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "12301": {
     "id": 12301,
     "type": 2,
     "rarity": 3,
-    "domain": 400,
-    "elite": 900,
-    "mob": 807,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "HP%",
-    "subStatBase": 0.07660000026226044,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "HP%": {
+        "initial": 0.07660000026226044,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "12302": {
     "id": 12302,
     "type": 2,
     "rarity": 3,
-    "domain": 401,
-    "elite": 902,
-    "mob": 803,
-    "atkBase": 37.60749816894531,
-    "atkCurve": 104,
-    "subStatType": "EM",
-    "subStatBase": 40.79999923706055,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 37.60749816894531,
+        "curve": "ATK-104"
+      },
+      "EM": {
+        "initial": 40.79999923706055,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "12303": {
     "id": 12303,
     "type": 2,
     "rarity": 3,
-    "domain": 402,
-    "elite": 903,
-    "mob": 800,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "DEF%",
-    "subStatBase": 0.09560000151395798,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "DEF%": {
+        "initial": 0.09560000151395798,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "12305": {
     "id": 12305,
     "type": 2,
     "rarity": 3,
-    "domain": 404,
-    "elite": 904,
-    "mob": 801,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "ATK%",
-    "subStatBase": 0.07660000026226044,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "ATK%": {
+        "initial": 0.07660000026226044,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "12306": {
     "id": 12306,
     "type": 2,
     "rarity": 3,
-    "domain": 405,
-    "elite": 906,
-    "mob": 806,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.09560000151395798,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "PHY DMG%": {
+        "initial": 0.09560000151395798,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "12401": {
     "id": 12401,
     "type": 2,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 805,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "ER%",
-    "subStatBase": 0.1333329975605011,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "ER%": {
+        "initial": 0.1333329975605011,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12402": {
     "id": 12402,
     "type": 2,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 807,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "HP%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "HP%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12403": {
     "id": 12403,
     "type": 2,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 803,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ER%",
-    "subStatBase": 0.06666699796915054,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ER%": {
+        "initial": 0.06666699796915054,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12404": {
     "id": 12404,
     "type": 2,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 800,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ATK%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ATK%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12405": {
     "id": 12405,
     "type": 2,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 802,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "EM",
-    "subStatBase": 36.0,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "EM": {
+        "initial": 36.0,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12406": {
     "id": 12406,
     "type": 2,
     "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "mob": 801,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ATK%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ATK%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12407": {
     "id": 12407,
     "type": 2,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 806,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "DEF%",
-    "subStatBase": 0.11259999871253967,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "DEF%": {
+        "initial": 0.11259999871253967,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12408": {
     "id": 12408,
     "type": 2,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 805,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHD%",
-    "subStatBase": 0.11999999731779099,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHD%": {
+        "initial": 0.11999999731779099,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12409": {
     "id": 12409,
     "type": 2,
     "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "mob": 807,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHC%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHC%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12411": {
     "id": 12411,
     "type": 2,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 800,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.07506699860095978,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "PHY DMG%": {
+        "initial": 0.07506699860095978,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "12501": {
     "id": 12501,
     "type": 2,
     "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 47.5369987487793,
-    "atkCurve": 302,
-    "subStatType": "ER%",
-    "subStatBase": 0.07999999821186066,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 47.5369987487793,
+        "curve": "ATK-302"
+      },
+      "ER%": {
+        "initial": 0.07999999821186066,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "12502": {
     "id": 12502,
     "type": 2,
     "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "mob": 802,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ATK%",
-    "subStatBase": 0.1080000028014183,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ATK%": {
+        "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "12504": {
     "id": 12504,
     "type": 2,
     "rarity": 5,
-    "domain": 404,
-    "elite": 904,
-    "mob": 806,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ATK%",
-    "subStatBase": 0.1080000028014183,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ATK%": {
+        "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "13301": {
     "id": 13301,
     "type": 3,
     "rarity": 3,
-    "domain": 403,
-    "elite": 905,
-    "mob": 805,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "CHC%",
-    "subStatBase": 0.050999999046325684,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "CHC%": {
+        "initial": 0.050999999046325684,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "13302": {
     "id": 13302,
     "type": 3,
     "rarity": 3,
-    "domain": 404,
-    "elite": 904,
-    "mob": 807,
-    "atkBase": 39.875099182128906,
-    "atkCurve": 102,
-    "subStatType": "ATK%",
-    "subStatBase": 0.05106699839234352,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 39.875099182128906,
+        "curve": "ATK-102"
+      },
+      "ATK%": {
+        "initial": 0.05106699839234352,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "13303": {
     "id": 13303,
     "type": 3,
     "rarity": 3,
-    "domain": 405,
-    "elite": 906,
-    "mob": 803,
-    "atkBase": 37.60749816894531,
-    "atkCurve": 104,
-    "subStatType": "HP%",
-    "subStatBase": 0.10213299840688705,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 37.60749816894531,
+        "curve": "ATK-104"
+      },
+      "HP%": {
+        "initial": 0.10213299840688705,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "13401": {
     "id": 13401,
     "type": 3,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 802,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "EM",
-    "subStatBase": 48.0,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "EM": {
+        "initial": 48.0,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13402": {
     "id": 13402,
     "type": 3,
     "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "mob": 801,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ER%",
-    "subStatBase": 0.10000000149011612,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ER%": {
+        "initial": 0.10000000149011612,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13403": {
     "id": 13403,
     "type": 3,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 806,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.07506699860095978,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "PHY DMG%": {
+        "initial": 0.07506699860095978,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13404": {
     "id": 13404,
     "type": 3,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 805,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHD%",
-    "subStatBase": 0.11999999731779099,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHD%": {
+        "initial": 0.11999999731779099,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13405": {
     "id": 13405,
     "type": 3,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 807,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "CHC%",
-    "subStatBase": 0.07999999821186066,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "CHC%": {
+        "initial": 0.07999999821186066,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13407": {
     "id": 13407,
     "type": 3,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 800,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ER%",
-    "subStatBase": 0.06666699796915054,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ER%": {
+        "initial": 0.06666699796915054,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13408": {
     "id": 13408,
     "type": 3,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 805,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ATK%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ATK%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13409": {
     "id": 13409,
     "type": 3,
     "rarity": 4,
-    "domain": 401,
-    "elite": 904,
-    "mob": 805,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.15013299882411957,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 904,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "PHY DMG%": {
+        "initial": 0.15013299882411957,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "13502": {
     "id": 13502,
     "type": 3,
     "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "mob": 802,
-    "atkBase": 47.5369987487793,
-    "atkCurve": 302,
-    "subStatType": "ER%",
-    "subStatBase": 0.07999999821186066,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 47.5369987487793,
+        "curve": "ATK-302"
+      },
+      "ER%": {
+        "initial": 0.07999999821186066,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "13504": {
     "id": 13504,
     "type": 3,
     "rarity": 5,
-    "domain": 405,
-    "elite": 906,
-    "mob": 806,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ATK%",
-    "subStatBase": 0.1080000028014183,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ATK%": {
+        "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "13505": {
     "id": 13505,
     "type": 3,
     "rarity": 5,
-    "domain": 403,
-    "elite": 905,
-    "mob": 805,
-    "atkBase": 47.5369987487793,
-    "atkCurve": 302,
-    "subStatType": "CHC%",
-    "subStatBase": 0.04800000041723251,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 47.5369987487793,
+        "curve": "ATK-302"
+      },
+      "CHC%": {
+        "initial": 0.04800000041723251,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "14301": {
     "id": 14301,
     "type": 4,
     "rarity": 3,
-    "domain": 400,
-    "elite": 900,
-    "mob": 800,
-    "atkBase": 37.60749816894531,
-    "atkCurve": 104,
-    "subStatType": "EM",
-    "subStatBase": 40.79999923706055,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 37.60749816894531,
+        "curve": "ATK-104"
+      },
+      "EM": {
+        "initial": 40.79999923706055,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "14302": {
     "id": 14302,
     "type": 4,
     "rarity": 3,
-    "domain": 401,
-    "elite": 902,
-    "mob": 802,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "HP%",
-    "subStatBase": 0.07660000026226044,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "HP%": {
+        "initial": 0.07660000026226044,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "14303": {
     "id": 14303,
     "type": 4,
     "rarity": 3,
-    "domain": 402,
-    "elite": 903,
-    "mob": 801,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "ER%",
-    "subStatBase": 0.08500000089406967,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "ER%": {
+        "initial": 0.08500000089406967,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "14304": {
     "id": 14304,
     "type": 4,
     "rarity": 3,
-    "domain": 403,
-    "elite": 905,
-    "mob": 806,
-    "atkBase": 39.875099182128906,
-    "atkCurve": 102,
-    "subStatType": "EM",
-    "subStatBase": 20.399999618530273,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 39.875099182128906,
+        "curve": "ATK-102"
+      },
+      "EM": {
+        "initial": 20.399999618530273,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "14305": {
     "id": 14305,
     "type": 4,
     "rarity": 3,
-    "domain": 404,
-    "elite": 904,
-    "mob": 805,
-    "atkBase": 39.875099182128906,
-    "atkCurve": 102,
-    "subStatType": "CHC%",
-    "subStatBase": 0.03400000184774399,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 39.875099182128906,
+        "curve": "ATK-102"
+      },
+      "CHC%": {
+        "initial": 0.03400000184774399,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "14401": {
     "id": 14401,
     "type": 4,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 802,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ER%",
-    "subStatBase": 0.10000000149011612,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ER%": {
+        "initial": 0.10000000149011612,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14402": {
     "id": 14402,
     "type": 4,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 801,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHD%",
-    "subStatBase": 0.11999999731779099,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHD%": {
+        "initial": 0.11999999731779099,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14403": {
     "id": 14403,
     "type": 4,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 806,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "EM",
-    "subStatBase": 48.0,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "EM": {
+        "initial": 48.0,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14404": {
     "id": 14404,
     "type": 4,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 805,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ATK%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ATK%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14405": {
     "id": 14405,
     "type": 4,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 807,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHC%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHC%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14406": {
     "id": 14406,
     "type": 4,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 803,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "HP%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "HP%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14407": {
     "id": 14407,
     "type": 4,
     "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "mob": 800,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "EM",
-    "subStatBase": 24.0,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "EM": {
+        "initial": 24.0,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14408": {
     "id": 14408,
     "type": 4,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 802,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHD%",
-    "subStatBase": 0.11999999731779099,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHD%": {
+        "initial": 0.11999999731779099,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14409": {
     "id": 14409,
     "type": 4,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 801,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "ATK%",
-    "subStatBase": 0.11999999731779099,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "ATK%": {
+        "initial": 0.11999999731779099,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14412": {
     "id": 14412,
     "type": 4,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 807,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "14501": {
     "id": 14501,
     "type": 4,
     "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "mob": 803,
-    "atkBase": 47.5369987487793,
-    "atkCurve": 302,
-    "subStatType": "ATK%",
-    "subStatBase": 0.07199999690055847,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 47.5369987487793,
+        "curve": "ATK-302"
+      },
+      "ATK%": {
+        "initial": 0.07199999690055847,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "14502": {
     "id": 14502,
     "type": 4,
     "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "mob": 800,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "CHC%",
-    "subStatBase": 0.07199999690055847,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "CHC%": {
+        "initial": 0.07199999690055847,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "14504": {
     "id": 14504,
     "type": 4,
     "rarity": 5,
-    "domain": 405,
-    "elite": 906,
-    "mob": 801,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ATK%",
-    "subStatBase": 0.1080000028014183,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ATK%": {
+        "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "15301": {
     "id": 15301,
     "type": 5,
     "rarity": 3,
-    "domain": 400,
-    "elite": 900,
-    "mob": 803,
-    "atkBase": 39.875099182128906,
-    "atkCurve": 102,
-    "subStatType": "EM",
-    "subStatBase": 20.399999618530273,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 39.875099182128906,
+        "curve": "ATK-102"
+      },
+      "EM": {
+        "initial": 20.399999618530273,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "15302": {
     "id": 15302,
     "type": 5,
     "rarity": 3,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 38.74129867553711,
-    "atkCurve": 101,
-    "subStatType": "CHD%",
-    "subStatBase": 0.10199999809265137,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 38.74129867553711,
+        "curve": "ATK-101"
+      },
+      "CHD%": {
+        "initial": 0.10199999809265137,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "15303": {
     "id": 15303,
     "type": 5,
     "rarity": 3,
-    "domain": 402,
-    "elite": 903,
-    "mob": 802,
-    "atkBase": 37.60749816894531,
-    "atkCurve": 104,
-    "subStatType": "HP%",
-    "subStatBase": 0.10213299840688705,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 37.60749816894531,
+        "curve": "ATK-104"
+      },
+      "HP%": {
+        "initial": 0.10213299840688705,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "15304": {
     "id": 15304,
     "type": 5,
     "rarity": 3,
-    "domain": 403,
-    "elite": 905,
-    "mob": 801,
-    "atkBase": 37.60749816894531,
-    "atkCurve": 104,
-    "subStatType": "CHC%",
-    "subStatBase": 0.06800000369548798,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 37.60749816894531,
+        "curve": "ATK-104"
+      },
+      "CHC%": {
+        "initial": 0.06800000369548798,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "15305": {
     "id": 15305,
     "type": 5,
     "rarity": 3,
-    "domain": 404,
-    "elite": 904,
-    "mob": 806,
-    "atkBase": 39.875099182128906,
-    "atkCurve": 102,
-    "subStatType": "CHD%",
-    "subStatBase": 0.06800000369548798,
-    "subStatCurve": 101
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 39.875099182128906,
+        "curve": "ATK-102"
+      },
+      "CHD%": {
+        "initial": 0.06800000369548798,
+        "curve": "CHC-101"
+      }
+    }
   },
-  {
+  "15401": {
     "id": 15401,
     "type": 5,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 807,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "ER%",
-    "subStatBase": 0.1333329975605011,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "ER%": {
+        "initial": 0.1333329975605011,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15402": {
     "id": 15402,
     "type": 5,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 803,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "EM",
-    "subStatBase": 36.0,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "EM": {
+        "initial": 36.0,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15403": {
     "id": 15403,
     "type": 5,
     "rarity": 4,
-    "domain": 401,
-    "elite": 902,
-    "mob": 800,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "ER%",
-    "subStatBase": 0.06666699796915054,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ER%": {
+        "initial": 0.06666699796915054,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15404": {
     "id": 15404,
     "type": 5,
     "rarity": 4,
-    "domain": 402,
-    "elite": 903,
-    "mob": 802,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15405": {
     "id": 15405,
     "type": 5,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 801,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 801
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15406": {
     "id": 15406,
     "type": 5,
     "rarity": 4,
-    "domain": 404,
-    "elite": 904,
-    "mob": 806,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "ATK%",
-    "subStatBase": 0.09000000357627869,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15407": {
     "id": 15407,
     "type": 5,
     "rarity": 4,
-    "domain": 405,
-    "elite": 906,
-    "mob": 805,
-    "atkBase": 41.067100524902344,
-    "atkCurve": 204,
-    "subStatType": "PHY DMG%",
-    "subStatBase": 0.15013299882411957,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 41.067100524902344,
+        "curve": "ATK-204"
+      },
+      "PHY DMG%": {
+        "initial": 0.15013299882411957,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15408": {
     "id": 15408,
     "type": 5,
     "rarity": 4,
-    "domain": 403,
-    "elite": 905,
-    "mob": 807,
-    "atkBase": 43.734901428222656,
-    "atkCurve": 202,
-    "subStatType": "CHD%",
-    "subStatBase": 0.07999999821186066,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "CHD%": {
+        "initial": 0.07999999821186066,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15409": {
     "id": 15409,
     "type": 5,
     "rarity": 4,
-    "domain": 400,
-    "elite": 900,
-    "mob": 803,
-    "atkBase": 42.4010009765625,
-    "atkCurve": 201,
-    "subStatType": "CHC%",
-    "subStatBase": 0.05999999865889549,
-    "subStatCurve": 201
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "CHC%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
   },
-  {
+  "15501": {
     "id": 15501,
     "type": 5,
     "rarity": 5,
-    "domain": 401,
-    "elite": 902,
-    "mob": 803,
-    "atkBase": 47.5369987487793,
-    "atkCurve": 302,
-    "subStatType": "CHC%",
-    "subStatBase": 0.04800000041723251,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 47.5369987487793,
+        "curve": "ATK-302"
+      },
+      "CHC%": {
+        "initial": 0.04800000041723251,
+        "curve": "CHC-301"
+      }
+    }
   },
-  {
+  "15502": {
     "id": 15502,
     "type": 5,
     "rarity": 5,
-    "domain": 402,
-    "elite": 903,
-    "mob": 800,
-    "atkBase": 45.9364013671875,
-    "atkCurve": 301,
-    "subStatType": "ATK%",
-    "subStatBase": 0.1080000028014183,
-    "subStatCurve": 301
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ATK%": {
+        "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
   }
-]
+}

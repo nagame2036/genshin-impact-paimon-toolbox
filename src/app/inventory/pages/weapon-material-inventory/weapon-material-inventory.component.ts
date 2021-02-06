@@ -1,34 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {MaterialService} from '../../services/material.service';
-import {InventoryItemDetail} from '../../models/inventory-item-detail.model';
-import {AbstractSubInventoryComponent} from '../abstract-sub-inventory.component';
+import {MaterialService} from '../../../material/services/material.service';
+import {MaterialDetail} from '../../../material/models/material.model';
 import {Observable} from 'rxjs';
-import {MaterialType} from '../../models/material-type.enum';
-import {InventoryService} from '../../services/inventory.service';
+import {MaterialType} from '../../../material/models/material-type.enum';
 
 @Component({
   selector: 'app-weapon-material-inventory',
   templateUrl: './weapon-material-inventory.component.html',
   styleUrls: ['./weapon-material-inventory.component.scss']
 })
-export class WeaponMaterialInventoryComponent extends AbstractSubInventoryComponent implements OnInit {
+export class WeaponMaterialInventoryComponent implements OnInit {
 
-  common$!: Observable<InventoryItemDetail[]>;
+  common$!: Observable<MaterialDetail[]>;
 
-  monThu$!: Observable<InventoryItemDetail[]>;
+  monThu$!: Observable<MaterialDetail[]>;
 
-  tueFri$!: Observable<InventoryItemDetail[]>;
+  tueFri$!: Observable<MaterialDetail[]>;
 
-  wedSat$!: Observable<InventoryItemDetail[]>;
+  wedSat$!: Observable<MaterialDetail[]>;
 
-  constructor(materials: MaterialService, inventory: InventoryService) {
-    super(materials, inventory);
+  constructor(private materials: MaterialService) {
   }
 
   ngOnInit(): void {
-    this.common$ = this.filterMaterials(MaterialType.WEAPON_EXP);
-    this.monThu$ = this.filterMaterials(MaterialType.WEAPON_14);
-    this.tueFri$ = this.filterMaterials(MaterialType.WEAPON_25);
-    this.wedSat$ = this.filterMaterials(MaterialType.WEAPON_36);
+    this.common$ = this.materials.getTypes(MaterialType.WEAPON_EXP);
+    this.monThu$ = this.materials.getTypes(MaterialType.WEAPON_14);
+    this.tueFri$ = this.materials.getTypes(MaterialType.WEAPON_25);
+    this.wedSat$ = this.materials.getTypes(MaterialType.WEAPON_36);
   }
 }

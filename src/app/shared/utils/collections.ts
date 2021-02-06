@@ -1,4 +1,4 @@
-import {iif, Observable, of} from 'rxjs';
+import {isNumeric} from 'rxjs/internal-compatibility';
 
 export function toggleListItem<T>(list: T[], item: T, equals: (a: T) => boolean): T[] {
   const notFound = list.findIndex(it => equals(it)) === -1;
@@ -9,17 +9,17 @@ export function toggleListItem<T>(list: T[], item: T, equals: (a: T) => boolean)
   return result;
 }
 
-export function toggleItem<T extends { id: number }>(list: T[], item: T, equals: (a: T) => boolean = a => a.id === item.id): T[] {
-  return toggleListItem(list, item, equals);
-}
-
-export function findObservable<T>(list: T[], predicate: (item: T) => boolean): Observable<T> {
-  const index = list.findIndex(predicate);
-  return iif(() => index !== -1, of(list[index]));
+export function objectMap<T>(obj: { [id: number]: T }): Map<number, T> {
+  const result = new Map<number, any>();
+  for (const [key, value] of Object.entries(obj)) {
+    const newKey = isNumeric(key) ? Number(key) : key;
+    result.set(newKey, value);
+  }
+  return result;
 }
 
 export function mapArrays<T, K, V, R>(items: T[], map: Map<K, V>, key: (item: T) => K, result: (item: T, mapItem: V) => R): R[] {
-  const results: R[] = [];
+  const results = [];
   for (const item of items) {
     const mapItem = map.get(key(item));
     if (mapItem) {

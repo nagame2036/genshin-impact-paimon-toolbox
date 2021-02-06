@@ -1,15 +1,13 @@
-@import '../../../game-common/styles/items-list.scss';
+@import '../../../game-common/styles/item-list.scss';
+@import '../../styles/character-list.scss';
 
-.element-hint {
-  @apply absolute;
-  @apply top-1;
-  @apply left-1;
-  @apply h-8;
-  @apply w-8;
-  @apply rounded-full;
-  background: #474747;
+.list {
+  grid-template-columns: repeat(auto-fill, 360px);
 }
 
-.weapon-type-hint {
-  @apply left-16;
+.item-overview {
+
+  div {
+    @apply pt-0.5;
+  }
 }

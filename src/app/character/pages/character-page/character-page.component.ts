@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Character} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
-import {PartyCharacterListComponent} from '../../components/party-character-list/party-character-list.component';
+import {CharacterListComponent} from '../../components/character-list/character-list.component';
 import {CharacterService} from '../../services/character.service';
 import {Router} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-character-page',
@@ -15,6 +16,8 @@ export class CharacterPageComponent implements OnInit {
 
   i18n = new I18n('characters');
 
+  characters$!: Observable<Character[]>;
+
   multiSelect = false;
 
   selectAll = false;
@@ -22,13 +25,14 @@ export class CharacterPageComponent implements OnInit {
   selectedItems: Character[] = [];
 
   @ViewChild('list')
-  list!: PartyCharacterListComponent;
+  list!: CharacterListComponent;
 
   constructor(private service: CharacterService, private router: Router, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
     this.logger.info('init');
+    this.characters$ = this.service.getAll();
   }
 
   gotoAdd(): void {
@@ -36,16 +40,17 @@ export class CharacterPageComponent implements OnInit {
   }
 
   goToDetail(character: Character): void {
-    this.router.navigate(['characters', character.id]).then();
+    this.router.navigate(['characters', character.progress.id]).then();
   }
 
   remove(): void {
-    this.service.removePartyMemberByList(this.selectedItems.map(it => it.id));
+    this.service.removeAll(this.selectedItems);
     this.logger.info('removed characters', this.selectedItems);
     this.updateSelected([]);
   }
 
   updateSelected(selected: Character[]): void {
+    this.logger.info('updated selected characters', selected);
     this.selectedItems = selected;
     this.selectAll = this.multiSelect && selected.length > 0 && selected.length === this.list.characters.length;
   }

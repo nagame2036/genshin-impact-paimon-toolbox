@@ -1,11 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterListComponent} from './character-list.component';
-import {AppTranslateModule} from '../../../app-translate.module';
+import {AppTestingModule} from '../../../app-testing.module';
 import {CharacterModule} from '../../character.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('CharacterListComponent', () => {
+describe('PartyCharacterListComponent', () => {
   let component: CharacterListComponent;
   let fixture: ComponentFixture<CharacterListComponent>;
 
@@ -16,9 +15,8 @@ describe('CharacterListComponent', () => {
       ],
       imports: [
         CharacterModule,
-        BrowserAnimationsModule,
-        AppTranslateModule
-      ]
+        AppTestingModule,
+      ],
     })
       .compileComponents();
   });

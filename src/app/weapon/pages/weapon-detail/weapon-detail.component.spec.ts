@@ -2,9 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponDetailComponent} from './weapon-detail.component';
 import {WeaponModule} from '../../weapon.module';
-import {AppTranslateModule} from '../../../app-translate.module';
-import {RouterTestingModule} from '@angular/router/testing';
-import {AppIndexedDbModule} from '../../../app-indexed-db.module';
+import {AppTestingModule} from '../../../app-testing.module';
 
 describe('WeaponDetailComponent', () => {
   let component: WeaponDetailComponent;
@@ -17,9 +15,7 @@ describe('WeaponDetailComponent', () => {
       ],
       imports: [
         WeaponModule,
-        AppIndexedDbModule,
-        AppTranslateModule,
-        RouterTestingModule,
+        AppTestingModule,
       ]
     })
       .compileComponents();

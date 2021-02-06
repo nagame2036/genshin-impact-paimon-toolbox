@@ -1,4 +1,4 @@
-import {GroupItemCost} from '../../game-common/models/group-item-cost.model';
+import {MaterialGroupCost} from '../../material/models/material-group-cost.model';
 
 export interface CharacterAscensionCost {
 
@@ -6,9 +6,9 @@ export interface CharacterAscensionCost {
 
   boss: number;
 
-  gem: GroupItemCost;
+  gem: MaterialGroupCost;
 
   local: number;
 
-  mob: GroupItemCost;
+  mob: MaterialGroupCost;
 }

@@ -1,580 +1,704 @@
-[
-  {
+{
+  "1001": {
     "id": 1001,
     "rarity": 5,
     "element": 1,
     "weapon": 1,
-    "skills": [
+    "talentsUpgradable": [
       10010,
       10011,
-      10014,
+      10014
+    ],
+    "talentsOther": [
       10015,
       10016
     ],
-    "gem": 300,
-    "local": 10103,
-    "mob": 801
+    "materials": {
+      "gem": 300,
+      "local": 10103,
+      "mob": 801
+    }
   },
-  {
+  "1002": {
     "id": 1002,
     "rarity": 5,
     "element": 2,
     "weapon": 1,
-    "skills": [
+    "talentsUpgradable": [
       10020,
       10021,
-      10024,
+      10024
+    ],
+    "talentsOther": [
       10025,
       10026
     ],
-    "gem": 300,
-    "local": 10103,
-    "mob": 801
+    "materials": {
+      "gem": 300,
+      "local": 10103,
+      "mob": 801
+    }
   },
-  {
+  "1011": {
     "id": 1011,
     "rarity": 5,
     "element": 1,
     "weapon": 1,
-    "skills": [
+    "talentsUpgradable": [
       10110,
       10011,
-      10014,
+      10014
+    ],
+    "talentsOther": [
       10015,
       10016
     ],
-    "gem": 300,
-    "local": 10103,
-    "mob": 801
+    "materials": {
+      "gem": 300,
+      "local": 10103,
+      "mob": 801
+    }
   },
-  {
+  "1012": {
     "id": 1012,
     "rarity": 5,
     "element": 2,
     "weapon": 1,
-    "skills": [
+    "talentsUpgradable": [
       10120,
       10021,
-      10024,
+      10024
+    ],
+    "talentsOther": [
       10025,
       10026
     ],
-    "gem": 300,
-    "local": 10103,
-    "mob": 801
+    "materials": {
+      "gem": 300,
+      "local": 10103,
+      "mob": 801
+    }
   },
-  {
+  "4000": {
     "id": 4000,
     "rarity": 4,
     "element": 6,
     "weapon": 5,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40000,
       40001,
-      40004,
+      40004
+    ],
+    "talentsOther": [
       40005,
       40006,
       40007
     ],
-    "boss": 2006,
-    "gem": 306,
-    "local": 10105,
-    "mob": 803
+    "materials": {
+      "boss": 2006,
+      "gem": 306,
+      "local": 10105,
+      "mob": 803
+    }
   },
-  {
+  "4001": {
     "id": 4001,
     "rarity": 4,
     "element": 7,
     "weapon": 1,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40010,
       40011,
-      40014,
+      40014
+    ],
+    "talentsOther": [
       40015,
       40016,
       40017
     ],
-    "boss": 2007,
-    "gem": 307,
-    "local": 10106,
-    "mob": 806
+    "materials": {
+      "boss": 2007,
+      "gem": 307,
+      "local": 10106,
+      "mob": 806
+    }
   },
-  {
+  "4002": {
     "id": 4002,
     "rarity": 4,
     "element": 3,
     "weapon": 4,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40020,
       40021,
-      40024,
+      40024
+    ],
+    "talentsOther": [
       40025,
       40026,
       40027
     ],
-    "boss": 2003,
-    "gem": 303,
-    "local": 10101,
-    "mob": 800
+    "materials": {
+      "boss": 2003,
+      "gem": 303,
+      "local": 10101,
+      "mob": 800
+    }
   },
-  {
+  "4003": {
     "id": 4003,
     "rarity": 4,
     "element": 5,
     "weapon": 4,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40030,
       40031,
-      40034,
+      40034
+    ],
+    "talentsOther": [
       40035,
       40036,
       40037
     ],
-    "boss": 2005,
-    "gem": 305,
-    "local": 10104,
-    "mob": 802
+    "materials": {
+      "boss": 2005,
+      "gem": 305,
+      "local": 10104,
+      "mob": 802
+    }
   },
-  {
+  "4004": {
     "id": 4004,
     "rarity": 4,
     "element": 3,
     "weapon": 2,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40040,
       40041,
-      40044,
+      40044
+    ],
+    "talentsOther": [
       40045,
       40046,
       40047
     ],
-    "boss": 2003,
-    "gem": 303,
-    "local": 10100,
-    "mob": 801
+    "materials": {
+      "boss": 2003,
+      "gem": 303,
+      "local": 10100,
+      "mob": 801
+    }
   },
-  {
+  "4005": {
     "id": 4005,
     "rarity": 4,
     "element": 6,
     "weapon": 3,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       40050,
       40051,
-      40054,
+      40054
+    ],
+    "talentsOther": [
       40055,
       40056,
       40057
     ],
-    "boss": 2006,
-    "gem": 306,
-    "local": 10200,
-    "mob": 800
+    "materials": {
+      "boss": 2006,
+      "gem": 306,
+      "local": 10200,
+      "mob": 800
+    }
   },
-  {
+  "4006": {
     "id": 4006,
     "rarity": 4,
     "element": 3,
     "weapon": 2,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       40060,
       40061,
-      40064,
+      40064
+    ],
+    "talentsOther": [
       40065,
       40066,
       40067
     ],
-    "boss": 2003,
-    "gem": 303,
-    "local": 10201,
-    "mob": 806
+    "materials": {
+      "boss": 2003,
+      "gem": 303,
+      "local": 10201,
+      "mob": 806
+    }
   },
-  {
+  "4007": {
     "id": 4007,
     "rarity": 4,
     "element": 5,
     "weapon": 1,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       40070,
       40071,
-      40074,
+      40074
+    ],
+    "talentsOther": [
       40075,
       40076,
       40077
     ],
-    "boss": 2005,
-    "gem": 305,
-    "local": 10202,
-    "mob": 801
+    "materials": {
+      "boss": 2005,
+      "gem": 305,
+      "local": 10202,
+      "mob": 801
+    }
   },
-  {
+  "4008": {
     "id": 4008,
     "rarity": 4,
     "element": 2,
     "weapon": 4,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       40080,
       40081,
-      40084,
+      40084
+    ],
+    "talentsOther": [
       40085,
       40086,
       40087
     ],
-    "boss": 2002,
-    "gem": 302,
-    "local": 10203,
-    "mob": 805
+    "materials": {
+      "boss": 2002,
+      "gem": 302,
+      "local": 10203,
+      "mob": 805
+    }
   },
-  {
+  "4009": {
     "id": 4009,
     "rarity": 4,
     "element": 3,
     "weapon": 5,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40090,
       40091,
-      40094,
+      40094
+    ],
+    "talentsOther": [
       40095,
       40096,
       40097
     ],
-    "boss": 2003,
-    "gem": 303,
-    "local": 10105,
-    "mob": 803
+    "materials": {
+      "boss": 2003,
+      "gem": 303,
+      "local": 10105,
+      "mob": 803
+    }
   },
-  {
+  "4010": {
     "id": 4010,
     "rarity": 4,
     "element": 6,
     "weapon": 1,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40100,
       40101,
-      40104,
+      40104
+    ],
+    "talentsOther": [
       40105,
       40106,
       40107
     ],
-    "boss": 2006,
-    "gem": 306,
-    "local": 10103,
-    "mob": 806
+    "materials": {
+      "boss": 2006,
+      "gem": 306,
+      "local": 10103,
+      "mob": 806
+    }
   },
-  {
+  "4011": {
     "id": 4011,
     "rarity": 4,
     "element": 2,
     "weapon": 2,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40110,
       40111,
-      40114,
+      40114
+    ],
+    "talentsOther": [
       40115,
       40116,
       40117
     ],
-    "boss": 2002,
-    "gem": 302,
-    "local": 10101,
-    "mob": 801
+    "materials": {
+      "boss": 2002,
+      "gem": 302,
+      "local": 10101,
+      "mob": 801
+    }
   },
-  {
+  "4012": {
     "id": 4012,
     "rarity": 4,
     "element": 7,
     "weapon": 2,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       40120,
       40121,
-      40124,
+      40124
+    ],
+    "talentsOther": [
       40125,
       40126,
       40127
     ],
-    "boss": 2007,
-    "gem": 307,
-    "local": 10207,
-    "mob": 801
+    "materials": {
+      "boss": 2007,
+      "gem": 307,
+      "local": 10207,
+      "mob": 801
+    }
   },
-  {
+  "4013": {
     "id": 4013,
     "rarity": 4,
     "element": 1,
     "weapon": 4,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40130,
       40131,
-      40134,
+      40134
+    ],
+    "talentsOther": [
       40135,
       40136,
       40137
     ],
-    "boss": 2001,
-    "gem": 301,
-    "local": 10103,
-    "mob": 807
+    "materials": {
+      "boss": 2001,
+      "gem": 301,
+      "local": 10103,
+      "mob": 807
+    }
   },
-  {
+  "4014": {
     "id": 4014,
     "rarity": 4,
     "element": 7,
     "weapon": 5,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       40140,
       40141,
-      40144,
+      40144
+    ],
+    "talentsOther": [
       40145,
       40146,
       40147
     ],
-    "boss": 2007,
-    "gem": 307,
-    "local": 10106,
-    "mob": 803
+    "materials": {
+      "boss": 2007,
+      "gem": 307,
+      "local": 10106,
+      "mob": 803
+    }
   },
-  {
+  "4015": {
     "id": 4015,
     "rarity": 4,
     "element": 6,
     "weapon": 2,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       40150,
       40151,
-      40154,
+      40154
+    ],
+    "talentsOther": [
       40155,
       40156,
       40157
     ],
-    "boss": 2006,
-    "gem": 306,
-    "local": 10206,
-    "mob": 806
+    "materials": {
+      "boss": 2006,
+      "gem": 306,
+      "local": 10206,
+      "mob": 806
+    }
   },
-  {
+  "5000": {
     "id": 5000,
     "rarity": 5,
     "element": 1,
     "weapon": 1,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       50000,
       50001,
-      50004,
+      50004
+    ],
+    "talentsOther": [
       50005,
       50006,
       50007
     ],
-    "boss": 2001,
-    "gem": 301,
-    "local": 10107,
-    "mob": 801
+    "materials": {
+      "boss": 2001,
+      "gem": 301,
+      "local": 10107,
+      "mob": 801
+    }
   },
-  {
+  "5001": {
     "id": 5001,
     "rarity": 5,
     "element": 6,
     "weapon": 2,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       50010,
       50011,
-      50014,
+      50014
+    ],
+    "talentsOther": [
       50015,
       50016,
       50017
     ],
-    "boss": 2006,
-    "gem": 306,
-    "local": 10105,
-    "mob": 805
+    "materials": {
+      "boss": 2006,
+      "gem": 306,
+      "local": 10105,
+      "mob": 805
+    }
   },
-  {
+  "5002": {
     "id": 5002,
     "rarity": 5,
     "element": 7,
     "weapon": 1,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       50020,
       50021,
-      50024,
+      50024
+    ],
+    "talentsOther": [
       50025,
       50026,
       50027
     ],
-    "boss": 2007,
-    "gem": 307,
-    "local": 10206,
-    "mob": 802
+    "materials": {
+      "boss": 2007,
+      "gem": 307,
+      "local": 10206,
+      "mob": 802
+    }
   },
-  {
+  "5003": {
     "id": 5003,
     "rarity": 5,
     "element": 5,
     "weapon": 4,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       50030,
       50031,
+      50034
+    ],
+    "talentsOther": [
       50032,
-      50034,
       50035,
       50036,
       50037
     ],
-    "boss": 2005,
-    "gem": 305,
-    "local": 10104,
-    "mob": 807
+    "materials": {
+      "boss": 2005,
+      "gem": 305,
+      "local": 10104,
+      "mob": 807
+    }
   },
-  {
+  "5004": {
     "id": 5004,
     "rarity": 5,
     "element": 3,
     "weapon": 1,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       50040,
       50041,
-      50044,
+      50044
+    ],
+    "talentsOther": [
       50045,
       50046,
       50047
     ],
-    "boss": 2003,
-    "gem": 303,
-    "local": 10207,
-    "mob": 807
+    "materials": {
+      "boss": 2003,
+      "gem": 303,
+      "local": 10207,
+      "mob": 807
+    }
   },
-  {
+  "5005": {
     "id": 5005,
     "rarity": 5,
     "element": 1,
     "weapon": 5,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       50050,
       50051,
-      50054,
+      50054
+    ],
+    "talentsOther": [
       50055,
       50056,
       50057
     ],
-    "boss": 2001,
-    "gem": 301,
-    "local": 10102,
-    "mob": 800
+    "materials": {
+      "boss": 2001,
+      "gem": 301,
+      "local": 10102,
+      "mob": 800
+    }
   },
-  {
+  "5006": {
     "id": 5006,
     "rarity": 5,
     "element": 6,
     "weapon": 4,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       50060,
       50061,
-      50064,
+      50064
+    ],
+    "talentsOther": [
       50065,
       50066,
       50067
     ],
-    "boss": 2006,
-    "gem": 306,
-    "local": 10104,
-    "mob": 802
+    "materials": {
+      "boss": 2006,
+      "gem": 306,
+      "local": 10104,
+      "mob": 802
+    }
   },
-  {
+  "5007": {
     "id": 5007,
     "rarity": 5,
     "element": 5,
     "weapon": 5,
     "nation": 7,
-    "skills": [
+    "talentsUpgradable": [
       50070,
       50071,
-      50074,
+      50074
+    ],
+    "talentsOther": [
       50075,
       50076,
       50077
     ],
-    "boss": 2005,
-    "gem": 305,
-    "local": 10205,
-    "mob": 805
+    "materials": {
+      "boss": 2005,
+      "gem": 305,
+      "local": 10205,
+      "mob": 805
+    }
   },
-  {
+  "5008": {
     "id": 5008,
     "rarity": 5,
     "element": 2,
     "weapon": 3,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       50080,
       50081,
-      50084,
+      50084
+    ],
+    "talentsOther": [
       50085,
       50086,
       50087
     ],
-    "boss": 2002,
-    "gem": 302,
-    "local": 10207,
-    "mob": 800
+    "materials": {
+      "boss": 2002,
+      "gem": 302,
+      "local": 10207,
+      "mob": 800
+    }
   },
-  {
+  "5009": {
     "id": 5009,
     "rarity": 5,
     "element": 2,
     "weapon": 1,
     "nation": 1,
-    "skills": [
+    "talentsUpgradable": [
       50090,
       50091,
-      50094,
+      50094
+    ],
+    "talentsOther": [
       50095,
       50096,
       50097
     ],
-    "boss": 2002,
-    "gem": 302,
-    "local": 10102,
-    "mob": 802
+    "materials": {
+      "boss": 2002,
+      "gem": 302,
+      "local": 10102,
+      "mob": 802
+    }
   },
-  {
+  "5010": {
     "id": 5010,
     "rarity": 5,
     "element": 7,
     "weapon": 5,
     "nation": 2,
-    "skills": [
+    "talentsUpgradable": [
       50100,
       50101,
-      50104,
+      50104
+    ],
+    "talentsOther": [
       50105,
       50106,
       50107
     ],
-    "boss": 2007,
-    "gem": 307,
-    "local": 10204,
-    "mob": 807
+    "materials": {
+      "boss": 2007,
+      "gem": 307,
+      "local": 10204,
+      "mob": 807
+    }
   }
-]
+}

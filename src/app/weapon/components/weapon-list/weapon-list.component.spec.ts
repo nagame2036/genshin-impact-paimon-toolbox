@@ -1,11 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WeaponListComponent} from './weapon-list.component';
-import {AppTranslateModule} from '../../../app-translate.module';
 import {WeaponModule} from '../../weapon.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppTestingModule} from '../../../app-testing.module';
 
-describe('WeaponListComponent', () => {
+describe('PartyWeaponListComponent', () => {
   let component: WeaponListComponent;
   let fixture: ComponentFixture<WeaponListComponent>;
 
@@ -16,9 +15,8 @@ describe('WeaponListComponent', () => {
       ],
       imports: [
         WeaponModule,
-        BrowserAnimationsModule,
-        AppTranslateModule
-      ]
+        AppTestingModule,
+      ],
     })
       .compileComponents();
   });

@@ -5,7 +5,7 @@
   <div class="remove-list-container">
     <div class="remove-list">
       <div *ngFor="let item of items" class="remove-item-view">
-        <app-item-view *ngIf="item" [category]="category" [id]="item.id" [rarity]="item.rarity">
+        <app-item-view *ngIf="item" [category]="category" [id]="item.info.id" [rarity]="item.info.rarity">
         </app-item-view>
       </div>
     </div>

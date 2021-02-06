@@ -1,12 +1,12 @@
-import {GroupItemCost} from '../../game-common/models/group-item-cost.model';
+import {MaterialGroupCost} from '../../material/models/material-group-cost.model';
 
 export interface TalentLevelupCost {
 
   mora: number;
 
-  domain: GroupItemCost;
+  domain: MaterialGroupCost;
 
-  mob: GroupItemCost;
+  mob: MaterialGroupCost;
 
   boss?: number;
 

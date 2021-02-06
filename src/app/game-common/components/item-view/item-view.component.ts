@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {ImageService} from '../../../image/services/image.service';
+import {ImageService, ImageType} from '../../../image/services/image.service';
 
 @Component({
   selector: 'app-item-view',
@@ -15,7 +15,7 @@ export class ItemViewComponent implements OnInit {
   width = 100;
 
   @Input()
-  category!: string;
+  category!: ImageType;
 
   @Input()
   id!: number;
