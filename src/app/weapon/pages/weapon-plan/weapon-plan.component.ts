@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Weapon} from '../../models/weapon.model';
+import {WeaponWithStats} from '../../models/weapon.model';
 import {WeaponService} from '../../services/weapon.service';
 import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, tap} from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class WeaponPlanComponent implements OnInit {
     'enemy',
   ];
 
-  weapon!: Weapon;
+  weapon!: WeaponWithStats;
 
   requirements: Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] = [];
 
@@ -52,6 +52,7 @@ export class WeaponPlanComponent implements OnInit {
     this.route.parent?.params
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
+        switchMap(weapon => this.service.getStats(weapon)),
         first(),
       )
       .subscribe(weapon => {

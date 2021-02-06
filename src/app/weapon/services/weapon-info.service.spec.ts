@@ -58,9 +58,9 @@ describe('WeaponInfoService', () => {
         weaponId: 15502,
         ascension: 6,
         level: 90,
-      }
+      },
     };
-    service.getStats(weapon.info, weapon.progress).subscribe(stats => {
+    service.getStatsValue(weapon.info, weapon.progress).subscribe(stats => {
       expect(Object.keys(stats)).toEqual(['ATK Base', 'ATK%']);
       expect(stats['ATK Base']).toBeCloseTo(608, 0);
       expect(stats['ATK%']).toBeCloseTo(0.496, 3);

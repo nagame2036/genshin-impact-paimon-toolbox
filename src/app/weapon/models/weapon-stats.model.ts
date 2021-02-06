@@ -47,7 +47,7 @@ export type WeaponStatsType =
   | 'DEF%' // Defense bonus %
   | 'CHC%' // Critical Hit Chance (CRIT Rate) bonus %
   | 'CHD%' // Critical Hit Damage (CRIT DMG) bonus %
-  | 'PHY DMG%' // Physical Damage bonus %
   | 'ER%' // Energy Recharge %
   | 'EM' // Element Mastery
+  | 'PHY DMG%' // Physical Damage bonus %
   ;

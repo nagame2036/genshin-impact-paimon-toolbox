@@ -11,21 +11,19 @@
                                  [satisfied]="satisfied[0]" (executePlan)="executePlan.emit(0)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
-  <ng-container *ngIf="stats$ | async as stats">
-    <ng-container *ngFor="let type of service.getStatsTypes(stats[0]); let i = index">
-      <ng-container *ngIf="type.endsWith('%') else numeric">
-        <app-current-goal-comparator [current]="stats[0][type] | percent: '1.0-1'"
-                                     [goal]="stats[1][type] | percent: '1.0-1'">
-          {{ i18n.dict('attributes.' + type) | translate }}
-        </app-current-goal-comparator>
-      </ng-container>
-      <ng-template #numeric>
-        <app-current-goal-comparator [current]="stats[0][type] | number: '1.0-0'"
-                                     [goal]="stats[1][type] | number: '1.0-0'">
-          {{ i18n.dict('attributes.' + type) | translate }}
-        </app-current-goal-comparator>
-      </ng-template>
+  <ng-container *ngFor="let type of service.getStatsTypes(weapon); let i = index">
+    <ng-container *ngIf="type.endsWith('%') else numeric">
+      <app-current-goal-comparator [current]="weapon.currentStats[type] | percent: '1.0-1'"
+                                   [goal]="weapon.planStats[type] | percent: '1.0-1'">
+        {{ i18n.dict('attributes.' + type) | translate }}
+      </app-current-goal-comparator>
     </ng-container>
+    <ng-template #numeric>
+      <app-current-goal-comparator [current]="weapon.currentStats[type] | number: '1.0-0'"
+                                   [goal]="weapon.planStats[type] | number: '1.0-0'">
+        {{ i18n.dict('attributes.' + type) | translate }}
+      </app-current-goal-comparator>
+    </ng-template>
   </ng-container>
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}

@@ -1,14 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Weapon} from '../../models/weapon.model';
+import {WeaponWithStats} from '../../models/weapon.model';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
-import {combineLatest, Observable} from 'rxjs';
+import {combineLatest} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {allRefineRanks, RefineRank, WeaponProgress} from '../../models/weapon-progress.model';
 import {WeaponInfo} from '../../models/weapon-info.model';
 import {WeaponService} from '../../services/weapon.service';
-import {WeaponStatsValue} from '../../models/weapon-stats.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {takeUntil} from 'rxjs/operators';
 
@@ -22,15 +21,13 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
   i18n = new I18n('game-common');
 
   @Input()
-  weapon!: Weapon;
+  weapon!: WeaponWithStats;
 
   info!: WeaponInfo;
 
   progress!: WeaponProgress;
 
   plan!: WeaponPlan;
-
-  stats$!: Observable<[WeaponStatsValue, WeaponStatsValue]>;
 
   satisfied: boolean[] = [];
 
@@ -54,7 +51,6 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
     this.info = this.weapon.info;
     this.progress = this.weapon.progress;
     this.plan = this.weapon.plan;
-    this.updateStats();
     if (this.planMode) {
       combineLatest(this.service.specificRequirement(this.weapon))
         .pipe(takeUntil(this.destroy$))
@@ -77,7 +73,6 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
     this.progress.ascension = ascension;
     this.progress.level = level;
     this.updateStats();
-    this.emitChange();
   }
 
   setGoalLevel(ascensionLevel: AscensionLevel): void {
@@ -86,7 +81,6 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
     this.plan.ascension = ascension;
     this.plan.level = level;
     this.updateStats();
-    this.emitChange();
   }
 
   private emitChange(): void {
@@ -95,6 +89,9 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
   }
 
   private updateStats(): void {
-    this.stats$ = this.service.getStats(this.weapon);
+    this.service.getStats(this.weapon).subscribe(weapon => {
+      this.weapon = weapon;
+      this.emitChange();
+    });
   }
 }

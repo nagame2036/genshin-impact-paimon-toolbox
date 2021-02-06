@@ -50,6 +50,8 @@ describe('WeaponPlanFormComponent', () => {
         ascension: 2,
         level: 50,
       },
+      currentStats: {},
+      planStats: {},
     };
     component.info = component.weapon.info;
     component.progress = component.weapon.progress;

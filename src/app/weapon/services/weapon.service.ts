@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '../../widget/models/i18n.model';
 import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
-import {Weapon} from '../models/weapon.model';
+import {Weapon, WeaponWithStats} from '../models/weapon.model';
 import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
 import {weaponTypeList} from '../models/weapon-type.enum';
-import {WeaponInfoService, WeaponStatsDependency} from './weapon-info.service';
+import {WeaponInfoService} from './weapon-info.service';
 import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {MaterialList} from '../../material/models/material-list.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {WeaponProgress} from '../models/weapon-progress.model';
-import {WeaponStatsType, WeaponStatsValue} from '../models/weapon-stats.model';
+import {WeaponStatsType} from '../models/weapon-stats.model';
 
 @Injectable({
   providedIn: 'root'
@@ -63,18 +63,19 @@ export class WeaponService {
       return;
     }
     this.synced = true;
-    combineLatest([this.information.items, this.progressor.inProgress, this.planner.plans])
-      .subscribe(([infos, inProgress, plans]) => {
-        this.syncWeapons(infos, inProgress, plans);
-        this.syncTotalRequirements();
-      });
+    combineLatest([this.information.items, this.progressor.inProgress, this.planner.plans]).pipe(
+      map(([infos, inProgress, plans]) => this.syncWeapons(infos, inProgress, plans)),
+      mergeMap(_ => this.syncTotalRequirements())
+    )
+      .subscribe();
   }
 
-  create(info: WeaponInfo): Weapon {
+  create(info: WeaponInfo): Observable<WeaponWithStats> {
     const id = new Date().getTime();
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
-    return {info, progress, plan};
+    const weapon = {info, progress, plan};
+    return this.information.getStats(weapon);
   }
 
   get(id: number): Observable<Weapon> {
@@ -88,26 +89,32 @@ export class WeaponService {
     );
   }
 
-  getStats({info, progress, plan}: Weapon): Observable<[WeaponStatsValue, WeaponStatsValue]> {
-    return forkJoin([this.getSpecificStats(info, progress), this.getSpecificStats(info, plan)]);
+  getStats(weapon: Weapon): Observable<WeaponWithStats> {
+    return this.information.getStats(weapon);
   }
 
-  getSpecificStats(info: WeaponInfo, dependency: WeaponStatsDependency): Observable<WeaponStatsValue> {
-    return this.information.getStats(info, dependency);
-  }
-
-  getStatsTypes(stats: WeaponStatsValue): WeaponStatsType[] {
+  getStatsTypes(weapon: WeaponWithStats): WeaponStatsType[] {
+    const stats = weapon.currentStats;
     return Object.keys(stats).filter(it => stats.hasOwnProperty(it)) as WeaponStatsType[];
   }
 
-  getAll(): Observable<Weapon[]> {
+  getAll(): Observable<WeaponWithStats[]> {
     return this.weapons.pipe(
-      map(weapons => [...weapons.values()]),
+      switchMap(weapons => {
+        if (weapons.size === 0) {
+          return of([]);
+        }
+        const statsObs: Observable<WeaponWithStats>[] = [];
+        for (const weapon of weapons.values()) {
+          statsObs.push(this.getStats(weapon));
+        }
+        return forkJoin(statsObs);
+      }),
       tap(weapons => this.logger.info('sent weapons', weapons)),
     );
   }
 
-  view(weapons: Weapon[]): Weapon[] {
+  view(weapons: WeaponWithStats[]): WeaponWithStats[] {
     return weapons.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
   }
 
@@ -149,10 +156,11 @@ export class WeaponService {
     this.weapons$.next(weapons);
   }
 
-  private syncTotalRequirements(): void {
-    this.weapons
-      .pipe(switchMap(weapons => this.planner.totalRequirements([...weapons.values()])))
-      .subscribe(requirements => this.materials.updateRequirement(ItemType.WEAPON, requirements));
+  private syncTotalRequirements(): Observable<void> {
+    return this.weapons.pipe(
+      switchMap(weapons => this.planner.totalRequirements([...weapons.values()])),
+      map(requirements => this.materials.updateRequirement(ItemType.WEAPON, requirements)),
+    );
   }
 
   private filterInfo({rarity, type}: WeaponInfo): boolean {

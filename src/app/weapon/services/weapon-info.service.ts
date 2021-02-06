@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {objectMap} from '../../shared/utils/collections';
-import {first, map} from 'rxjs/operators';
+import {first, map, tap} from 'rxjs/operators';
 import {WeaponStatsCurveAscension, WeaponStatsCurveLevel, WeaponStatsType, WeaponStatsValue} from '../models/weapon-stats.model';
 import {Ascension} from '../../game-common/models/ascension.type';
+import {Weapon, WeaponWithStats} from '../models/weapon.model';
 
 /**
  * Represents the dependency of weapon stats value.
@@ -24,9 +25,9 @@ export class WeaponInfoService {
 
   readonly items = this.items$.asObservable();
 
-  private curvesLevel = new ReplaySubject<WeaponStatsCurveLevel>(1);
+  private readonly curvesLevel = new ReplaySubject<WeaponStatsCurveLevel>(1);
 
-  private curvesAscension = new ReplaySubject<WeaponStatsCurveAscension>(1);
+  private readonly curvesAscension = new ReplaySubject<WeaponStatsCurveAscension>(1);
 
   constructor(http: HttpClient, private logger: NGXLogger) {
     http.get<{ [id: number]: WeaponInfo }>(`${this.prefix}/weapons.json`).subscribe(data => {
@@ -44,7 +45,15 @@ export class WeaponInfoService {
     });
   }
 
-  getStats({id, rarity, stats}: WeaponInfo, dependency: WeaponStatsDependency): Observable<WeaponStatsValue> {
+  getStats(weapon: Weapon): Observable<WeaponWithStats> {
+    const {info, progress, plan} = weapon;
+    return forkJoin([this.getStatsValue(info, progress), this.getStatsValue(info, plan)]).pipe(
+      map(([currentStats, planStats]) => ({...weapon, currentStats, planStats})),
+      tap(stats => this.logger.info('sent weapon stats', stats))
+    );
+  }
+
+  getStatsValue({id, rarity, stats}: WeaponInfo, dependency: WeaponStatsDependency): Observable<WeaponStatsValue> {
     return zip(this.curvesLevel, this.curvesAscension).pipe(
       first(),
       map(([curvesLevel, curvesAscension]) => {

@@ -64,40 +64,38 @@
           {{ item.plan.level }}
         </div>
       </ng-container>
-      <ng-container *ngIf="itemsStats.get(item.progress.id) as stats">
-        <ng-container *ngFor="let type of service.getStatsTypes(stats[0]); let i = index">
-          <ng-container *ngIf="stats[0][type] as statsValue">
-            <ng-container *ngIf="stats[1][type] as goalStatsValue">
-              <div [class.item-overview-odd]="i % 2 == 0">
-                <b>{{ i18n.dict('attributes.' + type) | translate }}</b>
+      <ng-container *ngFor="let type of service.getStatsTypes(item); let i = index">
+        <ng-container *ngIf="item.currentStats[type] as statsValue">
+          <ng-container *ngIf="item.planStats[type] as goalStatsValue">
+            <div [class.item-overview-odd]="i % 2 == 0">
+              <b>{{ i18n.dict('attributes.' + type) | translate }}</b>
+            </div>
+            <ng-container *ngIf="type.endsWith('%') else numeric">
+              <div [class.item-overview-odd]="i % 2 == 0" [class.col-span-3]="statsValue >= goalStatsValue">
+                {{ statsValue | percent: '1.0-1' }}
               </div>
-              <ng-container *ngIf="type.endsWith('%') else numeric">
-                <div [class.item-overview-odd]="i % 2 == 0" [class.col-span-3]="statsValue >= goalStatsValue">
-                  {{ statsValue | percent: '1.0-1' }}
+              <ng-container *ngIf="statsValue < goalStatsValue">
+                <div [class.item-overview-odd]="i % 2 == 0">
+                  →
                 </div>
-                <ng-container *ngIf="statsValue < goalStatsValue">
-                  <div [class.item-overview-odd]="i % 2 == 0">
-                    →
-                  </div>
-                  <div [class.item-overview-odd]="i % 2 == 0">
-                    {{ goalStatsValue | percent: '1.0-1' }}
-                  </div>
-                </ng-container>
+                <div [class.item-overview-odd]="i % 2 == 0">
+                  {{ goalStatsValue | percent: '1.0-1' }}
+                </div>
               </ng-container>
-              <ng-template #numeric>
-                <div [class.item-overview-odd]="i % 2 == 0" [class.col-span-3]="statsValue >= goalStatsValue">
-                  {{ statsValue | number: '1.0-0' }}
-                </div>
-                <ng-container *ngIf="statsValue < goalStatsValue">
-                  <div [class.item-overview-odd]="i % 2 == 0">
-                    →
-                  </div>
-                  <div [class.item-overview-odd]="i % 2 == 0">
-                    {{ goalStatsValue | number: '1.0-0' }}
-                  </div>
-                </ng-container>
-              </ng-template>
             </ng-container>
+            <ng-template #numeric>
+              <div [class.item-overview-odd]="i % 2 == 0" [class.col-span-3]="statsValue >= goalStatsValue">
+                {{ statsValue | number: '1.0-0' }}
+              </div>
+              <ng-container *ngIf="statsValue < goalStatsValue">
+                <div [class.item-overview-odd]="i % 2 == 0">
+                  →
+                </div>
+                <div [class.item-overview-odd]="i % 2 == 0">
+                  {{ goalStatsValue | number: '1.0-0' }}
+                </div>
+              </ng-container>
+            </ng-template>
           </ng-container>
         </ng-container>
       </ng-container>

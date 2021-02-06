@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {Weapon} from '../../models/weapon.model';
+import {Weapon, WeaponWithStats} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
@@ -7,7 +7,6 @@ import {NGXLogger} from 'ngx-logger';
 import {WeaponType} from '../../models/weapon-type.enum';
 import {ImageService} from '../../../image/services/image.service';
 import {toggleListItem} from '../../../shared/utils/collections';
-import {WeaponStatsValue} from '../../models/weapon-stats.model';
 import {Rarity} from '../../../game-common/models/rarity.type';
 
 @Component({
@@ -20,11 +19,9 @@ export class WeaponListComponent extends AbstractObservableComponent implements 
   i18n = new I18n('weapons');
 
   @Input()
-  weapons: Weapon[] = [];
+  weapons: WeaponWithStats[] = [];
 
-  items!: Weapon[];
-
-  itemsStats = new Map<number, [WeaponStatsValue, WeaponStatsValue]>();
+  items!: WeaponWithStats[];
 
   @Input()
   selectedItems: Weapon[] = [];
@@ -53,9 +50,6 @@ export class WeaponListComponent extends AbstractObservableComponent implements 
 
   update(): void {
     this.items = this.service.view(this.weapons);
-    this.items.forEach(item => {
-      this.service.getStats(item).subscribe(stats => this.itemsStats.set(item.progress.id, stats));
-    });
     this.logger.info('updated items', this.items);
   }
 

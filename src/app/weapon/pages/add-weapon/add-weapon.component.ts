@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Weapon} from 'src/app/weapon/models/weapon.model';
+import {WeaponWithStats} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {takeUntil} from 'rxjs/operators';
 import {WeaponInfo} from '../../models/weapon-info.model';
@@ -21,7 +21,7 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
 
   selected = false;
 
-  selectedWeapon!: Weapon;
+  selectedWeapon!: WeaponWithStats;
 
   constructor(private service: WeaponService, private location: Location, private logger: NGXLogger) {
     super();
@@ -42,9 +42,11 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
   }
 
   select(weapon: WeaponInfo): void {
-    this.selected = true;
-    this.selectedWeapon = this.service.create(weapon);
-    this.logger.info('select weapon', weapon);
+    this.service.create(weapon).subscribe(created => {
+      this.selected = true;
+      this.selectedWeapon = created;
+      this.logger.info('select weapon', created);
+    });
   }
 
   reset(): void {
