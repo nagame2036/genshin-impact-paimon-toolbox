@@ -4,9 +4,11 @@
   @apply border-2;
   @apply shadow;
   @apply appearance-none;
-  @apply hover:bg-primary-200;
+  @apply hover:border-black;
+  @apply focus:border-gray-300;
   @apply focus:outline-none;
   @apply focus:ring;
+  @apply focus:ring-offset-2;
 
   &.disabled {
     @apply cursor-not-allowed;

@@ -31,7 +31,7 @@
 
   &:hover {
     input ~ .checkmark {
-      @apply bg-gray-400;
+      @apply border-black;
     }
   }
 
@@ -57,7 +57,8 @@
   @apply bg-white;
   @apply rounded;
   @apply border;
-  @apply border-gray-400;
+  @apply border-2;
+  @apply border-gray-300;
 
   &:after {
     content: '';
