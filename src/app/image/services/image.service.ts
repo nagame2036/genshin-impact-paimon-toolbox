@@ -1,35 +1,55 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ImageMap} from '../models/image-map.model';
-import {from} from 'rxjs';
-import {mergeMap, tap} from 'rxjs/operators';
+
+export type ImageType =
+  | 'character-portraits'
+  | 'characters'
+  | 'elements'
+  | 'enemies'
+  | 'materials'
+  | 'weapon-types'
+  | 'weapons'
+  ;
+
+const characterMapping = new Map([
+  [1002, 1001],
+  [1012, 1011],
+]);
+
+const materialMapping = new Map([
+  [200, 100],
+]);
+
+const enemiesMapping = new Map([
+  [50101, 50100],
+  [50102, 50100],
+  [50103, 50100],
+  [50105, 50100],
+  [50106, 50100],
+  [50300, 50100],
+  [50302, 50104],
+  [50303, 50107],
+  [100001, 100000],
+  [100002, 100000],
+  [100003, 100000],
+]);
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
 
-  private readonly maps = new Map<string, ImageMap>();
+  private readonly specificImages = new Map<ImageType, Map<number, number>>([
+    ['character-portraits', characterMapping],
+    ['characters', characterMapping],
+    ['materials', materialMapping],
+    ['enemies', enemiesMapping],
+  ]);
 
-  private readonly types = [
-    'character-portraits',
-    'characters',
-    'elements',
-    'enemies',
-    'materials',
-    'weapon-types',
-    'weapons'
-  ];
-
-  constructor(private http: HttpClient) {
-    from(this.types)
-      .pipe(
-        mergeMap(type => http.get<ImageMap>(`assets/images/${type}/mapping.json`).pipe(tap(res => this.maps.set(type, res))))
-      )
-      .subscribe();
+  constructor() {
   }
 
-  get(type: string, id: number): string {
-    return this.maps.get(type)?.[id] ?? '';
+  get(type: ImageType, id: number): string {
+    const key = this.specificImages.get(type)?.get(id) ?? id;
+    return `assets/images/${type}/${key}.webp`;
   }
 }
