@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Character} from '../../models/character.model';
+import {CharacterWithStats} from '../../models/character.model';
 import {CharacterService} from '../../services/character.service';
 import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, tap} from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class CharacterPlanComponent implements OnInit {
     'enemy',
   ];
 
-  character!: Character;
+  character!: CharacterWithStats;
 
   requirements: Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] = [];
 
@@ -54,6 +54,7 @@ export class CharacterPlanComponent implements OnInit {
     this.route.parent?.params
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
+        switchMap(character => this.service.getStats(character)),
         first(),
       )
       .subscribe(character => {

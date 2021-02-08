@@ -13,6 +13,20 @@
                                  [satisfied]="satisfied[1]" (executePlan)="executePlan.emit(1)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
+  <ng-container *ngFor="let type of service.getStatsTypes(character); let i = index">
+    <ng-container *ngIf="type.endsWith('%') else numeric">
+      <app-current-goal-comparator [current]="character.currentStats[type] | percent: '1.0-1'"
+                                   [goal]="character.planStats[type] | percent: '1.0-1'">
+        {{ i18n.dict('attributes.' + type) | translate }}
+      </app-current-goal-comparator>
+    </ng-container>
+    <ng-template #numeric>
+      <app-current-goal-comparator [current]="character.currentStats[type] | number: '1.0-0'"
+                                   [goal]="character.planStats[type] | number: '1.0-0'">
+        {{ i18n.dict('attributes.' + type) | translate }}
+      </app-current-goal-comparator>
+    </ng-template>
+  </ng-container>
   <app-current-goal-select *ngFor="let talent of info.talentsUpgradable; let i = index"
                            [currentOptions]="talentLevels[talent]" [goalOptions]="goalTalentLevels[talent]"
                            [current]="progress.talents[talent] || 1" [goal]="plan.talents[talent] || 1"

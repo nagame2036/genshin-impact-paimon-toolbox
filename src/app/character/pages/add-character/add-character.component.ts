@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {Location} from '@angular/common';
-import {Character} from '../../models/character.model';
+import {CharacterWithStats} from '../../models/character.model';
 import {CharacterInfo} from '../../models/character-info.model';
 import {CharacterService} from '../../services/character.service';
 import {takeUntil} from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
 
   selected = false;
 
-  selectedCharacter!: Character;
+  selectedCharacter!: CharacterWithStats;
 
   constructor(private service: CharacterService, private location: Location, private logger: NGXLogger) {
     super();
@@ -42,9 +42,11 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
   }
 
   select(character: CharacterInfo): void {
-    this.selected = true;
-    this.selectedCharacter = this.service.create(character);
-    this.logger.info('select character', character);
+    this.service.create(character).subscribe(created => {
+      this.selected = true;
+      this.selectedCharacter = created;
+      this.logger.info('select character', created);
+    });
   }
 
   reset(): void {

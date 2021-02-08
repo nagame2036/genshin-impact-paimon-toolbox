@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {Character} from '../../models/character.model';
+import {Character, CharacterWithStats} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {ElementType} from '../../../game-common/models/element-type.enum';
 import {WeaponType} from '../../../weapon/models/weapon-type.enum';
@@ -20,9 +20,9 @@ export class CharacterListComponent extends AbstractObservableComponent implemen
   readonly i18n = new I18n('characters');
 
   @Input()
-  characters: Character[] = [];
+  characters: CharacterWithStats[] = [];
 
-  items!: Character[];
+  items!: CharacterWithStats[];
 
   @Input()
   selectedItems: Character[] = [];

@@ -41,6 +41,8 @@ describe('CharacterLevelupService', () => {
         },
         talentsUpgradable: [],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,
@@ -86,6 +88,8 @@ describe('CharacterLevelupService', () => {
         },
         talentsUpgradable: [],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,
@@ -127,6 +131,8 @@ describe('CharacterLevelupService', () => {
         },
         talentsUpgradable: [],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,

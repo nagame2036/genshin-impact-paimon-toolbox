@@ -42,6 +42,8 @@ describe('CharacterPlanFormComponent', () => {
           4000,
         ],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,
@@ -59,7 +61,9 @@ describe('CharacterPlanFormComponent', () => {
         talents: {
           40000: 10,
         }
-      }
+      },
+      currentStats: {},
+      planStats: {},
     };
     component.info = component.character.info;
     component.progress = component.character.progress;

@@ -45,6 +45,8 @@ describe('TalentLevelupCostService', () => {
           40000,
         ],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,
@@ -104,6 +106,8 @@ describe('TalentLevelupCostService', () => {
           4000,
         ],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,
@@ -159,6 +163,8 @@ describe('TalentLevelupCostService', () => {
           4000,
         ],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,
@@ -214,6 +220,8 @@ describe('TalentLevelupCostService', () => {
           4000,
         ],
         talentsOther: [],
+        stats: {},
+        curvesAscension: {},
       },
       progress: {
         id: 1,

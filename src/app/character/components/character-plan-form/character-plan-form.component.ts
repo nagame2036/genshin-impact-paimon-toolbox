@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Character} from '../../models/character.model';
+import {CharacterWithStats} from '../../models/character.model';
 import {allConstellations, CharacterProgress, Constellation} from '../../models/character-progress.model';
 import {TalentInformationService} from '../../services/talent-information.service';
 import {TalentLevel} from '../../models/talent-info.model';
@@ -26,7 +26,7 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
   i18n = new I18n('game-common');
 
   @Input()
-  character!: Character;
+  character!: CharacterWithStats;
 
   info!: CharacterInfo;
 
@@ -94,7 +94,7 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
     progress.level = level;
     this.talents.correctLevels(progress.talents, ascension);
     this.updateTalentLevels();
-    this.emitChange();
+    this.updateStats();
   }
 
   setGoalLevel({ascension, level}: AscensionLevel): void {
@@ -103,7 +103,7 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
     plan.ascension = ascension;
     plan.level = level;
     this.correctGoalTalents();
-    this.emitChange();
+    this.updateStats();
   }
 
   setTalent(id: number, level: number): void {
@@ -140,12 +140,18 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
     const {ascension, talents: goalTalents} = this.plan;
     this.talents.correctLevels(goalTalents, ascension, talents);
     this.updateGoalTalentLevels();
-    this.emitChange();
   }
 
   private emitChange(): void {
     this.logger.info('character changed');
     this.changed.emit();
+  }
+
+  private updateStats(): void {
+    this.service.getStats(this.character).subscribe(character => {
+      this.character = character;
+      this.emitChange();
+    });
   }
 }
 

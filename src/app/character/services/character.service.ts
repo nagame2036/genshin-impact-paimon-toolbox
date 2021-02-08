@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, EMPTY, Observable, of, ReplaySubject} from 'rxjs';
-import {Character} from '../models/character.model';
+import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
+import {Character, CharacterWithStats} from '../models/character.model';
 import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
 import {CharacterProgress} from '../models/character-progress.model';
 import {CharacterPlan} from '../models/character-plan.model';
@@ -15,6 +15,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {elementTypeList} from '../../game-common/models/element-type.enum';
 import {weaponTypeList} from '../../weapon/models/weapon-type.enum';
 import {I18n} from '../../widget/models/i18n.model';
+import {CharacterStatsType} from '../models/character-stats.model';
 
 @Injectable({
   providedIn: 'root'
@@ -74,11 +75,12 @@ export class CharacterService {
       });
   }
 
-  create(info: CharacterInfo): Character {
+  create(info: CharacterInfo): Observable<CharacterWithStats> {
     const id = info.id;
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
-    return {info, progress, plan};
+    const character = {info, progress, plan};
+    return this.information.getStats(character);
   }
 
   get(id: number): Observable<Character> {
@@ -92,14 +94,34 @@ export class CharacterService {
     );
   }
 
-  getAll(): Observable<Character[]> {
+  getStats(character: Character): Observable<CharacterWithStats> {
+    return this.information.getStats(character);
+  }
+
+  getStatsTypes(character: CharacterWithStats): CharacterStatsType[] {
+    const stats = character.currentStats;
+    const curvesAscension = character.info.curvesAscension;
+    const types = new Set([...Object.keys(stats), ...Object.keys(curvesAscension)]);
+    return [...types].filter(it => curvesAscension.hasOwnProperty(it)) as CharacterStatsType[];
+  }
+
+  getAll(): Observable<CharacterWithStats[]> {
     return this.characters.pipe(
-      map(characters => [...characters.values()]),
+      switchMap(characters => {
+        if (characters.size === 0) {
+          return of([]);
+        }
+        const statsObs: Observable<CharacterWithStats>[] = [];
+        for (const character of characters.values()) {
+          statsObs.push(this.information.getStats(character));
+        }
+        return forkJoin(statsObs);
+      }),
       tap(characters => this.logger.info('sent characters', characters)),
     );
   }
 
-  view(characters: Character[]): Character[] {
+  view(characters: CharacterWithStats[]): CharacterWithStats[] {
     return characters.filter(c => this.filterInfo(c.info))
       .sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
   }

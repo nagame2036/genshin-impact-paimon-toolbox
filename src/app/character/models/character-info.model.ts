@@ -3,6 +3,7 @@ import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../game-common/models/element-type.enum';
 import {Nation} from '../../game-common/models/nation.enum';
 import {ExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
+import {CharacterStatsCurveAscension, CharacterStatsInfo} from './character-stats.model';
 
 export const allCharacterRarities = [5, 4];
 
@@ -34,6 +35,10 @@ export interface CharacterInfo {
   materials: CharacterMaterialRequirement;
 
   expBonus?: ExpBonus[];
+
+  stats: CharacterStatsInfo;
+
+  curvesAscension: CharacterStatsCurveAscension;
 }
 
 /**
