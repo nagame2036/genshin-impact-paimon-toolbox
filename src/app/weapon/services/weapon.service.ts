@@ -32,9 +32,9 @@ export class WeaponService {
   readonly nonParty = this.progressor.noProgress.pipe(map(infos => [...infos.values()]));
 
   readonly sorts: { text: string, value: (a: Weapon, b: Weapon) => number }[] = [
-    {text: this.i18n.dict('level'), value: (a, b) => b.progress.level - a.progress.level},
-    {text: this.i18n.dict('rarity'), value: (a, b) => b.info.rarity - a.info.rarity},
-    {text: this.i18n.dict('refine-rank'), value: (a, b) => b.progress.refine - a.progress.refine},
+    {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
+    {text: this.i18n.dict('rarity'), value: ({info: a}, {info: b}) => b.rarity - a.rarity},
+    {text: this.i18n.dict('refine-rank'), value: ({progress: a}, {progress: b}) => b.refine - a.refine},
   ];
 
   sort = this.sorts[0].value;
