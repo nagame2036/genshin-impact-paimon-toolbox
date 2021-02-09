@@ -11,7 +11,7 @@ import {I18n} from '../../widget/models/i18n.model';
 import {NGXLogger} from 'ngx-logger';
 import {Character} from '../models/character.model';
 import {MaterialRequireList} from '../../material/models/material-require-list.model';
-import {TalentInformationService} from './talent-information.service';
+import {TalentInfoService} from './talent-info.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {TalentInfo} from '../models/talent-info.model';
 
@@ -24,7 +24,7 @@ export class TalentRequirementService {
 
   private readonly levels = new ReplaySubject<TalentLevelupCost[]>(1);
 
-  constructor(http: HttpClient, private talents: TalentInformationService, private domain: TalentLevelupMaterialService,
+  constructor(http: HttpClient, private infos: TalentInfoService, private domain: TalentLevelupMaterialService,
               private enemies: EnemyMaterialService, private logger: NGXLogger) {
     http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(data => {
       this.logger.info('loaded talent levelup cost data', data);
@@ -35,7 +35,7 @@ export class TalentRequirementService {
   totalRequirements(characters: Character[]): Observable<MaterialRequireList> {
     const requirementObs = characters.map(character => {
       const talentIds = character.info.talentsUpgradable;
-      return this.talents.getAll(talentIds).pipe(switchMap(talents => this.requirement(character, talents)));
+      return this.infos.getAll(talentIds).pipe(switchMap(talents => this.requirement(character, talents)));
     });
     return combineLatest(requirementObs).pipe(
       map(requirements => new MaterialRequireList(requirements)),

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterWithStats} from '../../models/character.model';
 import {allConstellations, CharacterProgress, Constellation} from '../../models/character-progress.model';
-import {TalentInformationService} from '../../services/talent-information.service';
+import {TalentInfoService} from '../../services/talent-info.service';
 import {TalentLevel} from '../../models/talent-info.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {CharacterPlan} from '../../models/character-plan.model';
@@ -51,7 +51,7 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
   @Output()
   executePlan = new EventEmitter<number>();
 
-  constructor(public service: CharacterService, public talents: TalentInformationService, public materials: MaterialService,
+  constructor(public service: CharacterService, public talents: TalentInfoService, public materials: MaterialService,
               private translator: TranslateService, private logger: NGXLogger) {
     super();
   }

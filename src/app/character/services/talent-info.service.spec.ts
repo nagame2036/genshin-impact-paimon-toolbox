@@ -1,11 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 
-import {TalentInformationService} from './talent-information.service';
+import {TalentInfoService} from './talent-info.service';
 import {CharacterModule} from '../character.module';
 import {AppTestingModule} from '../../app-testing.module';
 
-describe('TalentInformationService', () => {
-  let service: TalentInformationService;
+describe('TalentInfoService', () => {
+  let service: TalentInfoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('TalentInformationService', () => {
         AppTestingModule,
       ]
     });
-    service = TestBed.inject(TalentInformationService);
+    service = TestBed.inject(TalentInfoService);
   });
 
   it('should be created', () => {

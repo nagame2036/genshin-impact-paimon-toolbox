@@ -13,7 +13,7 @@ import {TalentProgress} from '../models/talent-progress.model';
 @Injectable({
   providedIn: 'root'
 })
-export class TalentInformationService {
+export class TalentInfoService {
 
   private readonly prefix = 'assets/data/characters';
 
