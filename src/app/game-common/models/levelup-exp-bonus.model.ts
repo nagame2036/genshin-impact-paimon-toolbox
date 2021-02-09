@@ -9,21 +9,21 @@ export interface ExpBonus {
 
 export function processExpBonus(
   item: { expBonus?: ExpBonus[] },
-  moraAmount: number,
-  getExp: (mora: number) => number
+  expAmount: number,
+  getMora: (mora: number) => number
 ): { mora: number, exp: number } {
-  let mora = moraAmount;
+  let exp = expAmount;
   const expBonus = item.expBonus;
   if (expBonus) {
     const now = new Date();
     for (const bonus of expBonus) {
       if (now >= new Date(bonus.startTime) && now <= new Date(bonus.endTime)) {
-        mora /= bonus.factor;
+        exp /= bonus.factor;
         break;
       }
     }
   }
-  const exp = Math.ceil(getExp(mora));
-  mora = Math.ceil(mora);
+  const mora = Math.ceil(getMora(exp));
+  exp = Math.ceil(exp);
   return {mora, exp};
 }

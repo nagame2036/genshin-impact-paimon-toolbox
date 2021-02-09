@@ -27,7 +27,7 @@ export class CharacterLevelupCostService {
   private readonly ascensions = new ReplaySubject<CharacterAscensionCost[]>(1);
 
   /**
-   * Stores the cost of mora per level for character level up.
+   * Stores the cost of exp per level for character level up.
    * @private
    */
   private readonly levels = new ReplaySubject<number[]>(1);
@@ -94,8 +94,8 @@ export class CharacterLevelupCostService {
       const requirement = new MaterialRequireList();
       const cost = new MaterialList();
       const levelSlice = levels.slice(progress.level, plan.level);
-      const moraAmount = levelSlice.reduce((sum, curr) => sum + curr, 0);
-      const {mora: moraCost, exp: expCost} = processExpBonus(info, moraAmount, v => v * 5);
+      const expCostBase = levelSlice.reduce((sum, curr) => sum + curr, 0);
+      const {mora: moraCost, exp: expCost} = processExpBonus(info, expCostBase, v => v * .2);
       cost.change(mora.id, moraCost);
       cost.change(characterExp.id, expCost);
       this.exps.splitExpNeed(cost);
