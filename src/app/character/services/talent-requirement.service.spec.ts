@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 
-import {TalentLevelupCostService} from './talent-levelup-cost.service';
+import {TalentRequirementService} from './talent-requirement.service';
 import {CharacterModule} from '../character.module';
 import {AppTestingModule} from '../../app-testing.module';
 import {Character} from '../models/character.model';
@@ -9,8 +9,8 @@ import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {mora} from '../../material/models/mora-and-exp.model';
 import {TalentInfo} from '../models/talent-info.model';
 
-describe('TalentLevelupCostService', () => {
-  let service: TalentLevelupCostService;
+describe('TalentRequirementService', () => {
+  let service: TalentRequirementService;
   let character: Character;
   let talent: TalentInfo;
 
@@ -21,7 +21,7 @@ describe('TalentLevelupCostService', () => {
         AppTestingModule,
       ]
     });
-    service = TestBed.inject(TalentLevelupCostService);
+    service = TestBed.inject(TalentRequirementService);
   });
 
   it('should be created', () => {

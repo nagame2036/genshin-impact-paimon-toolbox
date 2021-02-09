@@ -4,7 +4,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {MaterialList} from '../../material/models/material-list.model';
-import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
+import {WeaponRequirementService} from './weapon-requirement.service';
 import {Weapon} from '../models/weapon.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
@@ -26,7 +26,7 @@ export class WeaponPlanner {
 
   readonly plans = this.plans$.asObservable();
 
-  constructor(private weaponLevelup: WeaponLevelupCostService, private materials: MaterialService,
+  constructor(private requirement: WeaponRequirementService, private materials: MaterialService,
               private database: NgxIndexedDBService, private logger: NGXLogger) {
     this.database.getAll(this.store).subscribe(persisted => {
       this.logger.info('fetched character plans', persisted);
@@ -80,7 +80,7 @@ export class WeaponPlanner {
 
   totalRequirements(weapons: Weapon[]): Observable<MaterialRequireList> {
     const subRequirements = [
-      this.weaponLevelup.totalRequirements(weapons),
+      this.requirement.totalRequirements(weapons),
     ];
     return combineLatest(subRequirements).pipe(
       map(requirements => new MaterialRequireList(requirements)),
@@ -89,7 +89,7 @@ export class WeaponPlanner {
   }
 
   specificRequirements(weapon: Weapon): Observable<{ text: string, value: MaterialList, satisfied: boolean }>[] {
-    const levelupTexts = [this.weaponLevelup.levelupLabel, this.weaponLevelup.ascensionLabel];
+    const levelupTexts = [this.requirement.levelupLabel, this.requirement.ascensionLabel];
     const texts = [
       [
         this.i18n.module('total-requirement'),

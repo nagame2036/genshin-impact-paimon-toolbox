@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 
-import {CharacterLevelupCostService} from './character-levelup-cost.service';
+import {CharacterRequirementService} from './character-requirement.service';
 import {AppTestingModule} from '../../app-testing.module';
 import {CharacterModule} from '../character.module';
 import {Character} from '../models/character.model';
@@ -8,8 +8,8 @@ import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../game-common/models/element-type.enum';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 
-describe('CharacterLevelupService', () => {
-  let service: CharacterLevelupCostService;
+describe('CharacterRequirementService', () => {
+  let service: CharacterRequirementService;
   let character: Character;
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('CharacterLevelupService', () => {
         AppTestingModule,
       ]
     });
-    service = TestBed.inject(CharacterLevelupCostService);
+    service = TestBed.inject(CharacterRequirementService);
   });
 
   it('should be created', () => {

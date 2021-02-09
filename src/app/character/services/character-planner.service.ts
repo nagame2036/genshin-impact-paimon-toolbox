@@ -4,8 +4,8 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
 import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {MaterialList} from '../../material/models/material-list.model';
-import {CharacterLevelupCostService} from './character-levelup-cost.service';
-import {TalentLevelupCostService} from './talent-levelup-cost.service';
+import {CharacterRequirementService} from './character-requirement.service';
+import {TalentRequirementService} from './talent-requirement.service';
 import {Character} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
 import {TalentProgress} from '../models/talent-progress.model';
@@ -28,7 +28,7 @@ export class CharacterPlanner {
 
   readonly plans = this.plans$.asObservable();
 
-  constructor(private characterLevelup: CharacterLevelupCostService, private talentLevelup: TalentLevelupCostService,
+  constructor(private characterReq: CharacterRequirementService, private talentReq: TalentRequirementService,
               private materials: MaterialService, private database: NgxIndexedDBService, private logger: NGXLogger) {
     this.database.getAll(this.store).subscribe(persisted => {
       this.logger.info('fetched character plans', persisted);
@@ -84,8 +84,8 @@ export class CharacterPlanner {
 
   totalRequirements(characters: Character[]): Observable<MaterialRequireList> {
     const subRequirements = [
-      this.characterLevelup.totalRequirements(characters),
-      this.talentLevelup.totalRequirements(characters),
+      this.characterReq.totalRequirements(characters),
+      this.talentReq.totalRequirements(characters),
     ];
     return combineLatest(subRequirements).pipe(
       map(requirements => new MaterialRequireList(requirements)),
@@ -94,8 +94,8 @@ export class CharacterPlanner {
   }
 
   specificRequirements(character: Character): Observable<{ text: string, value: MaterialList, satisfied: boolean }>[] {
-    const levelupTexts = [this.characterLevelup.levelupLabel, this.characterLevelup.ascensionLabel];
-    const talentsTexts = character.info.talentsUpgradable.map(it => this.talentLevelup.getLabel(it));
+    const levelupTexts = [this.characterReq.levelupLabel, this.characterReq.ascensionLabel];
+    const talentsTexts = character.info.talentsUpgradable.map(it => this.talentReq.getLabel(it));
     const texts = [
       [
         this.i18n.module('total-requirement'),

@@ -18,7 +18,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class CharacterLevelupCostService {
+export class CharacterRequirementService {
 
   private readonly i18n = new I18n('game-common');
 

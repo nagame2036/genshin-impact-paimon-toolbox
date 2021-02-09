@@ -19,7 +19,7 @@ import {MaterialRequireList} from '../../material/models/material-require-list.m
 @Injectable({
   providedIn: 'root'
 })
-export class WeaponLevelupCostService {
+export class WeaponRequirementService {
 
   private readonly i18n = new I18n('game-common');
 

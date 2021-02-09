@@ -18,7 +18,7 @@ import {TalentInfo} from '../models/talent-info.model';
 @Injectable({
   providedIn: 'root'
 })
-export class TalentLevelupCostService {
+export class TalentRequirementService {
 
   private readonly i18n = new I18n('game-common');
 

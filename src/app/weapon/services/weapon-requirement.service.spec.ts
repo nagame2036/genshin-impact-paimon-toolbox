@@ -1,14 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 
-import {WeaponLevelupCostService} from './weapon-levelup-cost.service';
+import {WeaponRequirementService} from './weapon-requirement.service';
 import {Weapon} from '../models/weapon.model';
 import {WeaponType} from '../models/weapon-type.enum';
 import {WeaponModule} from '../weapon.module';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {AppTestingModule} from '../../app-testing.module';
 
-describe('WeaponLevelupCostService', () => {
-  let service: WeaponLevelupCostService;
+describe('WeaponRequirementService', () => {
+  let service: WeaponRequirementService;
   let weapon: Weapon;
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('WeaponLevelupCostService', () => {
         AppTestingModule,
       ]
     });
-    service = TestBed.inject(WeaponLevelupCostService);
+    service = TestBed.inject(WeaponRequirementService);
   });
 
   it('should be created', () => {
