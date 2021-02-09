@@ -15,7 +15,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {elementTypeList} from '../../game-common/models/element-type.enum';
 import {weaponTypeList} from '../../weapon/models/weapon-type.enum';
 import {I18n} from '../../widget/models/i18n.model';
-import {CharacterStatsType} from '../models/character-stats.model';
+import {StatsType} from '../../game-common/models/stats.model';
 
 @Injectable({
   providedIn: 'root'
@@ -98,11 +98,11 @@ export class CharacterService {
     return this.information.getStats(character);
   }
 
-  getStatsTypes(character: CharacterWithStats): CharacterStatsType[] {
+  getStatsTypes(character: CharacterWithStats): StatsType[] {
     const stats = character.currentStats;
     const curvesAscension = character.info.curvesAscension;
     const types = new Set([...Object.keys(stats), ...Object.keys(curvesAscension)]);
-    return [...types].filter(it => curvesAscension.hasOwnProperty(it)) as CharacterStatsType[];
+    return [...types].filter(it => curvesAscension.hasOwnProperty(it)) as StatsType[];
   }
 
   getAll(): Observable<CharacterWithStats[]> {

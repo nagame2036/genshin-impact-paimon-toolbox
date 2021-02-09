@@ -14,4 +14,8 @@ export class I18n {
   dict(key: string): string {
     return `dict.${key}`;
   }
+
+  stats(key: string): string {
+    return `dict.stats.${key}`;
+  }
 }

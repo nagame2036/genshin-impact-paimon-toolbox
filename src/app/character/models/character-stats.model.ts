@@ -1,7 +1,9 @@
 /**
  * Represents the stats info of a character.
  */
-export type CharacterStatsInfo = Partial<Record<CharacterStatsType, CharacterStats>>;
+import {allResBonusStatsTypes, StatsType, StatsValue} from '../../game-common/models/stats.model';
+
+export type CharacterStatsInfo = Partial<Record<StatsType, CharacterStats>>;
 
 /**
  * Represents the attribute info of a character stats.
@@ -30,44 +32,23 @@ export interface CharacterStatsCurveLevel {
 /**
  * Represent the data of a character stats grow curve per ascension.
  */
-export type CharacterStatsCurveAscension = Partial<Record<CharacterStatsType, number[]>>;
+export type CharacterStatsCurveAscension = Partial<Record<StatsType, number[]>>;
 
 /**
  * Cache the calculated value of specific character progress.
  */
-export type CharacterStatsValue = Partial<Record<CharacterStatsType, number>>;
+export class CharacterStatsValue extends StatsValue {
 
-export type CharacterStatsType =
-  | 'HP' // Max Health Points final
-  | 'HP Base' // Health Points base
-  | 'HP%' // Health Points bonus %
-  | 'ATK' // Attack final
-  | 'ATK Base' // Attack base
-  | 'ATK%' // Attack bonus %
-  | 'DEF' // Defense final
-  | 'DEF Base' // Defense base
-  | 'DEF%' // Defense bonus %
-  | 'CHC%' // Critical Hit Chance (CRIT Rate) bonus %
-  | 'CHD%' // Critical Hit Damage (CRIT DMG) bonus %
-  | 'ER%' // Energy Recharge %
-  | 'EM' // Element Mastery
-  | 'Healing%' // Healing bonus %
-  | 'Incoming Healing%' // Incoming Healing bonus %
-  | 'Shield STR%' // Shield Strength bonus %
-  | 'Anemo DMG%' // Anemo Damage bonus %
-  | 'Anemo RES%' // Anemo Resistance bonus %
-  | 'Geo DMG%' // Geo Damage bonus %
-  | 'Geo RES%' // Geo Resistance bonus %
-  | 'Electro DMG%' // Electro Damage bonus %
-  | 'Electro RES%' // Electro Resistance bonus %
-  | 'Dendro DMG%' // Dendro Damage bonus %
-  | 'Dendro RES%' // Dendro Resistance bonus %
-  | 'Hydro DMG%' // Hydro Damage bonus %
-  | 'Hydro RES%' // Hydro Resistance bonus %
-  | 'Pyro DMG%' // Pyro Damage bonus %
-  | 'Pyro RES%' // Pyro Resistance bonus %
-  | 'Cryo DMG%' // Cryo Damage bonus %
-  | 'Cryo RES%' // Cryo Resistance bonus %
-  | 'PHY DMG%' // Physical Damage bonus %
-  | 'PHY RES%' // Physical Resistance bonus %
-  ;
+  constructor() {
+    const defaults = new Map<StatsType, number>();
+    const specifics: [StatsType, number][] = [
+      ['CHC%', 0.05000000074505806],
+      ['CHD%', 0.5],
+      ['ER%', 1.0],
+      ['STA recover speed', 25.0],
+    ];
+    specifics.forEach(([type, value]) => defaults.set(type, value));
+    allResBonusStatsTypes.forEach(res => defaults.set(res, 0.15000000596046448));
+    super(defaults);
+  }
+}

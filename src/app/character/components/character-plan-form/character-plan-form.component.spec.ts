@@ -5,6 +5,7 @@ import {CharacterModule} from '../../character.module';
 import {AppTestingModule} from '../../../app-testing.module';
 import {WeaponType} from '../../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../../game-common/models/element-type.enum';
+import {CharacterStatsValue} from '../../models/character-stats.model';
 
 describe('CharacterPlanFormComponent', () => {
   let component: CharacterPlanFormComponent;
@@ -62,8 +63,8 @@ describe('CharacterPlanFormComponent', () => {
           40000: 10,
         }
       },
-      currentStats: {},
-      planStats: {},
+      currentStats: new CharacterStatsValue(),
+      planStats: new CharacterStatsValue(),
     };
     component.info = component.character.info;
     component.progress = component.character.progress;

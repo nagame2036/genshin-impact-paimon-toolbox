@@ -4,6 +4,7 @@ import {WeaponPlanFormComponent} from './weapon-plan-form.component';
 import {WeaponModule} from '../../weapon.module';
 import {WeaponType} from '../../models/weapon-type.enum';
 import {AppTestingModule} from '../../../app-testing.module';
+import {WeaponStatsValue} from '../../models/weapon-stats.model';
 
 describe('WeaponPlanFormComponent', () => {
   let component: WeaponPlanFormComponent;
@@ -50,8 +51,8 @@ describe('WeaponPlanFormComponent', () => {
         ascension: 2,
         level: 50,
       },
-      currentStats: {},
-      planStats: {},
+      currentStats: new WeaponStatsValue(),
+      planStats: new WeaponStatsValue(),
     };
     component.info = component.weapon.info;
     component.progress = component.weapon.progress;

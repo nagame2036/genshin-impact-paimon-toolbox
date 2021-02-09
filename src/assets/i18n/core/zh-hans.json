@@ -180,7 +180,7 @@
     "no-crit-hit-dmg": "技能{{ num }}未暴击伤害",
     "crit-hit-dmg": "技能{{ num }}暴击伤害",
     "avg-hit-dmg": "技能{{ num }}平均伤害",
-    "attributes": {
+    "stats": {
       "HP": "生命值上限",
       "HP Base": "基础生命值",
       "HP%": "生命值%",

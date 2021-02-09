@@ -14,7 +14,7 @@ import {MaterialList} from '../../material/models/material-list.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {WeaponProgress} from '../models/weapon-progress.model';
-import {WeaponStatsType} from '../models/weapon-stats.model';
+import {StatsType} from '../../game-common/models/stats.model';
 
 @Injectable({
   providedIn: 'root'
@@ -93,9 +93,9 @@ export class WeaponService {
     return this.information.getStats(weapon);
   }
 
-  getStatsTypes(weapon: WeaponWithStats): WeaponStatsType[] {
+  getStatsTypes(weapon: WeaponWithStats): StatsType[] {
     const stats = weapon.currentStats;
-    return Object.keys(stats).filter(it => stats.hasOwnProperty(it)) as WeaponStatsType[];
+    return stats.getTypes();
   }
 
   getAll(): Observable<WeaponWithStats[]> {

@@ -5,9 +5,10 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {objectMap} from '../../shared/utils/collections';
 import {first, map, tap} from 'rxjs/operators';
-import {WeaponStatsCurveAscension, WeaponStatsCurveLevel, WeaponStatsType, WeaponStatsValue} from '../models/weapon-stats.model';
+import {WeaponStatsCurveAscension, WeaponStatsCurveLevel, WeaponStatsValue} from '../models/weapon-stats.model';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Weapon, WeaponWithStats} from '../models/weapon.model';
+import {StatsType} from '../../game-common/models/stats.model';
 
 /**
  * Represents the dependency of weapon stats value.
@@ -58,14 +59,17 @@ export class WeaponInfoService {
       first(),
       map(([curvesLevel, curvesAscension]) => {
         const {ascension, level} = dependency;
-        const result: WeaponStatsValue = {};
+        const result = new WeaponStatsValue();
         for (const [type, statsInfo] of Object.entries(stats)) {
-          const statsType = type as WeaponStatsType;
+          const statsType = type as StatsType;
           if (statsInfo) {
             const {initial, curve} = statsInfo;
             const value = initial * curvesLevel[curve][level];
+            result.add(statsType, value);
             const curveAscension = curvesAscension[rarity][statsType];
-            result[statsType] = !curveAscension ? value : value + curveAscension[ascension];
+            if (curveAscension) {
+              result.add(statsType, curveAscension[ascension]);
+            }
           }
         }
         this.logger.info('sent weapon stats', id, dependency, result);

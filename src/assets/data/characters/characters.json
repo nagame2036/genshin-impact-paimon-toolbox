@@ -30,18 +30,6 @@
       "DEF Base": {
         "initial": 57.224998474121094,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -114,18 +102,6 @@
       "DEF Base": {
         "initial": 57.224998474121094,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -198,18 +174,6 @@
       "DEF Base": {
         "initial": 57.224998474121094,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -282,18 +246,6 @@
       "DEF Base": {
         "initial": 57.224998474121094,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -369,18 +321,6 @@
       "DEF Base": {
         "initial": 50.358001708984375,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -456,18 +396,6 @@
       "DEF Base": {
         "initial": 66.38099670410156,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -543,18 +471,6 @@
       "DEF Base": {
         "initial": 48.069000244140625,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -630,18 +546,6 @@
       "DEF Base": {
         "initial": 56.080501556396484,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -717,18 +621,6 @@
       "DEF Base": {
         "initial": 62.9474983215332,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -804,18 +696,6 @@
       "DEF Base": {
         "initial": 56.080501556396484,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -891,18 +771,6 @@
       "DEF Base": {
         "initial": 54.36375045776367,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -978,18 +846,6 @@
       "DEF Base": {
         "initial": 63.51974868774414,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1065,18 +921,6 @@
       "DEF Base": {
         "initial": 48.069000244140625,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1152,18 +996,6 @@
       "DEF Base": {
         "initial": 49.78575134277344,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1239,18 +1071,6 @@
       "DEF Base": {
         "initial": 64.66425323486328,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1326,18 +1146,6 @@
       "DEF Base": {
         "initial": 66.9532470703125,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1413,18 +1221,6 @@
       "DEF Base": {
         "initial": 54.36375045776367,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1500,18 +1296,6 @@
       "DEF Base": {
         "initial": 58.941749572753906,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1587,18 +1371,6 @@
       "DEF Base": {
         "initial": 50.358001708984375,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1674,18 +1446,6 @@
       "DEF Base": {
         "initial": 66.9532470703125,
         "curve": "HP-S4"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1761,18 +1521,6 @@
       "DEF Base": {
         "initial": 59.83000183105469,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1848,18 +1596,6 @@
       "DEF Base": {
         "initial": 61.0265998840332,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -1935,18 +1671,6 @@
       "DEF Base": {
         "initial": 71.7959976196289,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2023,18 +1747,6 @@
       "DEF Base": {
         "initial": 50.855499267578125,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2110,18 +1822,6 @@
       "DEF Base": {
         "initial": 62.223201751708984,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2197,18 +1897,6 @@
       "DEF Base": {
         "initial": 52.052101135253906,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2284,18 +1972,6 @@
       "DEF Base": {
         "initial": 47.86399841308594,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2371,18 +2047,6 @@
       "DEF Base": {
         "initial": 63.4197998046875,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2458,18 +2122,6 @@
       "DEF Base": {
         "initial": 57.436798095703125,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2545,18 +2197,6 @@
       "DEF Base": {
         "initial": 68.2061996459961,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {
@@ -2632,18 +2272,6 @@
       "DEF Base": {
         "initial": 49.06060028076172,
         "curve": "HP-S5"
-      },
-      "CHC%": {
-        "initial": 0.05000000074505806
-      },
-      "CHD%": {
-        "initial": 0.5
-      },
-      "ER%": {
-        "initial": 1.0
-      },
-      "STA recover speed": {
-        "initial": 25.0
       }
     },
     "curvesAscension": {

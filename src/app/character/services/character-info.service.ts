@@ -4,10 +4,11 @@ import {CharacterInfo} from '../models/character-info.model';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {objectMap} from '../../shared/utils/collections';
-import {CharacterStatsCurveLevel, CharacterStatsType, CharacterStatsValue} from '../models/character-stats.model';
+import {CharacterStatsCurveLevel, CharacterStatsValue} from '../models/character-stats.model';
 import {first, map, tap} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Character, CharacterWithStats} from '../models/character.model';
+import {StatsType} from '../../game-common/models/stats.model';
 
 /**
  * Represents the dependency of character stats value.
@@ -53,19 +54,20 @@ export class CharacterInfoService {
       first(),
       map(curvesLevel => {
         const {ascension, level} = dependency;
-        const result: CharacterStatsValue = {};
+        const result = new CharacterStatsValue();
         for (const [type, statsInfo] of Object.entries(stats)) {
-          const statsType = type as CharacterStatsType;
+          const statsType = type as StatsType;
           if (statsInfo) {
             const {initial, curve} = statsInfo;
-            result[statsType] = !curve ? initial : initial * curvesLevel[curve][level];
+            const value = !curve ? initial : initial * curvesLevel[curve][level];
+            result.add(statsType, value);
           }
         }
         for (const [type, values] of Object.entries(curvesAscension)) {
-          const statsType = type as CharacterStatsType;
+          const statsType = type as StatsType;
           if (values) {
             const value = values[ascension];
-            result[statsType] = value + (result[statsType] ?? 0);
+            result.add(statsType, value);
           }
         }
         this.logger.info('sent character stats', id, dependency, result);

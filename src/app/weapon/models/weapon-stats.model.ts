@@ -1,7 +1,9 @@
+import {StatsType, StatsValue} from '../../game-common/models/stats.model';
+
 /**
  * Represents the stats info of a weapon.
  */
-export type WeaponStatsInfo = Partial<Record<WeaponStatsType, WeaponStats>>;
+export type WeaponStatsInfo = Partial<Record<StatsType, WeaponStats>>;
 
 /**
  * Represents the attribute info of a weapon stats.
@@ -32,22 +34,15 @@ export interface WeaponStatsCurveLevel {
  */
 export interface WeaponStatsCurveAscension {
 
-  [rarity: number]: Partial<Record<WeaponStatsType, number[]>>;
+  [rarity: number]: Partial<Record<StatsType, number[]>>;
 }
 
 /**
  * Cache the calculated value of specific weapon progress.
  */
-export type WeaponStatsValue = Partial<Record<WeaponStatsType, number>>;
+export class WeaponStatsValue extends StatsValue {
 
-export type WeaponStatsType =
-  | 'ATK Base' // Attack base
-  | 'HP%' // Health Points bonus %
-  | 'ATK%' // Attack bonus %
-  | 'DEF%' // Defense bonus %
-  | 'CHC%' // Critical Hit Chance (CRIT Rate) bonus %
-  | 'CHD%' // Critical Hit Damage (CRIT DMG) bonus %
-  | 'ER%' // Energy Recharge %
-  | 'EM' // Element Mastery
-  | 'PHY DMG%' // Physical Damage bonus %
-  ;
+  constructor() {
+    super();
+  }
+}

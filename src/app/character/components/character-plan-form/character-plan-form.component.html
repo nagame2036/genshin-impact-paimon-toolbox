@@ -15,15 +15,15 @@
   </app-current-goal-level-select>
   <ng-container *ngFor="let type of service.getStatsTypes(character); let i = index">
     <ng-container *ngIf="type.endsWith('%') else numeric">
-      <app-current-goal-comparator [current]="character.currentStats[type] | percent: '1.0-1'"
-                                   [goal]="character.planStats[type] | percent: '1.0-1'">
-        {{ i18n.dict('attributes.' + type) | translate }}
+      <app-current-goal-comparator [current]="character.currentStats.get(type) | percent: '1.0-1'"
+                                   [goal]="character.planStats.get(type) | percent: '1.0-1'">
+        {{ i18n.stats(type) | translate }}
       </app-current-goal-comparator>
     </ng-container>
     <ng-template #numeric>
-      <app-current-goal-comparator [current]="character.currentStats[type] | number: '1.0-0'"
-                                   [goal]="character.planStats[type] | number: '1.0-0'">
-        {{ i18n.dict('attributes.' + type) | translate }}
+      <app-current-goal-comparator [current]="character.currentStats.get(type) | number: '1.0-0'"
+                                   [goal]="character.planStats.get(type) | number: '1.0-0'">
+        {{ i18n.stats(type) | translate }}
       </app-current-goal-comparator>
     </ng-template>
   </ng-container>
