@@ -88,7 +88,7 @@ export class TalentLevelupCostService {
           }
         }
         const key = plan.id;
-        requirement.mark(cost, ItemType.CHARACTER, key, key, this.getLabel(id), [start, goal].map(it => it.toString()));
+        requirement.mark(cost, ItemType.CHARACTER, key, key, this.getLabel(id), [start + 1, goal + 1].map(it => it.toString()));
       }
       return requirement;
     }));
