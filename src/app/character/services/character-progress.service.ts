@@ -31,7 +31,7 @@ export class CharacterProgressService {
       const noProgress = new Map<number, CharacterInfo>(infos);
       for (const progress of progresses) {
         inProgress.set(progress.id, progress);
-        noProgress.delete(progress.weaponId);
+        noProgress.delete(progress.id);
       }
       this.inProgress$.next(inProgress);
       this.noProgress$.next(noProgress);
@@ -56,10 +56,12 @@ export class CharacterProgressService {
 
   update({progress}: Character): void {
     const update = this.database.update(this.store, progress);
-    zip(update, this.inProgress).subscribe(([, inProgress]) => {
+    zip(update, this.inProgress, this.noProgress).subscribe(([, inProgress, noProgress]) => {
       this.logger.info('updated character progress', progress);
       inProgress.set(progress.id, progress);
+      noProgress.delete(progress.id);
       this.inProgress$.next(inProgress);
+      this.noProgress$.next(noProgress);
     });
   }
 
