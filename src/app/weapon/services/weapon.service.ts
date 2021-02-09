@@ -31,10 +31,21 @@ export class WeaponService {
 
   readonly nonParty = this.progressor.noProgress.pipe(map(infos => [...infos.values()]));
 
-  readonly sorts: { text: string, value: (a: Weapon, b: Weapon) => number }[] = [
+  readonly sorts: { text: string, value: (a: WeaponWithStats, b: WeaponWithStats) => number }[] = [
     {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
     {text: this.i18n.dict('rarity'), value: ({info: a}, {info: b}) => b.rarity - a.rarity},
     {text: this.i18n.dict('refine-rank'), value: ({progress: a}, {progress: b}) => b.refine - a.refine},
+    ...this.generateSorts([
+      'ATK Base',
+      'ATK%',
+      'CHC%',
+      'CHD%',
+      'ER%',
+      'PHY DMG%',
+      'HP%',
+      'EM',
+      'DEF%',
+    ]),
   ];
 
   sort = this.sorts[0].value;
@@ -165,5 +176,11 @@ export class WeaponService {
 
   private filterInfo({rarity, type}: WeaponInfo): boolean {
     return this.rarityFilter.includes(rarity) && this.typeFilter.includes(type);
+  }
+
+  private generateSorts(types: StatsType[]): { text: string, value: (a: WeaponWithStats, b: WeaponWithStats) => number }[] {
+    return types.map(type => {
+      return {text: this.i18n.stats(type), value: ({currentStats: a}, {currentStats: b}) => b.get(type) - a.get(type)};
+    });
   }
 }
