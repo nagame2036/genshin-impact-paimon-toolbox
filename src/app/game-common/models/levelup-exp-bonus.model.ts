@@ -1,6 +1,6 @@
 export interface ExpBonus {
 
-  factor: number;
+  multiplier: number;
 
   startTime: string;
 
@@ -18,7 +18,7 @@ export function processExpBonus(
     const now = new Date();
     for (const bonus of expBonus) {
       if (now >= new Date(bonus.startTime) && now <= new Date(bonus.endTime)) {
-        exp /= bonus.factor;
+        exp /= bonus.multiplier;
         break;
       }
     }
