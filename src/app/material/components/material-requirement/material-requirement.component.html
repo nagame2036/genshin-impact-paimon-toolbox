@@ -11,7 +11,7 @@
   </app-checkbox>
 </div>
 <div class="list" *ngIf="requireDetails$ | async as details">
-  <app-inventory-list *ngFor="let items$ of details; let i = index; trackBy: trackIndex"
-                      [subtitle]="subtitles[i]" [items$]="items$" [showCostDetails]="false">
-  </app-inventory-list>
+  <app-material-list *ngFor="let items$ of details; let i = index; trackBy: trackIndex"
+                     [subtitle]="subtitles[i]" [items$]="items$" [showCostDetails]="false">
+  </app-material-list>
 </div>

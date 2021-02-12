@@ -6,11 +6,11 @@ import {Observable} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 
 @Component({
-  selector: 'app-inventory-list',
-  templateUrl: './inventory-list.component.html',
-  styleUrls: ['./inventory-list.component.scss']
+  selector: 'app-material-list',
+  templateUrl: './material-list.component.html',
+  styleUrls: ['./material-list.component.scss']
 })
-export class InventoryListComponent implements OnInit {
+export class MaterialListComponent implements OnInit {
 
   i18n = new I18n('inventory');
 

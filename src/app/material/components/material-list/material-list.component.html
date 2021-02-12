@@ -37,7 +37,12 @@
           </span>
         </app-text-field>
         <app-ring-button class="craft-btn" [disabled]="notCraftable(item)" (click)="materials.craft(item, 1)">
-          {{ i18n.module('craft-one') | translate }}
+          <ng-container *ngIf="item.recipes else cantCraft">
+            {{ i18n.module('craft-one') | translate }}
+          </ng-container>
+          <ng-template #cantCraft>
+            {{ i18n.module('cant-craft') | translate }}
+          </ng-template>
         </app-ring-button>
       </div>
     </div>

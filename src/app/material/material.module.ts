@@ -2,14 +2,15 @@ import {NgModule} from '@angular/core';
 
 import {WidgetModule} from '../widget/widget.module';
 import {GameCommonModule} from '../game-common/game-common.module';
-import {InventoryListComponent} from './components/inventory-list/inventory-list.component';
+import {MaterialListComponent} from './components/material-list/material-list.component';
 import {MaterialRequirementComponent} from './components/material-requirement/material-requirement.component';
 import {MaterialRequirementDialogComponent} from './components/material-requirement-dialog/material-requirement-dialog.component';
 import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
+import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.component';
 
 @NgModule({
   declarations: [
-    InventoryListComponent,
+    MaterialListComponent,
     MaterialRequirementComponent,
     MaterialRequirementDialogComponent,
     ExecutePlanConfirmDialogComponent,
@@ -19,7 +20,7 @@ import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confi
     GameCommonModule,
   ],
   exports: [
-    InventoryListComponent,
+    MaterialListComponent,
     MaterialRequirementComponent,
     MaterialRequirementDialogComponent,
     ExecutePlanConfirmDialogComponent,
