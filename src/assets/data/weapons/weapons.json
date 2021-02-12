@@ -379,6 +379,25 @@
       }
     }
   },
+  "11505": {
+    "type": 1,
+    "rarity": 5,
+    "materials": {
+      "domain": 404,
+      "elite": 904,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 44.33580017089844,
+        "curve": "ATK-304"
+      },
+      "CHC%": {
+        "initial": 0.09600000083446503,
+        "curve": "CHC-301"
+      }
+    }
+  },
   "12301": {
     "type": 2,
     "rarity": 3,
@@ -927,6 +946,25 @@
       "PHY DMG%": {
         "initial": 0.15013299882411957,
         "curve": "CHC-201"
+      }
+    }
+  },
+  "13501": {
+    "type": 3,
+    "rarity": 5,
+    "materials": {
+      "domain": 405,
+      "elite": 902,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "CHD%": {
+        "initial": 0.14399999380111694,
+        "curve": "CHC-301"
       }
     }
   },
