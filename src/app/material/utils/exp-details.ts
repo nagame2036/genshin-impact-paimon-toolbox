@@ -1,7 +1,10 @@
 import {MaterialDetail} from '../models/material.model';
-import {MaterialList} from '../models/material-list.model';
+import {MaterialRequireList} from '../models/material-require-list.model';
+import {MaterialRequireMarkTemp} from '../models/material-require-mark.model';
 
-export function processExpMaterials(expId: number, exps: { id: number, exp: number }[], materials: Map<number, MaterialDetail>): void {
+type Exp = { id: number, exp: number };
+
+export function processExpMaterials(expId: number, exps: Exp[], materials: Map<number, MaterialDetail>): void {
   const expMaterial = materials.get(expId);
   if (!expMaterial) {
     return;
@@ -22,19 +25,19 @@ export function processExpMaterials(expId: number, exps: { id: number, exp: numb
   }
 }
 
-export function splitExpNeed(expId: number, exps: { id: number; exp: number }[], cost: MaterialList): void {
+export function splitExpNeed(expId: number, exps: Exp[], requirement: MaterialRequireList, mark: MaterialRequireMarkTemp): void {
   const length = exps.length;
   if (length < 1) {
     return;
   }
-  let expNeed = cost.getAmount(expId);
+  let expNeed = requirement.getNeed(expId);
   for (const {id, exp} of exps) {
     const need = Math.floor(expNeed / exp);
-    cost.change(id, need);
+    requirement.mark(id, need, mark);
     expNeed -= need * exp;
   }
   if (expNeed > 0) {
     const {id} = exps[length - 1];
-    cost.change(id, 1);
+    requirement.mark(id, 1, mark);
   }
 }

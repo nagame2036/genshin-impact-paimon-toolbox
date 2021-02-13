@@ -36,11 +36,6 @@ export class AscensionLevel {
   static levels(ascension: Ascension, start: number = -1): number[] {
     const limit = AscensionLevel.limit[ascension ?? 0];
     const min = Math.max(start, limit.min);
-    return rangeList(min, limit.max, true);
-  }
-
-  copyFrom(that: AscensionLevel): void {
-    this.ascension = that.ascension;
-    this.level = that.level;
+    return rangeList(min, limit.max);
   }
 }

@@ -53,7 +53,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.ascensions = (rangeList(0, 6, true) as Ascension[]).map(this.getAscension);
+    this.ascensions = rangeList(0, 6).map(this.getAscension);
     this.levels = this.getLevels();
     this.goalAscensions = this.getGoalAscensions();
     this.goalLevels = this.getGoalLevels();
@@ -66,7 +66,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   }
 
   getGoalAscensions(): SelectOption[] {
-    return (rangeList(this.ascension, 6, true) as Ascension[]).map(this.getAscension);
+    return rangeList(this.ascension, 6).map(this.getAscension);
   }
 
   getLevels(): SelectOption[] {

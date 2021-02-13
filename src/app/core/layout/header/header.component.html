@@ -15,7 +15,7 @@
     </span>
     <ul class="language-menu">
       <li *ngFor="let lang of languages" (click)="switchLanguage(lang.value)"
-          class="language-option" [ngClass]="{'selected': lang.value == currentLanguage}">
+          class="language-option" [ngClass]="{'selected': lang.value === currentLanguage}">
         {{ lang.text }}
       </li>
     </ul>

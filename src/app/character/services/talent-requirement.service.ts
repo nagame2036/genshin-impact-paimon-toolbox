@@ -3,7 +3,6 @@ import {combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
 import {EnemyMaterialService} from '../../material/services/enemy-material.service';
-import {MaterialList} from '../../material/models/material-list.model';
 import {TalentLevelupMaterialService} from '../../material/services/talent-levelup-material.service';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {mora} from '../../material/models/mora-and-exp.model';
@@ -14,6 +13,8 @@ import {MaterialRequireList} from '../../material/models/material-require-list.m
 import {TalentInfoService} from './talent-info.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {TalentInfo} from '../models/talent-info.model';
+import {MaterialRequireMarkTemp} from '../../material/models/material-require-mark.model';
+import {CharacterPlan} from '../models/character-plan.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,33 +65,35 @@ export class TalentRequirementService {
         if (!materials) {
           continue;
         }
-        const cost = new MaterialList();
         const {domain, mob, boss, event} = materials;
 
         // talent level starts with 1 not 0, so should minus 1
         const start = Math.max(0, progress.talents[id] - 1);
         const goal = Math.max(start, plan.talents[id] - 1);
+        const mark = generateMark(plan, this.getLabel(id), (start + 1).toString(), (goal + 1).toString());
         const domainLength = domain.length;
         for (let i = start; i < goal; i++) {
           const {mora: moraCost, domain: domainCost, mob: mobCost, boss: bossCost, event: eventCost} = levels[i];
-          cost.change(mora.id, moraCost);
+          requirement.mark(mora.id, moraCost, mark);
           const domainGroupIndex = i % domainLength;
           const domainGroup = domain[domainGroupIndex];
           const domainItem = this.domain.getByGroupAndRarity(domainGroup, domainCost.rarity);
-          cost.change(domainItem.id, domainCost.amount);
+          requirement.mark(domainItem.id, domainCost.amount, mark);
           const mobItem = this.enemies.getByGroupAndRarity(mob, mobCost.rarity);
-          cost.change(mobItem.id, mobCost.amount);
+          requirement.mark(mobItem.id, mobCost.amount, mark);
           if (bossCost) {
-            cost.change(boss, bossCost);
+            requirement.mark(boss, bossCost, mark);
           }
           if (eventCost) {
-            cost.change(event, eventCost);
+            requirement.mark(event, eventCost, mark);
           }
         }
-        const key = plan.id;
-        requirement.mark(cost, ItemType.CHARACTER, key, key, this.getLabel(id), [start + 1, goal + 1].map(it => it.toString()));
       }
       return requirement;
     }));
   }
+}
+
+function generateMark(plan: CharacterPlan, purpose: string, start: string, goal: string): MaterialRequireMarkTemp {
+  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purpose, start, goal};
 }

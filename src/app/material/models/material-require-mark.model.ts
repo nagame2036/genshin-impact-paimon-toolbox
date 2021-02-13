@@ -27,3 +27,8 @@ export interface MaterialRequireMarkDetail {
 
   need: number;
 }
+
+/**
+ * Used as temporary variable type.
+ */
+export type MaterialRequireMarkTemp = Omit<MaterialRequireMark & MaterialRequireMarkDetail, 'details' | 'need'>;

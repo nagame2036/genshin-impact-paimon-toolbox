@@ -1,6 +1,5 @@
-import {MaterialRequireMark, MaterialRequireMarkDetail} from './material-require-mark.model';
+import {MaterialRequireMark, MaterialRequireMarkDetail, MaterialRequireMarkTemp} from './material-require-mark.model';
 import {MaterialList} from './material-list.model';
-import {ItemType} from '../../game-common/models/item-type.enum';
 
 export class MaterialRequireList {
 
@@ -16,14 +15,12 @@ export class MaterialRequireList {
     }
   }
 
-  mark(cost: MaterialList, type: ItemType, id: number, key: number, purpose: string, [start, goal]: string[]): MaterialRequireList {
-    for (const [materialId, need] of cost.entries()) {
-      if (need <= 0) {
-        continue;
-      }
+  mark(materialId: number, need: number, {type, id, key, purpose, start, goal}: MaterialRequireMarkTemp): MaterialRequireList {
+    if (need > 0) {
       const reqMarks = this.map.get(materialId) ?? new Map<number, MaterialRequireMark>();
       const reqMark = reqMarks.get(key) ?? {type, id, key, details: new Map<string, MaterialRequireMarkDetail>()};
-      reqMark.details.set(purpose, {purpose, start, goal, need});
+      const currNeed = reqMark.details.get(purpose)?.need ?? 0;
+      reqMark.details.set(purpose, {purpose, start, goal, need: need + currNeed});
       reqMarks.set(key, reqMark);
       this.map.set(materialId, reqMarks);
     }

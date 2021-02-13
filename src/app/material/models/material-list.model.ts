@@ -29,23 +29,19 @@ export class MaterialList {
     return this;
   }
 
-  combine(that: MaterialList): MaterialList {
-    for (const [id, amount] of that.map) {
-      this.changeAmount(id, amount);
+  combineAll(list: MaterialList[]): MaterialList {
+    for (const materials of list) {
+      for (const [id, amount] of materials.map) {
+        this.change(id, amount);
+      }
     }
     return this;
   }
 
-  combineAll(list: MaterialList[]): MaterialList {
-    return list.reduce((total, acc) => total.combine(acc), this);
-  }
-
   private changeAmount(id: number, amount: number): void {
-    if (amount === 0) {
-      return;
+    if (amount !== 0) {
+      this.setAmount(id, amount + this.getAmount(id));
     }
-    const current = this.getAmount(id);
-    this.setAmount(id, current + amount);
   }
 
   entries(): [number, number][] {

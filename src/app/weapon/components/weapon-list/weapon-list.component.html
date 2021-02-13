@@ -65,33 +65,33 @@
         </div>
       </ng-container>
       <ng-container *ngFor="let type of service.getStatsTypes(item); let i = index">
-        <div [class.item-overview-odd]="i % 2 == 0">
+        <div [class.item-overview-odd]="i % 2 === 0">
           <b>{{ i18n.stats(type) | translate }}</b>
         </div>
         <ng-container *ngIf="type.endsWith('%') else numeric">
-          <div [class.item-overview-odd]="i % 2 == 0"
+          <div [class.item-overview-odd]="i % 2 === 0"
                [class.col-span-3]="item.currentStats.get(type) >= item.planStats.get(type)">
             {{ item.currentStats.get(type) | percent: '1.0-1' }}
           </div>
           <ng-container *ngIf="item.currentStats.get(type) < item.planStats.get(type)">
-            <div [class.item-overview-odd]="i % 2 == 0">
+            <div [class.item-overview-odd]="i % 2 === 0">
               →
             </div>
-            <div [class.item-overview-odd]="i % 2 == 0">
+            <div [class.item-overview-odd]="i % 2 === 0">
               {{ item.planStats.get(type) | percent: '1.0-1' }}
             </div>
           </ng-container>
         </ng-container>
         <ng-template #numeric>
-          <div [class.item-overview-odd]="i % 2 == 0"
+          <div [class.item-overview-odd]="i % 2 === 0"
                [class.col-span-3]="item.currentStats.get(type) >= item.planStats.get(type)">
             {{ item.currentStats.get(type) | number: '1.0-0' }}
           </div>
           <ng-container *ngIf="item.currentStats.get(type) < item.planStats.get(type)">
-            <div [class.item-overview-odd]="i % 2 == 0">
+            <div [class.item-overview-odd]="i % 2 === 0">
               →
             </div>
-            <div [class.item-overview-odd]="i % 2 == 0">
+            <div [class.item-overview-odd]="i % 2 === 0">
               {{ item.planStats.get(type) | number: '1.0-0' }}
             </div>
           </ng-container>

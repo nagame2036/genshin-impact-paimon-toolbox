@@ -5,7 +5,8 @@ import {WeaponExpMaterial} from '../models/weapon-exp-material.model';
 import {processExpMaterials, splitExpNeed} from '../utils/exp-details';
 import {MaterialDetail} from '../models/material.model';
 import {weaponExp} from '../models/mora-and-exp.model';
-import {MaterialList} from '../models/material-list.model';
+import {MaterialRequireList} from '../models/material-require-list.model';
+import {MaterialRequireMarkTemp} from '../models/material-require-mark.model';
 import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
@@ -27,8 +28,8 @@ export class WeaponExpMaterialService {
     });
   }
 
-  splitExpNeed(cost: MaterialList): void {
-    splitExpNeed(weaponExp.id, this.#items, cost);
+  splitExpNeed(requirement: MaterialRequireList, mark: MaterialRequireMarkTemp): void {
+    splitExpNeed(weaponExp.id, this.#items, requirement, mark);
   }
 
   processExpMaterials(details: Map<number, MaterialDetail>): void {
