@@ -28,7 +28,7 @@
         <ng-container *ngIf="mark.details.size as len">
           <tr *ngFor="let detail of getDetails(mark); let i = index">
             <td class="requirement-cell cell-border-b text-center" *ngIf="i === 0" [rowSpan]="len">
-              {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
+              {{ i18n.dict(types[mark.type] + 's.' + mark.key) | translate }}
             </td>
             <td class="requirement-cell text-center" [class.cell-border-b]="i === len - 1">
               {{ detail.purpose | translate }}
