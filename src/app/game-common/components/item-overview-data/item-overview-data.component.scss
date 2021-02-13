@@ -1,0 +1,17 @@
+.data-container {
+  @apply flex;
+
+  & > span {
+    @apply flex-1;
+
+    &:first-of-type {
+      @apply text-right;
+      @apply pr-2;
+    }
+
+    &:last-of-type {
+      @apply text-left;
+      @apply pl-2;
+    }
+  }
+}

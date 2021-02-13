@@ -4,10 +4,3 @@
 .list {
   grid-template-columns: repeat(auto-fill, 360px);
 }
-
-.item-overview {
-
-  div {
-    @apply pt-1.5;
-  }
-}

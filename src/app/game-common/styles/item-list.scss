@@ -12,15 +12,15 @@
   }
 }
 
-.item-overview {
+.item-overview-table {
   @apply w-full;
-  @apply grid;
-  grid-template-columns: auto 4rem 0.8rem 4rem;
-  @apply text-xs;
+  @apply h-full;
+  @apply table-auto;
+  @apply text-sm;
   @apply text-center;
   @apply border-l;
-}
 
-.item-overview-odd {
-  @apply bg-primary-100;
+  tr:nth-child(even) {
+    @apply bg-primary-100;
+  }
 }

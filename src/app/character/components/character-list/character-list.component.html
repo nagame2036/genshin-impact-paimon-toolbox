@@ -37,54 +37,45 @@
          [alt]="i18n.dict('elements.' + item.info.element) | translate">
     <img class="weapon-type-hint" [src]="images.get('weapon-types', item.info.weapon)"
          [alt]="i18n.dict('weapon-types.' + item.info.weapon) | translate">
-    <div class="item-overview">
-      <div>
-        <b>{{ i18n.dict('constellation') | translate }}</b>
-      </div>
-      <div class="col-span-3">
-        {{ item.progress.constellation }}
-      </div>
-      <div class="item-overview-odd">
-        <b>{{ i18n.dict('ascension') | translate }}</b>
-      </div>
-      <div class="item-overview-odd" [class.col-span-3]="item.progress.ascension >= item.plan.ascension">
-        ★{{ item.progress.ascension }}
-      </div>
-      <div class="item-overview-odd" *ngIf="item.progress.ascension < item.plan.ascension">
-        →
-      </div>
-      <div class="item-overview-odd" *ngIf="item.progress.ascension < item.plan.ascension">
-        ★{{ item.plan.ascension }}
-      </div>
-      <div>
-        <b>{{ i18n.dict('level') | translate }}</b>
-      </div>
-      <div [class.col-span-3]="item.progress.level >= item.plan.level">
-        {{ item.progress.level }}
-      </div>
-      <div *ngIf="item.progress.level < item.plan.level">
-        →
-      </div>
-      <div *ngIf="item.progress.level < item.plan.level">
-        {{ item.plan.level }}
-      </div>
-      <ng-container *ngFor="let talent of item.info.talentsUpgradable; let i = index">
-        <div [class.item-overview-odd]="i % 2 === 0">
+    <table class="item-overview-table">
+      <tr>
+        <td>
+          <b>{{ i18n.dict('constellation') | translate }}</b>
+        </td>
+        <td>
+          {{ item.progress.constellation }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>{{ i18n.dict('ascension') | translate }}</b>
+        </td>
+        <td>
+          <app-item-overview-data left="★{{ item.progress.ascension }}" right="★{{ item.plan.ascension }}"
+                                  [displayRight]="item.progress.ascension < item.plan.ascension">
+          </app-item-overview-data>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>{{ i18n.dict('level') | translate }}</b>
+        </td>
+        <td>
+          <app-item-overview-data [left]="item.progress.level" [right]="item.plan.level"
+                                  [displayRight]="item.progress.level < item.plan.level">
+          </app-item-overview-data>
+        </td>
+      </tr>
+      <tr *ngFor="let talent of item.info.talentsUpgradable; let i = index">
+        <td>
           <b>{{ i18n.dict('talent-types.' + talent % 10) | translate }}</b>
-        </div>
-        <div [class.item-overview-odd]="i % 2 === 0"
-             [class.col-span-3]="item.progress.talents[talent] >= item.plan.talents[talent]">
-          {{ item.progress.talents[talent] }}
-        </div>
-        <ng-container *ngIf="item.progress.talents[talent] < item.plan.talents[talent]">
-          <div [class.item-overview-odd]="i % 2 === 0">
-            →
-          </div>
-          <div [class.item-overview-odd]="i % 2 === 0">
-            {{ item.plan.talents[talent] }}
-          </div>
-        </ng-container>
-      </ng-container>
-    </div>
+        </td>
+        <td>
+          <app-item-overview-data [left]="item.progress.talents[talent]" [right]="item.plan.talents[talent]"
+                                  [displayRight]="item.progress.talents[talent] < item.plan.talents[talent]">
+          </app-item-overview-data>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

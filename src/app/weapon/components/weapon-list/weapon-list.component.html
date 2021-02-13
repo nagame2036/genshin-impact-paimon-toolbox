@@ -29,74 +29,53 @@
     <app-item-view category="weapons" [id]="item.info.id" [rarity]="item.info.rarity"></app-item-view>
     <img class="weapon-type-hint" [src]="images.get('weapon-types', item.info.type)"
          [alt]="i18n.dict('weapon-types.' + item.info.type) | translate">
-    <div class="item-overview">
-      <div>
-        <b>{{ i18n.dict('refine-rank') | translate }}</b>
-      </div>
-      <div class="col-span-3">
-        {{ item.progress.refine }}
-      </div>
-      <div class="item-overview-odd">
-        <b>{{ i18n.dict('ascension') | translate }}</b>
-      </div>
-      <div class="item-overview-odd" [class.col-span-3]="item.progress.ascension >= item.plan.ascension">
-        ★{{ item.progress.ascension }}
-      </div>
-      <ng-container *ngIf="item.progress.ascension < item.plan.ascension">
-        <div class="item-overview-odd">
-          →
-        </div>
-        <div class="item-overview-odd">
-          ★{{ item.plan.ascension }}
-        </div>
-      </ng-container>
-      <div>
-        <b>{{ i18n.dict('level') | translate }}</b>
-      </div>
-      <div [class.col-span-3]="item.progress.level >= item.plan.level">
-        {{ item.progress.level }}
-      </div>
-      <ng-container *ngIf="item.progress.level < item.plan.level">
-        <div>
-          →
-        </div>
-        <div>
-          {{ item.plan.level }}
-        </div>
-      </ng-container>
-      <ng-container *ngFor="let type of service.getStatsTypes(item); let i = index">
-        <div [class.item-overview-odd]="i % 2 === 0">
+    <table class="item-overview-table">
+      <tr>
+        <td>
+          <b>{{ i18n.dict('refine-rank') | translate }}</b>
+        </td>
+        <td>
+          {{ item.progress.refine }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>{{ i18n.dict('ascension') | translate }}</b>
+        </td>
+        <td>
+          <app-item-overview-data left="★{{ item.progress.ascension }}" right="★{{ item.plan.ascension }}"
+                                  [displayRight]="item.progress.ascension < item.plan.ascension">
+          </app-item-overview-data>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>{{ i18n.dict('level') | translate }}</b>
+        </td>
+        <td>
+          <app-item-overview-data [left]="item.progress.level" [right]="item.plan.level"
+                                  [displayRight]="item.progress.level < item.plan.level">
+          </app-item-overview-data>
+        </td>
+      </tr>
+      <tr *ngFor="let type of service.getStatsTypes(item); let i = index">
+        <td>
           <b>{{ i18n.stats(type) | translate }}</b>
-        </div>
-        <ng-container *ngIf="type.endsWith('%') else numeric">
-          <div [class.item-overview-odd]="i % 2 === 0"
-               [class.col-span-3]="item.currentStats.get(type) >= item.planStats.get(type)">
-            {{ item.currentStats.get(type) | percent: '1.0-1' }}
-          </div>
-          <ng-container *ngIf="item.currentStats.get(type) < item.planStats.get(type)">
-            <div [class.item-overview-odd]="i % 2 === 0">
-              →
-            </div>
-            <div [class.item-overview-odd]="i % 2 === 0">
-              {{ item.planStats.get(type) | percent: '1.0-1' }}
-            </div>
-          </ng-container>
-        </ng-container>
-        <ng-template #numeric>
-          <div [class.item-overview-odd]="i % 2 === 0"
-               [class.col-span-3]="item.currentStats.get(type) >= item.planStats.get(type)">
-            {{ item.currentStats.get(type) | number: '1.0-0' }}
-          </div>
-          <ng-container *ngIf="item.currentStats.get(type) < item.planStats.get(type)">
-            <div [class.item-overview-odd]="i % 2 === 0">
-              →
-            </div>
-            <div [class.item-overview-odd]="i % 2 === 0">
-              {{ item.planStats.get(type) | number: '1.0-0' }}
-            </div>
-          </ng-container>
-        </ng-template>
-      </ng-container>
-    </div>
+        </td>
+        <td>
+          <app-item-overview-data *ngIf="type.endsWith('%') else numeric"
+                                  [left]="item.currentStats.get(type) | percent: '1.0-1'"
+                                  [right]="item.planStats.get(type) | percent: '1.0-1'"
+                                  [displayRight]="item.currentStats.get(type) < item.planStats.get(type)">
+          </app-item-overview-data>
+          <ng-template #numeric>
+            <app-item-overview-data [left]="item.currentStats.get(type) | number: '1.0-0'"
+                                    [right]="item.planStats.get(type) | number: '1.0-0'"
+                                    [displayRight]="item.currentStats.get(type) < item.planStats.get(type)">
+            </app-item-overview-data>
+          </ng-template>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

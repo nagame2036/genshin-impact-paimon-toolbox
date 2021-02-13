@@ -1,0 +1,11 @@
+<div [class.data-container]="displayRight">
+  <span>
+  {{ left }}
+  </span>
+  <ng-container *ngIf="displayRight">
+    →
+    <span>
+      {{ right }}
+    </span>
+  </ng-container>
+</div>
