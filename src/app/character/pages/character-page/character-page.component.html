@@ -5,7 +5,7 @@
       <app-multi-select-and-select-all [multiSelect]="multiSelect" [selectAll]="selectAll"
                                        (changed)="onMultiSelectChange($event)">
       </app-multi-select-and-select-all>
-      <app-ring-button *ngIf="selectedItems.length > 0" class="remove-btn" (click)="removeConfirm.open()">
+      <app-ring-button *ngIf="selectedItems.length > 0" class="remove-btn" (clicked)="removeConfirm.open()">
         {{ i18n.module('remove') | translate }}
       </app-ring-button>
     </div>

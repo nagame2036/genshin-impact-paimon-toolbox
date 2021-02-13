@@ -17,7 +17,7 @@
     </span>
   </app-multi-select>
   <div class="actions">
-    <app-ring-button class="add-btn" (click)="add.emit($event)">
+    <app-ring-button class="add-btn" (clicked)="add.emit($event)">
       {{ i18n.module('add') | translate }}
     </app-ring-button>
     <ng-content select="[actions]"></ng-content>
