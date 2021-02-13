@@ -1,4 +1,4 @@
-<app-dialog #dialog>
+<app-dialog #dialog (closed)="close()">
   <h1 title>
     {{ i18n.dict('materials.' + id) | translate }}
     -
@@ -54,7 +54,7 @@
     </table>
   </div>
   <div actions>
-    <app-ring-button class="close-btn" (click)="dialog.close()">
+    <app-ring-button class="close-btn" (clicked)="close()">
       {{ i18n.dict('close') | translate }}
     </app-ring-button>
   </div>

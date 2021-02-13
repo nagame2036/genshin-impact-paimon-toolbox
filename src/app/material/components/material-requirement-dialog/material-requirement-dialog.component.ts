@@ -38,7 +38,6 @@ export class MaterialRequirementDialogComponent implements OnInit {
 
   open(id: number): void {
     this.id = id;
-    this.subscription?.unsubscribe();
     this.subscription = this.materials.getRequireMarks(id).subscribe(marks => {
       this.marks = marks.sort((a, b) => a.type - b.type || b.id - a.id);
       let need = 0;
@@ -56,5 +55,9 @@ export class MaterialRequirementDialogComponent implements OnInit {
 
   getDetails(mark: MaterialRequireMark): MaterialRequireMarkDetail[] {
     return [...mark.details.values()];
+  }
+
+  close(): void {
+    this.subscription?.unsubscribe();
   }
 }

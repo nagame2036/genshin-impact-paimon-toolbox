@@ -1,0 +1,14 @@
+<div class="container">
+  <button class="change-num-btn" [class.disabled]="value - 1 < min" (click)="change(-1)">
+    <span class="material-icons">
+      remove
+    </span>
+  </button>
+  <input type="range" class="range-slider" [valueAsNumber]="value" [min]="min" [max]="max" [step]="step"
+         (input)="emitChange(input.value)" #input>
+  <button class="change-num-btn" [class.disabled]="value + 1 > max" (click)="change(1)">
+    <span class="material-icons">
+      add
+    </span>
+  </button>
+</div>

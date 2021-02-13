@@ -46,6 +46,16 @@ export class MaterialListComponent implements OnInit {
   }
 
   notCraftable(item: MaterialDetail): boolean {
-    return item.craftable < 1 || item.readonly;
+    return !item.craftable || item.readonly;
+  }
+
+  getCraftBtnText(item: MaterialDetail): string {
+    if (!item.recipes || item.readonly) {
+      return this.i18n.module('cant-craft');
+    }
+    if (item.craftable) {
+      return this.i18n.module('craft');
+    }
+    return this.i18n.module('insufficient');
   }
 }

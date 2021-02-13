@@ -5,10 +5,9 @@ import {BehaviorSubject, combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {MaterialRequirementService} from './material-requirement.service';
 import {NGXLogger} from 'ngx-logger';
 import {allRarities} from '../../game-common/models/rarity.type';
-import {MaterialDetail} from '../models/material.model';
+import {CraftRecipe, MaterialDetail} from '../models/material.model';
 import {MaterialCraftService} from './material-craft.service';
-import {first, map, switchMap, tap} from 'rxjs/operators';
-import {mapArrays} from '../../shared/utils/collections';
+import {map, switchMap, tap} from 'rxjs/operators';
 import {MaterialList} from '../models/material-list.model';
 import {MaterialRequireList} from '../models/material-require-list.model';
 import {ItemType, itemTypeNames} from '../../game-common/models/item-type.enum';
@@ -68,6 +67,13 @@ export class MaterialService {
     );
   }
 
+  getCraftDetails(item: MaterialDetail): Observable<{ usage: MaterialDetail[], craftableAmount: number }[]> {
+    return this.materials$.pipe(
+      map(materials => this.crafter.getCraftDetails(item, materials)),
+      tap(details => this.logger.info('sent material craft details', item, details)),
+    );
+  }
+
   updateHave(id: number, have: number): void {
     this.quantities.update(id, have);
   }
@@ -82,14 +88,10 @@ export class MaterialService {
     this.quantities.change(cost);
   }
 
-  craft(target: MaterialDetail, performedTimes: number): void {
-    this.materials$
-      .pipe(
-        first(),
-        map(materials => this.crafter.craft(target, performedTimes, materials, new MaterialList())),
-        tap(change => this.logger.info('craft material', target, change))
-      )
-      .subscribe(change => this.quantities.change(change));
+  craft(id: number, recipe: CraftRecipe, performedTimes: number): void {
+    const change = this.crafter.craft(id, recipe, performedTimes);
+    this.logger.info('craft material', id, change);
+    this.quantities.change(change);
   }
 
   private updateMaterials(): void {
@@ -100,17 +102,27 @@ export class MaterialService {
           const material = new MaterialDetail(info);
           material.have = quantities.getAmount(id);
           material.need = requirements.getNeed(id);
+          material.lack = Math.max(0, material.need - material.have);
+          material.overflow = material.lack <= 0;
           return [id, material];
         }));
         for (const material of materials.values()) {
-          const lack = material.need - material.have - material.craftable;
-          material.craftable += this.crafter.getCraftableAmount(material, lack, materials);
-          material.lack = Math.max(0, lack - material.craftable);
-          material.overflow = material.lack <= 0;
+          material.craftable = this.crafter.isCraftable(material, materials);
         }
         this.information.processSpecialMaterials(materials);
         this.logger.info('updated materials', materials);
         this.materials$.next(materials);
       });
   }
+}
+
+function mapArrays<T, K, V, R>(items: T[], itemMap: Map<K, V>, key: (item: T) => K, result: (item: T, mapItem: V) => R): R[] {
+  const results = [];
+  for (const item of items) {
+    const mapItem = itemMap.get(key(item));
+    if (mapItem) {
+      results.push(result(item, mapItem));
+    }
+  }
+  return results;
 }

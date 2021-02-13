@@ -32,6 +32,9 @@ export class SelectComponent implements OnChanges {
     if (changes.hasOwnProperty('value')) {
       this.changeValueText(changes.value.currentValue);
     }
+    if (changes.hasOwnProperty('options')) {
+      this.changeValueText(this.value);
+    }
   }
 
   change(option: SelectOption): void {

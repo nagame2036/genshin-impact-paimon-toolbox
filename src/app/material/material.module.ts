@@ -14,6 +14,7 @@ import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.compo
     MaterialRequirementComponent,
     MaterialRequirementDialogComponent,
     ExecutePlanConfirmDialogComponent,
+    CraftDialogComponent,
   ],
   imports: [
     WidgetModule,
@@ -22,7 +23,6 @@ import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.compo
   exports: [
     MaterialListComponent,
     MaterialRequirementComponent,
-    MaterialRequirementDialogComponent,
     ExecutePlanConfirmDialogComponent,
   ]
 })

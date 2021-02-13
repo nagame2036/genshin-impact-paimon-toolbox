@@ -4,9 +4,9 @@
   </span>
   <div class="list">
     <div *ngFor="let item of items; trackBy: trackItem" class="detail-container">
-      <app-item-view category="materials" [width]="140" [id]="item.id" [rarity]="item.rarity || 1">
+      <app-item-view category="materials" [width]="138" [id]="item.id" [rarity]="item.rarity || 1">
       </app-item-view>
-      <button *ngIf="showCostDetails" class="cost-detail-btn" (click)="dialog.open(item.id)">
+      <button *ngIf="showCostDetails" class="cost-detail-btn" (click)="requirementDialog.open(item.id)">
         <span class="material-icons">
           info
         </span>
@@ -24,28 +24,18 @@
           </span>
           {{ item.lack | number: '1.0-0' }}
         </app-form-field>
-        <app-form-field [ngStyle]="{'color': item.overflow ? 'gray' : 'black'}">
-          <span form-label>
-            {{ i18n.module('craftable') | translate }}
-          </span>
-          {{ item.craftable | number: '1.0-0' }}
-        </app-form-field>
         <app-text-field [value]="(item.have | number: '1.0-0') || '0'" [disabled]="item.readonly"
                         (changed)="correct(item, $event)">
           <span form-label>
             {{ i18n.module('have') | translate }}
           </span>
         </app-text-field>
-        <app-ring-button class="craft-btn" [disabled]="notCraftable(item)" (click)="materials.craft(item, 1)">
-          <ng-container *ngIf="item.recipes else cantCraft">
-            {{ i18n.module('craft-one') | translate }}
-          </ng-container>
-          <ng-template #cantCraft>
-            {{ i18n.module('cant-craft') | translate }}
-          </ng-template>
+        <app-ring-button class="craft-btn" [disabled]="notCraftable(item)" (clicked)="craftDialog.open(item)">
+          {{ getCraftBtnText(item) | translate }}
         </app-ring-button>
       </div>
     </div>
   </div>
 </div>
-<app-material-requirement-dialog #dialog></app-material-requirement-dialog>
+<app-material-requirement-dialog #requirementDialog></app-material-requirement-dialog>
+<app-craft-dialog #craftDialog></app-craft-dialog>

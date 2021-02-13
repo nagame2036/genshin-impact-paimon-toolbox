@@ -18,14 +18,3 @@ export function objectMap<T extends { id: number }>(obj: { [id: number]: T }): M
   }
   return result;
 }
-
-export function mapArrays<T, K, V, R>(items: T[], map: Map<K, V>, key: (item: T) => K, result: (item: T, mapItem: V) => R): R[] {
-  const results = [];
-  for (const item of items) {
-    const mapItem = map.get(key(item));
-    if (mapItem) {
-      results.push(result(item, mapItem));
-    }
-  }
-  return results;
-}

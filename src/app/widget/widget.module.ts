@@ -10,6 +10,7 @@ import {SelectComponent} from './components/select/select.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
 import {RingButtonComponent} from './components/ring-button/ring-button.component';
 import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
+import {RangeSliderComponent} from './components/range-slider/range-slider.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
     MultiSelectComponent,
     RingButtonComponent,
     NavTabsComponent,
+    RangeSliderComponent,
   ],
   imports: [
     SharedModule,
@@ -37,6 +39,7 @@ import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
     MultiSelectComponent,
     RingButtonComponent,
     NavTabsComponent,
+    RangeSliderComponent,
   ]
 })
 export class WidgetModule {

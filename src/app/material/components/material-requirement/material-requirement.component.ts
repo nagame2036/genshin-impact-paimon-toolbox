@@ -75,13 +75,8 @@ function selectRequire(details: MaterialDetail[], requirement: MaterialList): Ma
   const results: MaterialDetail[] = [];
   for (const detail of details) {
     const id = detail.id;
-    const need = requirement.getAmount(id);
-    if (requirement.has(id) && need > 0) {
-      let lack = need - detail.have;
-      const craftable = Math.max(0, Math.min(lack, detail.craftable));
-      lack = Math.max(0, lack - craftable);
-      const overflow = lack <= 0;
-      results.push({...detail, need, lack, craftable, overflow});
+    if (requirement.has(id) && requirement.getAmount(id) > 0) {
+      results.push(detail);
     }
   }
   return results;

@@ -1,0 +1,60 @@
+.craft-dialog {
+  width: 800px;
+  @apply flex;
+  @apply flex-col;
+  @apply gap-2;
+}
+
+.recipe-materials {
+  @apply flex;
+  @apply flex-row;
+  @apply flex-wrap;
+  @apply place-content-center;
+  @apply gap-2;
+}
+
+.recipe-material {
+  width: 180px;
+  @apply flex;
+  @apply flex-col;
+  @apply place-items-center;
+  @apply border;
+  @apply rounded;
+}
+
+.perform-times {
+  @apply text-center;
+}
+
+.craft-actions {
+  @apply flex;
+  @apply flex-row;
+  @apply gap-2;
+}
+
+.close-btn, .craft-btn {
+  @apply flex-1;
+
+  ::ng-deep .ring-btn {
+    @apply block;
+    @apply w-full;
+    @apply m-auto;
+    @apply py-2;
+  }
+}
+
+.craft-btn ::ng-deep .ring-btn {
+  @apply text-white;
+  @apply bg-primary-400;
+  @apply border-primary-400;
+  @apply hover:bg-primary-600;
+  @apply hover:border-primary-600;
+
+  &.disabled {
+    @apply text-white;
+    @apply bg-primary-400;
+    @apply border-primary-400;
+    @apply hover:bg-primary-400;
+    @apply hover:border-primary-400;
+  }
+}

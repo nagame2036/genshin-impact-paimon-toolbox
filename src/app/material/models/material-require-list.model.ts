@@ -53,7 +53,7 @@ export class MaterialRequireList {
     }
     let need = 0;
     for (const mark of marks.values()) {
-      for (const [, detail] of mark.details) {
+      for (const detail of mark.details.values()) {
         need += detail.need;
       }
     }

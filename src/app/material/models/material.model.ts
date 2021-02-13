@@ -13,7 +13,7 @@ export interface MaterialInfo {
    */
   source?: number[];
 
-  recipe?: CraftRecipe;
+  recipes?: CraftRecipe[];
 }
 
 export class MaterialDetail {
@@ -26,11 +26,9 @@ export class MaterialDetail {
 
   have = 0;
 
-  recipe?: CraftRecipe;
+  recipes?: CraftRecipe[];
 
-  craftable = 0;
-
-  craftUsed = 0;
+  craftable = false;
 
   lack = 0;
 
@@ -38,10 +36,10 @@ export class MaterialDetail {
 
   readonly = false;
 
-  constructor({id, rarity, recipe}: MaterialInfo) {
+  constructor({id, rarity, recipes}: MaterialInfo) {
     this.id = id;
     this.rarity = rarity;
-    this.recipe = recipe;
+    this.recipes = recipes;
   }
 }
 

@@ -14,6 +14,7 @@
     @apply cursor-not-allowed;
     @apply text-gray-400;
     @apply hover:bg-white;
+    @apply hover:border-gray-200;
     @apply focus:ring-0;
   }
 }

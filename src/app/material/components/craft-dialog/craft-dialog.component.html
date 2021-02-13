@@ -1,0 +1,36 @@
+<app-dialog #dialog (closed)="close()">
+  <h1 title *ngIf="item">
+    {{ i18n.module('craft') | translate }}
+    -
+    {{ i18n.dict('materials.' + item.id) | translate }}
+  </h1>
+  <div *ngIf="recipes.length > 0" class="craft-dialog">
+    <app-select [options]="recipes" [value]="recipe" (changed)="changeRecipe($event)">
+      <span form-label>
+        {{ i18n.module('recipe') | translate }}
+      </span>
+    </app-select>
+    <div class="recipe-materials">
+      <div class="recipe-material" *ngFor="let material of recipeMaterials">
+        <app-item-view category="materials" [id]="material[0].id" [rarity]="material[0].rarity" [width]="178">
+        </app-item-view>
+        {{ material[0].have | number: '1.0-0' }}
+        /
+        {{ material[1] * performedTimes | number: '1.0-0' }}
+      </div>
+    </div>
+    <div class="perform-times">
+      {{ this.i18n.module('performed-times') | translate: {num: performedTimes} }}
+    </div>
+    <app-range-slider [value]="performedTimes" [min]="0" [max]="details[index].craftableAmount"
+                      (changed)="performedTimes = $event"></app-range-slider>
+  </div>
+  <div class="craft-actions" actions>
+    <app-ring-button class="close-btn" (clicked)="close()">
+      {{ i18n.dict('close') | translate }}
+    </app-ring-button>
+    <app-ring-button class="craft-btn" [disabled]="performedTimes === 0" (clicked)="craft()">
+      {{ i18n.module('craft') | translate }}
+    </app-ring-button>
+  </div>
+</app-dialog>

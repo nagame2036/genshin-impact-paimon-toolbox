@@ -11,10 +11,9 @@ export function processExpMaterials(expId: number, exps: { id: number, exp: numb
   for (const {exp, material} of expMaterials) {
     if (material) {
       expMaterial.have += material.have * exp;
-      expMaterial.craftable += material.craftable * exp;
     }
   }
-  expMaterial.lack = Math.max(0, expMaterial.need - expMaterial.have - expMaterial.craftable);
+  expMaterial.lack = Math.max(0, expMaterial.need - expMaterial.have);
   expMaterial.overflow = expMaterial.lack === 0;
   for (const {material} of expMaterials) {
     if (material) {

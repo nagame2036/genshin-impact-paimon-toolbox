@@ -1,0 +1,34 @@
+.container {
+  @apply p-2;
+  @apply box-border;
+  @apply w-full;
+  @apply flex;
+  @apply flex-row;
+  @apply gap-2;
+}
+
+.change-num-btn {
+  @apply h-8;
+  @apply w-8;
+  @apply py-0.5;
+  @apply flex;
+  @apply place-content-center;
+  @apply rounded-full;
+  @apply border-2;
+  @apply appearance-none;
+  @apply hover:border-black;
+  @apply focus:outline-none;
+  @apply focus:border-gray-200;
+  @apply focus:ring;
+  @apply focus:ring-primary-300;
+
+  &.disabled {
+    @apply cursor-not-allowed;
+    @apply hover:border-gray-200;
+    @apply focus:ring-0;
+  }
+}
+
+.range-slider {
+  @apply flex-1;
+}

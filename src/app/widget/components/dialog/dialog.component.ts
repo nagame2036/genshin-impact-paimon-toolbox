@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 
 @Component({
@@ -9,6 +9,9 @@ import {NGXLogger} from 'ngx-logger';
 export class DialogComponent implements OnInit {
 
   opened = false;
+
+  @Output()
+  closed = new EventEmitter();
 
   @ViewChild('outside')
   outside!: ElementRef;
@@ -27,12 +30,13 @@ export class DialogComponent implements OnInit {
   close(): void {
     this.opened = false;
     this.logger.info('close');
+    this.closed.emit();
   }
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event): void {
     if (this.outside.nativeElement === event.target) {
-      this.opened = false;
+      this.close();
     }
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-ring-button',
@@ -10,6 +10,7 @@ export class RingButtonComponent implements OnInit {
   @Input()
   disabled = false;
 
+  @Output()
   clicked = new EventEmitter();
 
   constructor() {
@@ -18,4 +19,9 @@ export class RingButtonComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  emitClick(): void {
+    if (!this.disabled) {
+      this.clicked.emit();
+    }
+  }
 }
