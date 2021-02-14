@@ -72,6 +72,7 @@ export class CraftDialogComponent implements OnInit {
 
   close(): void {
     this.subscription?.unsubscribe();
+    this.dialog.close();
   }
 
   changeRecipe(recipe: CraftRecipe): void {

@@ -28,9 +28,11 @@ export class DialogComponent implements OnInit {
   }
 
   close(): void {
-    this.opened = false;
-    this.logger.info('close');
-    this.closed.emit();
+    if (this.opened) {
+      this.opened = false;
+      this.logger.info('close');
+      this.closed.emit();
+    }
   }
 
   @HostListener('document:click', ['$event'])

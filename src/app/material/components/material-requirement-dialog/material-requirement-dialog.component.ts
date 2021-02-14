@@ -59,5 +59,6 @@ export class MaterialRequirementDialogComponent implements OnInit {
 
   close(): void {
     this.subscription?.unsubscribe();
+    this.dialog.close();
   }
 }
