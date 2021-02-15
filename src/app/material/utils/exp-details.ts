@@ -30,14 +30,18 @@ export function splitExpNeed(expId: number, exps: Exp[], requirement: MaterialRe
   if (length < 1) {
     return;
   }
+  const {exp: lastItemExp} = exps[length - 1];
   let expNeed = requirement.getNeed(expId);
-  for (const {id, exp} of exps) {
-    const need = Math.floor(expNeed / exp);
+  for (const {id, exp: currItemExp} of exps) {
+    if (expNeed <= 0) {
+      break;
+    }
+    let need = Math.floor(expNeed / currItemExp);
+    expNeed -= need * currItemExp;
+    if (currItemExp - expNeed < lastItemExp) {
+      need += 1;
+      expNeed -= currItemExp;
+    }
     requirement.mark(id, need, mark);
-    expNeed -= need * exp;
-  }
-  if (expNeed > 0) {
-    const {id} = exps[length - 1];
-    requirement.mark(id, 1, mark);
   }
 }
