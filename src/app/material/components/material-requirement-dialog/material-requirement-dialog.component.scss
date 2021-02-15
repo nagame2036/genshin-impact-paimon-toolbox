@@ -9,14 +9,14 @@
   @apply table-auto;
   @apply border-2;
   @apply border-collapse;
-  @apply border-primary-600;
+  @apply border-primary-400;
 }
 
 .requirement-cell {
-  @apply px-2;
-  @apply py-1;
+  @apply px-3;
+  @apply py-1.5;
   @apply border;
-  @apply border-primary-600;
+  @apply border-primary-400;
 }
 
 .cell-border-b {
