@@ -38,7 +38,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   goalLevel!: number;
 
   @Input()
-  satisfied!: boolean;
+  reached!: boolean;
 
   @Output()
   currentChange = new EventEmitter<AscensionLevel>();

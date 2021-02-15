@@ -9,11 +9,11 @@ import {mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {NGXLogger} from 'ngx-logger';
 import {Character} from '../models/character.model';
-import {MaterialRequireList} from '../../material/models/material-require-list.model';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {TalentInfoService} from './talent-info.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {TalentInfo} from '../models/talent-info.model';
-import {MaterialRequireMarkTemp} from '../../material/models/material-require-mark.model';
+import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
 
 @Injectable({
@@ -70,7 +70,8 @@ export class TalentRequirementService {
         // talent level starts with 1 not 0, so should minus 1
         const start = Math.max(0, progress.talents[id] - 1);
         const goal = Math.max(start, plan.talents[id] - 1);
-        const mark = generateMark(plan, this.getLabel(id), (start + 1).toString(), (goal + 1).toString());
+        const label = this.getLabel(id);
+        const mark = generateMark(plan, label, label, (start + 1).toString(), (goal + 1).toString());
         const domainLength = domain.length;
         for (let i = start; i < goal; i++) {
           const {mora: moraCost, domain: domainCost, mob: mobCost, boss: bossCost, event: eventCost} = levels[i];
@@ -94,6 +95,6 @@ export class TalentRequirementService {
   }
 }
 
-function generateMark(plan: CharacterPlan, purpose: string, start: string, goal: string): MaterialRequireMarkTemp {
-  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purpose, start, goal};
+function generateMark(plan: CharacterPlan, purposeType: string, purpose: string, start: string, goal: string): RequireMark {
+  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purposeType, purpose, start, goal};
 }

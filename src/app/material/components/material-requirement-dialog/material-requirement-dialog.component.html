@@ -24,31 +24,29 @@
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let mark of marks">
-        <ng-container *ngIf="mark.details.size as len">
-          <tr *ngFor="let detail of getDetails(mark); let i = index">
-            <td class="requirement-cell cell-border-b text-center" *ngIf="i === 0" [rowSpan]="len">
-              {{ i18n.dict(types[mark.type] + 's.' + mark.key) | translate }}
-            </td>
-            <td class="requirement-cell text-center" [class.cell-border-b]="i === len - 1">
-              {{ detail.purpose | translate }}
-            </td>
-            <td class="requirement-cell" [class.cell-border-b]="i === len - 1">
-              <div class="detail-cell">
+      <ng-container *ngFor="let markGroup of marks">
+        <tr *ngFor="let mark of markGroup; let i = index">
+          <td class="requirement-cell cell-border-b text-center" *ngIf="i === 0" [rowSpan]="markGroup.length">
+            {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
+          </td>
+          <td class="requirement-cell text-center" [class.cell-border-b]="i === markGroup.length - 1">
+            {{ mark.purpose | translate }}
+          </td>
+          <td class="requirement-cell" [class.cell-border-b]="i === markGroup.length - 1">
+            <div class="detail-cell">
                 <span>
-                  {{ detail.start }}
+                  {{ mark.start }}
                 </span>
-                →
-                <span>
-                  {{ detail.goal }}
+              →
+              <span>
+                  {{ mark.goal }}
                 </span>
-              </div>
-            </td>
-            <td class="requirement-cell text-right" [class.cell-border-b]="i === len - 1">
-              {{ detail.need | number: '1.0-0' }}
-            </td>
-          </tr>
-        </ng-container>
+            </div>
+          </td>
+          <td class="requirement-cell text-right" [class.cell-border-b]="i === markGroup.length - 1">
+            {{ mark.need | number: '1.0-0' }}
+          </td>
+        </tr>
       </ng-container>
       </tbody>
     </table>

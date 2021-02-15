@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, tap} from 'rxjs/operators';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {Observable} from 'rxjs';
-import {MaterialList} from '../../../material/models/material-list.model';
+import {RequirementDetail} from '../../../material/models/requirement-detail.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
@@ -38,7 +38,7 @@ export class WeaponPlanComponent implements OnInit {
 
   weapon!: WeaponWithStats;
 
-  requirements: Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] = [];
+  requirements$!: Observable<RequirementDetail[]>;
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
@@ -58,7 +58,7 @@ export class WeaponPlanComponent implements OnInit {
       .subscribe(weapon => {
         this.logger.info('received weapon', weapon);
         this.weapon = weapon;
-        this.requirements = this.service.specificRequirement(weapon);
+        this.requirements$ = this.service.specificRequirement(weapon);
       });
   }
 
@@ -69,13 +69,13 @@ export class WeaponPlanComponent implements OnInit {
 
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
-    this.requirements[planIndex].pipe(
+    this.requirements$?.pipe(
       first(),
-      switchMap(plan => {
-        const {text: title, value: cost} = plan;
-        const data = {title, cost, item: this.i18n.dict(`weapons.${this.weapon.info.id}`)};
+      switchMap(req => {
+        const {text: title, value: requirement} = req[planIndex];
+        const data = {title, requirement, item: this.i18n.dict(`weapons.${this.weapon.info.id}`)};
         return this.executePlanConfirm.open(data).afterConfirm().pipe(tap(_ => {
-          this.materials.consumeRequire(cost);
+          this.materials.consumeRequire(requirement);
           this.executeLevelup();
           this.logger.info('executed levelup plan');
           this.save();

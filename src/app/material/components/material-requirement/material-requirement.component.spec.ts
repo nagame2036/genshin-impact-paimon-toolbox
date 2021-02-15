@@ -2,8 +2,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MaterialRequirementComponent} from './material-requirement.component';
 import {MaterialModule} from '../../material.module';
-import {MaterialList} from '../../models/material-list.model';
-import {of} from 'rxjs';
 import {AppTestingModule} from '../../../app-testing.module';
 
 describe('MaterialRequirementComponent', () => {
@@ -26,9 +24,7 @@ describe('MaterialRequirementComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MaterialRequirementComponent);
     component = fixture.componentInstance;
-    component.requirements = [
-      of({text: '', value: new MaterialList()})
-    ];
+    component.requirements = [];
     fixture.detectChanges();
   });
 

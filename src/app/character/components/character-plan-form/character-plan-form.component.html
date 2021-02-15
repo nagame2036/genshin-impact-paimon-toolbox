@@ -10,7 +10,7 @@
   </app-select>
   <app-current-goal-level-select label="character" [ascension]="progress.ascension" [goalAscension]="plan.ascension"
                                  [level]="progress.level" [goalLevel]="plan.level"
-                                 [satisfied]="satisfied[1]" (executePlan)="executePlan.emit(1)"
+                                 [reached]="reachedStates[1]" (executePlan)="executePlan.emit(1)"
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
   <ng-container *ngFor="let type of service.getStatsTypes(character); let i = index">
@@ -31,7 +31,7 @@
                            [currentOptions]="talentLevels[talent]" [goalOptions]="goalTalentLevels[talent]"
                            [current]="progress.talents[talent] || 1" [goal]="plan.talents[talent] || 1"
                            (currentChange)="setTalent(talent, $event)" (goalChange)="setGoalTalent(talent, $event)"
-                           [satisfied]="satisfied[2 + i]" (executePlan)="executePlan.emit(2 + i)">
+                           [reached]="reachedStates[2 + i]" (executePlan)="executePlan.emit(2 + i)">
     {{ i18n.dict('talent-types.' + talent % 10) | translate }}
     -
     {{ i18n.dict('talents.' + talent) | translate }}
@@ -39,8 +39,8 @@
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <app-ring-button *ngIf="planMode" class="execute-all-btn" [class.satisfied]="satisfied[0]"
-                   [disabled]="!satisfied[0]" (clicked)="executePlan.emit(0)">
+  <app-ring-button *ngIf="planMode" class="execute-all-btn" [class.reached]="reachedStates[0]"
+                   [disabled]="!reachedStates[0]" (clicked)="executePlan.emit(0)">
     {{ i18n.module('execute-all-plan') | translate }}
   </app-ring-button>
 </div>

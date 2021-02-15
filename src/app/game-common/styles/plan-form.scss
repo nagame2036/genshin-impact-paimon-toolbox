@@ -1,4 +1,4 @@
-@import 'satisfied.scss';
+@import 'reached.scss';
 
 .plan-form-container {
   @apply flex;
@@ -28,7 +28,7 @@ app-item-view {
   @apply flex-grow;
   @apply w-full;
 
-  &.satisfied {
+  &.reached {
     ::ng-deep .ring-btn {
       @apply border-green-300;
       @apply hover:bg-green-100;

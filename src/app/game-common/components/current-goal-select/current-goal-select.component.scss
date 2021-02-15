@@ -1,5 +1,5 @@
 @import '../../../widget/styles/form-field.scss';
-@import '../../styles/satisfied.scss';
+@import '../../styles/reached.scss';
 
 .form {
   @apply flex;
@@ -28,7 +28,7 @@
   @apply appearance-none;
   @apply focus:outline-none;
 
-  &.satisfied {
+  &.reached {
     @apply cursor-pointer;
   }
 }

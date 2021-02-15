@@ -1,4 +1,5 @@
 import {Rarity} from '../../game-common/models/rarity.type';
+import {MaterialType} from './material-type.enum';
 
 export interface MaterialInfo {
 
@@ -18,15 +19,13 @@ export interface MaterialInfo {
 
 export class MaterialDetail {
 
-  id: number;
+  info: MaterialInfo;
 
-  rarity: Rarity;
+  type: MaterialType;
 
   need = 0;
 
   have = 0;
-
-  recipes?: CraftRecipe[];
 
   craftable = false;
 
@@ -36,10 +35,21 @@ export class MaterialDetail {
 
   readonly = false;
 
-  constructor({id, rarity, recipes}: MaterialInfo) {
-    this.id = id;
-    this.rarity = rarity;
-    this.recipes = recipes;
+  constructor(type: MaterialType, info: MaterialInfo, have: number, need: number) {
+    this.type = type;
+    this.info = info;
+    this.update(have, need);
+  }
+
+  update(have: number, need: number): void {
+    this.have = have;
+    this.need = need;
+    this.lack = Math.max(0, this.need - this.have);
+    this.overflow = this.lack <= 0;
+  }
+
+  copy(): MaterialDetail {
+    return new MaterialDetail(this.type, this.info, this.have, this.need);
   }
 }
 

@@ -1,10 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {MaterialList} from '../../models/material-list.model';
-import {MaterialService} from '../../services/material.service';
 import {MaterialType} from '../../models/material-type.enum';
-import {map} from 'rxjs/operators';
 import {MaterialDetail} from '../../models/material.model';
-import {combineLatest, Observable} from 'rxjs';
 import {I18n} from '../../../widget/models/i18n.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {NGXLogger} from 'ngx-logger';
@@ -25,59 +21,47 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
   types: MaterialType[][] = [];
 
   @Input()
-  requirements: Observable<{ text: string, value: MaterialList }>[] = [];
+  requirements!: { text: string, value: MaterialDetail[] }[];
 
   requirementOptions: SelectOption[] = [];
 
   currentIndex = 0;
 
-  details!: Observable<MaterialDetail[]>[];
+  requirementDetails: MaterialDetail[][] = [];
 
-  requireDetails$!: Observable<Observable<MaterialDetail[]>[]>;
-
-  constructor(public materials: MaterialService, private logger: NGXLogger) {
+  constructor(private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.details = this.types.map(type => this.materials.getTypes(...type));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('requirements')) {
-      this.logger.info('updated requirements', this.requirements);
-      combineLatest(this.requirements).subscribe(requirements => {
-        this.logger.info('received requirements', requirements);
-        this.requirementOptions = requirements.map((it, index) => ({text: it.text, value: index}));
-      });
-      this.update();
+      this.logger.info('received requirements', this.requirements);
+      this.requirementOptions = this.requirements.map((it, index) => ({text: it.text, value: index}));
+      this.changeRequirement(this.currentIndex);
     }
   }
 
   changeRequirement(index: number): void {
     this.currentIndex = index;
-    this.update();
+    const materials = this.requirements[index].value;
+    const tempDetails = new Map<MaterialType[], MaterialDetail[]>();
+    for (const material of materials) {
+      for (const materialTypes of this.types) {
+        if (materialTypes.indexOf(material.type) !== -1) {
+          const details = tempDetails.get(materialTypes) ?? [];
+          details.push(material);
+          tempDetails.set(materialTypes, details);
+          break;
+        }
+      }
+    }
+    this.requirementDetails = this.types.map(it => tempDetails.get(it) ?? []);
   }
 
   trackIndex(index: number, _: any): number {
     return index;
   }
-
-  private update(): void {
-    const requirement = this.requirements[this.currentIndex];
-    this.requireDetails$ = requirement.pipe(map(({value: req}) => {
-      return this.details.map(details => details.pipe(map(it => selectRequire(it, req))));
-    }));
-  }
-}
-
-function selectRequire(details: MaterialDetail[], requirement: MaterialList): MaterialDetail[] {
-  const results: MaterialDetail[] = [];
-  for (const detail of details) {
-    const id = detail.id;
-    if (requirement.has(id) && requirement.getAmount(id) > 0) {
-      results.push(detail);
-    }
-  }
-  return results;
 }

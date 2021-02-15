@@ -10,11 +10,11 @@ import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
 import {map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
-import {MaterialList} from '../../material/models/material-list.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {WeaponProgress} from '../models/weapon-progress.model';
 import {StatsType} from '../../game-common/models/stats.model';
+import {RequirementDetail} from '../../material/models/requirement-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +82,7 @@ export class WeaponService {
   }
 
   create(info: WeaponInfo): Observable<WeaponWithStats> {
-    const id = new Date().getTime();
+    const id = new Date().getTime() * 100 + ItemType.WEAPON;
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
     const weapon = {info, progress, plan};
@@ -151,7 +151,7 @@ export class WeaponService {
     this.logger.info('removed weapons', weapons);
   }
 
-  specificRequirement(weapon: Weapon): Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] {
+  specificRequirement(weapon: Weapon): Observable<RequirementDetail[]> {
     return this.planner.specificRequirements(weapon);
   }
 

@@ -2,30 +2,36 @@ import {Component, OnInit} from '@angular/core';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {MaterialType} from '../../../material/models/material-type.enum';
-import {Observable} from 'rxjs';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-talent-material-inventory',
   templateUrl: './talent-material-inventory.component.html',
   styleUrls: ['./talent-material-inventory.component.scss']
 })
-export class TalentMaterialInventoryComponent implements OnInit {
+export class TalentMaterialInventoryComponent extends AbstractObservableComponent implements OnInit {
 
-  common$!: Observable<MaterialDetail[]>;
+  common!: MaterialDetail[];
 
-  monThu$!: Observable<MaterialDetail[]>;
+  monThu!: MaterialDetail[];
 
-  tueFri$!: Observable<MaterialDetail[]>;
+  tueFri!: MaterialDetail[];
 
-  wedSat$!: Observable<MaterialDetail[]>;
+  wedSat!: MaterialDetail[];
 
   constructor(private materials: MaterialService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.common$ = this.materials.getTypes(MaterialType.TALENT_COMMON);
-    this.monThu$ = this.materials.getTypes(MaterialType.TALENT_14);
-    this.tueFri$ = this.materials.getTypes(MaterialType.TALENT_25);
-    this.wedSat$ = this.materials.getTypes(MaterialType.TALENT_36);
+    this.materials.filtered
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(materials => {
+        this.common = materials.get(MaterialType.TALENT_COMMON) ?? [];
+        this.monThu = materials.get(MaterialType.TALENT_14) ?? [];
+        this.tueFri = materials.get(MaterialType.TALENT_25) ?? [];
+        this.wedSat = materials.get(MaterialType.TALENT_36) ?? [];
+      });
   }
 }

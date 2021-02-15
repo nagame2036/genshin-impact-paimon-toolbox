@@ -9,7 +9,7 @@ import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
-import {MaterialList} from '../../material/models/material-list.model';
+import {RequirementDetail} from '../../material/models/requirement-detail.model';
 import {MaterialService} from '../../material/services/material.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {elementTypeList} from '../../game-common/models/element-type.enum';
@@ -149,7 +149,7 @@ export class CharacterService {
     this.logger.info('removed characters', characters);
   }
 
-  specificRequirement(character: Character): Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] {
+  specificRequirement(character: Character): Observable<RequirementDetail[]> {
     return this.planner.specificRequirements(character);
   }
 

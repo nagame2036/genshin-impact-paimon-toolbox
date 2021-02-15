@@ -12,12 +12,12 @@ import {combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {MaterialDetail, MaterialInfo} from '../models/material.model';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
 import {MaterialType} from '../models/material-type.enum';
-import {map, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MaterialInformationService {
+export class MaterialInfoService {
 
   private materials$ = new ReplaySubject<Map<number, MaterialInfo[]>>();
 
@@ -29,16 +29,8 @@ export class MaterialInformationService {
     this.loadMaterials();
   }
 
-  getAll(): Observable<MaterialInfo[]> {
+  getAll(): Observable<Map<number, MaterialInfo[]>> {
     return this.materials$.pipe(
-      map(materials => [...materials.values()].reduce((acc, curr) => [...acc, ...curr])),
-      tap(materials => this.logger.info('sent all information of materials', materials)),
-    );
-  }
-
-  getTypes(...types: MaterialType[]): Observable<MaterialInfo[]> {
-    return this.materials$.pipe(
-      map(materials => types.map(type => materials.get(type) ?? []).reduce((acc, curr) => [...acc, ...curr])),
       tap(materials => this.logger.info('sent all information of materials', materials)),
     );
   }
@@ -89,16 +81,15 @@ export class MaterialInformationService {
 
 function mapTypes(list: MaterialInfo[], parts: [MaterialType, (item: MaterialInfo) => boolean][]): Map<MaterialType, MaterialInfo[]> {
   const result = new Map<MaterialType, MaterialInfo[]>();
-  const distinct = new Set();
-  for (const [type, condition] of parts) {
-    const materials = [];
-    for (const item of list) {
-      if (!distinct.has(item) && condition(item)) {
+  for (const item of list) {
+    for (const [type, condition] of parts) {
+      if (condition(item)) {
+        const materials = result.get(type) ?? [];
         materials.push(item);
-        distinct.add(item);
+        result.set(type, materials);
+        break;
       }
     }
-    result.set(type, materials);
   }
   return result;
 }

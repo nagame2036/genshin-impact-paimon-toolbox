@@ -21,7 +21,7 @@ export class CurrentGoalSelectComponent implements OnInit {
   goal!: any;
 
   @Input()
-  satisfied!: boolean;
+  reached!: boolean;
 
   @Output()
   currentChange = new EventEmitter<number>();

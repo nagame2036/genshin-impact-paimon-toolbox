@@ -6,12 +6,10 @@ import {TalentInfoService} from '../../services/talent-info.service';
 import {TalentLevel} from '../../models/talent-info.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {CharacterPlan} from '../../models/character-plan.model';
-import {combineLatest} from 'rxjs';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterService} from '../../services/character.service';
-import {MaterialService} from '../../../material/services/material.service';
 import {CharacterInfo} from '../../models/character-info.model';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {takeUntil} from 'rxjs/operators';
@@ -34,7 +32,7 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
 
   plan!: CharacterPlan;
 
-  satisfied: boolean[] = [];
+  reachedStates: boolean[] = [];
 
   @Input()
   planMode = false;
@@ -51,7 +49,7 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
   @Output()
   executePlan = new EventEmitter<number>();
 
-  constructor(public service: CharacterService, public talents: TalentInfoService, public materials: MaterialService,
+  constructor(public service: CharacterService, public talents: TalentInfoService,
               private translator: TranslateService, private logger: NGXLogger) {
     super();
   }
@@ -67,11 +65,11 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
     this.updateTalentLevels();
     this.updateGoalTalentLevels();
     if (this.planMode) {
-      combineLatest(this.service.specificRequirement(this.character))
+      this.service.specificRequirement(this.character)
         .pipe(takeUntil(this.destroy$))
         .subscribe(requirements => {
-          this.satisfied = requirements.map(it => it.satisfied);
-          this.logger.info('updated character plans is satisfied?', this.satisfied);
+          this.reachedStates = requirements.map(it => it.reached);
+          this.logger.info('updated character plan reached requirement', this.reachedStates);
         });
     }
   }

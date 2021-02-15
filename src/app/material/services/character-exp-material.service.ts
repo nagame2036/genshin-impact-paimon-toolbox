@@ -5,8 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {processExpMaterials, splitExpNeed} from '../utils/exp-details';
 import {MaterialDetail} from '../models/material.model';
 import {characterExp} from '../models/mora-and-exp.model';
-import {MaterialRequireList} from '../models/material-require-list.model';
-import {MaterialRequireMarkTemp} from '../models/material-require-mark.model';
+import {MaterialRequireList} from '../collections/material-require-list';
+import {RequireMark} from '../models/material-require-mark.model';
 import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class CharacterExpMaterialService {
     });
   }
 
-  splitExpNeed(requirement: MaterialRequireList, mark: MaterialRequireMarkTemp): void {
+  splitExpNeed(requirement: MaterialRequireList, mark: RequireMark): void {
     splitExpNeed(characterExp.id, this.#items, requirement, mark);
   }
 

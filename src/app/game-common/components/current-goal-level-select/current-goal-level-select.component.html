@@ -1,11 +1,11 @@
 <app-current-goal-select [currentOptions]="ascensions" [current]="ascension" (currentChange)="setAscension($event)"
                          [goalOptions]="goalAscensions" [goal]="goalAscension" (goalChange)="setGoalAscension($event)"
-                         [satisfied]="satisfied" (executePlan)="executePlan.emit()">
+                         [reached]="reached" (executePlan)="executePlan.emit()">
   {{ i18n.dict('ascension-label') | translate }}
 </app-current-goal-select>
 <div style="height: 0.1rem"></div>
 <app-current-goal-select [currentOptions]="levels" [current]="level" (currentChange)="setLevel($event)"
                          [goalOptions]="goalLevels" [goal]="goalLevel" (goalChange)="setGoalLevel($event)"
-                         [satisfied]="satisfied" (executePlan)="executePlan.emit()">
+                         [reached]="reached" (executePlan)="executePlan.emit()">
   {{ i18n.dict('level-label') | translate }}
 </app-current-goal-select>

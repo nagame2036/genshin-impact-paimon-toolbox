@@ -2,7 +2,7 @@
   <h1 title *ngIf="item">
     {{ i18n.module('craft') | translate }}
     -
-    {{ i18n.dict('materials.' + item.id) | translate }}
+    {{ i18n.dict('materials.' + item.info.id) | translate }}
   </h1>
   <div *ngIf="recipes.length > 0" class="craft-dialog">
     <app-select [options]="recipes" [value]="recipe" (changed)="changeRecipe($event)">
@@ -12,7 +12,7 @@
     </app-select>
     <div class="recipe-materials">
       <div class="recipe-material" *ngFor="let material of recipeMaterials">
-        <app-item-view category="materials" [id]="material[0].id" [rarity]="material[0].rarity" [width]="178">
+        <app-item-view category="materials" [id]="material[0].info.id" [rarity]="material[0].info.rarity" [width]="178">
         </app-item-view>
         {{ material[0].have | number: '1.0-0' }}
         /

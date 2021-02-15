@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
-import {MaterialRequireMark, MaterialRequireMarkDetail} from '../../models/material-require-mark.model';
+import {MaterialRequireMark} from '../../models/material-require-mark.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {itemTypeNames} from '../../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
@@ -20,7 +20,7 @@ export class MaterialRequirementDialogComponent implements OnInit {
 
   subscription!: Subscription;
 
-  marks: MaterialRequireMark[] = [];
+  marks: MaterialRequireMark[][] = [];
 
   totalNeed = 0;
 
@@ -39,22 +39,20 @@ export class MaterialRequirementDialogComponent implements OnInit {
   open(id: number): void {
     this.id = id;
     this.subscription = this.materials.getRequireMarks(id).subscribe(marks => {
-      this.marks = marks.sort((a, b) => a.type - b.type || b.id - a.id);
-      let need = 0;
-      for (const mark of this.marks) {
-        for (const detail of mark.details.values()) {
-          need += detail.need;
-        }
+      const sortedMarks = marks.sort((a, b) => a.type - b.type || b.id - a.id);
+      const groupedMarks = new Map<number, MaterialRequireMark[]>();
+      for (const mark of sortedMarks) {
+        const key = mark.key;
+        const group = groupedMarks.get(key) ?? [];
+        group.push(mark);
+        groupedMarks.set(key, group);
       }
-      this.totalNeed = need;
+      this.marks = [...groupedMarks.values()];
+      this.totalNeed = sortedMarks.reduce((acc, curr) => acc + curr.need, 0);
       this.logger.info('received marks', this.marks);
     });
     this.dialog.open();
     this.logger.info('opened with id', id);
-  }
-
-  getDetails(mark: MaterialRequireMark): MaterialRequireMarkDetail[] {
-    return [...mark.details.values()];
   }
 
   close(): void {

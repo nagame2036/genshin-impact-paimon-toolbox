@@ -4,7 +4,7 @@ import {CharacterWithStats} from '../../models/character.model';
 import {CharacterService} from '../../services/character.service';
 import {ActivatedRoute} from '@angular/router';
 import {first, switchMap, tap} from 'rxjs/operators';
-import {MaterialList} from '../../../material/models/material-list.model';
+import {RequirementDetail} from '../../../material/models/requirement-detail.model';
 import {Observable} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialService} from '../../../material/services/material.service';
@@ -40,7 +40,7 @@ export class CharacterPlanComponent implements OnInit {
 
   character!: CharacterWithStats;
 
-  requirements: Observable<{ text: string; value: MaterialList; satisfied: boolean }>[] = [];
+  requirements$!: Observable<RequirementDetail[]>;
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
@@ -60,7 +60,7 @@ export class CharacterPlanComponent implements OnInit {
       .subscribe(character => {
         this.logger.info('received character', character);
         this.character = character;
-        this.requirements = this.service.specificRequirement(character);
+        this.requirements$ = this.service.specificRequirement(character);
       });
   }
 
@@ -71,13 +71,13 @@ export class CharacterPlanComponent implements OnInit {
 
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
-    this.requirements[planIndex].pipe(
+    this.requirements$.pipe(
       first(),
-      switchMap(plan => {
-        const {text: title, value: cost} = plan;
-        const data = {title, cost, item: this.i18n.dict(`characters.${this.character.info.id}`)};
+      switchMap(plans => {
+        const {text: title, value: requirement} = plans[planIndex];
+        const data = {title, requirement, item: this.i18n.dict(`characters.${this.character.info.id}`)};
         return this.executePlanConfirm.open(data).afterConfirm().pipe(tap(_ => {
-          this.materials.consumeRequire(cost);
+          this.materials.consumeRequire(requirement);
           this.executePlanByIndex(planIndex);
           this.save();
         }));

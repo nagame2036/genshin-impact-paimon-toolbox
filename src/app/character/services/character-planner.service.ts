@@ -3,14 +3,14 @@ import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
 import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
-import {MaterialList} from '../../material/models/material-list.model';
+import {RequirementDetail} from '../../material/models/requirement-detail.model';
 import {CharacterRequirementService} from './character-requirement.service';
 import {TalentRequirementService} from './talent-requirement.service';
 import {Character} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
 import {TalentProgress} from '../models/talent-progress.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {MaterialRequireList} from '../../material/models/material-require-list.model';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {MaterialService} from '../../material/services/material.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
@@ -93,19 +93,15 @@ export class CharacterPlanner {
     );
   }
 
-  specificRequirements(character: Character): Observable<{ text: string, value: MaterialList, satisfied: boolean }>[] {
-    const levelupTexts = [this.characterReq.levelupLabel, this.characterReq.ascensionLabel];
-    const talentsTexts = character.info.talentsUpgradable.map(it => this.talentReq.getLabel(it));
-    const texts = [
-      [
+  specificRequirements(character: Character): Observable<RequirementDetail[]> {
+    return this.materials.getRequirements(ItemType.CHARACTER, character.plan.id).pipe(map(requirements => {
+      const texts = [
         this.i18n.module('total-requirement'),
-        ...levelupTexts,
-        ...talentsTexts
-      ],
-      levelupTexts,
-      ...talentsTexts.map(it => [it])
-    ];
-    this.logger.info('sent specific material requirements of character', character, texts);
-    return texts.map(it => this.materials.getRequirements(ItemType.CHARACTER, character.plan.id, it));
+        this.characterReq.levelupLabel,
+        ...character.info.talentsUpgradable.map(it => this.talentReq.getLabel(it)),
+      ];
+      this.logger.info('sent specific material requirements of character', character, requirements);
+      return requirements.sort((a, b) => texts.indexOf(a.text) - texts.indexOf(b.text));
+    }));
   }
 }

@@ -1,6 +1,9 @@
 import {ItemType} from '../../game-common/models/item-type.enum';
+import {MaterialList} from '../collections/material-list';
 
-export interface MaterialRequireMark {
+export type MaterialRequireMark = RequireMark & { need: number };
+
+export interface RequireMark {
 
   type: ItemType;
 
@@ -11,24 +14,18 @@ export interface MaterialRequireMark {
    */
   key: number;
 
-  /**
-   * The Map of purpose to its mark detail.
-   */
-  details: Map<string, MaterialRequireMarkDetail>;
-}
-
-export interface MaterialRequireMarkDetail {
+  purposeType: string;
 
   purpose: string;
 
   start: string;
 
   goal: string;
-
-  need: number;
 }
 
-/**
- * Used as temporary variable type.
- */
-export type MaterialRequireMarkTemp = Omit<MaterialRequireMark & MaterialRequireMarkDetail, 'details' | 'need'>;
+export interface RequireMarkDetail {
+
+  mark: RequireMark;
+
+  requirement: MaterialList;
+}

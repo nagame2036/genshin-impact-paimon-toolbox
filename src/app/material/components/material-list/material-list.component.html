@@ -1,12 +1,12 @@
-<div *ngIf="items$ | async as items">
+<ng-container *ngIf="items">
   <span *ngIf="items.length > 0" class="title">
     {{ i18n.module(subtitle) | translate }}
   </span>
   <div class="list">
     <div *ngFor="let item of items; trackBy: trackItem" class="detail-container">
-      <app-item-view category="materials" [width]="138" [id]="item.id" [rarity]="item.rarity || 1">
+      <app-item-view category="materials" [width]="138" [id]="item.info.id" [rarity]="item.info.rarity || 1">
       </app-item-view>
-      <button *ngIf="showCostDetails" class="cost-detail-btn" (click)="requirementDialog.open(item.id)">
+      <button *ngIf="showCostDetails" class="cost-detail-btn" (click)="requirementDialog.open(item.info.id)">
         <span class="material-icons">
           info
         </span>
@@ -36,6 +36,6 @@
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 <app-material-requirement-dialog #requirementDialog></app-material-requirement-dialog>
 <app-craft-dialog #craftDialog></app-craft-dialog>

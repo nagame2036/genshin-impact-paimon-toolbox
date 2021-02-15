@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {MaterialList} from '../models/material-list.model';
+import {MaterialList} from '../collections/material-list';
 import {NGXLogger} from 'ngx-logger';
 import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {first, switchMap, tap} from 'rxjs/operators';
@@ -39,14 +39,13 @@ export class MaterialQuantityService {
         first(),
         switchMap(quantities => {
           const update = materialChange.entries().map(([itemId, itemAmountChange]) => {
-            quantities.change(itemId, itemAmountChange);
-            return this.updateDatabase(itemId, quantities.getAmount(itemId));
+            return this.updateDatabase(itemId, quantities.getAmount(itemId) + itemAmountChange);
           });
           return forkJoin([...update]).pipe(tap(_ => {
             this.logger.info('change materials quantities', materialChange);
-            this.quantities$.next(quantities);
+            this.quantities$.next(quantities.combine(materialChange));
           }));
-        })
+        }),
       )
       .subscribe();
   }

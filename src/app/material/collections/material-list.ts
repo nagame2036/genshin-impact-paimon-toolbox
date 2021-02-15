@@ -11,10 +11,6 @@ export class MaterialList {
     }
   }
 
-  has(id: number): boolean {
-    return this.map.has(id);
-  }
-
   getAmount(id: number): number {
     return this.map.get(id) ?? 0;
   }
@@ -29,22 +25,27 @@ export class MaterialList {
     return this;
   }
 
-  combineAll(list: MaterialList[]): MaterialList {
-    for (const materials of list) {
-      for (const [id, amount] of materials.map) {
-        this.change(id, amount);
-      }
+  combine(that: MaterialList): MaterialList {
+    for (const [id, amount] of that.map) {
+      this.change(id, amount);
     }
     return this;
+  }
+
+  combineAll(list: MaterialList[]): MaterialList {
+    for (const materials of list) {
+      this.combine(materials);
+    }
+    return this;
+  }
+
+  entries(): [number, number][] {
+    return [...this.map];
   }
 
   private changeAmount(id: number, amount: number): void {
     if (amount !== 0) {
       this.setAmount(id, amount + this.getAmount(id));
     }
-  }
-
-  entries(): [number, number][] {
-    return [...this.map];
   }
 }

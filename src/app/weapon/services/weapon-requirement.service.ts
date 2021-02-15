@@ -13,8 +13,8 @@ import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 import {NGXLogger} from 'ngx-logger';
-import {MaterialRequireList} from '../../material/models/material-require-list.model';
-import {MaterialRequireMarkTemp} from '../../material/models/material-require-mark.model';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
+import {RequireMark} from '../../material/models/material-require-mark.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
 
 @Injectable({
@@ -73,7 +73,7 @@ export class WeaponRequirementService {
     return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(map(([ascensions]) => {
       const {domain, elite, mob} = materials;
       const requirement = new MaterialRequireList();
-      const mark = generateMark(plan, this.levelupLabel, `★${progress.ascension}`, `★${plan.ascension}`);
+      const mark = generateMark(plan, this.levelupLabel, this.ascensionLabel, `★${progress.ascension}`, `★${plan.ascension}`);
       const ascensionSlice = ascensions[rarity].slice(progress.ascension, plan.ascension);
       for (const ascension of ascensionSlice) {
         const {mora: moraCost, domain: domainCost, elite: eliteCost, mob: mobCost} = ascension;
@@ -92,7 +92,7 @@ export class WeaponRequirementService {
   private levelup({info, progress, plan}: Weapon): Observable<MaterialRequireList> {
     return this.levels.pipe(map(levels => {
       const requirement = new MaterialRequireList();
-      const mark = generateMark(plan, this.levelupLabel, progress.level.toString(), plan.level.toString());
+      const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
       const expAmount = levels[info.rarity].slice(progress.level, plan.level).reduce((sum, curr) => sum + curr);
       const {mora: moraCost, exp: expCost} = processExpBonus(info, expAmount, v => v * .1);
       requirement.mark(mora.id, moraCost, mark);
@@ -103,6 +103,6 @@ export class WeaponRequirementService {
   }
 }
 
-function generateMark(plan: WeaponPlan, purpose: string, start: string, goal: string): MaterialRequireMarkTemp {
-  return {type: ItemType.WEAPON, id: plan.id, key: plan.weaponId, purpose, start, goal};
+function generateMark(plan: WeaponPlan, purposeType: string, purpose: string, start: string, goal: string): RequireMark {
+  return {type: ItemType.WEAPON, id: plan.weaponId, key: plan.id, purposeType, purpose, start, goal};
 }

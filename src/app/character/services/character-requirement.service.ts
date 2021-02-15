@@ -11,9 +11,9 @@ import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
 import {NGXLogger} from 'ngx-logger';
-import {MaterialRequireList} from '../../material/models/material-require-list.model';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {ItemType} from '../../game-common/models/item-type.enum';
-import {MaterialRequireMarkTemp} from '../../material/models/material-require-mark.model';
+import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class CharacterRequirementService {
     return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(map(([ascensions]) => {
       const {boss, gem, local, mob} = info.materials;
       const requirement = new MaterialRequireList();
-      const mark = generateMark(plan, this.ascensionLabel, `★${progress.ascension}`, `★${plan.ascension}`);
+      const mark = generateMark(plan, this.levelupLabel, this.ascensionLabel, `★${progress.ascension}`, `★${plan.ascension}`);
       const ascensionSlice = ascensions.slice(progress.ascension, plan.ascension);
       for (const ascension of ascensionSlice) {
         const {mora: moraCost, boss: bossCost, gem: gemCost, local: localCost, mob: mobCost} = ascension;
@@ -93,7 +93,7 @@ export class CharacterRequirementService {
   private levelup({info, progress, plan}: Character): Observable<MaterialRequireList> {
     return this.levels.pipe(map(levels => {
       const requirement = new MaterialRequireList();
-      const mark = generateMark(plan, this.levelupLabel, progress.level.toString(), plan.level.toString());
+      const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
       const levelSlice = levels.slice(progress.level, plan.level);
       const expCostBase = levelSlice.reduce((sum, curr) => sum + curr, 0);
       const {mora: moraCost, exp: expCost} = processExpBonus(info, expCostBase, v => v * .2);
@@ -105,6 +105,6 @@ export class CharacterRequirementService {
   }
 }
 
-function generateMark(plan: CharacterPlan, purpose: string, start: string, goal: string): MaterialRequireMarkTemp {
-  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purpose, start, goal};
+function generateMark(plan: CharacterPlan, purposeType: string, purpose: string, start: string, goal: string): RequireMark {
+  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purposeType, purpose, start, goal};
 }

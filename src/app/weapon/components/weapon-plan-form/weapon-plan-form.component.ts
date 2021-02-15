@@ -3,7 +3,6 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponWithStats} from '../../models/weapon.model';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
-import {combineLatest} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {allRefineRanks, RefineRank, WeaponProgress} from '../../models/weapon-progress.model';
 import {WeaponInfo} from '../../models/weapon-info.model';
@@ -29,7 +28,7 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
 
   plan!: WeaponPlan;
 
-  satisfied: boolean[] = [];
+  reachedStates: boolean[] = [];
 
   @Input()
   planMode = false;
@@ -52,11 +51,11 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
     this.progress = this.weapon.progress;
     this.plan = this.weapon.plan;
     if (this.planMode) {
-      combineLatest(this.service.specificRequirement(this.weapon))
+      this.service.specificRequirement(this.weapon)
         .pipe(takeUntil(this.destroy$))
         .subscribe(requirements => {
-          this.satisfied = requirements.map(it => it.satisfied);
-          this.logger.info('updated weapon plans is satisfied?', this.satisfied);
+          this.reachedStates = requirements.map(it => it.reached);
+          this.logger.info('updated weapon plan reached requirement', this.reachedStates);
         });
     }
   }

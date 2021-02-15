@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MaterialInformationService} from './material-information.service';
+import {MaterialInfoService} from './material-info.service';
 import {MaterialQuantityService} from './material-quantity.service';
 import {BehaviorSubject, combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {MaterialRequirementService} from './material-requirement.service';
@@ -8,18 +8,23 @@ import {allRarities} from '../../game-common/models/rarity.type';
 import {CraftRecipe, MaterialDetail} from '../models/material.model';
 import {MaterialCraftService} from './material-craft.service';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {MaterialList} from '../models/material-list.model';
-import {MaterialRequireList} from '../models/material-require-list.model';
-import {ItemType, itemTypeNames} from '../../game-common/models/item-type.enum';
+import {MaterialList} from '../collections/material-list';
+import {MaterialRequireList} from '../collections/material-require-list';
+import {ItemType} from '../../game-common/models/item-type.enum';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
+import {RequirementDetail} from '../models/requirement-detail.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaterialService {
 
-  private materials$ = new ReplaySubject<Map<number, MaterialDetail>>(1);
+  private readonly materials$ = new BehaviorSubject(new Map<number, MaterialDetail>());
+
+  private readonly filtered$ = new ReplaySubject<Map<number, MaterialDetail[]>>(1);
+
+  readonly filtered = this.filtered$.asObservable();
 
   readonly rarityOptions = allRarities.map(it => ({value: it, text: `★${it}`}));
 
@@ -27,44 +32,19 @@ export class MaterialService {
 
   showOverflow = new BehaviorSubject(true);
 
-  constructor(private information: MaterialInformationService, private quantities: MaterialQuantityService,
+  constructor(private infos: MaterialInfoService, private quantities: MaterialQuantityService,
               private requirements: MaterialRequirementService, private crafter: MaterialCraftService, private logger: NGXLogger) {
     this.updateMaterials();
   }
 
-  getRequireMarks(id: number): Observable<MaterialRequireMark[]> {
-    return this.requirements.getMarks(id);
-  }
-
-  getRequirements(type: ItemType, key: number, purposes: string[]): Observable<{ text: string, value: MaterialList, satisfied: boolean }> {
+  getRequirements(type: ItemType, key: number): Observable<RequirementDetail[]> {
     return this.requirements.getType(type).pipe(switchMap(requirements => {
-      const cost = new MaterialList(purposes.map(purpose => requirements.getNeedByKeyAndPurpose(key, purpose)));
-      return this.materials$.pipe(map(materials => {
-        const satisfied = cost.entries().every(([id, need]) => need <= (materials.get(id)?.have ?? 0));
-        const result = {text: purposes[0], value: cost, satisfied};
-        this.logger.info(`sent ${itemTypeNames[type]} ${key} requirement by ${purposes[0]}`, cost, satisfied);
-        return result;
-      }));
+      return this.materials$.pipe(map(materials => requirements.getDetails(key, materials)));
     }));
   }
 
-  getAll(ids: number[]): Observable<MaterialDetail[]> {
-    return this.materials$.pipe(
-      map(materials => mapArrays(ids, materials, id => id, (_, material) => material)),
-      tap(materials => this.logger.info('sent materials', materials)),
-    );
-  }
-
-  getTypes(...types: MaterialType[]): Observable<MaterialDetail[]> {
-    return combineLatest([this.materials$, this.rarityFilter, this.showOverflow]).pipe(
-      switchMap(([materials, rarities, showOverflow]) => {
-        return this.information.getTypes(...types).pipe(map(infos => {
-          return mapArrays(infos, materials, it => it.id, (_, material) => material)
-            .filter(({rarity, overflow}) => rarities.includes(rarity) && (!overflow || showOverflow));
-        }));
-      }),
-      tap(materials => this.logger.info('sent materials', materials)),
-    );
+  getRequireMarks(id: number): Observable<MaterialRequireMark[]> {
+    return this.requirements.getMarks(id);
   }
 
   getCraftDetails(item: MaterialDetail): Observable<{ usage: MaterialDetail[], craftableAmount: number }[]> {
@@ -82,9 +62,9 @@ export class MaterialService {
     this.requirements.update(type, requirement);
   }
 
-  consumeRequire(requirement: MaterialList): void {
+  consumeRequire(requirement: MaterialDetail[]): void {
     const cost = new MaterialList();
-    requirement.entries().forEach(([id, need]) => cost.setAmount(id, -need));
+    requirement.forEach(({info, need}) => cost.setAmount(info.id, -need));
     this.quantities.change(cost);
   }
 
@@ -95,34 +75,40 @@ export class MaterialService {
   }
 
   private updateMaterials(): void {
-    combineLatest([this.information.getAll(), this.quantities.quantities, this.requirements.getAll()])
-      .subscribe(([information, quantities, requirements]) => {
-        const materials = new Map<number, MaterialDetail>(information.map(info => {
-          const id = info.id;
-          const material = new MaterialDetail(info);
-          material.have = quantities.getAmount(id);
-          material.need = requirements.getNeed(id);
-          material.lack = Math.max(0, material.need - material.have);
-          material.overflow = material.lack <= 0;
-          return [id, material];
-        }));
+    combineLatest([this.infos.getAll(), this.quantities.quantities, this.requirements.getAll(), this.rarityFilter, this.showOverflow])
+      .subscribe(([information, quantities, requirements, rarities, showOverflow]) => {
+        const materials = this.materials$.getValue();
+        for (const [type, infos] of information) {
+          for (const info of infos) {
+            const id = info.id;
+            const have = quantities.getAmount(id);
+            const need = requirements.getNeed(id);
+            const material = materials.get(id);
+            if (material) {
+              material.update(have, need);
+            } else {
+              materials.set(id, new MaterialDetail(type, info, have, need));
+            }
+          }
+        }
         for (const material of materials.values()) {
           material.craftable = this.crafter.isCraftable(material, materials);
         }
-        this.information.processSpecialMaterials(materials);
+        this.infos.processSpecialMaterials(materials);
         this.logger.info('updated materials', materials);
         this.materials$.next(materials);
+
+        const filtered = new Map<MaterialType, MaterialDetail[]>();
+        for (const material of materials.values()) {
+          const {type, info, overflow} = material;
+          if ((!overflow || showOverflow) && rarities.includes(info.rarity)) {
+            const typedMaterials = filtered.get(type) ?? [];
+            typedMaterials.push(material);
+            filtered.set(type, typedMaterials);
+          }
+        }
+        this.logger.info('filtered materials', filtered);
+        this.filtered$.next(filtered);
       });
   }
-}
-
-function mapArrays<T, K, V, R>(items: T[], itemMap: Map<K, V>, key: (item: T) => K, result: (item: T, mapItem: V) => R): R[] {
-  const results = [];
-  for (const item of items) {
-    const mapItem = itemMap.get(key(item));
-    if (mapItem) {
-      results.push(result(item, mapItem));
-    }
-  }
-  return results;
 }

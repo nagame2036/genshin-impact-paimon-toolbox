@@ -4,7 +4,7 @@
                              (executePlan)="executePlan($event)" (changed)="save()">
     </app-character-plan-form>
   </ng-container>
-  <ng-container *ngIf="requirements.length > 0">
+  <ng-container *ngIf="requirements$ | async as requirements">
     <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
     </app-material-requirement>
   </ng-container>

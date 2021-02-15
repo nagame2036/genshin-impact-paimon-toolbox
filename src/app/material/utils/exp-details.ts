@@ -1,6 +1,6 @@
 import {MaterialDetail} from '../models/material.model';
-import {MaterialRequireList} from '../models/material-require-list.model';
-import {MaterialRequireMarkTemp} from '../models/material-require-mark.model';
+import {MaterialRequireList} from '../collections/material-require-list';
+import {RequireMark} from '../models/material-require-mark.model';
 
 type Exp = { id: number, exp: number };
 
@@ -9,23 +9,19 @@ export function processExpMaterials(expId: number, exps: Exp[], materials: Map<n
   if (!expMaterial) {
     return;
   }
+  expMaterial.have = 0;
   expMaterial.readonly = true;
-  const expMaterials = exps.map(({exp, id}) => ({exp, material: materials.get(id)}));
-  for (const {exp, material} of expMaterials) {
+  for (const {id, exp} of exps) {
+    const material = materials.get(id);
     if (material) {
       expMaterial.have += material.have * exp;
     }
   }
   expMaterial.lack = Math.max(0, expMaterial.need - expMaterial.have);
   expMaterial.overflow = expMaterial.lack === 0;
-  for (const {material} of expMaterials) {
-    if (material) {
-      material.overflow = expMaterial.overflow || material.lack === 0;
-    }
-  }
 }
 
-export function splitExpNeed(expId: number, exps: Exp[], requirement: MaterialRequireList, mark: MaterialRequireMarkTemp): void {
+export function splitExpNeed(expId: number, exps: Exp[], requirement: MaterialRequireList, mark: RequireMark): void {
   const length = exps.length;
   if (length < 1) {
     return;

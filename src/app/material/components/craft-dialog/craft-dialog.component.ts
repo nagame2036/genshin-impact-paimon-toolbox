@@ -48,7 +48,7 @@ export class CraftDialogComponent implements OnInit {
   }
 
   open(item: MaterialDetail): void {
-    const recipes = item.recipes;
+    const recipes = item.info.recipes;
     if (!recipes) {
       return;
     }
@@ -60,7 +60,7 @@ export class CraftDialogComponent implements OnInit {
       this.recipes = details.map(({usage, craftableAmount}, index) => {
         const key = craftableAmount > 0 ? 'craftable' : 'insufficient';
         const times = this.translator.instant(this.i18n.module(key), {num: craftableAmount});
-        const materials = usage.map(({id}) => this.translator.instant(this.i18n.dict(`materials.${id}`))).join(', ');
+        const materials = usage.map(({info}) => this.translator.instant(this.i18n.dict(`materials.${info.id}`))).join(', ');
         return ({text: `${times} - ${materials}`, value: recipes[index]});
       });
       this.changeRecipe(this.recipes[this.index].value);
@@ -80,10 +80,10 @@ export class CraftDialogComponent implements OnInit {
     const amount = this.details[this.index].craftableAmount;
     this.performedTimes = coerceIn(this.performedTimes, amount > 0 ? 1 : 0, amount);
     this.recipe = recipe;
-    this.recipeMaterials = this.details[this.index].usage.map(it => [it, recipe[it.id] ?? 0]);
+    this.recipeMaterials = this.details[this.index].usage.map(it => [it, recipe[it.info.id] ?? 0]);
   }
 
   craft(): void {
-    this.materials.craft(this.item.id, this.recipe, this.performedTimes);
+    this.materials.craft(this.item.info.id, this.recipe, this.performedTimes);
   }
 }

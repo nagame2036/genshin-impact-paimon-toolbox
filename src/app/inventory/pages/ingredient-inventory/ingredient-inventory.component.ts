@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MaterialService} from '../../../material/services/material.service';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {takeUntil} from 'rxjs/operators';
 import {MaterialDetail} from '../../../material/models/material.model';
-import {Observable} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
 
 @Component({
@@ -9,17 +10,24 @@ import {MaterialType} from '../../../material/models/material-type.enum';
   templateUrl: './ingredient-inventory.component.html',
   styleUrls: ['./ingredient-inventory.component.scss']
 })
-export class IngredientInventoryComponent implements OnInit {
+export class IngredientInventoryComponent extends AbstractObservableComponent implements OnInit {
 
-  common$!: Observable<MaterialDetail[]>;
+  common!: MaterialDetail[];
 
-  local$!: Observable<MaterialDetail[]>;
+  local!: MaterialDetail[];
 
   constructor(private materials: MaterialService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.common$ = this.materials.getTypes(MaterialType.CURRENCY, MaterialType.ORE);
-    this.local$ = this.materials.getTypes(MaterialType.LOCAL_SPECIALTY);
+    this.materials.filtered
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(materials => {
+        const currencies = materials.get(MaterialType.CURRENCY) ?? [];
+        const ores = materials.get(MaterialType.ORE) ?? [];
+        this.common = [...currencies, ...ores];
+        this.local = materials.get(MaterialType.LOCAL_SPECIALTY) ?? [];
+      });
   }
 }

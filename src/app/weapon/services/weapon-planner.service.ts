@@ -3,7 +3,7 @@ import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import {MaterialList} from '../../material/models/material-list.model';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {WeaponRequirementService} from './weapon-requirement.service';
 import {Weapon} from '../models/weapon.model';
 import {I18n} from '../../widget/models/i18n.model';
@@ -11,7 +11,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialService} from '../../material/services/material.service';
 import {WeaponInfo} from '../models/weapon-info.model';
-import {MaterialRequireList} from '../../material/models/material-require-list.model';
+import {RequirementDetail} from '../../material/models/requirement-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -88,15 +88,14 @@ export class WeaponPlanner {
     );
   }
 
-  specificRequirements(weapon: Weapon): Observable<{ text: string, value: MaterialList, satisfied: boolean }>[] {
-    const levelupTexts = [this.requirement.levelupLabel, this.requirement.ascensionLabel];
-    const texts = [
-      [
+  specificRequirements(weapon: Weapon): Observable<RequirementDetail[]> {
+    return this.materials.getRequirements(ItemType.WEAPON, weapon.plan.id).pipe(map(requirements => {
+      const texts = [
         this.i18n.module('total-requirement'),
-        ...levelupTexts
-      ],
-    ];
-    this.logger.info('sent specific material requirements of weapon', weapon, texts);
-    return texts.map(it => this.materials.getRequirements(ItemType.WEAPON, weapon.plan.id, it));
+        this.requirement.levelupLabel,
+      ];
+      this.logger.info('sent specific material requirements of weapon', weapon, texts, requirements);
+      return requirements.sort((a, b) => texts.indexOf(a.text) - texts.indexOf(b.text));
+    }));
   }
 }

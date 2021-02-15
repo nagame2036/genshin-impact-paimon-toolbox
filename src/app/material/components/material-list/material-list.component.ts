@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {MaterialDetail} from '../../models/material.model';
 import {MaterialService} from '../../services/material.service';
-import {Observable} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 
 @Component({
@@ -21,7 +20,7 @@ export class MaterialListComponent implements OnInit {
   showCostDetails = true;
 
   @Input()
-  items$!: Observable<MaterialDetail[]>;
+  items!: MaterialDetail[];
 
   constructor(public materials: MaterialService, private logger: NGXLogger) {
   }
@@ -32,8 +31,9 @@ export class MaterialListComponent implements OnInit {
 
   setHave(detail: MaterialDetail, value: number): void {
     const have = Math.max(0, value);
-    this.materials.updateHave(detail.id, have);
-    this.logger.info('set material have', detail.id, have);
+    const id = detail.info.id;
+    this.materials.updateHave(id, have);
+    this.logger.info('set material have', id, have);
   }
 
   correct(detail: MaterialDetail, value: string): void {
@@ -42,7 +42,7 @@ export class MaterialListComponent implements OnInit {
   }
 
   trackItem(index: number, item: MaterialDetail): number {
-    return item.id;
+    return item.info.id;
   }
 
   notCraftable(item: MaterialDetail): boolean {
@@ -50,7 +50,7 @@ export class MaterialListComponent implements OnInit {
   }
 
   getCraftBtnText(item: MaterialDetail): string {
-    if (!item.recipes || item.readonly) {
+    if (!item.info.recipes || item.readonly) {
       return this.i18n.module('cant-craft');
     }
     if (item.craftable) {
