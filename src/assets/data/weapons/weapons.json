@@ -664,6 +664,25 @@
       }
     }
   },
+  "12410": {
+    "type": 2,
+    "rarity": 4,
+    "materials": {
+      "domain": 403,
+      "elite": 905,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "ATK%": {
+        "initial": 0.09000000357627869,
+        "curve": "CHC-201"
+      }
+    }
+  },
   "12411": {
     "type": 2,
     "rarity": 4,
@@ -888,6 +907,25 @@
       },
       "CHC%": {
         "initial": 0.07999999821186066,
+        "curve": "CHC-201"
+      }
+    }
+  },
+  "13406": {
+    "type": 3,
+    "rarity": 4,
+    "materials": {
+      "domain": 405,
+      "elite": 906,
+      "mob": 803
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ATK%": {
+        "initial": 0.05999999865889549,
         "curve": "CHC-201"
       }
     }
