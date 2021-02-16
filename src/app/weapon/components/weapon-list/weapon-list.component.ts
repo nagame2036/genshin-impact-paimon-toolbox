@@ -34,9 +34,6 @@ export class WeaponListComponent extends AbstractObservableComponent implements 
   @Output()
   multiSelected = new EventEmitter<Weapon[]>();
 
-  @Output()
-  add = new EventEmitter();
-
   constructor(public service: WeaponService, public images: ImageService, private logger: NGXLogger) {
     super();
   }

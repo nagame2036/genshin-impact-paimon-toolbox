@@ -1,7 +1,10 @@
 <ng-container *ngIf="weapons$ | async as weapons">
   <app-weapon-list #list [weapons]="weapons" [selectedItems]="selectedItems"
-                   (add)="goToAdd()" (selected)="goToDetail($event)" (multiSelected)="updateSelected($event)">
+                   (selected)="goToDetail($event)" (multiSelected)="updateSelected($event)">
     <div actions>
+      <app-ring-button class="add-btn" (clicked)="goToAdd()">
+        {{ i18n.module('add') | translate }}
+      </app-ring-button>
       <app-multi-select-and-select-all [multiSelect]="multiSelect" [selectAll]="selectAll"
                                        (changed)="onMultiSelectChange($event)">
       </app-multi-select-and-select-all>

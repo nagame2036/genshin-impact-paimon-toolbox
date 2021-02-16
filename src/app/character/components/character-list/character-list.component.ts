@@ -35,9 +35,6 @@ export class CharacterListComponent extends AbstractObservableComponent implemen
   @Output()
   multiSelected = new EventEmitter<Character[]>();
 
-  @Output()
-  add = new EventEmitter();
-
   constructor(public service: CharacterService, public images: ImageService, private logger: NGXLogger) {
     super();
   }

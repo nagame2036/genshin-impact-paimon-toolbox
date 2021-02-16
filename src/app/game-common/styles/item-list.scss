@@ -1,15 +1,6 @@
 .actions {
   @apply flex;
-  @apply mt-2;
-}
-
-.add-btn {
-  @apply ml-2;
-
-  ::ng-deep .ring-btn {
-    @apply px-3;
-    @apply py-1.5;
-  }
+  @apply mt-1.5;
 }
 
 .item-overview-table {
