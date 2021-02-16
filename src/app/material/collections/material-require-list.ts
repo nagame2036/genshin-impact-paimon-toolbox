@@ -38,6 +38,7 @@ export class MaterialRequireList {
   replace(key: number, that: MaterialRequireList): MaterialRequireList {
     const thatMarks = that.marks.get(key);
     if (!thatMarks) {
+      this.remove(key);
       return this;
     }
     const origin = this.marks.get(key);
