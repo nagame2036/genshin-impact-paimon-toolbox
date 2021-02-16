@@ -1,13 +1,12 @@
-import {isDevMode, NgModule} from '@angular/core';
-import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
-
-const logLevel = isDevMode() ? NgxLoggerLevel.DEBUG : NgxLoggerLevel.WARN;
+import {NgModule} from '@angular/core';
+import {LoggerModule} from 'ngx-logger';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [],
   imports: [
     LoggerModule.forRoot({
-      level: logLevel,
+      level: environment.logLevel,
       enableSourceMaps: true,
     }),
   ],
