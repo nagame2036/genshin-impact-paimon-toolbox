@@ -86,8 +86,7 @@ export class CharacterRequirementService {
     return this.levels.pipe(first(), map(levels => {
       const requirement = new MaterialRequireList();
       const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
-      const levelSlice = levels.slice(progress.level, plan.level);
-      const expCostBase = levelSlice.reduce((sum, curr) => sum + curr, 0);
+      const expCostBase = levels.slice(progress.level, plan.level).reduce((sum, curr) => sum + curr, 0);
       const {mora: moraCost, exp: expCost} = processExpBonus(info, expCostBase, v => v * .2);
       requirement.mark(mora.id, moraCost, mark);
       requirement.mark(characterExp.id, expCost, mark);

@@ -85,7 +85,7 @@ export class WeaponRequirementService {
     return this.levels.pipe(first(), map(levels => {
       const requirement = new MaterialRequireList();
       const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
-      const expAmount = levels[info.rarity].slice(progress.level, plan.level).reduce((sum, curr) => sum + curr);
+      const expAmount = levels[info.rarity].slice(progress.level, plan.level).reduce((sum, curr) => sum + curr, 0);
       const {mora: moraCost, exp: expCost} = processExpBonus(info, expAmount, v => v * .1);
       requirement.mark(mora.id, moraCost, mark);
       requirement.mark(weaponExp.id, expCost, mark);
