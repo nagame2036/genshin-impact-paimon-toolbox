@@ -1,12 +1,8 @@
-<div class="plan-content">
-  <ng-container *ngIf="character">
-    <app-character-plan-form [character]="character" [planMode]="true"
-                             (executePlan)="executePlan($event)" (changed)="save()">
-    </app-character-plan-form>
-  </ng-container>
-  <ng-container *ngIf="requirements$ | async as requirements">
-    <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
-    </app-material-requirement>
-  </ng-container>
+<div class="plan-content" *ngIf="character">
+  <app-character-plan-form [character]="character" [reachedStates]="reachedStates"
+                           (executePlan)="executePlan($event)" (changed)="save()">
+  </app-character-plan-form>
+  <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
+  </app-material-requirement>
 </div>
 <app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

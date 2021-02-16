@@ -28,9 +28,9 @@ export class MaterialService {
 
   readonly rarityOptions = allRarities.map(it => ({value: it, text: `★${it}`}));
 
-  rarityFilter = new BehaviorSubject(allRarities);
+  readonly rarityFilter = new BehaviorSubject(allRarities);
 
-  showOverflow = new BehaviorSubject(true);
+  readonly showOverflow = new BehaviorSubject(true);
 
   constructor(private infos: MaterialInfoService, private quantities: MaterialQuantityService,
               private requirements: MaterialRequirementService, private crafter: MaterialCraftService, private logger: NGXLogger) {
@@ -58,8 +58,8 @@ export class MaterialService {
     this.quantities.update(id, have);
   }
 
-  updateRequirement(type: ItemType, requirement: MaterialRequireList): void {
-    this.requirements.update(type, requirement);
+  updateRequirement(type: ItemType, key: number, requirement: MaterialRequireList): Observable<void> {
+    return this.requirements.update(type, key, requirement);
   }
 
   consumeRequire(requirement: MaterialDetail[]): void {
@@ -72,6 +72,14 @@ export class MaterialService {
     const change = this.crafter.craft(id, recipe, performedTimes);
     this.logger.info('craft material', id, change);
     this.quantities.change(change);
+  }
+
+  removeRequirement(type: ItemType, key: number): Observable<void> {
+    return this.requirements.remove(type, key);
+  }
+
+  removeAllRequirement(type: ItemType, keys: number[]): Observable<void> {
+    return this.requirements.removeAll(type, keys);
   }
 
   private updateMaterials(): void {

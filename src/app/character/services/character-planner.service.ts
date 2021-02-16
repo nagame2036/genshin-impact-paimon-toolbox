@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
 import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
@@ -14,6 +14,7 @@ import {MaterialRequireList} from '../../material/collections/material-require-l
 import {MaterialService} from '../../material/services/material.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
+import {TalentInfoService} from './talent-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,8 @@ export class CharacterPlanner {
   readonly plans = this.plans$.asObservable();
 
   constructor(private characterReq: CharacterRequirementService, private talentReq: TalentRequirementService,
-              private materials: MaterialService, private database: NgxIndexedDBService, private logger: NGXLogger) {
+              private talentInfos: TalentInfoService, private materials: MaterialService,
+              private database: NgxIndexedDBService, private logger: NGXLogger) {
     this.database.getAll(this.store).subscribe(persisted => {
       this.logger.info('fetched character plans', persisted);
       const plans = new Map<number, CharacterPlan>();
@@ -54,46 +56,19 @@ export class CharacterPlanner {
     );
   }
 
-  update({plan}: Character): void {
-    const update = this.database.update(this.store, plan);
-    zip(update, this.plans).subscribe(([, plans]) => {
-      this.logger.info('updated character plan', plan);
-      plans.set(plan.id, plan);
-      this.plans$.next(plans);
-    });
-  }
-
-  remove({plan}: Character): void {
-    const id = plan.id;
-    const remove = this.database.delete(this.store, id);
-    zip(remove, this.plans).subscribe(([, plans]) => {
-      this.logger.info('removed character plan', plan);
-      plans.delete(id);
-      this.plans$.next(plans);
-    });
-  }
-
-  removeAll(characters: Character[]): void {
-    const remove = characters.map(it => this.database.delete(this.store, it.plan.id));
-    zip(forkJoin(remove), this.plans).subscribe(([, plans]) => {
-      this.logger.info('removed character plans', characters);
-      characters.forEach(it => plans.delete(it.plan.id));
-      this.plans$.next(plans);
-    });
-  }
-
-  totalRequirements(characters: Character[]): Observable<MaterialRequireList> {
-    const subRequirements = [
-      this.characterReq.totalRequirements(characters),
-      this.talentReq.totalRequirements(characters),
+  getRequirement(character: Character): Observable<MaterialRequireList> {
+    const talentsUpgradable = character.info.talentsUpgradable;
+    const subRequirement = [
+      this.characterReq.requirement(character),
+      this.talentInfos.getAll(talentsUpgradable).pipe(switchMap(talents => this.talentReq.requirement(character, talents))),
     ];
-    return combineLatest(subRequirements).pipe(
-      map(requirements => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent total material requirements of all character plans', requirements))
+    return forkJoin(subRequirement).pipe(
+      map((requirements) => new MaterialRequireList(requirements)),
+      tap(requirements => this.logger.info('sent material requirements of character', character, requirements)),
     );
   }
 
-  specificRequirements(character: Character): Observable<RequirementDetail[]> {
+  getRequirementDetails(character: Character): Observable<RequirementDetail[]> {
     return this.materials.getRequirements(ItemType.CHARACTER, character.plan.id).pipe(map(requirements => {
       const texts = [
         this.i18n.module('total-requirement'),
@@ -102,6 +77,34 @@ export class CharacterPlanner {
       ];
       this.logger.info('sent specific material requirements of character', character, requirements);
       return requirements.sort((a, b) => texts.indexOf(a.text) - texts.indexOf(b.text));
+    }));
+  }
+
+  update({plan}: Character): Observable<void> {
+    const update = this.database.update(this.store, plan);
+    return zip(update, this.plans).pipe(map(([, plans]) => {
+      this.logger.info('updated character plan', plan);
+      plans.set(plan.id, plan);
+      this.plans$.next(plans);
+    }));
+  }
+
+  remove({plan}: Character): Observable<void> {
+    const id = plan.id;
+    const remove = this.database.delete(this.store, id);
+    return zip(remove, this.plans).pipe(map(([, plans]) => {
+      this.logger.info('removed character plan', plan);
+      plans.delete(id);
+      this.plans$.next(plans);
+    }));
+  }
+
+  removeAll(characters: Character[]): Observable<void> {
+    const remove = characters.map(it => this.database.delete(this.store, it.plan.id));
+    return zip(forkJoin(remove), this.plans).pipe(map(([, plans]) => {
+      this.logger.info('removed character plans', characters);
+      characters.forEach(it => plans.delete(it.plan.id));
+      this.plans$.next(plans);
     }));
   }
 }

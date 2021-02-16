@@ -3,20 +3,20 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterWithStats} from '../../models/character.model';
 import {CharacterService} from '../../services/character.service';
 import {ActivatedRoute} from '@angular/router';
-import {first, switchMap, tap} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
 import {RequirementDetail} from '../../../material/models/requirement-detail.model';
-import {Observable} from 'rxjs';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 
 @Component({
   selector: 'app-character-plan',
   templateUrl: './character-plan.component.html',
   styleUrls: ['./character-plan.component.scss']
 })
-export class CharacterPlanComponent implements OnInit {
+export class CharacterPlanComponent extends AbstractObservableComponent implements OnInit {
 
   readonly i18n = new I18n('game-common');
 
@@ -40,13 +40,16 @@ export class CharacterPlanComponent implements OnInit {
 
   character!: CharacterWithStats;
 
-  requirements$!: Observable<RequirementDetail[]>;
+  requirements!: RequirementDetail[];
+
+  reachedStates!: boolean[];
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
   constructor(private service: CharacterService, private materials: MaterialService,
               private route: ActivatedRoute, private logger: NGXLogger) {
+    super();
   }
 
   ngOnInit(): void {
@@ -55,12 +58,16 @@ export class CharacterPlanComponent implements OnInit {
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
         switchMap(character => this.service.getStats(character)),
-        first(),
+        switchMap(character => {
+          this.logger.info('received character', character);
+          this.character = character;
+          return this.service.getRequirementDetails(character);
+        }),
+        takeUntil(this.destroy$),
       )
-      .subscribe(character => {
-        this.logger.info('received character', character);
-        this.character = character;
-        this.requirements$ = this.service.specificRequirement(character);
+      .subscribe(requirements => {
+        this.requirements = requirements;
+        this.reachedStates = requirements.map(it => it.reached);
       });
   }
 
@@ -71,18 +78,13 @@ export class CharacterPlanComponent implements OnInit {
 
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
-    this.requirements$.pipe(
-      first(),
-      switchMap(plans => {
-        const {text: title, value: requirement} = plans[planIndex];
-        const data = {title, requirement, item: this.i18n.dict(`characters.${this.character.info.id}`)};
-        return this.executePlanConfirm.open(data).afterConfirm().pipe(tap(_ => {
-          this.materials.consumeRequire(requirement);
-          this.executePlanByIndex(planIndex);
-          this.save();
-        }));
-      })
-    ).subscribe();
+    const {text: title, value: requirement} = this.requirements[planIndex];
+    const data = {title, requirement, item: this.i18n.dict(`characters.${this.character.info.id}`)};
+    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
+      this.materials.consumeRequire(requirement);
+      this.executePlanByIndex(planIndex);
+      this.save();
+    });
   }
 
   private executePlanByIndex(planIndex: number): void {

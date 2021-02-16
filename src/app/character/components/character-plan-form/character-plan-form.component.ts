@@ -11,15 +11,13 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterService} from '../../services/character.service';
 import {CharacterInfo} from '../../models/character-info.model';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-plan-form',
   templateUrl: './character-plan-form.component.html',
   styleUrls: ['./character-plan-form.component.scss']
 })
-export class CharacterPlanFormComponent extends AbstractObservableComponent implements OnInit {
+export class CharacterPlanFormComponent implements OnInit {
 
   i18n = new I18n('game-common');
 
@@ -32,10 +30,8 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
 
   plan!: CharacterPlan;
 
-  reachedStates: boolean[] = [];
-
   @Input()
-  planMode = false;
+  reachedStates: boolean[] = [];
 
   constellations!: SelectOption[];
 
@@ -51,7 +47,6 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
 
   constructor(public service: CharacterService, public talents: TalentInfoService,
               private translator: TranslateService, private logger: NGXLogger) {
-    super();
   }
 
   ngOnInit(): void {
@@ -64,14 +59,6 @@ export class CharacterPlanFormComponent extends AbstractObservableComponent impl
     });
     this.updateTalentLevels();
     this.updateGoalTalentLevels();
-    if (this.planMode) {
-      this.service.specificRequirement(this.character)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(requirements => {
-          this.reachedStates = requirements.map(it => it.reached);
-          this.logger.info('updated character plan reached requirement', this.reachedStates);
-        });
-    }
   }
 
   getConstellationText(constellation: Constellation): string {

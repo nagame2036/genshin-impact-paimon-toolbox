@@ -1,12 +1,8 @@
-<div class="plan-content">
-  <ng-container *ngIf="weapon">
-    <app-weapon-plan-form [weapon]="weapon" [planMode]="true"
-                          (executePlan)="executePlan($event)" (changed)="save()">
-    </app-weapon-plan-form>
-  </ng-container>
-  <ng-container *ngIf="requirements$ | async as requirements">
-    <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
-    </app-material-requirement>
-  </ng-container>
+<div class="plan-content" *ngIf="weapon">
+  <app-weapon-plan-form [weapon]="weapon" [reachedStates]="reachedStates"
+                        (executePlan)="executePlan($event)" (changed)="save()">
+  </app-weapon-plan-form>
+  <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
+  </app-material-requirement>
 </div>
 <app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>

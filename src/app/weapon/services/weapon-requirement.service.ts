@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {WeaponLevelupCost} from '../models/weapon-levelup-cost.model';
 import {HttpClient} from '@angular/common/http';
 import {EnemyMaterialService} from '../../material/services/enemy-material.service';
-import {map, tap} from 'rxjs/operators';
+import {first, map, tap} from 'rxjs/operators';
 import {WeaponAscensionMaterialService} from '../../material/services/weapon-ascension-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {Weapon} from '../models/weapon.model';
@@ -50,27 +50,19 @@ export class WeaponRequirementService {
     });
   }
 
-  totalRequirements(weapons: Weapon[]): Observable<MaterialRequireList> {
-    const requirementObs = weapons.map(weapon => this.requirement(weapon));
-    return combineLatest(requirementObs).pipe(
-      map(requirements => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent total material requirements of all weapons', requirements)),
-    );
-  }
-
   requirement(weapon: Weapon): Observable<MaterialRequireList> {
     const subRequirements = [
       this.ascension(weapon),
       this.levelup(weapon),
     ];
-    return combineLatest(subRequirements).pipe(
-      map((requirements) => new MaterialRequireList(requirements)),
+    return forkJoin(subRequirements).pipe(
+      map(requirements => new MaterialRequireList(requirements)),
       tap(requirements => this.logger.info('sent material requirements of weapon', weapon, requirements)),
     );
   }
 
   private ascension({info: {rarity, materials}, progress, plan}: Weapon): Observable<MaterialRequireList> {
-    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(map(([ascensions]) => {
+    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(first(), map(([ascensions]) => {
       const {domain, elite, mob} = materials;
       const requirement = new MaterialRequireList();
       const mark = generateMark(plan, this.levelupLabel, this.ascensionLabel, `★${progress.ascension}`, `★${plan.ascension}`);
@@ -90,7 +82,7 @@ export class WeaponRequirementService {
   }
 
   private levelup({info, progress, plan}: Weapon): Observable<MaterialRequireList> {
-    return this.levels.pipe(map(levels => {
+    return this.levels.pipe(first(), map(levels => {
       const requirement = new MaterialRequireList();
       const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
       const expAmount = levels[info.rarity].slice(progress.level, plan.level).reduce((sum, curr) => sum + curr);

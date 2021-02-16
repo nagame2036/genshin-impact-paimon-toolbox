@@ -3,20 +3,20 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponWithStats} from '../../models/weapon.model';
 import {WeaponService} from '../../services/weapon.service';
 import {ActivatedRoute} from '@angular/router';
-import {first, switchMap, tap} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
 import {MaterialType} from '../../../material/models/material-type.enum';
-import {Observable} from 'rxjs';
 import {RequirementDetail} from '../../../material/models/requirement-detail.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
+import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 
 @Component({
   selector: 'app-weapon-plan',
   templateUrl: './weapon-plan.component.html',
   styleUrls: ['./weapon-plan.component.scss']
 })
-export class WeaponPlanComponent implements OnInit {
+export class WeaponPlanComponent extends AbstractObservableComponent implements OnInit {
 
   readonly i18n = new I18n('game-common');
 
@@ -38,13 +38,16 @@ export class WeaponPlanComponent implements OnInit {
 
   weapon!: WeaponWithStats;
 
-  requirements$!: Observable<RequirementDetail[]>;
+  requirements!: RequirementDetail[];
+
+  reachedStates!: boolean[];
 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
   constructor(private service: WeaponService, private materials: MaterialService,
               private route: ActivatedRoute, private logger: NGXLogger) {
+    super();
   }
 
   ngOnInit(): void {
@@ -53,12 +56,16 @@ export class WeaponPlanComponent implements OnInit {
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
         switchMap(weapon => this.service.getStats(weapon)),
-        first(),
+        switchMap(weapon => {
+          this.logger.info('received weapon', weapon);
+          this.weapon = weapon;
+          return this.service.getRequirementDetails(weapon);
+        }),
+        takeUntil(this.destroy$),
       )
-      .subscribe(weapon => {
-        this.logger.info('received weapon', weapon);
-        this.weapon = weapon;
-        this.requirements$ = this.service.specificRequirement(weapon);
+      .subscribe(requirements => {
+        this.requirements = requirements;
+        this.reachedStates = requirements.map(it => it.reached);
       });
   }
 
@@ -69,19 +76,14 @@ export class WeaponPlanComponent implements OnInit {
 
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
-    this.requirements$?.pipe(
-      first(),
-      switchMap(req => {
-        const {text: title, value: requirement} = req[planIndex];
-        const data = {title, requirement, item: this.i18n.dict(`weapons.${this.weapon.info.id}`)};
-        return this.executePlanConfirm.open(data).afterConfirm().pipe(tap(_ => {
-          this.materials.consumeRequire(requirement);
-          this.executeLevelup();
-          this.logger.info('executed levelup plan');
-          this.save();
-        }));
-      })
-    ).subscribe();
+    const {text: title, value: requirement} = this.requirements[planIndex];
+    const data = {title, requirement, item: this.i18n.dict(`weapons.${this.weapon.info.id}`)};
+    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
+      this.materials.consumeRequire(requirement);
+      this.executeLevelup();
+      this.logger.info('executed levelup plan');
+      this.save();
+    });
   }
 
   private executeLevelup(): void {

@@ -29,7 +29,7 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.service.nonParty
+    this.service.infos
       .pipe(takeUntil(this.destroy$))
       .subscribe(weapons => {
         this.logger.info('received non-party weapons', weapons);

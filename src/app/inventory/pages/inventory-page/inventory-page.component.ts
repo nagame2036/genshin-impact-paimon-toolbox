@@ -21,10 +21,8 @@ export class InventoryPageComponent implements OnInit {
     {path: 'ingredients', text: this.i18n.dict('ingredients')},
   ];
 
-  constructor(characters: CharacterService, weapons: WeaponService) {
-    // sync items material requirements
-    characters.sync();
-    weapons.sync();
+  constructor(public characters: CharacterService, public weapons: WeaponService) {
+    // inject these services because materials required by item's plans.
   }
 
   ngOnInit(): void {

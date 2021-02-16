@@ -14,12 +14,11 @@
                                  (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
   </app-current-goal-level-select>
   <ng-container *ngFor="let type of service.getStatsTypes(character); let i = index">
-    <ng-container *ngIf="type.endsWith('%') else numeric">
-      <app-current-goal-comparator [current]="character.currentStats.get(type) | percent: '1.0-1'"
-                                   [goal]="character.planStats.get(type) | percent: '1.0-1'">
-        {{ i18n.stats(type) | translate }}
-      </app-current-goal-comparator>
-    </ng-container>
+    <app-current-goal-comparator *ngIf="type.endsWith('%') else numeric"
+                                 [current]="character.currentStats.get(type) | percent: '1.0-1'"
+                                 [goal]="character.planStats.get(type) | percent: '1.0-1'">
+      {{ i18n.stats(type) | translate }}
+    </app-current-goal-comparator>
     <ng-template #numeric>
       <app-current-goal-comparator [current]="character.currentStats.get(type) | number: '1.0-0'"
                                    [goal]="character.planStats.get(type) | number: '1.0-0'">
@@ -39,7 +38,7 @@
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <app-ring-button *ngIf="planMode" class="execute-all-btn" [class.reached]="reachedStates[0]"
+  <app-ring-button *ngIf="reachedStates.length > 0" class="execute-all-btn" [class.reached]="reachedStates[0]"
                    [disabled]="!reachedStates[0]" (clicked)="executePlan.emit(0)">
     {{ i18n.module('execute-all-plan') | translate }}
   </app-ring-button>

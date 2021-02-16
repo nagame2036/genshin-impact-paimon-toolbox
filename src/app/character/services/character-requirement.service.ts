@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {combineLatest, Observable, ReplaySubject, zip} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {first, map, tap} from 'rxjs/operators';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
 import {CharacterAscensionMaterialService} from '../../material/services/character-ascension-material.service';
 import {EnemyMaterialService} from '../../material/services/enemy-material.service';
@@ -49,27 +49,19 @@ export class CharacterRequirementService {
     });
   }
 
-  totalRequirements(characters: Character[]): Observable<MaterialRequireList> {
-    const requirementObs = characters.map(character => this.requirement(character));
-    return combineLatest(requirementObs).pipe(
-      map(requirements => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent total material requirements of all characters', requirements)),
-    );
-  }
-
   requirement(character: Character): Observable<MaterialRequireList> {
     const subRequirements = [
       this.ascension(character),
       this.levelup(character),
     ];
-    return combineLatest(subRequirements).pipe(
-      map((requirements) => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent material requirements of character', character, requirements)),
+    return forkJoin(subRequirements).pipe(
+      map(requirements => new MaterialRequireList(requirements)),
+      tap(requirements => this.logger.info('sent material requirements of character levelup', character, requirements)),
     );
   }
 
   private ascension({info, progress, plan}: Character): Observable<MaterialRequireList> {
-    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(map(([ascensions]) => {
+    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(first(), map(([ascensions]) => {
       const {boss, gem, local, mob} = info.materials;
       const requirement = new MaterialRequireList();
       const mark = generateMark(plan, this.levelupLabel, this.ascensionLabel, `★${progress.ascension}`, `★${plan.ascension}`);
@@ -91,7 +83,7 @@ export class CharacterRequirementService {
   }
 
   private levelup({info, progress, plan}: Character): Observable<MaterialRequireList> {
-    return this.levels.pipe(map(levels => {
+    return this.levels.pipe(first(), map(levels => {
       const requirement = new MaterialRequireList();
       const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
       const levelSlice = levels.slice(progress.level, plan.level);

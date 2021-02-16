@@ -1,21 +1,19 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
+import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character, CharacterWithStats} from '../models/character.model';
 import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
-import {CharacterProgress} from '../models/character-progress.model';
-import {CharacterPlan} from '../models/character-plan.model';
-import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
 import {RequirementDetail} from '../../material/models/requirement-detail.model';
 import {MaterialService} from '../../material/services/material.service';
-import {ItemType} from '../../game-common/models/item-type.enum';
 import {elementTypeList} from '../../game-common/models/element-type.enum';
 import {weaponTypeList} from '../../weapon/models/weapon-type.enum';
 import {I18n} from '../../widget/models/i18n.model';
 import {StatsType} from '../../game-common/models/stats.model';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +21,6 @@ import {StatsType} from '../../game-common/models/stats.model';
 export class CharacterService {
 
   private readonly i18n = new I18n('characters');
-
-  private synced = false;
 
   private readonly characters$ = new ReplaySubject<Map<number, Character>>(1);
 
@@ -60,19 +56,30 @@ export class CharacterService {
 
   constructor(private information: CharacterInfoService, private progressor: CharacterProgressService,
               private planner: CharacterPlanner, private materials: MaterialService, private logger: NGXLogger) {
-    this.sync();
-  }
-
-  sync(): void {
-    if (this.synced) {
-      return;
-    }
-    this.synced = true;
-    combineLatest([this.information.items, this.progressor.inProgress, this.planner.plans])
-      .subscribe(([infos, inProgress, plans]) => {
-        this.syncCharacters(infos, inProgress, plans);
-        this.syncTotalRequirements();
-      });
+    zip(this.information.items, this.progressor.inProgress, this.planner.plans)
+      .pipe(
+        first(),
+        map(([infos, inProgress, plans]) => {
+          const characters = new Map<number, Character>();
+          for (const [id, progress] of inProgress) {
+            const [info, plan] = [infos.get(id), plans.get(id)];
+            if (info && plan) {
+              characters.set(id, {info, progress, plan});
+            }
+          }
+          this.logger.info('loaded characters', characters);
+          this.characters$.next(characters);
+          return characters;
+        }),
+        switchMap(characters => {
+          const requirementObs = [...characters.values()].map(character => {
+            return this.planner.getRequirement(character)
+              .pipe(switchMap(req => this.materials.updateRequirement(ItemType.CHARACTER, character.progress.id, req)));
+          });
+          return forkJoin(requirementObs);
+        })
+      )
+      .subscribe(_ => this.logger.info('loaded the requirements of all characters'));
   }
 
   create(info: CharacterInfo): Observable<CharacterWithStats> {
@@ -92,6 +99,10 @@ export class CharacterService {
       throwIfEmpty(),
       tap(character => this.logger.info('sent character', character)),
     );
+  }
+
+  getRequirementDetails(character: Character): Observable<RequirementDetail[]> {
+    return this.planner.getRequirementDetails(character);
   }
 
   getStats(character: Character): Observable<CharacterWithStats> {
@@ -122,54 +133,57 @@ export class CharacterService {
   }
 
   view(characters: CharacterWithStats[]): CharacterWithStats[] {
-    return characters.filter(c => this.filterInfo(c.info))
-      .sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
+    return characters.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
   }
 
   viewInfos(characters: CharacterInfo[]): CharacterInfo[] {
-    return characters.filter(c => this.filterInfo(c))
-      .sort((a, b) => this.infoSort(a, b) || b.id - a.id);
+    return characters.filter(c => this.filterInfo(c)).sort((a, b) => this.infoSort(a, b) || b.id - a.id);
   }
 
   update(character: Character): void {
-    this.progressor.update(character);
-    this.planner.update(character);
-    this.logger.info('updated character', character);
+    this.characters
+      .pipe(
+        first(),
+        map(characters => {
+          characters.set(character.progress.id, character);
+          this.characters$.next(characters);
+        }),
+        mergeMap(_ => this.progressor.update(character)),
+        mergeMap(_ => this.planner.update(character)),
+        mergeMap(_ => this.planner.getRequirement(character)),
+        mergeMap(req => this.materials.updateRequirement(ItemType.CHARACTER, character.progress.id, req)),
+      )
+      .subscribe(_ => this.logger.info('updated character', character));
   }
 
   remove(character: Character): void {
-    this.progressor.remove(character);
-    this.planner.remove(character);
-    this.logger.info('removed character', character);
-  }
-
-  removeAll(characters: Character[]): void {
-    this.progressor.removeAll(characters);
-    this.planner.removeAll(characters);
-    this.logger.info('removed characters', characters);
-  }
-
-  specificRequirement(character: Character): Observable<RequirementDetail[]> {
-    return this.planner.specificRequirements(character);
-  }
-
-  private syncCharacters(infos: Map<number, CharacterInfo>, inProgress: Map<number, CharacterProgress>,
-                         plans: Map<number, CharacterPlan>): void {
-    const characters = new Map<number, Character>();
-    for (const [id, progress] of inProgress) {
-      const [info, plan] = [infos.get(id), plans.get(id)];
-      if (info && plan) {
-        characters.set(id, {info, progress, plan});
-      }
-    }
-    this.logger.info('updated characters', characters);
-    this.characters$.next(characters);
-  }
-
-  private syncTotalRequirements(): void {
     this.characters
-      .pipe(switchMap(characters => this.planner.totalRequirements([...characters.values()])))
-      .subscribe(requirements => this.materials.updateRequirement(ItemType.CHARACTER, requirements));
+      .pipe(
+        first(),
+        map(characters => {
+          characters.delete(character.progress.id);
+          this.characters$.next(characters);
+        }),
+        mergeMap(_ => this.progressor.remove(character)),
+        mergeMap(_ => this.planner.remove(character)),
+        mergeMap(_ => this.materials.removeRequirement(ItemType.CHARACTER, character.progress.id)),
+      )
+      .subscribe(_ => this.logger.info('removed character', character));
+  }
+
+  removeAll(characterList: Character[]): void {
+    this.characters
+      .pipe(
+        first(),
+        map(characters => {
+          characterList.forEach(character => characters.delete(character.progress.id));
+          this.characters$.next(characters);
+        }),
+        mergeMap(_ => this.progressor.removeAll(characterList)),
+        mergeMap(_ => this.planner.removeAll(characterList)),
+        mergeMap(_ => this.materials.removeAllRequirement(ItemType.CHARACTER, characterList.map(it => it.progress.id))),
+      )
+      .subscribe(_ => this.logger.info('removed characters', characterList));
   }
 
   private filterInfo({element, rarity, weapon}: CharacterInfo): boolean {

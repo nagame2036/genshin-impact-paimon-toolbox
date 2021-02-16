@@ -8,7 +8,6 @@ import {allRefineRanks, RefineRank, WeaponProgress} from '../../models/weapon-pr
 import {WeaponInfo} from '../../models/weapon-info.model';
 import {WeaponService} from '../../services/weapon.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-weapon-plan-form',
@@ -28,10 +27,8 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
 
   plan!: WeaponPlan;
 
-  reachedStates: boolean[] = [];
-
   @Input()
-  planMode = false;
+  reachedStates: boolean[] = [];
 
   refineRanks = allRefineRanks.map(it => ({value: it, text: `${it}`}));
 
@@ -50,14 +47,6 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
     this.info = this.weapon.info;
     this.progress = this.weapon.progress;
     this.plan = this.weapon.plan;
-    if (this.planMode) {
-      this.service.specificRequirement(this.weapon)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(requirements => {
-          this.reachedStates = requirements.map(it => it.reached);
-          this.logger.info('updated weapon plan reached requirement', this.reachedStates);
-        });
-    }
   }
 
   setRefineRank(refine: RefineRank): void {

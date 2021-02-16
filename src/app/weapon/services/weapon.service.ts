@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '../../widget/models/i18n.model';
-import {combineLatest, EMPTY, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
+import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Weapon, WeaponWithStats} from '../models/weapon.model';
 import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
 import {weaponTypeList} from '../models/weapon-type.enum';
@@ -9,10 +9,8 @@ import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
-import {WeaponPlan} from '../models/weapon-plan.model';
-import {WeaponProgress} from '../models/weapon-progress.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import {RequirementDetail} from '../../material/models/requirement-detail.model';
 
@@ -23,13 +21,11 @@ export class WeaponService {
 
   private readonly i18n = new I18n('weapons');
 
-  private synced = false;
-
   private readonly weapons$ = new ReplaySubject<Map<number, Weapon>>(1);
 
   readonly weapons = this.weapons$.asObservable();
 
-  readonly nonParty = this.progressor.noProgress.pipe(map(infos => [...infos.values()]));
+  readonly infos = this.information.items.pipe(map(infos => [...infos.values()]));
 
   readonly sorts: { text: string, value: (a: WeaponWithStats, b: WeaponWithStats) => number }[] = [
     {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
@@ -66,19 +62,30 @@ export class WeaponService {
 
   constructor(private information: WeaponInfoService, private progressor: WeaponProgressService,
               private planner: WeaponPlanner, private materials: MaterialService, private logger: NGXLogger) {
-    this.sync();
-  }
-
-  sync(): void {
-    if (this.synced) {
-      return;
-    }
-    this.synced = true;
-    combineLatest([this.information.items, this.progressor.inProgress, this.planner.plans]).pipe(
-      map(([infos, inProgress, plans]) => this.syncWeapons(infos, inProgress, plans)),
-      mergeMap(_ => this.syncTotalRequirements())
-    )
-      .subscribe();
+    zip(this.information.items, this.progressor.inProgress, this.planner.plans)
+      .pipe(
+        first(),
+        map(([infos, inProgress, plans]) => {
+          const weapons = new Map<number, Weapon>();
+          for (const [id, progress] of inProgress) {
+            const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
+            if (info && plan) {
+              weapons.set(id, {info, progress, plan});
+            }
+          }
+          this.logger.info('loaded weapons', weapons);
+          this.weapons$.next(weapons);
+          return weapons;
+        }),
+        switchMap(weapons => {
+          const requirementObs = [...weapons.values()].map(weapon => {
+            return this.planner.getRequirement(weapon)
+              .pipe(switchMap(req => this.materials.updateRequirement(ItemType.WEAPON, weapon.progress.id, req)));
+          });
+          return forkJoin(requirementObs);
+        })
+      )
+      .subscribe(_ => this.logger.info('loaded the requirements of all weapons'));
   }
 
   create(info: WeaponInfo): Observable<WeaponWithStats> {
@@ -98,6 +105,10 @@ export class WeaponService {
       throwIfEmpty(),
       tap(weapon => this.logger.info('sent weapon', weapon)),
     );
+  }
+
+  getRequirementDetails(weapon: Weapon): Observable<RequirementDetail[]> {
+    return this.planner.getRequirementDetails(weapon);
   }
 
   getStats(weapon: Weapon): Observable<WeaponWithStats> {
@@ -134,44 +145,49 @@ export class WeaponService {
   }
 
   update(weapon: Weapon): void {
-    this.progressor.update(weapon);
-    this.planner.update(weapon);
-    this.logger.info('updated weapon', weapon);
+    this.weapons
+      .pipe(
+        first(),
+        map(weapons => {
+          weapons.set(weapon.progress.id, weapon);
+          this.weapons$.next(weapons);
+        }),
+        mergeMap(_ => this.progressor.update(weapon)),
+        mergeMap(_ => this.planner.update(weapon)),
+        mergeMap(_ => this.planner.getRequirement(weapon)),
+        mergeMap(req => this.materials.updateRequirement(ItemType.WEAPON, weapon.progress.id, req)),
+      )
+      .subscribe(_ => this.logger.info('updated weapon', weapon));
   }
 
   remove(weapon: Weapon): void {
-    this.progressor.remove(weapon);
-    this.planner.remove(weapon);
-    this.logger.info('removed weapon', weapon);
+    this.weapons
+      .pipe(
+        first(),
+        map(weapons => {
+          weapons.delete(weapon.progress.id);
+          this.weapons$.next(weapons);
+        }),
+        mergeMap(_ => this.progressor.remove(weapon)),
+        mergeMap(_ => this.planner.remove(weapon)),
+        mergeMap(_ => this.materials.removeRequirement(ItemType.WEAPON, weapon.progress.id)),
+      )
+      .subscribe(_ => this.logger.info('removed weapon', weapon));
   }
 
-  removeAll(weapons: Weapon[]): void {
-    this.progressor.removeAll(weapons);
-    this.planner.removeAll(weapons);
-    this.logger.info('removed weapons', weapons);
-  }
-
-  specificRequirement(weapon: Weapon): Observable<RequirementDetail[]> {
-    return this.planner.specificRequirements(weapon);
-  }
-
-  private syncWeapons(infos: Map<number, WeaponInfo>, inProgress: Map<number, WeaponProgress>, plans: Map<number, WeaponPlan>): void {
-    const weapons = new Map<number, Weapon>();
-    for (const [id, progress] of inProgress) {
-      const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
-      if (info && plan) {
-        weapons.set(id, {info, progress, plan});
-      }
-    }
-    this.logger.info('updated weapons', weapons);
-    this.weapons$.next(weapons);
-  }
-
-  private syncTotalRequirements(): Observable<void> {
-    return this.weapons.pipe(
-      switchMap(weapons => this.planner.totalRequirements([...weapons.values()])),
-      map(requirements => this.materials.updateRequirement(ItemType.WEAPON, requirements)),
-    );
+  removeAll(weaponList: Weapon[]): void {
+    this.weapons
+      .pipe(
+        first(),
+        map(weapons => {
+          weaponList.forEach(weapon => weapons.delete(weapon.progress.id));
+          this.weapons$.next(weapons);
+        }),
+        mergeMap(_ => this.progressor.removeAll(weaponList)),
+        mergeMap(_ => this.planner.removeAll(weaponList)),
+        mergeMap(_ => this.materials.removeAllRequirement(ItemType.WEAPON, weaponList.map(it => it.progress.id))),
+      )
+      .subscribe(_ => this.logger.info('removed weapons', weaponList));
   }
 
   private filterInfo({rarity, type}: WeaponInfo): boolean {

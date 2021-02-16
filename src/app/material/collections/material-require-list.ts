@@ -35,6 +35,30 @@ export class MaterialRequireList {
     return this;
   }
 
+  replace(key: number, that: MaterialRequireList): MaterialRequireList {
+    const thatMarks = that.marks.get(key);
+    if (!thatMarks) {
+      return this;
+    }
+    const origin = this.marks.get(key);
+    if (origin) {
+      for (const [purpose, mark] of origin) {
+        const thatRequirement = thatMarks.get(purpose)?.requirement;
+        if (thatRequirement) {
+          for (const [id, thatNeed] of thatRequirement.entries()) {
+            this.totalNeed.change(id, thatNeed - mark.requirement.getAmount(id));
+          }
+        }
+      }
+    } else {
+      for (const mark of thatMarks.values()) {
+        this.totalNeed.combine(mark.requirement);
+      }
+    }
+    this.marks.set(key, thatMarks);
+    return this;
+  }
+
   getDetails(key: number, materials: Map<number, MaterialDetail>): RequirementDetail[] {
     const reqMarks = this.marks.get(key);
     const textTotal = i18n.module('total-requirement');
@@ -97,6 +121,18 @@ export class MaterialRequireList {
 
   combineAll(list: MaterialRequireList[]): MaterialRequireList {
     return list.reduce((total, acc) => total.combine(acc), this);
+  }
+
+  remove(key: number): void {
+    const existing = this.marks.get(key);
+    if (existing) {
+      for (const mark of existing.values()) {
+        for (const [id, need] of mark.requirement.entries()) {
+          this.totalNeed.change(id, -need);
+        }
+      }
+      this.marks.delete(key);
+    }
   }
 }
 
