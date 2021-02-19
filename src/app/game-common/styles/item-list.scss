@@ -6,10 +6,13 @@
 .item-overview-table {
   @apply w-full;
   @apply h-full;
-  @apply table-auto;
   @apply text-sm;
   @apply text-center;
   @apply border-l;
+
+  td:nth-child(even) {
+    @apply w-36;
+  }
 
   tr:nth-child(even) {
     @apply bg-primary-100;
