@@ -5,6 +5,6 @@
     </span>
   </app-multi-select>
   <app-checkbox [label]="i18n.module('show-overflow') | translate"
-                [value]="(materials.showOverflow | async) || true" (checked)="materials.showOverflow.next($event)">
+                [value]="(materials.showOverflow | async) || false" (checked)="materials.showOverflow.next($event)">
   </app-checkbox>
 </div>
