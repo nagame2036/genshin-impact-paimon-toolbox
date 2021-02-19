@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {WeaponWithStats} from '../../models/weapon.model';
+import {WeaponOverview} from '../../models/weapon.model';
 import {WeaponPlan} from '../../models/weapon-plan.model';
 import {AscensionLevel} from '../../../game-common/models/ascension-level.model';
 import {NGXLogger} from 'ngx-logger';
@@ -19,7 +19,7 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
   i18n = new I18n('game-common');
 
   @Input()
-  weapon!: WeaponWithStats;
+  weapon!: WeaponOverview;
 
   info!: WeaponInfo;
 
@@ -77,7 +77,7 @@ export class WeaponPlanFormComponent extends AbstractObservableComponent impleme
   }
 
   private updateStats(): void {
-    this.service.getStats(this.weapon).subscribe(weapon => {
+    this.service.getOverview(this.weapon).subscribe(weapon => {
       this.weapon = weapon;
       this.emitChange();
     });

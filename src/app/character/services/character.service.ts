@@ -56,7 +56,7 @@ export class CharacterService {
 
   constructor(private information: CharacterInfoService, private progressor: CharacterProgressService,
               private planner: CharacterPlanner, private materials: MaterialService, private logger: NGXLogger) {
-    zip(this.information.items, this.progressor.inProgress, this.planner.plans)
+    zip(this.information.infos, this.progressor.inProgress, this.planner.plans)
       .pipe(
         first(),
         map(([infos, inProgress, plans]) => {
@@ -105,7 +105,7 @@ export class CharacterService {
     return this.planner.getRequirementDetails(character);
   }
 
-  getStats(character: Character): Observable<CharacterWithStats> {
+  getOverview(character: Character): Observable<CharacterWithStats> {
     return this.information.getStats(character);
   }
 

@@ -25,7 +25,7 @@ export class CharacterProgressService {
   readonly noProgress = this.noProgress$.asObservable();
 
   constructor(private database: NgxIndexedDBService, private information: CharacterInfoService, private logger: NGXLogger) {
-    zip(database.getAll(this.store), information.items).subscribe(([progresses, infos]) => {
+    zip(database.getAll(this.store), information.infos).subscribe(([progresses, infos]) => {
       this.logger.info('fetched in-progress characters from indexed db', progresses);
       const inProgress = new Map<number, CharacterProgress>();
       const noProgress = new Map<number, CharacterInfo>(infos);

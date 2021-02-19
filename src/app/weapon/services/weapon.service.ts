@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '../../widget/models/i18n.model';
 import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
-import {Weapon, WeaponWithStats} from '../models/weapon.model';
+import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
 import {weaponTypeList} from '../models/weapon-type.enum';
 import {WeaponInfoService} from './weapon-info.service';
@@ -25,9 +25,9 @@ export class WeaponService {
 
   readonly weapons = this.weapons$.asObservable();
 
-  readonly infos = this.information.items.pipe(map(infos => [...infos.values()]));
+  readonly infos = this.information.infos.pipe(map(infos => [...infos.values()]));
 
-  readonly sorts: { text: string, value: (a: WeaponWithStats, b: WeaponWithStats) => number }[] = [
+  readonly sorts: { text: string, value: (a: WeaponOverview, b: WeaponOverview) => number }[] = [
     {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
     {text: this.i18n.dict('rarity'), value: ({info: a}, {info: b}) => b.rarity - a.rarity},
     {text: this.i18n.dict('refine-rank'), value: ({progress: a}, {progress: b}) => b.refine - a.refine},
@@ -62,7 +62,7 @@ export class WeaponService {
 
   constructor(private information: WeaponInfoService, private progressor: WeaponProgressService,
               private planner: WeaponPlanner, private materials: MaterialService, private logger: NGXLogger) {
-    zip(this.information.items, this.progressor.inProgress, this.planner.plans)
+    zip(this.information.infos, this.progressor.inProgress, this.planner.plans)
       .pipe(
         first(),
         map(([infos, inProgress, plans]) => {
@@ -88,7 +88,7 @@ export class WeaponService {
       .subscribe(_ => this.logger.info('loaded the requirements of all weapons'));
   }
 
-  create(info: WeaponInfo): Observable<WeaponWithStats> {
+  create(info: WeaponInfo): Observable<WeaponOverview> {
     const id = new Date().getTime() * 100 + ItemType.WEAPON;
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
@@ -111,24 +111,24 @@ export class WeaponService {
     return this.planner.getRequirementDetails(weapon);
   }
 
-  getStats(weapon: Weapon): Observable<WeaponWithStats> {
+  getOverview(weapon: Weapon): Observable<WeaponOverview> {
     return this.information.getStats(weapon);
   }
 
-  getStatsTypes(weapon: WeaponWithStats): StatsType[] {
+  getStatsTypes(weapon: WeaponOverview): StatsType[] {
     const stats = weapon.currentStats;
     return stats.getTypes();
   }
 
-  getAll(): Observable<WeaponWithStats[]> {
+  getAll(): Observable<WeaponOverview[]> {
     return this.weapons.pipe(
       switchMap(weapons => {
         if (weapons.size === 0) {
           return of([]);
         }
-        const statsObs: Observable<WeaponWithStats>[] = [];
+        const statsObs: Observable<WeaponOverview>[] = [];
         for (const weapon of weapons.values()) {
-          statsObs.push(this.getStats(weapon));
+          statsObs.push(this.getOverview(weapon));
         }
         return forkJoin(statsObs);
       }),
@@ -136,7 +136,7 @@ export class WeaponService {
     );
   }
 
-  view(weapons: WeaponWithStats[]): WeaponWithStats[] {
+  view(weapons: WeaponOverview[]): WeaponOverview[] {
     return weapons.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
   }
 
@@ -194,7 +194,7 @@ export class WeaponService {
     return this.rarityFilter.includes(rarity) && this.typeFilter.includes(type);
   }
 
-  private generateSorts(types: StatsType[]): { text: string, value: (a: WeaponWithStats, b: WeaponWithStats) => number }[] {
+  private generateSorts(types: StatsType[]): { text: string, value: (a: WeaponOverview, b: WeaponOverview) => number }[] {
     return types.map(type => {
       return {text: this.i18n.stats(type), value: ({currentStats: a}, {currentStats: b}) => b.get(type) - a.get(type)};
     });

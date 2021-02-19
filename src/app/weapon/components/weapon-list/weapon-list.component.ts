@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {Weapon, WeaponWithStats} from '../../models/weapon.model';
+import {Weapon, WeaponOverview} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
@@ -19,9 +19,9 @@ export class WeaponListComponent extends AbstractObservableComponent implements 
   i18n = new I18n('weapons');
 
   @Input()
-  weapons: WeaponWithStats[] = [];
+  weapons: WeaponOverview[] = [];
 
-  items!: WeaponWithStats[];
+  items!: WeaponOverview[];
 
   @Input()
   selectedItems: Weapon[] = [];

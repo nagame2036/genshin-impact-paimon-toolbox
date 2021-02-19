@@ -15,7 +15,7 @@ export interface Weapon {
   plan: WeaponPlan;
 }
 
-export interface WeaponWithStats extends Weapon {
+export interface WeaponOverview extends Weapon {
 
   currentStats: WeaponStatsValue;
 

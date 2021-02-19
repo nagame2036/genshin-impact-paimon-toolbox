@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {WeaponWithStats} from '../../models/weapon.model';
+import {WeaponOverview} from '../../models/weapon.model';
 import {WeaponService} from '../../services/weapon.service';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, takeUntil} from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
     'enemy',
   ];
 
-  weapon!: WeaponWithStats;
+  weapon!: WeaponOverview;
 
   requirements!: RequirementDetail[];
 
@@ -55,7 +55,7 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
     this.route.parent?.params
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
-        switchMap(weapon => this.service.getStats(weapon)),
+        switchMap(weapon => this.service.getOverview(weapon)),
         switchMap(weapon => {
           this.logger.info('received weapon', weapon);
           this.weapon = weapon;

@@ -22,7 +22,7 @@ export interface CharacterStats {
 }
 
 /**
- * Represent the data of a character stats grow curve per level.
+ * Represents the data of a character stats grow curve per level.
  */
 export interface CharacterStatsCurveLevel {
 
@@ -30,7 +30,7 @@ export interface CharacterStatsCurveLevel {
 }
 
 /**
- * Represent the data of a character stats grow curve per ascension.
+ * Represents the data of a character stats grow curve per ascension.
  */
 export type CharacterStatsCurveAscension = Partial<Record<StatsType, number[]>>;
 

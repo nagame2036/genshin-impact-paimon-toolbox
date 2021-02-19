@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Weapon, WeaponWithStats} from '../../models/weapon.model';
+import {Weapon, WeaponOverview} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {WeaponListComponent} from '../../components/weapon-list/weapon-list.component';
@@ -16,7 +16,7 @@ export class WeaponPageComponent implements OnInit {
 
   i18n = new I18n('weapons');
 
-  weapons$!: Observable<WeaponWithStats[]>;
+  weapons$!: Observable<WeaponOverview[]>;
 
   multiSelect = false;
 

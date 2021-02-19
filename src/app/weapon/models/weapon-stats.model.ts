@@ -22,7 +22,7 @@ export interface WeaponStats {
 }
 
 /**
- * Represent the data of a weapon stats grow curve per level.
+ * Represents the data of a weapon stats grow curve per level.
  */
 export interface WeaponStatsCurveLevel {
 
@@ -30,7 +30,7 @@ export interface WeaponStatsCurveLevel {
 }
 
 /**
- * Represent the data of a weapon stats grow curve per ascension.
+ * Represents the data of a weapon stats grow curve per ascension.
  */
 export interface WeaponStatsCurveAscension {
 

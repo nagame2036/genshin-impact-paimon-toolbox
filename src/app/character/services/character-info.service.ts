@@ -22,21 +22,21 @@ export class CharacterInfoService {
 
   private readonly prefix = 'assets/data/characters';
 
-  private readonly items$ = new ReplaySubject<Map<number, CharacterInfo>>(1);
+  private readonly infos$ = new ReplaySubject<Map<number, CharacterInfo>>(1);
 
-  readonly items = this.items$.asObservable();
+  readonly infos = this.infos$.asObservable();
 
-  private readonly curvesLevel = new ReplaySubject<CharacterStatsCurveLevel>(1);
+  private readonly statsCurvesLevel = new ReplaySubject<CharacterStatsCurveLevel>(1);
 
   constructor(http: HttpClient, private logger: NGXLogger) {
     http.get<{ [id: number]: CharacterInfo }>(`${this.prefix}/characters.json`).subscribe(data => {
       const characters = objectMap(data);
       this.logger.info('loaded character data', characters);
-      this.items$.next(characters);
+      this.infos$.next(characters);
     });
     http.get<CharacterStatsCurveLevel>(`${this.prefix}/character-stats-curve-level.json`).subscribe(data => {
       this.logger.info('loaded character stats curves per level data', data);
-      this.curvesLevel.next(data);
+      this.statsCurvesLevel.next(data);
     });
   }
 
@@ -50,7 +50,7 @@ export class CharacterInfoService {
 
   getStatsValue(info: CharacterInfo, dependency: CharacterStatsDependency): Observable<CharacterStatsValue> {
     const {id, stats, curvesAscension} = info;
-    return this.curvesLevel.pipe(
+    return this.statsCurvesLevel.pipe(
       first(),
       map(curvesLevel => {
         const {ascension, level} = dependency;

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {WeaponWithStats} from 'src/app/weapon/models/weapon.model';
+import {WeaponOverview} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
 import {takeUntil} from 'rxjs/operators';
 import {WeaponInfo} from '../../models/weapon-info.model';
@@ -21,7 +21,7 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
 
   selected = false;
 
-  selectedWeapon!: WeaponWithStats;
+  selectedWeapon!: WeaponOverview;
 
   constructor(private service: WeaponService, private location: Location, private logger: NGXLogger) {
     super();

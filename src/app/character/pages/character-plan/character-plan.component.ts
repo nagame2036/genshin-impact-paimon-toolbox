@@ -57,7 +57,7 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
     this.route.parent?.params
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
-        switchMap(character => this.service.getStats(character)),
+        switchMap(character => this.service.getOverview(character)),
         switchMap(character => {
           this.logger.info('received character', character);
           this.character = character;
@@ -98,9 +98,6 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
         this.logger.info('executed levelup plan');
         break;
       default:
-        const talentIndex = planIndex - 2;
-        this.executeTalentLevelup(talentIndex);
-        this.logger.info(`executed talent ${talentIndex} plan`);
         break;
     }
   }
