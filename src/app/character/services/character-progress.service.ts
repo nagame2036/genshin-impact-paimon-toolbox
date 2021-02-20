@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
-import {map, switchMap, throwIfEmpty} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {CharacterInfo} from '../models/character-info.model';
 import {CharacterProgress} from '../models/character-progress.model';
 import {TalentProgress} from '../models/talent-progress.model';
@@ -42,16 +42,6 @@ export class CharacterProgressService {
     const talents: TalentProgress = {};
     info.talentsUpgradable.forEach(t => talents[t] = 1);
     return {id, constellation: 0, ascension: 0, level: 1, talents};
-  }
-
-  get(id: number): Observable<CharacterProgress> {
-    return this.inProgress.pipe(
-      switchMap(inProgress => {
-        const progress = inProgress.get(id);
-        return progress ? of(progress) : EMPTY;
-      }),
-      throwIfEmpty(),
-    );
   }
 
   update({progress}: Character): Observable<void> {

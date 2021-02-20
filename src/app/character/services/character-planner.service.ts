@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
-import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 import {RequirementDetail} from '../../material/models/requirement-detail.model';
 import {CharacterRequirementService} from './character-requirement.service';
 import {TalentRequirementService} from './talent-requirement.service';
@@ -44,16 +44,6 @@ export class CharacterPlanner {
     const talents: TalentProgress = {};
     info.talentsUpgradable.forEach(t => talents[t] = 1);
     return {id, ascension: 0, level: 1, talents};
-  }
-
-  get(id: number): Observable<CharacterPlan> {
-    return this.plans.pipe(
-      switchMap(plans => {
-        const plan = plans.get(id);
-        return plan ? of(plan) : EMPTY;
-      }),
-      throwIfEmpty()
-    );
   }
 
   getRequirement(character: Character): Observable<MaterialRequireList> {

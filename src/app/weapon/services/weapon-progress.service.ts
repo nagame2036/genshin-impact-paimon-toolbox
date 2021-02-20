@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {WeaponProgress} from '../models/weapon-progress.model';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {WeaponInfo} from '../models/weapon-info.model';
-import {map, switchMap, throwIfEmpty} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Weapon} from '../models/weapon.model';
 
 @Injectable({
@@ -31,16 +31,6 @@ export class WeaponProgressService {
 
   create(info: WeaponInfo, id: number): WeaponProgress {
     return {id, weaponId: info.id, refine: 1, ascension: 0, level: 1};
-  }
-
-  get(id: number): Observable<WeaponProgress> {
-    return this.inProgress.pipe(
-      switchMap(inProgress => {
-        const progress = inProgress.get(id);
-        return progress ? of(progress) : EMPTY;
-      }),
-      throwIfEmpty(),
-    );
   }
 
   update({progress}: Weapon): Observable<void> {

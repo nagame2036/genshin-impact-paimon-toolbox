@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {WeaponRequirementService} from './weapon-requirement.service';
@@ -38,16 +38,6 @@ export class WeaponPlanner {
 
   create(info: WeaponInfo, id: number): WeaponPlan {
     return {id, weaponId: info.id, ascension: 0, level: 1};
-  }
-
-  get(id: number): Observable<WeaponPlan> {
-    return this.plans.pipe(
-      switchMap(plans => {
-        const plan = plans.get(id);
-        return plan ? of(plan) : EMPTY;
-      }),
-      throwIfEmpty()
-    );
   }
 
   getRequirement(weapon: Weapon): Observable<MaterialRequireList> {
