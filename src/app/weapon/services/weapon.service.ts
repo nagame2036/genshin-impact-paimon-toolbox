@@ -56,7 +56,7 @@ export class WeaponService {
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
     const weapon = {info, progress, plan};
-    return this.information.getStats(weapon);
+    return this.information.getOverview(weapon);
   }
 
   get(id: number): Observable<Weapon> {
@@ -75,7 +75,7 @@ export class WeaponService {
   }
 
   getOverview(weapon: Weapon): Observable<WeaponOverview> {
-    return this.information.getStats(weapon);
+    return this.information.getOverview(weapon);
   }
 
   getStatsTypes(weapon: WeaponOverview): StatsType[] {

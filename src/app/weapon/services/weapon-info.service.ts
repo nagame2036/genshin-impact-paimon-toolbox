@@ -46,7 +46,7 @@ export class WeaponInfoService {
     });
   }
 
-  getStats(weapon: Weapon): Observable<WeaponOverview> {
+  getOverview(weapon: Weapon): Observable<WeaponOverview> {
     const {info, progress, plan} = weapon;
     return forkJoin([this.getStatsValue(info, progress), this.getStatsValue(info, plan)]).pipe(
       map(([currentStats, planStats]) => ({...weapon, currentStats, planStats})),

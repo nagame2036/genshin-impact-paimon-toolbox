@@ -40,7 +40,7 @@ export class CharacterInfoService {
     });
   }
 
-  getStats(character: Character): Observable<CharacterWithStats> {
+  getOverview(character: Character): Observable<CharacterWithStats> {
     const {info, progress, plan} = character;
     return forkJoin([this.getStatsValue(info, progress), this.getStatsValue(info, plan)]).pipe(
       map(([currentStats, planStats]) => ({...character, currentStats, planStats})),

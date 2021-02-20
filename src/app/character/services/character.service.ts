@@ -56,7 +56,7 @@ export class CharacterService {
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
     const character = {info, progress, plan};
-    return this.information.getStats(character);
+    return this.information.getOverview(character);
   }
 
   get(id: number): Observable<Character> {
@@ -75,7 +75,7 @@ export class CharacterService {
   }
 
   getOverview(character: Character): Observable<CharacterWithStats> {
-    return this.information.getStats(character);
+    return this.information.getOverview(character);
   }
 
   getStatsTypes(character: CharacterWithStats): StatsType[] {
@@ -93,7 +93,7 @@ export class CharacterService {
         }
         const statsObs: Observable<CharacterWithStats>[] = [];
         for (const character of characters.values()) {
-          statsObs.push(this.information.getStats(character));
+          statsObs.push(this.information.getOverview(character));
         }
         return forkJoin(statsObs);
       }),
