@@ -1,14 +1,12 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Character, CharacterWithStats} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
-import {ElementType} from '../../../game-common/models/element-type.enum';
-import {WeaponType} from '../../../weapon/models/weapon-type.enum';
 import {toggleListItem} from '../../../shared/utils/collections';
 import {CharacterService} from '../../services/character.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
-import {Rarity} from '../../../game-common/models/rarity.type';
+import {CharacterViewService} from '../../services/character-view.service';
 
 @Component({
   selector: 'app-character-list',
@@ -35,7 +33,8 @@ export class CharacterListComponent extends AbstractObservableComponent implemen
   @Output()
   multiSelected = new EventEmitter<Character[]>();
 
-  constructor(public service: CharacterService, public images: ImageService, private logger: NGXLogger) {
+  constructor(private service: CharacterService, public view: CharacterViewService,
+              public images: ImageService, private logger: NGXLogger) {
     super();
   }
 
@@ -47,32 +46,8 @@ export class CharacterListComponent extends AbstractObservableComponent implemen
   }
 
   update(): void {
-    this.items = this.service.view(this.characters);
+    this.items = this.view.view(this.characters);
     this.logger.info('updated items', this.items);
-  }
-
-  changeSort(sort: (a: Character, b: Character) => number): void {
-    this.service.sort = sort;
-    this.logger.info('updated sort', this.service.sorts.find(it => it.value === sort)?.text);
-    this.update();
-  }
-
-  filterRarity(value: Rarity[]): void {
-    this.service.rarityFilter = value;
-    this.logger.info('updated rarityFilter', value);
-    this.update();
-  }
-
-  filterElement(value: ElementType[]): void {
-    this.service.elementFilter = value;
-    this.logger.info('updated elementFilter', value);
-    this.update();
-  }
-
-  filterWeapon(value: WeaponType[]): void {
-    this.service.weaponFilter = value;
-    this.logger.info('updated weaponFilter', value);
-    this.update();
   }
 
   select(character: Character): void {

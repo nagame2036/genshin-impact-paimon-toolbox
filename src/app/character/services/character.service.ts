@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character, CharacterWithStats} from '../models/character.model';
-import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
+import {CharacterInfo} from '../models/character-info.model';
 import {first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
@@ -9,9 +9,6 @@ import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
 import {RequirementDetail} from '../../material/models/requirement-detail.model';
 import {MaterialService} from '../../material/services/material.service';
-import {elementTypeList} from '../../game-common/models/element-type.enum';
-import {weaponTypeList} from '../../weapon/models/weapon-type.enum';
-import {I18n} from '../../widget/models/i18n.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
 
@@ -20,39 +17,11 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 })
 export class CharacterService {
 
-  private readonly i18n = new I18n('characters');
-
   private readonly characters$ = new ReplaySubject<Map<number, Character>>(1);
 
   readonly characters = this.characters$.asObservable();
 
   readonly nonParty = this.progressor.noProgress.pipe(map(infos => [...infos.values()]));
-
-  readonly sorts: { text: string, value: (a: Character, b: Character) => number }[] = [
-    {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
-    {text: this.i18n.dict('rarity'), value: ({info: a}, {info: b}) => b.rarity - a.rarity},
-    {text: this.i18n.dict('constellation'), value: ({progress: a}, {progress: b}) => b.constellation - a.constellation},
-  ];
-
-  sort = this.sorts[0].value;
-
-  readonly infoSorts: { text: string, value: (a: CharacterInfo, b: CharacterInfo) => number }[] = [
-    {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
-  ];
-
-  infoSort = this.infoSorts[0].value;
-
-  readonly rarities = allCharacterRarities.map(it => ({value: it, text: `★${it}`}));
-
-  rarityFilter = allCharacterRarities;
-
-  readonly elements = elementTypeList.map(it => ({value: it, text: this.i18n.dict(`elements.${it}`)}));
-
-  elementFilter = elementTypeList;
-
-  readonly weapons = weaponTypeList.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
-
-  weaponFilter = weaponTypeList;
 
   constructor(private information: CharacterInfoService, private progressor: CharacterProgressService,
               private planner: CharacterPlanner, private materials: MaterialService, private logger: NGXLogger) {
@@ -132,14 +101,6 @@ export class CharacterService {
     );
   }
 
-  view(characters: CharacterWithStats[]): CharacterWithStats[] {
-    return characters.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
-  }
-
-  viewInfos(characters: CharacterInfo[]): CharacterInfo[] {
-    return characters.filter(c => this.filterInfo(c)).sort((a, b) => this.infoSort(a, b) || b.id - a.id);
-  }
-
   update(character: Character): void {
     this.characters
       .pipe(
@@ -184,9 +145,5 @@ export class CharacterService {
         mergeMap(_ => this.materials.removeAllRequirement(ItemType.CHARACTER, characterList.map(it => it.progress.id))),
       )
       .subscribe(_ => this.logger.info('removed characters', characterList));
-  }
-
-  private filterInfo({element, rarity, weapon}: CharacterInfo): boolean {
-    return this.rarityFilter.includes(rarity) && this.elementFilter.includes(element) && this.weaponFilter.includes(weapon);
   }
 }

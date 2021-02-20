@@ -1,0 +1,13 @@
+.options {
+  @apply flex;
+  @apply flex-row;
+}
+
+.option {
+  @apply w-32;
+}
+
+.actions {
+  @apply flex;
+  @apply mt-1.5;
+}

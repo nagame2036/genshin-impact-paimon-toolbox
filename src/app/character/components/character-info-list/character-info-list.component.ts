@@ -1,12 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {ElementType} from '../../../game-common/models/element-type.enum';
-import {WeaponType} from '../../../weapon/models/weapon-type.enum';
 import {CharacterInfo} from '../../models/character-info.model';
 import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterService} from '../../services/character.service';
-import {Rarity} from '../../../game-common/models/rarity.type';
+import {CharacterViewService} from '../../services/character-view.service';
 
 @Component({
   selector: 'app-character-info-list',
@@ -25,7 +23,8 @@ export class CharacterInfoListComponent implements OnChanges {
   @Output()
   selected = new EventEmitter<CharacterInfo>();
 
-  constructor(public service: CharacterService, public images: ImageService, private logger: NGXLogger) {
+  constructor(private service: CharacterService, public view: CharacterViewService,
+              public images: ImageService, private logger: NGXLogger) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,32 +35,8 @@ export class CharacterInfoListComponent implements OnChanges {
   }
 
   update(): void {
-    this.items = this.service.viewInfos(this.characters);
+    this.items = this.view.viewInfos(this.characters);
     this.logger.info('updated items', this.items);
-  }
-
-  changeSort(sort: (a: CharacterInfo, b: CharacterInfo) => number): void {
-    this.service.infoSort = sort;
-    this.logger.info('updated sort', this.service.infoSorts.find(it => it.value === sort)?.text);
-    this.update();
-  }
-
-  filterRarity(value: Rarity[]): void {
-    this.service.rarityFilter = value;
-    this.logger.info('updated rarityFilter', value);
-    this.update();
-  }
-
-  filterElement(value: ElementType[]): void {
-    this.service.elementFilter = value;
-    this.logger.info('updated elementFilter', value);
-    this.update();
-  }
-
-  filterWeapon(value: WeaponType[]): void {
-    this.service.weaponFilter = value;
-    this.logger.info('updated weaponFilter', value);
-    this.update();
   }
 
   select(item: CharacterInfo): void {

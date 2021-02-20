@@ -1,31 +1,9 @@
-<div class="options">
-  <app-select class="option" [options]="service.sorts" [value]="service.sort" (changed)="changeSort($event)">
-    <span form-label>
-      {{ i18n.dict('sort') | translate }}
-    </span>
-  </app-select>
-  <app-multi-select class="option" [options]="service.rarities" [values]="service.rarityFilter"
-                    (changed)="filterRarity($event)">
-    <span form-label>
-      {{ i18n.dict('rarity') | translate }}
-    </span>
-  </app-multi-select>
-  <app-multi-select class="option" [options]="service.elements" [values]="service.elementFilter"
-                    (changed)="filterElement($event)">
-    <span form-label>
-      {{ i18n.dict('element') | translate }}
-    </span>
-  </app-multi-select>
-  <app-multi-select class="option" [options]="service.weapons" [values]="service.weaponFilter"
-                    (changed)="filterWeapon($event)">
-    <span form-label>
-      {{ i18n.dict('weapon') | translate }}
-    </span>
-  </app-multi-select>
-  <div class="actions">
+<app-character-list-header [sorts]="view.sorts" [sort]="view.sort"
+                           (changed)="update()" (sortChanged)="view.changeSort($event); update()">
+  <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
-</div>
+</app-character-list-header>
 <div class="list">
   <div *ngFor="let item of items" class="overview" [class.selected]="selectedItems.includes(item)"
        (click)="select(item)">

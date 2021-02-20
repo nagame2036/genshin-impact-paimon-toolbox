@@ -29,7 +29,7 @@ export enum WeaponType {
   BOW,
 }
 
-export const weaponTypeList = [
+export const allWeaponTypes = [
   WeaponType.SWORD,
   WeaponType.CLAYMORE,
   WeaponType.POLEARM,

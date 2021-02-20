@@ -11,6 +11,7 @@ import {CharacterPageComponent} from './pages/character-page/character-page.comp
 import {CharacterDetailComponent} from './pages/character-detail/character-detail.component';
 import {CharacterPlanComponent} from './pages/character-plan/character-plan.component';
 import {CharacterPlanFormComponent} from './components/character-plan-form/character-plan-form.component';
+import {CharacterListHeaderComponent} from './components/character-list-header/character-list-header.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {CharacterPlanFormComponent} from './components/character-plan-form/chara
     CharacterDetailComponent,
     CharacterPlanComponent,
     CharacterPlanFormComponent,
+    CharacterListHeaderComponent,
   ],
   imports: [
     WidgetModule,

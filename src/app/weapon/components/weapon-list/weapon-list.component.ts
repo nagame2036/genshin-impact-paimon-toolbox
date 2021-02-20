@@ -4,10 +4,9 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {NGXLogger} from 'ngx-logger';
-import {WeaponType} from '../../models/weapon-type.enum';
 import {ImageService} from '../../../image/services/image.service';
 import {toggleListItem} from '../../../shared/utils/collections';
-import {Rarity} from '../../../game-common/models/rarity.type';
+import {WeaponViewService} from '../../services/weapon-view.service';
 
 @Component({
   selector: 'app-weapon-list',
@@ -34,7 +33,8 @@ export class WeaponListComponent extends AbstractObservableComponent implements 
   @Output()
   multiSelected = new EventEmitter<Weapon[]>();
 
-  constructor(public service: WeaponService, public images: ImageService, private logger: NGXLogger) {
+  constructor(public service: WeaponService, public view: WeaponViewService,
+              public images: ImageService, private logger: NGXLogger) {
     super();
   }
 
@@ -46,26 +46,8 @@ export class WeaponListComponent extends AbstractObservableComponent implements 
   }
 
   update(): void {
-    this.items = this.service.view(this.weapons);
+    this.items = this.view.view(this.weapons);
     this.logger.info('updated items', this.items);
-  }
-
-  changeSort(sort: (a: Weapon, b: Weapon) => number): void {
-    this.service.sort = sort;
-    this.logger.info('updated sort', this.service.sorts.find(it => it.value === sort)?.text);
-    this.update();
-  }
-
-  filterRarity(value: Rarity[]): void {
-    this.service.rarityFilter = value;
-    this.logger.info('updated rarityFilter', value);
-    this.update();
-  }
-
-  filterType(value: WeaponType[]): void {
-    this.service.typeFilter = value;
-    this.logger.info('updated typeFilter', value);
-    this.update();
   }
 
   select(weapon: Weapon): void {

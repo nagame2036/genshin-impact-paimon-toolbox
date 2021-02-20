@@ -1,0 +1,22 @@
+<div class="options">
+  <app-select class="option" [options]="sorts" [value]="sort" (changed)="sortChanged.emit($event)">
+    <span form-label>
+      {{ i18n.dict('sort') | translate }}
+    </span>
+  </app-select>
+  <app-multi-select class="option" [options]="view.rarities" [values]="view.rarityFilter"
+                    (changed)="view.filterRarity($event); changed.emit()">
+    <span form-label>
+      {{ i18n.dict('rarity') | translate }}
+    </span>
+  </app-multi-select>
+  <app-multi-select class="option" [options]="view.types" [values]="view.typeFilter"
+                    (changed)="view.filterType($event); changed.emit()">
+    <span form-label>
+      {{ i18n.dict('weapon') | translate }}
+    </span>
+  </app-multi-select>
+  <div class="actions">
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</div>

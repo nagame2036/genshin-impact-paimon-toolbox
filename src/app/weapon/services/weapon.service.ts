@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {I18n} from '../../widget/models/i18n.model';
 import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
-import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
-import {weaponTypeList} from '../models/weapon-type.enum';
+import {WeaponInfo} from '../models/weapon-info.model';
 import {WeaponInfoService} from './weapon-info.service';
 import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
@@ -19,46 +17,11 @@ import {RequirementDetail} from '../../material/models/requirement-detail.model'
 })
 export class WeaponService {
 
-  private readonly i18n = new I18n('weapons');
-
   private readonly weapons$ = new ReplaySubject<Map<number, Weapon>>(1);
 
   readonly weapons = this.weapons$.asObservable();
 
   readonly infos = this.information.infos.pipe(map(infos => [...infos.values()]));
-
-  readonly sorts: { text: string, value: (a: WeaponOverview, b: WeaponOverview) => number }[] = [
-    {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
-    {text: this.i18n.dict('rarity'), value: ({info: a}, {info: b}) => b.rarity - a.rarity},
-    {text: this.i18n.dict('refine-rank'), value: ({progress: a}, {progress: b}) => b.refine - a.refine},
-    ...this.generateSorts([
-      'ATK Base',
-      'ATK%',
-      'CHC%',
-      'CHD%',
-      'ER%',
-      'PHY DMG%',
-      'HP%',
-      'EM',
-      'DEF%',
-    ]),
-  ];
-
-  sort = this.sorts[0].value;
-
-  readonly infoSorts: { text: string, value: (a: WeaponInfo, b: WeaponInfo) => number }[] = [
-    {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
-  ];
-
-  infoSort = this.infoSorts[0].value;
-
-  readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
-
-  rarityFilter = allWeaponRarities;
-
-  readonly types = weaponTypeList.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
-
-  typeFilter = weaponTypeList;
 
   constructor(private information: WeaponInfoService, private progressor: WeaponProgressService,
               private planner: WeaponPlanner, private materials: MaterialService, private logger: NGXLogger) {
@@ -136,14 +99,6 @@ export class WeaponService {
     );
   }
 
-  view(weapons: WeaponOverview[]): WeaponOverview[] {
-    return weapons.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
-  }
-
-  viewInfos(weapons: WeaponInfo[]): WeaponInfo[] {
-    return weapons.filter(c => this.filterInfo(c)).sort((a, b) => this.infoSort(a, b) || b.id - a.id);
-  }
-
   update(weapon: Weapon): void {
     this.weapons
       .pipe(
@@ -188,15 +143,5 @@ export class WeaponService {
         mergeMap(_ => this.materials.removeAllRequirement(ItemType.WEAPON, weaponList.map(it => it.progress.id))),
       )
       .subscribe(_ => this.logger.info('removed weapons', weaponList));
-  }
-
-  private filterInfo({rarity, type}: WeaponInfo): boolean {
-    return this.rarityFilter.includes(rarity) && this.typeFilter.includes(type);
-  }
-
-  private generateSorts(types: StatsType[]): { text: string, value: (a: WeaponOverview, b: WeaponOverview) => number }[] {
-    return types.map(type => {
-      return {text: this.i18n.stats(type), value: ({currentStats: a}, {currentStats: b}) => b.get(type) - a.get(type)};
-    });
   }
 }
