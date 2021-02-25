@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Character, CharacterWithStats} from '../../models/character.model';
+import {Character, CharacterOverview} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterListComponent} from '../../components/character-list/character-list.component';
 import {CharacterService} from '../../services/character.service';
@@ -16,7 +16,7 @@ export class CharacterPageComponent implements OnInit {
 
   i18n = new I18n('characters');
 
-  characters$!: Observable<CharacterWithStats[]>;
+  characters$!: Observable<CharacterOverview[]>;
 
   multiSelect = false;
 

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {CharacterWithStats} from '../../models/character.model';
+import {CharacterOverview} from '../../models/character.model';
 import {allConstellations, CharacterProgress, Constellation} from '../../models/character-progress.model';
 import {TalentInfoService} from '../../services/talent-info.service';
 import {TalentLevel} from '../../models/talent-info.model';
@@ -22,7 +22,7 @@ export class CharacterPlanFormComponent implements OnInit {
   i18n = new I18n('game-common');
 
   @Input()
-  character!: CharacterWithStats;
+  character!: CharacterOverview;
 
   info!: CharacterInfo;
 

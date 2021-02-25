@@ -7,7 +7,7 @@ import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {defaultIfEmpty, first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
 import {RequirementDetail} from '../../material/models/requirement-detail.model';
@@ -85,16 +85,8 @@ export class WeaponService {
 
   getAll(): Observable<WeaponOverview[]> {
     return this.weapons.pipe(
-      switchMap(weapons => {
-        if (weapons.size === 0) {
-          return of([]);
-        }
-        const statsObs: Observable<WeaponOverview>[] = [];
-        for (const weapon of weapons.values()) {
-          statsObs.push(this.getOverview(weapon));
-        }
-        return forkJoin(statsObs);
-      }),
+      switchMap(weapons => forkJoin([...weapons.values()].map(it => this.getOverview(it)))),
+      defaultIfEmpty([] as WeaponOverview[]),
       tap(weapons => this.logger.info('sent weapons', weapons)),
     );
   }

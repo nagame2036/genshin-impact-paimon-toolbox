@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
-import {Character, CharacterWithStats} from '../models/character.model';
+import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
-import {first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {defaultIfEmpty, first, map, mergeMap, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
@@ -51,7 +51,7 @@ export class CharacterService {
       .subscribe(_ => this.logger.info('loaded the requirements of all characters'));
   }
 
-  create(info: CharacterInfo): Observable<CharacterWithStats> {
+  create(info: CharacterInfo): Observable<CharacterOverview> {
     const id = info.id;
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
@@ -74,29 +74,21 @@ export class CharacterService {
     return this.planner.getRequirementDetails(character);
   }
 
-  getOverview(character: Character): Observable<CharacterWithStats> {
+  getOverview(character: Character): Observable<CharacterOverview> {
     return this.information.getOverview(character);
   }
 
-  getStatsTypes(character: CharacterWithStats): StatsType[] {
+  getStatsTypes(character: CharacterOverview): StatsType[] {
     const stats = character.currentStats;
     const curvesAscension = character.info.curvesAscension;
     const types = new Set([...Object.keys(stats), ...Object.keys(curvesAscension)]);
     return [...types].filter(it => curvesAscension.hasOwnProperty(it)) as StatsType[];
   }
 
-  getAll(): Observable<CharacterWithStats[]> {
+  getAll(): Observable<CharacterOverview[]> {
     return this.characters.pipe(
-      switchMap(characters => {
-        if (characters.size === 0) {
-          return of([]);
-        }
-        const statsObs: Observable<CharacterWithStats>[] = [];
-        for (const character of characters.values()) {
-          statsObs.push(this.information.getOverview(character));
-        }
-        return forkJoin(statsObs);
-      }),
+      switchMap(characters => forkJoin([...characters.values()].map(it => this.getOverview(it)))),
+      defaultIfEmpty([] as CharacterOverview[]),
       tap(characters => this.logger.info('sent characters', characters)),
     );
   }

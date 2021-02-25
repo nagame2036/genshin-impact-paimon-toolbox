@@ -15,7 +15,7 @@ export interface Character {
   plan: CharacterPlan;
 }
 
-export interface CharacterWithStats extends Character {
+export interface CharacterOverview extends Character {
 
   currentStats: CharacterStatsValue;
 

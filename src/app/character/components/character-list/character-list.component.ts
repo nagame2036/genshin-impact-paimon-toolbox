@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {Character, CharacterWithStats} from '../../models/character.model';
+import {Character, CharacterOverview} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {toggleListItem} from '../../../shared/utils/collections';
 import {CharacterService} from '../../services/character.service';
@@ -18,9 +18,9 @@ export class CharacterListComponent extends AbstractObservableComponent implemen
   readonly i18n = new I18n('characters');
 
   @Input()
-  characters: CharacterWithStats[] = [];
+  characters: CharacterOverview[] = [];
 
-  items!: CharacterWithStats[];
+  items!: CharacterOverview[];
 
   @Input()
   selectedItems: Character[] = [];

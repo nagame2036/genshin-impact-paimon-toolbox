@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {CharacterWithStats} from '../../models/character.model';
+import {CharacterOverview} from '../../models/character.model';
 import {CharacterService} from '../../services/character.service';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, takeUntil} from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
     'enemy',
   ];
 
-  character!: CharacterWithStats;
+  character!: CharacterOverview;
 
   requirements!: RequirementDetail[];
 

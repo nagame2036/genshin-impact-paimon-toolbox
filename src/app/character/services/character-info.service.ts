@@ -7,7 +7,7 @@ import {objectMap} from '../../shared/utils/collections';
 import {CharacterStatsCurveLevel, CharacterStatsValue} from '../models/character-stats.model';
 import {first, map, tap} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
-import {Character, CharacterWithStats} from '../models/character.model';
+import {Character, CharacterOverview} from '../models/character.model';
 import {StatsType} from '../../game-common/models/stats.model';
 
 /**
@@ -40,7 +40,7 @@ export class CharacterInfoService {
     });
   }
 
-  getOverview(character: Character): Observable<CharacterWithStats> {
+  getOverview(character: Character): Observable<CharacterOverview> {
     const {info, progress, plan} = character;
     return forkJoin([this.getStatsValue(info, progress), this.getStatsValue(info, plan)]).pipe(
       map(([currentStats, planStats]) => ({...character, currentStats, planStats})),

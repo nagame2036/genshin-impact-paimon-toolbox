@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Character, CharacterWithStats} from '../models/character.model';
+import {Character, CharacterOverview} from '../models/character.model';
 import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
 import {ElementType, elementTypeList} from '../../game-common/models/element-type.enum';
 import {allWeaponTypes, WeaponType} from '../../weapon/models/weapon-type.enum';
@@ -43,7 +43,7 @@ export class CharacterViewService {
   constructor(private logger: NGXLogger) {
   }
 
-  view(characters: CharacterWithStats[]): CharacterWithStats[] {
+  view(characters: CharacterOverview[]): CharacterOverview[] {
     return characters.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
   }
 
