@@ -24,12 +24,15 @@ export const allStatsTypes = [
   'HP', // Max Health Points final
   'HP Base', // Health Points base
   'HP%', // Health Points bonus %
+  'HP Flat', // Health Points Flat
   'ATK', // Attack final
   'ATK Base', // Attack base
   'ATK%', // Attack bonus %
+  'ATK Flat', // Attack Flat
   'DEF', // Defense final
   'DEF Base', // Defense base
   'DEF%', // Defense bonus %
+  'DEF Flat', // Defense Flat
   'CHC%', // Critical Hit Chance (CRIT Rate) bonus %
   'CHD%', // Critical Hit Damage (CRIT DMG) bonus %
   'ER%', // Energy Recharge %
