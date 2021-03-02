@@ -32,6 +32,8 @@ export class WeaponService {
     map(infos => [...infos.values()]),
   );
 
+  readonly statsTypeCache = new Map<number, StatsType[]>();
+
   constructor(
     private information: WeaponInfoService,
     private progressor: WeaponProgressService,
@@ -94,8 +96,14 @@ export class WeaponService {
   }
 
   getStatsTypes(weapon: WeaponOverview): StatsType[] {
-    const stats = weapon.currentStats;
-    return stats.getTypes();
+    const id = weapon.info.id;
+    const existing = this.statsTypeCache.get(id);
+    if (existing) {
+      return existing;
+    }
+    const result = weapon.currentStats.getTypes();
+    this.statsTypeCache.set(id, result);
+    return result;
   }
 
   getAll(): Observable<WeaponOverview[]> {

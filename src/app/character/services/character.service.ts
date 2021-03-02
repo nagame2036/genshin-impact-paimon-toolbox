@@ -31,6 +31,8 @@ export class CharacterService {
     map(infos => [...infos.values()]),
   );
 
+  readonly statsTypeCache = new Map<number, StatsType[]>();
+
   constructor(
     private information: CharacterInfoService,
     private progressor: CharacterProgressService,
@@ -93,14 +95,14 @@ export class CharacterService {
   }
 
   getStatsTypes(character: CharacterOverview): StatsType[] {
-    const stats = character.currentStats;
-    const curvesAscension = character.info.curvesAscension;
-    const types = new Set([
-      ...Object.keys(stats),
-      ...Object.keys(curvesAscension),
-    ]);
-    const result = [...types].filter(it => curvesAscension.hasOwnProperty(it));
-    return result as StatsType[];
+    const id = character.info.id;
+    const existing = this.statsTypeCache.get(id);
+    if (existing) {
+      return existing;
+    }
+    const result = character.currentStats.getTypes();
+    this.statsTypeCache.set(id, result);
+    return result;
   }
 
   getAll(): Observable<CharacterOverview[]> {
