@@ -3,7 +3,6 @@ import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
 import {
-  defaultIfEmpty,
   first,
   map,
   mergeMap,
@@ -108,9 +107,10 @@ export class CharacterService {
   getAll(): Observable<CharacterOverview[]> {
     return this.characters.pipe(
       switchMap(characters =>
-        forkJoin([...characters.values()].map(it => this.getOverview(it))),
+        characters.size > 0
+          ? forkJoin([...characters.values()].map(it => this.getOverview(it)))
+          : of([]),
       ),
-      defaultIfEmpty([] as CharacterOverview[]),
       tap(characters => this.logger.info('sent characters', characters)),
     );
   }

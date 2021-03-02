@@ -8,7 +8,6 @@ import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
 import {
-  defaultIfEmpty,
   first,
   map,
   mergeMap,
@@ -109,9 +108,10 @@ export class WeaponService {
   getAll(): Observable<WeaponOverview[]> {
     return this.weapons.pipe(
       mergeMap(weapons =>
-        forkJoin([...weapons.values()].map(it => this.getOverview(it))),
+        weapons.size > 0
+          ? forkJoin([...weapons.values()].map(it => this.getOverview(it)))
+          : of([]),
       ),
-      defaultIfEmpty([] as WeaponOverview[]),
       tap(weapons => this.logger.info('sent weapons', weapons)),
     );
   }
