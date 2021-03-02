@@ -12,10 +12,7 @@ describe('WeaponInfoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ]
+      imports: [WeaponModule, AppTestingModule],
     });
     service = TestBed.inject(WeaponInfoService);
   });
@@ -43,8 +40,8 @@ describe('WeaponInfoService', () => {
           'ATK%': {
             initial: 0.1080000028014183,
             curve: 'CHC-301',
-          }
-        }
+          },
+        },
       },
       progress: {
         id: 1,

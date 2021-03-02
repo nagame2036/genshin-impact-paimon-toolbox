@@ -7,10 +7,9 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
   i18n = new I18n('core');
 
   @Output()
@@ -27,13 +26,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   switchLanguage(language: string): void {
     this.currentLanguage = language;
     this.logger.info('switch language', language);
     this.translator.use(language);
   }
-
 }

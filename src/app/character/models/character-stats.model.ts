@@ -1,15 +1,18 @@
+import {
+  allResBonusStatsTypes,
+  StatsType,
+  StatsValue,
+} from '../../game-common/models/stats.model';
+
 /**
  * Represents the stats info of a character.
  */
-import {allResBonusStatsTypes, StatsType, StatsValue} from '../../game-common/models/stats.model';
-
 export type CharacterStatsInfo = Partial<Record<StatsType, CharacterStats>>;
 
 /**
  * Represents the attribute info of a character stats.
  */
 export interface CharacterStats {
-
   /**
    * The initial value of character stats.
    */
@@ -25,7 +28,6 @@ export interface CharacterStats {
  * Represents the data of a character stats grow curve per level.
  */
 export interface CharacterStatsCurveLevel {
-
   [name: string]: number[];
 }
 
@@ -38,17 +40,26 @@ export type CharacterStatsCurveAscension = Partial<Record<StatsType, number[]>>;
  * Cache the calculated value of specific character progress.
  */
 export class CharacterStatsValue extends StatsValue {
-
   constructor() {
     const defaults = new Map<StatsType, number>();
     const specifics: [StatsType, number][] = [
-      ['CHC%', 0.05000000074505806],
-      ['CHD%', 0.5],
-      ['ER%', 1.0],
-      ['STA recover speed', 25.0],
+      ['CHC%', defaultCHC],
+      ['CHD%', defaultCHD],
+      ['ER%', defaultER],
+      ['STA recover speed', defaultSTARecoverSpeed],
     ];
     specifics.forEach(([type, value]) => defaults.set(type, value));
-    allResBonusStatsTypes.forEach(res => defaults.set(res, 0.15000000596046448));
+    allResBonusStatsTypes.forEach(res => defaults.set(res, defaultRES));
     super(defaults);
   }
 }
+
+const defaultRES = 0.15000000596046448;
+
+const defaultCHC = 0.05000000074505806;
+
+const defaultCHD = 0.5;
+
+const defaultER = 1.0;
+
+const defaultSTARecoverSpeed = 25.0;

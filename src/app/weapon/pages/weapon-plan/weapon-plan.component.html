@@ -1,8 +1,16 @@
 <div class="plan-content" *ngIf="weapon">
-  <app-weapon-plan-form [weapon]="weapon" [reachedStates]="reachedStates"
-                        (executePlan)="executePlan($event)" (changed)="save()">
-  </app-weapon-plan-form>
-  <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
-  </app-material-requirement>
+  <app-weapon-plan-form
+    [weapon]="weapon"
+    [reachedStates]="reachedStates"
+    (executePlan)="executePlan($event)"
+    (changed)="save()"
+  ></app-weapon-plan-form>
+  <app-material-requirement
+    class="cost-list"
+    [requirements]="requirements"
+    [types]="types"
+  ></app-material-requirement>
 </div>
-<app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>
+<app-execute-plan-confirm-dialog
+  #executePlanConfirm
+></app-execute-plan-confirm-dialog>

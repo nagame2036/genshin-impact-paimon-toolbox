@@ -5,7 +5,6 @@ import {TalentProgress} from './talent-progress.model';
  * Represents the levelup progress of a character.
  */
 export interface CharacterProgress {
-
   id: number;
 
   constellation: Constellation;
@@ -17,6 +16,6 @@ export interface CharacterProgress {
   talents: TalentProgress;
 }
 
-export type Constellation = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type Constellation = typeof allConstellations[number];
 
-export const allConstellations: Constellation[] = [0, 1, 2, 3, 4, 5, 6];
+export const allConstellations = [0, 1, 2, 3, 4, 5, 6] as const;

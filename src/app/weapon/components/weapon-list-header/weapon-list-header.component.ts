@@ -6,10 +6,9 @@ import {WeaponViewService} from '../../services/weapon-view.service';
 @Component({
   selector: 'app-weapon-list-header',
   templateUrl: './weapon-list-header.component.html',
-  styleUrls: ['./weapon-list-header.component.scss']
+  styleUrls: ['./weapon-list-header.component.scss'],
 })
 export class WeaponListHeaderComponent implements OnInit {
-
   readonly i18n = new I18n('weapons');
 
   @Input()
@@ -24,10 +23,7 @@ export class WeaponListHeaderComponent implements OnInit {
   @Output()
   sortChanged = new EventEmitter();
 
-  constructor(public view: WeaponViewService) {
-  }
+  constructor(public view: WeaponViewService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

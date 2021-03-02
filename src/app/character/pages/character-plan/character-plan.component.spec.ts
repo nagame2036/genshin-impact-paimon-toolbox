@@ -10,15 +10,9 @@ describe('CharacterPlanComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CharacterPlanComponent
-      ],
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [CharacterPlanComponent],
+      imports: [CharacterModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

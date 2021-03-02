@@ -10,15 +10,9 @@ describe('InventoryPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        InventoryPageComponent
-      ],
-      imports: [
-        InventoryModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [InventoryPageComponent],
+      imports: [InventoryModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

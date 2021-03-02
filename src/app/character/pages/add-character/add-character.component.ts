@@ -11,10 +11,11 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-add-character',
   templateUrl: './add-character.component.html',
-  styleUrls: ['./add-character.component.scss']
+  styleUrls: ['./add-character.component.scss'],
 })
-export class AddCharacterComponent extends AbstractObservableComponent implements OnInit {
-
+export class AddCharacterComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   readonly i18n = new I18n('characters');
 
   characters: CharacterInfo[] = [];
@@ -23,7 +24,11 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
 
   selectedCharacter!: CharacterOverview;
 
-  constructor(private service: CharacterService, private location: Location, private logger: NGXLogger) {
+  constructor(
+    private service: CharacterService,
+    private location: Location,
+    private logger: NGXLogger,
+  ) {
     super();
   }
 
@@ -61,5 +66,4 @@ export class AddCharacterComponent extends AbstractObservableComponent implement
       this.reset();
     }
   }
-
 }

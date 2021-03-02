@@ -1,40 +1,30 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
-import {EMPTY, Observable, of, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {TalentInfo, TalentLevel} from '../models/talent-info.model';
 import {objectMap} from '../../shared/utils/collections';
-import {first, map, switchMap, tap, throwIfEmpty} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {coerceIn} from '../../shared/utils/coerce';
 import {rangeList} from '../../shared/utils/range-list';
 import {TalentProgress} from '../models/talent-progress.model';
+import {characterData} from './character-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TalentInfoService {
-
-  private readonly prefix = 'assets/data/characters';
-
   private talents$ = new ReplaySubject<Map<number, TalentInfo>>(1);
 
   constructor(http: HttpClient, private logger: NGXLogger) {
-    http.get<{ [id: number]: TalentInfo }>(`${this.prefix}/talents.json`).subscribe(data => {
-      const talents = objectMap(data);
-      this.logger.info('loaded talent data', talents, data);
-      this.talents$.next(talents);
-    });
-  }
-
-  get(id: number): Observable<TalentInfo> {
-    return this.talents$.pipe(
-      switchMap(talents => {
-        const talent = talents.get(id);
-        return talent ? of(talent) : EMPTY;
-      }),
-      throwIfEmpty()
-    );
+    http
+      .get<{[id: number]: TalentInfo}>(characterData('talents'))
+      .subscribe(data => {
+        const talents = objectMap(data);
+        this.logger.info('loaded talent data', talents, data);
+        this.talents$.next(talents);
+      });
   }
 
   getAll(ids: number[]): Observable<TalentInfo[]> {
@@ -48,9 +38,9 @@ export class TalentInfoService {
             results.push(talent);
           }
         }
+        this.logger.info('sent talents', ids, talents);
         return results;
       }),
-      tap(talents => this.logger.info('sent talents', ids, talents)),
     );
   }
 
@@ -71,7 +61,11 @@ export class TalentInfoService {
     return coerceIn(level, 1, max) as TalentLevel;
   }
 
-  correctLevels(levels: TalentProgress, ascension: Ascension, starts: { [id: number]: number } = {}): void {
+  correctLevels(
+    levels: TalentProgress,
+    ascension: Ascension,
+    starts: TalentProgress = {},
+  ): void {
     const max = this.maxLevel(ascension);
     for (const [idString, level] of Object.entries(levels)) {
       const id = Number(idString);

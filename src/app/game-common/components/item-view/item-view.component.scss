@@ -13,7 +13,13 @@
   @apply rounded-br-2xl;
 }
 
-$rarities: (1: #676f7c, 2: #4f7d6b, 3: #4b94aa, 4: #a27bba, 5: #d59e4f);
+$rarities: (
+  1: #676f7c,
+  2: #4f7d6b,
+  3: #4b94aa,
+  4: #a27bba,
+  5: #d59e4f,
+);
 
 @each $rarity, $color in $rarities {
   .rarity-#{$rarity} {

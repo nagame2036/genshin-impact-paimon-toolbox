@@ -7,8 +7,7 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {LoggerModule} from 'ngx-logger';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,7 +21,6 @@ import {LoggerModule} from 'ngx-logger';
     TranslateModule,
     NgxIndexedDBModule,
     LoggerModule,
-  ]
+  ],
 })
-export class SharedModule {
-}
+export class SharedModule {}

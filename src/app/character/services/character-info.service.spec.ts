@@ -11,10 +11,7 @@ describe('CharacterInfoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
+      imports: [CharacterModule, AppTestingModule],
     });
     service = TestBed.inject(CharacterInfoService);
   });
@@ -31,35 +28,27 @@ describe('CharacterInfoService', () => {
         element: 1,
         weapon: 4,
         nation: 1,
-        talentsUpgradable: [
-          40130,
-          40131,
-          40134
-        ],
-        talentsOther: [
-          40135,
-          40136,
-          40137
-        ],
+        talentsUpgradable: [40130, 40131, 40134],
+        talentsOther: [40135, 40136, 40137],
         materials: {
           boss: 2001,
           gem: 301,
           local: 10103,
-          mob: 807
+          mob: 807,
         },
         stats: {
           'HP Base': {
             initial: 775.0223388671875,
-            curve: 'HP-S4'
+            curve: 'HP-S4',
           },
           'ATK Base': {
             initial: 14.246399879455566,
-            curve: 'ATK-S4'
+            curve: 'ATK-S4',
           },
           'DEF Base': {
             initial: 58.941749572753906,
-            curve: 'HP-S4'
-          }
+            curve: 'HP-S4',
+          },
         },
         curvesAscension: {
           'HP Base': [
@@ -69,7 +58,7 @@ describe('CharacterInfoService', () => {
             1538.87158203125,
             1950.2530517578125,
             2361.634521484375,
-            2773.01611328125
+            2773.01611328125,
           ],
           'DEF Base': [
             0,
@@ -78,7 +67,7 @@ describe('CharacterInfoService', () => {
             117.03375244140625,
             148.32000732421875,
             179.6062469482422,
-            210.8925018310547
+            210.8925018310547,
           ],
           'ATK Base': [
             0,
@@ -87,7 +76,7 @@ describe('CharacterInfoService', () => {
             28.2880802154541,
             35.85023880004883,
             43.41239929199219,
-            50.97455978393555
+            50.97455978393555,
           ],
           'Anemo DMG%': [
             0,
@@ -96,9 +85,9 @@ describe('CharacterInfoService', () => {
             0.11999999731779099,
             0.11999999731779099,
             0.18000000715255737,
-            0.23999999463558197
-          ]
-        }
+            0.23999999463558197,
+          ],
+        },
       },
       progress: {
         id: 1,
@@ -114,12 +103,14 @@ describe('CharacterInfoService', () => {
         talents: [],
       },
     };
-    service.getStatsValue(character.info, character.progress).subscribe(stats => {
-      expect(stats.get('HP Base')).toBeCloseTo(9244, 0);
-      expect(stats.get('ATK Base')).toBeCloseTo(170, 0);
-      expect(stats.get('DEF Base')).toBeCloseTo(703, 0);
-      expect(stats.get('Anemo DMG%')).toBeCloseTo(0.24, 2);
-      done();
-    });
+    service
+      .getStatsValue(character.info, character.progress)
+      .subscribe(stats => {
+        expect(stats.get('HP Base')).toBeCloseTo(9244, 0);
+        expect(stats.get('ATK Base')).toBeCloseTo(170, 0);
+        expect(stats.get('DEF Base')).toBeCloseTo(703, 0);
+        expect(stats.get('Anemo DMG%')).toBeCloseTo(0.24, 2);
+        done();
+      });
   });
 });

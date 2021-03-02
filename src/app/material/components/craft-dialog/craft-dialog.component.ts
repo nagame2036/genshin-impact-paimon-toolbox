@@ -12,10 +12,9 @@ import {coerceIn} from '../../../shared/utils/coerce';
 @Component({
   selector: 'app-craft-dialog',
   templateUrl: './craft-dialog.component.html',
-  styleUrls: ['./craft-dialog.component.scss']
+  styleUrls: ['./craft-dialog.component.scss'],
 })
 export class CraftDialogComponent implements OnInit {
-
   i18n = new I18n('inventory');
 
   item!: MaterialDetail;
@@ -27,21 +26,27 @@ export class CraftDialogComponent implements OnInit {
   /**
    * the [detail, amount] of material in recipe.
    */
-  recipeMaterials: [MaterialDetail, number][] = [];
+  materials: [MaterialDetail, number][] = [];
 
-  details: { usage: MaterialDetail[]; craftableAmount: number }[] = [];
+  details: {usage: MaterialDetail[]; craftableAmount: number}[] = [];
 
   index = 0;
 
-  performedTimes = 0;
+  /**
+   * The craft performed times.
+   */
+  times = 0;
 
   subscription!: Subscription;
 
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private materials: MaterialService, private translator: TranslateService, private logger: NGXLogger) {
-  }
+  constructor(
+    private service: MaterialService,
+    private translator: TranslateService,
+    private logger: NGXLogger,
+  ) {}
 
   ngOnInit(): void {
     this.logger.info('init');
@@ -53,19 +58,16 @@ export class CraftDialogComponent implements OnInit {
       return;
     }
     this.item = item;
-    this.performedTimes = 0;
+    this.times = 0;
     this.index = 0;
-    this.subscription = this.materials.getCraftDetails(this.item).subscribe(details => {
-      this.details = details;
-      this.recipes = details.map(({usage, craftableAmount}, index) => {
-        const key = craftableAmount > 0 ? 'craftable' : 'insufficient';
-        const times = this.translator.instant(this.i18n.module(key), {num: craftableAmount});
-        const materials = usage.map(({info}) => this.translator.instant(this.i18n.dict(`materials.${info.id}`))).join(', ');
-        return ({text: `${times} - ${materials}`, value: recipes[index]});
+    this.subscription = this.service
+      .getCraftDetails(this.item)
+      .subscribe(details => {
+        this.details = details;
+        this.recipes = this.recipeOptions(recipes, details);
+        this.changeRecipe(this.recipes[this.index].value);
+        this.logger.info('received material craft details', item, details);
       });
-      this.changeRecipe(this.recipes[this.index].value);
-      this.logger.info('received material craft details', item, details);
-    });
     this.dialog.open();
     this.logger.info('opened with item', item);
   }
@@ -77,13 +79,34 @@ export class CraftDialogComponent implements OnInit {
 
   changeRecipe(recipe: CraftRecipe): void {
     this.index = this.recipes.findIndex(it => it.value === recipe);
-    const amount = this.details[this.index].craftableAmount;
-    this.performedTimes = coerceIn(this.performedTimes, amount > 0 ? 1 : 0, amount);
+    const detail = this.details[this.index];
+    const amount = detail.craftableAmount;
+    const minAmount = amount > 0 ? 1 : 0;
+    this.times = coerceIn(this.times, minAmount, amount);
     this.recipe = recipe;
-    this.recipeMaterials = this.details[this.index].usage.map(it => [it, recipe[it.info.id] ?? 0]);
+    this.materials = detail.usage.map(it => [it, recipe[it.info.id] ?? 0]);
   }
 
   craft(): void {
-    this.materials.craft(this.item.info.id, this.recipe, this.performedTimes);
+    this.service.craft(this.item.info.id, this.recipe, this.times);
+  }
+
+  private recipeOptions(
+    recipes: CraftRecipe[],
+    details: {usage: MaterialDetail[]; craftableAmount: number}[],
+  ): SelectOption[] {
+    return details.map(({usage, craftableAmount}, index) => {
+      const key = craftableAmount > 0 ? 'craftable' : 'insufficient';
+      const params = {amount: craftableAmount};
+      const times = this.translator.instant(this.i18n.module(key), params);
+      const materials = usage
+        .map(({info}) => {
+          return this.translator.instant(
+            this.i18n.dict(`materials.${info.id}`),
+          );
+        })
+        .join(', ');
+      return {text: `${times} - ${materials}`, value: recipes[index]};
+    });
   }
 }

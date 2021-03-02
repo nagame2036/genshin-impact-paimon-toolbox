@@ -1,23 +1,40 @@
 <div class="options">
-  <app-select class="option" [options]="sorts" [value]="sort" (changed)="sortChanged.emit($event)">
+  <app-select
+    class="option"
+    [options]="sorts"
+    [value]="sort"
+    (changed)="sortChanged.emit($event)"
+  >
     <span form-label>
       {{ i18n.dict('sort') | translate }}
     </span>
   </app-select>
-  <app-multi-select class="option" [options]="view.rarities" [values]="view.rarityFilter"
-                    (changed)="view.filterRarity($event); changed.emit()">
+  <app-multi-select
+    class="option"
+    [options]="view.rarities"
+    [values]="view.rarityFilter"
+    (changed)="view.filterRarity($event); changed.emit()"
+  >
     <span form-label>
       {{ i18n.dict('rarity') | translate }}
     </span>
   </app-multi-select>
-  <app-multi-select class="option" [options]="view.elements" [values]="view.elementFilter"
-                    (changed)="view.filterElement($event); changed.emit()">
+  <app-multi-select
+    class="option"
+    [options]="view.elements"
+    [values]="view.elementFilter"
+    (changed)="view.filterElement($event); changed.emit()"
+  >
     <span form-label>
       {{ i18n.dict('element') | translate }}
     </span>
   </app-multi-select>
-  <app-multi-select class="option" [options]="view.weapons" [values]="view.weaponFilter"
-                    (changed)="view.filterWeapon($event); changed.emit()">
+  <app-multi-select
+    class="option"
+    [options]="view.weapons"
+    [values]="view.weaponFilter"
+    (changed)="view.filterWeapon($event); changed.emit()"
+  >
     <span form-label>
       {{ i18n.dict('weapon') | translate }}
     </span>

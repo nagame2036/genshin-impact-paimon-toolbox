@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponInfo} from '../../models/weapon-info.model';
 import {ImageService} from '../../../image/services/image.service';
@@ -9,10 +16,9 @@ import {WeaponViewService} from '../../services/weapon-view.service';
 @Component({
   selector: 'app-weapon-info-list',
   templateUrl: './weapon-info-list.component.html',
-  styleUrls: ['./weapon-info-list.component.scss']
+  styleUrls: ['./weapon-info-list.component.scss'],
 })
 export class WeaponInfoListComponent implements OnChanges {
-
   readonly i18n = new I18n('weapons');
 
   @Input()
@@ -23,9 +29,12 @@ export class WeaponInfoListComponent implements OnChanges {
   @Output()
   selected = new EventEmitter<WeaponInfo>();
 
-  constructor(private service: WeaponService, public view: WeaponViewService,
-              public images: ImageService, private logger: NGXLogger) {
-  }
+  constructor(
+    private service: WeaponService,
+    public view: WeaponViewService,
+    public images: ImageService,
+    private logger: NGXLogger,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('weapons')) {

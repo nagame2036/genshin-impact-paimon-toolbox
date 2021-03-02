@@ -8,10 +8,11 @@ import {MaterialType} from '../../../material/models/material-type.enum';
 @Component({
   selector: 'app-ingredient-inventory',
   templateUrl: './ingredient-inventory.component.html',
-  styleUrls: ['./ingredient-inventory.component.scss']
+  styleUrls: ['./ingredient-inventory.component.scss'],
 })
-export class IngredientInventoryComponent extends AbstractObservableComponent implements OnInit {
-
+export class IngredientInventoryComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   common!: MaterialDetail[];
 
   local!: MaterialDetail[];

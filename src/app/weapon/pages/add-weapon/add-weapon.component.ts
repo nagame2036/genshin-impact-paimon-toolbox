@@ -11,10 +11,11 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-add-weapon',
   templateUrl: './add-weapon.component.html',
-  styleUrls: ['./add-weapon.component.scss']
+  styleUrls: ['./add-weapon.component.scss'],
 })
-export class AddWeaponComponent extends AbstractObservableComponent implements OnInit {
-
+export class AddWeaponComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   readonly i18n = new I18n('weapons');
 
   weapons: WeaponInfo[] = [];
@@ -23,18 +24,20 @@ export class AddWeaponComponent extends AbstractObservableComponent implements O
 
   selectedWeapon!: WeaponOverview;
 
-  constructor(private service: WeaponService, private location: Location, private logger: NGXLogger) {
+  constructor(
+    private service: WeaponService,
+    private location: Location,
+    private logger: NGXLogger,
+  ) {
     super();
   }
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.service.infos
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(weapons => {
-        this.logger.info('received non-party weapons', weapons);
-        this.weapons = weapons;
-      });
+    this.service.infos.pipe(takeUntil(this.destroy$)).subscribe(weapons => {
+      this.logger.info('received non-party weapons', weapons);
+      this.weapons = weapons;
+    });
   }
 
   goBack(): void {

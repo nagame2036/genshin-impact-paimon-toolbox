@@ -4,10 +4,9 @@ import {SelectOption} from '../../../widget/models/select-option.model';
 @Component({
   selector: 'app-current-goal-select',
   templateUrl: './current-goal-select.component.html',
-  styleUrls: ['./current-goal-select.component.scss']
+  styleUrls: ['./current-goal-select.component.scss'],
 })
 export class CurrentGoalSelectComponent implements OnInit {
-
   @Input()
   currentOptions!: SelectOption[];
 
@@ -32,11 +31,9 @@ export class CurrentGoalSelectComponent implements OnInit {
   @Output()
   executePlan = new EventEmitter();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   setCurrent(value: number): void {
     this.current = value;

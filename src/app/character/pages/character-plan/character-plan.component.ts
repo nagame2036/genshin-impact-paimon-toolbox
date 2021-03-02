@@ -14,28 +14,30 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
 @Component({
   selector: 'app-character-plan',
   templateUrl: './character-plan.component.html',
-  styleUrls: ['./character-plan.component.scss']
+  styleUrls: ['./character-plan.component.scss'],
 })
-export class CharacterPlanComponent extends AbstractObservableComponent implements OnInit {
-
+export class CharacterPlanComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   readonly i18n = new I18n('game-common');
 
-  readonly types = [
-    [MaterialType.CURRENCY, MaterialType.LOCAL_SPECIALTY, MaterialType.CHARACTER_EXP],
-    [MaterialType.TALENT_COMMON, MaterialType.CHARACTER_BOSS, MaterialType.CHARACTER_GEM],
-    [MaterialType.TALENT_14],
-    [MaterialType.TALENT_25],
-    [MaterialType.TALENT_36],
-    [MaterialType.ENEMY_MOB],
-  ];
-
-  readonly subtitles = [
-    'common',
-    'boss',
-    '1/4/7',
-    '2/5/7',
-    '3/6/7',
-    'enemy',
+  readonly types: [string, ...MaterialType[]][] = [
+    [
+      'common',
+      MaterialType.CURRENCY,
+      MaterialType.LOCAL_SPECIALTY,
+      MaterialType.CHARACTER_EXP,
+    ],
+    [
+      'boss',
+      MaterialType.TALENT_COMMON,
+      MaterialType.CHARACTER_BOSS,
+      MaterialType.CHARACTER_GEM,
+    ],
+    ['1/4/7', MaterialType.TALENT_14],
+    ['2/5/7', MaterialType.TALENT_25],
+    ['3/6/7', MaterialType.TALENT_36],
+    ['enemy', MaterialType.ENEMY_MOB],
   ];
 
   character!: CharacterOverview;
@@ -47,8 +49,12 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
-  constructor(private service: CharacterService, private materials: MaterialService,
-              private route: ActivatedRoute, private logger: NGXLogger) {
+  constructor(
+    private service: CharacterService,
+    private materials: MaterialService,
+    private route: ActivatedRoute,
+    private logger: NGXLogger,
+  ) {
     super();
   }
 
@@ -79,12 +85,16 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
     const {text: title, value: requirement} = this.requirements[planIndex];
-    const data = {title, requirement, item: this.i18n.dict(`characters.${this.character.info.id}`)};
-    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
-      this.materials.consumeRequire(requirement);
-      this.executePlanByIndex(planIndex);
-      this.save();
-    });
+    const item = this.i18n.dict(`characters.${this.character.info.id}`);
+    const data = {title, requirement, item};
+    this.executePlanConfirm
+      .open(data)
+      .afterConfirm()
+      .subscribe(_ => {
+        this.materials.consumeRequire(requirement);
+        this.executePlanByIndex(planIndex);
+        this.save();
+      });
   }
 
   private executePlanByIndex(planIndex: number): void {
@@ -98,6 +108,7 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
         this.logger.info('executed levelup plan');
         break;
       default:
+        this.executeTalentLevelup(planIndex - 2);
         break;
     }
   }
@@ -117,7 +128,7 @@ export class CharacterPlanComponent extends AbstractObservableComponent implemen
   }
 
   private executeTalentLevelup(index: number): void {
-    const talentId = this.character.info.talentsUpgradable[index];
-    this.character.progress.talents[talentId] = this.character.plan.talents[talentId];
+    const id = this.character.info.talentsUpgradable[index];
+    this.character.progress.talents[id] = this.character.plan.talents[id];
   }
 }

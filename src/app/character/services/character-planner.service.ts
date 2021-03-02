@@ -17,10 +17,9 @@ import {NGXLogger} from 'ngx-logger';
 import {TalentInfoService} from './talent-info.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CharacterPlanner {
-
   private readonly i18n = new I18n('game-common');
 
   private readonly store = 'character-plans';
@@ -29,9 +28,14 @@ export class CharacterPlanner {
 
   readonly plans = this.plans$.asObservable();
 
-  constructor(private characterReq: CharacterRequirementService, private talentReq: TalentRequirementService,
-              private talentInfos: TalentInfoService, private materials: MaterialService,
-              private database: NgxIndexedDBService, private logger: NGXLogger) {
+  constructor(
+    private characterReq: CharacterRequirementService,
+    private talentReq: TalentRequirementService,
+    private talentInfos: TalentInfoService,
+    private materials: MaterialService,
+    private database: NgxIndexedDBService,
+    private logger: NGXLogger,
+  ) {
     this.database.getAll(this.store).subscribe(persisted => {
       this.logger.info('fetched character plans', persisted);
       const plans = new Map<number, CharacterPlan>();
@@ -42,7 +46,7 @@ export class CharacterPlanner {
 
   create(info: CharacterInfo, id: number): CharacterPlan {
     const talents: TalentProgress = {};
-    info.talentsUpgradable.forEach(t => talents[t] = 1);
+    info.talentsUpgradable.forEach(t => (talents[t] = 1));
     return {id, ascension: 0, level: 1, talents};
   }
 
@@ -50,51 +54,70 @@ export class CharacterPlanner {
     const talentsUpgradable = character.info.talentsUpgradable;
     const subRequirement = [
       this.characterReq.requirement(character),
-      this.talentInfos.getAll(talentsUpgradable).pipe(switchMap(talents => this.talentReq.requirement(character, talents))),
+      this.talentInfos
+        .getAll(talentsUpgradable)
+        .pipe(
+          switchMap(talents => this.talentReq.requirement(character, talents)),
+        ),
     ];
     return forkJoin(subRequirement).pipe(
-      map((requirements) => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent material requirements of character', character, requirements)),
+      map(requirements => new MaterialRequireList(requirements)),
+      tap(req => this.logger.info('sent requirements', character, req)),
     );
   }
 
   getRequirementDetails(character: Character): Observable<RequirementDetail[]> {
-    return this.materials.getRequirements(ItemType.CHARACTER, character.plan.id).pipe(map(requirements => {
-      const texts = [
-        this.i18n.module('total-requirement'),
-        this.characterReq.levelupLabel,
-        ...character.info.talentsUpgradable.map(it => this.talentReq.getLabel(it)),
-      ];
-      this.logger.info('sent specific material requirements of character', character, requirements);
-      return requirements.sort((a, b) => texts.indexOf(a.text) - texts.indexOf(b.text));
-    }));
+    return this.materials
+      .getRequirement(ItemType.CHARACTER, character.plan.id)
+      .pipe(
+        map(req => {
+          const talents = character.info.talentsUpgradable;
+          const texts = [
+            this.i18n.module('total-requirement'),
+            this.characterReq.levelupLabel,
+            ...talents.map(it => this.talentReq.getLabel(it)),
+          ];
+          this.logger.info('sent requirement detail', character, req);
+          return req.sort(
+            (a, b) => texts.indexOf(a.text) - texts.indexOf(b.text),
+          );
+        }),
+      );
   }
 
   update({plan}: Character): Observable<void> {
     const update = this.database.update(this.store, plan);
-    return zip(update, this.plans).pipe(map(([, plans]) => {
-      this.logger.info('updated character plan', plan);
-      plans.set(plan.id, plan);
-      this.plans$.next(plans);
-    }));
+    return zip(update, this.plans).pipe(
+      map(([, plans]) => {
+        this.logger.info('updated character plan', plan);
+        plans.set(plan.id, plan);
+        this.plans$.next(plans);
+      }),
+    );
   }
 
   remove({plan}: Character): Observable<void> {
     const id = plan.id;
     const remove = this.database.delete(this.store, id);
-    return zip(remove, this.plans).pipe(map(([, plans]) => {
-      this.logger.info('removed character plan', plan);
-      plans.delete(id);
-      this.plans$.next(plans);
-    }));
+    return zip(remove, this.plans).pipe(
+      map(([, plans]) => {
+        this.logger.info('removed character plan', plan);
+        plans.delete(id);
+        this.plans$.next(plans);
+      }),
+    );
   }
 
   removeAll(characters: Character[]): Observable<void> {
-    const remove = characters.map(it => this.database.delete(this.store, it.plan.id));
-    return zip(forkJoin(remove), this.plans).pipe(map(([, plans]) => {
-      this.logger.info('removed character plans', characters);
-      characters.forEach(it => plans.delete(it.plan.id));
-      this.plans$.next(plans);
-    }));
+    const remove = characters.map(it =>
+      this.database.delete(this.store, it.plan.id),
+    );
+    return zip(forkJoin(remove), this.plans).pipe(
+      map(([, plans]) => {
+        this.logger.info('removed character plans', characters);
+        characters.forEach(it => plans.delete(it.plan.id));
+        this.plans$.next(plans);
+      }),
+    );
   }
 }

@@ -10,15 +10,9 @@ describe('TalentMaterialInventoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        TalentMaterialInventoryComponent
-      ],
-      imports: [
-        InventoryModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [TalentMaterialInventoryComponent],
+      imports: [InventoryModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

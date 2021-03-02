@@ -8,10 +8,11 @@ import {takeUntil} from 'rxjs/operators';
 @Component({
   selector: 'app-talent-material-inventory',
   templateUrl: './talent-material-inventory.component.html',
-  styleUrls: ['./talent-material-inventory.component.scss']
+  styleUrls: ['./talent-material-inventory.component.scss'],
 })
-export class TalentMaterialInventoryComponent extends AbstractObservableComponent implements OnInit {
-
+export class TalentMaterialInventoryComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   common!: MaterialDetail[];
 
   monThu!: MaterialDetail[];

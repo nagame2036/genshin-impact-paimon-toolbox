@@ -1,6 +1,10 @@
 <div class="view-container" [style.width.px]="width">
   <div class="image-container" [class]="'rarity-' + rarity">
-    <img class="image" [src]="images.get(category, id)" [alt]="i18n.dict(itemKey) | translate">
+    <img
+      class="image"
+      [src]="images.get(category, id)"
+      [alt]="i18n.dict(itemKey) | translate"
+    />
   </div>
   <div class="name">
     {{ i18n.dict(itemKey) | translate }}

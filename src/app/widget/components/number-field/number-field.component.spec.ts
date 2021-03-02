@@ -8,9 +8,8 @@ describe('NumberFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NumberFieldComponent]
-    })
-      .compileComponents();
+      declarations: [NumberFieldComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

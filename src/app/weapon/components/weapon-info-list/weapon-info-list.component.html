@@ -1,13 +1,24 @@
-<app-weapon-list-header [sorts]="view.infoSorts" [sort]="view.infoSort"
-                        (changed)="update()" (sortChanged)="view.changeInfoSort($event); update()">
+<app-weapon-list-header
+  [sorts]="view.infoSorts"
+  [sort]="view.infoSort"
+  (changed)="update()"
+  (sortChanged)="view.changeInfoSort($event); update()"
+>
   <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
 </app-weapon-list-header>
 <div class="list">
   <div *ngFor="let item of items" class="overview" (click)="select(item)">
-    <app-item-view category="weapons" [id]="item.id" [rarity]="item.rarity"></app-item-view>
-    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.type)"
-         [alt]="i18n.dict('weapon-types.' + item.type) | translate">
+    <app-item-view
+      category="weapons"
+      [id]="item.id"
+      [rarity]="item.rarity"
+    ></app-item-view>
+    <img
+      class="weapon-type-hint"
+      [src]="images.get('weapon-types', item.type)"
+      [alt]="i18n.dict('weapon-types.' + item.type) | translate"
+    />
   </div>
 </div>

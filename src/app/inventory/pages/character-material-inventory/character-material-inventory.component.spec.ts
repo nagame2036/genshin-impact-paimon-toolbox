@@ -10,15 +10,9 @@ describe('CharacterMaterialInventoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CharacterMaterialInventoryComponent
-      ],
-      imports: [
-        InventoryModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [CharacterMaterialInventoryComponent],
+      imports: [InventoryModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,8 +1,18 @@
 <div class="plan-content" *ngIf="character">
-  <app-character-plan-form [character]="character" [reachedStates]="reachedStates"
-                           (executePlan)="executePlan($event)" (changed)="save()">
+  <app-character-plan-form
+    [character]="character"
+    [reachedStates]="reachedStates"
+    (executePlan)="executePlan($event)"
+    (changed)="save()"
+  >
   </app-character-plan-form>
-  <app-material-requirement class="cost-list" [requirements]="requirements" [subtitles]="subtitles" [types]="types">
+  <app-material-requirement
+    class="cost-list"
+    [requirements]="requirements"
+    [types]="types"
+  >
   </app-material-requirement>
 </div>
-<app-execute-plan-confirm-dialog #executePlanConfirm></app-execute-plan-confirm-dialog>
+<app-execute-plan-confirm-dialog
+  #executePlanConfirm
+></app-execute-plan-confirm-dialog>

@@ -1,15 +1,30 @@
-<app-weapon-list-header [sorts]="view.sorts" [sort]="view.sort"
-                        (changed)="update()" (sortChanged)="view.changeSort($event); update()">
+<app-weapon-list-header
+  [sorts]="view.sorts"
+  [sort]="view.sort"
+  (changed)="update()"
+  (sortChanged)="view.changeSort($event); update()"
+>
   <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
 </app-weapon-list-header>
 <div class="list">
-  <div *ngFor="let item of items; trackBy: trackItem" class="overview" [class.selected]="selectedItems.includes(item)"
-       (click)="select(item)">
-    <app-item-view category="weapons" [id]="item.info.id" [rarity]="item.info.rarity"></app-item-view>
-    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.info.type)"
-         [alt]="i18n.dict('weapon-types.' + item.info.type) | translate">
+  <div
+    *ngFor="let item of items; trackBy: trackItem"
+    class="overview"
+    [class.selected]="selectedItems.includes(item)"
+    (click)="select(item)"
+  >
+    <app-item-view
+      category="weapons"
+      [id]="item.info.id"
+      [rarity]="item.info.rarity"
+    ></app-item-view>
+    <img
+      class="weapon-type-hint"
+      [src]="images.get('weapon-types', item.info.type)"
+      [alt]="i18n.dict('weapon-types.' + item.info.type) | translate"
+    />
     <table class="item-overview-table">
       <tr>
         <td>
@@ -24,8 +39,11 @@
           <b>{{ i18n.dict('ascension') | translate }}</b>
         </td>
         <td>
-          <app-item-overview-data left="★{{ item.progress.ascension }}" right="★{{ item.plan.ascension }}"
-                                  [displayRight]="item.progress.ascension < item.plan.ascension">
+          <app-item-overview-data
+            left="★{{ item.progress.ascension }}"
+            right="★{{ item.plan.ascension }}"
+            [displayRight]="item.progress.ascension < item.plan.ascension"
+          >
           </app-item-overview-data>
         </td>
       </tr>
@@ -34,8 +52,11 @@
           <b>{{ i18n.dict('level') | translate }}</b>
         </td>
         <td>
-          <app-item-overview-data [left]="item.progress.level" [right]="item.plan.level"
-                                  [displayRight]="item.progress.level < item.plan.level">
+          <app-item-overview-data
+            [left]="item.progress.level"
+            [right]="item.plan.level"
+            [displayRight]="item.progress.level < item.plan.level"
+          >
           </app-item-overview-data>
         </td>
       </tr>
@@ -44,15 +65,23 @@
           <b>{{ i18n.stats(type) | translate }}</b>
         </td>
         <td>
-          <app-item-overview-data *ngIf="type.endsWith('%') else numeric"
-                                  [left]="item.currentStats.get(type) | percent: '1.0-1'"
-                                  [right]="item.planStats.get(type) | percent: '1.0-1'"
-                                  [displayRight]="item.currentStats.get(type) < item.planStats.get(type)">
+          <app-item-overview-data
+            *ngIf="type.endsWith('%'); else numeric"
+            [left]="item.currentStats.get(type) | percent: '1.0-1'"
+            [right]="item.planStats.get(type) | percent: '1.0-1'"
+            [displayRight]="
+              item.currentStats.get(type) < item.planStats.get(type)
+            "
+          >
           </app-item-overview-data>
           <ng-template #numeric>
-            <app-item-overview-data [left]="item.currentStats.get(type) | number: '1.0-0'"
-                                    [right]="item.planStats.get(type) | number: '1.0-0'"
-                                    [displayRight]="item.currentStats.get(type) < item.planStats.get(type)">
+            <app-item-overview-data
+              [left]="item.currentStats.get(type) | number: '1.0-0'"
+              [right]="item.planStats.get(type) | number: '1.0-0'"
+              [displayRight]="
+                item.currentStats.get(type) < item.planStats.get(type)
+              "
+            >
             </app-item-overview-data>
           </ng-template>
         </td>

@@ -10,10 +10,9 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'app-weapon-page',
   templateUrl: './weapon-page.component.html',
-  styleUrls: ['./weapon-page.component.scss']
+  styleUrls: ['./weapon-page.component.scss'],
 })
 export class WeaponPageComponent implements OnInit {
-
   i18n = new I18n('weapons');
 
   weapons$!: Observable<WeaponOverview[]>;
@@ -27,8 +26,11 @@ export class WeaponPageComponent implements OnInit {
   @ViewChild('list')
   list!: WeaponListComponent;
 
-  constructor(private service: WeaponService, private router: Router, private logger: NGXLogger) {
-  }
+  constructor(
+    private service: WeaponService,
+    private router: Router,
+    private logger: NGXLogger,
+  ) {}
 
   ngOnInit(): void {
     this.logger.info('init');
@@ -52,13 +54,15 @@ export class WeaponPageComponent implements OnInit {
   updateSelected(selected: Weapon[]): void {
     this.logger.info('updated selected characters', selected);
     this.selectedItems = selected;
-    this.selectAll = this.multiSelect && selected.length > 0 && selected.length === this.list.weapons.length;
+    this.selectAll =
+      this.multiSelect &&
+      selected.length > 0 &&
+      selected.length === this.list.weapons.length;
   }
 
-  onMultiSelectChange(event: { multiSelect: boolean; selectAll: boolean }): void {
+  onMultiSelectChange(event: {multiSelect: boolean; selectAll: boolean}): void {
     this.multiSelect = event.multiSelect;
     this.selectAll = event.selectAll;
-    this.logger.debug(`multi-select: ${this.multiSelect}, select-all: ${this.selectAll}`);
     this.list.onMultiSelectChange(event);
   }
 }

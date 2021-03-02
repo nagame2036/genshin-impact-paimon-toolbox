@@ -9,7 +9,6 @@ import {ImageService, ImageType} from '../../../image/services/image.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemViewComponent implements OnInit {
-
   i18n = new I18n('item-view');
 
   @Input()
@@ -26,11 +25,9 @@ export class ItemViewComponent implements OnInit {
 
   itemKey!: string;
 
-  constructor(public images: ImageService) {
-  }
+  constructor(public images: ImageService) {}
 
   ngOnInit(): void {
     this.itemKey = `${this.category}.${this.id}`;
   }
-
 }

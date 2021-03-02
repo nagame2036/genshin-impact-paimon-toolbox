@@ -10,9 +10,7 @@ import {AppIndexedDbModule} from './app-indexed-db.module';
 import {AppLoggerModule} from './app-logger.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -23,7 +21,6 @@ import {AppLoggerModule} from './app-logger.module';
     CoreModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

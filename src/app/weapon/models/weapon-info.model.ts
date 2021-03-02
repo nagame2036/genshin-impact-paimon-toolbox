@@ -9,7 +9,6 @@ export const allWeaponRarities = [5, 4, 3];
  * Represents the game data info of a weapon.
  */
 export interface WeaponInfo {
-
   id: number;
 
   type: WeaponType;
@@ -30,7 +29,6 @@ export interface WeaponInfo {
  * Represents the material requirement for weapon leveling up.
  */
 export interface WeaponMaterialRequirement {
-
   /**
    * Domain material group id.
    */

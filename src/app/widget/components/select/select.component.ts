@@ -1,13 +1,21 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {SelectOption} from '../../models/select-option.model';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent implements OnChanges {
-
   @Input()
   value!: any;
 
@@ -25,8 +33,7 @@ export class SelectComponent implements OnChanges {
 
   opened = false;
 
-  constructor(private self: ElementRef) {
-  }
+  constructor(private self: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('value')) {

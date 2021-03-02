@@ -3,7 +3,10 @@ import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../game-common/models/element-type.enum';
 import {Nation} from '../../game-common/models/nation.enum';
 import {ExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
-import {CharacterStatsCurveAscension, CharacterStatsInfo} from './character-stats.model';
+import {
+  CharacterStatsCurveAscension,
+  CharacterStatsInfo,
+} from './character-stats.model';
 
 export const allCharacterRarities = [5, 4];
 
@@ -11,7 +14,6 @@ export const allCharacterRarities = [5, 4];
  * Represents the game data info of a character.
  */
 export interface CharacterInfo {
-
   id: number;
 
   rarity: Rarity;
@@ -45,7 +47,6 @@ export interface CharacterInfo {
  * Represents the material requirement for character leveling up.
  */
 export interface CharacterMaterialRequirement {
-
   /**
    * Boss material id.
    */

@@ -23,7 +23,8 @@
 
 .result {
   &.disabled ::ng-deep {
-    .form-field-label, .form-field-content {
+    .form-field-label,
+    .form-field-content {
       @apply text-gray-300;
     }
   }

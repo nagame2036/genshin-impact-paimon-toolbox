@@ -10,15 +10,9 @@ describe('CurrentGoalComparatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CurrentGoalComparatorComponent
-      ],
-      imports: [
-        GameCommonModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [CurrentGoalComparatorComponent],
+      imports: [GameCommonModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

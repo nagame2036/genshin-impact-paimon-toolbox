@@ -7,17 +7,14 @@ export type ImageType =
   | 'enemies'
   | 'materials'
   | 'weapon-types'
-  | 'weapons'
-  ;
+  | 'weapons';
 
 const characterMapping = new Map([
   [1002, 1001],
   [1012, 1011],
 ]);
 
-const materialMapping = new Map([
-  [200, 100],
-]);
+const materialMapping = new Map([[200, 100]]);
 
 const enemiesMapping = new Map([
   [50101, 50100],
@@ -34,10 +31,9 @@ const enemiesMapping = new Map([
 ]);
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImageService {
-
   private readonly specificImages = new Map<ImageType, Map<number, number>>([
     ['character-portraits', characterMapping],
     ['characters', characterMapping],
@@ -45,8 +41,7 @@ export class ImageService {
     ['enemies', enemiesMapping],
   ]);
 
-  constructor() {
-  }
+  constructor() {}
 
   get(type: ImageType, id: number): string {
     const key = this.specificImages.get(type)?.get(id) ?? id;

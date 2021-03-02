@@ -9,10 +9,11 @@ import {Rarity} from '../../../game-common/models/rarity.type';
 @Component({
   selector: 'app-inventory-header',
   templateUrl: './inventory-header.component.html',
-  styleUrls: ['./inventory-header.component.scss']
+  styleUrls: ['./inventory-header.component.scss'],
 })
-export class InventoryHeaderComponent extends AbstractObservableComponent implements OnInit {
-
+export class InventoryHeaderComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   i18n = new I18n('inventory');
 
   rarityFilter!: number[];
@@ -23,15 +24,16 @@ export class InventoryHeaderComponent extends AbstractObservableComponent implem
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.materials.rarityFilter.pipe(takeUntil(this.destroy$)).subscribe(rarities => {
-      this.logger.info('received rarity filter', rarities);
-      return this.rarityFilter = rarities;
-    });
+    this.materials.rarityFilter
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(rarities => {
+        this.logger.info('received rarity filter', rarities);
+        this.rarityFilter = rarities;
+      });
   }
 
   changeRarityFilter(rarities: Rarity[]): void {
     this.logger.info('set rarity filter', rarities);
     this.materials.rarityFilter.next(rarities);
   }
-
 }

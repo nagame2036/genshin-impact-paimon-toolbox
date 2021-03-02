@@ -8,12 +8,12 @@ import {weaponExp} from '../models/mora-and-exp.model';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {RequireMark} from '../models/material-require-mark.model';
 import {NGXLogger} from 'ngx-logger';
+import {materialData} from './material-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeaponExpMaterialService {
-
   #items: WeaponExpMaterial[] = [];
 
   private items$ = new ReplaySubject<WeaponExpMaterial[]>(1);
@@ -21,11 +21,13 @@ export class WeaponExpMaterialService {
   readonly items = this.items$.asObservable();
 
   constructor(http: HttpClient, private logger: NGXLogger) {
-    http.get<WeaponExpMaterial[]>('assets/data/materials/weapon-exp-materials.json').subscribe(data => {
-      this.logger.info('loaded weapon exp materials', data);
-      this.#items = data.sort((a, b) => b.rarity - a.rarity);
-      this.items$.next(this.#items);
-    });
+    http
+      .get<WeaponExpMaterial[]>(materialData('weapon-exp-materials'))
+      .subscribe(data => {
+        this.logger.info('loaded weapon exp materials', data);
+        this.#items = data.sort((a, b) => b.rarity - a.rarity);
+        this.items$.next(this.#items);
+      });
   }
 
   splitExpNeed(requirement: MaterialRequireList, mark: RequireMark): void {

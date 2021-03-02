@@ -10,15 +10,9 @@ describe('PartyWeaponListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        WeaponListComponent
-      ],
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [WeaponListComponent],
+      imports: [WeaponModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

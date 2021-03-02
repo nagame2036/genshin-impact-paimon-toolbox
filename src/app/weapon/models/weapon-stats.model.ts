@@ -9,7 +9,6 @@ export type WeaponStatsInfo = Partial<Record<StatsType, WeaponStats>>;
  * Represents the attribute info of a weapon stats.
  */
 export interface WeaponStats {
-
   /**
    * The initial value of weapon stats.
    */
@@ -25,7 +24,6 @@ export interface WeaponStats {
  * Represents the data of a weapon stats grow curve per level.
  */
 export interface WeaponStatsCurveLevel {
-
   [name: string]: number[];
 }
 
@@ -33,7 +31,6 @@ export interface WeaponStatsCurveLevel {
  * Represents the data of a weapon stats grow curve per ascension.
  */
 export interface WeaponStatsCurveAscension {
-
   [rarity: number]: Partial<Record<StatsType, number[]>>;
 }
 
@@ -41,7 +38,6 @@ export interface WeaponStatsCurveAscension {
  * Cache the calculated value of specific weapon progress.
  */
 export class WeaponStatsValue extends StatsValue {
-
   constructor() {
     super();
   }

@@ -5,31 +5,48 @@
     {{ i18n.dict('materials.' + item.info.id) | translate }}
   </h1>
   <div *ngIf="recipes.length > 0" class="craft-dialog">
-    <app-select [options]="recipes" [value]="recipe" (changed)="changeRecipe($event)">
+    <app-select
+      [options]="recipes"
+      [value]="recipe"
+      (changed)="changeRecipe($event)"
+    >
       <span form-label>
         {{ i18n.module('recipe') | translate }}
       </span>
     </app-select>
     <div class="recipe-materials">
-      <div class="recipe-material" *ngFor="let material of recipeMaterials">
-        <app-item-view category="materials" [id]="material[0].info.id" [rarity]="material[0].info.rarity" [width]="178">
+      <div class="recipe-material" *ngFor="let material of materials">
+        <app-item-view
+          category="materials"
+          [id]="material[0].info.id"
+          [rarity]="material[0].info.rarity"
+          [width]="178"
+        >
         </app-item-view>
         {{ material[0].have | number: '1.0-0' }}
         /
-        {{ material[1] * performedTimes | number: '1.0-0' }}
+        {{ material[1] * times | number: '1.0-0' }}
       </div>
     </div>
     <div class="perform-times">
-      {{ this.i18n.module('performed-times') | translate: {num: performedTimes} }}
+      {{ this.i18n.module('performed-times') | translate: {num: times} }}
     </div>
-    <app-range-slider [value]="performedTimes" [min]="0" [max]="details[index].craftableAmount"
-                      (changed)="performedTimes = $event"></app-range-slider>
+    <app-range-slider
+      [value]="times"
+      [min]="0"
+      [max]="details[index].craftableAmount"
+      (changed)="times = $event"
+    ></app-range-slider>
   </div>
   <div class="craft-actions" actions>
     <app-ring-button class="close-btn" (clicked)="close()">
       {{ i18n.dict('close') | translate }}
     </app-ring-button>
-    <app-ring-button class="craft-btn" [disabled]="performedTimes === 0" (clicked)="craft()">
+    <app-ring-button
+      class="craft-btn"
+      [disabled]="times === 0"
+      (clicked)="craft()"
+    >
       {{ i18n.module('craft') | translate }}
     </app-ring-button>
   </div>

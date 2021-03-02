@@ -5,30 +5,34 @@ import {Observable, Subject} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialDetail} from '../../models/material.model';
 
+type PlanData = {
+  item: string;
+  title: string;
+  requirement: MaterialDetail[];
+};
+
 @Component({
   selector: 'app-execute-plan-confirm-dialog',
   templateUrl: './execute-plan-confirm-dialog.component.html',
-  styleUrls: ['./execute-plan-confirm-dialog.component.scss']
+  styleUrls: ['./execute-plan-confirm-dialog.component.scss'],
 })
 export class ExecutePlanConfirmDialogComponent implements OnInit {
-
   i18n = new I18n('game-common');
 
-  data: { item: string; title: string; requirement: MaterialDetail[] } = {item: '', title: '', requirement: []};
+  data: PlanData = {item: '', title: '', requirement: []};
 
   private confirm$!: Subject<any>;
 
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private logger: NGXLogger) {
-  }
+  constructor(private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');
   }
 
-  open(data: { item: string, title: string, requirement: MaterialDetail[] }): ExecutePlanConfirmDialogComponent {
+  open(data: PlanData): ExecutePlanConfirmDialogComponent {
     this.logger.info('open with data', data);
     this.data = data;
     this.dialog.open();

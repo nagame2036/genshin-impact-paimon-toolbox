@@ -1,25 +1,52 @@
-<app-form-field class="form-container" [ngClass]="{'hover': hover, 'focus': focus}" #container
-                (mouseenter)="hover = true" (mouseleave)="hover = false">
+<app-form-field
+  class="form-container"
+  [ngClass]="{hover: hover, focus: focus}"
+  #container
+  (mouseenter)="hover = true"
+  (mouseleave)="hover = false"
+>
   <label form-label>
     <ng-content select="[form-label]"></ng-content>
   </label>
   <div class="select-container">
-    <div #prefix [ngClass]="{'prefix': prefix.children.length > 0}">
+    <div #prefix [ngClass]="{prefix: prefix.children.length > 0}">
       <ng-content select="[prefix]"></ng-content>
     </div>
-    <input class="select" type="text" [value]="valueText | translate" readonly
-           (focusin)="focus = opened = true" (focusout)="focus = false" (click)="opened = true">
-    <div class="material-icons select-arrow" [ngClass]="{'hover': hover, 'focus': focus}"
-         (click)="focus = opened = true">
+    <input
+      class="select"
+      type="text"
+      [value]="valueText | translate"
+      readonly
+      (focusin)="focus = opened = true"
+      (focusout)="focus = false"
+      (click)="opened = true"
+    />
+    <div
+      class="material-icons select-arrow"
+      [ngClass]="{hover: hover, focus: focus}"
+      (click)="focus = opened = true"
+    >
       keyboard_arrow_down
     </div>
-    <ul class="select-dropdown" [ngClass]="{'opened': opened}" [style.width.px]="container.width">
-      <li *ngFor="let option of options" (click)="change(option)"
-          class="select-option" [ngClass]="{'selected': option.value === value}">
+    <ul
+      class="select-dropdown"
+      [ngClass]="{opened: opened}"
+      [style.width.px]="container.width"
+    >
+      <li
+        *ngFor="let option of options"
+        (click)="change(option)"
+        class="select-option"
+        [ngClass]="{selected: option.value === value}"
+      >
         {{ option.text | translate }}
       </li>
     </ul>
-    <div #suffix [ngClass]="{'suffix': suffix.children.length > 0}" (click)="opened = true">
+    <div
+      #suffix
+      [ngClass]="{suffix: suffix.children.length > 0}"
+      (click)="opened = true"
+    >
       <ng-content select="[suffix]"></ng-content>
     </div>
   </div>

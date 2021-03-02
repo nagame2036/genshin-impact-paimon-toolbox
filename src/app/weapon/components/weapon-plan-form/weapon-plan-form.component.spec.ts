@@ -12,15 +12,9 @@ describe('WeaponPlanFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        WeaponPlanFormComponent
-      ],
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [WeaponPlanFormComponent],
+      imports: [WeaponModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -36,7 +30,7 @@ describe('WeaponPlanFormComponent', () => {
           elite: 905,
           mob: 805,
         },
-        stats: {}
+        stats: {},
       },
       progress: {
         id: 10000,

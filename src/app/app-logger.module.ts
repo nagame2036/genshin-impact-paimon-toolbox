@@ -10,9 +10,6 @@ import {environment} from '../environments/environment';
       enableSourceMaps: true,
     }),
   ],
-  exports: [
-    LoggerModule,
-  ]
+  exports: [LoggerModule],
 })
-export class AppLoggerModule {
-}
+export class AppLoggerModule {}

@@ -7,7 +7,6 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemOverviewDataComponent implements OnInit {
-
   @Input()
   left!: string | number | null;
 
@@ -17,10 +16,7 @@ export class ItemOverviewDataComponent implements OnInit {
   @Input()
   displayRight!: boolean;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

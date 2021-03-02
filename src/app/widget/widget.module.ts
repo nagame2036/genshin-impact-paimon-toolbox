@@ -25,9 +25,7 @@ import {RangeSliderComponent} from './components/range-slider/range-slider.compo
     NavTabsComponent,
     RangeSliderComponent,
   ],
-  imports: [
-    SharedModule,
-  ],
+  imports: [SharedModule],
   exports: [
     SharedModule,
     CheckboxComponent,
@@ -40,7 +38,6 @@ import {RangeSliderComponent} from './components/range-slider/range-slider.compo
     RingButtonComponent,
     NavTabsComponent,
     RangeSliderComponent,
-  ]
+  ],
 })
-export class WidgetModule {
-}
+export class WidgetModule {}

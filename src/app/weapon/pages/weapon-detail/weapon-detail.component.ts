@@ -10,22 +10,23 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-weapon-detail',
   templateUrl: './weapon-detail.component.html',
-  styleUrls: ['./weapon-detail.component.scss']
+  styleUrls: ['./weapon-detail.component.scss'],
 })
 export class WeaponDetailComponent implements OnInit {
-
   readonly i18n = new I18n('weapons');
 
   weapon!: Weapon;
 
   weaponId = 0;
 
-  links = [
-    {path: 'plan', text: this.i18n.module('plan.title')},
-  ];
+  links = [{path: 'plan', text: this.i18n.module('plan.title')}];
 
-  constructor(private weapons: WeaponService, private route: ActivatedRoute, private location: Location, private logger: NGXLogger) {
-  }
+  constructor(
+    private weapons: WeaponService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private logger: NGXLogger,
+  ) {}
 
   ngOnInit(): void {
     this.logger.info('init');
@@ -50,5 +51,4 @@ export class WeaponDetailComponent implements OnInit {
     this.logger.info('removed character', this.weapon);
     this.goBack();
   }
-
 }

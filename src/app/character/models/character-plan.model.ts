@@ -5,7 +5,6 @@ import {TalentProgress} from './talent-progress.model';
  * Represents the levelup goal of a character.
  */
 export interface CharacterPlan {
-
   id: number;
 
   ascension: Ascension;

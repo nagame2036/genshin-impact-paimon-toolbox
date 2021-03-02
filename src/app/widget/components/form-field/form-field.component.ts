@@ -3,17 +3,15 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 @Component({
   selector: 'app-form-field',
   templateUrl: './form-field.component.html',
-  styleUrls: ['./form-field.component.scss']
+  styleUrls: ['./form-field.component.scss'],
 })
 export class FormFieldComponent implements AfterViewInit {
-
   @ViewChild('container', {static: true})
   private container!: ElementRef;
 
   width = 0;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -21,5 +19,4 @@ export class FormFieldComponent implements AfterViewInit {
       this.width = width ?? 0;
     }, 10);
   }
-
 }

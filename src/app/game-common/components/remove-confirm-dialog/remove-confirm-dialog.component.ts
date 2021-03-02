@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {I18n} from '../../../widget/models/i18n.model';
 import {Rarity} from '../../models/rarity.type';
@@ -8,17 +15,16 @@ import {ImageType} from '../../../image/services/image.service';
 @Component({
   selector: 'app-remove-confirm-dialog',
   templateUrl: './remove-confirm-dialog.component.html',
-  styleUrls: ['./remove-confirm-dialog.component.scss']
+  styleUrls: ['./remove-confirm-dialog.component.scss'],
 })
 export class RemoveConfirmDialogComponent implements OnInit {
-
   i18n = new I18n('game-common');
 
   @Input()
   category!: ImageType;
 
   @Input()
-  items!: { info: { id: number, rarity: Rarity } }[];
+  items!: {info: {id: number; rarity: Rarity}}[];
 
   @Output()
   confirm = new EventEmitter();
@@ -26,12 +32,9 @@ export class RemoveConfirmDialogComponent implements OnInit {
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private logger: NGXLogger) {
-  }
+  constructor(private logger: NGXLogger) {}
 
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  ngOnInit(): void {}
 
   open(): void {
     this.dialog.open();

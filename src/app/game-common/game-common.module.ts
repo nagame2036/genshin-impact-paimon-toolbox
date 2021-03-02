@@ -19,9 +19,7 @@ import {ItemOverviewDataComponent} from './components/item-overview-data/item-ov
     CurrentGoalComparatorComponent,
     ItemOverviewDataComponent,
   ],
-  imports: [
-    WidgetModule,
-  ],
+  imports: [WidgetModule],
   exports: [
     ItemViewComponent,
     MultiSelectAndSelectAllComponent,
@@ -30,7 +28,6 @@ import {ItemOverviewDataComponent} from './components/item-overview-data/item-ov
     RemoveConfirmDialogComponent,
     CurrentGoalComparatorComponent,
     ItemOverviewDataComponent,
-  ]
+  ],
 })
-export class GameCommonModule {
-}
+export class GameCommonModule {}

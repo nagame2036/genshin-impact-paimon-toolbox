@@ -3,7 +3,6 @@ import {Ascension} from './ascension.type';
 import {rangeList} from '../../shared/utils/range-list';
 
 export class AscensionLevel {
-
   static limit = [
     {min: 1, max: 20},
     {min: 20, max: 40},
@@ -29,12 +28,12 @@ export class AscensionLevel {
   }
 
   static correctLevel(ascension: Ascension, level: number): number {
-    const limit = AscensionLevel.limit[ascension ?? 0];
+    const limit = AscensionLevel.limit[ascension];
     return coerceIn(level, limit.min, limit.max);
   }
 
   static levels(ascension: Ascension, start: number = -1): number[] {
-    const limit = AscensionLevel.limit[ascension ?? 0];
+    const limit = AscensionLevel.limit[ascension];
     const min = Math.max(start, limit.min);
     return rangeList(min, limit.max);
   }

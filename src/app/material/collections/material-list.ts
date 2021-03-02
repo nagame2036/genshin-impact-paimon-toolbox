@@ -1,5 +1,4 @@
 export class MaterialList {
-
   /**
    * item's id to it's amount.
    */

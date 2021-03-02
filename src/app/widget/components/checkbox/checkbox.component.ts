@@ -3,10 +3,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 @Component({
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss']
+  styleUrls: ['./checkbox.component.scss'],
 })
 export class CheckboxComponent implements OnInit {
-
   @Input()
   label!: string;
 
@@ -16,15 +15,12 @@ export class CheckboxComponent implements OnInit {
   @Output()
   checked = new EventEmitter<boolean>();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   emitChange(): void {
     this.value = !this.value;
     this.checked.emit(this.value);
   }
-
 }

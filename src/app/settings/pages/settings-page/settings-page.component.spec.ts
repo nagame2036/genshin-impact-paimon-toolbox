@@ -10,15 +10,9 @@ describe('SettingsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        SettingsPageComponent
-      ],
-      imports: [
-        SettingsModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [SettingsPageComponent],
+      imports: [SettingsModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

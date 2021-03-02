@@ -8,7 +8,9 @@ export const supportedLanguages = [
   {value: 'en', text: 'English'},
 ];
 
-export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
+export function createTranslateLoader(
+  http: HttpClient,
+): MultiTranslateHttpLoader {
   return new MultiTranslateHttpLoader(http, [
     {prefix: './assets/i18n/core/', suffix: '.json'},
     {prefix: './assets/i18n/data/', suffix: '.json'},
@@ -21,13 +23,12 @@ const translateConfig = {
   loader: {
     provide: TranslateLoader,
     useFactory: createTranslateLoader,
-    deps: [HttpClient]
-  }
+    deps: [HttpClient],
+  },
 };
 
 @NgModule({
   imports: [HttpClientModule, TranslateModule.forRoot(translateConfig)],
-  exports: [TranslateModule]
+  exports: [TranslateModule],
 })
-export class AppTranslateModule {
-}
+export class AppTranslateModule {}

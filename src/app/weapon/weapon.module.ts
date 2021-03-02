@@ -30,8 +30,6 @@ import {WeaponListHeaderComponent} from './components/weapon-list-header/weapon-
     MaterialModule,
     WeaponRoutingModule,
   ],
-  exports: [
-  ]
+  exports: [],
 })
-export class WeaponModule {
-}
+export class WeaponModule {}

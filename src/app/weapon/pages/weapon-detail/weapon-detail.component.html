@@ -1,8 +1,6 @@
 <div class="sub-toolbar">
   <button class="icon-btn" (click)="goBack()">
-    <span class="material-icons">
-      arrow_back
-    </span>
+    <span class="material-icons"> arrow_back </span>
   </button>
   <div class="sub-toolbar-title">
     {{ i18n.module('detail') | translate }}
@@ -10,9 +8,7 @@
     {{ i18n.dict('weapons.' + weaponId) | translate }}
   </div>
   <button class="icon-btn remove-btn" (click)="removeConfirm.open()">
-    <span class="material-icons">
-      delete
-    </span>
+    <span class="material-icons"> delete </span>
   </button>
 </div>
 <div class="detail-content">
@@ -21,5 +17,10 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-<app-remove-confirm-dialog category="weapons" [items]="[weapon]" (confirm)="remove()" #removeConfirm>
+<app-remove-confirm-dialog
+  category="weapons"
+  [items]="[weapon]"
+  (confirm)="remove()"
+  #removeConfirm
+>
 </app-remove-confirm-dialog>

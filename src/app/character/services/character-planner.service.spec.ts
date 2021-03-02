@@ -9,10 +9,7 @@ describe('CharacterPlanner', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
+      imports: [CharacterModule, AppTestingModule],
     });
     service = TestBed.inject(CharacterPlanner);
   });

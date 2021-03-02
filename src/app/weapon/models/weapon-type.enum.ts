@@ -2,7 +2,6 @@
  * Represents the five types of weapon.
  */
 export enum WeaponType {
-
   /**
    * In chinese: 单手剑.
    */
@@ -34,5 +33,5 @@ export const allWeaponTypes = [
   WeaponType.CLAYMORE,
   WeaponType.POLEARM,
   WeaponType.CATALYST,
-  WeaponType.BOW
+  WeaponType.BOW,
 ];

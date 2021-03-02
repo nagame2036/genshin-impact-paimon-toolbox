@@ -6,10 +6,6 @@ import {HomePageComponent} from './pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [HomePageComponent],
-  imports: [
-    WidgetModule,
-    HomeRoutingModule,
-  ]
+  imports: [WidgetModule, HomeRoutingModule],
 })
-export class HomeModule {
-}
+export class HomeModule {}

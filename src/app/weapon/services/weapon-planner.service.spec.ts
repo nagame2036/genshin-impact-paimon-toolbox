@@ -9,10 +9,7 @@ describe('WeaponPlanner', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ]
+      imports: [WeaponModule, AppTestingModule],
     });
     service = TestBed.inject(WeaponPlanner);
   });

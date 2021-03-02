@@ -10,15 +10,9 @@ describe('AddWeaponComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AddWeaponComponent
-      ],
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [AddWeaponComponent],
+      imports: [WeaponModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

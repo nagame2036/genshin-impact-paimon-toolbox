@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterInfo} from '../../models/character-info.model';
 import {ImageService} from '../../../image/services/image.service';
@@ -9,10 +16,9 @@ import {CharacterViewService} from '../../services/character-view.service';
 @Component({
   selector: 'app-character-info-list',
   templateUrl: './character-info-list.component.html',
-  styleUrls: ['./character-info-list.component.scss']
+  styleUrls: ['./character-info-list.component.scss'],
 })
 export class CharacterInfoListComponent implements OnChanges {
-
   readonly i18n = new I18n('characters');
 
   @Input()
@@ -23,9 +29,12 @@ export class CharacterInfoListComponent implements OnChanges {
   @Output()
   selected = new EventEmitter<CharacterInfo>();
 
-  constructor(private service: CharacterService, public view: CharacterViewService,
-              public images: ImageService, private logger: NGXLogger) {
-  }
+  constructor(
+    private service: CharacterService,
+    public view: CharacterViewService,
+    public images: ImageService,
+    private logger: NGXLogger,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('characters')) {

@@ -3,7 +3,11 @@
     {{ i18n.module('title') | translate }}
   </h1>
   <div class="resin-inputs">
-    <app-number-field class="resin-field" [value]="resin" (inputted)="setResin($event)">
+    <app-number-field
+      class="resin-field"
+      [value]="resin"
+      (inputted)="setResin($event)"
+    >
       <span form-label>
         {{ i18n.module('current') | translate }}
       </span>
@@ -11,7 +15,11 @@
         {{ i18n.dict('resin') | translate }}
       </span>
     </app-number-field>
-    <app-number-field class="resin-field" [value]="minutes" (inputted)="setMinutes($event)">
+    <app-number-field
+      class="resin-field"
+      [value]="minutes"
+      (inputted)="setMinutes($event)"
+    >
       <span form-label>
         {{ i18n.module('replenished-in') | translate }}
       </span>
@@ -19,11 +27,17 @@
         {{ i18n.dict('minutes') | translate }}
       </span>
     </app-number-field>
-    <app-form-field *ngFor="let result of results" class="result" [ngClass]="{'disabled': resin >= result.target}">
+    <app-form-field
+      *ngFor="let result of results"
+      class="result"
+      [ngClass]="{disabled: resin >= result.target}"
+    >
       <span form-label>
         {{ i18n.module('replenished-to') | translate }} {{ result.target }}
       </span>
-      {{ resin >= result.target ? (i18n.module('now') | translate) : result.time }}
+      {{
+      resin >= result.target ? (i18n.module('now') | translate) : result.time
+      }}
     </app-form-field>
   </div>
 </div>

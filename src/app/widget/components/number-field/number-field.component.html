@@ -1,15 +1,26 @@
-<app-form-field class="form-container" [ngClass]="{'hover': hover, 'focus': focus, 'wrong': wrong}"
-                (mouseenter)="hover = true" (mouseleave)="hover = false">
+<app-form-field
+  class="form-container"
+  [ngClass]="{hover: hover, focus: focus, wrong: wrong}"
+  (mouseenter)="hover = true"
+  (mouseleave)="hover = false"
+>
   <label form-label>
     <ng-content select="[form-label]"></ng-content>
   </label>
   <div class="input-container">
-    <div #prefix [ngClass]="{'prefix': prefix.children.length > 0}">
+    <div #prefix [ngClass]="{prefix: prefix.children.length > 0}">
       <ng-content select="[prefix]"></ng-content>
     </div>
-    <input class="input-field" type="tel" [value]="value" (focusin)="focus = true" (focusout)="focus = false"
-           (input)="input($event)" (change)="change($event)">
-    <div #suffix [ngClass]="{'suffix': suffix.children.length > 0}">
+    <input
+      class="input-field"
+      type="tel"
+      [value]="value"
+      (focusin)="focus = true"
+      (focusout)="focus = false"
+      (input)="input($event)"
+      (change)="change($event)"
+    />
+    <div #suffix [ngClass]="{suffix: suffix.children.length > 0}">
       <ng-content select="[suffix]"></ng-content>
     </div>
   </div>

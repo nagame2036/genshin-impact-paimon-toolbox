@@ -16,15 +16,11 @@ import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.compo
     ExecutePlanConfirmDialogComponent,
     CraftDialogComponent,
   ],
-  imports: [
-    WidgetModule,
-    GameCommonModule,
-  ],
+  imports: [WidgetModule, GameCommonModule],
   exports: [
     MaterialListComponent,
     MaterialRequirementComponent,
     ExecutePlanConfirmDialogComponent,
-  ]
+  ],
 })
-export class MaterialModule {
-}
+export class MaterialModule {}

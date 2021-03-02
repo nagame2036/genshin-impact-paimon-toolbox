@@ -7,10 +7,9 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
-  styleUrls: ['./settings-page.component.scss']
+  styleUrls: ['./settings-page.component.scss'],
 })
 export class SettingsPageComponent implements OnInit {
-
   i18n = new I18n('settings');
 
   currentLanguage = '';
@@ -24,8 +23,7 @@ export class SettingsPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   switchLanguage(language: string): void {
     this.currentLanguage = language;

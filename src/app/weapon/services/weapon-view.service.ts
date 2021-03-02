@@ -7,17 +7,36 @@ import {NGXLogger} from 'ngx-logger';
 import {StatsType} from '../../game-common/models/stats.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 
+type WeaponSort = {
+  text: string;
+  value: (a: WeaponOverview, b: WeaponOverview) => number;
+};
+
+type WeaponInfoSort = {
+  text: string;
+  value: (a: WeaponInfo, b: WeaponInfo) => number;
+};
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeaponViewService {
-
   private readonly i18n = new I18n('weapons');
 
-  readonly sorts: { text: string, value: (a: WeaponOverview, b: WeaponOverview) => number }[] = [
-    {text: this.i18n.dict('level'), value: ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level},
-    {text: this.i18n.dict('rarity'), value: ({info: a}, {info: b}) => b.rarity - a.rarity},
-    {text: this.i18n.dict('refine-rank'), value: ({progress: a}, {progress: b}) => b.refine - a.refine},
+  readonly sorts: WeaponSort[] = [
+    {
+      text: this.i18n.dict('level'),
+      value: ({progress: a}, {progress: b}) =>
+        b.ascension - a.ascension || b.level - a.level,
+    },
+    {
+      text: this.i18n.dict('rarity'),
+      value: ({info: a}, {info: b}) => b.rarity - a.rarity,
+    },
+    {
+      text: this.i18n.dict('refine-rank'),
+      value: ({progress: a}, {progress: b}) => b.refine - a.refine,
+    },
     ...this.generateSorts([
       'ATK Base',
       'ATK%',
@@ -33,39 +52,53 @@ export class WeaponViewService {
 
   sort = this.sorts[0].value;
 
-  readonly infoSorts: { text: string, value: (a: WeaponInfo, b: WeaponInfo) => number }[] = [
-    {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
+  readonly infoSorts: WeaponInfoSort[] = [
+    {
+      text: this.i18n.dict('rarity'),
+      value: (a, b) => b.rarity - a.rarity,
+    },
   ];
 
   infoSort = this.infoSorts[0].value;
 
-  readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
+  readonly rarities = allWeaponRarities.map(it => ({
+    value: it,
+    text: `★${it}`,
+  }));
 
   rarityFilter = allWeaponRarities;
 
-  readonly types = allWeaponTypes.map(it => ({value: it, text: this.i18n.dict(`weapon-types.${it}`)}));
+  readonly types = allWeaponTypes.map(it => ({
+    value: it,
+    text: this.i18n.dict(`weapon-types.${it}`),
+  }));
 
   typeFilter = allWeaponTypes;
 
-  constructor(private logger: NGXLogger) {
-  }
+  constructor(private logger: NGXLogger) {}
 
   view(weapons: WeaponOverview[]): WeaponOverview[] {
-    return weapons.filter(c => this.filterInfo(c.info)).sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
+    return weapons
+      .filter(c => this.filterInfo(c.info))
+      .sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
   }
 
   viewInfos(weapons: WeaponInfo[]): WeaponInfo[] {
-    return weapons.filter(c => this.filterInfo(c)).sort((a, b) => this.infoSort(a, b) || b.id - a.id);
+    return weapons
+      .filter(c => this.filterInfo(c))
+      .sort((a, b) => this.infoSort(a, b) || b.id - a.id);
   }
 
   changeSort(sort: (a: Weapon, b: Weapon) => number): void {
     this.sort = sort;
-    this.logger.info('updated sort', this.sorts.find(it => it.value === sort)?.text);
+    const text = this.sorts.find(it => it.value === sort)?.text;
+    this.logger.info('updated sort', text);
   }
 
   changeInfoSort(sort: (a: WeaponInfo, b: WeaponInfo) => number): void {
     this.infoSort = sort;
-    this.logger.info('updated info sort', this.infoSorts.find(it => it.value === sort)?.text);
+    const text = this.infoSorts.find(it => it.value === sort)?.text;
+    this.logger.info('updated info sort', text);
   }
 
   filterRarity(value: Rarity[]): void {
@@ -82,9 +115,11 @@ export class WeaponViewService {
     return this.rarityFilter.includes(rarity) && this.typeFilter.includes(type);
   }
 
-  private generateSorts(types: StatsType[]): { text: string, value: (a: WeaponOverview, b: WeaponOverview) => number }[] {
-    return types.map(type => {
-      return {text: this.i18n.stats(type), value: ({currentStats: a}, {currentStats: b}) => b.get(type) - a.get(type)};
-    });
+  private generateSorts(types: StatsType[]): WeaponSort[] {
+    return types.map(type => ({
+      text: this.i18n.stats(type),
+      value: ({currentStats: a}, {currentStats: b}) =>
+        b.get(type) - a.get(type),
+    }));
   }
 }

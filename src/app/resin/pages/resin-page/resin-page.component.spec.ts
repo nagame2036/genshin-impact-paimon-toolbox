@@ -10,15 +10,9 @@ describe('ResinPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ResinPageComponent
-      ],
-      imports: [
-        ResinModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [ResinPageComponent],
+      imports: [ResinModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

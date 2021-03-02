@@ -2,7 +2,6 @@ import {Rarity} from '../../game-common/models/rarity.type';
 import {MaterialType} from './material-type.enum';
 
 export interface MaterialInfo {
-
   id: number;
 
   group?: number;
@@ -18,7 +17,6 @@ export interface MaterialInfo {
 }
 
 export class MaterialDetail {
-
   info: MaterialInfo;
 
   type: MaterialType;
@@ -35,7 +33,12 @@ export class MaterialDetail {
 
   readonly = false;
 
-  constructor(type: MaterialType, info: MaterialInfo, have: number, need: number) {
+  constructor(
+    type: MaterialType,
+    info: MaterialInfo,
+    have: number,
+    need: number,
+  ) {
     this.type = type;
     this.info = info;
     this.update(have, need);
@@ -54,7 +57,6 @@ export class MaterialDetail {
 }
 
 export interface CraftRecipe {
-
   /**
    * Item id to amount.
    */

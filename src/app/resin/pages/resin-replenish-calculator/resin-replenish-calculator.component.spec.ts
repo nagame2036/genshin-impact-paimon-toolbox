@@ -10,15 +10,9 @@ describe('ResinReplenishCalculatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ResinReplenishCalculatorComponent
-      ],
-      imports: [
-        ResinModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [ResinReplenishCalculatorComponent],
+      imports: [ResinModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

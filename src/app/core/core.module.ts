@@ -6,13 +6,7 @@ import {SidenavComponent} from './layout/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [HeaderComponent, SidenavComponent],
-  exports: [
-    HeaderComponent,
-    SidenavComponent
-  ],
-  imports: [
-    WidgetModule,
-  ]
+  exports: [HeaderComponent, SidenavComponent],
+  imports: [WidgetModule],
 })
-export class CoreModule {
-}
+export class CoreModule {}

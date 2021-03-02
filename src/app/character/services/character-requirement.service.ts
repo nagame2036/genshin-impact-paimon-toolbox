@@ -15,15 +15,13 @@ import {MaterialRequireList} from '../../material/collections/material-require-l
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
+import {characterData} from './character-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CharacterRequirementService {
-
   private readonly i18n = new I18n('game-common');
-
-  private readonly prefix = 'assets/data/characters';
 
   private readonly ascensions = new ReplaySubject<CharacterAscensionCost[]>(1);
 
@@ -37,16 +35,25 @@ export class CharacterRequirementService {
 
   readonly levelupLabel = this.i18n.dict('levelup');
 
-  constructor(http: HttpClient, private exps: CharacterExpMaterialService, private domain: CharacterAscensionMaterialService,
-              private enemies: EnemyMaterialService, private logger: NGXLogger) {
-    http.get<CharacterAscensionCost[]>(`${this.prefix}/character-ascension-cost.json`).subscribe(data => {
-      this.logger.info('loaded character ascension cost data', data);
-      this.ascensions.next(data);
-    });
-    http.get<number[]>(`${this.prefix}/character-levelup-cost.json`).subscribe(data => {
-      this.logger.info('loaded character levelup cost data', data);
-      this.levels.next(data);
-    });
+  constructor(
+    http: HttpClient,
+    private exps: CharacterExpMaterialService,
+    private domain: CharacterAscensionMaterialService,
+    private enemies: EnemyMaterialService,
+    private logger: NGXLogger,
+  ) {
+    http
+      .get<CharacterAscensionCost[]>(characterData('character-ascension-cost'))
+      .subscribe(data => {
+        this.logger.info('loaded character ascension cost data', data);
+        this.ascensions.next(data);
+      });
+    http
+      .get<number[]>(characterData('character-levelup-cost'))
+      .subscribe(data => {
+        this.logger.info('loaded character levelup cost data', data);
+        this.levels.next(data);
+      });
   }
 
   requirement(character: Character): Observable<MaterialRequireList> {
@@ -56,46 +63,73 @@ export class CharacterRequirementService {
     ];
     return forkJoin(subRequirements).pipe(
       map(requirements => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent material requirements of character levelup', character, requirements)),
+      tap(req => this.logger.info('sent requirements', character, req)),
     );
   }
 
-  private ascension({info, progress, plan}: Character): Observable<MaterialRequireList> {
-    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(first(), map(([ascensions]) => {
-      const {boss, gem, local, mob} = info.materials;
-      const requirement = new MaterialRequireList();
-      const mark = generateMark(plan, this.levelupLabel, this.ascensionLabel, `★${progress.ascension}`, `★${plan.ascension}`);
-      const ascensionSlice = ascensions.slice(progress.ascension, plan.ascension);
-      for (const ascension of ascensionSlice) {
-        const {mora: moraCost, boss: bossCost, gem: gemCost, local: localCost, mob: mobCost} = ascension;
-        requirement.mark(mora.id, moraCost, mark);
-        if (boss) {
-          requirement.mark(boss, bossCost, mark);
+  private ascension(character: Character): Observable<MaterialRequireList> {
+    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(
+      first(),
+      map(([ascensions]) => {
+        const {info, progress, plan} = character;
+        const {boss, gem, local, mob} = info.materials;
+        const requirement = new MaterialRequireList();
+        const label = this.ascensionLabel;
+        const start = progress.ascension;
+        const goal = plan.ascension;
+        const mark = this.generateMark(plan, label, `★${start}`, `★${goal}`);
+        for (const ascension of ascensions.slice(start, goal)) {
+          requirement.mark(mora.id, ascension.mora, mark);
+          if (boss) {
+            requirement.mark(boss, ascension.boss, mark);
+          }
+          const gemItem = this.domain.get(gem, ascension.gem.rarity);
+          requirement.mark(gemItem.id, ascension.gem.amount, mark);
+          requirement.mark(local, ascension.local, mark);
+          const mobItem = this.enemies.get(mob, ascension.mob.rarity);
+          requirement.mark(mobItem.id, ascension.mob.amount, mark);
         }
-        const gemItem = this.domain.getByGroupAndRarity(gem, gemCost.rarity);
-        requirement.mark(gemItem.id, gemCost.amount, mark);
-        requirement.mark(local, localCost, mark);
-        const mobItem = this.enemies.getByGroupAndRarity(mob, mobCost.rarity);
-        requirement.mark(mobItem.id, mobCost.amount, mark);
-      }
-      return requirement;
-    }));
+        return requirement;
+      }),
+    );
   }
 
-  private levelup({info, progress, plan}: Character): Observable<MaterialRequireList> {
-    return this.levels.pipe(first(), map(levels => {
-      const requirement = new MaterialRequireList();
-      const mark = generateMark(plan, this.levelupLabel, this.levelupLabel, progress.level.toString(), plan.level.toString());
-      const expCostBase = levels.slice(progress.level, plan.level).reduce((sum, curr) => sum + curr, 0);
-      const {mora: moraCost, exp: expCost} = processExpBonus(info, expCostBase, v => v * .2);
-      requirement.mark(mora.id, moraCost, mark);
-      requirement.mark(characterExp.id, expCost, mark);
-      this.exps.splitExpNeed(requirement, mark);
-      return requirement;
-    }));
+  private levelup(character: Character): Observable<MaterialRequireList> {
+    return this.levels.pipe(
+      first(),
+      map(levels => {
+        const {info, progress, plan} = character;
+        const requirement = new MaterialRequireList();
+        const label = this.levelupLabel;
+        const start = progress.level;
+        const goal = plan.level;
+        const mark = this.generateMark(plan, label, `${start}`, `${goal}`);
+        const expCostBase = levels
+          .slice(start, goal)
+          .reduce((sum, curr) => sum + curr, 0);
+        const {moraCost, expCost} = processExpBonus(info, expCostBase, 0.2);
+        requirement.mark(mora.id, moraCost, mark);
+        requirement.mark(characterExp.id, expCost, mark);
+        this.exps.splitExpNeed(requirement, mark);
+        return requirement;
+      }),
+    );
   }
-}
 
-function generateMark(plan: CharacterPlan, purposeType: string, purpose: string, start: string, goal: string): RequireMark {
-  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purposeType, purpose, start, goal};
+  private generateMark(
+    plan: CharacterPlan,
+    purpose: string,
+    start: string,
+    goal: string,
+  ): RequireMark {
+    return {
+      type: ItemType.CHARACTER,
+      id: plan.id,
+      key: plan.id,
+      purposeType: this.levelupLabel,
+      purpose,
+      start,
+      goal,
+    };
+  }
 }

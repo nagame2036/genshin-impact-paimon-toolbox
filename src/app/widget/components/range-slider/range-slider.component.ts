@@ -3,10 +3,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 @Component({
   selector: 'app-range-slider',
   templateUrl: './range-slider.component.html',
-  styleUrls: ['./range-slider.component.scss']
+  styleUrls: ['./range-slider.component.scss'],
 })
 export class RangeSliderComponent implements OnInit {
-
   @Input()
   value = 0;
 
@@ -22,11 +21,9 @@ export class RangeSliderComponent implements OnInit {
   @Output()
   changed = new EventEmitter<number>();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   change(num: number): void {
     const after = this.value + num;

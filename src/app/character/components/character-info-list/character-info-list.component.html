@@ -1,15 +1,29 @@
-<app-character-list-header [sorts]="view.infoSorts" [sort]="view.infoSort"
-                           (changed)="update()" (sortChanged)="view.changeInfoSort($event); update()">
+<app-character-list-header
+  [sorts]="view.infoSorts"
+  [sort]="view.infoSort"
+  (changed)="update()"
+  (sortChanged)="view.changeInfoSort($event); update()"
+>
   <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
 </app-character-list-header>
 <div class="list">
   <div *ngFor="let item of items" class="overview" (click)="select(item)">
-    <app-item-view category="characters" [id]="item.id" [rarity]="item.rarity"></app-item-view>
-    <img class="element-hint" [src]="images.get('elements', item.element)"
-         [alt]="i18n.dict('elements.' + item.element) | translate">
-    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.weapon)"
-         [alt]="i18n.dict('weapon-types.' + item.weapon) | translate">
+    <app-item-view
+      category="characters"
+      [id]="item.id"
+      [rarity]="item.rarity"
+    ></app-item-view>
+    <img
+      class="element-hint"
+      [src]="images.get('elements', item.element)"
+      [alt]="i18n.dict('elements.' + item.element) | translate"
+    />
+    <img
+      class="weapon-type-hint"
+      [src]="images.get('weapon-types', item.weapon)"
+      [alt]="i18n.dict('weapon-types.' + item.weapon) | translate"
+    />
   </div>
 </div>

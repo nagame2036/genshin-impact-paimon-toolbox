@@ -10,15 +10,9 @@ describe('CurrentGoalLevelSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CurrentGoalLevelSelectComponent
-      ],
-      imports: [
-        GameCommonModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [CurrentGoalLevelSelectComponent],
+      imports: [GameCommonModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

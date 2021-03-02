@@ -15,23 +15,28 @@ import {MaterialType} from '../models/material-type.enum';
 import {tap} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MaterialInfoService {
-
   private materials$ = new ReplaySubject<Map<number, MaterialInfo[]>>();
 
-  constructor(private characterExpMaterials: CharacterExpMaterialService, private weaponExpMaterials: WeaponExpMaterialService,
-              private oreMaterials: OreMaterialService, private characterMaterials: CharacterAscensionMaterialService,
-              private talentMaterials: TalentLevelupMaterialService, private weaponMaterials: WeaponAscensionMaterialService,
-              private enemyMaterials: EnemyMaterialService, private localSpecialties: LocalSpecialtyService,
-              private logger: NGXLogger) {
+  constructor(
+    private characterExpMaterials: CharacterExpMaterialService,
+    private weaponExpMaterials: WeaponExpMaterialService,
+    private oreMaterials: OreMaterialService,
+    private characterMaterials: CharacterAscensionMaterialService,
+    private talentMaterials: TalentLevelupMaterialService,
+    private weaponMaterials: WeaponAscensionMaterialService,
+    private enemyMaterials: EnemyMaterialService,
+    private localSpecialties: LocalSpecialtyService,
+    private logger: NGXLogger,
+  ) {
     this.loadMaterials();
   }
 
   getAll(): Observable<Map<number, MaterialInfo[]>> {
     return this.materials$.pipe(
-      tap(materials => this.logger.info('sent all information of materials', materials)),
+      tap(materials => this.logger.info('sent all information', materials)),
     );
   }
 
@@ -41,12 +46,26 @@ export class MaterialInfoService {
   }
 
   private loadMaterials(): void {
-    combineLatest([this.characterExpMaterials.items, this.weaponExpMaterials.items, this.oreMaterials.items,
-      this.characterMaterials.items, this.talentMaterials.items, this.weaponMaterials.items, this.enemyMaterials.items,
-      this.localSpecialties.items])
-      .subscribe(([characterExps, weaponExps, ores,
-                    characters, talents, weapons,
-                    enemies, local]) => {
+    combineLatest([
+      this.characterExpMaterials.items,
+      this.weaponExpMaterials.items,
+      this.oreMaterials.items,
+      this.characterMaterials.items,
+      this.talentMaterials.items,
+      this.weaponMaterials.items,
+      this.enemyMaterials.items,
+      this.localSpecialties.items,
+    ]).subscribe(
+      ([
+        characterExps,
+        weaponExps,
+        ores,
+        characters,
+        talents,
+        weapons,
+        enemies,
+        local,
+      ]) => {
         const materials = new Map<number, MaterialInfo[]>([
           [MaterialType.CURRENCY, [mora]],
           [MaterialType.CHARACTER_EXP, [characterExp, ...characterExps]],
@@ -57,14 +76,32 @@ export class MaterialInfoService {
             [MaterialType.CHARACTER_GEM, it => it.id < 4000],
           ]),
           ...mapTypes(weapons, [
-            [MaterialType.WEAPON_14, it => this.weaponMaterials.getWeekday(it) === 147],
-            [MaterialType.WEAPON_25, it => this.weaponMaterials.getWeekday(it) === 257],
-            [MaterialType.WEAPON_36, it => this.weaponMaterials.getWeekday(it) === 367],
+            [
+              MaterialType.WEAPON_14,
+              it => this.weaponMaterials.getWeekday(it) === 147,
+            ],
+            [
+              MaterialType.WEAPON_25,
+              it => this.weaponMaterials.getWeekday(it) === 257,
+            ],
+            [
+              MaterialType.WEAPON_36,
+              it => this.weaponMaterials.getWeekday(it) === 367,
+            ],
           ]),
           ...mapTypes(talents, [
-            [MaterialType.TALENT_14, it => this.talentMaterials.getWeekday(it) === 147],
-            [MaterialType.TALENT_25, it => this.talentMaterials.getWeekday(it) === 257],
-            [MaterialType.TALENT_36, it => this.talentMaterials.getWeekday(it) === 367],
+            [
+              MaterialType.TALENT_14,
+              it => this.talentMaterials.getWeekday(it) === 147,
+            ],
+            [
+              MaterialType.TALENT_25,
+              it => this.talentMaterials.getWeekday(it) === 257,
+            ],
+            [
+              MaterialType.TALENT_36,
+              it => this.talentMaterials.getWeekday(it) === 367,
+            ],
             [MaterialType.TALENT_COMMON, it => it.id < 8000],
           ]),
           ...mapTypes(enemies, [
@@ -75,11 +112,15 @@ export class MaterialInfoService {
         ]);
         this.logger.info('loaded materials', materials);
         this.materials$.next(materials);
-      });
+      },
+    );
   }
 }
 
-function mapTypes(list: MaterialInfo[], parts: [MaterialType, (item: MaterialInfo) => boolean][]): Map<MaterialType, MaterialInfo[]> {
+function mapTypes(
+  list: MaterialInfo[],
+  parts: [MaterialType, (item: MaterialInfo) => boolean][],
+): Map<MaterialType, MaterialInfo[]> {
   const result = new Map<MaterialType, MaterialInfo[]>();
   for (const item of list) {
     for (const [type, condition] of parts) {

@@ -7,10 +7,9 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-material-list',
   templateUrl: './material-list.component.html',
-  styleUrls: ['./material-list.component.scss']
+  styleUrls: ['./material-list.component.scss'],
 })
 export class MaterialListComponent implements OnInit {
-
   i18n = new I18n('inventory');
 
   @Input()
@@ -22,8 +21,7 @@ export class MaterialListComponent implements OnInit {
   @Input()
   items!: MaterialDetail[];
 
-  constructor(public materials: MaterialService, private logger: NGXLogger) {
-  }
+  constructor(public materials: MaterialService, private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');
@@ -52,8 +50,7 @@ export class MaterialListComponent implements OnInit {
   getCraftBtnText(item: MaterialDetail): string {
     if (!item.info.recipes || item.readonly) {
       return this.i18n.module('cant-craft');
-    }
-    if (item.craftable) {
+    } else if (item.craftable) {
       return this.i18n.module('craft');
     }
     return this.i18n.module('insufficient');

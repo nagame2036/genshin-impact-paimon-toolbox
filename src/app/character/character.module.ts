@@ -30,8 +30,6 @@ import {CharacterListHeaderComponent} from './components/character-list-header/c
     MaterialModule,
     CharacterRoutingModule,
   ],
-  exports: [
-  ]
+  exports: [],
 })
-export class CharacterModule {
-}
+export class CharacterModule {}

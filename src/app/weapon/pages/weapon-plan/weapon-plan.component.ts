@@ -14,26 +14,19 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
 @Component({
   selector: 'app-weapon-plan',
   templateUrl: './weapon-plan.component.html',
-  styleUrls: ['./weapon-plan.component.scss']
+  styleUrls: ['./weapon-plan.component.scss'],
 })
-export class WeaponPlanComponent extends AbstractObservableComponent implements OnInit {
-
+export class WeaponPlanComponent
+  extends AbstractObservableComponent
+  implements OnInit {
   readonly i18n = new I18n('game-common');
 
-  readonly types = [
-    [MaterialType.CURRENCY, MaterialType.WEAPON_EXP],
-    [MaterialType.WEAPON_14],
-    [MaterialType.WEAPON_25],
-    [MaterialType.WEAPON_36],
-    [MaterialType.ENEMY_ELITE, MaterialType.ENEMY_MOB],
-  ];
-
-  readonly subtitles = [
-    'common',
-    '1/4/7',
-    '2/5/7',
-    '3/6/7',
-    'enemy',
+  readonly types: [string, ...MaterialType[]][] = [
+    ['common', MaterialType.CURRENCY, MaterialType.WEAPON_EXP],
+    ['1/4/7', MaterialType.WEAPON_14],
+    ['2/5/7', MaterialType.WEAPON_25],
+    ['3/6/7', MaterialType.WEAPON_36],
+    ['enemy', MaterialType.ENEMY_ELITE, MaterialType.ENEMY_MOB],
   ];
 
   weapon!: WeaponOverview;
@@ -45,8 +38,12 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
   @ViewChild('executePlanConfirm')
   executePlanConfirm!: ExecutePlanConfirmDialogComponent;
 
-  constructor(private service: WeaponService, private materials: MaterialService,
-              private route: ActivatedRoute, private logger: NGXLogger) {
+  constructor(
+    private service: WeaponService,
+    private materials: MaterialService,
+    private route: ActivatedRoute,
+    private logger: NGXLogger,
+  ) {
     super();
   }
 
@@ -77,13 +74,20 @@ export class WeaponPlanComponent extends AbstractObservableComponent implements 
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
     const {text: title, value: requirement} = this.requirements[planIndex];
-    const data = {title, requirement, item: this.i18n.dict(`weapons.${this.weapon.info.id}`)};
-    this.executePlanConfirm.open(data).afterConfirm().subscribe(_ => {
-      this.materials.consumeRequire(requirement);
-      this.executeLevelup();
-      this.logger.info('executed levelup plan');
-      this.save();
-    });
+    const data = {
+      title,
+      requirement,
+      item: this.i18n.dict(`weapons.${this.weapon.info.id}`),
+    };
+    this.executePlanConfirm
+      .open(data)
+      .afterConfirm()
+      .subscribe(_ => {
+        this.materials.consumeRequire(requirement);
+        this.executeLevelup();
+        this.logger.info('executed levelup plan');
+        this.save();
+      });
   }
 
   private executeLevelup(): void {

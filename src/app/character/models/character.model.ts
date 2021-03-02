@@ -7,7 +7,6 @@ import {CharacterStatsValue} from './character-stats.model';
  * Represents the details of a character.
  */
 export interface Character {
-
   info: CharacterInfo;
 
   progress: CharacterProgress;
@@ -16,7 +15,6 @@ export interface Character {
 }
 
 export interface CharacterOverview extends Character {
-
   currentStats: CharacterStatsValue;
 
   planStats: CharacterStatsValue;

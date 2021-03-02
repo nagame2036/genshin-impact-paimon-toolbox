@@ -13,15 +13,9 @@ describe('CharacterPlanFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CharacterPlanFormComponent
-      ],
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [CharacterPlanFormComponent],
+      imports: [CharacterModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -39,9 +33,7 @@ describe('CharacterPlanFormComponent', () => {
           local: 10105,
           mob: 801,
         },
-        talentsUpgradable: [
-          4000,
-        ],
+        talentsUpgradable: [4000],
         talentsOther: [],
         stats: {},
         curvesAscension: {},
@@ -61,7 +53,7 @@ describe('CharacterPlanFormComponent', () => {
         level: 90,
         talents: {
           40000: 10,
-        }
+        },
       },
       currentStats: new CharacterStatsValue(),
       planStats: new CharacterStatsValue(),

@@ -5,37 +5,40 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home'
+    redirectTo: 'home',
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
   {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+    loadChildren: () =>
+      import('./settings/settings.module').then(m => m.SettingsModule),
   },
   {
     path: 'characters',
-    loadChildren: () => import('./character/character.module').then(m => m.CharacterModule)
+    loadChildren: () =>
+      import('./character/character.module').then(m => m.CharacterModule),
   },
   {
     path: 'weapons',
-    loadChildren: () => import('./weapon/weapon.module').then(m => m.WeaponModule)
+    loadChildren: () =>
+      import('./weapon/weapon.module').then(m => m.WeaponModule),
   },
   {
     path: 'inventory',
-    loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule)
+    loadChildren: () =>
+      import('./inventory/inventory.module').then(m => m.InventoryModule),
   },
   {
     path: 'resin',
-    loadChildren: () => import('./resin/resin.module').then(m => m.ResinModule)
+    loadChildren: () => import('./resin/resin.module').then(m => m.ResinModule),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

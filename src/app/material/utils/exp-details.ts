@@ -2,9 +2,13 @@ import {MaterialDetail} from '../models/material.model';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {RequireMark} from '../models/material-require-mark.model';
 
-type Exp = { id: number, exp: number };
+type Exp = {id: number; exp: number};
 
-export function processExpMaterials(expId: number, exps: Exp[], materials: Map<number, MaterialDetail>): void {
+export function processExpMaterials(
+  expId: number,
+  exps: Exp[],
+  materials: Map<number, MaterialDetail>,
+): void {
   const expMaterial = materials.get(expId);
   if (!expMaterial) {
     return;
@@ -21,7 +25,12 @@ export function processExpMaterials(expId: number, exps: Exp[], materials: Map<n
   expMaterial.overflow = expMaterial.lack === 0;
 }
 
-export function splitExpNeed(expId: number, exps: Exp[], requirement: MaterialRequireList, mark: RequireMark): void {
+export function splitExpNeed(
+  expId: number,
+  exps: Exp[],
+  requirement: MaterialRequireList,
+  mark: RequireMark,
+): void {
   const length = exps.length;
   if (length < 1) {
     return;

@@ -1,28 +1,55 @@
-<app-form-field class="form-container" [ngClass]="{'hover': hover, 'focus': focus}" #container
-                (mouseenter)="hover = true" (mouseleave)="hover = false" (click)="opened = true">
+<app-form-field
+  #container
+  class="form-container"
+  [ngClass]="{hover: hover, focus: focus}"
+  (mouseenter)="hover = true"
+  (mouseleave)="hover = false"
+  (click)="opened = true"
+>
   <label form-label>
     <ng-content select="[form-label]"></ng-content>
   </label>
   <div class="select-container">
-    <div #prefix [ngClass]="{'prefix': prefix.children.length > 0}">
+    <div #prefix [ngClass]="{prefix: prefix.children.length > 0}">
       <ng-content select="[prefix]"></ng-content>
     </div>
-    <input class="select" type="text" [value]="valuesText" readonly
-           (focusin)="focus = opened = true" (focusout)="focus = false">
-    <div class="material-icons select-arrow" [ngClass]="{'hover': hover, 'focus': focus}"
-         (click)="focus = opened = true">
+    <input
+      class="select"
+      type="text"
+      [value]="valuesText"
+      readonly
+      (focusin)="focus = opened = true"
+      (focusout)="focus = false"
+    />
+    <div
+      class="material-icons select-arrow"
+      [ngClass]="{hover: hover, focus: focus}"
+      (click)="focus = opened = true"
+    >
       keyboard_arrow_down
     </div>
-    <ul class="select-dropdown" [ngClass]="{'opened': opened}" [style.width.px]="container.width">
-      <li class="select-option" [class.selected]="values.length === options.length" (click)="selectAll()">
+    <ul
+      class="select-dropdown"
+      [ngClass]="{opened: opened}"
+      [style.width.px]="container.width"
+    >
+      <li
+        class="select-option"
+        [class.selected]="values.length === options.length"
+        (click)="selectAll()"
+      >
         {{ i18n.dict('select-all') | translate }}
       </li>
-      <li *ngFor="let option of options" class="select-option" [class.selected]="values.includes(option.value)"
-          (click)="change(option)">
+      <li
+        *ngFor="let option of options"
+        class="select-option"
+        [class.selected]="values.includes(option.value)"
+        (click)="change(option)"
+      >
         {{ option.text | translate }}
       </li>
     </ul>
-    <div #suffix [ngClass]="{'suffix': suffix.children.length > 0}">
+    <div #suffix [ngClass]="{suffix: suffix.children.length > 0}">
       <ng-content select="[suffix]"></ng-content>
     </div>
   </div>

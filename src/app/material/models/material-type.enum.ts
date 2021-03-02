@@ -1,5 +1,4 @@
 export enum MaterialType {
-
   CURRENCY,
 
   CHARACTER_EXP,
@@ -30,5 +29,5 @@ export enum MaterialType {
 
   ORE,
 
-  LOCAL_SPECIALTY
+  LOCAL_SPECIALTY,
 }

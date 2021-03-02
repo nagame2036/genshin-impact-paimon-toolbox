@@ -1,8 +1,6 @@
 <div class="sub-toolbar">
   <button class="icon-btn" (click)="goBack()">
-    <span class="material-icons">
-      arrow_back
-    </span>
+    <span class="material-icons"> arrow_back </span>
   </button>
   <div class="sub-toolbar-title">
     {{ i18n.module('detail') | translate }}
@@ -10,18 +8,24 @@
     {{ i18n.dict('characters.' + characterId) | translate }}
   </div>
   <button class="icon-btn remove-btn" (click)="removeConfirm.open()">
-    <span class="material-icons">
-      person_remove
-    </span>
+    <span class="material-icons">person_remove</span>
   </button>
 </div>
 <div class="detail-content">
   <app-nav-tabs [links]="links"></app-nav-tabs>
   <div class="detail-subpage">
     <router-outlet></router-outlet>
-    <img class="character-portrait" [src]="images.get('character-portraits', characterId)"
-         [alt]="i18n.dict('characters.' + characterId) | translate">
+    <img
+      class="character-portrait"
+      [src]="images.get('character-portraits', characterId)"
+      [alt]="i18n.dict('characters.' + characterId) | translate"
+    />
   </div>
 </div>
-<app-remove-confirm-dialog category="characters" [items]="[character]" (confirm)="remove()" #removeConfirm>
+<app-remove-confirm-dialog
+  #removeConfirm
+  category="characters"
+  [items]="[character]"
+  (confirm)="remove()"
+>
 </app-remove-confirm-dialog>

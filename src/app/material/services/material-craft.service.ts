@@ -3,14 +3,15 @@ import {CraftRecipe, MaterialDetail} from '../models/material.model';
 import {MaterialList} from '../collections/material-list';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MaterialCraftService {
+  constructor() {}
 
-  constructor() {
-  }
-
-  isCraftable(target: MaterialDetail, materials: Map<number, MaterialDetail>): boolean {
+  isCraftable(
+    target: MaterialDetail,
+    materials: Map<number, MaterialDetail>,
+  ): boolean {
     for (const recipe of target.info.recipes ?? []) {
       const every = Object.entries(recipe).every(([itemId, itemAmount]) => {
         const itemHave = materials.get(Number(itemId))?.have ?? 0;
@@ -23,11 +24,14 @@ export class MaterialCraftService {
     return false;
   }
 
-  getCraftDetails(item: MaterialDetail, materials: Map<number, MaterialDetail>): { usage: MaterialDetail[], craftableAmount: number }[] {
+  getCraftDetails(
+    item: MaterialDetail,
+    materials: Map<number, MaterialDetail>,
+  ): {usage: MaterialDetail[]; craftableAmount: number}[] {
     if (!item.info.recipes) {
       return [];
     }
-    const result: { usage: MaterialDetail[], craftableAmount: number }[] = [];
+    const result: {usage: MaterialDetail[]; craftableAmount: number}[] = [];
     for (const recipe of item.info.recipes) {
       const usage: MaterialDetail[] = [];
       let craftableAmount = Infinity;

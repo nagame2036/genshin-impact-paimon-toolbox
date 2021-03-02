@@ -13,10 +13,10 @@ module.exports = {
               require('postcss-easy-import'),
               require('autoprefixer'),
               require('tailwindcss'),
-            ]
-          }
-        }
-      }
-    ]
-  }
-}
+            ],
+          },
+        },
+      },
+    ],
+  },
+};

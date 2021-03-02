@@ -1,12 +1,20 @@
 <div class="list-options" *ngIf="requirements.length > 0">
-  <app-select [value]="currentIndex" [options]="requirementOptions" (changed)="changeRequirement($event)">
+  <app-select
+    [value]="currentIndex"
+    [options]="requirementOptions"
+    (changed)="changeRequirement($event)"
+  >
     <span form-label>
       {{ i18n.module('plan-requirement') | translate }}
     </span>
   </app-select>
 </div>
 <div class="list">
-  <app-material-list *ngFor="let items of requirementDetails; let i = index; trackBy: trackIndex"
-                     [subtitle]="subtitles[i]" [items]="items" [showCostDetails]="false">
+  <app-material-list
+    *ngFor="let items of details; let i = index; trackBy: trackIndex"
+    [subtitle]="subtitles[i]"
+    [items]="items"
+    [showCostDetails]="false"
+  >
   </app-material-list>
 </div>

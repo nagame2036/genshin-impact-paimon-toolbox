@@ -10,15 +10,9 @@ describe('WeaponListHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        WeaponListHeaderComponent
-      ],
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [WeaponListHeaderComponent],
+      imports: [WeaponModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

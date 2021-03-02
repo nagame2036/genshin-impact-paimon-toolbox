@@ -1,7 +1,5 @@
 export class I18n {
-
-  constructor(private moduleName: string) {
-  }
+  constructor(private moduleName: string) {}
 
   path(key: string): string {
     return `path.${key}`;

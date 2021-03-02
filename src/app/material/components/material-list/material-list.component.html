@@ -3,13 +3,23 @@
     {{ i18n.module(subtitle) | translate }}
   </span>
   <div class="list">
-    <div *ngFor="let item of items; trackBy: trackItem" class="detail-container">
-      <app-item-view category="materials" [width]="138" [id]="item.info.id" [rarity]="item.info.rarity || 1">
+    <div
+      *ngFor="let item of items; trackBy: trackItem"
+      class="detail-container"
+    >
+      <app-item-view
+        category="materials"
+        [width]="138"
+        [id]="item.info.id"
+        [rarity]="item.info.rarity || 1"
+      >
       </app-item-view>
-      <button *ngIf="showCostDetails" class="cost-detail-btn" (click)="requirementDialog.open(item.info.id)">
-        <span class="material-icons">
-          info
-        </span>
+      <button
+        *ngIf="showCostDetails"
+        class="cost-detail-btn"
+        (click)="requirementDialog.open(item.info.id)"
+      >
+        <span class="material-icons"> info </span>
       </button>
       <div class="detail">
         <app-form-field>
@@ -18,24 +28,33 @@
           </span>
           {{ item.need | number: '1.0-0' }}
         </app-form-field>
-        <app-form-field [ngStyle]="{'color': item.overflow ? 'gray' : 'red'}">
+        <app-form-field [ngStyle]="{color: item.overflow ? 'gray' : 'red'}">
           <span form-label>
             {{ i18n.module(item.overflow ? 'overflow' : 'lack') | translate }}
           </span>
           {{ item.lack | number: '1.0-0' }}
         </app-form-field>
-        <app-text-field [value]="(item.have | number: '1.0-0') || '0'" [disabled]="item.readonly"
-                        (changed)="correct(item, $event)">
+        <app-text-field
+          [value]="(item.have | number: '1.0-0') || '0'"
+          [disabled]="item.readonly"
+          (changed)="correct(item, $event)"
+        >
           <span form-label>
             {{ i18n.module('have') | translate }}
           </span>
         </app-text-field>
-        <app-ring-button class="craft-btn" [disabled]="notCraftable(item)" (clicked)="craftDialog.open(item)">
+        <app-ring-button
+          class="craft-btn"
+          [disabled]="notCraftable(item)"
+          (clicked)="craftDialog.open(item)"
+        >
           {{ getCraftBtnText(item) | translate }}
         </app-ring-button>
       </div>
     </div>
   </div>
 </ng-container>
-<app-material-requirement-dialog #requirementDialog></app-material-requirement-dialog>
+<app-material-requirement-dialog
+  #requirementDialog
+></app-material-requirement-dialog>
 <app-craft-dialog #craftDialog></app-craft-dialog>

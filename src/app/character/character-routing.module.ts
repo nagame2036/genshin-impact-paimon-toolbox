@@ -9,16 +9,17 @@ const routes: Routes = [
   {path: '', component: CharacterPageComponent},
   {path: 'add', component: AddCharacterComponent},
   {
-    path: ':id', component: CharacterDetailComponent, children: [
+    path: ':id',
+    component: CharacterDetailComponent,
+    children: [
       {path: '', redirectTo: 'plan', pathMatch: 'full'},
       {path: 'plan', component: CharacterPlanComponent},
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CharacterRoutingModule {
-}
+export class CharacterRoutingModule {}

@@ -6,7 +6,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from './shared/shared.module';
 
-
 @NgModule({
   declarations: [],
   imports: [
@@ -24,7 +23,6 @@ import {SharedModule} from './shared/shared.module';
     AppTranslateModule,
     AppIndexedDbModule,
     AppLoggerModule,
-  ]
+  ],
 })
-export class AppTestingModule {
-}
+export class AppTestingModule {}

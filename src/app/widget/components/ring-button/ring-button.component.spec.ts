@@ -8,9 +8,8 @@ describe('RingButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RingButtonComponent]
-    })
-      .compileComponents();
+      declarations: [RingButtonComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -2,7 +2,6 @@
  * Represents the seven nations in Teyvat.
  */
 export enum Nation {
-
   /**
    * In chinese: 蒙德.
    */
@@ -36,5 +35,5 @@ export enum Nation {
   /**
    * In chinese: 至冬.
    */
-  SNEZHNAYA
+  SNEZHNAYA,
 }

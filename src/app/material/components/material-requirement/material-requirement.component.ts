@@ -1,4 +1,10 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {MaterialType} from '../../models/material-type.enum';
 import {MaterialDetail} from '../../models/material.model';
 import {I18n} from '../../../widget/models/i18n.model';
@@ -8,38 +14,39 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-material-requirement',
   templateUrl: './material-requirement.component.html',
-  styleUrls: ['./material-requirement.component.scss']
+  styleUrls: ['./material-requirement.component.scss'],
 })
 export class MaterialRequirementComponent implements OnInit, OnChanges {
-
   i18n = new I18n('inventory');
 
   @Input()
-  subtitles!: string[];
+  types: [string, ...MaterialType[]][] = [];
 
   @Input()
-  types: MaterialType[][] = [];
-
-  @Input()
-  requirements!: { text: string, value: MaterialDetail[] }[];
+  requirements!: {text: string; value: MaterialDetail[]}[];
 
   requirementOptions: SelectOption[] = [];
 
   currentIndex = 0;
 
-  requirementDetails: MaterialDetail[][] = [];
+  subtitles: string[] = [];
 
-  constructor(private logger: NGXLogger) {
-  }
+  details: MaterialDetail[][] = [];
+
+  constructor(private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');
+    this.subtitles = this.types.map(([it]) => it);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('requirements')) {
       this.logger.info('received requirements', this.requirements);
-      this.requirementOptions = this.requirements.map((it, index) => ({text: it.text, value: index}));
+      this.requirementOptions = this.requirements.map((it, index) => ({
+        text: it.text,
+        value: index,
+      }));
       this.changeRequirement(this.currentIndex);
     }
   }
@@ -47,18 +54,18 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
   changeRequirement(index: number): void {
     this.currentIndex = index;
     const materials = this.requirements[index].value;
-    const tempDetails = new Map<MaterialType[], MaterialDetail[]>();
+    const detailsMap = new Map<string, MaterialDetail[]>();
     for (const material of materials) {
-      for (const materialTypes of this.types) {
-        if (materialTypes.indexOf(material.type) !== -1) {
-          const details = tempDetails.get(materialTypes) ?? [];
+      for (const [type, ...materialTypes] of this.types) {
+        if (materialTypes.includes(material.type)) {
+          const details = detailsMap.get(type) ?? [];
           details.push(material);
-          tempDetails.set(materialTypes, details);
+          detailsMap.set(type, details);
           break;
         }
       }
     }
-    this.requirementDetails = this.types.map(it => tempDetails.get(it) ?? []);
+    this.details = this.types.map(([it]) => detailsMap.get(it) ?? []);
   }
 
   trackIndex(index: number, _: any): number {

@@ -4,10 +4,9 @@ import {I18n} from '../../../widget/models/i18n.model';
 @Component({
   selector: 'app-multi-select-and-select-all',
   templateUrl: './multi-select-and-select-all.component.html',
-  styleUrls: ['./multi-select-and-select-all.component.scss']
+  styleUrls: ['./multi-select-and-select-all.component.scss'],
 })
 export class MultiSelectAndSelectAllComponent implements OnInit {
-
   i18n = new I18n('shared.multi-select');
 
   @Input()
@@ -17,13 +16,11 @@ export class MultiSelectAndSelectAllComponent implements OnInit {
   selectAll = false;
 
   @Output()
-  changed = new EventEmitter<{ multiSelect: boolean, selectAll: boolean }>();
+  changed = new EventEmitter<{multiSelect: boolean; selectAll: boolean}>();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   setMultiSelect(checked: boolean): void {
     if (!checked) {
@@ -42,7 +39,9 @@ export class MultiSelectAndSelectAllComponent implements OnInit {
   }
 
   emitChange(): void {
-    this.changed.emit({multiSelect: this.multiSelect, selectAll: this.selectAll});
+    this.changed.emit({
+      multiSelect: this.multiSelect,
+      selectAll: this.selectAll,
+    });
   }
-
 }

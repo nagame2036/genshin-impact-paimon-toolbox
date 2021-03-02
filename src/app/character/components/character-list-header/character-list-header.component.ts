@@ -6,10 +6,9 @@ import {SelectOption} from '../../../widget/models/select-option.model';
 @Component({
   selector: 'app-character-list-header',
   templateUrl: './character-list-header.component.html',
-  styleUrls: ['./character-list-header.component.scss']
+  styleUrls: ['./character-list-header.component.scss'],
 })
 export class CharacterListHeaderComponent implements OnInit {
-
   readonly i18n = new I18n('characters');
 
   @Input()
@@ -24,10 +23,7 @@ export class CharacterListHeaderComponent implements OnInit {
   @Output()
   sortChanged = new EventEmitter();
 
-  constructor(public view: CharacterViewService) {
-  }
+  constructor(public view: CharacterViewService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

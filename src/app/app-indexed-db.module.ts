@@ -8,34 +8,33 @@ const config: DBConfig = {
     {
       store: 'materials',
       storeConfig: {keyPath: 'id', autoIncrement: false},
-      storeSchema: []
+      storeSchema: [],
     },
     {
       store: 'character-progresses',
       storeConfig: {keyPath: 'id', autoIncrement: false},
-      storeSchema: []
+      storeSchema: [],
     },
     {
       store: 'character-plans',
       storeConfig: {keyPath: 'id', autoIncrement: false},
-      storeSchema: []
+      storeSchema: [],
     },
     {
       store: 'weapon-progresses',
       storeConfig: {keyPath: 'id', autoIncrement: false},
-      storeSchema: []
+      storeSchema: [],
     },
     {
       store: 'weapon-plans',
       storeConfig: {keyPath: 'id', autoIncrement: false},
-      storeSchema: []
+      storeSchema: [],
     },
-  ]
+  ],
 };
 
 @NgModule({
   imports: [NgxIndexedDBModule.forRoot(config)],
-  exports: [NgxIndexedDBModule]
+  exports: [NgxIndexedDBModule],
 })
-export class AppIndexedDbModule {
-}
+export class AppIndexedDbModule {}

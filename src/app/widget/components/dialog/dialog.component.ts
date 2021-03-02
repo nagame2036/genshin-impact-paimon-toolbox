@@ -1,13 +1,20 @@
-import {Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent implements OnInit {
-
   opened = false;
 
   @Output()
@@ -16,11 +23,9 @@ export class DialogComponent implements OnInit {
   @ViewChild('outside')
   outside!: ElementRef;
 
-  constructor(private logger: NGXLogger) {
-  }
+  constructor(private logger: NGXLogger) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   open(): void {
     this.opened = true;

@@ -2,7 +2,6 @@
  * Represents the seven elements.
  */
 export enum ElementType {
-
   /**
    * In chinese: 风.
    */
@@ -36,14 +35,14 @@ export enum ElementType {
   /**
    * In chinese: 冰.
    */
-  CRYO
+  CRYO,
 }
 
-export const elementTypeList = [
+export const allElements = [
   ElementType.ANEMO,
   ElementType.GEO,
   ElementType.ELECTRO,
   ElementType.HYDRO,
   ElementType.PYRO,
-  ElementType.CRYO
+  ElementType.CRYO,
 ];

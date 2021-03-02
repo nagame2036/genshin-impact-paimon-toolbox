@@ -7,10 +7,9 @@ import {WeaponService} from '../../../weapon/services/weapon.service';
 @Component({
   selector: 'app-inventory-page',
   templateUrl: './inventory-page.component.html',
-  styleUrls: ['./inventory-page.component.scss']
+  styleUrls: ['./inventory-page.component.scss'],
 })
 export class InventoryPageComponent implements OnInit {
-
   i18n = new I18n('inventory');
 
   links: NavBarLink[] = [
@@ -21,10 +20,12 @@ export class InventoryPageComponent implements OnInit {
     {path: 'ingredients', text: this.i18n.dict('ingredients')},
   ];
 
-  constructor(public characters: CharacterService, public weapons: WeaponService) {
+  constructor(
+    public characters: CharacterService,
+    public weapons: WeaponService,
+  ) {
     // inject these services because materials required by item's plans.
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

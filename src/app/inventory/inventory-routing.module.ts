@@ -9,20 +9,24 @@ import {IngredientInventoryComponent} from './pages/ingredient-inventory/ingredi
 
 const routes: Routes = [
   {
-    path: '', component: InventoryPageComponent, children: [
+    path: '',
+    component: InventoryPageComponent,
+    children: [
       {path: '', redirectTo: 'character-materials', pathMatch: 'full'},
-      {path: 'character-materials', component: CharacterMaterialInventoryComponent},
+      {
+        path: 'character-materials',
+        component: CharacterMaterialInventoryComponent,
+      },
       {path: 'talent-materials', component: TalentMaterialInventoryComponent},
       {path: 'weapon-materials', component: WeaponMaterialInventoryComponent},
       {path: 'enemies-materials', component: EnemyMaterialInventoryComponent},
-      {path: 'ingredients', component: IngredientInventoryComponent}
-    ]
-  }
+      {path: 'ingredients', component: IngredientInventoryComponent},
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class InventoryRoutingModule {
-}
+export class InventoryRoutingModule {}

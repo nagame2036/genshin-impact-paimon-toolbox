@@ -10,15 +10,9 @@ describe('ItemViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ItemViewComponent
-      ],
-      imports: [
-        GameCommonModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [ItemViewComponent],
+      imports: [GameCommonModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

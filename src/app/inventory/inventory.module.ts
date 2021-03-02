@@ -21,11 +21,6 @@ import {InventoryHeaderComponent} from './components/inventory-header/inventory-
     IngredientInventoryComponent,
     InventoryHeaderComponent,
   ],
-  imports: [
-    WidgetModule,
-    MaterialModule,
-    InventoryRoutingModule,
-  ],
+  imports: [WidgetModule, MaterialModule, InventoryRoutingModule],
 })
-export class InventoryModule {
-}
+export class InventoryModule {}

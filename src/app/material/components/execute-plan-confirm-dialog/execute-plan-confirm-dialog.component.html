@@ -1,11 +1,18 @@
 <app-dialog #dialog>
   <h2 title>
-    {{ i18n.module('confirm-execute-plan') | translate: {item: data.item | translate, plan: data.title | translate} }}
+    {{
+    i18n.module('confirm-execute-plan')
+      | translate: {item: data.item | translate, plan: data.title | translate}
+    }}
   </h2>
   <div class="material-list-container">
     <div class="material-list" *ngIf="data.requirement">
       <div *ngFor="let item of data.requirement" class="material-item-view">
-        <app-item-view category="materials" [id]="item.info.id" [rarity]="item.info.rarity"></app-item-view>
+        <app-item-view
+          category="materials"
+          [id]="item.info.id"
+          [rarity]="item.info.rarity"
+        ></app-item-view>
         <div class="material-item-need">
           {{ item.need | number: '1.0-0' }}
         </div>
@@ -13,10 +20,16 @@
     </div>
   </div>
   <div actions class="execute-plan-actions">
-    <app-ring-button class="execute-plan-actions-btn cancel-btn" (clicked)="dialog.close()">
+    <app-ring-button
+      class="execute-plan-actions-btn cancel-btn"
+      (clicked)="dialog.close()"
+    >
       {{ i18n.dict('cancel') | translate }}
     </app-ring-button>
-    <app-ring-button class="execute-plan-actions-btn confirm-btn" (clicked)="confirm()">
+    <app-ring-button
+      class="execute-plan-actions-btn confirm-btn"
+      (clicked)="confirm()"
+    >
       {{ i18n.dict('confirm') | translate }}
     </app-ring-button>
   </div>

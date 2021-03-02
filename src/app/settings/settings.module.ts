@@ -6,10 +6,6 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
 
 @NgModule({
   declarations: [SettingsPageComponent],
-  imports: [
-    WidgetModule,
-    SettingsRoutingModule,
-  ]
+  imports: [WidgetModule, SettingsRoutingModule],
 })
-export class SettingsModule {
-}
+export class SettingsModule {}

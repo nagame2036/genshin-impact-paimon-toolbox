@@ -17,7 +17,6 @@
     @apply cursor-pointer;
 
     &:checked {
-
       ~ .checkmark {
         @apply bg-primary-500;
         @apply border-0;

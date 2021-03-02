@@ -14,10 +14,9 @@ import {WeaponInfo} from '../models/weapon-info.model';
 import {RequirementDetail} from '../../material/models/requirement-detail.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeaponPlanner {
-
   private readonly i18n = new I18n('game-common');
 
   private readonly store = 'weapon-plans';
@@ -26,8 +25,12 @@ export class WeaponPlanner {
 
   readonly plans = this.plans$.asObservable();
 
-  constructor(private weaponReq: WeaponRequirementService, private materials: MaterialService,
-              private database: NgxIndexedDBService, private logger: NGXLogger) {
+  constructor(
+    private weaponReq: WeaponRequirementService,
+    private materials: MaterialService,
+    private database: NgxIndexedDBService,
+    private logger: NGXLogger,
+  ) {
     this.database.getAll(this.store).subscribe(persisted => {
       this.logger.info('fetched weapon plans', persisted);
       const plans = new Map<number, WeaponPlan>();
@@ -41,51 +44,61 @@ export class WeaponPlanner {
   }
 
   getRequirement(weapon: Weapon): Observable<MaterialRequireList> {
-    const subRequirement = [
-      this.weaponReq.requirement(weapon),
-    ];
+    const subRequirement = [this.weaponReq.requirement(weapon)];
     return forkJoin(subRequirement).pipe(
-      map((requirements) => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent material requirements of weapon', weapon, requirements)),
+      map(requirements => new MaterialRequireList(requirements)),
+      tap(req => this.logger.info('sent requirements of weapon', weapon, req)),
     );
   }
 
   getRequirementDetails(weapon: Weapon): Observable<RequirementDetail[]> {
-    return this.materials.getRequirements(ItemType.WEAPON, weapon.plan.id).pipe(map(requirements => {
-      const texts = [
-        this.i18n.module('total-requirement'),
-        this.weaponReq.levelupLabel,
-      ];
-      this.logger.info('sent specific material requirements of weapon', weapon, texts, requirements);
-      return requirements.sort((a, b) => texts.indexOf(a.text) - texts.indexOf(b.text));
-    }));
+    return this.materials.getRequirement(ItemType.WEAPON, weapon.plan.id).pipe(
+      map(req => {
+        const texts = [
+          this.i18n.module('total-requirement'),
+          this.weaponReq.levelupLabel,
+        ];
+        this.logger.info('sent requirements of weapon', weapon, texts, req);
+        return req.sort(
+          (a, b) => texts.indexOf(a.text) - texts.indexOf(b.text),
+        );
+      }),
+    );
   }
 
   update({plan}: Weapon): Observable<void> {
     const update = this.database.update(this.store, plan);
-    return zip(update, this.plans).pipe(map(([, plans]) => {
-      this.logger.info('updated weapon plan', plan);
-      plans.set(plan.id, plan);
-      this.plans$.next(plans);
-    }));
+    return zip(update, this.plans).pipe(
+      map(([, plans]) => {
+        this.logger.info('updated weapon plan', plan);
+        plans.set(plan.id, plan);
+        this.plans$.next(plans);
+      }),
+    );
   }
 
   remove({plan}: Weapon): Observable<void> {
     const id = plan.id;
     const remove = this.database.delete(this.store, id);
-    return zip(remove, this.plans).pipe(map(([, plans]) => {
-      this.logger.info('removed weapon plan', plan);
-      plans.delete(id);
-      this.plans$.next(plans);
-    }));
+    return zip(remove, this.plans).pipe(
+      map(([, plans]) => {
+        this.logger.info('removed weapon plan', plan);
+        plans.delete(id);
+        this.plans$.next(plans);
+      }),
+    );
   }
 
   removeAll(weapons: Weapon[]): Observable<void> {
-    const remove = weapons.map(it => this.database.delete(this.store, it.plan.id));
-    return zip(forkJoin(remove), this.plans).pipe(map(([, plans]) => {
-      this.logger.info('removed weapon plans', weapons);
-      weapons.forEach(it => plans.delete(it.plan.id));
-      this.plans$.next(plans);
-    }));
+    const remove = weapons.map(it =>
+      this.database.delete(this.store, it.plan.id),
+    );
+    return zip(forkJoin(remove), this.plans).pipe(
+      map(([, plans]) => {
+        this.logger.info('removed weapon plans', weapons);
+        weapons.forEach(it => plans.delete(it.plan.id));
+        this.plans$.next(plans);
+      }),
+    );
   }
 }

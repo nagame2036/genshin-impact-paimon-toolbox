@@ -11,23 +11,24 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-character-detail',
   templateUrl: './character-detail.component.html',
-  styleUrls: ['./character-detail.component.scss']
+  styleUrls: ['./character-detail.component.scss'],
 })
 export class CharacterDetailComponent implements OnInit {
-
   readonly i18n = new I18n('characters');
 
   character!: Character;
 
   characterId = -1;
 
-  links = [
-    {path: 'plan', text: this.i18n.module('plan.title')},
-  ];
+  links = [{path: 'plan', text: this.i18n.module('plan.title')}];
 
-  constructor(private characters: CharacterService, public images: ImageService, private route: ActivatedRoute,
-              private location: Location, private logger: NGXLogger) {
-  }
+  constructor(
+    private characters: CharacterService,
+    public images: ImageService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private logger: NGXLogger,
+  ) {}
 
   ngOnInit(): void {
     this.logger.info('init');

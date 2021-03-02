@@ -10,15 +10,9 @@ describe('PartyCharacterListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CharacterListComponent
-      ],
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [CharacterListComponent],
+      imports: [CharacterModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

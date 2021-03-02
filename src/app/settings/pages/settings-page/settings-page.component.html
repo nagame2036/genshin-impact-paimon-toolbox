@@ -3,7 +3,11 @@
     {{ i18n.module('title') | translate }}
   </h1>
   <div class="settings">
-    <app-select [options]="languages" [value]="currentLanguage" (changed)="switchLanguage($event)">
+    <app-select
+      [options]="languages"
+      [value]="currentLanguage"
+      (changed)="switchLanguage($event)"
+    >
       <span form-label>
         {{ i18n.module('language') | translate }}
       </span>

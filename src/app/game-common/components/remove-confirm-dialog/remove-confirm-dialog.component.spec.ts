@@ -10,15 +10,9 @@ describe('RemoveConfirmDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        RemoveConfirmDialogComponent
-      ],
-      imports: [
-        GameCommonModule,
-        AppTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [RemoveConfirmDialogComponent],
+      imports: [GameCommonModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -16,10 +16,7 @@ describe('TalentRequirementService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
+      imports: [CharacterModule, AppTestingModule],
     });
     service = TestBed.inject(TalentRequirementService);
   });
@@ -41,9 +38,7 @@ describe('TalentRequirementService', () => {
           local: 10105,
           mob: 801,
         },
-        talentsUpgradable: [
-          40000,
-        ],
+        talentsUpgradable: [40000],
         talentsOther: [],
         stats: {},
         curvesAscension: {},
@@ -63,8 +58,8 @@ describe('TalentRequirementService', () => {
         level: 90,
         talents: {
           40000: 10,
-        }
-      }
+        },
+      },
     };
     talent = {
       id: 40000,
@@ -73,7 +68,7 @@ describe('TalentRequirementService', () => {
         mob: 800,
         boss: 6002,
         event: 7000,
-      }
+      },
     };
     service.requirement(character, [talent]).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(1652500);
@@ -102,9 +97,7 @@ describe('TalentRequirementService', () => {
           local: 10105,
           mob: 801,
         },
-        talentsUpgradable: [
-          4000,
-        ],
+        talentsUpgradable: [4000],
         talentsOther: [],
         stats: {},
         curvesAscension: {},
@@ -124,8 +117,8 @@ describe('TalentRequirementService', () => {
         level: 90,
         talents: {
           40000: 6,
-        }
-      }
+        },
+      },
     };
     talent = {
       id: 40000,
@@ -134,7 +127,7 @@ describe('TalentRequirementService', () => {
         mob: 800,
         boss: 6002,
         event: 7000,
-      }
+      },
     };
     service.requirement(character, [talent]).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(122500);
@@ -159,9 +152,7 @@ describe('TalentRequirementService', () => {
           local: 10105,
           mob: 801,
         },
-        talentsUpgradable: [
-          4000,
-        ],
+        talentsUpgradable: [4000],
         talentsOther: [],
         stats: {},
         curvesAscension: {},
@@ -181,8 +172,8 @@ describe('TalentRequirementService', () => {
         level: 90,
         talents: {
           40000: 10,
-        }
-      }
+        },
+      },
     };
     talent = {
       id: 40000,
@@ -191,7 +182,7 @@ describe('TalentRequirementService', () => {
         mob: 800,
         boss: 6002,
         event: 7000,
-      }
+      },
     };
     service.requirement(character, [talent]).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(1530000);
@@ -216,9 +207,7 @@ describe('TalentRequirementService', () => {
           local: 10105,
           mob: 801,
         },
-        talentsUpgradable: [
-          4000,
-        ],
+        talentsUpgradable: [4000],
         talentsOther: [],
         stats: {},
         curvesAscension: {},
@@ -238,8 +227,8 @@ describe('TalentRequirementService', () => {
         level: 90,
         talents: {
           40000: 10,
-        }
-      }
+        },
+      },
     };
     talent = {
       id: 40000,
@@ -248,7 +237,7 @@ describe('TalentRequirementService', () => {
         mob: 800,
         boss: 6002,
         event: 7000,
-      }
+      },
     };
     service.requirement(character, [talent]).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(1652500);

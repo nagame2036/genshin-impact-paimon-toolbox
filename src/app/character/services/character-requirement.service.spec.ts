@@ -14,10 +14,7 @@ describe('CharacterRequirementService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
+      imports: [CharacterModule, AppTestingModule],
     });
     service = TestBed.inject(CharacterRequirementService);
   });
@@ -55,8 +52,8 @@ describe('CharacterRequirementService', () => {
         id: 1,
         ascension: 6,
         level: 90,
-        talents: {}
-      }
+        talents: {},
+      },
     };
     service.requirement(character).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(2092530);
@@ -102,8 +99,8 @@ describe('CharacterRequirementService', () => {
         id: 1,
         ascension: 2,
         level: 50,
-        talents: {}
-      }
+        talents: {},
+      },
     };
     service.requirement(character).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(315520);
@@ -145,8 +142,8 @@ describe('CharacterRequirementService', () => {
         id: 1,
         ascension: 6,
         level: 90,
-        talents: {}
-      }
+        talents: {},
+      },
     };
     service.requirement(character).subscribe(res => {
       expect(res.getNeed(mora.id)).toBe(1777010);

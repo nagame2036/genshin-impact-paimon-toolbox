@@ -1,14 +1,17 @@
-<nav class="menu" [ngClass]="{'opened': showMenu}">
+<nav class="menu" [ngClass]="{opened: showMenu}">
   <h1 class="menu-title">
     {{ i18n.dict('title') | translate }}
   </h1>
   <button class="menu-close-btn" (click)="showMenu = false">
-    <span class="material-icons">
-      close
-    </span>
+    <span class="material-icons"> close </span>
   </button>
   <div class="menu-links">
-    <a *ngFor="let router of routers" class="menu-link" routerLinkActive="active" [routerLink]="router.path">
+    <a
+      *ngFor="let router of routers"
+      class="menu-link"
+      routerLinkActive="active"
+      [routerLink]="router.path"
+    >
       {{ i18n.path(router.path) | translate }}
     </a>
   </div>

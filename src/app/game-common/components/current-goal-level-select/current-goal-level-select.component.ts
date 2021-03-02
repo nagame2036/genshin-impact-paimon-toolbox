@@ -1,4 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {rangeList} from '../../../shared/utils/range-list';
 import {Ascension} from '../../models/ascension.type';
@@ -8,10 +16,9 @@ import {SelectOption} from '../../../widget/models/select-option.model';
 @Component({
   selector: 'app-current-goal-level-select',
   templateUrl: './current-goal-level-select.component.html',
-  styleUrls: ['./current-goal-level-select.component.scss']
+  styleUrls: ['./current-goal-level-select.component.scss'],
 })
 export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
-
   i18n = new I18n('game-common');
 
   @Input()
@@ -49,8 +56,7 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   @Output()
   executePlan = new EventEmitter();
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.ascensions = rangeList(0, 6).map(this.getAscension);
@@ -74,7 +80,9 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   }
 
   getGoalLevels(): SelectOption[] {
-    return AscensionLevel.levels(this.goalAscension, this.level).map(this.getLevel);
+    return AscensionLevel.levels(this.goalAscension, this.level).map(
+      this.getLevel,
+    );
   }
 
   getAscension(num: number): SelectOption {
@@ -101,7 +109,10 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   setGoalAscension(value: number, emit: boolean = true): void {
     this.goalAscension = value as Ascension;
     this.goalLevels = this.getGoalLevels();
-    this.goalLevel = AscensionLevel.correctLevel(this.goalAscension, this.goalLevel);
+    this.goalLevel = AscensionLevel.correctLevel(
+      this.goalAscension,
+      this.goalLevel,
+    );
     if (emit) {
       this.emitGoalChange();
     }
@@ -126,6 +137,8 @@ export class CurrentGoalLevelSelectComponent implements OnInit, OnChanges {
   }
 
   private emitGoalChange(): void {
-    this.goalChange.emit(new AscensionLevel(this.goalAscension, this.goalLevel));
+    this.goalChange.emit(
+      new AscensionLevel(this.goalAscension, this.goalLevel),
+    );
   }
 }

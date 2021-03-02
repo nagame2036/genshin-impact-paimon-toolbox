@@ -16,41 +16,49 @@ import {MaterialRequireMark} from '../models/material-require-mark.model';
 import {RequirementDetail} from '../models/requirement-detail.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MaterialService {
+  private materials$ = new BehaviorSubject(new Map<number, MaterialDetail>());
 
-  private readonly materials$ = new BehaviorSubject(new Map<number, MaterialDetail>());
-
-  private readonly filtered$ = new ReplaySubject<Map<number, MaterialDetail[]>>(1);
+  private filtered$ = new ReplaySubject<Map<number, MaterialDetail[]>>(1);
 
   readonly filtered = this.filtered$.asObservable();
 
   readonly rarityOptions = allRarities.map(it => ({value: it, text: `★${it}`}));
 
-  readonly rarityFilter = new BehaviorSubject(allRarities);
+  readonly rarityFilter = new BehaviorSubject([...allRarities]);
 
   readonly showOverflow = new BehaviorSubject(true);
 
-  constructor(private infos: MaterialInfoService, private quantities: MaterialQuantityService,
-              private requirements: MaterialRequirementService, private crafter: MaterialCraftService, private logger: NGXLogger) {
+  constructor(
+    private infos: MaterialInfoService,
+    private quantities: MaterialQuantityService,
+    private requirements: MaterialRequirementService,
+    private crafter: MaterialCraftService,
+    private logger: NGXLogger,
+  ) {
     this.updateMaterials();
   }
 
-  getRequirements(type: ItemType, key: number): Observable<RequirementDetail[]> {
-    return this.requirements.getType(type).pipe(switchMap(requirements => {
-      return this.materials$.pipe(map(materials => requirements.getDetails(key, materials)));
-    }));
+  getRequirement(type: ItemType, key: number): Observable<RequirementDetail[]> {
+    return this.requirements.getType(type).pipe(
+      switchMap(req => {
+        return this.materials$.pipe(map(it => req.getDetails(key, it)));
+      }),
+    );
   }
 
   getRequireMarks(id: number): Observable<MaterialRequireMark[]> {
     return this.requirements.getMarks(id);
   }
 
-  getCraftDetails(item: MaterialDetail): Observable<{ usage: MaterialDetail[], craftableAmount: number }[]> {
+  getCraftDetails(
+    item: MaterialDetail,
+  ): Observable<{usage: MaterialDetail[]; craftableAmount: number}[]> {
     return this.materials$.pipe(
       map(materials => this.crafter.getCraftDetails(item, materials)),
-      tap(details => this.logger.info('sent material craft details', item, details)),
+      tap(details => this.logger.info('sent craft details', item, details)),
     );
   }
 
@@ -58,8 +66,12 @@ export class MaterialService {
     this.quantities.update(id, have);
   }
 
-  updateRequirement(type: ItemType, key: number, requirement: MaterialRequireList): Observable<void> {
-    return this.requirements.update(type, key, requirement);
+  updateRequirement(
+    type: ItemType,
+    key: number,
+    requirement: MaterialRequireList,
+  ): void {
+    this.requirements.update(type, key, requirement);
   }
 
   consumeRequire(requirement: MaterialDetail[]): void {
@@ -74,17 +86,23 @@ export class MaterialService {
     this.quantities.change(change);
   }
 
-  removeRequirement(type: ItemType, key: number): Observable<void> {
-    return this.requirements.remove(type, key);
+  removeRequirement(type: ItemType, key: number): void {
+    this.requirements.remove(type, key);
   }
 
-  removeAllRequirement(type: ItemType, keys: number[]): Observable<void> {
-    return this.requirements.removeAll(type, keys);
+  removeAllRequirement(type: ItemType, keys: number[]): void {
+    this.requirements.removeAll(type, keys);
   }
 
   private updateMaterials(): void {
-    combineLatest([this.infos.getAll(), this.quantities.quantities, this.requirements.getAll(), this.rarityFilter, this.showOverflow])
-      .subscribe(([information, quantities, requirements, rarities, showOverflow]) => {
+    combineLatest([
+      this.infos.getAll(),
+      this.quantities.quantities,
+      this.requirements.getAll(),
+      this.rarityFilter,
+      this.showOverflow,
+    ]).subscribe(
+      ([information, quantities, requirements, rarities, showOverflow]) => {
         const materials = this.materials$.getValue();
         for (const [type, infos] of information) {
           for (const info of infos) {
@@ -117,6 +135,7 @@ export class MaterialService {
         }
         this.logger.info('filtered materials', filtered);
         this.filtered$.next(filtered);
-      });
+      },
+    );
   }
 }

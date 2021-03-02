@@ -32,7 +32,8 @@
   @apply gap-2;
 }
 
-.close-btn, .craft-btn {
+.close-btn,
+.craft-btn {
   @apply flex-1;
 
   ::ng-deep .ring-btn {

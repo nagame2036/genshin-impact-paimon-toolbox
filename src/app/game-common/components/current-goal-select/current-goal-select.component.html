@@ -1,18 +1,37 @@
-<app-form-field class="form-container"
-                [ngClass]="{'hover': left.hover || right.hover, 'focus': left.focus || right.focus}">
+<app-form-field
+  class="form-container"
+  [ngClass]="{
+    hover: left.hover || right.hover,
+    focus: left.focus || right.focus
+  }"
+>
   <span form-label>
     <ng-content></ng-content>
   </span>
   <div class="form">
-    <app-select class="value" [options]="currentOptions" [value]="current" (changed)="setCurrent($event)" #left>
+    <app-select
+      #left
+      class="value"
+      [options]="currentOptions"
+      [value]="current"
+      (changed)="setCurrent($event)"
+    >
     </app-select>
-    <button class="execute-plan-btn" [class.reached]="checkPlanAvailable(reached)"
-            [disabled]="!checkPlanAvailable(reached)" (click)="executePlan.emit()">
-      <span class="material-icons arrow">
-        chevron_right
-      </span>
+    <button
+      class="execute-plan-btn"
+      [class.reached]="checkPlanAvailable(reached)"
+      [disabled]="!checkPlanAvailable(reached)"
+      (click)="executePlan.emit()"
+    >
+      <span class="material-icons arrow">chevron_right</span>
     </button>
-    <app-select class="value" [options]="goalOptions" [value]="goal" (changed)="setGoal($event)" #right>
+    <app-select
+      #right
+      class="value"
+      [options]="goalOptions"
+      [value]="goal"
+      (changed)="setGoal($event)"
+    >
     </app-select>
   </div>
 </app-form-field>

@@ -13,10 +13,7 @@ describe('WeaponRequirementService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        WeaponModule,
-        AppTestingModule,
-      ]
+      imports: [WeaponModule, AppTestingModule],
     });
     service = TestBed.inject(WeaponRequirementService);
   });
@@ -36,7 +33,7 @@ describe('WeaponRequirementService', () => {
           elite: 900,
           mob: 800,
         },
-        stats: {}
+        stats: {},
       },
       progress: {
         id: 10000,
@@ -80,7 +77,7 @@ describe('WeaponRequirementService', () => {
           elite: 905,
           mob: 805,
         },
-        stats: {}
+        stats: {},
       },
       progress: {
         id: 10000,
@@ -118,7 +115,7 @@ describe('WeaponRequirementService', () => {
           elite: 904,
           mob: 807,
         },
-        stats: {}
+        stats: {},
       },
       progress: {
         id: 10000,

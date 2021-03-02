@@ -14,31 +14,38 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {TalentInfo} from '../models/talent-info.model';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
+import {characterData} from './character-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TalentRequirementService {
-
   private readonly i18n = new I18n('game-common');
 
   private readonly levels = new ReplaySubject<TalentLevelupCost[]>(1);
 
-  constructor(http: HttpClient, private domain: TalentLevelupMaterialService,
-              private enemies: EnemyMaterialService, private logger: NGXLogger) {
-    http.get<TalentLevelupCost[]>('assets/data/characters/talent-levelup-cost.json').subscribe(data => {
-      this.logger.info('loaded talent levelup cost data', data);
-      this.levels.next(data);
-    });
+  constructor(
+    http: HttpClient,
+    private domain: TalentLevelupMaterialService,
+    private enemies: EnemyMaterialService,
+    private logger: NGXLogger,
+  ) {
+    http
+      .get<TalentLevelupCost[]>(characterData('talent-levelup-cost'))
+      .subscribe(data => {
+        this.logger.info('loaded talent levelup cost data', data);
+        this.levels.next(data);
+      });
   }
 
-  requirement(character: Character, talents: TalentInfo[]): Observable<MaterialRequireList> {
-    const subRequirements = [
-      this.levelup(character, talents),
-    ];
+  requirement(
+    character: Character,
+    talents: TalentInfo[],
+  ): Observable<MaterialRequireList> {
+    const subRequirements = [this.levelup(character, talents)];
     return forkJoin(subRequirements).pipe(
-      map((requirements) => new MaterialRequireList(requirements)),
-      tap(requirements => this.logger.info('sent material requirements of talents levelup', talents, requirements)),
+      map(requirements => new MaterialRequireList(requirements)),
+      tap(req => this.logger.info('sent requirements', talents, req)),
     );
   }
 
@@ -46,7 +53,10 @@ export class TalentRequirementService {
     return this.i18n.dict(`talent-types.${talentId % 10}`);
   }
 
-  private levelup({progress, plan}: Character, talents: TalentInfo[]): Observable<MaterialRequireList> {
+  private levelup(
+    {progress, plan}: Character,
+    talents: TalentInfo[],
+  ): Observable<MaterialRequireList> {
     return zip(this.levels, this.domain.items, this.enemies.items).pipe(
       first(),
       map(([levels]) => {
@@ -61,31 +71,44 @@ export class TalentRequirementService {
           const start = Math.max(0, progress.talents[id] - 1);
           const goal = Math.max(start, plan.talents[id] - 1);
           const label = this.getLabel(id);
-          const mark = generateMark(plan, label, label, (start + 1).toString(), (goal + 1).toString());
+          const mark = generateMark(plan, label, start, goal);
           const domainLength = domain.length;
           for (let i = start; i < goal; i++) {
-            const {mora: moraCost, domain: domainCost, mob: mobCost, boss: bossCost, event: eventCost} = levels[i];
-            requirement.mark(mora.id, moraCost, mark);
+            const cost = levels[i];
+            requirement.mark(mora.id, cost.mora, mark);
             const domainGroupIndex = i % domainLength;
             const domainGroup = domain[domainGroupIndex];
-            const domainItem = this.domain.getByGroupAndRarity(domainGroup, domainCost.rarity);
-            requirement.mark(domainItem.id, domainCost.amount, mark);
-            const mobItem = this.enemies.getByGroupAndRarity(mob, mobCost.rarity);
-            requirement.mark(mobItem.id, mobCost.amount, mark);
-            if (bossCost) {
-              requirement.mark(boss, bossCost, mark);
+            const domainItem = this.domain.get(domainGroup, cost.domain.rarity);
+            requirement.mark(domainItem.id, cost.domain.amount, mark);
+            const mobItem = this.enemies.get(mob, cost.mob.rarity);
+            requirement.mark(mobItem.id, cost.mob.amount, mark);
+            if (cost.boss) {
+              requirement.mark(boss, cost.boss, mark);
             }
-            if (eventCost) {
-              requirement.mark(event, eventCost, mark);
+            if (cost.event) {
+              requirement.mark(event, cost.event, mark);
             }
           }
         }
         return requirement;
-      })
+      }),
     );
   }
 }
 
-function generateMark(plan: CharacterPlan, purposeType: string, purpose: string, start: string, goal: string): RequireMark {
-  return {type: ItemType.CHARACTER, id: plan.id, key: plan.id, purposeType, purpose, start, goal};
+function generateMark(
+  plan: CharacterPlan,
+  purpose: string,
+  start: number,
+  goal: number,
+): RequireMark {
+  return {
+    type: ItemType.CHARACTER,
+    id: plan.id,
+    key: plan.id,
+    purposeType: purpose,
+    purpose,
+    start: (start + 1).toString(),
+    goal: (goal + 1).toString(),
+  };
 }

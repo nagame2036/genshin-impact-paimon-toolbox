@@ -1,45 +1,77 @@
 <div *ngIf="character" class="plan-form-container">
-  <app-item-view category="characters" [id]="info.id" [rarity]="info.rarity"></app-item-view>
-  <app-select class="attribute-select" [options]="constellations" [value]="progress.constellation"
-              (changed)="setConstellation($event)">
+  <app-item-view
+    category="characters"
+    [id]="info.id"
+    [rarity]="info.rarity"
+  ></app-item-view>
+  <app-select
+    class="attribute-select"
+    [options]="constellations"
+    [value]="progress.constellation"
+    (changed)="setConstellation($event)"
+  >
     <span form-label>
       {{ i18n.dict('constellation') | translate }}
       -
       {{ i18n.dict('constellations.' + info.id + '.name') | translate }}
     </span>
   </app-select>
-  <app-current-goal-level-select label="character" [ascension]="progress.ascension" [goalAscension]="plan.ascension"
-                                 [level]="progress.level" [goalLevel]="plan.level"
-                                 [reached]="reachedStates[1]" (executePlan)="executePlan.emit(1)"
-                                 (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
+  <app-current-goal-level-select
+    label="character"
+    [ascension]="progress.ascension"
+    [goalAscension]="plan.ascension"
+    [level]="progress.level"
+    [goalLevel]="plan.level"
+    [reached]="reachedStates[1]"
+    (executePlan)="executePlan.emit(1)"
+    (currentChange)="setCurrentLevel($event)"
+    (goalChange)="setGoalLevel($event)"
+  >
   </app-current-goal-level-select>
-  <ng-container *ngFor="let type of service.getStatsTypes(character); let i = index">
-    <app-current-goal-comparator *ngIf="type.endsWith('%') else numeric"
-                                 [current]="character.currentStats.get(type) | percent: '1.0-1'"
-                                 [goal]="character.planStats.get(type) | percent: '1.0-1'">
+  <ng-container
+    *ngFor="let type of service.getStatsTypes(character); let i = index"
+  >
+    <app-current-goal-comparator
+      *ngIf="type.endsWith('%'); else numeric"
+      [current]="character.currentStats.get(type) | percent: '1.0-1'"
+      [goal]="character.planStats.get(type) | percent: '1.0-1'"
+    >
       {{ i18n.stats(type) | translate }}
     </app-current-goal-comparator>
     <ng-template #numeric>
-      <app-current-goal-comparator [current]="character.currentStats.get(type) | number: '1.0-0'"
-                                   [goal]="character.planStats.get(type) | number: '1.0-0'">
+      <app-current-goal-comparator
+        [current]="character.currentStats.get(type) | number: '1.0-0'"
+        [goal]="character.planStats.get(type) | number: '1.0-0'"
+      >
         {{ i18n.stats(type) | translate }}
       </app-current-goal-comparator>
     </ng-template>
   </ng-container>
-  <app-current-goal-select *ngFor="let talent of info.talentsUpgradable; let i = index"
-                           [currentOptions]="talentLevels[talent]" [goalOptions]="goalTalentLevels[talent]"
-                           [current]="progress.talents[talent] || 1" [goal]="plan.talents[talent] || 1"
-                           (currentChange)="setTalent(talent, $event)" (goalChange)="setGoalTalent(talent, $event)"
-                           [reached]="reachedStates[2 + i]" (executePlan)="executePlan.emit(2 + i)">
-    {{ i18n.dict('talent-types.' + talent % 10) | translate }}
+  <app-current-goal-select
+    *ngFor="let talent of info.talentsUpgradable; let i = index"
+    [currentOptions]="talentLevels[talent]"
+    [goalOptions]="goalTalentLevels[talent]"
+    [current]="progress.talents[talent] || 1"
+    [goal]="plan.talents[talent] || 1"
+    (currentChange)="setTalent(talent, $event)"
+    (goalChange)="setGoalTalent(talent, $event)"
+    [reached]="reachedStates[2 + i]"
+    (executePlan)="executePlan.emit(2 + i)"
+  >
+    {{ i18n.dict('talent-types.' + (talent % 10)) | translate }}
     -
     {{ i18n.dict('talents.' + talent) | translate }}
   </app-current-goal-select>
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <app-ring-button *ngIf="reachedStates.length > 0" class="execute-all-btn" [class.reached]="reachedStates[0]"
-                   [disabled]="!reachedStates[0]" (clicked)="executePlan.emit(0)">
+  <app-ring-button
+    *ngIf="reachedStates.length > 0"
+    class="execute-all-btn"
+    [class.reached]="reachedStates[0]"
+    [disabled]="!reachedStates[0]"
+    (clicked)="executePlan.emit(0)"
+  >
     {{ i18n.module('execute-all-plan') | translate }}
   </app-ring-button>
 </div>

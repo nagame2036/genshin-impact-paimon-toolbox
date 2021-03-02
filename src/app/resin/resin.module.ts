@@ -6,14 +6,7 @@ import {ResinPageComponent} from './pages/resin-page/resin-page.component';
 import {ResinReplenishCalculatorComponent} from './pages/resin-replenish-calculator/resin-replenish-calculator.component';
 
 @NgModule({
-  declarations: [
-    ResinPageComponent,
-    ResinReplenishCalculatorComponent
-  ],
-  imports: [
-    WidgetModule,
-    ResinRoutingModule,
-  ]
+  declarations: [ResinPageComponent, ResinReplenishCalculatorComponent],
+  imports: [WidgetModule, ResinRoutingModule],
 })
-export class ResinModule {
-}
+export class ResinModule {}

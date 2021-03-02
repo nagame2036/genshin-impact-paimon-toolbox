@@ -9,10 +9,7 @@ describe('TalentInfoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CharacterModule,
-        AppTestingModule,
-      ]
+      imports: [CharacterModule, AppTestingModule],
     });
     service = TestBed.inject(TalentInfoService);
   });

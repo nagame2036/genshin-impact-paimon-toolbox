@@ -1,17 +1,35 @@
-<app-character-list-header [sorts]="view.sorts" [sort]="view.sort"
-                           (changed)="update()" (sortChanged)="view.changeSort($event); update()">
+<app-character-list-header
+  [sorts]="view.sorts"
+  [sort]="view.sort"
+  (changed)="update()"
+  (sortChanged)="view.changeSort($event); update()"
+>
   <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
 </app-character-list-header>
 <div class="list">
-  <div *ngFor="let item of items" class="overview" [class.selected]="selectedItems.includes(item)"
-       (click)="select(item)">
-    <app-item-view category="characters" [id]="item.info.id" [rarity]="item.info.rarity"></app-item-view>
-    <img class="element-hint" [src]="images.get('elements', item.info.element)"
-         [alt]="i18n.dict('elements.' + item.info.element) | translate">
-    <img class="weapon-type-hint" [src]="images.get('weapon-types', item.info.weapon)"
-         [alt]="i18n.dict('weapon-types.' + item.info.weapon) | translate">
+  <div
+    *ngFor="let item of items"
+    class="overview"
+    [class.selected]="selectedItems.includes(item)"
+    (click)="select(item)"
+  >
+    <app-item-view
+      category="characters"
+      [id]="item.info.id"
+      [rarity]="item.info.rarity"
+    ></app-item-view>
+    <img
+      class="element-hint"
+      [src]="images.get('elements', item.info.element)"
+      [alt]="i18n.dict('elements.' + item.info.element) | translate"
+    />
+    <img
+      class="weapon-type-hint"
+      [src]="images.get('weapon-types', item.info.weapon)"
+      [alt]="i18n.dict('weapon-types.' + item.info.weapon) | translate"
+    />
     <table class="item-overview-table">
       <tr>
         <td>
@@ -26,8 +44,11 @@
           <b>{{ i18n.dict('ascension') | translate }}</b>
         </td>
         <td>
-          <app-item-overview-data left="★{{ item.progress.ascension }}" right="★{{ item.plan.ascension }}"
-                                  [displayRight]="item.progress.ascension < item.plan.ascension">
+          <app-item-overview-data
+            left="★{{ item.progress.ascension }}"
+            right="★{{ item.plan.ascension }}"
+            [displayRight]="item.progress.ascension < item.plan.ascension"
+          >
           </app-item-overview-data>
         </td>
       </tr>
@@ -36,18 +57,24 @@
           <b>{{ i18n.dict('level') | translate }}</b>
         </td>
         <td>
-          <app-item-overview-data [left]="item.progress.level" [right]="item.plan.level"
-                                  [displayRight]="item.progress.level < item.plan.level">
+          <app-item-overview-data
+            [left]="item.progress.level"
+            [right]="item.plan.level"
+            [displayRight]="item.progress.level < item.plan.level"
+          >
           </app-item-overview-data>
         </td>
       </tr>
-      <tr *ngFor="let talent of item.info.talentsUpgradable; let i = index">
+      <tr *ngFor="let t of item.info.talentsUpgradable; let i = index">
         <td>
-          <b>{{ i18n.dict('talent-types.' + talent % 10) | translate }}</b>
+          <b>{{ i18n.dict('talent-types.' + (t % 10)) | translate }}</b>
         </td>
         <td>
-          <app-item-overview-data [left]="item.progress.talents[talent]" [right]="item.plan.talents[talent]"
-                                  [displayRight]="item.progress.talents[talent] < item.plan.talents[talent]">
+          <app-item-overview-data
+            [left]="item.progress.talents[t]"
+            [right]="item.plan.talents[t]"
+            [displayRight]="item.progress.talents[t] < item.plan.talents[t]"
+          >
           </app-item-overview-data>
         </td>
       </tr>

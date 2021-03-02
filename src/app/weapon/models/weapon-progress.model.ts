@@ -4,7 +4,6 @@ import {Ascension} from '../../game-common/models/ascension.type';
  * Represents the levelup progress of a weapon.
  */
 export interface WeaponProgress {
-
   id: number;
 
   weaponId: number;

@@ -3,10 +3,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 @Component({
   selector: 'app-number-field',
   templateUrl: './number-field.component.html',
-  styleUrls: ['./number-field.component.scss']
+  styleUrls: ['./number-field.component.scss'],
 })
 export class NumberFieldComponent implements OnInit {
-
   @Input()
   value!: number;
 
@@ -22,11 +21,9 @@ export class NumberFieldComponent implements OnInit {
 
   wrong = false;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   input(event: Event): void {
     this.emitOnValid(event, this.inputted);

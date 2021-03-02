@@ -10,15 +10,9 @@ describe('ExecutePlanConfirmDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ExecutePlanConfirmDialogComponent
-      ],
-      imports: [
-        GameCommonModule,
-        AppTestingModule,
-      ],
-    })
-      .compileComponents();
+      declarations: [ExecutePlanConfirmDialogComponent],
+      imports: [GameCommonModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

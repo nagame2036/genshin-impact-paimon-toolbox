@@ -60,7 +60,7 @@
     "inventory": {
       "show-overflow": "显示溢出",
       "need": "需求",
-      "craftable": "可合成 {{ num }} 次",
+      "craftable": "可合成 {{ amount }} 次",
       "recipe": "配方",
       "lack": "缺少",
       "overflow": "溢出",

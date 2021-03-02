@@ -1,4 +1,8 @@
-import {MaterialRequireMark, RequireMark, RequireMarkDetail} from '../models/material-require-mark.model';
+import {
+  MaterialRequireMark,
+  RequireMark,
+  RequireMarkDetail,
+} from '../models/material-require-mark.model';
 import {MaterialDetail} from '../models/material.model';
 import {MaterialList} from './material-list';
 import {RequirementDetail} from '../models/requirement-detail.model';
@@ -7,7 +11,6 @@ import {I18n} from '../../widget/models/i18n.model';
 const i18n = new I18n('game-common');
 
 export class MaterialRequireList {
-
   /**
    * The Map of item's id to the Map of its purpose to its mark.
    * @private
@@ -22,61 +25,73 @@ export class MaterialRequireList {
     }
   }
 
-  mark(materialId: number, need: number, mark: RequireMark): MaterialRequireList {
+  mark(
+    materialId: number,
+    need: number,
+    mark: RequireMark,
+  ): MaterialRequireList {
     if (need > 0) {
       const {key, purpose} = mark;
       this.totalNeed.change(materialId, need);
-      const reqMarks = this.marks.get(key) ?? new Map<string, RequireMarkDetail>();
-      const reqMark = reqMarks.get(purpose) ?? {mark, requirement: new MaterialList()};
+      const marks = this.marks.get(key) ?? new Map<string, RequireMarkDetail>();
+      const reqMark = marks.get(purpose) ?? {
+        mark,
+        requirement: new MaterialList(),
+      };
       reqMark.requirement.change(materialId, need);
-      reqMarks.set(purpose, reqMark);
-      this.marks.set(key, reqMarks);
+      marks.set(purpose, reqMark);
+      this.marks.set(key, marks);
     }
     return this;
   }
 
-  replace(key: number, that: MaterialRequireList): MaterialRequireList {
+  update(key: number, that: MaterialRequireList): MaterialRequireList {
     const thatMarks = that.marks.get(key);
     if (!thatMarks) {
       this.remove(key);
       return this;
     }
     const origin = this.marks.get(key);
-    if (origin) {
+    if (!origin) {
+      for (const mark of thatMarks.values()) {
+        this.totalNeed.combine(mark.requirement);
+      }
+    } else {
       for (const [purpose, mark] of origin) {
         const thatRequirement = thatMarks.get(purpose)?.requirement;
         if (thatRequirement) {
           for (const [id, thatNeed] of thatRequirement.entries()) {
-            this.totalNeed.change(id, thatNeed - mark.requirement.getAmount(id));
+            const newNeed = thatNeed - mark.requirement.getAmount(id);
+            this.totalNeed.change(id, newNeed);
           }
         }
-      }
-    } else {
-      for (const mark of thatMarks.values()) {
-        this.totalNeed.combine(mark.requirement);
       }
     }
     this.marks.set(key, thatMarks);
     return this;
   }
 
-  getDetails(key: number, materials: Map<number, MaterialDetail>): RequirementDetail[] {
+  getDetails(
+    key: number,
+    materials: Map<number, MaterialDetail>,
+  ): RequirementDetail[] {
     const reqMarks = this.marks.get(key);
     const textTotal = i18n.module('total-requirement');
     if (!reqMarks) {
       return [{text: textTotal, value: [], reached: true}];
     }
     const valueTotal = new MaterialList();
-    const purposedRequirements = new Map<string, MaterialList>();
-    for (const {mark: {purposeType}, requirement} of reqMarks.values()) {
+    const purposes = new Map<string, MaterialList>();
+    for (const {mark, requirement} of reqMarks.values()) {
       valueTotal.combine(requirement);
-      const purposeReq = purposedRequirements.get(purposeType) ?? new MaterialList();
+      const purposeType = mark.purposeType;
+      const purposeReq = purposes.get(purposeType) ?? new MaterialList();
       purposeReq.combine(requirement);
-      purposedRequirements.set(purposeType, purposeReq);
+      purposes.set(purposeType, purposeReq);
     }
     const results = [];
     results.push(processDetail(textTotal, valueTotal, materials));
-    for (const [purpose, req] of purposedRequirements) {
+    for (const [purpose, req] of purposes) {
       results.push(processDetail(purpose, req, materials));
     }
     return results;
@@ -137,7 +152,11 @@ export class MaterialRequireList {
   }
 }
 
-function processDetail(text: string, req: MaterialList, materials: Map<number, MaterialDetail>): RequirementDetail {
+function processDetail(
+  text: string,
+  req: MaterialList,
+  materials: Map<number, MaterialDetail>,
+): RequirementDetail {
   const value = [];
   let reached = true;
   for (const [id, need] of req.entries()) {

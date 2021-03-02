@@ -1,25 +1,46 @@
 <div *ngIf="weapon" class="plan-form-container">
-  <app-item-view category="weapons" [id]="info.id" [rarity]="info.rarity"></app-item-view>
-  <app-select class="attribute-select" [options]="refineRanks" [value]="progress.refine"
-              (changed)="setRefineRank($event)">
+  <app-item-view
+    category="weapons"
+    [id]="info.id"
+    [rarity]="info.rarity"
+  ></app-item-view>
+  <app-select
+    class="attribute-select"
+    [options]="refineRanks"
+    [value]="progress.refine"
+    (changed)="setRefineRank($event)"
+  >
     <span form-label>
       {{ i18n.dict('refine-rank') | translate }}
     </span>
   </app-select>
-  <app-current-goal-level-select label="weapon" [ascension]="progress.ascension" [goalAscension]="plan.ascension"
-                                 [level]="progress.level" [goalLevel]="plan.level"
-                                 [reached]="reachedStates[1]" (executePlan)="executePlan.emit(1)"
-                                 (currentChange)="setCurrentLevel($event)" (goalChange)="setGoalLevel($event)">
+  <app-current-goal-level-select
+    label="weapon"
+    [ascension]="progress.ascension"
+    [goalAscension]="plan.ascension"
+    [level]="progress.level"
+    [goalLevel]="plan.level"
+    [reached]="reachedStates[1]"
+    (executePlan)="executePlan.emit(1)"
+    (currentChange)="setCurrentLevel($event)"
+    (goalChange)="setGoalLevel($event)"
+  >
   </app-current-goal-level-select>
-  <ng-container *ngFor="let type of service.getStatsTypes(weapon); let i = index">
-    <app-current-goal-comparator *ngIf="type.endsWith('%') else numeric"
-                                 [current]="weapon.currentStats.get(type) | percent: '1.0-1'"
-                                 [goal]="weapon.planStats.get(type) | percent: '1.0-1'">
+  <ng-container
+    *ngFor="let type of service.getStatsTypes(weapon); let i = index"
+  >
+    <app-current-goal-comparator
+      *ngIf="type.endsWith('%'); else numeric"
+      [current]="weapon.currentStats.get(type) | percent: '1.0-1'"
+      [goal]="weapon.planStats.get(type) | percent: '1.0-1'"
+    >
       {{ i18n.stats(type) | translate }}
     </app-current-goal-comparator>
     <ng-template #numeric>
-      <app-current-goal-comparator [current]="weapon.currentStats.get(type) | number: '1.0-0'"
-                                   [goal]="weapon.planStats.get(type) | number: '1.0-0'">
+      <app-current-goal-comparator
+        [current]="weapon.currentStats.get(type) | number: '1.0-0'"
+        [goal]="weapon.planStats.get(type) | number: '1.0-0'"
+      >
         {{ i18n.stats(type) | translate }}
       </app-current-goal-comparator>
     </ng-template>
@@ -27,8 +48,13 @@
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>
-  <app-ring-button *ngIf="reachedStates.length > 0" class="execute-all-btn" [class.reached]="reachedStates[0]"
-                   [disabled]="!reachedStates[0]" (click)="executePlan.emit(0)">
+  <app-ring-button
+    *ngIf="reachedStates.length > 0"
+    class="execute-all-btn"
+    [class.reached]="reachedStates[0]"
+    [disabled]="!reachedStates[0]"
+    (click)="executePlan.emit(0)"
+  >
     {{ i18n.module('execute-all-plan') | translate }}
   </app-ring-button>
 </div>

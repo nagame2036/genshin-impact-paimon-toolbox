@@ -3,4 +3,4 @@ module.exports = ({file, option, env}) => ({
   plugins: {
     'postcss-import': {},
   },
-})
+});

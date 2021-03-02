@@ -10,10 +10,9 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-material-requirement-dialog',
   templateUrl: './material-requirement-dialog.component.html',
-  styleUrls: ['./material-requirement-dialog.component.scss']
+  styleUrls: ['./material-requirement-dialog.component.scss'],
 })
 export class MaterialRequirementDialogComponent implements OnInit {
-
   i18n = new I18n('inventory');
 
   id = 0;
@@ -29,8 +28,7 @@ export class MaterialRequirementDialogComponent implements OnInit {
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private materials: MaterialService, private logger: NGXLogger) {
-  }
+  constructor(private materials: MaterialService, private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');

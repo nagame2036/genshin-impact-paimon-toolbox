@@ -10,15 +10,9 @@ describe('CraftDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        CraftDialogComponent
-      ],
-      imports: [
-        MaterialModule,
-        AppTestingModule,
-      ]
-    })
-      .compileComponents();
+      declarations: [CraftDialogComponent],
+      imports: [MaterialModule, AppTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
