@@ -38,7 +38,7 @@ export class WeaponInfoService {
 
   constructor(http: HttpClient, private logger: NGXLogger) {
     http
-      .get<{[id: number]: WeaponInfo}>(weaponData('weapons.json'))
+      .get<{[id: number]: WeaponInfo}>(weaponData('weapons'))
       .subscribe(data => {
         const weapons = objectMap(data);
         this.logger.info('loaded weapon data', weapons);

@@ -17,7 +17,7 @@ import {characterData} from './character-data';
 /**
  * Represents the dependency of character stats value.
  */
-type CharacterStatsDependency = { ascension: Ascension; level: number };
+type CharacterStatsDependency = {ascension: Ascension; level: number};
 
 @Injectable({
   providedIn: 'root',
