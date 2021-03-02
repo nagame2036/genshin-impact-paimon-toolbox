@@ -53,7 +53,7 @@ export class SelectComponent implements OnChanges {
   }
 
   changeValueText(value: any): void {
-    this.valueText = this.options.find(it => it.value === value)?.text ?? '';
+    this.valueText = this.options?.find(it => it.value === value)?.text ?? '';
   }
 
   @HostListener('window:click', ['$event'])

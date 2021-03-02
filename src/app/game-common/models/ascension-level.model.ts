@@ -29,12 +29,12 @@ export class AscensionLevel {
 
   static correctLevel(ascension: Ascension, level: number): number {
     const limit = AscensionLevel.limit[ascension];
-    return coerceIn(level, limit.min, limit.max);
+    return coerceIn(level, limit?.min ?? 0, limit?.max ?? 0);
   }
 
   static levels(ascension: Ascension, start: number = -1): number[] {
     const limit = AscensionLevel.limit[ascension];
-    const min = Math.max(start, limit.min);
-    return rangeList(min, limit.max);
+    const min = Math.max(start, limit?.min ?? start);
+    return rangeList(min, limit?.max ?? start);
   }
 }
