@@ -78,7 +78,7 @@ export class MaterialRequireList {
     const reqMarks = this.marks.get(key);
     const textTotal = i18n.module('total-requirement');
     if (!reqMarks) {
-      return [{text: textTotal, value: [], reached: true}];
+      return [{text: textTotal, value: [], reached: false}];
     }
     const valueTotal = new MaterialList();
     const purposes = new Map<string, MaterialList>();
@@ -159,14 +159,17 @@ function processDetail(
 ): RequireDetail {
   const value = [];
   let reached = true;
+  let existsRequire = false;
   for (const [id, need] of req.entries()) {
     const material = materials.get(id);
     if (material) {
+      existsRequire = true;
       const detail = material.copy();
       detail.update(detail.have, need);
       value.push(detail);
       reached &&= detail.have >= need;
     }
   }
+  reached &&= existsRequire;
   return {text, value, reached};
 }
