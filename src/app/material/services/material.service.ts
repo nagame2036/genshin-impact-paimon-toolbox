@@ -92,46 +92,43 @@ export class MaterialService {
 
   private updateMaterials(): void {
     combineLatest([
-      this.infos.getAll(),
       this.quantities.quantities,
       this.requirements.getAll(),
       this.rarityFilter,
       this.showOverflow,
-    ]).subscribe(
-      ([information, quantities, requirements, rarities, showOverflow]) => {
-        const materials = this.materials$.getValue();
-        for (const [type, infos] of information) {
-          for (const info of infos) {
-            const id = info.id;
-            const have = quantities.getAmount(id);
-            const need = requirements.getNeed(id);
-            const material = materials.get(id);
-            if (material) {
-              material.update(have, need);
-            } else {
-              materials.set(id, new MaterialDetail(type, info, have, need));
-            }
+    ]).subscribe(([quantities, requirements, rarities, showOverflow]) => {
+      const materials = this.materials$.getValue();
+      for (const [type, infos] of this.infos.typed) {
+        for (const info of infos) {
+          const id = info.id;
+          const have = quantities.getAmount(id);
+          const need = requirements.getNeed(id);
+          const material = materials.get(id);
+          if (material) {
+            material.update(have, need);
+          } else {
+            materials.set(id, new MaterialDetail(type, info, have, need));
           }
         }
-        for (const material of materials.values()) {
-          material.craftable = this.crafter.isCraftable(material, materials);
-        }
-        this.infos.processSpecialMaterials(materials);
-        this.logger.info('updated materials', materials);
-        this.materials$.next(materials);
+      }
+      for (const material of materials.values()) {
+        material.craftable = this.crafter.isCraftable(material, materials);
+      }
+      this.infos.processSpecialMaterials(materials);
+      this.logger.info('updated materials', materials);
+      this.materials$.next(materials);
 
-        const filtered = new Map<MaterialType, MaterialDetail[]>();
-        for (const material of materials.values()) {
-          const {type, info, overflow} = material;
-          if ((!overflow || showOverflow) && rarities.includes(info.rarity)) {
-            const typedMaterials = filtered.get(type) ?? [];
-            typedMaterials.push(material);
-            filtered.set(type, typedMaterials);
-          }
+      const filtered = new Map<MaterialType, MaterialDetail[]>();
+      for (const material of materials.values()) {
+        const {type, info, overflow} = material;
+        if ((!overflow || showOverflow) && rarities.includes(info.rarity)) {
+          const typedMaterials = filtered.get(type) ?? [];
+          typedMaterials.push(material);
+          filtered.set(type, typedMaterials);
         }
-        this.logger.info('filtered materials', filtered);
-        this.filtered$.next(filtered);
-      },
-    );
+      }
+      this.logger.info('filtered materials', filtered);
+      this.filtered$.next(filtered);
+    });
   }
 }

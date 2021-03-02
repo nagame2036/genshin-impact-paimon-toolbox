@@ -1,15 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {first, map, tap} from 'rxjs/operators';
 import {CharacterAscensionCost} from '../models/character-ascension-cost.model';
-import {CharacterAscensionMaterialService} from '../../material/services/character-ascension-material.service';
-import {EnemyMaterialService} from '../../material/services/enemy-material.service';
+import {MaterialInfoService} from '../../material/services/material-info.service';
 import {Character} from '../models/character.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {CharacterExpMaterialService} from '../../material/services/character-exp-material.service';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {ItemType} from '../../game-common/models/item-type.enum';
@@ -37,9 +35,7 @@ export class CharacterRequirementService {
 
   constructor(
     http: HttpClient,
-    private exps: CharacterExpMaterialService,
-    private domain: CharacterAscensionMaterialService,
-    private enemies: EnemyMaterialService,
+    private materials: MaterialInfoService,
     private logger: NGXLogger,
   ) {
     http
@@ -68,9 +64,9 @@ export class CharacterRequirementService {
   }
 
   private ascension(character: Character): Observable<MaterialRequireList> {
-    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(
+    return this.ascensions.pipe(
       first(),
-      map(([ascensions]) => {
+      map(ascensions => {
         const {info, progress, plan} = character;
         const {boss, gem, local, mob} = info.materials;
         const requirement = new MaterialRequireList();
@@ -83,10 +79,10 @@ export class CharacterRequirementService {
           if (boss) {
             requirement.mark(boss, ascension.boss, mark);
           }
-          const gemItem = this.domain.get(gem, ascension.gem.rarity);
+          const gemItem = this.materials.get(gem, ascension.gem.rarity);
           requirement.mark(gemItem.id, ascension.gem.amount, mark);
           requirement.mark(local, ascension.local, mark);
-          const mobItem = this.enemies.get(mob, ascension.mob.rarity);
+          const mobItem = this.materials.get(mob, ascension.mob.rarity);
           requirement.mark(mobItem.id, ascension.mob.amount, mark);
         }
         return requirement;
@@ -110,7 +106,7 @@ export class CharacterRequirementService {
         const {moraCost, expCost} = processExpBonus(info, expCostBase, 0.2);
         requirement.mark(mora.id, moraCost, mark);
         requirement.mark(characterExp.id, expCost, mark);
-        this.exps.splitExpNeed(requirement, mark);
+        this.materials.processSpecialRequirement(requirement, mark);
         return requirement;
       }),
     );

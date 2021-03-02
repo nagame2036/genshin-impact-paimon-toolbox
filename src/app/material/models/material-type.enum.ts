@@ -9,19 +9,19 @@ export enum MaterialType {
 
   TALENT_COMMON,
 
-  TALENT_14,
+  TALENT_147,
 
-  TALENT_25,
+  TALENT_257,
 
-  TALENT_36,
+  TALENT_367,
 
   WEAPON_EXP,
 
-  WEAPON_14,
+  WEAPON_147,
 
-  WEAPON_25,
+  WEAPON_257,
 
-  WEAPON_36,
+  WEAPON_367,
 
   ENEMY_MOB,
 

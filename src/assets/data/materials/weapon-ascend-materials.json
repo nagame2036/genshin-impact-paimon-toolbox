@@ -1,36 +1,36 @@
 {
-  "groups": [
-    {
+  "groups": {
+    "400": {
       "id": 400,
       "nation": 1,
       "weekday": 147
     },
-    {
+    "401": {
       "id": 401,
       "nation": 1,
       "weekday": 257
     },
-    {
+    "402": {
       "id": 402,
       "nation": 1,
       "weekday": 367
     },
-    {
+    "403": {
       "id": 403,
       "nation": 1,
       "weekday": 147
     },
-    {
+    "404": {
       "id": 404,
       "nation": 1,
       "weekday": 257
     },
-    {
+    "405": {
       "id": 405,
       "nation": 1,
       "weekday": 367
     }
-  ],
+  },
   "items": [
     {
       "id": 4000,

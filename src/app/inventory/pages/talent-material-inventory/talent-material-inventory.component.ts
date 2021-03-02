@@ -30,9 +30,9 @@ export class TalentMaterialInventoryComponent
       .pipe(takeUntil(this.destroy$))
       .subscribe(materials => {
         this.common = materials.get(MaterialType.TALENT_COMMON) ?? [];
-        this.monThu = materials.get(MaterialType.TALENT_14) ?? [];
-        this.tueFri = materials.get(MaterialType.TALENT_25) ?? [];
-        this.wedSat = materials.get(MaterialType.TALENT_36) ?? [];
+        this.monThu = materials.get(MaterialType.TALENT_147) ?? [];
+        this.tueFri = materials.get(MaterialType.TALENT_257) ?? [];
+        this.wedSat = materials.get(MaterialType.TALENT_367) ?? [];
       });
   }
 }

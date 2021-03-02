@@ -34,9 +34,9 @@ export class CharacterPlanComponent
       MaterialType.CHARACTER_BOSS,
       MaterialType.CHARACTER_GEM,
     ],
-    ['1/4/7', MaterialType.TALENT_14],
-    ['2/5/7', MaterialType.TALENT_25],
-    ['3/6/7', MaterialType.TALENT_36],
+    ['1/4/7', MaterialType.TALENT_147],
+    ['2/5/7', MaterialType.TALENT_257],
+    ['3/6/7', MaterialType.TALENT_367],
     ['enemy', MaterialType.ENEMY_MOB],
   ];
 

@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {TalentLevelupCost} from '../models/talent-level-up-cost.model';
 import {HttpClient} from '@angular/common/http';
-import {EnemyMaterialService} from '../../material/services/enemy-material.service';
-import {TalentLevelupMaterialService} from '../../material/services/talent-levelup-material.service';
+import {MaterialInfoService} from '../../material/services/material-info.service';
 import {first, map, tap} from 'rxjs/operators';
 import {mora} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
@@ -26,8 +25,7 @@ export class TalentRequirementService {
 
   constructor(
     http: HttpClient,
-    private domain: TalentLevelupMaterialService,
-    private enemies: EnemyMaterialService,
+    private materials: MaterialInfoService,
     private logger: NGXLogger,
   ) {
     http
@@ -57,9 +55,9 @@ export class TalentRequirementService {
     {progress, plan}: Character,
     talents: TalentInfo[],
   ): Observable<MaterialRequireList> {
-    return zip(this.levels, this.domain.items, this.enemies.items).pipe(
+    return this.levels.pipe(
       first(),
-      map(([levels]) => {
+      map(levels => {
         const requirement = new MaterialRequireList();
         for (const {id, materials} of talents) {
           if (!materials) {
@@ -78,9 +76,12 @@ export class TalentRequirementService {
             requirement.mark(mora.id, cost.mora, mark);
             const domainGroupIndex = i % domainLength;
             const domainGroup = domain[domainGroupIndex];
-            const domainItem = this.domain.get(domainGroup, cost.domain.rarity);
+            const domainItem = this.materials.get(
+              domainGroup,
+              cost.domain.rarity,
+            );
             requirement.mark(domainItem.id, cost.domain.amount, mark);
-            const mobItem = this.enemies.get(mob, cost.mob.rarity);
+            const mobItem = this.materials.get(mob, cost.mob.rarity);
             requirement.mark(mobItem.id, cost.mob.amount, mark);
             if (cost.boss) {
               requirement.mark(boss, cost.boss, mark);

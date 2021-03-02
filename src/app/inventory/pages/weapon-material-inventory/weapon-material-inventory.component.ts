@@ -30,9 +30,9 @@ export class WeaponMaterialInventoryComponent
       .pipe(takeUntil(this.destroy$))
       .subscribe(materials => {
         this.common = materials.get(MaterialType.WEAPON_EXP) ?? [];
-        this.monThu = materials.get(MaterialType.WEAPON_14) ?? [];
-        this.tueFri = materials.get(MaterialType.WEAPON_25) ?? [];
-        this.wedSat = materials.get(MaterialType.WEAPON_36) ?? [];
+        this.monThu = materials.get(MaterialType.WEAPON_147) ?? [];
+        this.tueFri = materials.get(MaterialType.WEAPON_257) ?? [];
+        this.wedSat = materials.get(MaterialType.WEAPON_367) ?? [];
       });
   }
 }

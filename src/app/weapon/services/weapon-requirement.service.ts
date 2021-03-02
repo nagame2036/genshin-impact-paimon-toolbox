@@ -1,17 +1,15 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {WeaponLevelupCost} from '../models/weapon-levelup-cost.model';
 import {HttpClient} from '@angular/common/http';
-import {EnemyMaterialService} from '../../material/services/enemy-material.service';
+import {MaterialInfoService} from '../../material/services/material-info.service';
 import {first, map, tap} from 'rxjs/operators';
-import {WeaponAscensionMaterialService} from '../../material/services/weapon-ascension-material.service';
 import {WeaponAscensionCost} from '../models/weapon-ascension-cost.model';
 import {Weapon} from '../models/weapon.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {ItemType} from '../../game-common/models/item-type.enum';
-import {WeaponExpMaterialService} from '../../material/services/weapon-exp-material.service';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireMark} from '../../material/models/material-require-mark.model';
@@ -39,9 +37,7 @@ export class WeaponRequirementService {
 
   constructor(
     http: HttpClient,
-    private exps: WeaponExpMaterialService,
-    private domain: WeaponAscensionMaterialService,
-    private enemies: EnemyMaterialService,
+    private materials: MaterialInfoService,
     private logger: NGXLogger,
   ) {
     http
@@ -67,9 +63,9 @@ export class WeaponRequirementService {
   }
 
   private ascension(weapon: Weapon): Observable<MaterialRequireList> {
-    return zip(this.ascensions, this.domain.items, this.enemies.items).pipe(
+    return this.ascensions.pipe(
       first(),
-      map(([ascensions]) => {
+      map(ascensions => {
         const {progress, plan} = weapon;
         const {rarity, materials} = weapon.info;
         const {domain, elite, mob} = materials;
@@ -87,11 +83,11 @@ export class WeaponRequirementService {
             mob: mobCost,
           } = ascension;
           requirement.mark(mora.id, moraCost, mark);
-          const domainItem = this.domain.get(domain, domainCost.rarity);
+          const domainItem = this.materials.get(domain, domainCost.rarity);
           requirement.mark(domainItem.id, domainCost.amount, mark);
-          const eliteItem = this.enemies.get(elite, eliteCost.rarity);
+          const eliteItem = this.materials.get(elite, eliteCost.rarity);
           requirement.mark(eliteItem.id, eliteCost.amount, mark);
-          const mobItem = this.enemies.get(mob, mobCost.rarity);
+          const mobItem = this.materials.get(mob, mobCost.rarity);
           requirement.mark(mobItem.id, mobCost.amount, mark);
         }
         return requirement;
@@ -115,7 +111,7 @@ export class WeaponRequirementService {
         const {moraCost, expCost} = processExpBonus(info, expAmount, 0.1);
         requirement.mark(mora.id, moraCost, mark);
         requirement.mark(weaponExp.id, expCost, mark);
-        this.exps.splitExpNeed(requirement, mark);
+        this.materials.processSpecialRequirement(requirement, mark);
         return requirement;
       }),
     );

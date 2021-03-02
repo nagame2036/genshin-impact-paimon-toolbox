@@ -23,9 +23,9 @@ export class WeaponPlanComponent
 
   readonly types: [string, ...MaterialType[]][] = [
     ['common', MaterialType.CURRENCY, MaterialType.WEAPON_EXP],
-    ['1/4/7', MaterialType.WEAPON_14],
-    ['2/5/7', MaterialType.WEAPON_25],
-    ['3/6/7', MaterialType.WEAPON_36],
+    ['1/4/7', MaterialType.WEAPON_147],
+    ['2/5/7', MaterialType.WEAPON_257],
+    ['3/6/7', MaterialType.WEAPON_367],
     ['enemy', MaterialType.ENEMY_ELITE, MaterialType.ENEMY_MOB],
   ];
 
