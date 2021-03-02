@@ -5,7 +5,7 @@ import {
 } from '../models/material-require-mark.model';
 import {MaterialDetail} from '../models/material.model';
 import {MaterialList} from './material-list';
-import {RequirementDetail} from '../models/requirement-detail.model';
+import {RequireDetail} from '../models/requirement-detail.model';
 import {I18n} from '../../widget/models/i18n.model';
 
 const i18n = new I18n('game-common');
@@ -74,7 +74,7 @@ export class MaterialRequireList {
   getDetails(
     key: number,
     materials: Map<number, MaterialDetail>,
-  ): RequirementDetail[] {
+  ): RequireDetail[] {
     const reqMarks = this.marks.get(key);
     const textTotal = i18n.module('total-requirement');
     if (!reqMarks) {
@@ -156,7 +156,7 @@ function processDetail(
   text: string,
   req: MaterialList,
   materials: Map<number, MaterialDetail>,
-): RequirementDetail {
+): RequireDetail {
   const value = [];
   let reached = true;
   for (const [id, need] of req.entries()) {

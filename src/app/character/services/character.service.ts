@@ -15,10 +15,9 @@ import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
-import {RequirementDetail} from '../../material/models/requirement-detail.model';
+import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {MaterialService} from '../../material/services/material.service';
 import {StatsType} from '../../game-common/models/stats.model';
-import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -56,24 +55,14 @@ export class CharacterService {
         }),
         switchMap(characters => {
           const requirementObs = [...characters.values()].map(character => {
-            return this.planner
-              .getRequirement(character)
-              .pipe(
-                map(req =>
-                  this.materials.updateRequirement(
-                    ItemType.CHARACTER,
-                    character.progress.id,
-                    req,
-                  ),
-                ),
-              );
+            return this.planner.updateRequire(character);
           });
           return forkJoin(requirementObs);
         }),
       )
-      .subscribe(_ =>
-        this.logger.info('loaded the requirements of all characters'),
-      );
+      .subscribe(_ => {
+        this.logger.info('loaded the requirements of all characters');
+      });
   }
 
   create(info: CharacterInfo): Observable<CharacterOverview> {
@@ -95,8 +84,8 @@ export class CharacterService {
     );
   }
 
-  getRequirementDetails(character: Character): Observable<RequirementDetail[]> {
-    return this.planner.getRequirementDetails(character);
+  getRequireDetails(character: Character): Observable<RequireDetail[]> {
+    return this.planner.getRequireDetails(character);
   }
 
   getOverview(character: Character): Observable<CharacterOverview> {
@@ -134,16 +123,10 @@ export class CharacterService {
         }),
         mergeMap(_ => this.progressor.update(character)),
         mergeMap(_ => this.planner.update(character)),
-        mergeMap(_ => this.planner.getRequirement(character)),
-        map(req =>
-          this.materials.updateRequirement(
-            ItemType.CHARACTER,
-            character.progress.id,
-            req,
-          ),
-        ),
       )
-      .subscribe(_ => this.logger.info('updated character', character));
+      .subscribe(_ => {
+        this.logger.info('updated character', character);
+      });
   }
 
   remove(character: Character): void {
@@ -156,12 +139,6 @@ export class CharacterService {
         }),
         mergeMap(_ => this.progressor.remove(character)),
         mergeMap(_ => this.planner.remove(character)),
-        map(_ =>
-          this.materials.removeRequirement(
-            ItemType.CHARACTER,
-            character.progress.id,
-          ),
-        ),
       )
       .subscribe(_ => this.logger.info('removed character', character));
   }
@@ -178,12 +155,6 @@ export class CharacterService {
         }),
         mergeMap(_ => this.progressor.removeAll(characterList)),
         mergeMap(_ => this.planner.removeAll(characterList)),
-        map(_ =>
-          this.materials.removeAllRequirement(
-            ItemType.CHARACTER,
-            characterList.map(it => it.progress.id),
-          ),
-        ),
       )
       .subscribe(_ => this.logger.info('removed characters', characterList));
   }

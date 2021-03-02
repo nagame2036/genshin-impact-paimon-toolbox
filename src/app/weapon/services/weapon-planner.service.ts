@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {map, tap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {WeaponRequirementService} from './weapon-requirement.service';
@@ -11,12 +11,14 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialService} from '../../material/services/material.service';
 import {WeaponInfo} from '../models/weapon-info.model';
-import {RequirementDetail} from '../../material/models/requirement-detail.model';
+import {RequireDetail} from '../../material/models/requirement-detail.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeaponPlanner {
+  private readonly type = ItemType.WEAPON;
+
   private readonly i18n = new I18n('game-common');
 
   private readonly store = 'weapon-plans';
@@ -43,22 +45,25 @@ export class WeaponPlanner {
     return {id, weaponId: info.id, ascension: 0, level: 1};
   }
 
-  getRequirement(weapon: Weapon): Observable<MaterialRequireList> {
+  updateRequire(weapon: Weapon): Observable<void> {
     const subRequirement = [this.weaponReq.requirement(weapon)];
     return forkJoin(subRequirement).pipe(
-      map(requirements => new MaterialRequireList(requirements)),
-      tap(req => this.logger.info('sent requirements of weapon', weapon, req)),
+      map(requirements => {
+        const req = new MaterialRequireList(requirements);
+        this.materials.updateRequire(this.type, weapon.plan.id, req);
+        this.logger.info('sent requirement', weapon, req);
+      }),
     );
   }
 
-  getRequirementDetails(weapon: Weapon): Observable<RequirementDetail[]> {
+  getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
     return this.materials.getRequirement(ItemType.WEAPON, weapon.plan.id).pipe(
       map(req => {
         const texts = [
           this.i18n.module('total-requirement'),
           this.weaponReq.levelupLabel,
         ];
-        this.logger.info('sent requirements of weapon', weapon, texts, req);
+        this.logger.info('sent require detail', weapon, texts, req);
         return req.sort(
           (a, b) => texts.indexOf(a.text) - texts.indexOf(b.text),
         );
@@ -66,13 +71,15 @@ export class WeaponPlanner {
     );
   }
 
-  update({plan}: Weapon): Observable<void> {
+  update(weapon: Weapon): Observable<void> {
+    const plan = weapon.plan;
     const update = this.database.update(this.store, plan);
     return zip(update, this.plans).pipe(
-      map(([, plans]) => {
+      switchMap(([, plans]) => {
         this.logger.info('updated weapon plan', plan);
         plans.set(plan.id, plan);
         this.plans$.next(plans);
+        return this.updateRequire(weapon);
       }),
     );
   }
@@ -85,19 +92,20 @@ export class WeaponPlanner {
         this.logger.info('removed weapon plan', plan);
         plans.delete(id);
         this.plans$.next(plans);
+        this.materials.removeRequire(this.type, id);
       }),
     );
   }
 
   removeAll(weapons: Weapon[]): Observable<void> {
-    const remove = weapons.map(it =>
-      this.database.delete(this.store, it.plan.id),
-    );
+    const planIds = weapons.map(it => it.plan.id);
+    const remove = planIds.map(it => this.database.delete(this.store, it));
     return zip(forkJoin(remove), this.plans).pipe(
       map(([, plans]) => {
         this.logger.info('removed weapon plans', weapons);
-        weapons.forEach(it => plans.delete(it.plan.id));
+        planIds.forEach(it => plans.delete(it));
         this.plans$.next(plans);
+        this.materials.removeAllRequire(this.type, planIds);
       }),
     );
   }

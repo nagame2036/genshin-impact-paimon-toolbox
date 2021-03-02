@@ -18,7 +18,7 @@ import {
 } from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
-import {RequirementDetail} from '../../material/models/requirement-detail.model';
+import {RequireDetail} from '../../material/models/requirement-detail.model';
 
 @Injectable({
   providedIn: 'root',
@@ -56,24 +56,14 @@ export class WeaponService {
         }),
         switchMap(weapons => {
           const requirementObs = [...weapons.values()].map(weapon => {
-            return this.planner
-              .getRequirement(weapon)
-              .pipe(
-                map(req =>
-                  this.materials.updateRequirement(
-                    ItemType.WEAPON,
-                    weapon.progress.id,
-                    req,
-                  ),
-                ),
-              );
+            return this.planner.updateRequire(weapon);
           });
           return forkJoin(requirementObs);
         }),
       )
-      .subscribe(_ =>
-        this.logger.info('loaded the requirements of all weapons'),
-      );
+      .subscribe(_ => {
+        this.logger.info('loaded the requirements of all weapons');
+      });
   }
 
   create(info: WeaponInfo): Observable<WeaponOverview> {
@@ -95,8 +85,8 @@ export class WeaponService {
     );
   }
 
-  getRequirementDetails(weapon: Weapon): Observable<RequirementDetail[]> {
-    return this.planner.getRequirementDetails(weapon);
+  getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
+    return this.planner.getRequireDetails(weapon);
   }
 
   getOverview(weapon: Weapon): Observable<WeaponOverview> {
@@ -128,14 +118,6 @@ export class WeaponService {
         }),
         mergeMap(_ => this.progressor.update(weapon)),
         mergeMap(_ => this.planner.update(weapon)),
-        mergeMap(_ => this.planner.getRequirement(weapon)),
-        map(req =>
-          this.materials.updateRequirement(
-            ItemType.WEAPON,
-            weapon.progress.id,
-            req,
-          ),
-        ),
       )
       .subscribe(_ => this.logger.info('updated weapon', weapon));
   }
@@ -150,9 +132,6 @@ export class WeaponService {
         }),
         mergeMap(_ => this.progressor.remove(weapon)),
         mergeMap(_ => this.planner.remove(weapon)),
-        map(_ =>
-          this.materials.removeRequirement(ItemType.WEAPON, weapon.progress.id),
-        ),
       )
       .subscribe(_ => this.logger.info('removed weapon', weapon));
   }
@@ -167,12 +146,6 @@ export class WeaponService {
         }),
         mergeMap(_ => this.progressor.removeAll(weaponList)),
         mergeMap(_ => this.planner.removeAll(weaponList)),
-        map(_ =>
-          this.materials.removeAllRequirement(
-            ItemType.WEAPON,
-            weaponList.map(it => it.progress.id),
-          ),
-        ),
       )
       .subscribe(_ => this.logger.info('removed weapons', weaponList));
   }

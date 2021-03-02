@@ -5,7 +5,7 @@ import {WeaponService} from '../../services/weapon.service';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, takeUntil} from 'rxjs/operators';
 import {MaterialType} from '../../../material/models/material-type.enum';
-import {RequirementDetail} from '../../../material/models/requirement-detail.model';
+import {RequireDetail} from '../../../material/models/requirement-detail.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
@@ -31,7 +31,7 @@ export class WeaponPlanComponent
 
   weapon!: WeaponOverview;
 
-  requirements!: RequirementDetail[];
+  requirements!: RequireDetail[];
 
   reachedStates!: boolean[];
 
@@ -56,7 +56,7 @@ export class WeaponPlanComponent
         switchMap(weapon => {
           this.logger.info('received weapon', weapon);
           this.weapon = weapon;
-          return this.service.getRequirementDetails(weapon);
+          return this.service.getRequireDetails(weapon);
         }),
         takeUntil(this.destroy$),
       )

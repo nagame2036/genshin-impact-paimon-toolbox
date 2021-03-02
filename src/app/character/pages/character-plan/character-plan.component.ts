@@ -4,7 +4,7 @@ import {CharacterOverview} from '../../models/character.model';
 import {CharacterService} from '../../services/character.service';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, takeUntil} from 'rxjs/operators';
-import {RequirementDetail} from '../../../material/models/requirement-detail.model';
+import {RequireDetail} from '../../../material/models/requirement-detail.model';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
@@ -42,7 +42,7 @@ export class CharacterPlanComponent
 
   character!: CharacterOverview;
 
-  requirements!: RequirementDetail[];
+  requirements!: RequireDetail[];
 
   reachedStates!: boolean[];
 
@@ -67,7 +67,7 @@ export class CharacterPlanComponent
         switchMap(character => {
           this.logger.info('received character', character);
           this.character = character;
-          return this.service.getRequirementDetails(character);
+          return this.service.getRequireDetails(character);
         }),
         takeUntil(this.destroy$),
       )

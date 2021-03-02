@@ -1,6 +1,6 @@
 import {MaterialDetail} from './material.model';
 
-export interface RequirementDetail {
+export interface RequireDetail {
   text: string;
 
   value: MaterialDetail[];

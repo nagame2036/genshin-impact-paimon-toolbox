@@ -13,7 +13,7 @@ import {MaterialRequireList} from '../collections/material-require-list';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
-import {RequirementDetail} from '../models/requirement-detail.model';
+import {RequireDetail} from '../models/requirement-detail.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +41,7 @@ export class MaterialService {
     this.updateMaterials();
   }
 
-  getRequirement(type: ItemType, key: number): Observable<RequirementDetail[]> {
+  getRequirement(type: ItemType, key: number): Observable<RequireDetail[]> {
     return this.requirements.getType(type).pipe(
       switchMap(req => {
         return this.materials$.pipe(map(it => req.getDetails(key, it)));
@@ -66,12 +66,8 @@ export class MaterialService {
     this.quantities.update(id, have);
   }
 
-  updateRequirement(
-    type: ItemType,
-    key: number,
-    requirement: MaterialRequireList,
-  ): void {
-    this.requirements.update(type, key, requirement);
+  updateRequire(type: ItemType, key: number, req: MaterialRequireList): void {
+    this.requirements.update(type, key, req);
   }
 
   consumeRequire(requirement: MaterialDetail[]): void {
@@ -86,11 +82,11 @@ export class MaterialService {
     this.quantities.change(change);
   }
 
-  removeRequirement(type: ItemType, key: number): void {
+  removeRequire(type: ItemType, key: number): void {
     this.requirements.remove(type, key);
   }
 
-  removeAllRequirement(type: ItemType, keys: number[]): void {
+  removeAllRequire(type: ItemType, keys: number[]): void {
     this.requirements.removeAll(type, keys);
   }
 
