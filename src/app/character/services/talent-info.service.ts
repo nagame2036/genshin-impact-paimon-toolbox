@@ -1,47 +1,33 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
-import {Observable, ReplaySubject} from 'rxjs';
 import {TalentInfo, TalentLevel} from '../models/talent-info.model';
 import {objectMap} from '../../shared/utils/collections';
-import {first, map} from 'rxjs/operators';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {coerceIn} from '../../shared/utils/coerce';
 import {rangeList} from '../../shared/utils/range-list';
 import {TalentProgress} from '../models/talent-progress.model';
-import {characterData} from './character-data';
+import talentList from '../../../assets/data/characters/talent-list.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TalentInfoService {
-  private talents$ = new ReplaySubject<Map<number, TalentInfo>>(1);
+  readonly talents = objectMap<TalentInfo>(
+    JSON.parse(JSON.stringify(talentList)),
+  );
 
-  constructor(http: HttpClient, private logger: NGXLogger) {
-    http
-      .get<{[id: number]: TalentInfo}>(characterData('talents'))
-      .subscribe(data => {
-        const talents = objectMap(data);
-        this.logger.info('loaded talent data', talents, data);
-        this.talents$.next(talents);
-      });
-  }
+  constructor(private logger: NGXLogger) {}
 
-  getAll(ids: number[]): Observable<TalentInfo[]> {
-    return this.talents$.pipe(
-      first(),
-      map(talents => {
-        const results = [];
-        for (const id of ids) {
-          const talent = talents.get(id);
-          if (talent) {
-            results.push(talent);
-          }
-        }
-        this.logger.info('sent talents', ids, talents);
-        return results;
-      }),
-    );
+  getAll(ids: number[]): TalentInfo[] {
+    const results = [];
+    for (const id of ids) {
+      const talent = this.talents.get(id);
+      if (talent) {
+        results.push(talent);
+      }
+    }
+    this.logger.info('sent talents', ids, results);
+    return results;
   }
 
   /**

@@ -63,10 +63,9 @@ export class CharacterPlanComponent
     this.route.parent?.params
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
-        switchMap(character => this.service.getOverview(character)),
         switchMap(character => {
           this.logger.info('received character', character);
-          this.character = character;
+          this.character = this.service.getOverview(character);
           return this.service.getRequireDetails(character);
         }),
         takeUntil(this.destroy$),

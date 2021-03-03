@@ -1,13 +1,13 @@
 import {MaterialGroupCost} from '../../material/models/material-group-cost.model';
 
-export interface WeaponAscensionCost {
+export interface WeaponAscendCost {
   /**
    * Stores the cost of materials per ascension for each rarity of weapons.
    */
-  [rarity: number]: WeaponRarityAscensionCost[];
+  [rarity: number]: WeaponRarityAscendCost[];
 }
 
-export interface WeaponRarityAscensionCost {
+export interface WeaponRarityAscendCost {
   mora: number;
 
   domain: MaterialGroupCost;

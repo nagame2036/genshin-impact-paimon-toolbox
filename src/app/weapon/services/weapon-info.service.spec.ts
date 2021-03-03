@@ -21,7 +21,7 @@ describe('WeaponInfoService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('calculate weapon stats', done => {
+  it('calculate weapon stats', () => {
     weapon = {
       info: {
         id: 15502,
@@ -57,10 +57,8 @@ describe('WeaponInfoService', () => {
         level: 90,
       },
     };
-    service.getStatsValue(weapon.info, weapon.progress).subscribe(stats => {
-      expect(stats.get('ATK Base')).toBeCloseTo(608, 0);
-      expect(stats.get('ATK%')).toBeCloseTo(0.496, 3);
-      done();
-    });
+    const stats = service.getStatsValue(weapon.info, weapon.progress);
+    expect(stats.get('ATK Base')).toBeCloseTo(608, 0);
+    expect(stats.get('ATK%')).toBeCloseTo(0.496, 3);
   });
 });

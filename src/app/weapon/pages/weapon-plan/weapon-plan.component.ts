@@ -3,7 +3,7 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponOverview} from '../../models/weapon.model';
 import {WeaponService} from '../../services/weapon.service';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {map, switchMap, takeUntil} from 'rxjs/operators';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {RequireDetail} from '../../../material/models/requirement-detail.model';
 import {MaterialService} from '../../../material/services/material.service';
@@ -52,7 +52,7 @@ export class WeaponPlanComponent
     this.route.parent?.params
       .pipe(
         switchMap(params => this.service.get(Number(params.id))),
-        switchMap(weapon => this.service.getOverview(weapon)),
+        map(weapon => this.service.getOverview(weapon)),
         switchMap(weapon => {
           this.logger.info('received weapon', weapon);
           this.weapon = weapon;

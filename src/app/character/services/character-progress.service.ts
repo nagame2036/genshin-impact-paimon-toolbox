@@ -25,22 +25,20 @@ export class CharacterProgressService {
 
   constructor(
     private database: NgxIndexedDBService,
-    private information: CharacterInfoService,
+    private infos: CharacterInfoService,
     private logger: NGXLogger,
   ) {
-    zip(database.getAll(this.store), information.infos).subscribe(
-      ([progresses, infos]) => {
-        this.logger.info('fetched in-progress characters', progresses);
-        const inProgress = new Map<number, CharacterProgress>();
-        const noProgress = new Map<number, CharacterInfo>(infos);
-        for (const progress of progresses) {
-          inProgress.set(progress.id, progress);
-          noProgress.delete(progress.id);
-        }
-        this.inProgress$.next(inProgress);
-        this.noProgress$.next(noProgress);
-      },
-    );
+    database.getAll(this.store).subscribe(progresses => {
+      this.logger.info('fetched in-progress characters', progresses);
+      const inProgress = new Map<number, CharacterProgress>();
+      const noProgress = new Map<number, CharacterInfo>(infos.infos);
+      for (const progress of progresses) {
+        inProgress.set(progress.id, progress);
+        noProgress.delete(progress.id);
+      }
+      this.inProgress$.next(inProgress);
+      this.noProgress$.next(noProgress);
+    });
   }
 
   create(info: CharacterInfo, id: number): CharacterProgress {
@@ -76,14 +74,14 @@ export class CharacterProgressService {
     );
   }
 
-  removeAll(characters: Character[]): Observable<void> {
-    const remove = characters.map(it =>
+  removeAll(list: Character[]): Observable<void> {
+    const remove = list.map(it =>
       this.database.delete(this.store, it.progress.id),
     );
     return zip(forkJoin(remove), this.inProgress, this.noProgress).pipe(
       map(([, inProgress, noProgress]) => {
-        this.logger.info('removed character progresses', characters);
-        for (const {info, progress} of characters) {
+        this.logger.info('removed character progresses', list);
+        for (const {info, progress} of list) {
           inProgress.delete(progress.id);
           noProgress.set(info.id, info);
         }

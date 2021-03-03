@@ -47,11 +47,10 @@ export class AddCharacterComponent
   }
 
   select(character: CharacterInfo): void {
-    this.service.create(character).subscribe(created => {
-      this.selected = true;
-      this.selectedCharacter = created;
-      this.logger.info('select character', created);
-    });
+    const created = this.service.create(character);
+    this.selected = true;
+    this.selectedCharacter = created;
+    this.logger.info('select character', created);
   }
 
   reset(): void {

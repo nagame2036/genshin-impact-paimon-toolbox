@@ -20,7 +20,7 @@ describe('CharacterInfoService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('calculate character stats', done => {
+  it('calculate character stats', () => {
     character = {
       info: {
         id: 4013,
@@ -103,14 +103,10 @@ describe('CharacterInfoService', () => {
         talents: [],
       },
     };
-    service
-      .getStatsValue(character.info, character.progress)
-      .subscribe(stats => {
-        expect(stats.get('HP Base')).toBeCloseTo(9244, 0);
-        expect(stats.get('ATK Base')).toBeCloseTo(170, 0);
-        expect(stats.get('DEF Base')).toBeCloseTo(703, 0);
-        expect(stats.get('Anemo DMG%')).toBeCloseTo(0.24, 2);
-        done();
-      });
+    const stats = service.getStatsValue(character.info, character.progress);
+    expect(stats.get('HP Base')).toBeCloseTo(9244, 0);
+    expect(stats.get('ATK Base')).toBeCloseTo(170, 0);
+    expect(stats.get('DEF Base')).toBeCloseTo(703, 0);
+    expect(stats.get('Anemo DMG%')).toBeCloseTo(0.24, 2);
   });
 });

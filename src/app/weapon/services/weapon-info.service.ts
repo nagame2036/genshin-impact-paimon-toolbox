@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {WeaponInfo} from '../models/weapon-info.model';
-import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {objectMap} from '../../shared/utils/collections';
-import {first, map} from 'rxjs/operators';
 import {
   WeaponStatsCurveAscension,
   WeaponStatsCurveLevel,
@@ -13,7 +10,9 @@ import {
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {StatsType} from '../../game-common/models/stats.model';
-import {weaponData} from './weapon-data';
+import weaponList from '../../../assets/data/weapons/weapon-list.json';
+import weaponStatsCurveLevel from '../../../assets/data/weapons/weapon-stats-curve-level.json';
+import weaponStatsCurveAscension from '../../../assets/data/weapons/weapon-stats-curve-ascension.json';
 
 /**
  * Represents the dependency of weapon stats value.
@@ -24,85 +23,48 @@ export type WeaponStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class WeaponInfoService {
-  private readonly infos$ = new ReplaySubject<Map<number, WeaponInfo>>(1);
-
-  readonly infos = this.infos$.asObservable();
-
-  private readonly statsCurvesLevel = new ReplaySubject<WeaponStatsCurveLevel>(
-    1,
+  readonly infos = objectMap<WeaponInfo>(
+    JSON.parse(JSON.stringify(weaponList)),
   );
 
-  private readonly statsCurvesAscension = new ReplaySubject<WeaponStatsCurveAscension>(
-    1,
-  );
+  private statsCurvesLevel = weaponStatsCurveLevel as WeaponStatsCurveLevel;
 
-  constructor(http: HttpClient, private logger: NGXLogger) {
-    http
-      .get<{[id: number]: WeaponInfo}>(weaponData('weapons'))
-      .subscribe(data => {
-        const weapons = objectMap(data);
-        this.logger.info('loaded weapon data', weapons);
-        this.infos$.next(weapons);
-      });
-    http
-      .get<WeaponStatsCurveLevel>(weaponData('weapon-stats-curve-level'))
-      .subscribe(data => {
-        this.logger.info('loaded weapon stats curves per level data', data);
-        this.statsCurvesLevel.next(data);
-      });
-    http
-      .get<WeaponStatsCurveAscension>(
-        weaponData('weapon-stats-curve-ascension'),
-      )
-      .subscribe(data => {
-        this.logger.info('loaded weapon stats curves per ascension data', data);
-        this.statsCurvesAscension.next(data);
-      });
-  }
+  private statsCurvesAscension = weaponStatsCurveAscension as WeaponStatsCurveAscension;
 
-  getOverview(weapon: Weapon): Observable<WeaponOverview> {
+  constructor(private logger: NGXLogger) {}
+
+  getOverview(weapon: Weapon): WeaponOverview {
     const {info, progress, plan} = weapon;
-    const statsObs = [
-      this.getStatsValue(info, progress),
-      this.getStatsValue(info, plan),
-    ];
-    return forkJoin(statsObs).pipe(
-      map(([currentStats, planStats]) => {
-        const overview = {
-          ...weapon,
-          currentStats,
-          planStats,
-        };
-        this.logger.info('sent weapon overview', overview);
-        return overview;
-      }),
-    );
+    const currentStats = this.getStatsValue(info, progress);
+    const planStats = this.getStatsValue(info, plan);
+    const overview = {
+      ...weapon,
+      currentStats,
+      planStats,
+    };
+    this.logger.info('sent weapon overview', overview);
+    return overview;
   }
 
   getStatsValue(
     {id, rarity, stats}: WeaponInfo,
     dependency: WeaponStatsDependency,
-  ): Observable<WeaponStatsValue> {
-    return zip(this.statsCurvesLevel, this.statsCurvesAscension).pipe(
-      first(),
-      map(([curvesLevel, curvesAscension]) => {
-        const {ascension, level} = dependency;
-        const result = new WeaponStatsValue();
-        for (const [type, statsInfo] of Object.entries(stats)) {
-          const statsType = type as StatsType;
-          if (statsInfo) {
-            const {initial, curve} = statsInfo;
-            const value = initial * curvesLevel[curve][level];
-            result.add(statsType, value);
-            const curveAscension = curvesAscension[rarity][statsType];
-            if (curveAscension) {
-              result.add(statsType, curveAscension[ascension]);
-            }
-          }
+  ): WeaponStatsValue {
+    const {ascension, level} = dependency;
+    const result = new WeaponStatsValue();
+    for (const [type, statsInfo] of Object.entries(stats)) {
+      const statsType = type as StatsType;
+      if (statsInfo) {
+        const {initial, curve} = statsInfo;
+        const value = initial * this.statsCurvesLevel[curve][level];
+        result.add(statsType, value);
+        const curveAscension = this.statsCurvesAscension[rarity][statsType];
+        if (curveAscension) {
+          result.add(statsType, curveAscension[ascension]);
         }
-        this.logger.info('sent weapon stats', id, dependency, result);
-        return result;
-      }),
-    );
+      }
+    }
+    this.logger.info('sent weapon stats', id, dependency, result);
+    return result;
   }
 }

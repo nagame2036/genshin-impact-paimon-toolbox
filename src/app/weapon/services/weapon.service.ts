@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {EMPTY, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {WeaponInfoService} from './weapon-info.service';
@@ -27,9 +27,7 @@ export class WeaponService {
 
   readonly weapons = this.weapons$.asObservable();
 
-  readonly infos = this.information.infos.pipe(
-    map(infos => [...infos.values()]),
-  );
+  readonly infos = [...this.information.infos.values()];
 
   readonly statsTypeCache = new Map<number, StatsType[]>();
 
@@ -40,11 +38,12 @@ export class WeaponService {
     private materials: MaterialService,
     private logger: NGXLogger,
   ) {
-    zip(this.information.infos, this.progressor.inProgress, this.planner.plans)
+    zip(this.progressor.inProgress, this.planner.plans)
       .pipe(
         first(),
-        map(([infos, inProgress, plans]) => {
+        map(([inProgress, plans]) => {
           const weapons = new Map<number, Weapon>();
+          const infos = this.information.infos;
           for (const [id, progress] of inProgress) {
             const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
             if (info && plan) {
@@ -55,19 +54,14 @@ export class WeaponService {
           this.weapons$.next(weapons);
           return weapons;
         }),
-        switchMap(weapons => {
-          const requirementObs = [...weapons.values()].map(weapon => {
-            return this.planner.updateRequire(weapon);
-          });
-          return forkJoin(requirementObs);
-        }),
       )
-      .subscribe(_ => {
+      .subscribe(weapons => {
+        weapons.forEach(it => this.planner.updateRequire(it));
         this.logger.info('loaded the requirements of all weapons');
       });
   }
 
-  create(info: WeaponInfo): Observable<WeaponOverview> {
+  create(info: WeaponInfo): WeaponOverview {
     const id = new Date().getTime() * 100 + ItemType.WEAPON;
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
@@ -90,7 +84,7 @@ export class WeaponService {
     return this.planner.getRequireDetails(weapon);
   }
 
-  getOverview(weapon: Weapon): Observable<WeaponOverview> {
+  getOverview(weapon: Weapon): WeaponOverview {
     return this.information.getOverview(weapon);
   }
 
@@ -107,11 +101,7 @@ export class WeaponService {
 
   getAll(): Observable<WeaponOverview[]> {
     return this.weapons.pipe(
-      mergeMap(weapons =>
-        weapons.size > 0
-          ? forkJoin([...weapons.values()].map(it => this.getOverview(it)))
-          : of([]),
-      ),
+      map(weapons => [...weapons.values()].map(it => this.getOverview(it))),
       tap(weapons => this.logger.info('sent weapons', weapons)),
     );
   }

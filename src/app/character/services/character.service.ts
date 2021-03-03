@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EMPTY, forkJoin, Observable, of, ReplaySubject, zip} from 'rxjs';
+import {EMPTY, Observable, of, ReplaySubject, zip} from 'rxjs';
 import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
 import {
@@ -39,11 +39,12 @@ export class CharacterService {
     private materials: MaterialService,
     private logger: NGXLogger,
   ) {
-    zip(this.information.infos, this.progressor.inProgress, this.planner.plans)
+    zip(this.progressor.inProgress, this.planner.plans)
       .pipe(
         first(),
-        map(([infos, inProgress, plans]) => {
+        map(([inProgress, plans]) => {
           const characters = new Map<number, Character>();
+          const infos = information.infos;
           for (const [id, progress] of inProgress) {
             const [info, plan] = [infos.get(id), plans.get(id)];
             if (info && plan) {
@@ -54,24 +55,19 @@ export class CharacterService {
           this.characters$.next(characters);
           return characters;
         }),
-        switchMap(characters => {
-          const requirementObs = [...characters.values()].map(character => {
-            return this.planner.updateRequire(character);
-          });
-          return forkJoin(requirementObs);
-        }),
       )
-      .subscribe(_ => {
+      .subscribe(characters => {
+        characters.forEach(character => this.planner.updateRequire(character));
         this.logger.info('loaded the requirements of all characters');
       });
   }
 
-  create(info: CharacterInfo): Observable<CharacterOverview> {
+  create(info: CharacterInfo): CharacterOverview {
     const id = info.id;
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
     const character = {info, progress, plan};
-    return this.information.getOverview(character);
+    return this.getOverview(character);
   }
 
   get(id: number): Observable<Character> {
@@ -89,7 +85,7 @@ export class CharacterService {
     return this.planner.getRequireDetails(character);
   }
 
-  getOverview(character: Character): Observable<CharacterOverview> {
+  getOverview(character: Character): CharacterOverview {
     return this.information.getOverview(character);
   }
 
@@ -106,12 +102,8 @@ export class CharacterService {
 
   getAll(): Observable<CharacterOverview[]> {
     return this.characters.pipe(
-      switchMap(characters =>
-        characters.size > 0
-          ? forkJoin([...characters.values()].map(it => this.getOverview(it)))
-          : of([]),
-      ),
-      tap(characters => this.logger.info('sent characters', characters)),
+      map(list => [...list.values()].map(it => this.getOverview(it))),
+      tap(list => this.logger.info('sent characters', list)),
     );
   }
 
@@ -145,19 +137,17 @@ export class CharacterService {
       .subscribe(_ => this.logger.info('removed character', character));
   }
 
-  removeAll(characterList: Character[]): void {
+  removeAll(list: Character[]): void {
     this.characters
       .pipe(
         first(),
         map(characters => {
-          characterList.forEach(character =>
-            characters.delete(character.progress.id),
-          );
+          list.forEach(character => characters.delete(character.progress.id));
           this.characters$.next(characters);
         }),
-        mergeMap(_ => this.progressor.removeAll(characterList)),
-        mergeMap(_ => this.planner.removeAll(characterList)),
+        mergeMap(_ => this.progressor.removeAll(list)),
+        mergeMap(_ => this.planner.removeAll(list)),
       )
-      .subscribe(_ => this.logger.info('removed characters', characterList));
+      .subscribe(_ => this.logger.info('removed characters', list));
   }
 }

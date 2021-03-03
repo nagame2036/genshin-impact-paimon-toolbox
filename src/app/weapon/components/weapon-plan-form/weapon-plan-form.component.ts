@@ -82,9 +82,7 @@ export class WeaponPlanFormComponent
   }
 
   private updateStats(): void {
-    this.service.getOverview(this.weapon).subscribe(weapon => {
-      this.weapon = weapon;
-      this.emitChange();
-    });
+    this.weapon = this.service.getOverview(this.weapon);
+    this.emitChange();
   }
 }

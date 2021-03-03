@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
-import {map, switchMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {CharacterRequirementService} from './character-requirement.service';
 import {TalentRequirementService} from './talent-requirement.service';
@@ -52,23 +52,14 @@ export class CharacterPlanner {
     return {id, ascension: 0, level: 1, talents};
   }
 
-  updateRequire(character: Character): Observable<void> {
-    const talentsUpgradable = character.info.talentsUpgradable;
+  updateRequire(character: Character): void {
+    const talents = this.talentInfos.getAll(character.info.talentsUpgradable);
     const subRequirement = [
       this.characterReq.requirement(character),
-      this.talentInfos.getAll(talentsUpgradable).pipe(
-        switchMap(talents => {
-          return this.talentReq.requirement(character, talents);
-        }),
-      ),
+      this.talentReq.requirement(character, talents),
     ];
-    return forkJoin(subRequirement).pipe(
-      map(requirements => {
-        const req = new MaterialRequireList(requirements);
-        this.materials.updateRequire(this.type, character.plan.id, req);
-        this.logger.info('sent requirement', character, req);
-      }),
-    );
+    const req = new MaterialRequireList(subRequirement);
+    this.materials.updateRequire(this.type, character.plan.id, req);
   }
 
   getRequireDetails(character: Character): Observable<RequireDetail[]> {
@@ -92,11 +83,11 @@ export class CharacterPlanner {
     const plan = character.plan;
     const update = this.database.update(this.store, plan);
     return zip(update, this.plans).pipe(
-      switchMap(([, plans]) => {
+      map(([, plans]) => {
         this.logger.info('updated character plan', plan);
         plans.set(plan.id, plan);
         this.plans$.next(plans);
-        return this.updateRequire(character);
+        this.updateRequire(character);
       }),
     );
   }

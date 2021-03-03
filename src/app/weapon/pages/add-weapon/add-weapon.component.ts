@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponOverview} from 'src/app/weapon/models/weapon.model';
 import {WeaponService} from 'src/app/weapon/services/weapon.service';
-import {takeUntil} from 'rxjs/operators';
 import {WeaponInfo} from '../../models/weapon-info.model';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {Location} from '@angular/common';
 import {NGXLogger} from 'ngx-logger';
 
@@ -13,9 +11,7 @@ import {NGXLogger} from 'ngx-logger';
   templateUrl: './add-weapon.component.html',
   styleUrls: ['./add-weapon.component.scss'],
 })
-export class AddWeaponComponent
-  extends AbstractObservableComponent
-  implements OnInit {
+export class AddWeaponComponent implements OnInit {
   readonly i18n = new I18n('weapons');
 
   weapons: WeaponInfo[] = [];
@@ -28,16 +24,11 @@ export class AddWeaponComponent
     private service: WeaponService,
     private location: Location,
     private logger: NGXLogger,
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.logger.info('init');
-    this.service.infos.pipe(takeUntil(this.destroy$)).subscribe(weapons => {
-      this.logger.info('received non-party weapons', weapons);
-      this.weapons = weapons;
-    });
+    this.weapons = this.service.infos;
+    this.logger.info('init with weapons', this.weapons);
   }
 
   goBack(): void {
@@ -45,11 +36,10 @@ export class AddWeaponComponent
   }
 
   select(weapon: WeaponInfo): void {
-    this.service.create(weapon).subscribe(created => {
-      this.selected = true;
-      this.selectedWeapon = created;
-      this.logger.info('select weapon', created);
-    });
+    const created = this.service.create(weapon);
+    this.selected = true;
+    this.selectedWeapon = created;
+    this.logger.info('select weapon', created);
   }
 
   reset(): void {

@@ -142,10 +142,8 @@ export class CharacterPlanFormComponent implements OnInit {
   }
 
   private updateStats(): void {
-    this.service.getOverview(this.character).subscribe(character => {
-      this.character = character;
-      this.emitChange();
-    });
+    this.character = this.service.getOverview(this.character);
+    this.emitChange();
   }
 }
 

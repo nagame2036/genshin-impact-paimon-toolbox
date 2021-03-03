@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {map, switchMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {WeaponRequirementService} from './weapon-requirement.service';
@@ -45,15 +45,11 @@ export class WeaponPlanner {
     return {id, weaponId: info.id, ascension: 0, level: 1};
   }
 
-  updateRequire(weapon: Weapon): Observable<void> {
+  updateRequire(weapon: Weapon): void {
     const subRequirement = [this.weaponReq.requirement(weapon)];
-    return forkJoin(subRequirement).pipe(
-      map(requirements => {
-        const req = new MaterialRequireList(requirements);
-        this.materials.updateRequire(this.type, weapon.plan.id, req);
-        this.logger.info('sent requirement', weapon, req);
-      }),
-    );
+    const req = new MaterialRequireList(subRequirement);
+    this.materials.updateRequire(this.type, weapon.plan.id, req);
+    this.logger.info('sent requirement', weapon, req);
   }
 
   getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
@@ -75,11 +71,11 @@ export class WeaponPlanner {
     const plan = weapon.plan;
     const update = this.database.update(this.store, plan);
     return zip(update, this.plans).pipe(
-      switchMap(([, plans]) => {
+      map(([, plans]) => {
         this.logger.info('updated weapon plan', plan);
         plans.set(plan.id, plan);
         this.plans$.next(plans);
-        return this.updateRequire(weapon);
+        this.updateRequire(weapon);
       }),
     );
   }

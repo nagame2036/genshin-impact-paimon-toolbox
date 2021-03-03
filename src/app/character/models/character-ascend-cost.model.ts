@@ -1,6 +1,6 @@
 import {MaterialGroupCost} from '../../material/models/material-group-cost.model';
 
-export interface CharacterAscensionCost {
+export interface CharacterAscendCost {
   mora: number;
 
   boss: number;
