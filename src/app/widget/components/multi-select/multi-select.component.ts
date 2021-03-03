@@ -57,17 +57,20 @@ export class MultiSelectComponent implements OnInit {
   }
 
   updateValuesText(): void {
-    if (this.values.length === 0) {
+    const length = this.values.length;
+    if (length === 0) {
       this.valuesText = this.translator.instant(this.i18n.dict('none'));
-      return;
+    } else if (length === this.options.length) {
+      this.valuesText = this.translator.instant(this.i18n.dict('all'));
+    } else {
+      this.valuesText = this.values
+        .map(it => {
+          const index = this.optionsValues.indexOf(it);
+          const text = this.options[index]?.text ?? '';
+          return this.translator.instant(text);
+        })
+        .join(', ');
     }
-    this.valuesText = this.values
-      .map(it => {
-        const index = this.optionsValues.indexOf(it);
-        const text = this.options[index]?.text ?? '';
-        return this.translator.instant(text);
-      })
-      .join(', ');
   }
 
   @HostListener('document:click', ['$event'])
