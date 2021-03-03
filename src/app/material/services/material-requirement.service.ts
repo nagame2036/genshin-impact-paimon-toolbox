@@ -14,12 +14,12 @@ export class MaterialRequirementService {
     new Map<ItemType, MaterialRequireList>(),
   );
 
-  private total$ = new BehaviorSubject(new MaterialRequireList());
+  readonly total = new BehaviorSubject(new MaterialRequireList());
 
   constructor(private logger: NGXLogger) {}
 
   getMarks(id: number): Observable<MaterialRequireMark[]> {
-    return this.total$.pipe(
+    return this.total.pipe(
       map(total => total.getMarks(id)),
       tap(marks => this.logger.info('sent marks of material', id, marks)),
     );
@@ -32,14 +32,8 @@ export class MaterialRequirementService {
     );
   }
 
-  getAll(): Observable<MaterialRequireList> {
-    return this.total$.pipe(
-      tap(req => this.logger.info('sent all requirements', req)),
-    );
-  }
-
   update(type: ItemType, key: number, req: MaterialRequireList): void {
-    const [typed, total] = [this.typed$.value, this.total$.value];
+    const [typed, total] = [this.typed$.value, this.total.value];
     const typeReq = typed.get(type);
     if (typeReq) {
       typeReq.update(key, req);
@@ -49,23 +43,23 @@ export class MaterialRequirementService {
     this.logger.info('update requirement of item', type, key, req);
     this.typed$.next(typed);
     total.update(key, req);
-    this.total$.next(total);
+    this.total.next(total);
   }
 
   remove(type: ItemType, key: number): void {
-    const [typed, total] = [this.typed$.value, this.total$.value];
+    const [typed, total] = [this.typed$.value, this.total.value];
     const typeReq = typed.get(type);
     if (typeReq) {
       typeReq.remove(key);
       this.logger.info('remove requirement of item', type, key);
       this.typed$.next(typed);
       total.remove(key);
-      this.total$.next(total);
+      this.total.next(total);
     }
   }
 
   removeAll(type: ItemType, keys: number[]): void {
-    const [typed, total] = [this.typed$.value, this.total$.value];
+    const [typed, total] = [this.typed$.value, this.total.value];
     const typeReq = typed.get(type);
     if (typeReq) {
       keys.forEach(it => {
@@ -74,7 +68,7 @@ export class MaterialRequirementService {
       });
       this.logger.info('remove all requirements of items', type, keys);
       this.typed$.next(typed);
-      this.total$.next(total);
+      this.total.next(total);
     }
   }
 }

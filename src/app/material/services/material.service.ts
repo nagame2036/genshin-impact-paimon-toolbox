@@ -39,6 +39,7 @@ export class MaterialService {
     private logger: NGXLogger,
   ) {
     this.updateMaterials();
+    this.filterMaterials();
   }
 
   getRequirement(type: ItemType, key: number): Observable<RequireDetail[]> {
@@ -93,10 +94,8 @@ export class MaterialService {
   private updateMaterials(): void {
     combineLatest([
       this.quantities.quantities,
-      this.requirements.getAll(),
-      this.rarityFilter,
-      this.showOverflow,
-    ]).subscribe(([quantities, requirements, rarities, showOverflow]) => {
+      this.requirements.total,
+    ]).subscribe(([quantities, requirements]) => {
       const materials = this.materials$.getValue();
       for (const [type, infos] of this.infos.typed) {
         for (const info of infos) {
@@ -117,7 +116,15 @@ export class MaterialService {
       this.infos.processSpecialMaterials(materials);
       this.logger.info('updated materials', materials);
       this.materials$.next(materials);
+    });
+  }
 
+  private filterMaterials(): void {
+    combineLatest([
+      this.materials$,
+      this.rarityFilter,
+      this.showOverflow,
+    ]).subscribe(([materials, rarities, showOverflow]) => {
       const filtered = new Map<MaterialType, MaterialDetail[]>();
       for (const material of materials.values()) {
         const {type, info, overflow} = material;
@@ -127,7 +134,9 @@ export class MaterialService {
           filtered.set(type, typedMaterials);
         }
       }
-      this.logger.info('filtered materials', filtered);
+      this.logger.info(
+        `filtered materials: rarities=${rarities}; showOverflow=${showOverflow}`,
+      );
       this.filtered$.next(filtered);
     });
   }
