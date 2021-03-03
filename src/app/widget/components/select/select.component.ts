@@ -49,7 +49,9 @@ export class SelectComponent implements OnChanges {
     this.value = value;
     this.changeValueText(this.value);
     this.changed.emit(value);
-    this.opened = false;
+    setTimeout(() => {
+      this.opened = false;
+    }, 10);
   }
 
   changeValueText(value: any): void {

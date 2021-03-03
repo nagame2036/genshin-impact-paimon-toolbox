@@ -4,13 +4,13 @@
   [ngClass]="{hover: hover, focus: focus}"
   (mouseenter)="hover = true"
   (mouseleave)="hover = false"
-  (click)="opened = true"
+  (click)="focus = opened = true"
 >
   <label form-label>
     <ng-content select="[form-label]"></ng-content>
   </label>
   <div class="select-container">
-    <div #prefix [ngClass]="{prefix: prefix.children.length > 0}">
+    <div #prefix [class.prefix]="prefix.children.length > 0">
       <ng-content select="[prefix]"></ng-content>
     </div>
     <input
@@ -24,13 +24,12 @@
     <div
       class="material-icons select-arrow"
       [ngClass]="{hover: hover, focus: focus}"
-      (click)="focus = opened = true"
     >
       keyboard_arrow_down
     </div>
     <ul
       class="select-dropdown"
-      [ngClass]="{opened: opened}"
+      [class.opened]="opened"
       [style.width.px]="container.width"
     >
       <li
@@ -49,7 +48,7 @@
         {{ option.text | translate }}
       </li>
     </ul>
-    <div #suffix [ngClass]="{suffix: suffix.children.length > 0}">
+    <div #suffix [class.suffix]="suffix.children.length > 0">
       <ng-content select="[suffix]"></ng-content>
     </div>
   </div>
