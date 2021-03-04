@@ -1,24 +1,50 @@
 @import '../../../widget/styles/form-field.scss';
 @import '../../styles/reached.scss';
 
-.form {
-  @apply flex;
-  @apply flex-row;
-  @apply place-content-center;
+.form-container {
+  @apply w-full;
+
+  ::ng-deep .form-field {
+    @apply mx-0;
+  }
 
   ::ng-deep .form-field-content {
     @apply p-0;
+    @apply relative;
   }
+}
 
-  app-select {
-    width: 5.5rem;
-    @apply flex-grow;
+.form {
+  width: 15.5rem;
+  height: 1.5rem;
+
+  .value {
+    @apply absolute;
+    width: 5.75rem;
+    height: 2rem;
+    top: -2rem;
+
+    &:first-child {
+      @apply pl-1;
+      @apply left-0;
+    }
+
+    &:last-child {
+      @apply pr-1;
+      @apply right-0;
+    }
 
     ::ng-deep .form-field {
       @apply border-0;
       @apply m-0;
       @apply p-0;
     }
+  }
+
+  .arrow {
+    @apply absolute;
+    top: -1rem;
+    left: 5.75rem;
   }
 }
 
