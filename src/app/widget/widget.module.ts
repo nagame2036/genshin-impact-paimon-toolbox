@@ -10,7 +10,7 @@ import {SelectComponent} from './components/select/select.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
 import {RingButtonComponent} from './components/ring-button/ring-button.component';
 import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
-import {RangeSliderComponent} from './components/range-slider/range-slider.component';
+import {SliderComponent} from './components/slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import {RangeSliderComponent} from './components/range-slider/range-slider.compo
     MultiSelectComponent,
     RingButtonComponent,
     NavTabsComponent,
-    RangeSliderComponent,
+    SliderComponent,
   ],
   imports: [SharedModule],
   exports: [
@@ -37,7 +37,7 @@ import {RangeSliderComponent} from './components/range-slider/range-slider.compo
     MultiSelectComponent,
     RingButtonComponent,
     NavTabsComponent,
-    RangeSliderComponent,
+    SliderComponent,
   ],
 })
 export class WidgetModule {}

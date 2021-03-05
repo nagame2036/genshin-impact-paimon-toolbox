@@ -20,23 +20,43 @@
           category="materials"
           [id]="material[0].info.id"
           [rarity]="material[0].info.rarity"
-          [width]="178"
+          [width]="158"
         >
         </app-item-view>
-        {{ material[0].have | number: '1.0-0' }}
-        /
-        {{ material[1] * times | number: '1.0-0' }}
+        <table>
+          <tr>
+            <td class="pr-2">
+              {{ i18n.module('have') | translate }}
+            </td>
+            <td class="text-right">
+              {{ material[0].have | number: '1.0-0' }}
+            </td>
+          </tr>
+          <tr>
+            <td class="pr-2">
+              {{ i18n.module('need') | translate }}
+            </td>
+            <td class="text-right">
+              {{ material[1] * times | number: '1.0-0' }}
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
     <div class="perform-times">
-      {{ this.i18n.module('performed-times') | translate: {num: times} }}
+      {{
+        (details[index].craftableAmount === 0
+          ? this.i18n.module('insufficient')
+          : this.i18n.module('performed-times')
+        ) | translate: {num: times}
+      }}
     </div>
-    <app-range-slider
+    <app-slider
       [value]="times"
       [min]="0"
       [max]="details[index].craftableAmount"
       (changed)="times = $event"
-    ></app-range-slider>
+    ></app-slider>
   </div>
   <div class="craft-actions" actions>
     <app-ring-button class="close-btn" (clicked)="close()">

@@ -1,5 +1,5 @@
 .craft-dialog {
-  width: 800px;
+  @apply w-full;
   @apply flex;
   @apply flex-col;
   @apply gap-2;
@@ -14,7 +14,7 @@
 }
 
 .recipe-material {
-  width: 180px;
+  width: 160px;
   @apply flex;
   @apply flex-col;
   @apply place-items-center;

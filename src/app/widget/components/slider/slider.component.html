@@ -1,0 +1,43 @@
+<div class="container">
+  <table class="input-container">
+    <tr>
+      <td rowspan="2">
+        <button
+          class="change-num-btn"
+          [class.disabled]="value - 1 < min"
+          (click)="change(-1)"
+        >
+          <span class="material-icons">remove</span>
+        </button>
+      </td>
+      <td class="slider-container">
+        <input
+          type="range"
+          class="slider"
+          [valueAsNumber]="value"
+          [min]="min"
+          [max]="max"
+          [step]="step"
+          (input)="emitChange(input.value)"
+          #input
+        />
+      </td>
+      <td rowspan="2">
+        <button
+          class="change-num-btn"
+          [class.disabled]="value + 1 > max"
+          (click)="change(1)"
+        >
+          <span class="material-icons">add</span>
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="tick-marks">
+          <div *ngFor="let i of range" class="tick-mark"></div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

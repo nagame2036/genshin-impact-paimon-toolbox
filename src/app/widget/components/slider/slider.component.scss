@@ -1,10 +1,6 @@
-.container {
+.input-container {
   @apply p-2;
-  @apply box-border;
   @apply w-full;
-  @apply flex;
-  @apply flex-row;
-  @apply gap-2;
 }
 
 .change-num-btn {
@@ -29,6 +25,28 @@
   }
 }
 
-.range-slider {
-  @apply flex-1;
+.slider-container {
+  @apply w-full;
+  @apply relative;
+}
+
+.slider {
+  @apply w-full;
+  @apply absolute;
+  @apply top-2;
+}
+
+.tick-marks {
+  @apply w-full;
+  @apply mt-4;
+  @apply px-1.5;
+  @apply flex;
+  @apply flex-row;
+  @apply place-content-between;
+}
+
+.tick-mark {
+  @apply h-2;
+  @apply border;
+  @apply border-black;
 }
