@@ -41,6 +41,8 @@
 
 .select-dropdown {
   @apply w-full;
+  @apply max-h-64;
+  @apply overflow-y-scroll;
   @apply hidden;
   @apply absolute;
   @apply top-7;
@@ -57,8 +59,8 @@
 }
 
 .select-option {
-  @apply px-4;
-  @apply py-2;
+  @apply px-2;
+  @apply py-0.5;
   @apply cursor-pointer;
   @apply bg-white;
   @apply hover:bg-primary-100;
