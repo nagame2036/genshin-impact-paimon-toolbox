@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Weapon, WeaponOverview} from '../models/weapon.model';
+import {WeaponOverview} from '../models/weapon.model';
 import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
 import {allWeaponTypes, WeaponType} from '../models/weapon-type.enum';
 import {I18n} from '../../widget/models/i18n.model';
@@ -7,14 +7,18 @@ import {NGXLogger} from 'ngx-logger';
 import {StatsType} from '../../game-common/models/stats.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 
-type WeaponSort = {
+type WeaponSort = (a: WeaponOverview, b: WeaponOverview) => number;
+
+type WeaponSortOption = {
   text: string;
-  value: (a: WeaponOverview, b: WeaponOverview) => number;
+  value: WeaponSort;
 };
 
-type WeaponInfoSort = {
+type WeaponInfoSort = (a: WeaponInfo, b: WeaponInfo) => number;
+
+type WeaponInfoSortOption = {
   text: string;
-  value: (a: WeaponInfo, b: WeaponInfo) => number;
+  value: WeaponInfoSort;
 };
 
 @Injectable({
@@ -23,7 +27,7 @@ type WeaponInfoSort = {
 export class WeaponViewService {
   private readonly i18n = new I18n('weapons');
 
-  readonly sorts: WeaponSort[] = [
+  readonly sorts: WeaponSortOption[] = [
     {
       text: this.i18n.dict('level'),
       value: ({progress: a}, {progress: b}) =>
@@ -50,16 +54,16 @@ export class WeaponViewService {
     ]),
   ];
 
-  sort = this.sorts[0].value;
+  sort = [this.sorts[0].value];
 
-  readonly infoSorts: WeaponInfoSort[] = [
+  readonly infoSorts: WeaponInfoSortOption[] = [
     {
       text: this.i18n.dict('rarity'),
       value: (a, b) => b.rarity - a.rarity,
     },
   ];
 
-  infoSort = this.infoSorts[0].value;
+  infoSort = [this.infoSorts[0].value];
 
   readonly rarities = allWeaponRarities.map(it => ({
     value: it,
@@ -80,24 +84,32 @@ export class WeaponViewService {
   view(weapons: WeaponOverview[]): WeaponOverview[] {
     return weapons
       .filter(c => this.filterInfo(c.info))
-      .sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
+      .sort(
+        (a, b) =>
+          this.sort.reduce((acc, curr) => acc || curr(a, b), 0) ||
+          b.info.id - a.info.id,
+      );
   }
 
   viewInfos(weapons: WeaponInfo[]): WeaponInfo[] {
     return weapons
       .filter(c => this.filterInfo(c))
-      .sort((a, b) => this.infoSort(a, b) || b.id - a.id);
+      .sort(
+        (a, b) =>
+          this.infoSort.reduce((acc, curr) => acc || curr(a, b), 0) ||
+          b.id - a.id,
+      );
   }
 
-  changeSort(sort: (a: Weapon, b: Weapon) => number): void {
+  changeSort(sort: WeaponSort[]): void {
     this.sort = sort;
-    const text = this.sorts.find(it => it.value === sort)?.text;
+    const text = sort.map(s => this.sorts.find(it => it.value === s)?.text);
     this.logger.info('updated sort', text);
   }
 
-  changeInfoSort(sort: (a: WeaponInfo, b: WeaponInfo) => number): void {
+  changeInfoSort(sort: WeaponInfoSort[]): void {
     this.infoSort = sort;
-    const text = this.infoSorts.find(it => it.value === sort)?.text;
+    const text = sort.map(s => this.infoSorts.find(it => it.value === s)?.text);
     this.logger.info('updated info sort', text);
   }
 
@@ -115,7 +127,7 @@ export class WeaponViewService {
     return this.rarityFilter.includes(rarity) && this.typeFilter.includes(type);
   }
 
-  private generateSorts(types: StatsType[]): WeaponSort[] {
+  private generateSorts(types: StatsType[]): WeaponSortOption[] {
     return types.map(type => ({
       text: this.i18n.stats(type),
       value: ({currentStats: a}, {currentStats: b}) =>

@@ -61,6 +61,8 @@
 .select-option {
   @apply px-2;
   @apply py-0.5;
+  @apply flex;
+  @apply flex-row;
   @apply cursor-pointer;
   @apply bg-white;
   @apply hover:bg-primary-100;
@@ -74,4 +76,13 @@
     @apply border-l-4;
     @apply border-primary-400;
   }
+}
+
+.order-hint {
+  @apply mr-1;
+}
+
+.select-option-text {
+  @apply flex-grow;
+  @apply truncate;
 }

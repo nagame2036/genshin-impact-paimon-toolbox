@@ -15,7 +15,7 @@ export class CharacterListHeaderComponent implements OnInit {
   sorts!: SelectOption[];
 
   @Input()
-  sort!: any;
+  sort!: any[];
 
   @Output()
   changed = new EventEmitter();

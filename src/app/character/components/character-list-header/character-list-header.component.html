@@ -1,14 +1,15 @@
 <div class="options">
-  <app-select
+  <app-multi-select
     class="option"
+    [ordered]="true"
     [options]="sorts"
-    [value]="sort"
+    [values]="sort"
     (changed)="sortChanged.emit($event)"
   >
     <span form-label>
       {{ i18n.dict('sort') | translate }}
     </span>
-  </app-select>
+  </app-multi-select>
   <app-multi-select
     class="option"
     [options]="view.rarities"

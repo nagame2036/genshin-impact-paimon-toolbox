@@ -33,6 +33,7 @@
       [style.width.px]="container.width"
     >
       <li
+        *ngIf="!ordered"
         class="select-option"
         [class.selected]="values.length === options.length"
         (click)="selectAll()"
@@ -45,7 +46,14 @@
         [class.selected]="values.includes(option.value)"
         (click)="change(option)"
       >
-        {{ option.text | translate }}
+        <ng-container *ngIf="values.indexOf(option.value) + 1 as index">
+          <div *ngIf="ordered && index >= 1" class="order-hint">
+            {{ index }}
+          </div>
+        </ng-container>
+        <div class="select-option-text">
+          {{ option.text | translate }}
+        </div>
       </li>
     </ul>
     <div #suffix [class.suffix]="suffix.children.length > 0">

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Character, CharacterOverview} from '../models/character.model';
+import {CharacterOverview} from '../models/character.model';
 import {
   allCharacterRarities,
   CharacterInfo,
@@ -13,14 +13,18 @@ import {I18n} from '../../widget/models/i18n.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 import {NGXLogger} from 'ngx-logger';
 
-type CharacterSort = {
+type CharacterSort = (a: CharacterOverview, b: CharacterOverview) => number;
+
+type CharacterSortOption = {
   text: string;
-  value: (a: CharacterOverview, b: CharacterOverview) => number;
+  value: CharacterSort;
 };
 
-type CharacterInfoSort = {
+type CharacterInfoSort = (a: CharacterInfo, b: CharacterInfo) => number;
+
+type CharacterInfoSortOption = {
   text: string;
-  value: (a: CharacterInfo, b: CharacterInfo) => number;
+  value: CharacterInfoSort;
 };
 
 @Injectable({
@@ -29,7 +33,7 @@ type CharacterInfoSort = {
 export class CharacterViewService {
   private readonly i18n = new I18n('characters');
 
-  readonly sorts: CharacterSort[] = [
+  readonly sorts: CharacterSortOption[] = [
     {
       text: this.i18n.dict('level'),
       value: ({progress: a}, {progress: b}) =>
@@ -46,13 +50,13 @@ export class CharacterViewService {
     },
   ];
 
-  sort = this.sorts[0].value;
+  sort = [this.sorts[0].value];
 
-  readonly infoSorts: CharacterInfoSort[] = [
+  readonly infoSorts: CharacterInfoSortOption[] = [
     {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
   ];
 
-  infoSort = this.infoSorts[0].value;
+  infoSort = [this.infoSorts[0].value];
 
   readonly rarities = allCharacterRarities.map(it => ({
     value: it,
@@ -80,25 +84,33 @@ export class CharacterViewService {
   view(characters: CharacterOverview[]): CharacterOverview[] {
     return characters
       .filter(c => this.filterInfo(c.info))
-      .sort((a, b) => this.sort(a, b) || b.info.id - a.info.id);
+      .sort(
+        (a, b) =>
+          this.sort.reduce((acc, curr) => acc || curr(a, b), 0) ||
+          b.info.id - a.info.id,
+      );
   }
 
   viewInfos(characters: CharacterInfo[]): CharacterInfo[] {
     return characters
       .filter(c => this.filterInfo(c))
-      .sort((a, b) => this.infoSort(a, b) || b.id - a.id);
+      .sort(
+        (a, b) =>
+          this.infoSort.reduce((acc, curr) => acc || curr(a, b), 0) ||
+          b.id - a.id,
+      );
   }
 
-  changeSort(sort: (a: Character, b: Character) => number): void {
+  changeSort(sort: CharacterSort[]): void {
     this.sort = sort;
-    const text = this.sorts.find(it => it.value === sort)?.text;
+    const text = sort.map(s => this.sorts.find(it => it.value === s)?.text);
     this.logger.info('updated sort', text);
   }
 
-  changeInfoSort(sort: (a: CharacterInfo, b: CharacterInfo) => number): void {
+  changeInfoSort(sort: CharacterInfoSort[]): void {
     this.infoSort = sort;
-    const text = this.infoSorts.find(it => it.value === sort)?.text;
-    this.logger.info('updated sort', text);
+    const text = sort.map(s => this.infoSorts.find(it => it.value === s)?.text);
+    this.logger.info('updated info sort', text);
   }
 
   filterRarity(value: Rarity[]): void {

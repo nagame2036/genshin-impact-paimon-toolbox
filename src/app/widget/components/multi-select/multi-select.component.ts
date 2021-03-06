@@ -30,6 +30,9 @@ export class MultiSelectComponent implements OnInit {
 
   optionsValues!: any[];
 
+  @Input()
+  ordered = false;
+
   @Output()
   changed = new EventEmitter<any[]>();
 
@@ -49,9 +52,11 @@ export class MultiSelectComponent implements OnInit {
   change(option: SelectOption): void {
     const item = option.value;
     this.values = toggleItem(this.values, item, it => it === item);
-    this.values.sort(
-      (a, b) => this.optionsValues.indexOf(a) - this.optionsValues.indexOf(b),
-    );
+    if (!this.ordered) {
+      this.values.sort(
+        (a, b) => this.optionsValues.indexOf(a) - this.optionsValues.indexOf(b),
+      );
+    }
     this.updateValuesText();
     this.changed.emit(this.values);
   }
@@ -60,7 +65,7 @@ export class MultiSelectComponent implements OnInit {
     const length = this.values.length;
     if (length === 0) {
       this.valuesText = this.translator.instant(this.i18n.dict('none'));
-    } else if (length === this.options.length) {
+    } else if (!this.ordered && length === this.options.length) {
       this.valuesText = this.translator.instant(this.i18n.dict('all'));
     } else {
       this.valuesText = this.values
