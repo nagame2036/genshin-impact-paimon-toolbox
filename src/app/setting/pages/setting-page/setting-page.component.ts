@@ -1,30 +1,27 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {I18n} from '../../../widget/models/i18n.model';
+import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
   languageSettingKey,
   supportedLanguages,
 } from '../../../app-translate.module';
-import {SettingService} from '../../../setting/services/setting.service';
+import {I18n} from '../../../widget/models/i18n.model';
+import {SettingService} from '../../services/setting.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-settings-page',
+  templateUrl: './setting-page.component.html',
+  styleUrls: ['./setting-page.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  i18n = new I18n('core');
-
-  @Output()
-  showMenu = new EventEmitter<boolean>();
+export class SettingPageComponent implements OnInit {
+  i18n = new I18n('settings');
 
   languages = supportedLanguages;
 
   currentLanguage = '';
 
   constructor(
-    private settings: SettingService,
     private translator: TranslateService,
+    private settings: SettingService,
   ) {
     settings
       .get(languageSettingKey, () => supportedLanguages[0].value)

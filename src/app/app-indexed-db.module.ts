@@ -3,8 +3,13 @@ import {DBConfig, NgxIndexedDBModule} from 'ngx-indexed-db';
 
 const config: DBConfig = {
   name: 'PaimonToolbox',
-  version: 1,
+  version: 2,
   objectStoresMeta: [
+    {
+      store: 'settings',
+      storeConfig: {keyPath: 'id', autoIncrement: false},
+      storeSchema: [],
+    },
     {
       store: 'materials',
       storeConfig: {keyPath: 'id', autoIncrement: false},

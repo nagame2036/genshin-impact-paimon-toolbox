@@ -1,14 +1,14 @@
 <header class="toolbar">
   <div class="toolbar-left">
     <button class="toolbar-btn" (click)="showMenu.emit(true)">
-      <span class="material-icons"> menu </span>
+      <span class="material-icons">menu</span>
     </button>
     <h1 class="title">
       {{ i18n.dict('title') | translate }}
     </h1>
   </div>
   <div class="language-settings">
-    <span id="language-btn" class="material-icons toolbar-btn"> language </span>
+    <span id="language-btn" class="material-icons toolbar-btn">language</span>
     <ul class="language-menu">
       <li
         *ngFor="let lang of languages"

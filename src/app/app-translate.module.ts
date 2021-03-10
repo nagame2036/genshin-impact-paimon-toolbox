@@ -3,6 +3,8 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
+export const languageSettingKey = 'app-language';
+
 export const supportedLanguages = [
   {value: 'zh-hans', text: '简体中文'},
   {value: 'en', text: 'English'},
