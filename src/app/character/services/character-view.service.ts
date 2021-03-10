@@ -11,128 +11,134 @@ import {
 import {allWeaponTypes, WeaponType} from '../../weapon/models/weapon-type.enum';
 import {I18n} from '../../widget/models/i18n.model';
 import {Rarity} from '../../game-common/models/rarity.type';
-import {NGXLogger} from 'ngx-logger';
+import {Observable, ReplaySubject} from 'rxjs';
+import {SettingService} from '../../setting/services/setting.service';
+import {CharacterViewOptions} from '../models/character-view-options.model';
+import {first, map} from 'rxjs/operators';
+import {sortItems} from '../../shared/utils/collections';
+
+const i18n = new I18n('characters');
 
 type CharacterSort = (a: CharacterOverview, b: CharacterOverview) => number;
 
-type CharacterSortOption = {
-  text: string;
-  value: CharacterSort;
-};
+const sortMap = new Map<string, CharacterSort>([
+  [
+    i18n.dict('level'),
+    ({progress: a}, {progress: b}) =>
+      b.ascension - a.ascension || b.level - a.level,
+  ],
+  [i18n.dict('rarity'), ({info: a}, {info: b}) => b.rarity - a.rarity],
+  [
+    i18n.dict('constellation'),
+    ({progress: a}, {progress: b}) => b.constellation - a.constellation,
+  ],
+]);
 
 type CharacterInfoSort = (a: CharacterInfo, b: CharacterInfo) => number;
 
-type CharacterInfoSortOption = {
-  text: string;
-  value: CharacterInfoSort;
-};
+const infoSortMap = new Map<string, CharacterInfoSort>([
+  [i18n.dict('rarity'), (a, b) => b.rarity - a.rarity],
+]);
 
 @Injectable({
   providedIn: 'root',
 })
 export class CharacterViewService {
-  private readonly i18n = new I18n('characters');
+  private readonly settingKey = 'character-view';
 
-  readonly sorts: CharacterSortOption[] = [
-    {
-      text: this.i18n.dict('level'),
-      value: ({progress: a}, {progress: b}) =>
-        b.ascension - a.ascension || b.level - a.level,
-    },
-    {
-      text: this.i18n.dict('rarity'),
-      value: ({info: a}, {info: b}) => b.rarity - a.rarity,
-    },
-    {
-      text: this.i18n.dict('constellation'),
-      value: ({progress: a}, {progress: b}) =>
-        b.constellation - a.constellation,
-    },
-  ];
+  readonly sorts = [...sortMap].map(([text]) => ({text, value: text}));
 
-  sort = [this.sorts[0].value];
-
-  readonly infoSorts: CharacterInfoSortOption[] = [
-    {text: this.i18n.dict('rarity'), value: (a, b) => b.rarity - a.rarity},
-  ];
-
-  infoSort = [this.infoSorts[0].value];
+  readonly infoSorts = [...infoSortMap].map(([text]) => ({text, value: text}));
 
   readonly rarities = allCharacterRarities.map(it => ({
     value: it,
     text: `★${it}`,
   }));
 
-  rarityFilter = allCharacterRarities;
-
   readonly elements = allElements.map(it => ({
     value: it,
-    text: this.i18n.dict(`elements.${it}`),
+    text: i18n.dict(`elements.${it}`),
   }));
-
-  elementFilter = allElements;
 
   readonly weapons = allWeaponTypes.map(it => ({
     value: it,
-    text: this.i18n.dict(`weapon-types.${it}`),
+    text: i18n.dict(`weapon-types.${it}`),
   }));
 
-  weaponFilter = allWeaponTypes;
+  private options$ = new ReplaySubject<CharacterViewOptions>(1);
 
-  constructor(private logger: NGXLogger) {}
+  readonly options = this.options$.asObservable();
 
-  view(characters: CharacterOverview[]): CharacterOverview[] {
-    return characters
-      .filter(c => this.filterInfo(c.info))
-      .sort(
-        (a, b) =>
-          this.sort.reduce((acc, curr) => acc || curr(a, b), 0) ||
-          b.info.id - a.info.id,
-      );
+  constructor(private settings: SettingService) {
+    settings
+      .get(this.settingKey, () => ({
+        sort: [this.sorts[0].text],
+        infoSort: [this.infoSorts[0].text],
+        rarities: allCharacterRarities,
+        elements: allElements,
+        weapons: allWeaponTypes,
+      }))
+      .subscribe(options => this.options$.next(options));
   }
 
-  viewInfos(characters: CharacterInfo[]): CharacterInfo[] {
-    return characters
-      .filter(c => this.filterInfo(c))
-      .sort(
-        (a, b) =>
-          this.infoSort.reduce((acc, curr) => acc || curr(a, b), 0) ||
-          b.id - a.id,
-      );
-  }
-
-  changeSort(sort: CharacterSort[]): void {
-    this.sort = sort;
-    const text = sort.map(s => this.sorts.find(it => it.value === s)?.text);
-    this.logger.info('updated sort', text);
-  }
-
-  changeInfoSort(sort: CharacterInfoSort[]): void {
-    this.infoSort = sort;
-    const text = sort.map(s => this.infoSorts.find(it => it.value === s)?.text);
-    this.logger.info('updated info sort', text);
-  }
-
-  filterRarity(value: Rarity[]): void {
-    this.rarityFilter = value;
-    this.logger.info('updated rarityFilter', value);
-  }
-
-  filterElement(value: ElementType[]): void {
-    this.elementFilter = value;
-    this.logger.info('updated elementFilter', value);
-  }
-
-  filterWeapon(value: WeaponType[]): void {
-    this.weaponFilter = value;
-    this.logger.info('updated weaponFilter', value);
-  }
-
-  private filterInfo({element, rarity, weapon}: CharacterInfo): boolean {
-    return (
-      this.rarityFilter.includes(rarity) &&
-      this.elementFilter.includes(element) &&
-      this.weaponFilter.includes(weapon)
+  view(characters: CharacterOverview[]): Observable<CharacterOverview[]> {
+    return this.options.pipe(
+      first(),
+      map(options => {
+        const sorts = options.sort.map(it => sortMap.get(it) ?? (() => 0));
+        const filtered = characters.filter(c => filterInfo(c.info, options));
+        return sortItems(filtered, [...sorts, (a, b) => b.info.id - a.info.id]);
+      }),
     );
   }
+
+  viewInfos(characters: CharacterInfo[]): Observable<CharacterInfo[]> {
+    return this.options.pipe(
+      first(),
+      map(options => {
+        const option = options.infoSort;
+        const sorts = option.map(it => infoSortMap.get(it) ?? (() => 0));
+        const filtered = characters.filter(c => filterInfo(c, options));
+        return sortItems(filtered, [...sorts, (a, b) => b.id - a.id]);
+      }),
+    );
+  }
+
+  changeSort(sort: string[]): void {
+    this.updateView({sort});
+  }
+
+  changeInfoSort(sort: string[]): void {
+    this.updateView({infoSort: sort});
+  }
+
+  filterRarity(rarities: Rarity[]): void {
+    this.updateView({rarities});
+  }
+
+  filterElement(elements: ElementType[]): void {
+    this.updateView({elements});
+  }
+
+  filterWeapon(weapons: WeaponType[]): void {
+    this.updateView({weapons});
+  }
+
+  private updateView(update: Partial<CharacterViewOptions>): void {
+    this.options.pipe(first()).subscribe(options => {
+      Object.assign(options, update);
+      this.settings.set(this.settingKey, options);
+    });
+  }
+}
+
+function filterInfo(
+  {rarity, element, weapon}: CharacterInfo,
+  {rarities, elements, weapons}: CharacterViewOptions,
+): boolean {
+  return (
+    rarities.includes(rarity) &&
+    elements.includes(element) &&
+    weapons.includes(weapon)
+  );
 }

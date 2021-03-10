@@ -22,3 +22,10 @@ export function objectMap<T extends {id: number}>(obj: {
   }
   return result;
 }
+
+export function sortItems<T>(
+  items: T[],
+  sorts: ((a: T, b: T) => number)[],
+): T[] {
+  return items.sort((a, b) => sorts.reduce((acc, it) => acc || it(a, b), 0));
+}

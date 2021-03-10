@@ -1,6 +1,7 @@
 <app-character-list-header
+  *ngIf="view.options | async as options"
   [sorts]="view.sorts"
-  [sort]="view.sort"
+  [sort]="options.sort"
   (changed)="update()"
   (sortChanged)="view.changeSort($event); update()"
 >

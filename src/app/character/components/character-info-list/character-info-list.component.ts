@@ -44,8 +44,9 @@ export class CharacterInfoListComponent implements OnChanges {
   }
 
   update(): void {
-    this.items = this.view.viewInfos(this.characters);
-    this.logger.info('updated items', this.items);
+    this.view.viewInfos(this.characters).subscribe(items => {
+      this.items = items;
+    });
   }
 
   select(item: CharacterInfo): void {

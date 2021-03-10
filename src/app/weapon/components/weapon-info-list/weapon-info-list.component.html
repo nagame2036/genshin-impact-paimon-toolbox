@@ -1,6 +1,7 @@
 <app-weapon-list-header
+  *ngIf="view.options | async as options"
   [sorts]="view.infoSorts"
-  [sort]="view.infoSort"
+  [sort]="options.infoSort"
   (changed)="update()"
   (sortChanged)="view.changeInfoSort($event); update()"
 >

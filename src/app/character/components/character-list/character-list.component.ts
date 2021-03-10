@@ -58,8 +58,9 @@ export class CharacterListComponent
   }
 
   update(): void {
-    this.items = this.view.view(this.characters);
-    this.logger.info('updated items', this.items);
+    this.view.view(this.characters).subscribe(items => {
+      this.items = items;
+    });
   }
 
   select(character: Character): void {

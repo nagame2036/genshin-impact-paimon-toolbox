@@ -44,8 +44,9 @@ export class WeaponInfoListComponent implements OnChanges {
   }
 
   update(): void {
-    this.items = this.view.viewInfos(this.weapons);
-    this.logger.info('updated items', this.items);
+    this.view.viewInfos(this.weapons).subscribe(items => {
+      this.items = items;
+    });
   }
 
   select(item: WeaponInfo): void {

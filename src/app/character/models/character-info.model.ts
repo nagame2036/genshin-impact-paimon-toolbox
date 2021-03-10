@@ -8,7 +8,7 @@ import {
   CharacterStatsInfo,
 } from './character-stats.model';
 
-export const allCharacterRarities = [5, 4];
+export const allCharacterRarities: Rarity[] = [5, 4];
 
 /**
  * Represents the game data info of a character.

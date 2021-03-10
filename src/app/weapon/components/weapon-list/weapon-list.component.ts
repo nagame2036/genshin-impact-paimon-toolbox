@@ -58,8 +58,9 @@ export class WeaponListComponent
   }
 
   update(): void {
-    this.items = this.view.view(this.weapons);
-    this.logger.info('updated items', this.items);
+    this.view.view(this.weapons).subscribe(items => {
+      this.items = items;
+    });
   }
 
   select(weapon: Weapon): void {

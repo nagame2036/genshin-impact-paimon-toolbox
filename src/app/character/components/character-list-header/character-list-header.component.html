@@ -1,4 +1,4 @@
-<div class="options">
+<div *ngIf="view.options | async as options" class="options">
   <app-multi-select
     class="option"
     [ordered]="true"
@@ -13,7 +13,7 @@
   <app-multi-select
     class="option"
     [options]="view.rarities"
-    [values]="view.rarityFilter"
+    [values]="options.rarities"
     (changed)="view.filterRarity($event); changed.emit()"
   >
     <span form-label>
@@ -23,7 +23,7 @@
   <app-multi-select
     class="option"
     [options]="view.elements"
-    [values]="view.elementFilter"
+    [values]="options.elements"
     (changed)="view.filterElement($event); changed.emit()"
   >
     <span form-label>
@@ -33,7 +33,7 @@
   <app-multi-select
     class="option"
     [options]="view.weapons"
-    [values]="view.weaponFilter"
+    [values]="options.weapons"
     (changed)="view.filterWeapon($event); changed.emit()"
   >
     <span form-label>

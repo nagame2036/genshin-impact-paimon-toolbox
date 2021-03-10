@@ -3,7 +3,7 @@ import {Rarity} from '../../game-common/models/rarity.type';
 import {ExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {WeaponStatsInfo} from './weapon-stats.model';
 
-export const allWeaponRarities = [5, 4, 3];
+export const allWeaponRarities: Rarity[] = [5, 4, 3];
 
 /**
  * Represents the game data info of a weapon.
