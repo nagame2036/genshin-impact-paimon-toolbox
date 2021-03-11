@@ -1,0 +1,8 @@
+<div class="not-found-page">
+  <img src="../../../../assets/images/stickers/1.webp" alt="404" />
+  <span class="text-2xl font-bold">404</span>
+  <span>{{ i18n.error('404') | translate }}</span>
+  <app-ring-button class="return-btn" (clicked)="goBack()">
+    {{ i18n.dict('return-previous-page') | translate }}
+  </app-ring-button>
+</div>

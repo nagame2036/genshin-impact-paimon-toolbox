@@ -35,6 +35,14 @@ const routes: Routes = [
     path: 'resin',
     loadChildren: () => import('./resin/resin.module').then(m => m.ResinModule),
   },
+  {
+    path: 'error',
+    loadChildren: () => import('./error/error.module').then(m => m.ErrorModule),
+  },
+  {
+    path: '**',
+    redirectTo: 'error',
+  },
 ];
 
 @NgModule({

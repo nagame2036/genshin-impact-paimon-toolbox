@@ -132,6 +132,9 @@
     }
   },
   "dict": {
+    "errors": {
+      "404": "这片区域不存在，以后再来探索吧！"
+    },
     "title": "派蒙工具箱",
     "menu": "菜单",
     "and": "和",
@@ -146,6 +149,7 @@
     "select-all": "全选",
     "confirm": "我已确定",
     "cancel": "我再想想",
+    "return-previous-page": "返回上一页",
     "rarity": "稀有度",
     "type": "类型",
     "character": "角色",

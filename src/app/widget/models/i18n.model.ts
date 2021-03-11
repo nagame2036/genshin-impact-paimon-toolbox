@@ -16,4 +16,8 @@ export class I18n {
   stats(key: string): string {
     return `dict.stats.${key}`;
   }
+
+  error(key: string): string {
+    return `dict.errors.${key}`;
+  }
 }
