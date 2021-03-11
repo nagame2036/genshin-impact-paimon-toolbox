@@ -11,6 +11,7 @@ import {map, tap} from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
+import {generateItemId} from '../../game-common/utils/generate-id';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class WeaponService {
   }
 
   create(info: WeaponInfo): WeaponOverview {
-    const id = new Date().getTime() * 100 + ItemType.WEAPON;
+    const id = generateItemId(ItemType.WEAPON);
     const progress = this.progressor.create(info, id);
     const plan = this.planner.create(info, id);
     const weapon = {info, progress, plan};
