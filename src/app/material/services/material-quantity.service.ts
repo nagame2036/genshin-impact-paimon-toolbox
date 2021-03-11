@@ -50,6 +50,7 @@ export class MaterialQuantityService {
       });
     forkJoin(updateObs).subscribe(_ => {
       this.logger.info('change materials quantities', materialChanges);
+      this.quantities.combine(materialChanges);
       this.changes$.next(changes);
     });
   }

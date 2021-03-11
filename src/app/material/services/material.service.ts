@@ -52,10 +52,14 @@ export class MaterialService {
 
   getCraftDetails(
     item: MaterialDetail,
-  ): {usage: MaterialDetail[]; craftableAmount: number}[] {
-    const details = this.crafter.getCraftDetails(item, this.materials);
-    this.logger.info('sent craft details', item, details);
-    return details;
+  ): Observable<{usage: MaterialDetail[]; craftableAmount: number}[]> {
+    return this.updated.pipe(
+      map(_ => {
+        const details = this.crafter.getCraftDetails(item, this.materials);
+        this.logger.info('sent craft details', item, details);
+        return details;
+      }),
+    );
   }
 
   updateHave(id: number, have: number): void {

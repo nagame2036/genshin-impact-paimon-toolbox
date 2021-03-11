@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {MaterialService} from '../../services/material.service';
@@ -7,13 +7,14 @@ import {CraftRecipe, MaterialDetail} from '../../models/material.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 import {coerceIn} from '../../../shared/utils/coerce';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-craft-dialog',
   templateUrl: './craft-dialog.component.html',
   styleUrls: ['./craft-dialog.component.scss'],
 })
-export class CraftDialogComponent implements OnInit {
+export class CraftDialogComponent implements OnInit, OnDestroy {
   i18n = new I18n('inventory');
 
   item!: MaterialDetail;
@@ -36,6 +37,8 @@ export class CraftDialogComponent implements OnInit {
    */
   times = 0;
 
+  subscription?: Subscription;
+
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
@@ -49,6 +52,10 @@ export class CraftDialogComponent implements OnInit {
     this.logger.info('init');
   }
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
   open(item: MaterialDetail): void {
     const recipes = item.info.recipes;
     if (!recipes) {
@@ -57,16 +64,19 @@ export class CraftDialogComponent implements OnInit {
     this.item = item;
     this.times = 0;
     this.index = 0;
-    const details = this.service.getCraftDetails(item);
-    this.details = details;
-    this.recipes = this.recipeOptions(recipes, details);
-    this.changeRecipe(this.recipes[this.index].value);
-    this.logger.info('received material craft details', item, details);
-    this.dialog.open();
-    this.logger.info('opened with item', item);
+    this.subscription = this.service
+      .getCraftDetails(item)
+      .subscribe(details => {
+        this.details = details;
+        this.recipes = this.recipeOptions(recipes, details);
+        this.changeRecipe(this.recipes[this.index].value);
+        this.logger.info('received material craft details', item, details);
+        this.dialog.open();
+      });
   }
 
   close(): void {
+    this.subscription?.unsubscribe();
     this.dialog.close();
   }
 
