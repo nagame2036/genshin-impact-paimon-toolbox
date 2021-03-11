@@ -9,9 +9,15 @@ export type ImageType =
   | 'weapon-types'
   | 'weapons';
 
-const characterMapping = new Map([
+const characterPortraitMapping = new Map([
   [1002, 1001],
   [1012, 1011],
+]);
+
+const characterMapping = new Map([
+  [1001, 1001],
+  [1011, 1001],
+  [1012, 1001],
 ]);
 
 const materialMapping = new Map([[200, 100]]);
@@ -35,7 +41,7 @@ const enemiesMapping = new Map([
 })
 export class ImageService {
   private readonly specificImages = new Map<ImageType, Map<number, number>>([
-    ['character-portraits', characterMapping],
+    ['character-portraits', characterPortraitMapping],
     ['characters', characterMapping],
     ['materials', materialMapping],
     ['enemies', enemiesMapping],
