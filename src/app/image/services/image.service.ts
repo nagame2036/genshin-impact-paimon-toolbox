@@ -15,7 +15,7 @@ const characterPortraitMapping = new Map([
 ]);
 
 const characterMapping = new Map([
-  [1001, 1001],
+  [1002, 1001],
   [1011, 1001],
   [1012, 1001],
 ]);
