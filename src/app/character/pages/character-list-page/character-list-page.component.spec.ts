@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CharacterPageComponent} from './character-page.component';
+import {CharacterListPageComponent} from './character-list-page.component';
 import {CharacterModule} from '../../character.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
-describe('CharacterPageComponent', () => {
-  let component: CharacterPageComponent;
-  let fixture: ComponentFixture<CharacterPageComponent>;
+describe('CharacterListPageComponent', () => {
+  let component: CharacterListPageComponent;
+  let fixture: ComponentFixture<CharacterListPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CharacterPageComponent],
+      declarations: [CharacterListPageComponent],
       imports: [CharacterModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterPageComponent);
+    fixture = TestBed.createComponent(CharacterListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

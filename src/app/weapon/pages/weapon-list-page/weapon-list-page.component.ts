@@ -8,11 +8,11 @@ import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-weapon-page',
-  templateUrl: './weapon-page.component.html',
-  styleUrls: ['./weapon-page.component.scss'],
+  selector: 'app-weapon-list-page',
+  templateUrl: './weapon-list-page.component.html',
+  styleUrls: ['./weapon-list-page.component.scss'],
 })
-export class WeaponPageComponent implements OnInit {
+export class WeaponListPageComponent implements OnInit {
   i18n = new I18n('weapons');
 
   weapons$!: Observable<WeaponOverview[]>;
@@ -42,7 +42,7 @@ export class WeaponPageComponent implements OnInit {
   }
 
   goToDetail(weapon: Weapon): void {
-    this.router.navigate(['weapons', weapon.progress.id]).then();
+    this.router.navigate(['weapons/progresses', weapon.progress.id]).then();
   }
 
   remove(): void {

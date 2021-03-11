@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {WeaponService} from '../../services/weapon.service';
 import {first, switchMap} from 'rxjs/operators';
@@ -23,23 +23,26 @@ export class WeaponDetailComponent implements OnInit {
 
   constructor(
     private weapons: WeaponService,
+    private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     private logger: NGXLogger,
   ) {}
 
   ngOnInit(): void {
-    this.logger.info('init');
     this.route.params
       .pipe(
         switchMap(params => this.weapons.get(Number(params.id))),
         first(),
       )
-      .subscribe(weapon => {
-        this.logger.info('received weapon detail', weapon);
-        this.weapon = weapon;
-        this.weaponId = weapon.info.id;
-      });
+      .subscribe(
+        weapon => {
+          this.logger.info('received weapon detail', weapon);
+          this.weapon = weapon;
+          this.weaponId = weapon.info.id;
+        },
+        _ => this.router.navigate(['error/404']),
+      );
   }
 
   goBack(): void {

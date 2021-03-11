@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WeaponPageComponent} from './weapon-page.component';
+import {WeaponListPageComponent} from './weapon-list-page.component';
 import {WeaponModule} from '../../weapon.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
-describe('WeaponPageComponent', () => {
-  let component: WeaponPageComponent;
-  let fixture: ComponentFixture<WeaponPageComponent>;
+describe('WeaponListPageComponent', () => {
+  let component: WeaponListPageComponent;
+  let fixture: ComponentFixture<WeaponListPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WeaponPageComponent],
+      declarations: [WeaponListPageComponent],
       imports: [WeaponModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WeaponPageComponent);
+    fixture = TestBed.createComponent(WeaponListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

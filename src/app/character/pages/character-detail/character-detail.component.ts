@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {CharacterService} from '../../services/character.service';
 import {first, switchMap} from 'rxjs/operators';
@@ -25,23 +25,26 @@ export class CharacterDetailComponent implements OnInit {
   constructor(
     private characters: CharacterService,
     public images: ImageService,
+    private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     private logger: NGXLogger,
   ) {}
 
   ngOnInit(): void {
-    this.logger.info('init');
     this.route.params
       .pipe(
         switchMap(params => this.characters.get(Number(params.id))),
         first(),
       )
-      .subscribe(character => {
-        this.logger.info('received character detail', character);
-        this.character = character;
-        this.characterId = character.info.id;
-      });
+      .subscribe(
+        character => {
+          this.logger.info('received character detail', character);
+          this.character = character;
+          this.characterId = character.info.id;
+        },
+        _ => this.router.navigate(['error/404']),
+      );
   }
 
   goBack(): void {

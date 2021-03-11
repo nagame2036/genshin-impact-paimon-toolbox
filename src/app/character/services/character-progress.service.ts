@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {map} from 'rxjs/operators';
 import {CharacterInfo} from '../models/character-info.model';
@@ -15,29 +15,25 @@ import {CharacterInfoService} from './character-info.service';
 export class CharacterProgressService {
   private readonly store = 'character-progresses';
 
-  private inProgress$ = new ReplaySubject<Map<number, CharacterProgress>>(1);
+  readonly inProgress = new Map<number, CharacterProgress>();
 
-  readonly inProgress = this.inProgress$.asObservable();
+  readonly noProgress = new Map<number, CharacterInfo>(this.information.infos);
 
-  private noProgress$ = new ReplaySubject<Map<number, CharacterInfo>>(1);
-
-  readonly noProgress = this.noProgress$.asObservable();
+  readonly ready = new ReplaySubject(1);
 
   constructor(
     private database: NgxIndexedDBService,
-    private infos: CharacterInfoService,
+    private information: CharacterInfoService,
     private logger: NGXLogger,
   ) {
     database.getAll(this.store).subscribe(progresses => {
       this.logger.info('fetched in-progress characters', progresses);
-      const inProgress = new Map<number, CharacterProgress>();
-      const noProgress = new Map<number, CharacterInfo>(infos.infos);
       for (const progress of progresses) {
-        inProgress.set(progress.id, progress);
-        noProgress.delete(progress.id);
+        this.inProgress.set(progress.id, progress);
+        this.noProgress.delete(progress.id);
       }
-      this.inProgress$.next(inProgress);
-      this.noProgress$.next(noProgress);
+      this.ready.next();
+      this.ready.complete();
     });
   }
 
@@ -48,28 +44,22 @@ export class CharacterProgressService {
   }
 
   update({progress}: Character): Observable<void> {
-    const update = this.database.update(this.store, progress);
-    return zip(update, this.inProgress, this.noProgress).pipe(
-      map(([, inProgress, noProgress]) => {
+    return this.database.update(this.store, progress).pipe(
+      map(_ => {
         this.logger.info('updated character progress', progress);
-        inProgress.set(progress.id, progress);
-        noProgress.delete(progress.id);
-        this.inProgress$.next(inProgress);
-        this.noProgress$.next(noProgress);
+        this.inProgress.set(progress.id, progress);
+        this.noProgress.delete(progress.id);
       }),
     );
   }
 
   remove({info, progress}: Character): Observable<void> {
     const {id} = progress;
-    const remove = this.database.delete(this.store, id);
-    return zip(remove, this.inProgress, this.noProgress).pipe(
-      map(([, inProgress, noProgress]) => {
+    return this.database.delete(this.store, id).pipe(
+      map(_ => {
         this.logger.info('removed character progress', progress);
-        inProgress.delete(id);
-        noProgress.set(info.id, info);
-        this.inProgress$.next(inProgress);
-        this.noProgress$.next(noProgress);
+        this.inProgress.delete(id);
+        this.noProgress.set(info.id, info);
       }),
     );
   }
@@ -78,15 +68,13 @@ export class CharacterProgressService {
     const remove = list.map(it =>
       this.database.delete(this.store, it.progress.id),
     );
-    return zip(forkJoin(remove), this.inProgress, this.noProgress).pipe(
-      map(([, inProgress, noProgress]) => {
+    return forkJoin(remove).pipe(
+      map(_ => {
         this.logger.info('removed character progresses', list);
         for (const {info, progress} of list) {
-          inProgress.delete(progress.id);
-          noProgress.set(info.id, info);
+          this.inProgress.delete(progress.id);
+          this.noProgress.set(info.id, info);
         }
-        this.inProgress$.next(inProgress);
-        this.noProgress$.next(noProgress);
       }),
     );
   }

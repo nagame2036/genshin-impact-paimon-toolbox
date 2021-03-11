@@ -8,11 +8,11 @@ import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-character-page',
-  templateUrl: './character-page.component.html',
-  styleUrls: ['./character-page.component.scss'],
+  selector: 'app-character-list-page',
+  templateUrl: './character-list-page.component.html',
+  styleUrls: ['./character-list-page.component.scss'],
 })
-export class CharacterPageComponent implements OnInit {
+export class CharacterListPageComponent implements OnInit {
   i18n = new I18n('characters');
 
   characters$!: Observable<CharacterOverview[]>;
@@ -42,7 +42,9 @@ export class CharacterPageComponent implements OnInit {
   }
 
   goToDetail(character: Character): void {
-    this.router.navigate(['characters', character.progress.id]).then();
+    this.router
+      .navigate(['characters/progresses', character.progress.id])
+      .then();
   }
 
   remove(): void {

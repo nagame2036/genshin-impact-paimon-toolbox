@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
 import {map} from 'rxjs/operators';
@@ -26,9 +26,9 @@ export class CharacterPlanner {
 
   private readonly store = 'character-plans';
 
-  private plans$ = new ReplaySubject<Map<number, CharacterPlan>>(1);
+  readonly plans = new Map<number, CharacterPlan>();
 
-  readonly plans = this.plans$.asObservable();
+  readonly ready = new ReplaySubject(1);
 
   constructor(
     private characterReq: CharacterRequirementService,
@@ -38,11 +38,13 @@ export class CharacterPlanner {
     private database: NgxIndexedDBService,
     private logger: NGXLogger,
   ) {
-    this.database.getAll(this.store).subscribe(persisted => {
-      this.logger.info('fetched character plans', persisted);
-      const plans = new Map<number, CharacterPlan>();
-      persisted.forEach(p => plans.set(p.id, p));
-      this.plans$.next(plans);
+    this.database.getAll(this.store).subscribe(plans => {
+      this.logger.info('fetched character plans', plans);
+      for (const p of plans) {
+        this.plans.set(p.id, p);
+      }
+      this.ready.next();
+      this.ready.complete();
     });
   }
 
@@ -81,12 +83,10 @@ export class CharacterPlanner {
 
   update(character: Character): Observable<void> {
     const plan = character.plan;
-    const update = this.database.update(this.store, plan);
-    return zip(update, this.plans).pipe(
-      map(([, plans]) => {
+    return this.database.update(this.store, plan).pipe(
+      map(_ => {
         this.logger.info('updated character plan', plan);
-        plans.set(plan.id, plan);
-        this.plans$.next(plans);
+        this.plans.set(plan.id, plan);
         this.updateRequire(character);
       }),
     );
@@ -94,12 +94,10 @@ export class CharacterPlanner {
 
   remove({plan}: Character): Observable<void> {
     const id = plan.id;
-    const remove = this.database.delete(this.store, id);
-    return zip(remove, this.plans).pipe(
-      map(([, plans]) => {
+    return this.database.delete(this.store, id).pipe(
+      map(_ => {
         this.logger.info('removed character plan', plan);
-        plans.delete(id);
-        this.plans$.next(plans);
+        this.plans.delete(id);
         this.materials.removeRequire(this.type, id);
       }),
     );
@@ -108,11 +106,10 @@ export class CharacterPlanner {
   removeAll(characters: Character[]): Observable<void> {
     const planIds = characters.map(it => it.plan.id);
     const remove = planIds.map(it => this.database.delete(this.store, it));
-    return zip(forkJoin(remove), this.plans).pipe(
-      map(([, plans]) => {
+    return forkJoin(remove).pipe(
+      map(_ => {
         this.logger.info('removed character plans', characters);
-        planIds.forEach(it => plans.delete(it));
-        this.plans$.next(plans);
+        planIds.forEach(it => this.plans.delete(it));
         this.materials.removeAllRequire(this.type, planIds);
       }),
     );

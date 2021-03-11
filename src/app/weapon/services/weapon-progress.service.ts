@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {WeaponProgress} from '../models/weapon-progress.model';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
@@ -13,11 +13,9 @@ import {Weapon} from '../models/weapon.model';
 export class WeaponProgressService {
   private readonly store = 'weapon-progresses';
 
-  private readonly inProgress$ = new ReplaySubject<Map<number, WeaponProgress>>(
-    1,
-  );
+  readonly inProgress = new Map<number, WeaponProgress>();
 
-  readonly inProgress = this.inProgress$.asObservable();
+  readonly ready = new ReplaySubject(1);
 
   constructor(
     private database: NgxIndexedDBService,
@@ -25,11 +23,11 @@ export class WeaponProgressService {
   ) {
     database.getAll(this.store).subscribe(progresses => {
       this.logger.info('fetched in-progress weapons', progresses);
-      const inProgress = new Map<number, WeaponProgress>();
       for (const progress of progresses) {
-        inProgress.set(progress.id, progress);
+        this.inProgress.set(progress.id, progress);
       }
-      this.inProgress$.next(inProgress);
+      this.ready.next();
+      this.ready.complete();
     });
   }
 
@@ -38,24 +36,20 @@ export class WeaponProgressService {
   }
 
   update({progress}: Weapon): Observable<void> {
-    const update = this.database.update(this.store, progress);
-    return zip(update, this.inProgress).pipe(
-      map(([, inProgress]) => {
+    return this.database.update(this.store, progress).pipe(
+      map(_ => {
         this.logger.info('updated weapon progress', progress);
-        inProgress.set(progress.id, progress);
-        this.inProgress$.next(inProgress);
+        this.inProgress.set(progress.id, progress);
       }),
     );
   }
 
   remove({progress}: Weapon): Observable<void> {
     const id = progress.id;
-    const remove = this.database.delete(this.store, id);
-    return zip(remove, this.inProgress).pipe(
-      map(([, inProgress]) => {
+    return this.database.delete(this.store, id).pipe(
+      map(_ => {
         this.logger.info('removed weapon progress', progress);
-        inProgress.delete(id);
-        this.inProgress$.next(inProgress);
+        this.inProgress.delete(id);
       }),
     );
   }
@@ -64,11 +58,10 @@ export class WeaponProgressService {
     const remove = weapons.map(it =>
       this.database.delete(this.store, it.progress.id),
     );
-    return zip(forkJoin(remove), this.inProgress).pipe(
-      map(([, inProgress]) => {
+    return forkJoin(remove).pipe(
+      map(_ => {
         this.logger.info('removed weapon progresses', weapons);
-        weapons.forEach(it => inProgress.delete(it.progress.id));
-        this.inProgress$.next(inProgress);
+        weapons.forEach(it => this.inProgress.delete(it.progress.id));
       }),
     );
   }

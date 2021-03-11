@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject, zip} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {map} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
@@ -23,9 +23,9 @@ export class WeaponPlanner {
 
   private readonly store = 'weapon-plans';
 
-  private readonly plans$ = new ReplaySubject<Map<number, WeaponPlan>>(1);
+  readonly plans = new Map<number, WeaponPlan>();
 
-  readonly plans = this.plans$.asObservable();
+  readonly ready = new ReplaySubject(1);
 
   constructor(
     private weaponReq: WeaponRequirementService,
@@ -33,11 +33,13 @@ export class WeaponPlanner {
     private database: NgxIndexedDBService,
     private logger: NGXLogger,
   ) {
-    this.database.getAll(this.store).subscribe(persisted => {
-      this.logger.info('fetched weapon plans', persisted);
-      const plans = new Map<number, WeaponPlan>();
-      persisted.forEach(p => plans.set(p.id, p));
-      this.plans$.next(plans);
+    this.database.getAll(this.store).subscribe(plans => {
+      this.logger.info('fetched weapon plans', plans);
+      for (const p of plans) {
+        this.plans.set(p.id, p);
+      }
+      this.ready.next();
+      this.ready.complete();
     });
   }
 
@@ -69,12 +71,10 @@ export class WeaponPlanner {
 
   update(weapon: Weapon): Observable<void> {
     const plan = weapon.plan;
-    const update = this.database.update(this.store, plan);
-    return zip(update, this.plans).pipe(
-      map(([, plans]) => {
+    return this.database.update(this.store, plan).pipe(
+      map(_ => {
         this.logger.info('updated weapon plan', plan);
-        plans.set(plan.id, plan);
-        this.plans$.next(plans);
+        this.plans.set(plan.id, plan);
         this.updateRequire(weapon);
       }),
     );
@@ -82,12 +82,10 @@ export class WeaponPlanner {
 
   remove({plan}: Weapon): Observable<void> {
     const id = plan.id;
-    const remove = this.database.delete(this.store, id);
-    return zip(remove, this.plans).pipe(
-      map(([, plans]) => {
+    return this.database.delete(this.store, id).pipe(
+      map(_ => {
         this.logger.info('removed weapon plan', plan);
-        plans.delete(id);
-        this.plans$.next(plans);
+        this.plans.delete(id);
         this.materials.removeRequire(this.type, id);
       }),
     );
@@ -96,11 +94,10 @@ export class WeaponPlanner {
   removeAll(weapons: Weapon[]): Observable<void> {
     const planIds = weapons.map(it => it.plan.id);
     const remove = planIds.map(it => this.database.delete(this.store, it));
-    return zip(forkJoin(remove), this.plans).pipe(
-      map(([, plans]) => {
+    return forkJoin(remove).pipe(
+      map(_ => {
         this.logger.info('removed weapon plans', weapons);
-        planIds.forEach(it => plans.delete(it));
-        this.plans$.next(plans);
+        planIds.forEach(it => this.plans.delete(it));
         this.materials.removeAllRequire(this.type, planIds);
       }),
     );
