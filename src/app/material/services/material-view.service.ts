@@ -7,6 +7,7 @@ import {MaterialDetail} from '../models/material.model';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialService} from './material.service';
 import {first, map} from 'rxjs/operators';
+import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +78,15 @@ export class MaterialViewService {
   }
 }
 
+/**
+ * Materials id which has prior order in view.
+ */
+const prior = [mora.id, characterExp.id, weaponExp.id];
+
 function compare({info: a}: MaterialDetail, {info: b}: MaterialDetail): number {
-  return (a.group ?? 0) - (b.group ?? 0) || b.rarity - a.rarity;
+  return (
+    prior.indexOf(b.id) - prior.indexOf(a.id) ||
+    (a.group ?? 0) - (b.group ?? 0) ||
+    b.rarity - a.rarity
+  );
 }
