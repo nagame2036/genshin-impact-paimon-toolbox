@@ -1,5 +1,5 @@
 {
-  "name": "genshin-impact-paimon-toolbox",
+  "name": "paimon-toolbox",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "analyze": "cross-env NODE_ENV=production ng build --extra-webpack-config webpack.config.js --stats-json && webpack-bundle-analyzer dist/genshin-impact-paimon-toolbox/stats.json",
-    "analyze:prod": "cross-env NODE_ENV=production ng build --prod --extra-webpack-config webpack.config.js --stats-json && webpack-bundle-analyzer dist/genshin-impact-paimon-toolbox/stats.json"
+    "analyze": "cross-env NODE_ENV=production ng build --extra-webpack-config webpack.config.js --stats-json && webpack-bundle-analyzer dist/paimon-toolbox/stats.json",
+    "analyze:prod": "cross-env NODE_ENV=production ng build --prod --extra-webpack-config webpack.config.js --stats-json && webpack-bundle-analyzer dist/paimon-toolbox/stats.json"
   },
   "private": true,
   "dependencies": {

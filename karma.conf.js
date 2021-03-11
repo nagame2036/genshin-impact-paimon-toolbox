@@ -19,10 +19,7 @@ module.exports = function (config) {
       suppressAll: true, // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(
-        __dirname,
-        './coverage/genshin-impact-paimon-toolbox',
-      ),
+      dir: require('path').join(__dirname, './coverage/paimon-toolbox'),
       subdir: '.',
       reporters: [{type: 'html'}, {type: 'text-summary'}],
     },
