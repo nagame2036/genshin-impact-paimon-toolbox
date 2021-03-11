@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MaterialService} from '../../../material/services/material.service';
+import {MaterialViewService} from '../../../material/services/material-view.service';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {takeUntil} from 'rxjs/operators';
 import {MaterialDetail} from '../../../material/models/material.model';
@@ -17,18 +17,21 @@ export class IngredientInventoryComponent
 
   local!: MaterialDetail[];
 
-  constructor(private materials: MaterialService) {
+  constructor(private view: MaterialViewService) {
     super();
   }
 
   ngOnInit(): void {
-    this.materials.filtered
+    const types = [
+      [MaterialType.CURRENCY, MaterialType.ORE],
+      [MaterialType.LOCAL_SPECIALTY],
+    ];
+    this.view
+      .view(types)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(materials => {
-        const currencies = materials.get(MaterialType.CURRENCY) ?? [];
-        const ores = materials.get(MaterialType.ORE) ?? [];
-        this.common = [...currencies, ...ores];
-        this.local = materials.get(MaterialType.LOCAL_SPECIALTY) ?? [];
+      .subscribe(([common, local]) => {
+        this.common = common;
+        this.local = local;
       });
   }
 }

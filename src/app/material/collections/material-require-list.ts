@@ -59,11 +59,12 @@ export class MaterialRequireList {
     } else {
       for (const [purpose, mark] of origin) {
         const thatRequirement = thatMarks.get(purpose)?.requirement;
-        if (thatRequirement) {
-          for (const [id, thatNeed] of thatRequirement.entries()) {
-            const newNeed = thatNeed - mark.requirement.getAmount(id);
-            this.totalNeed.change(id, newNeed);
-          }
+        if (!thatRequirement) {
+          continue;
+        }
+        for (const [id, thatNeed] of thatRequirement.entries()) {
+          const newNeed = thatNeed - mark.requirement.getAmount(id);
+          this.totalNeed.change(id, newNeed);
         }
       }
     }
@@ -150,6 +151,10 @@ export class MaterialRequireList {
       this.marks.delete(key);
     }
   }
+
+  entries(): [number, number][] {
+    return this.totalNeed.entries();
+  }
 }
 
 function processDetail(
@@ -164,10 +169,9 @@ function processDetail(
     const material = materials.get(id);
     if (material) {
       existsRequire = true;
-      const detail = material.copy();
-      detail.update(detail.have, need);
+      const detail = material.copy(material.have, need);
       value.push(detail);
-      reached &&= detail.have >= need;
+      reached &&= detail.overflow;
     }
   }
   reached &&= existsRequire;

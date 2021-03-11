@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {MaterialInfoService} from './material-info.service';
 import {MaterialQuantityService} from './material-quantity.service';
-import {BehaviorSubject, combineLatest, Observable, ReplaySubject} from 'rxjs';
+import {combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {MaterialRequirementService} from './material-requirement.service';
 import {NGXLogger} from 'ngx-logger';
-import {allRarities} from '../../game-common/models/rarity.type';
 import {CraftRecipe, MaterialDetail} from '../models/material.model';
 import {MaterialCraftService} from './material-craft.service';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {MaterialList} from '../collections/material-list';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {ItemType} from '../../game-common/models/item-type.enum';
@@ -19,17 +18,13 @@ import {RequireDetail} from '../models/requirement-detail.model';
   providedIn: 'root',
 })
 export class MaterialService {
-  private materials$ = new BehaviorSubject(new Map<number, MaterialDetail>());
+  private materials = new Map<number, MaterialDetail>();
 
-  private filtered$ = new ReplaySubject<Map<number, MaterialDetail[]>>(1);
+  readonly typed = new Map<MaterialType, Map<number, MaterialDetail>>();
 
-  readonly filtered = this.filtered$.asObservable();
+  private updated$ = new ReplaySubject(1);
 
-  readonly rarityOptions = allRarities.map(it => ({value: it, text: `★${it}`}));
-
-  readonly rarityFilter = new BehaviorSubject([...allRarities]);
-
-  readonly showOverflow = new BehaviorSubject(true);
+  readonly updated = this.updated$.asObservable();
 
   constructor(
     private infos: MaterialInfoService,
@@ -38,29 +33,29 @@ export class MaterialService {
     private crafter: MaterialCraftService,
     private logger: NGXLogger,
   ) {
-    this.updateMaterials();
-    this.filterMaterials();
+    this.initDetails();
+    this.updateDetails();
   }
 
   getRequirement(type: ItemType, key: number): Observable<RequireDetail[]> {
-    return this.requirements.getType(type).pipe(
-      switchMap(req => {
-        return this.materials$.pipe(map(it => req.getDetails(key, it)));
+    return this.updated.pipe(
+      map(_ => {
+        const req = this.requirements.getType(type);
+        return req.getDetails(key, this.materials);
       }),
     );
   }
 
-  getRequireMarks(id: number): Observable<MaterialRequireMark[]> {
+  getRequireMarks(id: number): MaterialRequireMark[] {
     return this.requirements.getMarks(id);
   }
 
   getCraftDetails(
     item: MaterialDetail,
-  ): Observable<{usage: MaterialDetail[]; craftableAmount: number}[]> {
-    return this.materials$.pipe(
-      map(materials => this.crafter.getCraftDetails(item, materials)),
-      tap(details => this.logger.info('sent craft details', item, details)),
-    );
+  ): {usage: MaterialDetail[]; craftableAmount: number}[] {
+    const details = this.crafter.getCraftDetails(item, this.materials);
+    this.logger.info('sent craft details', item, details);
+    return details;
   }
 
   updateHave(id: number, have: number): void {
@@ -91,53 +86,37 @@ export class MaterialService {
     this.requirements.removeAll(type, keys);
   }
 
-  private updateMaterials(): void {
+  private initDetails(): void {
+    for (const [type, infos] of this.infos.typed) {
+      const materials = new Map<number, MaterialDetail>();
+      for (const info of infos) {
+        const id = info.id;
+        const material = new MaterialDetail(type, info, 0, 0);
+        this.materials.set(id, material);
+        materials.set(id, material);
+      }
+      this.typed.set(type, materials);
+    }
+  }
+
+  private updateDetails(): void {
     combineLatest([
-      this.quantities.quantities,
-      this.requirements.total,
+      this.quantities.changes,
+      this.requirements.changes,
     ]).subscribe(([quantities, requirements]) => {
-      const materials = this.materials$.getValue();
-      for (const [type, infos] of this.infos.typed) {
-        for (const info of infos) {
-          const id = info.id;
-          const have = quantities.getAmount(id);
-          const need = requirements.getNeed(id);
-          const material = materials.get(id);
-          if (material) {
-            material.update(have, need);
-          } else {
-            materials.set(id, new MaterialDetail(type, info, have, need));
-          }
-        }
+      const materials = this.materials;
+      for (const [id, have] of quantities.entries()) {
+        materials.get(id)?.updateHave(have);
+      }
+      for (const [id, need] of requirements.entries()) {
+        materials.get(id)?.updateNeed(need);
       }
       for (const material of materials.values()) {
         material.craftable = this.crafter.isCraftable(material, materials);
       }
       this.infos.processSpecialMaterials(materials);
       this.logger.info('updated materials', materials);
-      this.materials$.next(materials);
-    });
-  }
-
-  private filterMaterials(): void {
-    combineLatest([
-      this.materials$,
-      this.rarityFilter,
-      this.showOverflow,
-    ]).subscribe(([materials, rarities, showOverflow]) => {
-      const filtered = new Map<MaterialType, MaterialDetail[]>();
-      for (const material of materials.values()) {
-        const {type, info, overflow} = material;
-        if ((!overflow || showOverflow) && rarities.includes(info.rarity)) {
-          const typedMaterials = filtered.get(type) ?? [];
-          typedMaterials.push(material);
-          filtered.set(type, typedMaterials);
-        }
-      }
-      this.logger.info(
-        `filtered materials: rarities=${rarities}; showOverflow=${showOverflow}`,
-      );
-      this.filtered$.next(filtered);
+      this.updated$.next();
     });
   }
 }

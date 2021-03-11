@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Subscription} from 'rxjs';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {MaterialService} from '../../services/material.service';
 import {NGXLogger} from 'ngx-logger';
@@ -37,8 +36,6 @@ export class CraftDialogComponent implements OnInit {
    */
   times = 0;
 
-  subscription!: Subscription;
-
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
@@ -60,20 +57,16 @@ export class CraftDialogComponent implements OnInit {
     this.item = item;
     this.times = 0;
     this.index = 0;
-    this.subscription = this.service
-      .getCraftDetails(this.item)
-      .subscribe(details => {
-        this.details = details;
-        this.recipes = this.recipeOptions(recipes, details);
-        this.changeRecipe(this.recipes[this.index].value);
-        this.logger.info('received material craft details', item, details);
-      });
+    const details = this.service.getCraftDetails(item);
+    this.details = details;
+    this.recipes = this.recipeOptions(recipes, details);
+    this.changeRecipe(this.recipes[this.index].value);
+    this.logger.info('received material craft details', item, details);
     this.dialog.open();
     this.logger.info('opened with item', item);
   }
 
   close(): void {
-    this.subscription?.unsubscribe();
     this.dialog.close();
   }
 

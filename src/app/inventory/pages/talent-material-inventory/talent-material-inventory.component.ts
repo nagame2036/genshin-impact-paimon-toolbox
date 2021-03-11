@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MaterialDetail} from '../../../material/models/material.model';
-import {MaterialService} from '../../../material/services/material.service';
+import {MaterialViewService} from '../../../material/services/material-view.service';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {takeUntil} from 'rxjs/operators';
@@ -21,18 +21,25 @@ export class TalentMaterialInventoryComponent
 
   wedSat!: MaterialDetail[];
 
-  constructor(private materials: MaterialService) {
+  constructor(private view: MaterialViewService) {
     super();
   }
 
   ngOnInit(): void {
-    this.materials.filtered
+    const types = [
+      [MaterialType.TALENT_COMMON],
+      [MaterialType.TALENT_147],
+      [MaterialType.TALENT_257],
+      [MaterialType.TALENT_367],
+    ];
+    this.view
+      .view(types)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(materials => {
-        this.common = materials.get(MaterialType.TALENT_COMMON) ?? [];
-        this.monThu = materials.get(MaterialType.TALENT_147) ?? [];
-        this.tueFri = materials.get(MaterialType.TALENT_257) ?? [];
-        this.wedSat = materials.get(MaterialType.TALENT_367) ?? [];
+      .subscribe(([common, monThu, tueFri, wedSat]) => {
+        this.common = common;
+        this.monThu = monThu;
+        this.tueFri = tueFri;
+        this.wedSat = wedSat;
       });
   }
 }

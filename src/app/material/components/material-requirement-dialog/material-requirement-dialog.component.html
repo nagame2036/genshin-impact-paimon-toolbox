@@ -8,59 +8,59 @@
   <div class="content" *ngIf="marks.length > 0">
     <table class="requirement-table">
       <thead>
-      <tr class="bg-primary-200">
-        <th class="requirement-cell cell-border-b">
-          {{ i18n.module('name') | translate }}
-        </th>
-        <th class="requirement-cell cell-border-b">
-          {{ i18n.module('purpose') | translate }}
-        </th>
-        <th class="requirement-cell cell-border-b">
-          {{ i18n.module('detail') | translate }}
-        </th>
-        <th class="requirement-cell cell-border-b">
-          {{ i18n.module('requirement') | translate }}
-        </th>
-      </tr>
+        <tr class="bg-primary-200">
+          <th class="requirement-cell cell-border-b">
+            {{ i18n.module('name') | translate }}
+          </th>
+          <th class="requirement-cell cell-border-b">
+            {{ i18n.module('purpose') | translate }}
+          </th>
+          <th class="requirement-cell cell-border-b">
+            {{ i18n.module('detail') | translate }}
+          </th>
+          <th class="requirement-cell cell-border-b">
+            {{ i18n.module('requirement') | translate }}
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let markGroup of marks">
-        <tr *ngFor="let mark of markGroup; let i = index">
-          <td
-            *ngIf="i === 0"
-            class="requirement-cell cell-border-b text-center"
-            [rowSpan]="markGroup.length"
-          >
-            {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
-          </td>
-          <td
-            class="requirement-cell text-center"
-            [class.cell-border-b]="i === markGroup.length - 1"
-          >
-            {{ mark.purpose | translate }}
-          </td>
-          <td
-            class="requirement-cell"
-            [class.cell-border-b]="i === markGroup.length - 1"
-          >
-            <div class="detail-cell">
+        <ng-container *ngFor="let markGroup of marks">
+          <tr *ngFor="let mark of markGroup; let i = index">
+            <td
+              *ngIf="i === 0"
+              class="requirement-cell cell-border-b text-center"
+              [rowSpan]="markGroup.length"
+            >
+              {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
+            </td>
+            <td
+              class="requirement-cell text-center"
+              [class.cell-border-b]="i === markGroup.length - 1"
+            >
+              {{ mark.purpose | translate }}
+            </td>
+            <td
+              class="requirement-cell"
+              [class.cell-border-b]="i === markGroup.length - 1"
+            >
+              <div class="detail-cell">
                 <span>
                   {{ mark.start }}
                 </span>
-              →
-              <span>
+                →
+                <span>
                   {{ mark.goal }}
                 </span>
-            </div>
-          </td>
-          <td
-            class="requirement-cell text-right"
-            [class.cell-border-b]="i === markGroup.length - 1"
-          >
-            {{ mark.need | number: '1.0-0' }}
-          </td>
-        </tr>
-      </ng-container>
+              </div>
+            </td>
+            <td
+              class="requirement-cell text-right"
+              [class.cell-border-b]="i === markGroup.length - 1"
+            >
+              {{ mark.need | number: '1.0-0' }}
+            </td>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>

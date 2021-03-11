@@ -30,12 +30,12 @@ export function processExpRequirement(
   requirement: MaterialRequireList,
   mark: RequireMark,
 ): void {
-  const expId = exps[0].id;
   const length = exps.length;
-  if (length < 1) {
+  if (length < 2) {
     return;
   }
   const {exp: lastItemExp} = exps[length - 2];
+  const expId = exps[0].id;
   let expNeed = requirement.getNeed(expId);
   for (let i = exps.length - 1; i >= 1; i--) {
     if (expNeed <= 0) {

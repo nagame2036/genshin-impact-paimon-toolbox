@@ -1,8 +1,8 @@
-<div class="inventory-header">
+<div *ngIf="view.options | async as options" class="inventory-header">
   <app-multi-select
-    [values]="rarityFilter"
-    [options]="materials.rarityOptions"
-    (changed)="changeRarityFilter($event)"
+    [options]="view.rarities"
+    [values]="options.rarities"
+    (changed)="view.changeRarity($event)"
   >
     <span form-label>
       {{ i18n.dict('rarity') | translate }}
@@ -10,8 +10,8 @@
   </app-multi-select>
   <app-checkbox
     [label]="i18n.module('show-overflow') | translate"
-    [value]="(materials.showOverflow | async) || false"
-    (checked)="materials.showOverflow.next($event)"
+    [value]="options.showOverflow"
+    (checked)="view.changeShowOverflow($event)"
   >
   </app-checkbox>
 </div>

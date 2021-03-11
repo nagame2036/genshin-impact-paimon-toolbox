@@ -53,7 +53,7 @@ export class WeaponPlanner {
   }
 
   getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
-    return this.materials.getRequirement(ItemType.WEAPON, weapon.plan.id).pipe(
+    return this.materials.getRequirement(this.type, weapon.plan.id).pipe(
       map(req => {
         const texts = [
           this.i18n.module('total-requirement'),

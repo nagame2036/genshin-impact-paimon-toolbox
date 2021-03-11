@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MaterialDetail} from '../../../material/models/material.model';
-import {MaterialService} from '../../../material/services/material.service';
+import {MaterialViewService} from '../../../material/services/material-view.service';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
 import {takeUntil} from 'rxjs/operators';
@@ -13,20 +13,22 @@ import {takeUntil} from 'rxjs/operators';
 export class EnemyMaterialInventoryComponent
   extends AbstractObservableComponent
   implements OnInit {
-  mobs!: MaterialDetail[];
+  mob!: MaterialDetail[];
 
-  elites!: MaterialDetail[];
+  elite!: MaterialDetail[];
 
-  constructor(private materials: MaterialService) {
+  constructor(private view: MaterialViewService) {
     super();
   }
 
   ngOnInit(): void {
-    this.materials.filtered
+    const types = [[MaterialType.ENEMY_MOB], [MaterialType.ENEMY_ELITE]];
+    this.view
+      .view(types)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(materials => {
-        this.mobs = materials.get(MaterialType.ENEMY_MOB) ?? [];
-        this.elites = materials.get(MaterialType.ENEMY_ELITE) ?? [];
+      .subscribe(([mob, elite]) => {
+        this.mob = mob;
+        this.elite = elite;
       });
   }
 }

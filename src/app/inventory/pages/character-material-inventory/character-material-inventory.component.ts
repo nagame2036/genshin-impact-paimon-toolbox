@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MaterialService} from '../../../material/services/material.service';
+import {MaterialViewService} from '../../../material/services/material-view.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
@@ -19,17 +19,23 @@ export class CharacterMaterialInventoryComponent
 
   gem!: MaterialDetail[];
 
-  constructor(private materials: MaterialService) {
+  constructor(private view: MaterialViewService) {
     super();
   }
 
   ngOnInit(): void {
-    this.materials.filtered
+    const types = [
+      [MaterialType.CHARACTER_EXP],
+      [MaterialType.CHARACTER_BOSS],
+      [MaterialType.CHARACTER_GEM],
+    ];
+    this.view
+      .view(types)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(materials => {
-        this.common = materials.get(MaterialType.CHARACTER_EXP) ?? [];
-        this.boss = materials.get(MaterialType.CHARACTER_BOSS) ?? [];
-        this.gem = materials.get(MaterialType.CHARACTER_GEM) ?? [];
+      .subscribe(([common, boss, gem]) => {
+        this.common = common;
+        this.boss = boss;
+        this.gem = gem;
       });
   }
 }

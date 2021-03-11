@@ -44,15 +44,23 @@ export class MaterialDetail {
     this.update(have, need);
   }
 
-  update(have: number, need: number): void {
+  updateHave(value: number): void {
+    this.update(value, this.need);
+  }
+
+  updateNeed(value: number): void {
+    this.update(this.have, value);
+  }
+
+  copy(have: number, need: number): MaterialDetail {
+    return new MaterialDetail(this.type, this.info, have, need);
+  }
+
+  private update(have: number, need: number): void {
     this.have = have;
     this.need = need;
     this.lack = Math.max(0, this.need - this.have);
     this.overflow = this.lack <= 0;
-  }
-
-  copy(): MaterialDetail {
-    return new MaterialDetail(this.type, this.info, this.have, this.need);
   }
 }
 
