@@ -14,6 +14,8 @@ import {MaterialService} from '../../services/material.service';
 export class MaterialRequirementDialogComponent implements OnInit {
   i18n = new I18n('inventory');
 
+  totalAmountPurpose = this.i18n.dict('total-amount');
+
   id = 0;
 
   marks: MaterialRequireMark[][] = [];
@@ -44,7 +46,17 @@ export class MaterialRequirementDialogComponent implements OnInit {
         groupedMarks.set(key, group);
       }
     }
-    this.marks = [...groupedMarks.values()];
+    const purpose = this.totalAmountPurpose;
+    const summedMarks = [];
+    for (const group of groupedMarks.values()) {
+      if (group.length > 1) {
+        const need = group.reduce((acc, curr) => acc + curr.need, 0);
+        const sumMark = {...group[0], purpose, need};
+        group.push(sumMark);
+      }
+      summedMarks.push(group);
+    }
+    this.marks = summedMarks;
     this.totalNeed = sortedMarks.reduce((acc, curr) => acc + curr.need, 0);
     this.logger.info('received marks', this.marks);
     this.dialog.open();

@@ -36,10 +36,12 @@
             <td
               class="requirement-cell text-center"
               [class.cell-border-b]="i === markGroup.length - 1"
+              [colSpan]="mark.purpose !== totalAmountPurpose ? 1 : 2"
             >
               {{ mark.purpose | translate }}
             </td>
             <td
+              *ngIf="mark.purpose !== totalAmountPurpose"
               class="requirement-cell"
               [class.cell-border-b]="i === markGroup.length - 1"
             >
