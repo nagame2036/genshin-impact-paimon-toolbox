@@ -73,7 +73,6 @@
       "insufficient": "材料不足",
       "performed-times": "合成 {{ num }} 次",
       "craft": "合成",
-      "plan-requirement": "培养需求",
       "common": "通用",
       "boss": "Boss掉落",
       "gem": "宝石",
@@ -88,7 +87,9 @@
       "name": "名称",
       "purpose": "用途",
       "detail": "详情",
-      "requirement": "需求"
+      "requirement": "需求",
+      "plan-requirement": "培养需求",
+      "requirement-reached": "任务做完了，来陪姐姐聊会天吧"
     }
   },
   "dict": {

@@ -8,3 +8,10 @@
   height: 72vh;
   @apply overflow-auto;
 }
+
+.requirement-reached {
+  @apply pt-16;
+  @apply flex;
+  @apply flex-col;
+  @apply place-items-center;
+}

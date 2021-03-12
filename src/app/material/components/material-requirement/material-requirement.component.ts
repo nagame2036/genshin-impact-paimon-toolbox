@@ -33,6 +33,8 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   details: MaterialDetail[][] = [];
 
+  detailsEmpty = true;
+
   constructor(private logger: NGXLogger) {}
 
   ngOnInit(): void {
@@ -58,6 +60,7 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
   changeRequirement(index: number): void {
     this.currentIndex = index;
     const materials = this.requirements[index].value;
+    this.detailsEmpty = materials.length === 0;
     const detailsMap = new Map<string, MaterialDetail[]>();
     for (const material of materials) {
       for (const [type, ...materialTypes] of this.types) {
