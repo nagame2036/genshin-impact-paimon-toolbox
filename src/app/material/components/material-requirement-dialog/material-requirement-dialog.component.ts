@@ -5,6 +5,7 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {itemTypeNames} from '../../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialService} from '../../services/material.service';
+import {MaterialDetail} from '../../models/material.model';
 
 @Component({
   selector: 'app-material-requirement-dialog',
@@ -18,24 +19,25 @@ export class MaterialRequirementDialogComponent implements OnInit {
 
   id = 0;
 
-  marks: MaterialRequireMark[][] = [];
+  have = 0;
 
-  totalNeed = 0;
+  marks: MaterialRequireMark[][] = [];
 
   types = itemTypeNames;
 
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private materials: MaterialService, private logger: NGXLogger) {}
+  constructor(public materials: MaterialService, private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');
   }
 
-  open(id: number): void {
-    this.id = id;
-    const marks = this.materials.getRequireMarks(id);
+  open(item: MaterialDetail): void {
+    this.id = item.info.id;
+    this.have = item.have;
+    const marks = this.materials.getRequireMarks(this.id);
     const sortedMarks = marks.sort((a, b) => a.type - b.type || b.id - a.id);
     const groupedMarks = new Map<number, MaterialRequireMark[]>();
     for (const mark of sortedMarks) {
@@ -57,10 +59,8 @@ export class MaterialRequirementDialogComponent implements OnInit {
       summedMarks.push(group);
     }
     this.marks = summedMarks;
-    this.totalNeed = sortedMarks.reduce((acc, curr) => acc + curr.need, 0);
-    this.logger.info('received marks', this.marks);
+    this.logger.info('received marks', item, this.marks);
     this.dialog.open();
-    this.logger.info('opened with id', id);
   }
 
   close(): void {

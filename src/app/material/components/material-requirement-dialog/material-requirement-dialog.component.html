@@ -1,10 +1,10 @@
 <app-dialog #dialog (closed)="close()">
-  <h1 title>
+  <div title>
     {{ i18n.dict('materials.' + id) | translate }}
     -
-    {{ i18n.module('total-requirement') | translate }}
-    {{ totalNeed | number: '1.0-0' }}
-  </h1>
+    {{ i18n.module('have') | translate }}
+    {{ have | number: '1.0-0' }}
+  </div>
   <div class="content" *ngIf="marks.length > 0">
     <table class="requirement-table">
       <thead>
