@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {forkJoin, Observable, of, ReplaySubject, throwError, zip} from 'rxjs';
 import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
-import {map, tap} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
@@ -57,9 +57,13 @@ export class CharacterService {
   }
 
   get(id: number): Observable<Character> {
-    const character = this.characters.get(id);
-    this.logger.info('sent character', character);
-    return character ? of(character) : throwError('character-not-found');
+    return this.updated.pipe(
+      switchMap(_ => {
+        const character = this.characters.get(id);
+        this.logger.info('sent character', character);
+        return character ? of(character) : throwError('character-not-found');
+      }),
+    );
   }
 
   getRequireDetails(character: Character): Observable<RequireDetail[]> {

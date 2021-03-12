@@ -7,7 +7,7 @@ import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {map, tap} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
@@ -59,9 +59,13 @@ export class WeaponService {
   }
 
   get(id: number): Observable<Weapon> {
-    const weapon = this.weapons.get(id);
-    this.logger.info('sent weapon', weapon);
-    return weapon ? of(weapon) : throwError('weapon-not-found');
+    return this.updated.pipe(
+      switchMap(_ => {
+        const weapon = this.weapons.get(id);
+        this.logger.info('sent weapon', weapon);
+        return weapon ? of(weapon) : throwError('weapon-not-found');
+      }),
+    );
   }
 
   getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
