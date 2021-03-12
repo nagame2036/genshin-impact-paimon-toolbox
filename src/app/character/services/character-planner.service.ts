@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {CharacterRequirementService} from './character-requirement.service';
 import {TalentRequirementService} from './talent-requirement.service';
@@ -65,20 +65,18 @@ export class CharacterPlanner {
   }
 
   getRequireDetails(character: Character): Observable<RequireDetail[]> {
-    return this.materials.getRequirement(this.type, character.plan.id).pipe(
-      map(req => {
-        const talents = character.info.talentsUpgradable;
-        const texts = [
-          this.i18n.module('total-requirement'),
-          this.characterReq.levelupLabel,
-          ...talents.map(it => this.talentReq.getLabel(it)),
-        ];
-        this.logger.info('sent require detail', character, req);
-        return req.sort(
-          (a, b) => texts.indexOf(a.text) - texts.indexOf(b.text),
-        );
-      }),
-    );
+    const texts = [
+      this.i18n.module('total-requirement'),
+      this.characterReq.levelupLabel,
+    ];
+    character.info.talentsUpgradable.forEach(it => {
+      texts.push(this.talentReq.getLabel(it));
+    });
+    return this.materials
+      .getRequireDetails(this.type, character.plan.id, texts)
+      .pipe(
+        tap(req => this.logger.info('sent require detail', character, req)),
+      );
   }
 
   update(character: Character): Observable<void> {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {WeaponPlan} from '../models/weapon-plan.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {WeaponRequirementService} from './weapon-requirement.service';
@@ -55,18 +55,15 @@ export class WeaponPlanner {
   }
 
   getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
-    return this.materials.getRequirement(this.type, weapon.plan.id).pipe(
-      map(req => {
-        const texts = [
-          this.i18n.module('total-requirement'),
-          this.weaponReq.levelupLabel,
-        ];
-        this.logger.info('sent require detail', weapon, texts, req);
-        return req.sort(
-          (a, b) => texts.indexOf(a.text) - texts.indexOf(b.text),
-        );
-      }),
-    );
+    const texts = [
+      this.i18n.module('total-requirement'),
+      this.weaponReq.levelupLabel,
+    ];
+    return this.materials
+      .getRequireDetails(this.type, weapon.plan.id, texts)
+      .pipe(
+        tap(req => this.logger.info('sent require detail', weapon, texts, req)),
+      );
   }
 
   update(weapon: Weapon): Observable<void> {

@@ -74,28 +74,29 @@ export class MaterialRequireList {
 
   getDetails(
     key: number,
+    totalPurposes: string[],
     materials: Map<number, MaterialDetail>,
   ): RequireDetail[] {
-    const reqMarks = this.marks.get(key);
-    const textTotal = i18n.module('total-requirement');
-    if (!reqMarks) {
-      return [{text: textTotal, value: [], reached: false}];
-    }
-    const valueTotal = new MaterialList();
     const purposes = new Map<string, MaterialList>();
-    for (const {mark, requirement} of reqMarks.values()) {
-      valueTotal.combine(requirement);
-      const purposeType = mark.purposeType;
-      const purposeReq = purposes.get(purposeType) ?? new MaterialList();
-      purposeReq.combine(requirement);
-      purposes.set(purposeType, purposeReq);
+    for (const p of totalPurposes) {
+      purposes.set(p, new MaterialList());
+    }
+    const reqMarks = this.marks.get(key);
+    if (reqMarks) {
+      const total = purposes.get(i18n.module('total-requirement'));
+      for (const {mark, requirement} of reqMarks.values()) {
+        const purposeType = mark.purposeType;
+        purposes.get(purposeType)?.combine(requirement);
+        total?.combine(requirement);
+      }
     }
     const results = [];
-    results.push(processDetail(textTotal, valueTotal, materials));
     for (const [purpose, req] of purposes) {
       results.push(processDetail(purpose, req, materials));
     }
-    return results;
+    return results.sort(
+      (a, b) => totalPurposes.indexOf(a.text) - totalPurposes.indexOf(b.text),
+    );
   }
 
   getMarks(materialId: number): MaterialRequireMark[] {

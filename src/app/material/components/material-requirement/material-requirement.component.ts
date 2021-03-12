@@ -43,10 +43,14 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('requirements')) {
       this.logger.info('received requirements', this.requirements);
-      this.requirementOptions = this.requirements.map((it, index) => ({
-        text: it.text,
-        value: index,
-      }));
+      const options = [];
+      for (let i = 0; i < this.requirements.length; i++) {
+        const {text, value} = this.requirements[i];
+        if (i === 0 || value.length > 0) {
+          options.push({text, value: i});
+        }
+      }
+      this.requirementOptions = options;
       this.changeRequirement(this.currentIndex);
     }
   }

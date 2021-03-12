@@ -37,11 +37,15 @@ export class MaterialService {
     this.updateDetails();
   }
 
-  getRequirement(type: ItemType, key: number): Observable<RequireDetail[]> {
+  getRequireDetails(
+    type: ItemType,
+    key: number,
+    purposes: string[],
+  ): Observable<RequireDetail[]> {
     return this.updated.pipe(
       map(_ => {
         const req = this.requirements.getType(type);
-        return req.getDetails(key, this.materials);
+        return req.getDetails(key, purposes, this.materials);
       }),
     );
   }
