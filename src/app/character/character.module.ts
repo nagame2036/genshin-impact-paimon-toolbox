@@ -11,7 +11,8 @@ import {CharacterListPageComponent} from './pages/character-list-page/character-
 import {CharacterDetailComponent} from './pages/character-detail/character-detail.component';
 import {CharacterPlanComponent} from './pages/character-plan/character-plan.component';
 import {CharacterPlanFormComponent} from './components/character-plan-form/character-plan-form.component';
-import {CharacterListHeaderComponent} from './components/character-list-header/character-list-header.component';
+import {CharacterListOptionsComponent} from './components/character-list-options/character-list-options.component';
+import {CharacterSettingsComponent} from './pages/character-settings/character-settings.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {CharacterListHeaderComponent} from './components/character-list-header/c
     CharacterDetailComponent,
     CharacterPlanComponent,
     CharacterPlanFormComponent,
-    CharacterListHeaderComponent,
+    CharacterListOptionsComponent,
+    CharacterSettingsComponent,
   ],
   imports: [
     WidgetModule,

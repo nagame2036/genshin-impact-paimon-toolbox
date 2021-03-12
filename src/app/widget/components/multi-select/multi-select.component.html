@@ -38,7 +38,7 @@
         [class.selected]="values.length === options.length"
         (click)="selectAll()"
       >
-        {{ i18n.dict('select-all') | translate }}
+        {{ i18n.dict('all') | translate }}
       </li>
       <li
         *ngFor="let option of options"

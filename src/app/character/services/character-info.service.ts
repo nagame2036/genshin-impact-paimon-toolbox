@@ -11,6 +11,12 @@ import {Character, CharacterOverview} from '../models/character.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import characterList from '../../../assets/data/characters/character-list.json';
 import statsCurvesLevel from '../../../assets/data/characters/character-stats-curve-level.json';
+import {SettingService} from '../../setting/services/setting.service';
+import {allGenders, Gender} from '../models/gender.enum';
+import {Observable, ReplaySubject} from 'rxjs';
+import {CharacterInfoOptions} from '../models/options.model';
+import {first, map} from 'rxjs/operators';
+import {I18n} from '../../widget/models/i18n.model';
 
 /**
  * Represents the dependency of character stats value.
@@ -21,13 +27,53 @@ type CharacterStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class CharacterInfoService {
+  private i18n = new I18n('characters');
+
+  private readonly settingKey = 'character-info';
+
   readonly infos = objectMap<CharacterInfo>(
     JSON.parse(JSON.stringify(characterList)),
   );
 
-  private readonly statsCurvesLevel = statsCurvesLevel as CharacterStatsCurveLevel;
+  private statsCurvesLevel = statsCurvesLevel as CharacterStatsCurveLevel;
 
-  constructor(private logger: NGXLogger) {}
+  readonly genders = allGenders.map(value => ({
+    value,
+    text: this.i18n.dict(`genders.${value}`),
+  }));
+
+  readonly travelersGendered = new Map([
+    [Gender.MALE, [1001, 1002]],
+    [Gender.FEMALE, [1011, 1012]],
+  ]);
+
+  private options$ = new ReplaySubject<CharacterInfoOptions>(1);
+
+  readonly options = this.options$.asObservable();
+
+  constructor(private settings: SettingService, private logger: NGXLogger) {
+    settings
+      .get(this.settingKey, {
+        travelerGender: Gender.FEMALE,
+      })
+      .subscribe(options => this.options$.next(options));
+  }
+
+  ignoreIds(): Observable<number[]> {
+    return this.options.pipe(
+      first(),
+      map(options => {
+        const genderOption = options.travelerGender;
+        const shouldRemove: number[] = [];
+        for (const [gender, travelers] of this.travelersGendered) {
+          if (gender !== genderOption) {
+            shouldRemove.push(...travelers);
+          }
+        }
+        return shouldRemove;
+      }),
+    );
+  }
 
   getOverview(character: Character): CharacterOverview {
     const {info, progress, plan} = character;
@@ -63,5 +109,16 @@ export class CharacterInfoService {
     }
     this.logger.info('sent character stats', id, dependency, result);
     return result;
+  }
+
+  changeTravelerGender(travelerGender: Gender): void {
+    this.updateSetting({travelerGender});
+  }
+
+  private updateSetting(update: Partial<CharacterInfoOptions>): void {
+    this.options.pipe(first()).subscribe(options => {
+      Object.assign(options, update);
+      this.settings.set(this.settingKey, options);
+    });
   }
 }

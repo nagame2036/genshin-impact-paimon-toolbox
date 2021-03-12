@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     private translator: TranslateService,
   ) {
     settings
-      .get(languageSettingKey, () => supportedLanguages[0].value)
+      .get(languageSettingKey, supportedLanguages[0].value)
       .subscribe(lang => {
         this.currentLanguage = lang;
         translator.use(lang);

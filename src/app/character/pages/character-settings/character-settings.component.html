@@ -1,0 +1,26 @@
+<div class="settings-page" *ngIf="information.options | async as options">
+  <div class="settings-header">
+    <button class="icon-btn" (click)="goBack()">
+      <span class="material-icons"> arrow_back </span>
+    </button>
+    <h2 class="text-xl font-bold">
+      {{ i18n.module('title') | translate }}
+    </h2>
+  </div>
+  <app-select
+    [options]="information.genders"
+    [value]="options.travelerGender"
+    (changed)="information.changeTravelerGender($event)"
+  >
+    <span form-label>
+      {{ i18n.module('traveler-gender') | translate }}
+    </span>
+  </app-select>
+  <app-form-field>
+    <span form-label>
+      {{ i18n.dict('list-options') | translate }}
+    </span>
+    <app-character-list-options [viewSort]="true" [viewInfoSort]="true">
+    </app-character-list-options>
+  </app-form-field>
+</div>

@@ -4,6 +4,7 @@ import {AddCharacterComponent} from './pages/add-character/add-character.compone
 import {CharacterListPageComponent} from './pages/character-list-page/character-list-page.component';
 import {CharacterDetailComponent} from './pages/character-detail/character-detail.component';
 import {CharacterPlanComponent} from './pages/character-plan/character-plan.component';
+import {CharacterSettingsComponent} from './pages/character-settings/character-settings.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'progresses', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
       {path: 'plan', component: CharacterPlanComponent},
     ],
   },
+  {path: 'settings', component: CharacterSettingsComponent},
 ];
 
 @NgModule({

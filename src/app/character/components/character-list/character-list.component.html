@@ -1,14 +1,12 @@
-<app-character-list-header
+<app-character-list-options
   *ngIf="view.options | async as options"
-  [sorts]="view.sorts"
-  [sort]="options.sort"
+  [viewSort]="true"
   (changed)="update()"
-  (sortChanged)="view.changeSort($event); update()"
 >
   <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
-</app-character-list-header>
+</app-character-list-options>
 <div class="list">
   <div
     *ngFor="let item of items"

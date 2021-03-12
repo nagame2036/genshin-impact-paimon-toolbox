@@ -13,7 +13,7 @@ import {I18n} from '../../widget/models/i18n.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 import {Observable, ReplaySubject} from 'rxjs';
 import {SettingService} from '../../setting/services/setting.service';
-import {CharacterViewOptions} from '../models/character-view-options.model';
+import {CharacterViewOptions} from '../models/options.model';
 import {first, map} from 'rxjs/operators';
 import {sortItems} from '../../shared/utils/collections';
 
@@ -71,13 +71,13 @@ export class CharacterViewService {
 
   constructor(private settings: SettingService) {
     settings
-      .get(this.settingKey, () => ({
+      .get(this.settingKey, {
         sort: [this.sorts[0].text],
         infoSort: [this.infoSorts[0].text],
         rarities: allCharacterRarities,
         elements: allElements,
         weapons: allWeaponTypes,
-      }))
+      })
       .subscribe(options => this.options$.next(options));
   }
 

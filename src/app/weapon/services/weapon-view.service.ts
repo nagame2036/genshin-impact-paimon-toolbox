@@ -71,12 +71,12 @@ export class WeaponViewService {
 
   constructor(private settings: SettingService) {
     settings
-      .get(this.settingKey, () => ({
+      .get(this.settingKey, {
         sort: [this.sorts[0].text],
         infoSort: [this.infoSorts[0].text],
         rarities: allWeaponRarities,
         types: allWeaponTypes,
-      }))
+      })
       .subscribe(options => this.options$.next(options));
   }
 

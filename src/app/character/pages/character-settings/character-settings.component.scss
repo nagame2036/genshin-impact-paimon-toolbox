@@ -1,0 +1,15 @@
+@import '../../../widget/styles/icon-btn.scss';
+
+.settings-page {
+  @apply mt-8;
+  @apply flex;
+  @apply flex-col;
+  @apply gap-2;
+}
+
+.settings-header {
+  @apply flex;
+  @apply flex-row;
+  @apply gap-2;
+  @apply place-items-center;
+}

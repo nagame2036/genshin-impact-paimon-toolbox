@@ -26,10 +26,10 @@ export class MaterialViewService {
     private settings: SettingService,
   ) {
     settings
-      .get(this.settingKey, () => ({
+      .get(this.settingKey, {
         rarities: [...allRarities],
         showOverflow: true,
-      }))
+      })
       .subscribe(options => this.options$.next(options));
   }
 

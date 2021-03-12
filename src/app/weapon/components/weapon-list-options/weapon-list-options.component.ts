@@ -1,27 +1,23 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {SelectOption} from '../../../widget/models/select-option.model';
 import {WeaponViewService} from '../../services/weapon-view.service';
 
 @Component({
-  selector: 'app-weapon-list-header',
-  templateUrl: './weapon-list-header.component.html',
-  styleUrls: ['./weapon-list-header.component.scss'],
+  selector: 'app-weapon-list-options',
+  templateUrl: './weapon-list-options.component.html',
+  styleUrls: ['./weapon-list-options.component.scss'],
 })
-export class WeaponListHeaderComponent implements OnInit {
+export class WeaponListOptionsComponent implements OnInit {
   readonly i18n = new I18n('weapons');
 
   @Input()
-  sorts!: SelectOption[];
+  viewSort = false;
 
   @Input()
-  sort!: any[];
+  viewInfoSort = false;
 
   @Output()
   changed = new EventEmitter();
-
-  @Output()
-  sortChanged = new EventEmitter();
 
   constructor(public view: WeaponViewService) {}
 

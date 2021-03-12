@@ -1,14 +1,8 @@
-<app-character-list-header
-  *ngIf="view.options | async as options"
-  [sorts]="view.infoSorts"
-  [sort]="options.infoSort"
-  (changed)="update()"
-  (sortChanged)="view.changeInfoSort($event); update()"
->
+<app-character-list-options [viewInfoSort]="true" (changed)="update()">
   <div actions>
     <ng-content select="[actions]"></ng-content>
   </div>
-</app-character-list-header>
+</app-character-list-options>
 <div class="list">
   <div *ngFor="let item of items" class="overview" (click)="select(item)">
     <app-item-view

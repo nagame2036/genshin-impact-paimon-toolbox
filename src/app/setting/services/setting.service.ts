@@ -31,16 +31,15 @@ export class SettingService {
     });
   }
 
-  get<T>(id: string, defaultValue: () => T): Observable<T> {
+  get<T>(id: string, defaultValue: T): Observable<T> {
     return this.settings.pipe(
       switchMap(settings => {
         const setting = settings.get(id);
-        if (setting) {
+        if (setting && ensureOptionsValue(setting, defaultValue)) {
           return of(setting);
         }
-        const value = defaultValue();
-        const update = this.database.update(this.storeName, {id, value});
-        return update.pipe(
+        const value = defaultValue;
+        return this.database.update(this.storeName, {id, value}).pipe(
           map(_ => settings.set(id, value)),
           map(_ => value),
         );
@@ -57,4 +56,12 @@ export class SettingService {
       this.settings.next(settings);
     });
   }
+}
+
+function ensureOptionsValue<T>(setting: any, defaultValue: T): boolean {
+  return (
+    typeof defaultValue === 'string' ||
+    defaultValue instanceof Array ||
+    Object.keys(defaultValue).every(it => setting.hasOwnProperty(it))
+  );
 }

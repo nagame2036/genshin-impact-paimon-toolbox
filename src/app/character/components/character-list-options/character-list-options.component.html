@@ -1,14 +1,29 @@
 <div *ngIf="view.options | async as options" class="options">
   <app-multi-select
+    *ngIf="viewSort"
     class="option"
     [ordered]="true"
-    [options]="sorts"
-    [values]="sort"
-    (changed)="sortChanged.emit($event)"
+    [options]="view.sorts"
+    [values]="options.sort"
+    (changed)="view.changeSort($event); changed.emit()"
   >
     <span form-label>
+      {{ viewInfoSort ? (i18n.dict('progress-list') | translate) : '' }}
       {{ i18n.dict('sort') | translate }}
     </span>
+  </app-multi-select>
+  <app-multi-select
+    *ngIf="viewInfoSort"
+    class="option"
+    [ordered]="true"
+    [options]="view.infoSorts"
+    [values]="options.infoSort"
+    (changed)="view.changeInfoSort($event); changed.emit()"
+  >
+    <span form-label>
+      {{ viewSort ? (i18n.dict('info-list') | translate) : '' }}
+      {{ i18n.dict('sort') | translate }} </span
+    >z
   </app-multi-select>
   <app-multi-select
     class="option"

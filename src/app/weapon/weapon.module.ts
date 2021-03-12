@@ -11,7 +11,7 @@ import {WeaponListPageComponent} from './pages/weapon-list-page/weapon-list-page
 import {WeaponDetailComponent} from './pages/weapon-detail/weapon-detail.component';
 import {WeaponPlanComponent} from './pages/weapon-plan/weapon-plan.component';
 import {WeaponPlanFormComponent} from './components/weapon-plan-form/weapon-plan-form.component';
-import {WeaponListHeaderComponent} from './components/weapon-list-header/weapon-list-header.component';
+import {WeaponListOptionsComponent} from './components/weapon-list-options/weapon-list-options.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import {WeaponListHeaderComponent} from './components/weapon-list-header/weapon-
     WeaponDetailComponent,
     WeaponPlanComponent,
     WeaponPlanFormComponent,
-    WeaponListHeaderComponent,
+    WeaponListOptionsComponent,
   ],
   imports: [
     WidgetModule,

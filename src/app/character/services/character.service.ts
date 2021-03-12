@@ -1,8 +1,16 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, of, ReplaySubject, throwError, zip} from 'rxjs';
+import {
+  combineLatest,
+  forkJoin,
+  Observable,
+  of,
+  ReplaySubject,
+  throwError,
+  zip,
+} from 'rxjs';
 import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
@@ -86,16 +94,26 @@ export class CharacterService {
   }
 
   getAll(): Observable<CharacterOverview[]> {
-    return this.updated.pipe(
-      map(_ => [...this.characters.values()].map(it => this.getOverview(it))),
-      tap(list => this.logger.info('sent characters', list)),
+    return combineLatest([this.updated, this.information.ignoreIds()]).pipe(
+      map(([, ids]) => {
+        const list = [...this.characters.values()]
+          .filter(it => !ids.includes(it.info.id))
+          .map(it => this.getOverview(it));
+        this.logger.info('sent characters', list);
+        return list;
+      }),
     );
   }
 
   getAllNonParty(): Observable<CharacterInfo[]> {
-    return this.updated.pipe(
-      map(_ => [...this.nonParty.values()]),
-      tap(list => this.logger.info('sent non-party characters', list)),
+    return combineLatest([this.updated, this.information.ignoreIds()]).pipe(
+      map(([, ids]) => {
+        const list = [...this.nonParty.values()].filter(
+          it => !ids.includes(it.id),
+        );
+        this.logger.info('sent non-party characters', list);
+        return list;
+      }),
     );
   }
 

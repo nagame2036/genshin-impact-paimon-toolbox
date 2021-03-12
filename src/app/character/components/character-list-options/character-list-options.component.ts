@@ -1,27 +1,23 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterViewService} from '../../services/character-view.service';
-import {SelectOption} from '../../../widget/models/select-option.model';
 
 @Component({
-  selector: 'app-character-list-header',
-  templateUrl: './character-list-header.component.html',
-  styleUrls: ['./character-list-header.component.scss'],
+  selector: 'app-character-list-options',
+  templateUrl: './character-list-options.component.html',
+  styleUrls: ['./character-list-options.component.scss'],
 })
-export class CharacterListHeaderComponent implements OnInit {
+export class CharacterListOptionsComponent implements OnInit {
   readonly i18n = new I18n('characters');
 
   @Input()
-  sorts!: SelectOption[];
+  viewSort = false;
 
   @Input()
-  sort!: any[];
+  viewInfoSort = false;
 
   @Output()
   changed = new EventEmitter();
-
-  @Output()
-  sortChanged = new EventEmitter();
 
   constructor(public view: CharacterViewService) {}
 

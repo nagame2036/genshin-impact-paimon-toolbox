@@ -24,7 +24,7 @@ export class SettingPageComponent implements OnInit {
     private settings: SettingService,
   ) {
     settings
-      .get(languageSettingKey, () => supportedLanguages[0].value)
+      .get(languageSettingKey, supportedLanguages[0].value)
       .subscribe(lang => {
         this.currentLanguage = lang;
         translator.use(lang);
