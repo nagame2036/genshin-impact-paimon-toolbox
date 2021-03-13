@@ -10,3 +10,11 @@
     @apply focus:ring-offset-2;
   }
 }
+
+.settings-btn {
+  @apply self-end;
+  ::ng-deep .ring-btn {
+    @apply px-3;
+    @apply py-1.5;
+  }
+}

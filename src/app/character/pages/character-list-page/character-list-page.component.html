@@ -7,6 +7,9 @@
     (multiSelected)="updateSelected($event)"
   >
     <div actions>
+      <app-ring-button class="settings-btn" routerLink="/characters/settings">
+        {{ i18n.module('settings.title') | translate }}
+      </app-ring-button>
       <app-ring-button class="add-btn" (clicked)="gotoAdd()">
         {{ i18n.module('add') | translate }}
       </app-ring-button>
