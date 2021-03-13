@@ -24,7 +24,7 @@ export class EnemyMaterialInventoryComponent
   ngOnInit(): void {
     const types = [[MaterialType.ENEMY_MOB], [MaterialType.ENEMY_ELITE]];
     this.view
-      .view(types)
+      .viewTypes(types)
       .pipe(takeUntil(this.destroy$))
       .subscribe(([mob, elite]) => {
         this.mob = mob;

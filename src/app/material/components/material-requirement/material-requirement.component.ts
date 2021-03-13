@@ -10,6 +10,8 @@ import {MaterialDetail} from '../../models/material.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {NGXLogger} from 'ngx-logger';
+import {MaterialViewService} from '../../services/material-view.service';
+import {defaultMaterialViewOptions} from '../../models/options.model';
 
 @Component({
   selector: 'app-material-requirement',
@@ -35,7 +37,7 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   detailsEmpty = true;
 
-  constructor(private logger: NGXLogger) {}
+  constructor(private view: MaterialViewService, private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');
@@ -72,7 +74,10 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
         }
       }
     }
-    this.details = this.types.map(([it]) => detailsMap.get(it) ?? []);
+    this.details = this.types.map(([it]) => {
+      const details = detailsMap.get(it) ?? [];
+      return this.view.viewDetails(details, defaultMaterialViewOptions);
+    });
   }
 
   trackIndex(index: number, _: any): number {

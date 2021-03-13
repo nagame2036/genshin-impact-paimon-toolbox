@@ -7,6 +7,10 @@ export interface CharacterInfoOptions {
   travelerGender: Gender;
 }
 
+export const defaultCharacterInfoOptions: CharacterInfoOptions = {
+  travelerGender: Gender.FEMALE,
+};
+
 export interface CharacterViewOptions {
   sort: string[];
   infoSort: string[];

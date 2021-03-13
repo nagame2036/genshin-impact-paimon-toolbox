@@ -18,7 +18,7 @@ import {RequireDetail} from '../models/requirement-detail.model';
   providedIn: 'root',
 })
 export class MaterialService {
-  private materials = new Map<number, MaterialDetail>();
+  materials = new Map<number, MaterialDetail>();
 
   readonly typed = new Map<MaterialType, Map<number, MaterialDetail>>();
 

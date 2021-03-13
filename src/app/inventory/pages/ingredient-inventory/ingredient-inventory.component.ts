@@ -27,7 +27,7 @@ export class IngredientInventoryComponent
       [MaterialType.LOCAL_SPECIALTY],
     ];
     this.view
-      .view(types)
+      .viewTypes(types)
       .pipe(takeUntil(this.destroy$))
       .subscribe(([common, local]) => {
         this.common = common;

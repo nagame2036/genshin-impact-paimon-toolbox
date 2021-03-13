@@ -30,7 +30,7 @@ export class CharacterMaterialInventoryComponent
       [MaterialType.CHARACTER_GEM],
     ];
     this.view
-      .view(types)
+      .viewTypes(types)
       .pipe(takeUntil(this.destroy$))
       .subscribe(([common, boss, gem]) => {
         this.common = common;

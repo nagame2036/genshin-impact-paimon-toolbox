@@ -33,7 +33,7 @@ export class TalentMaterialInventoryComponent
       [MaterialType.TALENT_367],
     ];
     this.view
-      .view(types)
+      .viewTypes(types)
       .pipe(takeUntil(this.destroy$))
       .subscribe(([common, monThu, tueFri, wedSat]) => {
         this.common = common;

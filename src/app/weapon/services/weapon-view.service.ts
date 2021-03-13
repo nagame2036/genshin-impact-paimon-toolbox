@@ -6,7 +6,7 @@ import {I18n} from '../../widget/models/i18n.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 import {Observable, ReplaySubject} from 'rxjs';
-import {WeaponViewOptions} from '../models/weapon-view-options.model';
+import {WeaponViewOptions} from '../models/options.model';
 import {SettingService} from '../../setting/services/setting.service';
 import {first, map} from 'rxjs/operators';
 import {sortItems} from '../../shared/utils/collections';

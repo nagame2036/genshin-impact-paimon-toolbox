@@ -2,12 +2,16 @@ import {Injectable} from '@angular/core';
 import {allRarities, Rarity} from '../../game-common/models/rarity.type';
 import {SettingService} from '../../setting/services/setting.service';
 import {combineLatest, Observable, ReplaySubject} from 'rxjs';
-import {MaterialViewOptions} from '../models/material-view-options.model';
+import {
+  defaultMaterialViewOptions,
+  MaterialViewOptions,
+} from '../models/options.model';
 import {MaterialDetail} from '../models/material.model';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialService} from './material.service';
 import {first, map} from 'rxjs/operators';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
+import {MaterialInfoService} from './material-info.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,39 +27,59 @@ export class MaterialViewService {
 
   constructor(
     private materials: MaterialService,
+    private information: MaterialInfoService,
     private settings: SettingService,
   ) {
     settings
-      .get(this.settingKey, {
-        rarities: [...allRarities],
-        showOverflow: true,
-      })
+      .get(this.settingKey, defaultMaterialViewOptions)
       .subscribe(options => this.options$.next(options));
   }
 
-  view(types: MaterialType[][]): Observable<MaterialDetail[][]> {
+  viewDetails(
+    details: MaterialDetail[],
+    {rarities, showOverflow}: MaterialViewOptions,
+  ): MaterialDetail[] {
+    const results = [];
+    const groups = new Set<number>();
+    for (const detail of details) {
+      const {info, overflow} = detail;
+      if (!rarities.includes(info.rarity) || (overflow && !showOverflow)) {
+        continue;
+      }
+      const group = info.group;
+      if (!group) {
+        results.push(detail);
+        continue;
+      }
+      if (groups.has(group)) {
+        continue;
+      }
+      groups.add(group);
+      const grouped = this.information.grouped.get(group) ?? [];
+      for (const {id, rarity} of grouped) {
+        if (rarities.includes(rarity)) {
+          const groupedDetail = this.materials.materials.get(id);
+          if (groupedDetail) {
+            results.push(groupedDetail);
+          }
+        }
+      }
+    }
+    return results.sort(compare);
+  }
+
+  viewTypes(types: MaterialType[][]): Observable<MaterialDetail[][]> {
     return combineLatest([this.options, this.materials.updated]).pipe(
       map(([options]) => {
         const results: MaterialDetail[][] = [];
-        const {rarities, showOverflow} = options;
-        const typedMaterials = this.materials.typed;
         for (const type of types) {
           const typed: MaterialDetail[] = [];
           for (const subType of type) {
-            const subTyped = typedMaterials.get(subType);
-            if (!subTyped) {
-              continue;
-            }
-            for (const detail of subTyped.values()) {
-              const {info, overflow} = detail;
-              const rarity = info.rarity;
-              if (rarities.includes(rarity) && (!overflow || showOverflow)) {
-                typed.push(detail);
-              }
-            }
+            const subTyped = this.materials.typed.get(subType) ?? [];
+            typed.push(...subTyped.values());
           }
-          typed.sort(compare);
-          results.push(typed);
+          const details = this.viewDetails(typed, options);
+          results.push(details);
         }
         return results;
       }),

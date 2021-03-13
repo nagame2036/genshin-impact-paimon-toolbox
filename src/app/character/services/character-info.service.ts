@@ -14,7 +14,10 @@ import statsCurvesLevel from '../../../assets/data/characters/character-stats-cu
 import {SettingService} from '../../setting/services/setting.service';
 import {allGenders, Gender} from '../models/gender.enum';
 import {Observable, ReplaySubject} from 'rxjs';
-import {CharacterInfoOptions} from '../models/options.model';
+import {
+  CharacterInfoOptions,
+  defaultCharacterInfoOptions,
+} from '../models/options.model';
 import {first, map} from 'rxjs/operators';
 import {I18n} from '../../widget/models/i18n.model';
 
@@ -53,9 +56,7 @@ export class CharacterInfoService {
 
   constructor(private settings: SettingService, private logger: NGXLogger) {
     settings
-      .get(this.settingKey, {
-        travelerGender: Gender.FEMALE,
-      })
+      .get(this.settingKey, defaultCharacterInfoOptions)
       .subscribe(options => this.options$.next(options));
   }
 
