@@ -19,6 +19,7 @@ import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {MaterialService} from '../../material/services/material.service';
 import {StatsType} from '../../game-common/models/stats.model';
 import {TalentInfoService} from './talent-info.service';
+import {Ascension} from '../../game-common/models/ascension.type';
 
 @Injectable({
   providedIn: 'root',
@@ -152,17 +153,21 @@ export class CharacterService {
 
   private updateSame(character: Character): Character[] {
     const results = new Set<Character>();
-    const {progress: curr, plan} = character;
-    this.sameLevels(character).forEach(c => {
-      Object.assign(c.progress, {ascension: curr.ascension, level: curr.level});
-      Object.assign(c.plan, {ascension: plan.ascension, level: curr.level});
+    const {progress, plan} = character;
+    for (const c of this.sameLevels(character)) {
       results.add(c);
-    });
-    this.sameTalents(character).forEach(c => {
-      this.talents.copyProgress(c.progress.talents, curr.talents);
-      this.talents.copyProgress(c.plan.talents, plan.talents);
+      if (c === character) {
+        copyLevel(c.progress, progress);
+        copyLevel(c.plan, plan);
+      }
+    }
+    for (const c of this.sameTalents(character)) {
       results.add(c);
-    });
+      if (c !== character) {
+        this.talents.copyProgress(c.progress.talents, progress.talents);
+        this.talents.copyProgress(c.plan.talents, plan.talents);
+      }
+    }
     return [...results];
   }
 
@@ -176,7 +181,11 @@ export class CharacterService {
 
   private getSame(target: Character, data: Map<number, number[]>): Character[] {
     const results = [];
-    const ids = data.get(target.progress.id) ?? [];
+    const targetId = target.progress.id;
+    const ids = data.get(targetId);
+    if (!ids) {
+      return [target];
+    }
     for (const id of ids) {
       const character = this.characters.get(id);
       if (character) {
@@ -192,4 +201,11 @@ export class CharacterService {
     }
     return results;
   }
+}
+
+type AscensionLevel = {ascension: Ascension; level: number};
+
+function copyLevel(target: AscensionLevel, source: AscensionLevel): void {
+  const {ascension, level} = source;
+  Object.assign(target, {ascension, level});
 }

@@ -86,10 +86,6 @@ export class MaterialService {
     this.quantities.change(change);
   }
 
-  removeRequire(type: ItemType, key: number): void {
-    this.requirements.remove(type, key);
-  }
-
   removeAllRequire(type: ItemType, keys: number[]): void {
     this.requirements.removeAll(type, keys);
   }
