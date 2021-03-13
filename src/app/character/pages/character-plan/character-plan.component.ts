@@ -27,16 +27,17 @@ export class CharacterPlanComponent
       MaterialType.CURRENCY,
       MaterialType.LOCAL_SPECIALTY,
       MaterialType.CHARACTER_EXP,
+      MaterialType.TALENT_COMMON,
     ],
+    ['1/4/7', MaterialType.TALENT_147],
+    ['2/5/7', MaterialType.TALENT_257],
+    ['3/6/7', MaterialType.TALENT_367],
     [
       'boss',
       MaterialType.TALENT_COMMON,
       MaterialType.CHARACTER_BOSS,
       MaterialType.CHARACTER_GEM,
     ],
-    ['1/4/7', MaterialType.TALENT_147],
-    ['2/5/7', MaterialType.TALENT_257],
-    ['3/6/7', MaterialType.TALENT_367],
     ['enemy', MaterialType.ENEMY_MOB],
   ];
 

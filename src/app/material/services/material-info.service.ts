@@ -25,6 +25,11 @@ export class MaterialInfoService {
 
   readonly grouped = new Map<number, MaterialInfo[]>();
 
+  readonly ignoreGroupTypes = [
+    MaterialType.TALENT_COMMON,
+    MaterialType.LOCAL_SPECIALTY,
+  ];
+
   constructor() {
     this.initTyped();
     this.initGrouped();

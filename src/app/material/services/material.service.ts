@@ -22,6 +22,8 @@ export class MaterialService {
 
   readonly typed = new Map<MaterialType, Map<number, MaterialDetail>>();
 
+  readonly grouped = new Map<number, MaterialDetail[]>();
+
   private updated$ = new ReplaySubject(1);
 
   readonly updated = this.updated$.asObservable();
@@ -92,12 +94,17 @@ export class MaterialService {
 
   private initDetails(): void {
     for (const [type, infos] of this.infos.typed) {
-      const materials = new Map<number, MaterialDetail>();
+      const materials = new Map<MaterialType, MaterialDetail>();
       for (const info of infos) {
-        const id = info.id;
+        const {id, group} = info;
         const material = new MaterialDetail(type, info, 0, 0);
         this.materials.set(id, material);
         materials.set(id, material);
+        if (group && !this.infos.ignoreGroupTypes.includes(type)) {
+          const grouped = this.grouped.get(group) ?? [];
+          grouped.push(material);
+          this.grouped.set(group, grouped);
+        }
       }
       this.typed.set(type, materials);
     }

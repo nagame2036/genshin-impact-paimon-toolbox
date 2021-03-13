@@ -40,14 +40,16 @@ export class MaterialViewService {
     {rarities, showOverflow}: MaterialViewOptions,
   ): MaterialDetail[] {
     const results = [];
+    const detailMap = new Map<number, MaterialDetail>();
+    details.forEach(it => detailMap.set(it.info.id, it));
     const groups = new Set<number>();
     for (const detail of details) {
-      const {info, overflow} = detail;
+      const {info, type, overflow} = detail;
       if (!rarities.includes(info.rarity) || (overflow && !showOverflow)) {
         continue;
       }
       const group = info.group;
-      if (!group) {
+      if (!group || this.information.ignoreGroupTypes.includes(type)) {
         results.push(detail);
         continue;
       }
@@ -55,13 +57,12 @@ export class MaterialViewService {
         continue;
       }
       groups.add(group);
-      const grouped = this.information.grouped.get(group) ?? [];
-      for (const {id, rarity} of grouped) {
+      const grouped = this.materials.grouped.get(group) ?? [];
+      for (const g of grouped) {
+        const {id, rarity} = g.info;
         if (rarities.includes(rarity)) {
-          const groupedDetail = this.materials.materials.get(id);
-          if (groupedDetail) {
-            results.push(groupedDetail);
-          }
+          const need = detailMap.get(id)?.need ?? 0;
+          results.push(g.copy(g.have, need));
         }
       }
     }
@@ -78,8 +79,7 @@ export class MaterialViewService {
             const subTyped = this.materials.typed.get(subType) ?? [];
             typed.push(...subTyped.values());
           }
-          const details = this.viewDetails(typed, options);
-          results.push(details);
+          results.push(this.viewDetails(typed, options));
         }
         return results;
       }),
