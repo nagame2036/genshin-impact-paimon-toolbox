@@ -26,8 +26,6 @@ import {TalentInfoService} from './talent-info.service';
 export class CharacterService {
   private characters = new Map<number, Character>();
 
-  private nonParty = [...this.progressor.noProgress.values()];
-
   private statsTypeCache = new Map<number, StatsType[]>();
 
   private updated = new ReplaySubject(1);
@@ -96,7 +94,7 @@ export class CharacterService {
   }
 
   getAll(): Observable<CharacterOverview[]> {
-    return combineLatest([this.updated, this.information.ignoreIds()]).pipe(
+    return combineLatest([this.updated, this.information.ignoredIds()]).pipe(
       map(([, ids]) => {
         const list = [...this.characters.values()]
           .filter(it => !ids.includes(it.info.id))
@@ -108,11 +106,10 @@ export class CharacterService {
   }
 
   getAllNonParty(): Observable<CharacterInfo[]> {
-    return combineLatest([this.updated, this.information.ignoreIds()]).pipe(
+    return combineLatest([this.updated, this.information.ignoredIds()]).pipe(
       map(([, ids]) => {
-        const list = [...this.nonParty.values()].filter(
-          it => !ids.includes(it.id),
-        );
+        const nonParty = [...this.progressor.noProgress.values()];
+        const list = nonParty.filter(it => !ids.includes(it.id));
         this.logger.info('sent non-party characters', list);
         return list;
       }),

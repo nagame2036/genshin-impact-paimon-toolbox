@@ -67,7 +67,7 @@ export class CharacterInfoService {
       .subscribe(options => this.options$.next(options));
   }
 
-  ignoreIds(): Observable<number[]> {
+  ignoredIds(): Observable<number[]> {
     return this.options.pipe(
       first(),
       map(options => {
