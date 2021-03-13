@@ -53,17 +53,6 @@ export class CharacterProgressService {
     );
   }
 
-  remove({info, progress}: Character): Observable<void> {
-    const {id} = progress;
-    return this.database.delete(this.store, id).pipe(
-      map(_ => {
-        this.logger.info('removed character progress', progress);
-        this.inProgress.delete(id);
-        this.noProgress.set(info.id, info);
-      }),
-    );
-  }
-
   removeAll(list: Character[]): Observable<void> {
     const remove = list.map(it =>
       this.database.delete(this.store, it.progress.id),

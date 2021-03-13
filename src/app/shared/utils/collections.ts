@@ -29,3 +29,13 @@ export function sortItems<T>(
 ): T[] {
   return items.sort((a, b) => sorts.reduce((acc, it) => acc || it(a, b), 0));
 }
+
+export function unionMap<T>(items: T[][]): Map<T, T[]> {
+  const map = new Map<T, T[]>();
+  for (const list of items) {
+    for (const item of list) {
+      map.set(item, list);
+    }
+  }
+  return map;
+}

@@ -18,6 +18,7 @@ import {CharacterPlanner} from './character-planner.service';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {MaterialService} from '../../material/services/material.service';
 import {StatsType} from '../../game-common/models/stats.model';
+import {TalentInfoService} from './talent-info.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class CharacterService {
     private information: CharacterInfoService,
     private progressor: CharacterProgressService,
     private planner: CharacterPlanner,
+    private talents: TalentInfoService,
     private materials: MaterialService,
     private logger: NGXLogger,
   ) {
@@ -118,38 +120,79 @@ export class CharacterService {
   }
 
   update(character: Character): void {
-    this.characters.set(character.progress.id, character);
-    const subActions = [
-      this.progressor.update(character),
-      this.planner.update(character),
-    ];
+    const characters = this.updateSame(character);
+    const subActions = [];
+    for (const c of characters) {
+      subActions.push(this.progressor.update(c));
+      subActions.push(this.planner.update(c));
+    }
     forkJoin(subActions).subscribe(_ => {
-      this.logger.info('updated character', character);
+      this.logger.info('updated characters', characters);
+      characters.forEach(c => this.characters.set(c.progress.id, c));
       this.updated.next();
     });
   }
 
   remove(character: Character): void {
-    this.characters.delete(character.progress.id);
+    this.removeAll([character]);
+  }
+
+  removeAll(list: Character[]): void {
+    const characters: Character[] = [];
+    for (const c of list) {
+      characters.push(...this.sameLevels(c));
+    }
     const subActions = [
-      this.progressor.remove(character),
-      this.planner.remove(character),
+      this.progressor.removeAll(characters),
+      this.planner.removeAll(characters),
     ];
     forkJoin(subActions).subscribe(_ => {
-      this.logger.info('removed character', character);
+      this.logger.info('removed characters', characters);
+      characters.forEach(it => this.characters.delete(it.progress.id));
       this.updated.next();
     });
   }
 
-  removeAll(list: Character[]): void {
-    list.forEach(character => this.characters.delete(character.progress.id));
-    const subActions = [
-      this.progressor.removeAll(list),
-      this.planner.removeAll(list),
-    ];
-    forkJoin(subActions).subscribe(_ => {
-      this.logger.info('removed characters', list);
-      this.updated.next();
+  private updateSame(character: Character): Character[] {
+    const results = new Set<Character>();
+    const {progress: curr, plan} = character;
+    this.sameLevels(character).forEach(c => {
+      Object.assign(c.progress, {ascension: curr.ascension, level: curr.level});
+      Object.assign(c.plan, {ascension: plan.ascension, level: curr.level});
+      results.add(c);
     });
+    this.sameTalents(character).forEach(c => {
+      this.talents.copyProgress(c.progress.talents, curr.talents);
+      this.talents.copyProgress(c.plan.talents, plan.talents);
+      results.add(c);
+    });
+    return [...results];
+  }
+
+  private sameLevels(target: Character): Character[] {
+    return this.getSame(target, this.information.sameLevels);
+  }
+
+  private sameTalents(target: Character): Character[] {
+    return this.getSame(target, this.information.sameTalents);
+  }
+
+  private getSame(target: Character, data: Map<number, number[]>): Character[] {
+    const results = [];
+    const ids = data.get(target.progress.id) ?? [];
+    for (const id of ids) {
+      const character = this.characters.get(id);
+      if (character) {
+        results.push(character);
+        continue;
+      }
+      const info = this.information.infos.get(id);
+      if (info) {
+        const newCharacter = this.create(info);
+        this.characters.set(newCharacter.progress.id, newCharacter);
+        results.push(newCharacter);
+      }
+    }
+    return results;
   }
 }

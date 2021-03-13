@@ -77,17 +77,6 @@ export class WeaponPlanner {
     );
   }
 
-  remove({plan}: Weapon): Observable<void> {
-    const id = plan.id;
-    return this.database.delete(this.store, id).pipe(
-      map(_ => {
-        this.logger.info('removed weapon plan', plan);
-        this.plans.delete(id);
-        this.materials.removeRequire(this.type, id);
-      }),
-    );
-  }
-
   removeAll(weapons: Weapon[]): Observable<void> {
     const planIds = weapons.map(it => it.plan.id);
     const remove = planIds.map(it => this.database.delete(this.store, it));

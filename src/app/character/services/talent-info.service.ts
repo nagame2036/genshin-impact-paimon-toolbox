@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {TalentInfo, TalentLevel} from '../models/talent-info.model';
-import {objectMap} from '../../shared/utils/collections';
+import {objectMap, unionMap} from '../../shared/utils/collections';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {coerceIn} from '../../shared/utils/coerce';
 import {rangeList} from '../../shared/utils/range-list';
@@ -15,6 +15,11 @@ export class TalentInfoService {
   readonly talents = objectMap<TalentInfo>(
     JSON.parse(JSON.stringify(talentList)),
   );
+
+  readonly sameLevels = unionMap([
+    [10010, 10110],
+    [10020, 10120],
+  ]);
 
   constructor(private logger: NGXLogger) {}
 
@@ -42,6 +47,23 @@ export class TalentInfoService {
     return (ascension < 2 ? 1 : (ascension - 1) * 2) as TalentLevel;
   }
 
+  levels(ascension: Ascension, start: number = 1): TalentLevel[] {
+    const min = Math.max(1, start) as TalentLevel;
+    return rangeList(min, this.maxLevel(ascension));
+  }
+
+  copyProgress(source: TalentProgress, target: TalentProgress): void {
+    for (const idStr of Object.keys(source)) {
+      const id = Number(idStr);
+      const sameLevels = this.sameLevels.get(id) ?? [id];
+      for (const sameId of sameLevels) {
+        if (target.hasOwnProperty(sameId)) {
+          source[id] = target[sameId];
+        }
+      }
+    }
+  }
+
   correctLevel(ascension: Ascension, level: number): TalentLevel {
     const max = this.maxLevel(ascension);
     return coerceIn(level, 1, max) as TalentLevel;
@@ -58,10 +80,5 @@ export class TalentInfoService {
       const min = coerceIn(starts[id] ?? 1, 1, max);
       levels[id] = coerceIn(level, min, max) as TalentLevel;
     }
-  }
-
-  levels(ascension: Ascension, start: number = 1): TalentLevel[] {
-    const min = Math.max(1, start) as TalentLevel;
-    return rangeList(min, this.maxLevel(ascension));
   }
 }

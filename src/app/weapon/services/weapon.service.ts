@@ -95,37 +95,29 @@ export class WeaponService {
   }
 
   update(weapon: Weapon): void {
-    this.weapons.set(weapon.progress.id, weapon);
     const subActions = [
       this.progressor.update(weapon),
       this.planner.update(weapon),
     ];
     forkJoin(subActions).subscribe(_ => {
       this.logger.info('updated weapon', weapon);
+      this.weapons.set(weapon.progress.id, weapon);
       this.updated.next();
     });
   }
 
   remove(weapon: Weapon): void {
-    this.weapons.delete(weapon.progress.id);
-    const subActions = [
-      this.progressor.remove(weapon),
-      this.planner.remove(weapon),
-    ];
-    forkJoin(subActions).subscribe(_ => {
-      this.logger.info('removed weapon', weapon);
-      this.updated.next();
-    });
+    this.removeAll([weapon]);
   }
 
   removeAll(list: Weapon[]): void {
-    list.forEach(weapon => this.weapons.delete(weapon.progress.id));
     const subActions = [
       this.progressor.removeAll(list),
       this.planner.removeAll(list),
     ];
     forkJoin(subActions).subscribe(_ => {
       this.logger.info('removed weapons', list);
+      list.forEach(weapon => this.weapons.delete(weapon.progress.id));
       this.updated.next();
     });
   }

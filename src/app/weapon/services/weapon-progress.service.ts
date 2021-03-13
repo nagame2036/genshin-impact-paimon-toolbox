@@ -44,16 +44,6 @@ export class WeaponProgressService {
     );
   }
 
-  remove({progress}: Weapon): Observable<void> {
-    const id = progress.id;
-    return this.database.delete(this.store, id).pipe(
-      map(_ => {
-        this.logger.info('removed weapon progress', progress);
-        this.inProgress.delete(id);
-      }),
-    );
-  }
-
   removeAll(weapons: Weapon[]): Observable<void> {
     const remove = weapons.map(it =>
       this.database.delete(this.store, it.progress.id),

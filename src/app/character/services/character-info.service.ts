@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CharacterInfo} from '../models/character-info.model';
 import {NGXLogger} from 'ngx-logger';
-import {objectMap} from '../../shared/utils/collections';
+import {objectMap, unionMap} from '../../shared/utils/collections';
 import {
   CharacterStatsCurveLevel,
   CharacterStatsValue,
@@ -48,6 +48,13 @@ export class CharacterInfoService {
   readonly travelersGendered = new Map([
     [Gender.MALE, [1001, 1002]],
     [Gender.FEMALE, [1011, 1012]],
+  ]);
+
+  readonly sameLevels = unionMap([[1001, 1002, 1011, 1012]]);
+
+  readonly sameTalents = unionMap([
+    [1001, 1011],
+    [1002, 1012],
   ]);
 
   private options$ = new ReplaySubject<CharacterInfoOptions>(1);

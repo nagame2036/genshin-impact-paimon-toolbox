@@ -90,17 +90,6 @@ export class CharacterPlanner {
     );
   }
 
-  remove({plan}: Character): Observable<void> {
-    const id = plan.id;
-    return this.database.delete(this.store, id).pipe(
-      map(_ => {
-        this.logger.info('removed character plan', plan);
-        this.plans.delete(id);
-        this.materials.removeRequire(this.type, id);
-      }),
-    );
-  }
-
   removeAll(characters: Character[]): Observable<void> {
     const planIds = characters.map(it => it.plan.id);
     const remove = planIds.map(it => this.database.delete(this.store, it));
