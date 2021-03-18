@@ -11,6 +11,7 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {Rarity} from '../../models/rarity.type';
 import {NGXLogger} from 'ngx-logger';
 import {ImageType} from '../../../image/services/image.service';
+import {ElementType} from '../../models/element-type.enum';
 
 @Component({
   selector: 'app-remove-confirm-dialog',
@@ -24,7 +25,7 @@ export class RemoveConfirmDialogComponent implements OnInit {
   category!: ImageType;
 
   @Input()
-  items!: {info: {id: number; rarity: Rarity}}[];
+  items!: {info: {id: number; rarity: Rarity; element?: ElementType}}[];
 
   @Output()
   confirm = new EventEmitter();

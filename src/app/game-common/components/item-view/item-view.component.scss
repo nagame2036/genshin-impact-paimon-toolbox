@@ -1,4 +1,5 @@
 .view-container {
+  @apply relative;
   @apply rounded;
 }
 
@@ -22,7 +23,23 @@ $rarities: (
 );
 
 @each $rarity, $color in $rarities {
-  .rarity-#{$rarity} {
+  .background-#{$rarity} {
+    background: $color;
+  }
+}
+
+$elements: (
+  101:#3baeaf,
+  102:#ba9546,
+  103:#8d5abc,
+  //104:,
+  105:#3e67af,
+  106:#c26544,
+  107:#76d5e4,
+);
+
+@each $element, $color in $elements {
+  .background-#{$element} {
     background: $color;
   }
 }
@@ -32,6 +49,15 @@ $rarities: (
   height: 100px;
   @apply block;
   @apply m-auto;
+}
+
+.stars {
+  @apply w-full;
+  @apply absolute;
+  top: 84px;
+  @apply flex;
+  @apply flex-row;
+  @apply place-content-center;
 }
 
 .name {

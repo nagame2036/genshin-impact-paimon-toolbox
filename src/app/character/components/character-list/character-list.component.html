@@ -18,12 +18,8 @@
       category="characters"
       [id]="item.info.id"
       [rarity]="item.info.rarity"
+      [backgroundDeps]="item.info.element"
     ></app-item-view>
-    <img
-      class="element-hint"
-      [src]="images.get('elements', item.info.element)"
-      [alt]="i18n.dict('elements.' + item.info.element) | translate"
-    />
     <img
       class="weapon-type-hint"
       [src]="images.get('weapon-types', item.info.weapon)"
