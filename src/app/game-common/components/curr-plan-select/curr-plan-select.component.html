@@ -1,9 +1,7 @@
 <app-form-field
   class="form-container"
-  [ngClass]="{
-    hover: left.hover || right.hover,
-    focus: left.focus || right.focus
-  }"
+  [class.hover]="left.hover || right.hover"
+  [class.focus]="left.focus || right.focus"
 >
   <span form-label>
     <ng-content></ng-content>
@@ -12,15 +10,15 @@
     <app-select
       #left
       class="value"
-      [options]="currentOptions"
-      [value]="current"
-      (changed)="setCurrent($event)"
+      [options]="currOptions"
+      [value]="curr"
+      (changed)="setCurr($event)"
     >
     </app-select>
     <button
       class="execute-plan-btn"
-      [class.reached]="checkPlanAvailable(reached)"
-      [disabled]="!checkPlanAvailable(reached)"
+      [class.reached]="checkReached(reached)"
+      [disabled]="!checkReached(reached)"
       (click)="executePlan.emit()"
     >
       <span class="material-icons arrow">chevron_right</span>
@@ -28,9 +26,9 @@
     <app-select
       #right
       class="value"
-      [options]="goalOptions"
-      [value]="goal"
-      (changed)="setGoal($event)"
+      [options]="planOptions"
+      [value]="plan"
+      (changed)="setPlan($event)"
     >
     </app-select>
   </div>

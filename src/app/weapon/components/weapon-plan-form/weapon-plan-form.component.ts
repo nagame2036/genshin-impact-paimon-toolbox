@@ -60,16 +60,14 @@ export class WeaponPlanFormComponent
     this.emitChange();
   }
 
-  setCurrentLevel(ascensionLevel: AscensionLevel): void {
-    const {ascension, level} = ascensionLevel;
+  setCurrLevel({ascension, level}: AscensionLevel): void {
     this.logger.info(`change ascension-level to ${ascension}, ${level}`);
     this.progress.ascension = ascension;
     this.progress.level = level;
     this.updateStats();
   }
 
-  setGoalLevel(ascensionLevel: AscensionLevel): void {
-    const {ascension, level} = ascensionLevel;
+  setPlanLevel({ascension, level}: AscensionLevel): void {
     this.logger.info(`change plan ascension-level to ${ascension}, ${level}`);
     this.plan.ascension = ascension;
     this.plan.level = level;

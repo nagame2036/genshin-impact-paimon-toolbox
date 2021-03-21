@@ -3,30 +3,33 @@ import {NgModule} from '@angular/core';
 import {WidgetModule} from '../widget/widget.module';
 import {ItemViewComponent} from './components/item-view/item-view.component';
 import {MultiSelectAndSelectAllComponent} from './components/multi-select-and-select-all/multi-select-and-select-all.component';
-import {CurrentGoalSelectComponent} from './components/current-goal-select/current-goal-select.component';
-import {CurrentGoalLevelSelectComponent} from './components/current-goal-level-select/current-goal-level-select.component';
+import {AscensionLevelSelectComponent} from './components/ascension-level-select/ascension-level-select.component';
+import {CurrPlanSelectComponent} from './components/curr-plan-select/curr-plan-select.component';
+import {CurrPlanLevelSelectComponent} from './components/curr-plan-level-select/curr-plan-level-select.component';
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
-import {CurrentGoalComparatorComponent} from './components/current-goal-comparator/current-goal-comparator.component';
+import {CurrPlanComparatorComponent} from './components/curr-plan-comparator/curr-plan-comparator.component';
 import {ItemOverviewDataComponent} from './components/item-overview-data/item-overview-data.component';
 
 @NgModule({
   declarations: [
     ItemViewComponent,
     MultiSelectAndSelectAllComponent,
-    CurrentGoalSelectComponent,
-    CurrentGoalLevelSelectComponent,
+    AscensionLevelSelectComponent,
+    CurrPlanSelectComponent,
+    CurrPlanLevelSelectComponent,
     RemoveConfirmDialogComponent,
-    CurrentGoalComparatorComponent,
+    CurrPlanComparatorComponent,
     ItemOverviewDataComponent,
   ],
   imports: [WidgetModule],
   exports: [
     ItemViewComponent,
     MultiSelectAndSelectAllComponent,
-    CurrentGoalSelectComponent,
-    CurrentGoalLevelSelectComponent,
+    AscensionLevelSelectComponent,
+    CurrPlanSelectComponent,
+    CurrPlanLevelSelectComponent,
     RemoveConfirmDialogComponent,
-    CurrentGoalComparatorComponent,
+    CurrPlanComparatorComponent,
     ItemOverviewDataComponent,
   ],
 })

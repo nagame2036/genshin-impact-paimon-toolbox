@@ -14,35 +14,33 @@
       {{ i18n.dict('refine-rank') | translate }}
     </span>
   </app-select>
-  <app-current-goal-level-select
+  <app-curr-plan-level-select
     label="weapon"
-    [ascension]="progress.ascension"
-    [goalAscension]="plan.ascension"
-    [level]="progress.level"
-    [goalLevel]="plan.level"
+    [currLevel]="progress"
+    [planLevel]="plan"
     [reached]="reachedStates[1]"
     (executePlan)="executePlan.emit(1)"
-    (currentChange)="setCurrentLevel($event)"
-    (goalChange)="setGoalLevel($event)"
+    (currChange)="setCurrLevel($event)"
+    (planChange)="setPlanLevel($event)"
   >
-  </app-current-goal-level-select>
+  </app-curr-plan-level-select>
   <ng-container
     *ngFor="let type of service.getStatsTypes(weapon); let i = index"
   >
-    <app-current-goal-comparator
+    <app-curr-plan-comparator
       *ngIf="type.endsWith('%'); else numeric"
-      [current]="weapon.currentStats.get(type) | percent: '1.0-1'"
-      [goal]="weapon.planStats.get(type) | percent: '1.0-1'"
+      [curr]="weapon.currentStats.get(type) | percent: '1.0-1'"
+      [plan]="weapon.planStats.get(type) | percent: '1.0-1'"
     >
       {{ i18n.stats(type) | translate }}
-    </app-current-goal-comparator>
+    </app-curr-plan-comparator>
     <ng-template #numeric>
-      <app-current-goal-comparator
-        [current]="weapon.currentStats.get(type) | number: '1.0-0'"
-        [goal]="weapon.planStats.get(type) | number: '1.0-0'"
+      <app-curr-plan-comparator
+        [curr]="weapon.currentStats.get(type) | number: '1.0-0'"
+        [plan]="weapon.planStats.get(type) | number: '1.0-0'"
       >
         {{ i18n.stats(type) | translate }}
-      </app-current-goal-comparator>
+      </app-curr-plan-comparator>
     </ng-template>
   </ng-container>
   <div *ngFor="let bonus of info.expBonus || []">

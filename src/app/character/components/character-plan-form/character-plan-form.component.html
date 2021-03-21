@@ -17,52 +17,50 @@
       {{ i18n.dict('constellations.' + info.id + '.name') | translate }}
     </span>
   </app-select>
-  <app-current-goal-level-select
+  <app-curr-plan-level-select
     label="character"
-    [ascension]="progress.ascension"
-    [goalAscension]="plan.ascension"
-    [level]="progress.level"
-    [goalLevel]="plan.level"
+    [currLevel]="progress"
+    [planLevel]="plan"
     [reached]="reachedStates[1]"
     (executePlan)="executePlan.emit(1)"
-    (currentChange)="setCurrentLevel($event)"
-    (goalChange)="setGoalLevel($event)"
+    (currChange)="setCurrLevel($event)"
+    (planChange)="setPlanLevel($event)"
   >
-  </app-current-goal-level-select>
+  </app-curr-plan-level-select>
   <ng-container
     *ngFor="let type of service.getStatsTypes(character); let i = index"
   >
-    <app-current-goal-comparator
+    <app-curr-plan-comparator
       *ngIf="type.endsWith('%'); else numeric"
-      [current]="character.currentStats.get(type) | percent: '1.0-1'"
-      [goal]="character.planStats.get(type) | percent: '1.0-1'"
+      [curr]="character.currentStats.get(type) | percent: '1.0-1'"
+      [plan]="character.planStats.get(type) | percent: '1.0-1'"
     >
       {{ i18n.stats(type) | translate }}
-    </app-current-goal-comparator>
+    </app-curr-plan-comparator>
     <ng-template #numeric>
-      <app-current-goal-comparator
-        [current]="character.currentStats.get(type) | number: '1.0-0'"
-        [goal]="character.planStats.get(type) | number: '1.0-0'"
+      <app-curr-plan-comparator
+        [curr]="character.currentStats.get(type) | number: '1.0-0'"
+        [plan]="character.planStats.get(type) | number: '1.0-0'"
       >
         {{ i18n.stats(type) | translate }}
-      </app-current-goal-comparator>
+      </app-curr-plan-comparator>
     </ng-template>
   </ng-container>
-  <app-current-goal-select
+  <app-curr-plan-select
     *ngFor="let talent of info.talentsUpgradable; let i = index"
-    [currentOptions]="talentLevels[talent]"
-    [goalOptions]="goalTalentLevels[talent]"
-    [current]="progress.talents[talent] || 1"
-    [goal]="plan.talents[talent] || 1"
-    (currentChange)="setTalent(talent, $event)"
-    (goalChange)="setGoalTalent(talent, $event)"
+    [currOptions]="currTalentLevels[talent]"
+    [planOptions]="planTalentLevels[talent]"
+    [curr]="progress.talents[talent] || 1"
+    [plan]="plan.talents[talent] || 1"
+    (currChange)="setCurrTalent(talent, $event)"
+    (planChange)="setPlanTalent(talent, $event)"
     [reached]="reachedStates[2 + i]"
     (executePlan)="executePlan.emit(2 + i)"
   >
     {{ i18n.dict('talent-types.' + (talent % 10)) | translate }}
     -
     {{ i18n.dict('talents.' + talent) | translate }}
-  </app-current-goal-select>
+  </app-curr-plan-select>
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>

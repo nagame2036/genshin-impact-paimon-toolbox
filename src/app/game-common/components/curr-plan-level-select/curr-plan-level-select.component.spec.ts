@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CurrentGoalLevelSelectComponent} from './current-goal-level-select.component';
+import {CurrPlanLevelSelectComponent} from './curr-plan-level-select.component';
 import {GameCommonModule} from '../../game-common.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
-describe('CurrentGoalLevelSelectComponent', () => {
-  let component: CurrentGoalLevelSelectComponent;
-  let fixture: ComponentFixture<CurrentGoalLevelSelectComponent>;
+describe('CurrPlanLevelSelectComponent', () => {
+  let component: CurrPlanLevelSelectComponent;
+  let fixture: ComponentFixture<CurrPlanLevelSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CurrentGoalLevelSelectComponent],
+      declarations: [CurrPlanLevelSelectComponent],
       imports: [GameCommonModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentGoalLevelSelectComponent);
+    fixture = TestBed.createComponent(CurrPlanLevelSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

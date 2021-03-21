@@ -1,0 +1,34 @@
+<app-form-field
+  class="form-container"
+  [class.hover]="left.hover || right.hover"
+  [class.focus]="left.focus || right.focus"
+>
+  <span form-label>
+    {{ i18n.dict('level') | translate }}
+  </span>
+  <div class="form">
+    <app-ascension-level-select
+      #left
+      class="value"
+      [data]="currData"
+      (changed)="emitCurrChange($event)"
+    >
+    </app-ascension-level-select>
+    <button
+      class="execute-plan-btn"
+      [class.reached]="checkReached(reached)"
+      [disabled]="!checkReached(reached)"
+      (click)="executePlan.emit()"
+    >
+      <span class="material-icons arrow">chevron_right</span>
+    </button>
+    <app-ascension-level-select
+      #right
+      class="value"
+      [data]="planData"
+      [dataStart]="currData"
+      (changed)="emitPlanChange($event)"
+    >
+    </app-ascension-level-select>
+  </div>
+</app-form-field>

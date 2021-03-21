@@ -38,9 +38,9 @@ export class CharacterPlanFormComponent implements OnInit {
 
   constellations!: SelectOption[];
 
-  talentLevels: {[id: number]: SelectOption[]} = {};
+  currTalentLevels: {[id: number]: SelectOption[]} = {};
 
-  goalTalentLevels: {[id: number]: SelectOption[]} = {};
+  planTalentLevels: {[id: number]: SelectOption[]} = {};
 
   @Output()
   changed = new EventEmitter();
@@ -67,8 +67,8 @@ export class CharacterPlanFormComponent implements OnInit {
         text: `${it} - ${this.translator.instant(this.i18n.dict(key))}`,
       };
     });
-    this.updateTalentLevels();
-    this.updateGoalTalentLevels();
+    this.updateCurrTalentLevels();
+    this.updatePlanTalentLevels();
   }
 
   setConstellation(constellation: Constellation): void {
@@ -78,72 +78,71 @@ export class CharacterPlanFormComponent implements OnInit {
     this.emitChange();
   }
 
-  setCurrentLevel({ascension, level}: AscensionLevel): void {
+  setCurrLevel({ascension, level}: AscensionLevel): void {
     const progress = this.progress;
     this.logger.info(`change ascension-level to (${ascension}, ${level})`);
     progress.ascension = ascension;
     progress.level = level;
     this.talents.correctLevels(progress.talents, ascension);
-    this.updateTalentLevels();
+    this.updateCurrTalentLevels();
     this.updateStats();
   }
 
-  setGoalLevel({ascension, level}: AscensionLevel): void {
-    const plan = this.plan;
+  setPlanLevel({ascension, level}: AscensionLevel): void {
     this.logger.info(`change plan ascension-level to (${ascension}, ${level})`);
-    plan.ascension = ascension;
-    plan.level = level;
-    this.correctGoalTalents();
+    this.plan.ascension = ascension;
+    this.plan.level = level;
+    this.correctPlanTalents();
     this.updateStats();
   }
 
-  setTalent(id: number, level: number): void {
+  setCurrTalent(id: number, level: number): void {
     const progress = this.progress;
     this.logger.info(`change talent level to ${level}`);
     progress.talents[id] = this.talents.correctLevel(progress.ascension, level);
-    this.correctGoalTalents();
+    this.correctPlanTalents();
     this.emitChange();
   }
 
-  setGoalTalent(id: number, level: number): void {
+  setPlanTalent(id: number, level: number): void {
     const plan = this.plan;
     this.logger.info(`change plan talent level to ${level}`);
     plan.talents[id] = this.talents.correctLevel(plan.ascension, level);
     this.emitChange();
   }
 
-  private updateTalentLevels(): void {
+  private updateCurrTalentLevels(): void {
     for (const talent of this.info.talentsUpgradable) {
       const levels = this.talents.levels(this.progress.ascension);
-      this.talentLevels[talent] = mapTalentLevels(levels);
+      this.currTalentLevels[talent] = mapTalentLevels(levels);
     }
   }
 
-  private updateGoalTalentLevels(): void {
+  private updatePlanTalentLevels(): void {
     for (const talent of this.info.talentsUpgradable) {
       const levels = this.talents.levels(
         this.plan.ascension,
         this.progress.talents[talent] ?? 1,
       );
-      this.goalTalentLevels[talent] = mapTalentLevels(levels);
+      this.planTalentLevels[talent] = mapTalentLevels(levels);
     }
   }
 
-  private correctGoalTalents(): void {
+  private correctPlanTalents(): void {
     const talents = this.progress.talents;
     const {ascension, talents: goalTalents} = this.plan;
     this.talents.correctLevels(goalTalents, ascension, talents);
-    this.updateGoalTalentLevels();
-  }
-
-  private emitChange(): void {
-    this.logger.info('character changed');
-    this.changed.emit();
+    this.updatePlanTalentLevels();
   }
 
   private updateStats(): void {
     this.character = this.service.getOverview(this.character);
     this.emitChange();
+  }
+
+  private emitChange(): void {
+    this.logger.info('character changed');
+    this.changed.emit();
   }
 }
 

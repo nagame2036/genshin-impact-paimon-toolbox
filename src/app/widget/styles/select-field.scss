@@ -44,6 +44,7 @@
   @apply max-h-64;
   @apply overflow-y-scroll;
   @apply hidden;
+  @apply bg-white;
   @apply absolute;
   @apply top-7;
   @apply -left-2;
@@ -64,7 +65,6 @@
   @apply flex;
   @apply flex-row;
   @apply cursor-pointer;
-  @apply bg-white;
   @apply hover:bg-primary-100;
 
   &:last-child {

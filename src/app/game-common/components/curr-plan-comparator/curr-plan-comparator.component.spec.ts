@@ -1,25 +1,23 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CurrentGoalSelectComponent} from './current-goal-select.component';
+import {CurrPlanComparatorComponent} from './curr-plan-comparator.component';
 import {GameCommonModule} from '../../game-common.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
-describe('CurrentTargetSelectComponent', () => {
-  let component: CurrentGoalSelectComponent;
-  let fixture: ComponentFixture<CurrentGoalSelectComponent>;
+describe('CurrPlanComparatorComponent', () => {
+  let component: CurrPlanComparatorComponent;
+  let fixture: ComponentFixture<CurrPlanComparatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CurrentGoalSelectComponent],
+      declarations: [CurrPlanComparatorComponent],
       imports: [GameCommonModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentGoalSelectComponent);
+    fixture = TestBed.createComponent(CurrPlanComparatorComponent);
     component = fixture.componentInstance;
-    component.currentOptions = [];
-    component.goalOptions = [];
     fixture.detectChanges();
   });
 

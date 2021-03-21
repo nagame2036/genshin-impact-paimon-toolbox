@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CurrentGoalComparatorComponent} from './current-goal-comparator.component';
+import {AscensionLevelSelectComponent} from './ascension-level-select.component';
 import {GameCommonModule} from '../../game-common.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
-describe('CurrentGoalComparatorComponent', () => {
-  let component: CurrentGoalComparatorComponent;
-  let fixture: ComponentFixture<CurrentGoalComparatorComponent>;
+describe('AscensionLevelSelectComponent', () => {
+  let component: AscensionLevelSelectComponent;
+  let fixture: ComponentFixture<AscensionLevelSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CurrentGoalComparatorComponent],
+      declarations: [AscensionLevelSelectComponent],
       imports: [GameCommonModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentGoalComparatorComponent);
+    fixture = TestBed.createComponent(AscensionLevelSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

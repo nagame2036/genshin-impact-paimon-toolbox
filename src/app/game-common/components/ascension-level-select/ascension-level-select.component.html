@@ -1,0 +1,51 @@
+<app-form-field
+  class="form-container"
+  [ngClass]="{hover: hover, focus: focus}"
+  (mouseenter)="hover = true"
+  (mouseleave)="hover = false"
+  (click)="focus = opened = true"
+>
+  <span form-label>
+    <ng-content select="[form-label]"></ng-content>
+  </span>
+  <div class="select-container">
+    <input
+      class="select"
+      type="text"
+      [value]="valueText"
+      readonly
+      (focusin)="focus = opened = true"
+      (focusout)="focus = false"
+    />
+    <div
+      class="material-icons select-arrow"
+      [ngClass]="{hover: hover, focus: focus}"
+    >
+      keyboard_arrow_down
+    </div>
+    <div class="select-dropdown p-2" [class.opened]="opened">
+      <div>
+        {{ i18n.dict('ascension-label') | translate }}
+        {{ ascension }}
+      </div>
+      <app-slider
+        [value]="ascension"
+        [min]="ascensionRange[0]"
+        [max]="ascensionRange[1]"
+        (changed)="changeAscension($event)"
+      >
+      </app-slider>
+      <div class="mt-4">
+        {{ i18n.dict('level') | translate }}
+        {{ level }}
+      </div>
+      <app-slider
+        [value]="level"
+        [min]="levelRange[0]"
+        [max]="levelRange[1]"
+        (changed)="changeLevel($event)"
+      >
+      </app-slider>
+    </div>
+  </div>
+</app-form-field>
