@@ -14,6 +14,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ImageService} from '../../../image/services/image.service';
 import {toggleItem} from '../../../shared/utils/collections';
 import {WeaponViewService} from '../../services/weapon-view.service';
+import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
 
 @Component({
   selector: 'app-weapon-list',
@@ -44,6 +45,7 @@ export class WeaponListComponent
   constructor(
     public service: WeaponService,
     public view: WeaponViewService,
+    public level: AscensionLevelService,
     public images: ImageService,
     private logger: NGXLogger,
   ) {

@@ -35,7 +35,7 @@ export class AscensionLevelService {
     let result = `${level}`;
     if (ascension > 0 && level === this.levelRanges[ascension][0]) {
       const ascended = this.translator.instant(this.i18n.dict('ascended'));
-      result += ` ${ascended}`;
+      result += ascended;
     }
     return result;
   }

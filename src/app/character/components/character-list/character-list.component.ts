@@ -14,6 +14,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
 import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterViewService} from '../../services/character-view.service';
+import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
 
 @Component({
   selector: 'app-character-list',
@@ -44,6 +45,7 @@ export class CharacterListComponent
   constructor(
     private service: CharacterService,
     public view: CharacterViewService,
+    public level: AscensionLevelService,
     public images: ImageService,
     private logger: NGXLogger,
   ) {

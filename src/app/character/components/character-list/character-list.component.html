@@ -28,34 +28,16 @@
     <table class="item-overview-table">
       <tr>
         <td>
-          <b>{{ i18n.dict('constellation') | translate }}</b>
-        </td>
-        <td>
-          {{ item.progress.constellation }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <b>{{ i18n.dict('ascension') | translate }}</b>
-        </td>
-        <td>
-          <app-item-overview-data
-            left="★{{ item.progress.ascension }}"
-            right="★{{ item.plan.ascension }}"
-            [displayRight]="item.progress.ascension < item.plan.ascension"
-          >
-          </app-item-overview-data>
-        </td>
-      </tr>
-      <tr>
-        <td>
           <b>{{ i18n.dict('level') | translate }}</b>
         </td>
         <td>
           <app-item-overview-data
-            [left]="item.progress.level"
-            [right]="item.plan.level"
-            [displayRight]="item.progress.level < item.plan.level"
+            [left]="level.getText(item.progress)"
+            [right]="level.getText(item.plan)"
+            [displayRight]="
+              item.progress.ascension < item.plan.ascension ||
+              item.progress.level < item.plan.level
+            "
           >
           </app-item-overview-data>
         </td>
