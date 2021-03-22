@@ -42,7 +42,7 @@
 .select-dropdown {
   @apply w-full;
   @apply max-h-64;
-  @apply overflow-y-scroll;
+  @apply overflow-y-auto;
   @apply hidden;
   @apply bg-white;
   @apply absolute;
