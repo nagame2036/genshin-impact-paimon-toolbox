@@ -15,7 +15,9 @@ export class MaterialRequirementService {
 
   readonly changes = new ReplaySubject<MaterialRequireList>(1);
 
-  constructor(private logger: NGXLogger) {}
+  constructor(private logger: NGXLogger) {
+    this.changes.next(this.total);
+  }
 
   getMarks(id: number): MaterialRequireMark[] {
     const marks = this.total.getMarks(id);
