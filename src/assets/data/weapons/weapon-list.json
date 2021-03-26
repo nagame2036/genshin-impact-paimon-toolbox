@@ -284,6 +284,25 @@
       }
     }
   },
+  "11410": {
+    "type": 1,
+    "rarity": 4,
+    "materials": {
+      "domain": 400,
+      "elite": 900,
+      "mob": 802
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.06869888305664,
+        "curve": "ATK-203"
+      },
+      "EM": {
+        "initial": 11.999987602233887,
+        "curve": "CHC-201"
+      }
+    }
+  },
   "11412": {
     "type": 1,
     "rarity": 4,
@@ -1329,6 +1348,25 @@
       }
     }
   },
+  "14410": {
+    "type": 4,
+    "rarity": 4,
+    "materials": {
+      "domain": 401,
+      "elite": 902,
+      "mob": 806
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ER%": {
+        "initial": 0.06666699796915054,
+        "curve": "CHC-201"
+      }
+    }
+  },
   "14412": {
     "type": 4,
     "rarity": 4,
@@ -1671,6 +1709,44 @@
       }
     }
   },
+  "15410": {
+    "type": 5,
+    "rarity": 4,
+    "materials": {
+      "domain": 402,
+      "elite": 903,
+      "mob": 800
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 43.734901428222656,
+        "curve": "ATK-202"
+      },
+      "ATK%": {
+        "initial": 0.05999999865889549,
+        "curve": "CHC-201"
+      }
+    }
+  },
+  "15413": {
+    "type": 5,
+    "rarity": 4,
+    "materials": {
+      "domain": 402,
+      "elite": 902,
+      "mob": 807
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 42.4010009765625,
+        "curve": "ATK-201"
+      },
+      "EM": {
+        "initial": 36.0,
+        "curve": "CHC-201"
+      }
+    }
+  },
   "15501": {
     "type": 5,
     "rarity": 5,
@@ -1705,6 +1781,25 @@
       },
       "ATK%": {
         "initial": 0.1080000028014183,
+        "curve": "CHC-301"
+      }
+    }
+  },
+  "15503": {
+    "type": 5,
+    "rarity": 5,
+    "materials": {
+      "domain": 401,
+      "elite": 900,
+      "mob": 805
+    },
+    "stats": {
+      "ATK Base": {
+        "initial": 45.9364013671875,
+        "curve": "ATK-301"
+      },
+      "ER%": {
+        "initial": 0.11999999731779099,
         "curve": "CHC-301"
       }
     }
