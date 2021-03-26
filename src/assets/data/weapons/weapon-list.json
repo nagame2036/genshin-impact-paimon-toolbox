@@ -9,11 +9,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "ATK%": {
-        "initial": 0.07660000026226044,
+        "initial": 0.0766,
         "curve": "CHC-101"
       }
     }
@@ -28,11 +28,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "CHD%": {
-        "initial": 0.10199999809265137,
+        "initial": 0.102,
         "curve": "CHC-101"
       }
     }
@@ -47,11 +47,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 39.875099182128906,
+        "initial": 39.8751,
         "curve": "ATK-102"
       },
       "DEF%": {
-        "initial": 0.06373299658298492,
+        "initial": 0.063733,
         "curve": "CHC-101"
       }
     }
@@ -66,11 +66,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "EM": {
-        "initial": 30.600000381469727,
+        "initial": 30.6,
         "curve": "CHC-101"
       }
     }
@@ -85,11 +85,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "ATK%": {
-        "initial": 0.07660000026226044,
+        "initial": 0.0766,
         "curve": "CHC-101"
       }
     }
@@ -104,11 +104,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 37.60749816894531,
+        "initial": 37.6075,
         "curve": "ATK-104"
       },
       "ER%": {
-        "initial": 0.11333300173282623,
+        "initial": 0.113333,
         "curve": "CHC-101"
       }
     }
@@ -123,11 +123,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "ER%": {
-        "initial": 0.1333329975605011,
+        "initial": 0.133333,
         "curve": "CHC-201"
       }
     }
@@ -142,11 +142,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -161,11 +161,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "ER%": {
-        "initial": 0.1333329975605011,
+        "initial": 0.133333,
         "curve": "CHC-201"
       }
     }
@@ -180,11 +180,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -199,11 +199,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -218,11 +218,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "PHY DMG%": {
-        "initial": 0.07506699860095978,
+        "initial": 0.075067,
         "curve": "CHC-201"
       }
     }
@@ -237,11 +237,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "EM": {
-        "initial": 36.0,
+        "initial": 36,
         "curve": "CHC-201"
       }
     }
@@ -256,11 +256,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "CHD%": {
-        "initial": 0.07999999821186066,
+        "initial": 0.08,
         "curve": "CHC-201"
       }
     }
@@ -275,11 +275,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHC%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -294,11 +294,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.06869888305664,
+        "initial": 45.0687,
         "curve": "ATK-203"
       },
       "EM": {
-        "initial": 11.999987602233887,
+        "initial": 11.999988,
         "curve": "CHC-201"
       }
     }
@@ -313,11 +313,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "ATK%": {
-        "initial": 0.07660000026226044,
+        "initial": 0.0766,
         "curve": "CHC-101"
       }
     }
@@ -332,11 +332,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ER%": {
-        "initial": 0.10000000149011612,
+        "initial": 0.1,
         "curve": "CHC-201"
       }
     }
@@ -351,11 +351,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 47.5369987487793,
+        "initial": 47.537,
         "curve": "ATK-302"
       },
       "PHY DMG%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-301"
       }
     }
@@ -370,11 +370,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ER%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-301"
       }
     }
@@ -389,11 +389,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ATK%": {
-        "initial": 0.1080000028014183,
+        "initial": 0.108,
         "curve": "CHC-301"
       }
     }
@@ -408,11 +408,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 44.33580017089844,
+        "initial": 44.3358,
         "curve": "ATK-304"
       },
       "CHC%": {
-        "initial": 0.09600000083446503,
+        "initial": 0.096,
         "curve": "CHC-301"
       }
     }
@@ -427,11 +427,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "HP%": {
-        "initial": 0.07660000026226044,
+        "initial": 0.0766,
         "curve": "CHC-101"
       }
     }
@@ -446,11 +446,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 37.60749816894531,
+        "initial": 37.6075,
         "curve": "ATK-104"
       },
       "EM": {
-        "initial": 40.79999923706055,
+        "initial": 40.8,
         "curve": "CHC-101"
       }
     }
@@ -465,11 +465,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "DEF%": {
-        "initial": 0.09560000151395798,
+        "initial": 0.0956,
         "curve": "CHC-101"
       }
     }
@@ -484,11 +484,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "ATK%": {
-        "initial": 0.07660000026226044,
+        "initial": 0.0766,
         "curve": "CHC-101"
       }
     }
@@ -503,11 +503,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "PHY DMG%": {
-        "initial": 0.09560000151395798,
+        "initial": 0.0956,
         "curve": "CHC-101"
       }
     }
@@ -522,11 +522,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "ER%": {
-        "initial": 0.1333329975605011,
+        "initial": 0.133333,
         "curve": "CHC-201"
       }
     }
@@ -541,11 +541,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "HP%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -560,11 +560,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ER%": {
-        "initial": 0.06666699796915054,
+        "initial": 0.066667,
         "curve": "CHC-201"
       }
     }
@@ -579,11 +579,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ATK%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -598,11 +598,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "EM": {
-        "initial": 36.0,
+        "initial": 36,
         "curve": "CHC-201"
       }
     }
@@ -617,11 +617,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ATK%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -636,11 +636,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "DEF%": {
-        "initial": 0.11259999871253967,
+        "initial": 0.1126,
         "curve": "CHC-201"
       }
     }
@@ -655,11 +655,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHD%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-201"
       }
     }
@@ -674,11 +674,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHC%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -693,11 +693,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -712,11 +712,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "PHY DMG%": {
-        "initial": 0.07506699860095978,
+        "initial": 0.075067,
         "curve": "CHC-201"
       }
     }
@@ -731,11 +731,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 47.5369987487793,
+        "initial": 47.537,
         "curve": "ATK-302"
       },
       "ER%": {
-        "initial": 0.07999999821186066,
+        "initial": 0.08,
         "curve": "CHC-301"
       }
     }
@@ -750,11 +750,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ATK%": {
-        "initial": 0.1080000028014183,
+        "initial": 0.108,
         "curve": "CHC-301"
       }
     }
@@ -769,11 +769,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ATK%": {
-        "initial": 0.1080000028014183,
+        "initial": 0.108,
         "curve": "CHC-301"
       }
     }
@@ -788,11 +788,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "CHC%": {
-        "initial": 0.050999999046325684,
+        "initial": 0.051,
         "curve": "CHC-101"
       }
     }
@@ -807,11 +807,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 39.875099182128906,
+        "initial": 39.8751,
         "curve": "ATK-102"
       },
       "ATK%": {
-        "initial": 0.05106699839234352,
+        "initial": 0.051067,
         "curve": "CHC-101"
       }
     }
@@ -826,11 +826,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 37.60749816894531,
+        "initial": 37.6075,
         "curve": "ATK-104"
       },
       "HP%": {
-        "initial": 0.10213299840688705,
+        "initial": 0.102133,
         "curve": "CHC-101"
       }
     }
@@ -845,11 +845,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "EM": {
-        "initial": 48.0,
+        "initial": 48,
         "curve": "CHC-201"
       }
     }
@@ -864,11 +864,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ER%": {
-        "initial": 0.10000000149011612,
+        "initial": 0.1,
         "curve": "CHC-201"
       }
     }
@@ -883,11 +883,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "PHY DMG%": {
-        "initial": 0.07506699860095978,
+        "initial": 0.075067,
         "curve": "CHC-201"
       }
     }
@@ -902,11 +902,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHD%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-201"
       }
     }
@@ -921,11 +921,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "CHC%": {
-        "initial": 0.07999999821186066,
+        "initial": 0.08,
         "curve": "CHC-201"
       }
     }
@@ -940,11 +940,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ATK%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -959,11 +959,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ER%": {
-        "initial": 0.06666699796915054,
+        "initial": 0.066667,
         "curve": "CHC-201"
       }
     }
@@ -978,11 +978,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ATK%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -997,11 +997,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "PHY DMG%": {
-        "initial": 0.15013299882411957,
+        "initial": 0.150133,
         "curve": "CHC-201"
       }
     }
@@ -1016,11 +1016,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "CHD%": {
-        "initial": 0.14399999380111694,
+        "initial": 0.144,
         "curve": "CHC-301"
       }
     }
@@ -1035,11 +1035,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 47.5369987487793,
+        "initial": 47.537,
         "curve": "ATK-302"
       },
       "ER%": {
-        "initial": 0.07999999821186066,
+        "initial": 0.08,
         "curve": "CHC-301"
       }
     }
@@ -1054,11 +1054,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ATK%": {
-        "initial": 0.1080000028014183,
+        "initial": 0.108,
         "curve": "CHC-301"
       }
     }
@@ -1073,11 +1073,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 47.5369987487793,
+        "initial": 47.537,
         "curve": "ATK-302"
       },
       "CHC%": {
-        "initial": 0.04800000041723251,
+        "initial": 0.048,
         "curve": "CHC-301"
       }
     }
@@ -1092,11 +1092,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 37.60749816894531,
+        "initial": 37.6075,
         "curve": "ATK-104"
       },
       "EM": {
-        "initial": 40.79999923706055,
+        "initial": 40.8,
         "curve": "CHC-101"
       }
     }
@@ -1111,11 +1111,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "HP%": {
-        "initial": 0.07660000026226044,
+        "initial": 0.0766,
         "curve": "CHC-101"
       }
     }
@@ -1130,11 +1130,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "ER%": {
-        "initial": 0.08500000089406967,
+        "initial": 0.085,
         "curve": "CHC-101"
       }
     }
@@ -1149,11 +1149,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 39.875099182128906,
+        "initial": 39.8751,
         "curve": "ATK-102"
       },
       "EM": {
-        "initial": 20.399999618530273,
+        "initial": 20.4,
         "curve": "CHC-101"
       }
     }
@@ -1168,11 +1168,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 39.875099182128906,
+        "initial": 39.8751,
         "curve": "ATK-102"
       },
       "CHC%": {
-        "initial": 0.03400000184774399,
+        "initial": 0.034,
         "curve": "CHC-101"
       }
     }
@@ -1187,11 +1187,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ER%": {
-        "initial": 0.10000000149011612,
+        "initial": 0.1,
         "curve": "CHC-201"
       }
     }
@@ -1206,11 +1206,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHD%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-201"
       }
     }
@@ -1225,11 +1225,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "EM": {
-        "initial": 48.0,
+        "initial": 48,
         "curve": "CHC-201"
       }
     }
@@ -1244,11 +1244,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ATK%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -1263,11 +1263,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHC%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -1282,11 +1282,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "HP%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -1301,11 +1301,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "EM": {
-        "initial": 24.0,
+        "initial": 24,
         "curve": "CHC-201"
       }
     }
@@ -1320,11 +1320,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHD%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-201"
       }
     }
@@ -1339,11 +1339,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "ATK%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-201"
       }
     }
@@ -1358,11 +1358,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ER%": {
-        "initial": 0.06666699796915054,
+        "initial": 0.066667,
         "curve": "CHC-201"
       }
     }
@@ -1377,11 +1377,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -1396,11 +1396,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 47.5369987487793,
+        "initial": 47.537,
         "curve": "ATK-302"
       },
       "ATK%": {
-        "initial": 0.07199999690055847,
+        "initial": 0.072,
         "curve": "CHC-301"
       }
     }
@@ -1415,11 +1415,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "CHC%": {
-        "initial": 0.07199999690055847,
+        "initial": 0.072,
         "curve": "CHC-301"
       }
     }
@@ -1434,11 +1434,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ATK%": {
-        "initial": 0.1080000028014183,
+        "initial": 0.108,
         "curve": "CHC-301"
       }
     }
@@ -1453,11 +1453,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 39.875099182128906,
+        "initial": 39.8751,
         "curve": "ATK-102"
       },
       "EM": {
-        "initial": 20.399999618530273,
+        "initial": 20.4,
         "curve": "CHC-101"
       }
     }
@@ -1472,11 +1472,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 38.74129867553711,
+        "initial": 38.7413,
         "curve": "ATK-101"
       },
       "CHD%": {
-        "initial": 0.10199999809265137,
+        "initial": 0.102,
         "curve": "CHC-101"
       }
     }
@@ -1491,11 +1491,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 37.60749816894531,
+        "initial": 37.6075,
         "curve": "ATK-104"
       },
       "HP%": {
-        "initial": 0.10213299840688705,
+        "initial": 0.102133,
         "curve": "CHC-101"
       }
     }
@@ -1510,11 +1510,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 37.60749816894531,
+        "initial": 37.6075,
         "curve": "ATK-104"
       },
       "CHC%": {
-        "initial": 0.06800000369548798,
+        "initial": 0.068,
         "curve": "CHC-101"
       }
     }
@@ -1529,11 +1529,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 39.875099182128906,
+        "initial": 39.8751,
         "curve": "ATK-102"
       },
       "CHD%": {
-        "initial": 0.06800000369548798,
+        "initial": 0.068,
         "curve": "CHC-101"
       }
     }
@@ -1548,11 +1548,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "ER%": {
-        "initial": 0.1333329975605011,
+        "initial": 0.133333,
         "curve": "CHC-201"
       }
     }
@@ -1567,11 +1567,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "EM": {
-        "initial": 36.0,
+        "initial": 36,
         "curve": "CHC-201"
       }
     }
@@ -1586,11 +1586,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ER%": {
-        "initial": 0.06666699796915054,
+        "initial": 0.066667,
         "curve": "CHC-201"
       }
     }
@@ -1605,11 +1605,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -1624,11 +1624,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -1643,11 +1643,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "ATK%": {
-        "initial": 0.09000000357627869,
+        "initial": 0.09,
         "curve": "CHC-201"
       }
     }
@@ -1662,11 +1662,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 41.067100524902344,
+        "initial": 41.0671,
         "curve": "ATK-204"
       },
       "PHY DMG%": {
-        "initial": 0.15013299882411957,
+        "initial": 0.150133,
         "curve": "CHC-201"
       }
     }
@@ -1681,11 +1681,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "CHD%": {
-        "initial": 0.07999999821186066,
+        "initial": 0.08,
         "curve": "CHC-201"
       }
     }
@@ -1700,11 +1700,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "CHC%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -1719,11 +1719,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 43.734901428222656,
+        "initial": 43.7349,
         "curve": "ATK-202"
       },
       "ATK%": {
-        "initial": 0.05999999865889549,
+        "initial": 0.06,
         "curve": "CHC-201"
       }
     }
@@ -1738,11 +1738,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 42.4010009765625,
+        "initial": 42.401,
         "curve": "ATK-201"
       },
       "EM": {
-        "initial": 36.0,
+        "initial": 36,
         "curve": "CHC-201"
       }
     }
@@ -1757,11 +1757,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 47.5369987487793,
+        "initial": 47.537,
         "curve": "ATK-302"
       },
       "CHC%": {
-        "initial": 0.04800000041723251,
+        "initial": 0.048,
         "curve": "CHC-301"
       }
     }
@@ -1776,11 +1776,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ATK%": {
-        "initial": 0.1080000028014183,
+        "initial": 0.108,
         "curve": "CHC-301"
       }
     }
@@ -1795,11 +1795,11 @@
     },
     "stats": {
       "ATK Base": {
-        "initial": 45.9364013671875,
+        "initial": 45.9364,
         "curve": "ATK-301"
       },
       "ER%": {
-        "initial": 0.11999999731779099,
+        "initial": 0.12,
         "curve": "CHC-301"
       }
     }

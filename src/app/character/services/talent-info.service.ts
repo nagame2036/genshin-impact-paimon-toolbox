@@ -1,20 +1,19 @@
 import {Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {TalentInfo, TalentLevel} from '../models/talent-info.model';
-import {objectMap, unionMap} from '../../shared/utils/collections';
+import {unionMap} from '../../shared/utils/collections';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {coerceIn} from '../../shared/utils/coerce';
 import {rangeList} from '../../shared/utils/range-list';
 import {TalentProgress} from '../models/talent-progress.model';
 import talentList from '../../../assets/data/characters/talent-list.json';
+import {load, objectMap} from '../../shared/utils/json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TalentInfoService {
-  readonly talents = objectMap<TalentInfo>(
-    JSON.parse(JSON.stringify(talentList)),
-  );
+  readonly talents = objectMap<TalentInfo>(load(talentList));
 
   readonly sameLevels = unionMap([
     [10010, 10110],

@@ -11,18 +11,6 @@ export function toggleItem<T>(
   return result;
 }
 
-export function objectMap<T extends {id: number}>(obj: {
-  [id: number]: T;
-}): Map<number, T> {
-  const result = new Map<number, T>();
-  for (const [key, value] of Object.entries(obj)) {
-    const newKey = Number(key);
-    value.id = newKey;
-    result.set(newKey, value);
-  }
-  return result;
-}
-
 export function sortItems<T>(
   items: T[],
   sorts: ((a: T, b: T) => number)[],

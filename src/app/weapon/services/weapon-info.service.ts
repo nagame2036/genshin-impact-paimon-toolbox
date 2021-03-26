@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {NGXLogger} from 'ngx-logger';
-import {objectMap} from '../../shared/utils/collections';
+import {load, objectMap} from '../../shared/utils/json';
 import {
   WeaponStatsCurveAscension,
   WeaponStatsCurveLevel,
@@ -11,8 +11,8 @@ import {Ascension} from '../../game-common/models/ascension.type';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import weaponList from '../../../assets/data/weapons/weapon-list.json';
-import weaponStatsCurveLevel from '../../../assets/data/weapons/weapon-stats-curve-level.json';
-import weaponStatsCurveAscension from '../../../assets/data/weapons/weapon-stats-curve-ascension.json';
+import statsLevel from '../../../assets/data/weapons/weapon-stats-curve-level.json';
+import statsAscension from '../../../assets/data/weapons/weapon-stats-curve-ascension.json';
 import {MaterialDetail} from '../../material/models/material.model';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialType} from '../../material/models/material-type.enum';
@@ -26,13 +26,11 @@ export type WeaponStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class WeaponInfoService {
-  readonly infos = objectMap<WeaponInfo>(
-    JSON.parse(JSON.stringify(weaponList)),
-  );
+  readonly infos = objectMap<WeaponInfo>(load(weaponList));
 
-  private statsCurvesLevel = weaponStatsCurveLevel as WeaponStatsCurveLevel;
+  private statsLevel = load(statsLevel) as WeaponStatsCurveLevel;
 
-  private statsCurvesAscension = weaponStatsCurveAscension as WeaponStatsCurveAscension;
+  private statsAscension = load(statsAscension) as WeaponStatsCurveAscension;
 
   private readonly materialOrder = [
     MaterialType.WEAPON_147,
@@ -67,9 +65,9 @@ export class WeaponInfoService {
       const statsType = type as StatsType;
       if (statsInfo) {
         const {initial, curve} = statsInfo;
-        const value = initial * this.statsCurvesLevel[curve][level];
+        const value = initial * this.statsLevel[curve][level];
         result.add(statsType, value);
-        const curveAscension = this.statsCurvesAscension[rarity][statsType];
+        const curveAscension = this.statsAscension[rarity][statsType];
         if (curveAscension) {
           result.add(statsType, curveAscension[ascension]);
         }

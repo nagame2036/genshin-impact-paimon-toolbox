@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CharacterInfo} from '../models/character-info.model';
 import {NGXLogger} from 'ngx-logger';
-import {objectMap, unionMap} from '../../shared/utils/collections';
+import {objectMap, load} from '../../shared/utils/json';
+import {unionMap} from '../../shared/utils/collections';
 import {
   CharacterStatsCurveLevel,
   CharacterStatsValue,
@@ -38,11 +39,9 @@ export class CharacterInfoService {
 
   private readonly settingKey = 'character-info';
 
-  readonly infos = objectMap<CharacterInfo>(
-    JSON.parse(JSON.stringify(characterList)),
-  );
+  readonly infos = objectMap<CharacterInfo>(load(characterList));
 
-  private statsCurvesLevel = statsCurvesLevel as CharacterStatsCurveLevel;
+  private statsLevel = load(statsCurvesLevel) as CharacterStatsCurveLevel;
 
   readonly genders = allGenders.map(value => ({
     value,
@@ -123,7 +122,7 @@ export class CharacterInfoService {
       const statsType = type as StatsType;
       if (statsInfo) {
         const {initial, curve} = statsInfo;
-        const curvesLevel = this.statsCurvesLevel;
+        const curvesLevel = this.statsLevel;
         const value = curve ? initial * curvesLevel[curve][level] : initial;
         result.add(statsType, value);
       }
