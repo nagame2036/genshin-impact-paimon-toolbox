@@ -11,8 +11,8 @@ import {NGXLogger} from 'ngx-logger';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import weaponAscendCost from '../../../assets/data/weapons/weapon-ascend-cost.json';
-import weaponLevelupCost from '../../../assets/data/weapons/weapon-levelup-cost.json';
+import weaponAscendCost from '../../../data/weapons/weapon-ascend-cost.json';
+import weaponLevelupCost from '../../../data/weapons/weapon-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',

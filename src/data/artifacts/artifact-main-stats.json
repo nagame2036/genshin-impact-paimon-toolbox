@@ -1,0 +1,112 @@
+{
+  "1": [
+    {
+      "stats": "HP Flat",
+      "obtainWeight": 1000
+    }
+  ],
+  "2": [
+    {
+      "stats": "ATK Flat",
+      "obtainWeight": 1000
+    }
+  ],
+  "3": [
+    {
+      "stats": "HP%",
+      "obtainWeight": 1334
+    },
+    {
+      "stats": "ATK%",
+      "obtainWeight": 1333
+    },
+    {
+      "stats": "DEF%",
+      "obtainWeight": 1333
+    },
+    {
+      "stats": "ER%",
+      "obtainWeight": 500
+    },
+    {
+      "stats": "EM",
+      "obtainWeight": 500
+    }
+  ],
+  "4": [
+    {
+      "stats": "HP%",
+      "obtainWeight": 850
+    },
+    {
+      "stats": "ATK%",
+      "obtainWeight": 850
+    },
+    {
+      "stats": "DEF%",
+      "obtainWeight": 800
+    },
+    {
+      "stats": "EM",
+      "obtainWeight": 100
+    },
+    {
+      "stats": "Pyro DMG%",
+      "obtainWeight": 200
+    },
+    {
+      "stats": "Electro DMG%",
+      "obtainWeight": 200
+    },
+    {
+      "stats": "Cryo DMG%",
+      "obtainWeight": 200
+    },
+    {
+      "stats": "Hydro DMG%",
+      "obtainWeight": 200
+    },
+    {
+      "stats": "Anemo DMG%",
+      "obtainWeight": 200
+    },
+    {
+      "stats": "Geo DMG%",
+      "obtainWeight": 200
+    },
+    {
+      "stats": "PHY DMG%",
+      "obtainWeight": 200
+    }
+  ],
+  "5": [
+    {
+      "stats": "HP%",
+      "obtainWeight": 1100
+    },
+    {
+      "stats": "ATK%",
+      "obtainWeight": 1100
+    },
+    {
+      "stats": "DEF%",
+      "obtainWeight": 1100
+    },
+    {
+      "stats": "CHC%",
+      "obtainWeight": 500
+    },
+    {
+      "stats": "CHD%",
+      "obtainWeight": 500
+    },
+    {
+      "stats": "Healing%",
+      "obtainWeight": 500
+    },
+    {
+      "stats": "EM",
+      "obtainWeight": 200
+    }
+  ]
+}

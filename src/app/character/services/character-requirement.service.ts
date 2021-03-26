@@ -10,8 +10,8 @@ import {MaterialRequireList} from '../../material/collections/material-require-l
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
-import characterAscendCost from '../../../assets/data/characters/character-ascend-cost.json';
-import characterLevelupCost from '../../../assets/data/characters/character-levelup-cost.json';
+import characterAscendCost from '../../../data/characters/character-ascend-cost.json';
+import characterLevelupCost from '../../../data/characters/character-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',

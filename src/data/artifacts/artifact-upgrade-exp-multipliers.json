@@ -1,0 +1,14 @@
+[
+  {
+    "multiplier": 1,
+    "weight": 9000
+  },
+  {
+    "multiplier": 2,
+    "weight": 900
+  },
+  {
+    "multiplier": 5,
+    "weight": 100
+  }
+]

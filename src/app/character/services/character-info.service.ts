@@ -10,8 +10,8 @@ import {
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Character, CharacterOverview} from '../models/character.model';
 import {StatsType} from '../../game-common/models/stats.model';
-import characterList from '../../../assets/data/characters/character-list.json';
-import statsCurvesLevel from '../../../assets/data/characters/character-stats-curve-level.json';
+import characterList from '../../../data/characters/character-list.json';
+import statsCurvesLevel from '../../../data/characters/character-stats-curve-level.json';
 import {SettingService} from '../../setting/services/setting.service';
 import {allGenders, Gender} from '../models/gender.enum';
 import {Observable, ReplaySubject} from 'rxjs';

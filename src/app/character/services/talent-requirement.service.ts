@@ -10,7 +10,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {TalentInfo} from '../models/talent-info.model';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
-import talentLevelupCost from '../../../assets/data/characters/talent-levelup-cost.json';
+import talentLevelupCost from '../../../data/characters/talent-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',

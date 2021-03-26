@@ -10,9 +10,9 @@ import {
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {StatsType} from '../../game-common/models/stats.model';
-import weaponList from '../../../assets/data/weapons/weapon-list.json';
-import statsLevel from '../../../assets/data/weapons/weapon-stats-curve-level.json';
-import statsAscension from '../../../assets/data/weapons/weapon-stats-curve-ascension.json';
+import weaponList from '../../../data/weapons/weapon-list.json';
+import statsLevel from '../../../data/weapons/weapon-stats-curve-level.json';
+import statsAscension from '../../../data/weapons/weapon-stats-curve-ascension.json';
 import {MaterialDetail} from '../../material/models/material.model';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialType} from '../../material/models/material-type.enum';

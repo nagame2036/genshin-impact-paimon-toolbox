@@ -6,7 +6,7 @@ import {Ascension} from '../../game-common/models/ascension.type';
 import {coerceIn} from '../../shared/utils/coerce';
 import {rangeList} from '../../shared/utils/range-list';
 import {TalentProgress} from '../models/talent-progress.model';
-import talentList from '../../../assets/data/characters/talent-list.json';
+import talentList from '../../../data/characters/talent-list.json';
 import {load, objectMap} from '../../shared/utils/json';
 
 @Injectable({
