@@ -2,7 +2,7 @@
   <span *ngIf="items.length > 0" class="title">
     {{ i18n.module(subtitle) | translate }}
   </span>
-  <div class="list">
+  <div class="item-list">
     <div
       *ngFor="let item of items; trackBy: trackItem"
       class="detail-container"

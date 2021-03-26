@@ -15,6 +15,7 @@ import {ImageService} from '../../../image/services/image.service';
 import {toggleItem} from '../../../shared/utils/collections';
 import {WeaponViewService} from '../../services/weapon-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
+import {MaterialDetail} from '../../../material/models/material.model';
 
 @Component({
   selector: 'app-weapon-list',
@@ -31,16 +32,20 @@ export class WeaponListComponent
 
   items!: WeaponOverview[];
 
-  @Input()
-  selectedItems: Weapon[] = [];
+  clickedItem: WeaponOverview | null = null;
+
+  clickedItemMaterials!: MaterialDetail[];
 
   @Output()
-  selected = new EventEmitter<Weapon>();
+  doubleClicked = new EventEmitter<WeaponOverview>();
+
+  @Input()
+  selectedItems: WeaponOverview[] = [];
 
   multiSelect = false;
 
   @Output()
-  multiSelected = new EventEmitter<Weapon[]>();
+  multiSelected = new EventEmitter<WeaponOverview[]>();
 
   constructor(
     public service: WeaponService,
@@ -65,18 +70,27 @@ export class WeaponListComponent
     });
   }
 
-  select(weapon: Weapon): void {
-    this.logger.info('selected weapon', weapon);
-    if (this.multiSelect) {
-      this.selectedItems = toggleItem(
-        this.selectedItems,
-        weapon,
-        it => it.progress.id === weapon.progress.id,
-      );
-      this.multiSelected.emit(this.selectedItems);
+  select(item: WeaponOverview): void {
+    this.logger.info('clicked weapon', item);
+    if (!this.multiSelect) {
+      this.clickedItem = this.clickedItem === item ? null : item;
     } else {
-      this.selected.emit(weapon);
+      const origin = this.selectedItems;
+      const itemId = item.progress.id;
+      const list = toggleItem(origin, item, it => it.progress.id === itemId);
+      this.selectedItems = list;
+      this.clickedItem = list[list.length - 1] ?? null;
+      this.multiSelected.emit(list);
     }
+    if (this.clickedItem) {
+      const info = this.clickedItem.info;
+      this.clickedItemMaterials = this.service.getRequireMaterials(info);
+    }
+  }
+
+  doubleClick(item: WeaponOverview): void {
+    this.logger.info('double clicked weapon', item);
+    this.doubleClicked.emit(item);
   }
 
   onMultiSelectChange({

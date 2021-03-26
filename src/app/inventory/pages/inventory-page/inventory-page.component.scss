@@ -3,7 +3,8 @@
   @apply mx-4;
 }
 
-.list {
+.item-list {
   height: 84vh;
+  @apply p-2;
   @apply overflow-auto;
 }

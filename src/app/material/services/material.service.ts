@@ -39,6 +39,20 @@ export class MaterialService {
     this.updateDetails();
   }
 
+  getHighestRarityByIdOrGroupId(id: number): MaterialDetail | null {
+    const group = this.grouped.get(id);
+    if (!group) {
+      return this.materials.get(id) ?? null;
+    }
+    let max: MaterialDetail = group[0];
+    for (const m of group) {
+      if (m.info.rarity > max.info.rarity) {
+        max = m;
+      }
+    }
+    return max ?? null;
+  }
+
   getRequireDetails(
     type: ItemType,
     key: number,

@@ -50,7 +50,7 @@ export class WeaponDetailComponent implements OnInit {
   }
 
   remove(): void {
-    this.weapons.remove(this.weapon);
+    this.weapons.removeAll([this.weapon]);
     this.logger.info('removed character', this.weapon);
     this.goBack();
   }

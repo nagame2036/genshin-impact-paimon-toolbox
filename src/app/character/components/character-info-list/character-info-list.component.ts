@@ -12,6 +12,7 @@ import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterService} from '../../services/character.service';
 import {CharacterViewService} from '../../services/character-view.service';
+import {MaterialDetail} from '../../../material/models/material.model';
 
 @Component({
   selector: 'app-character-info-list',
@@ -26,11 +27,15 @@ export class CharacterInfoListComponent implements OnChanges {
 
   items!: CharacterInfo[];
 
+  clickedItem: CharacterInfo | null = null;
+
+  clickedItemMaterials!: MaterialDetail[];
+
   @Output()
-  selected = new EventEmitter<CharacterInfo>();
+  doubleClicked = new EventEmitter<CharacterInfo>();
 
   constructor(
-    private service: CharacterService,
+    public service: CharacterService,
     public view: CharacterViewService,
     public images: ImageService,
     private logger: NGXLogger,
@@ -49,8 +54,14 @@ export class CharacterInfoListComponent implements OnChanges {
     });
   }
 
-  select(item: CharacterInfo): void {
-    this.logger.info('selected character', item);
-    this.selected.emit(item);
+  click(item: CharacterInfo): void {
+    this.logger.info('clicked character', item);
+    this.clickedItem = this.clickedItem === item ? null : item;
+    this.clickedItemMaterials = this.service.getRequireMaterials(item);
+  }
+
+  doubleClick(item: CharacterInfo): void {
+    this.logger.info('double clicked character', item);
+    this.doubleClicked.emit(item);
   }
 }

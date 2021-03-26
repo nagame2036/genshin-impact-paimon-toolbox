@@ -52,7 +52,7 @@ export class CharacterDetailComponent implements OnInit {
   }
 
   remove(): void {
-    this.characters.remove(this.character);
+    this.characters.removeAll([this.character]);
     this.logger.info('removed character', this.character);
     this.goBack();
   }

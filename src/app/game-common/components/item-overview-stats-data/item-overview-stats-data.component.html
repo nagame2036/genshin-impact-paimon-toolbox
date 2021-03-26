@@ -1,0 +1,13 @@
+<app-item-overview-data
+  *ngIf="type.endsWith('%'); else numeric"
+  [left]="left | percent: '1.0-1'"
+  [right]="right | percent: '1.0-1'"
+  [displayRight]="displayRight"
+></app-item-overview-data>
+<ng-template #numeric>
+  <app-item-overview-data
+    [left]="left | number: '1.0-0'"
+    [right]="right | number: '1.0-0'"
+    [displayRight]="displayRight"
+  ></app-item-overview-data>
+</ng-template>

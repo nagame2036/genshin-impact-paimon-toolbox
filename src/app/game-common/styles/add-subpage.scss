@@ -13,14 +13,14 @@
   @apply flex-row;
   @apply items-center;
   @apply gap-4;
-}
 
-.add-actions-btn {
-  @apply flex-grow;
+  app-ring-button {
+    @apply flex-grow;
 
-  ::ng-deep .ring-btn {
-    @apply px-4;
-    @apply py-2;
+    ::ng-deep .ring-btn {
+      @apply px-4;
+      @apply py-2;
+    }
   }
 }
 

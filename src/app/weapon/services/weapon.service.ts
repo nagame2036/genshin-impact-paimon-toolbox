@@ -12,6 +12,10 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {generateItemId} from '../../game-common/utils/generate-id';
+import {MaterialDetail} from '../../material/models/material.model';
+import {CharacterStatsValue} from '../../character/models/character-stats.model';
+import {allAscensions} from '../../game-common/models/ascension.type';
+import {maxItemLevel} from '../../game-common/models/level.type';
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +72,10 @@ export class WeaponService {
     );
   }
 
+  getRequireMaterials(weapon: WeaponInfo): MaterialDetail[] {
+    return this.information.getMaterials(weapon);
+  }
+
   getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
     return this.planner.getRequireDetails(weapon);
   }
@@ -76,15 +84,24 @@ export class WeaponService {
     return this.information.getOverview(weapon);
   }
 
-  getStatsTypes(weapon: WeaponOverview): StatsType[] {
-    const id = weapon.info.id;
-    const existing = this.statsTypeCache.get(id);
+  getStatsAtMaxLevel(weapon: WeaponInfo): CharacterStatsValue {
+    const ascension = allAscensions[allAscensions.length - 1];
+    const level = {ascension, level: maxItemLevel};
+    return this.information.getStatsValue(weapon, level);
+  }
+
+  getStatsTypes(weaponId: number): StatsType[] {
+    const existing = this.statsTypeCache.get(weaponId);
     if (existing) {
       return existing;
     }
-    const result = weapon.currentStats.getTypes();
-    this.statsTypeCache.set(id, result);
-    return result;
+    const info = this.information.infos.get(weaponId);
+    if (!info) {
+      return [];
+    }
+    const types = this.getStatsAtMaxLevel(info).getTypes();
+    this.statsTypeCache.set(weaponId, types);
+    return types;
   }
 
   getAll(): Observable<WeaponOverview[]> {
@@ -104,10 +121,6 @@ export class WeaponService {
       this.weapons.set(weapon.progress.id, weapon);
       this.updated.next();
     });
-  }
-
-  remove(weapon: Weapon): void {
-    this.removeAll([weapon]);
   }
 
   removeAll(list: Weapon[]): void {

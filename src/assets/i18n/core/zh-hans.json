@@ -33,7 +33,11 @@
       "exp-bonus": "在{{ startTime }}到{{ endTime }}期间有{{ multiplier }}倍经验加成",
       "execute-all-plan": "拉满",
       "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 培养需求扣除库存",
-      "total-requirement": "全部"
+      "total-requirement": "全部",
+      "item-not-selected": {
+        "1": "单击左侧{{ type }}可{{ click }}",
+        "2": "双击则可{{ doubleClick }}"
+      }
     },
     "characters": {
       "title": "角色列表",
@@ -41,6 +45,11 @@
       "add": "添加角色",
       "add-success": "成功添加角色 - {{ name }}",
       "remove": "移除角色",
+      "summary": {
+        "info-click": "查看简略信息",
+        "add-double-click": "添加角色",
+        "detail-double-click": "查看角色详情"
+      },
       "detail": "角色详情",
       "plan": {
         "title": "规划"
@@ -56,6 +65,11 @@
       "add": "添加武器",
       "add-success": "成功添加武器 - {{ name }}",
       "remove": "移除武器",
+      "summary": {
+        "info-click": "查看简略信息",
+        "add-double-click": "添加武器",
+        "detail-double-click": "查看武器详情"
+      },
       "detail": "武器详情",
       "plan": {
         "title": "规划"
@@ -151,6 +165,7 @@
       "6": "穆纳塔",
       "7": "至冬"
     },
+    "stats-at-max-level": "满级属性",
     "stats": {
       "HP": "生命上限",
       "HP Base": "基础生命",

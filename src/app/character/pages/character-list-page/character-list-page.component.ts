@@ -21,7 +21,7 @@ export class CharacterListPageComponent implements OnInit {
 
   selectAll = false;
 
-  selectedItems: Character[] = [];
+  selectedItems: CharacterOverview[] = [];
 
   @ViewChild('list')
   list!: CharacterListComponent;
@@ -53,7 +53,7 @@ export class CharacterListPageComponent implements OnInit {
     this.updateSelected([]);
   }
 
-  updateSelected(selected: Character[]): void {
+  updateSelected(selected: CharacterOverview[]): void {
     this.logger.info('updated selected characters', selected);
     this.selectedItems = selected;
     this.selectAll =

@@ -1,0 +1,15 @@
+<app-curr-plan-comparator
+  *ngIf="type.endsWith('%'); else numeric"
+  [curr]="curr | percent: '1.0-1'"
+  [plan]="plan | percent: '1.0-1'"
+>
+  {{ i18n.stats(type) | translate }}
+</app-curr-plan-comparator>
+<ng-template #numeric>
+  <app-curr-plan-comparator
+    [curr]="curr | number: '1.0-0'"
+    [plan]="plan | number: '1.0-0'"
+  >
+    {{ i18n.stats(type) | translate }}
+  </app-curr-plan-comparator>
+</ng-template>

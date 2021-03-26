@@ -7,7 +7,6 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {LoggerModule} from 'ngx-logger';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     RouterModule,

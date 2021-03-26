@@ -3,7 +3,7 @@
     #list
     [weapons]="weapons"
     [selectedItems]="selectedItems"
-    (selected)="goToDetail($event)"
+    (doubleClicked)="goToDetail($event)"
     (multiSelected)="updateSelected($event)"
   >
     <div actions>
@@ -24,6 +24,12 @@
         {{ i18n.module('remove') | translate }}
       </app-ring-button>
     </div>
+    <app-item-summary-not-select
+      not-select
+      [type]="i18n.pDict('weapon')"
+      [clickText]="i18n.pModule('summary.info-click')"
+      [doubleClickText]="i18n.pModule('summary.detail-double-click')"
+    ></app-item-summary-not-select>
   </app-weapon-list>
 </ng-container>
 <app-remove-confirm-dialog
@@ -31,5 +37,5 @@
   [items]="selectedItems"
   (confirm)="remove()"
   #removeConfirm
->
-</app-remove-confirm-dialog>
+  ><app-remove-confirm-dialog> </app-remove-confirm-dialog
+></app-remove-confirm-dialog>

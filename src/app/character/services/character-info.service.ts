@@ -20,6 +20,10 @@ import {
 } from '../models/options.model';
 import {first, map} from 'rxjs/operators';
 import {I18n} from '../../widget/models/i18n.model';
+import {MaterialService} from '../../material/services/material.service';
+import {TalentInfoService} from './talent-info.service';
+import {MaterialDetail} from '../../material/models/material.model';
+import {MaterialType} from '../../material/models/material-type.enum';
 
 /**
  * Represents the dependency of character stats value.
@@ -57,11 +61,27 @@ export class CharacterInfoService {
     [1002, 1012],
   ]);
 
+  private readonly materialOrder = [
+    MaterialType.TALENT_147,
+    MaterialType.TALENT_257,
+    MaterialType.TALENT_367,
+    MaterialType.TALENT_COMMON,
+    MaterialType.LOCAL_SPECIALTY,
+    MaterialType.ENEMY_MOB,
+    MaterialType.CHARACTER_GEM,
+    MaterialType.CHARACTER_BOSS,
+  ];
+
   private options$ = new ReplaySubject<CharacterInfoOptions>(1);
 
   readonly options = this.options$.asObservable();
 
-  constructor(private settings: SettingService, private logger: NGXLogger) {
+  constructor(
+    private settings: SettingService,
+    private talents: TalentInfoService,
+    private materials: MaterialService,
+    private logger: NGXLogger,
+  ) {
     settings
       .get(this.settingKey, defaultCharacterInfoOptions)
       .subscribe(options => this.options$.next(options));
@@ -117,6 +137,33 @@ export class CharacterInfoService {
     }
     this.logger.info('sent character stats', id, dependency, result);
     return result;
+  }
+
+  getMaterials(character: CharacterInfo): MaterialDetail[] {
+    const ids = [];
+    for (const t of this.talents.getAll(character.talentsUpgradable)) {
+      const materials = t.materials;
+      if (materials) {
+        ids.push(...materials.domain);
+        ids.push(materials.boss);
+        ids.push(materials.mob);
+      }
+    }
+    const characterMaterials = character.materials;
+    if (characterMaterials.boss) {
+      ids.push(characterMaterials.boss);
+    }
+    ids.push(characterMaterials.gem);
+    ids.push(characterMaterials.local);
+    const result = [];
+    for (const id of new Set(ids)) {
+      const material = this.materials.getHighestRarityByIdOrGroupId(id);
+      if (material) {
+        result.push(material);
+      }
+    }
+    const order = this.materialOrder;
+    return result.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
   }
 
   changeTravelerGender(travelerGender: Gender): void {

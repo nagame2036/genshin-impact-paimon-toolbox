@@ -16,10 +16,13 @@ import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
-import {MaterialService} from '../../material/services/material.service';
 import {StatsType} from '../../game-common/models/stats.model';
 import {TalentInfoService} from './talent-info.service';
-import {Ascension} from '../../game-common/models/ascension.type';
+import {allAscensions} from '../../game-common/models/ascension.type';
+import {CharacterStatsValue} from '../models/character-stats.model';
+import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+import {MaterialDetail} from '../../material/models/material.model';
+import {maxItemLevel} from '../../game-common/models/level.type';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +39,6 @@ export class CharacterService {
     private progressor: CharacterProgressService,
     private planner: CharacterPlanner,
     private talents: TalentInfoService,
-    private materials: MaterialService,
     private logger: NGXLogger,
   ) {
     zip(progressor.ready, planner.ready).subscribe(_ => {
@@ -83,15 +85,28 @@ export class CharacterService {
     return this.information.getOverview(character);
   }
 
-  getStatsTypes(character: CharacterOverview): StatsType[] {
-    const id = character.info.id;
-    const existing = this.statsTypeCache.get(id);
+  getStatsAtMaxLevel(character: CharacterInfo): CharacterStatsValue {
+    const ascension = allAscensions[allAscensions.length - 1];
+    const level = {ascension, level: maxItemLevel};
+    return this.information.getStatsValue(character, level);
+  }
+
+  getStatsTypes(characterId: number): StatsType[] {
+    const existing = this.statsTypeCache.get(characterId);
     if (existing) {
       return existing;
     }
-    const result = character.currentStats.getTypes();
-    this.statsTypeCache.set(id, result);
-    return result;
+    const info = this.information.infos.get(characterId);
+    if (!info) {
+      return [];
+    }
+    const types = this.getStatsAtMaxLevel(info).getTypes();
+    this.statsTypeCache.set(characterId, types);
+    return types;
+  }
+
+  getRequireMaterials(character: CharacterInfo): MaterialDetail[] {
+    return this.information.getMaterials(character);
   }
 
   getAll(): Observable<CharacterOverview[]> {
@@ -129,10 +144,6 @@ export class CharacterService {
       characters.forEach(c => this.characters.set(c.progress.id, c));
       this.updated.next();
     });
-  }
-
-  remove(character: Character): void {
-    this.removeAll([character]);
   }
 
   removeAll(list: Character[]): void {
@@ -202,8 +213,6 @@ export class CharacterService {
     return results;
   }
 }
-
-type AscensionLevel = {ascension: Ascension; level: number};
 
 function copyLevel(target: AscensionLevel, source: AscensionLevel): void {
   const {ascension, level} = source;

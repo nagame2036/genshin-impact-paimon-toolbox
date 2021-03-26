@@ -7,27 +7,31 @@
   </div>
 </div>
 <div class="subpage-padding-x">
-  <div *ngIf="!selected">
-    <app-character-info-list
-      [characters]="characters"
-      (selected)="select($event)"
-    ></app-character-info-list>
-  </div>
-  <div class="add-form" *ngIf="selected">
-    <app-character-plan-form
-      [character]="selectedCharacter"
-    ></app-character-plan-form>
-    <div *ngIf="selected" class="add-actions">
-      <app-ring-button class="add-actions-btn reset-btn" (clicked)="reset()">
-        {{ i18n.module('reset') | translate }}
-      </app-ring-button>
-      <app-ring-button
-        class="add-actions-btn add-btn"
-        [disabled]="!selected"
-        (clicked)="add()"
-      >
-        {{ i18n.module('add') | translate }}
-      </app-ring-button>
+  <app-character-info-list
+    *ngIf="!selected; else form"
+    [characters]="characters"
+    (doubleClicked)="select($event)"
+  >
+    <app-item-summary-not-select
+      not-select
+      [type]="i18n.pDict('character')"
+      [clickText]="i18n.pModule('summary.info-click')"
+      [doubleClickText]="i18n.pModule('summary.add-double-click')"
+    ></app-item-summary-not-select>
+  </app-character-info-list>
+  <ng-template #form>
+    <div class="add-form">
+      <app-character-plan-form
+        [character]="selectedCharacter"
+      ></app-character-plan-form>
+      <div class="add-actions">
+        <app-ring-button class="reset-btn" (clicked)="reset()">
+          {{ i18n.module('reset') | translate }}
+        </app-ring-button>
+        <app-ring-button class="add-btn" (clicked)="add()">
+          {{ i18n.module('add') | translate }}
+        </app-ring-button>
+      </div>
     </div>
-  </div>
+  </ng-template>
 </div>

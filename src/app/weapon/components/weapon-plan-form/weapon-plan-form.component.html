@@ -24,25 +24,12 @@
     (planChange)="setPlanLevel($event)"
   >
   </app-curr-plan-level-select>
-  <ng-container
-    *ngFor="let type of service.getStatsTypes(weapon); let i = index"
-  >
-    <app-curr-plan-comparator
-      *ngIf="type.endsWith('%'); else numeric"
-      [curr]="weapon.currentStats.get(type) | percent: '1.0-1'"
-      [plan]="weapon.planStats.get(type) | percent: '1.0-1'"
-    >
-      {{ i18n.stats(type) | translate }}
-    </app-curr-plan-comparator>
-    <ng-template #numeric>
-      <app-curr-plan-comparator
-        [curr]="weapon.currentStats.get(type) | number: '1.0-0'"
-        [plan]="weapon.planStats.get(type) | number: '1.0-0'"
-      >
-        {{ i18n.stats(type) | translate }}
-      </app-curr-plan-comparator>
-    </ng-template>
-  </ng-container>
+  <app-curr-plan-stats-comparator
+    *ngFor="let type of service.getStatsTypes(info.id); let i = index"
+    [type]="type"
+    [curr]="weapon.currentStats.get(type)"
+    [plan]="weapon.planStats.get(type)"
+  ></app-curr-plan-stats-comparator>
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>

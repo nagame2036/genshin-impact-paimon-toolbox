@@ -1,6 +1,5 @@
-@import '../../../game-common/styles/item-list.scss';
 @import '../../styles/character-list.scss';
 
-.list {
+.item-list {
   grid-template-columns: repeat(auto-fill, 360px);
 }

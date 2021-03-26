@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {ImageService, ImageType} from '../../../image/services/image.service';
 import {rangeList} from '../../../shared/utils/range-list';
@@ -9,7 +15,7 @@ import {rangeList} from '../../../shared/utils/range-list';
   styleUrls: ['./item-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ItemViewComponent implements OnInit {
+export class ItemViewComponent implements OnChanges {
   i18n = new I18n('item-view');
 
   @Input()
@@ -40,8 +46,12 @@ export class ItemViewComponent implements OnInit {
     return this.rarity;
   }
 
-  ngOnInit(): void {
-    this.itemKey = `${this.category}.${this.id}`;
-    this.stars = rangeList(1, this.rarity);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('id')) {
+      this.itemKey = `${this.category}.${this.id}`;
+    }
+    if (changes.hasOwnProperty('rarity')) {
+      this.stars = rangeList(1, this.rarity);
+    }
   }
 }

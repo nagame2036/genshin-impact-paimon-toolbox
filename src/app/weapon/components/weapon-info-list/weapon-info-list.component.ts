@@ -12,6 +12,7 @@ import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
 import {WeaponService} from '../../services/weapon.service';
 import {WeaponViewService} from '../../services/weapon-view.service';
+import {MaterialDetail} from '../../../material/models/material.model';
 
 @Component({
   selector: 'app-weapon-info-list',
@@ -26,11 +27,15 @@ export class WeaponInfoListComponent implements OnChanges {
 
   items!: WeaponInfo[];
 
+  clickedItem: WeaponInfo | null = null;
+
+  clickedItemMaterials!: MaterialDetail[];
+
   @Output()
-  selected = new EventEmitter<WeaponInfo>();
+  doubleClicked = new EventEmitter<WeaponInfo>();
 
   constructor(
-    private service: WeaponService,
+    public service: WeaponService,
     public view: WeaponViewService,
     public images: ImageService,
     private logger: NGXLogger,
@@ -49,8 +54,14 @@ export class WeaponInfoListComponent implements OnChanges {
     });
   }
 
-  select(item: WeaponInfo): void {
-    this.logger.info('selected character', item);
-    this.selected.emit(item);
+  click(item: WeaponInfo): void {
+    this.logger.info('clicked weapon', item);
+    this.clickedItem = this.clickedItem === item ? null : item;
+    this.clickedItemMaterials = this.service.getRequireMaterials(item);
+  }
+
+  doubleClick(item: WeaponInfo): void {
+    this.logger.info('double clicked weapon', item);
+    this.doubleClicked.emit(item);
   }
 }

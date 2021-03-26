@@ -1,11 +1,7 @@
 <div [class.data-container]="displayRight">
-  <span class="truncate">
-    {{ left }}
-  </span>
+  <span class="truncate">{{ left }}</span>
   <ng-container *ngIf="displayRight">
     →
-    <span class="truncate">
-      {{ right }}
-    </span>
+    <span class="truncate">{{ right }}</span>
   </ng-container>
 </div>

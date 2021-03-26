@@ -6,12 +6,12 @@
 
     &:first-of-type {
       @apply text-right;
-      @apply pr-2;
+      @apply pr-1;
     }
 
     &:last-of-type {
       @apply text-left;
-      @apply pl-2;
+      @apply pl-1;
     }
   }
 }

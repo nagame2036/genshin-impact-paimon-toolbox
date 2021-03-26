@@ -29,13 +29,12 @@ $rarities: (
 }
 
 $elements: (
-  101:#3baeaf,
-  102:#ba9546,
-  103:#8d5abc,
-  //104:,
-  105:#3e67af,
-  106:#c26544,
-  107:#76d5e4,
+  101: #3baeaf,
+  102: #ba9546,
+  103: #8d5abc,
+  105: #3e67af,
+  106: #c26544,
+  107: #76d5e4,
 );
 
 @each $element, $color in $elements {

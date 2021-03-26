@@ -1,9 +1,50 @@
+.container {
+  @apply flex;
+  @apply flex-row;
+  @apply divide-x;
+}
+
+.item-list {
+  @apply flex-1;
+  @apply p-4;
+  max-height: 72vh;
+  @apply overflow-y-auto;
+  @apply grid;
+  grid-template-rows: repeat(auto-fit, 132px);
+  @apply gap-4;
+  @apply justify-around;
+}
+
+.item-overview {
+  @extend .item-summary-thumb;
+  @apply relative;
+  @apply flex;
+  @apply flex-row;
+  @apply cursor-pointer;
+
+  &.selected {
+    @apply ring;
+    @apply ring-offset-2;
+  }
+}
+
+.weapon-type-hint {
+  @apply absolute;
+  @apply top-1;
+  @apply h-8;
+  @apply w-8;
+}
+
 .item-overview-table {
   @apply w-full;
   @apply h-full;
   @apply text-sm;
   @apply text-center;
   @apply border-l;
+
+  td:nth-child(odd) {
+    @apply font-bold;
+  }
 
   td:nth-child(even) {
     @apply w-36;
@@ -12,4 +53,31 @@
   tr:nth-child(even) {
     @apply bg-primary-100;
   }
+}
+
+.item-summary {
+  @apply mt-4;
+  @apply w-96;
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply gap-4;
+}
+
+.item-summary-thumb {
+  @apply border;
+  @apply rounded;
+}
+
+.item-summary-table {
+  @extend .item-overview-table;
+  @apply w-80;
+  @apply h-auto;
+  @apply border;
+}
+
+.item-material-required {
+  @apply grid;
+  @apply grid-cols-3;
+  @apply gap-2;
 }

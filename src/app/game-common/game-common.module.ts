@@ -9,6 +9,9 @@ import {CurrPlanLevelSelectComponent} from './components/curr-plan-level-select/
 import {RemoveConfirmDialogComponent} from './components/remove-confirm-dialog/remove-confirm-dialog.component';
 import {CurrPlanComparatorComponent} from './components/curr-plan-comparator/curr-plan-comparator.component';
 import {ItemOverviewDataComponent} from './components/item-overview-data/item-overview-data.component';
+import {ItemOverviewStatsDataComponent} from './components/item-overview-stats-data/item-overview-stats-data.component';
+import {CurrPlanStatsComparatorComponent} from './components/curr-plan-stats-comparator/curr-plan-stats-comparator.component';
+import {ItemSummaryNotSelectComponent} from './components/item-summary-not-select/item-summary-not-select.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import {ItemOverviewDataComponent} from './components/item-overview-data/item-ov
     RemoveConfirmDialogComponent,
     CurrPlanComparatorComponent,
     ItemOverviewDataComponent,
+    ItemOverviewStatsDataComponent,
+    CurrPlanStatsComparatorComponent,
+    ItemSummaryNotSelectComponent,
   ],
   imports: [WidgetModule],
   exports: [
@@ -31,6 +37,9 @@ import {ItemOverviewDataComponent} from './components/item-overview-data/item-ov
     RemoveConfirmDialogComponent,
     CurrPlanComparatorComponent,
     ItemOverviewDataComponent,
+    ItemOverviewStatsDataComponent,
+    CurrPlanStatsComparatorComponent,
+    ItemSummaryNotSelectComponent,
   ],
 })
 export class GameCommonModule {}

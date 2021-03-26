@@ -3,18 +3,83 @@
     <ng-content select="[actions]"></ng-content>
   </div>
 </app-character-list-options>
-<div class="list">
-  <div *ngFor="let item of items" class="overview" (click)="select(item)">
-    <app-item-view
-      category="characters"
-      [id]="item.id"
-      [rarity]="item.rarity"
-      [backgroundDeps]="item.element"
-    ></app-item-view>
-    <img
-      class="weapon-type-hint"
-      [src]="images.get('weapon-types', item.weapon)"
-      [alt]="i18n.dict('weapon-types.' + item.weapon) | translate"
-    />
+<div class="container">
+  <div class="item-list">
+    <div
+      *ngFor="let item of items"
+      class="item-overview"
+      (click)="click(item)"
+      (dblclick)="doubleClick(item)"
+    >
+      <app-item-view
+        category="characters"
+        [id]="item.id"
+        [rarity]="item.rarity"
+        [backgroundDeps]="item.element"
+      ></app-item-view>
+      <img
+        class="weapon-type-hint"
+        [src]="images.get('weapon-types', item.weapon)"
+        [alt]="i18n.dict('weapon-types.' + item.weapon) | translate"
+      />
+    </div>
+  </div>
+  <div class="item-summary">
+    <ng-container *ngIf="clickedItem as item; else notSelect">
+      <app-item-view
+        class="item-summary-thumb"
+        category="characters"
+        [id]="item.id"
+        [rarity]="item.rarity"
+        [backgroundDeps]="item.element"
+      ></app-item-view>
+      <table class="item-summary-table">
+        <tr>
+          <td>{{ i18n.dict('rarity') | translate }}</td>
+          <td>★{{ item.rarity }}</td>
+        </tr>
+        <tr>
+          <td>{{ i18n.dict('element') | translate }}</td>
+          <td>{{ i18n.dict('elements.' + item.element) | translate }}</td>
+        </tr>
+        <tr>
+          <td>{{ i18n.dict('weapon') | translate }}</td>
+          <td>{{ i18n.dict('weapon-types.' + item.weapon) | translate }}</td>
+        </tr>
+        <tr *ngIf="item.nation">
+          <td>{{ i18n.dict('nation') | translate }}</td>
+          <td>{{ i18n.dict('nations.' + item.nation) | translate }}</td>
+        </tr>
+      </table>
+      <table
+        *ngIf="service.getStatsAtMaxLevel(item) as stats"
+        class="item-summary-table"
+      >
+        <tr>
+          <td colspan="2">{{ i18n.dict('stats-at-max-level') | translate }}</td>
+        </tr>
+        <tr *ngFor="let type of service.getStatsTypes(item.id); let i = index">
+          <td>{{ i18n.stats(type) | translate }}</td>
+          <td>
+            <app-item-overview-stats-data
+              [type]="type"
+              [left]="stats.get(type)"
+            ></app-item-overview-stats-data>
+          </td>
+        </tr>
+      </table>
+      <div class="item-material-required">
+        <app-item-view
+          *ngFor="let m of clickedItemMaterials"
+          class="item-summary-thumb"
+          category="materials"
+          [id]="m.info.id"
+          [rarity]="m.info.rarity"
+        ></app-item-view>
+      </div>
+    </ng-container>
+    <ng-template #notSelect>
+      <ng-content select="[not-select]"></ng-content>
+    </ng-template>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Weapon, WeaponOverview} from '../../models/weapon.model';
+import {WeaponOverview} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {WeaponListComponent} from '../../components/weapon-list/weapon-list.component';
@@ -21,7 +21,7 @@ export class WeaponListPageComponent implements OnInit {
 
   selectAll = false;
 
-  selectedItems: Weapon[] = [];
+  selectedItems: WeaponOverview[] = [];
 
   @ViewChild('list')
   list!: WeaponListComponent;
@@ -41,7 +41,7 @@ export class WeaponListPageComponent implements OnInit {
     this.router.navigate(['weapons/add']).then(_ => this.updateSelected([]));
   }
 
-  goToDetail(weapon: Weapon): void {
+  goToDetail(weapon: WeaponOverview): void {
     this.router.navigate(['weapons/progresses', weapon.progress.id]).then();
   }
 
@@ -51,8 +51,8 @@ export class WeaponListPageComponent implements OnInit {
     this.updateSelected([]);
   }
 
-  updateSelected(selected: Weapon[]): void {
-    this.logger.info('updated selected characters', selected);
+  updateSelected(selected: WeaponOverview[]): void {
+    this.logger.info('updated selected weapons', selected);
     this.selectedItems = selected;
     this.selectAll =
       this.multiSelect &&

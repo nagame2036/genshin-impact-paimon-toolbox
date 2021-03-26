@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {Character, CharacterOverview} from '../../models/character.model';
+import {CharacterOverview} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {toggleItem} from '../../../shared/utils/collections';
 import {CharacterService} from '../../services/character.service';
@@ -15,6 +15,7 @@ import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterViewService} from '../../services/character-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
+import {MaterialDetail} from '../../../material/models/material.model';
 
 @Component({
   selector: 'app-character-list',
@@ -31,19 +32,23 @@ export class CharacterListComponent
 
   items!: CharacterOverview[];
 
+  clickedItem: CharacterOverview | null = null;
+
+  clickedItemMaterials!: MaterialDetail[];
+
   @Input()
-  selectedItems: Character[] = [];
+  selectedItems: CharacterOverview[] = [];
 
   @Output()
-  selected = new EventEmitter<Character>();
+  doubleClicked = new EventEmitter<CharacterOverview>();
 
   multiSelect = false;
 
   @Output()
-  multiSelected = new EventEmitter<Character[]>();
+  multiSelected = new EventEmitter<CharacterOverview[]>();
 
   constructor(
-    private service: CharacterService,
+    public service: CharacterService,
     public view: CharacterViewService,
     public level: AscensionLevelService,
     public images: ImageService,
@@ -65,18 +70,27 @@ export class CharacterListComponent
     });
   }
 
-  select(character: Character): void {
-    this.logger.info('selected character', character);
-    if (this.multiSelect) {
-      this.selectedItems = toggleItem(
-        this.selectedItems,
-        character,
-        it => it.progress.id === character.progress.id,
-      );
-      this.multiSelected.emit(this.selectedItems);
+  click(item: CharacterOverview): void {
+    this.logger.info('clicked character', item);
+    if (!this.multiSelect) {
+      this.clickedItem = this.clickedItem === item ? null : item;
     } else {
-      this.selected.emit(character);
+      const origin = this.selectedItems;
+      const itemId = item.progress.id;
+      const list = toggleItem(origin, item, it => it.progress.id === itemId);
+      this.selectedItems = list;
+      this.clickedItem = list[list.length - 1] ?? null;
+      this.multiSelected.emit(list);
     }
+    if (this.clickedItem) {
+      const info = this.clickedItem.info;
+      this.clickedItemMaterials = this.service.getRequireMaterials(info);
+    }
+  }
+
+  doubleClick(item: CharacterOverview): void {
+    this.logger.info('double clicked character', item);
+    this.doubleClicked.emit(item);
   }
 
   onMultiSelectChange(event: {multiSelect: boolean; selectAll: boolean}): void {

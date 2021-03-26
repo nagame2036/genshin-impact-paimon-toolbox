@@ -11,6 +11,7 @@ import {MultiSelectComponent} from './components/multi-select/multi-select.compo
 import {RingButtonComponent} from './components/ring-button/ring-button.component';
 import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
 import {SliderComponent} from './components/slider/slider.component';
+import {ParamTranslatePipe} from './pipes/param-translate.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {SliderComponent} from './components/slider/slider.component';
     RingButtonComponent,
     NavTabsComponent,
     SliderComponent,
+    ParamTranslatePipe,
   ],
   imports: [SharedModule],
   exports: [
@@ -38,6 +40,7 @@ import {SliderComponent} from './components/slider/slider.component';
     RingButtonComponent,
     NavTabsComponent,
     SliderComponent,
+    ParamTranslatePipe,
   ],
 })
 export class WidgetModule {}

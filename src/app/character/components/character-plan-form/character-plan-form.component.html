@@ -27,25 +27,12 @@
     (planChange)="setPlanLevel($event)"
   >
   </app-curr-plan-level-select>
-  <ng-container
-    *ngFor="let type of service.getStatsTypes(character); let i = index"
-  >
-    <app-curr-plan-comparator
-      *ngIf="type.endsWith('%'); else numeric"
-      [curr]="character.currentStats.get(type) | percent: '1.0-1'"
-      [plan]="character.planStats.get(type) | percent: '1.0-1'"
-    >
-      {{ i18n.stats(type) | translate }}
-    </app-curr-plan-comparator>
-    <ng-template #numeric>
-      <app-curr-plan-comparator
-        [curr]="character.currentStats.get(type) | number: '1.0-0'"
-        [plan]="character.planStats.get(type) | number: '1.0-0'"
-      >
-        {{ i18n.stats(type) | translate }}
-      </app-curr-plan-comparator>
-    </ng-template>
-  </ng-container>
+  <app-curr-plan-stats-comparator
+    *ngFor="let type of service.getStatsTypes(info.id); let i = index"
+    [type]="type"
+    [curr]="character.currentStats.get(type)"
+    [plan]="character.planStats.get(type)"
+  ></app-curr-plan-stats-comparator>
   <app-curr-plan-select
     *ngFor="let talent of info.talentsUpgradable; let i = index"
     [currOptions]="currTalentLevels[talent]"
