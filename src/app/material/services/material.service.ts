@@ -111,7 +111,7 @@ export class MaterialService {
       const materials = new Map<MaterialType, MaterialDetail>();
       for (const info of infos) {
         const {id, group} = info;
-        const material = new MaterialDetail(type, info, 0, 0);
+        const material = new MaterialDetail(type, info);
         this.materials.set(id, material);
         materials.set(id, material);
         if (group && !this.infos.ignoreGroupTypes.includes(type)) {

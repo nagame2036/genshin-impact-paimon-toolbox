@@ -36,11 +36,13 @@ export class MaterialDetail {
   constructor(
     type: MaterialType,
     info: MaterialInfo,
-    have: number,
-    need: number,
+    have: number = 0,
+    need: number = 0,
+    craftable: boolean = false,
   ) {
     this.type = type;
     this.info = info;
+    this.craftable = craftable;
     this.update(have, need);
   }
 
@@ -53,7 +55,7 @@ export class MaterialDetail {
   }
 
   copy(have: number, need: number): MaterialDetail {
-    return new MaterialDetail(this.type, this.info, have, need);
+    return new MaterialDetail(this.type, this.info, have, need, this.craftable);
   }
 
   private update(have: number, need: number): void {
