@@ -5,9 +5,14 @@ import {Weapon} from '../models/weapon.model';
 import {WeaponType} from '../models/weapon-type.enum';
 import {WeaponModule} from '../weapon.module';
 import {AppTestingModule} from '../../app-testing.module';
+import {allWeaponAbilities} from '../models/weapon-ability.model';
+import {TranslateService} from '@ngx-translate/core';
+import {fromIterable} from 'rxjs/internal-compatibility';
+import {map, mergeMap} from 'rxjs/operators';
 
 describe('WeaponInfoService', () => {
   let service: WeaponInfoService;
+  let translator: TranslateService;
   let weapon: Weapon;
 
   beforeEach(() => {
@@ -15,6 +20,7 @@ describe('WeaponInfoService', () => {
       imports: [WeaponModule, AppTestingModule],
     });
     service = TestBed.inject(WeaponInfoService);
+    translator = TestBed.inject(TranslateService);
   });
 
   it('should be created', () => {
@@ -42,6 +48,10 @@ describe('WeaponInfoService', () => {
             curve: 'CHC-301',
           },
         },
+        ability: {
+          id: 15502,
+          params: [],
+        },
       },
       progress: {
         id: 1,
@@ -60,5 +70,27 @@ describe('WeaponInfoService', () => {
     const stats = service.getStatsValue(weapon.info, weapon.progress);
     expect(stats.get('ATK Base')).toBeCloseTo(608, 0);
     expect(stats.get('ATK%')).toBeCloseTo(0.496, 3);
+  });
+
+  it('all weapon abilities description should be correct', done => {
+    fromIterable(service.infos.values())
+      .pipe(
+        mergeMap(info => {
+          const {id, params} = info.ability;
+          const key = `dict.weapon-abilities.${id}.desc`;
+          return translator.get(key).pipe(
+            map(descText => {
+              const descParams = allWeaponAbilities[id].desc(params[0]);
+              let text: string = descText;
+              for (const p of descParams) {
+                text = text.replace('{}', p);
+              }
+              console.log(text);
+              expect(text.indexOf('{}')).toBe(-1);
+            }),
+          );
+        }),
+      )
+      .subscribe({complete: () => done()});
   });
 });

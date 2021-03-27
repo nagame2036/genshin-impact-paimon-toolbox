@@ -16,6 +16,7 @@ import {MaterialDetail} from '../../material/models/material.model';
 import {CharacterStatsValue} from '../../character/models/character-stats.model';
 import {allAscensions} from '../../game-common/models/ascension.type';
 import {maxItemLevel} from '../../game-common/models/level.type';
+import {RefineRank} from '../models/weapon-progress.model';
 
 @Injectable({
   providedIn: 'root',
@@ -102,6 +103,14 @@ export class WeaponService {
     const types = this.getStatsAtMaxLevel(info).getTypes();
     this.statsTypeCache.set(weaponId, types);
     return types;
+  }
+
+  getAbilityDesc(
+    weapon: WeaponInfo,
+    refineStart: RefineRank,
+    refineEnd: RefineRank = refineStart,
+  ): string {
+    return this.information.getAbilityDesc(weapon, refineStart, refineEnd);
   }
 
   getAll(): Observable<WeaponOverview[]> {

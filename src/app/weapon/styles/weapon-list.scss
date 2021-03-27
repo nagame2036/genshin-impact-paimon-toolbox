@@ -3,3 +3,16 @@
 .weapon-type-hint {
   @apply left-1;
 }
+
+.item-ability {
+  min-width: 320px;
+  @apply mx-8;
+  @apply p-2;
+  @apply border;
+  @apply rounded;
+
+  h4 {
+    @apply mb-2;
+    @apply font-bold;
+  }
+}

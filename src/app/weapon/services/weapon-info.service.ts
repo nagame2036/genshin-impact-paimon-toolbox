@@ -16,6 +16,10 @@ import statsAscension from '../../../data/weapons/weapon-stats-curve-ascension.j
 import {MaterialDetail} from '../../material/models/material.model';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialType} from '../../material/models/material-type.enum';
+import {TranslateService} from '@ngx-translate/core';
+import {allRefineRanks, RefineRank} from '../models/weapon-progress.model';
+import {allWeaponAbilities} from '../models/weapon-ability.model';
+import {I18n} from '../../widget/models/i18n.model';
 
 /**
  * Represents the dependency of weapon stats value.
@@ -26,6 +30,8 @@ export type WeaponStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class WeaponInfoService {
+  private i18n = new I18n('weapons');
+
   readonly infos = objectMap<WeaponInfo>(load(weaponList));
 
   private statsLevel = load(statsLevel) as WeaponStatsCurveLevel;
@@ -40,7 +46,11 @@ export class WeaponInfoService {
     MaterialType.ENEMY_MOB,
   ];
 
-  constructor(private materials: MaterialService, private logger: NGXLogger) {}
+  constructor(
+    private materials: MaterialService,
+    private translator: TranslateService,
+    private logger: NGXLogger,
+  ) {}
 
   getOverview(weapon: Weapon): WeaponOverview {
     const {info, progress, plan} = weapon;
@@ -75,6 +85,36 @@ export class WeaponInfoService {
     }
     this.logger.info('sent weapon stats', id, dependency, result);
     return result;
+  }
+
+  getAbilityDesc(
+    {ability: {id, params}}: WeaponInfo,
+    refineStart: RefineRank,
+    refineEnd: RefineRank,
+  ): string {
+    const ability = allWeaponAbilities[id];
+    if (!ability) {
+      return '';
+    }
+    const start = Math.max(refineStart, allRefineRanks[0]) - 1;
+    const end = Math.min(refineEnd, params.length);
+    const paramList = params.map(p => ability.desc(p));
+    const paramArray: string[][] = [];
+    for (let i = 0; i < paramList[0].length; i++) {
+      const paramFields = [];
+      for (let j = start; j < end; j++) {
+        paramFields.push(paramList[j][i]);
+      }
+      paramArray.push(paramFields);
+    }
+    const paramTexts = paramArray.map(it => {
+      const p = new Set(it).size <= 1 ? it[0] : ' (' + it.join(' / ') + ') ';
+      return `<b>${p}</b>`;
+    });
+    const key = this.i18n.dict(`weapon-abilities.${id}.desc`);
+    let text: string = this.translator.instant(key);
+    paramTexts.forEach(p => (text = text.replace('{}', p)));
+    return text;
   }
 
   getMaterials(weapon: WeaponInfo): MaterialDetail[] {

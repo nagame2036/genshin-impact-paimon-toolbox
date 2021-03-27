@@ -34,6 +34,10 @@ describe('WeaponRequirementService', () => {
           mob: 800,
         },
         stats: {},
+        ability: {
+          id: 1,
+          params: [],
+        },
       },
       progress: {
         id: 10000,
@@ -76,6 +80,10 @@ describe('WeaponRequirementService', () => {
           mob: 805,
         },
         stats: {},
+        ability: {
+          id: 1,
+          params: [],
+        },
       },
       progress: {
         id: 10000,
@@ -112,6 +120,10 @@ describe('WeaponRequirementService', () => {
           mob: 807,
         },
         stats: {},
+        ability: {
+          id: 1,
+          params: [],
+        },
       },
       progress: {
         id: 10000,

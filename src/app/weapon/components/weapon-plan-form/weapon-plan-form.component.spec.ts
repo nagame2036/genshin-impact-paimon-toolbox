@@ -31,6 +31,10 @@ describe('WeaponPlanFormComponent', () => {
           mob: 805,
         },
         stats: {},
+        ability: {
+          id: 1,
+          params: [],
+        },
       },
       progress: {
         id: 10000,

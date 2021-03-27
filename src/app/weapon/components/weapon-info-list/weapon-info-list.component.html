@@ -58,6 +58,12 @@
           </td>
         </tr>
       </table>
+      <div *ngIf="item.ability.id as abilityId" class="item-ability">
+        <h4>
+          {{ i18n.dict('weapon-abilities.' + abilityId + '.name') | translate }}
+        </h4>
+        <div [innerHTML]="service.getAbilityDesc(item, 1, 5)"></div>
+      </div>
       <div class="item-material-required">
         <app-item-view
           *ngFor="let m of clickedItemMaterials"
