@@ -1,20 +1,47 @@
 .ring-btn {
-  @apply mt-1.5;
+  @apply block;
+  @apply mx-auto;
+  margin-top: 0.5rem;
+  @apply px-3;
+  @apply py-1.5;
   @apply rounded;
   @apply border-2;
   @apply shadow;
   @apply appearance-none;
-  @apply hover:border-black;
-  @apply focus:border-gray-300;
   @apply focus:outline-none;
   @apply focus:ring;
   @apply focus:ring-offset-2;
+}
 
-  &.disabled {
-    @apply cursor-not-allowed;
-    @apply text-gray-400;
-    @apply hover:bg-white;
-    @apply hover:border-gray-200;
-    @apply focus:ring-0;
-  }
+.ring-btn-normal {
+  @apply hover:border-black;
+  @apply focus:border-gray-300;
+}
+
+.ring-btn-primary {
+  @apply text-white;
+  @apply bg-primary-500;
+  @apply border-primary-500;
+  @apply hover:bg-primary-300;
+  @apply hover:border-primary-500;
+  @apply focus:ring-primary-500;
+}
+
+.ring-btn-red {
+  @apply text-white;
+  @apply bg-red-500;
+  @apply border-red-500;
+  @apply hover:bg-red-300;
+  @apply hover:border-red-500;
+  @apply focus:ring-red-500;
+}
+
+.disabled {
+  @apply cursor-not-allowed;
+  @apply focus:ring-0;
+  @apply text-gray-400;
+  @apply bg-white;
+  @apply border-gray-200;
+  @apply hover:bg-white;
+  @apply hover:border-gray-200;
 }

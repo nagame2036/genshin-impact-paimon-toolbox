@@ -27,18 +27,7 @@ app-item-view {
   @apply flex-grow;
   @apply w-full;
 
-  &.reached {
-    ::ng-deep .ring-btn {
-      @apply border-green-300;
-      @apply hover:bg-green-100;
-      @apply focus:ring-green-300;
-      @apply focus:ring-offset-2;
-    }
-  }
-
   ::ng-deep .ring-btn {
     @apply w-full;
-    @apply py-2;
-    @apply hover:bg-white;
   }
 }

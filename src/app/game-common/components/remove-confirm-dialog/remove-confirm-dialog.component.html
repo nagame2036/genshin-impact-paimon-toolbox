@@ -17,16 +17,10 @@
     </div>
   </div>
   <div actions class="remove-confirm-actions">
-    <app-ring-button
-      class="remove-confirm-actions-btn cancel-btn"
-      (clicked)="dialog.close()"
-    >
+    <app-ring-button (clicked)="dialog.close()">
       {{ i18n.dict('cancel') | translate }}
     </app-ring-button>
-    <app-ring-button
-      class="remove-confirm-actions-btn confirm-btn"
-      (clicked)="emitConfirm()"
-    >
+    <app-ring-button color="red" (clicked)="emitConfirm()">
       {{ i18n.dict('confirm') | translate }}
     </app-ring-button>
   </div>

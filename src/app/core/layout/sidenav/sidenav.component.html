@@ -1,9 +1,9 @@
-<nav class="menu" [ngClass]="{opened: showMenu}">
+<nav class="menu" [class.opened]="showMenu">
   <h1 class="menu-title">
     {{ i18n.dict('title') | translate }}
   </h1>
   <button class="menu-close-btn" (click)="showMenu = false">
-    <span class="material-icons"> close </span>
+    <span class="material-icons">close</span>
   </button>
   <div class="menu-links">
     <a
@@ -17,7 +17,5 @@
   </div>
 </nav>
 <main class="main" (click)="showMenu = false">
-  <div class="content">
-    <ng-content></ng-content>
-  </div>
+  <ng-content></ng-content>
 </main>

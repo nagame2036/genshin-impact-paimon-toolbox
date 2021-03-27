@@ -20,16 +20,10 @@
     </div>
   </div>
   <div actions class="execute-plan-actions">
-    <app-ring-button
-      class="execute-plan-actions-btn cancel-btn"
-      (clicked)="dialog.close()"
-    >
+    <app-ring-button (clicked)="dialog.close()">
       {{ i18n.dict('cancel') | translate }}
     </app-ring-button>
-    <app-ring-button
-      class="execute-plan-actions-btn confirm-btn"
-      (clicked)="confirm()"
-    >
+    <app-ring-button color="primary" (clicked)="confirm()">
       {{ i18n.dict('confirm') | translate }}
     </app-ring-button>
   </div>

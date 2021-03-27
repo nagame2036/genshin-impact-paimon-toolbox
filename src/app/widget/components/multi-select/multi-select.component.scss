@@ -1,1 +1,10 @@
 @import '../../styles/select-field.scss';
+
+.order-hint {
+  @apply mr-1;
+}
+
+.select-option-text {
+  @apply flex-grow;
+  @apply truncate;
+}

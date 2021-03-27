@@ -23,7 +23,7 @@
     >
       keyboard_arrow_down
     </div>
-    <div class="select-dropdown p-2" [class.opened]="opened">
+    <div *ngIf="opened" class="select-dropdown p-2">
       <div>
         {{ i18n.dict('ascension-label') | translate }}
         {{ ascension }}

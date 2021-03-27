@@ -36,6 +36,7 @@
   <app-ring-button
     *ngIf="reachedStates.length > 0"
     class="execute-all-btn"
+    color="primary"
     [class.reached]="reachedStates[0]"
     [disabled]="!reachedStates[0]"
     (click)="executePlan.emit(0)"

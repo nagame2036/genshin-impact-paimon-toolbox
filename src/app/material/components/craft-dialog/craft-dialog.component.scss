@@ -30,32 +30,12 @@
   @apply flex;
   @apply flex-row;
   @apply gap-2;
-}
 
-.close-btn,
-.craft-btn {
-  @apply flex-1;
+  app-ring-button {
+    @apply flex-1;
 
-  ::ng-deep .ring-btn {
-    @apply block;
-    @apply w-full;
-    @apply m-auto;
-    @apply py-2;
-  }
-}
-
-.craft-btn ::ng-deep .ring-btn {
-  @apply text-white;
-  @apply bg-primary-400;
-  @apply border-primary-400;
-  @apply hover:bg-primary-600;
-  @apply hover:border-primary-600;
-
-  &.disabled {
-    @apply text-white;
-    @apply bg-primary-400;
-    @apply border-primary-400;
-    @apply hover:bg-primary-400;
-    @apply hover:border-primary-400;
+    ::ng-deep .ring-btn {
+      @apply w-full;
+    }
   }
 }

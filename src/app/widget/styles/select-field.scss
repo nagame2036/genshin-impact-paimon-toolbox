@@ -43,7 +43,6 @@
   @apply w-full;
   @apply max-h-64;
   @apply overflow-y-auto;
-  @apply hidden;
   @apply bg-white;
   @apply absolute;
   @apply top-7;
@@ -53,10 +52,6 @@
   @apply ring-2;
   @apply ring-primary-200;
   @apply rounded-b;
-
-  &.opened {
-    @apply block;
-  }
 }
 
 .select-option {
@@ -76,13 +71,4 @@
     @apply border-l-4;
     @apply border-primary-400;
   }
-}
-
-.order-hint {
-  @apply mr-1;
-}
-
-.select-option-text {
-  @apply flex-grow;
-  @apply truncate;
 }

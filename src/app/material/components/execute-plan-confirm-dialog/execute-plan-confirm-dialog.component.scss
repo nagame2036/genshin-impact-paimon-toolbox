@@ -28,31 +28,11 @@
   @apply flex-row;
   @apply place-content-center;
   @apply gap-4;
-}
 
-.execute-plan-actions-btn {
-  @apply flex-grow;
-
-  ::ng-deep .ring-btn {
-    @apply block;
-    @apply mx-auto;
-    @apply px-4;
-    @apply py-2;
-  }
-}
-
-.cancel-btn {
-  ::ng-deep .ring-btn {
-  }
-}
-
-.confirm-btn {
-  ::ng-deep .ring-btn {
-    @apply text-white;
-    @apply bg-primary-500;
-    @apply border-primary-500;
-    @apply hover:bg-primary-300;
-    @apply hover:border-primary-300;
-    @apply focus:ring-primary-500;
+  app-ring-button {
+    @apply flex-grow;
+    ::ng-deep .ring-btn {
+      @apply w-full;
+    }
   }
 }

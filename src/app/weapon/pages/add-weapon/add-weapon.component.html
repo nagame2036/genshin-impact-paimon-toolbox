@@ -23,10 +23,10 @@
     <div class="add-form">
       <app-weapon-plan-form [weapon]="selectedWeapon"></app-weapon-plan-form>
       <div class="add-actions">
-        <app-ring-button class="reset-btn" (clicked)="reset()">
+        <app-ring-button color="red" (clicked)="reset()">
           {{ i18n.module('reset') | translate }}
         </app-ring-button>
-        <app-ring-button class="add-btn" (clicked)="add()">
+        <app-ring-button color="primary" (clicked)="add()">
           {{ i18n.module('add') | translate }}
         </app-ring-button>
       </div>

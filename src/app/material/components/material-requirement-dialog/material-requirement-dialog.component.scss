@@ -42,8 +42,5 @@
 }
 
 .close-btn ::ng-deep .ring-btn {
-  @apply block;
-  @apply m-auto;
   @apply px-12;
-  @apply py-2;
 }

@@ -28,8 +28,8 @@
       keyboard_arrow_down
     </div>
     <ul
+      *ngIf="opened"
       class="select-dropdown"
-      [class.opened]="opened"
       [style.width.px]="container.width"
     >
       <li

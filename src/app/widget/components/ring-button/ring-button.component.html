@@ -1,3 +1,8 @@
-<button class="ring-btn" [class.disabled]="disabled" (click)="emitClick()">
+<button
+  class="ring-btn"
+  [ngClass]="colorClass"
+  [class.disabled]="disabled"
+  (click)="emitClick()"
+>
   <ng-content></ng-content>
 </button>

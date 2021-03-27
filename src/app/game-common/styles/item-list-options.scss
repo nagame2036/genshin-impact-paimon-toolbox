@@ -9,5 +9,8 @@
 
 .actions {
   @apply flex;
+  @apply flex-row;
   @apply mt-1.5;
+  @apply ml-2;
+  @apply gap-4;
 }

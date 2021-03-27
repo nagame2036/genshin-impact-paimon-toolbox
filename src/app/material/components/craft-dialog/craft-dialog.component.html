@@ -61,11 +61,11 @@
     ></app-slider>
   </div>
   <div class="craft-actions" actions>
-    <app-ring-button class="close-btn" (clicked)="close()">
+    <app-ring-button (clicked)="close()">
       {{ i18n.dict('close') | translate }}
     </app-ring-button>
     <app-ring-button
-      class="craft-btn"
+      color="primary"
       [disabled]="times === 0"
       (clicked)="craft()"
     >
