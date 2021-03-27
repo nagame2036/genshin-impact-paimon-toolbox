@@ -17,7 +17,7 @@ import {CharacterViewOptions} from '../models/options.model';
 import {first, map} from 'rxjs/operators';
 import {sortItems} from '../../shared/utils/collections';
 
-const i18n = new I18n('characters');
+const i18n = I18n.create('characters');
 
 type CharacterSort = (a: CharacterOverview, b: CharacterOverview) => number;
 

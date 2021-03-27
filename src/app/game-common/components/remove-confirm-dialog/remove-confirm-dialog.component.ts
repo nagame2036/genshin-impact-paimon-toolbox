@@ -19,7 +19,7 @@ import {ElementType} from '../../models/element-type.enum';
   styleUrls: ['./remove-confirm-dialog.component.scss'],
 })
 export class RemoveConfirmDialogComponent implements OnInit {
-  i18n = new I18n('game-common');
+  i18n = I18n.create('game-common');
 
   @Input()
   category!: ImageType;

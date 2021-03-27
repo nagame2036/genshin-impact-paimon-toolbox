@@ -18,7 +18,7 @@ const timeFormat = {
   styleUrls: ['./resin-replenish-calculator.component.scss'],
 })
 export class ResinReplenishCalculatorComponent implements OnInit {
-  i18n = new I18n('resin.replenish');
+  i18n = I18n.create('resin.replenish');
 
   currentLanguage = '';
 

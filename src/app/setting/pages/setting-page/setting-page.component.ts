@@ -13,7 +13,7 @@ import {SettingService} from '../../services/setting.service';
   styleUrls: ['./setting-page.component.scss'],
 })
 export class SettingPageComponent implements OnInit {
-  i18n = new I18n('settings');
+  i18n = I18n.create('settings');
 
   languages = supportedLanguages;
 

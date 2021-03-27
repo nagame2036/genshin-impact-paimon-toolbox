@@ -13,7 +13,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./weapon-list-page.component.scss'],
 })
 export class WeaponListPageComponent implements OnInit {
-  i18n = new I18n('weapons');
+  i18n = I18n.create('weapons');
 
   weapons$!: Observable<WeaponOverview[]>;
 

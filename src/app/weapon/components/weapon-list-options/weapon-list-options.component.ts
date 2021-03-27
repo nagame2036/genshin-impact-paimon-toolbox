@@ -8,7 +8,7 @@ import {WeaponViewService} from '../../services/weapon-view.service';
   styleUrls: ['./weapon-list-options.component.scss'],
 })
 export class WeaponListOptionsComponent implements OnInit {
-  readonly i18n = new I18n('weapons');
+  readonly i18n = I18n.create('weapons');
 
   @Input()
   viewSort = false;

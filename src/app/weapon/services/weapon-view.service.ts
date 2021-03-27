@@ -11,7 +11,7 @@ import {SettingService} from '../../setting/services/setting.service';
 import {first, map} from 'rxjs/operators';
 import {sortItems} from '../../shared/utils/collections';
 
-const i18n = new I18n('weapons');
+const i18n = I18n.create('weapons');
 
 type WeaponSort = (a: WeaponOverview, b: WeaponOverview) => number;
 

@@ -19,7 +19,7 @@ import {RequireDetail} from '../../material/models/requirement-detail.model';
 export class WeaponPlanner {
   private readonly type = ItemType.WEAPON;
 
-  private readonly i18n = new I18n('game-common');
+  private readonly i18n = I18n.create('game-common');
 
   private readonly store = 'weapon-plans';
 

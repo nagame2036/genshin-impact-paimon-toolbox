@@ -13,7 +13,7 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./weapon-detail.component.scss'],
 })
 export class WeaponDetailComponent implements OnInit {
-  readonly i18n = new I18n('weapons');
+  readonly i18n = I18n.create('weapons');
 
   weapon!: Weapon;
 

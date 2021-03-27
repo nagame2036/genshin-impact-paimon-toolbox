@@ -10,7 +10,7 @@ import {WeaponService} from '../../../weapon/services/weapon.service';
   styleUrls: ['./inventory-page.component.scss'],
 })
 export class InventoryPageComponent implements OnInit {
-  i18n = new I18n('inventory');
+  i18n = I18n.create('inventory');
 
   links: NavBarLink[] = [
     {path: 'character-materials', text: this.i18n.dict('character-materials')},

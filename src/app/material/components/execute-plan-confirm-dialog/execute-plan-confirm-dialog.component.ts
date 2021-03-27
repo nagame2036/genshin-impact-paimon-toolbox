@@ -17,7 +17,7 @@ type PlanData = {
   styleUrls: ['./execute-plan-confirm-dialog.component.scss'],
 })
 export class ExecutePlanConfirmDialogComponent implements OnInit {
-  i18n = new I18n('game-common');
+  i18n = I18n.create('game-common');
 
   data: PlanData = {item: '', title: '', requirement: []};
 

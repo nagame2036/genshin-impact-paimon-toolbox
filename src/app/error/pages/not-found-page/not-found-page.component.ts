@@ -8,7 +8,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./not-found-page.component.scss'],
 })
 export class NotFoundPageComponent implements OnInit {
-  i18n = new I18n('error');
+  i18n = I18n.create('error');
 
   constructor(private location: Location) {}
 

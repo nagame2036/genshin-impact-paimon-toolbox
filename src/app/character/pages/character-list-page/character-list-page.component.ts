@@ -13,7 +13,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./character-list-page.component.scss'],
 })
 export class CharacterListPageComponent implements OnInit {
-  i18n = new I18n('characters');
+  i18n = I18n.create('characters');
 
   characters$!: Observable<CharacterOverview[]>;
 

@@ -17,7 +17,7 @@ import characterLevelupCost from '../../../data/characters/character-levelup-cos
   providedIn: 'root',
 })
 export class CharacterRequirementService {
-  private readonly i18n = new I18n('game-common');
+  private readonly i18n = I18n.create('game-common');
 
   private readonly ascensions = characterAscendCost as CharacterAscendCost[];
 

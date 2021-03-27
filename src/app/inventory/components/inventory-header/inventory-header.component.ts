@@ -12,7 +12,7 @@ import {MaterialViewService} from '../../../material/services/material-view.serv
 export class InventoryHeaderComponent
   extends AbstractObservableComponent
   implements OnInit {
-  i18n = new I18n('inventory');
+  i18n = I18n.create('inventory');
 
   constructor(public view: MaterialViewService, private logger: NGXLogger) {
     super();

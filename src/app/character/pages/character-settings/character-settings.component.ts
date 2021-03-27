@@ -9,7 +9,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./character-settings.component.scss'],
 })
 export class CharacterSettingsComponent implements OnInit {
-  i18n = new I18n('characters.settings');
+  i18n = I18n.create('characters.settings');
 
   constructor(
     public information: CharacterInfoService,

@@ -15,7 +15,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./craft-dialog.component.scss'],
 })
 export class CraftDialogComponent implements OnInit, OnDestroy {
-  i18n = new I18n('inventory');
+  i18n = I18n.create('inventory');
 
   item!: MaterialDetail;
 

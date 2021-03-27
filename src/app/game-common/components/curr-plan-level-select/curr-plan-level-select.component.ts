@@ -19,7 +19,7 @@ import {AscensionLevelService} from '../../services/ascension-level.service';
   styleUrls: ['./curr-plan-level-select.component.scss'],
 })
 export class CurrPlanLevelSelectComponent implements OnChanges {
-  i18n = new I18n('game-common');
+  i18n = I18n.create('game-common');
 
   @Input()
   label!: string;

@@ -16,7 +16,7 @@ import {rangeList} from '../../../shared/utils/range-list';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemViewComponent implements OnChanges {
-  i18n = new I18n('item-view');
+  i18n = I18n.create('item-view');
 
   @Input()
   width = 100;

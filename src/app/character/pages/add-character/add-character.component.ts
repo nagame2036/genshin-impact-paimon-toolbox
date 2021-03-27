@@ -16,7 +16,7 @@ import {NGXLogger} from 'ngx-logger';
 export class AddCharacterComponent
   extends AbstractObservableComponent
   implements OnInit {
-  readonly i18n = new I18n('characters');
+  readonly i18n = I18n.create('characters');
 
   characters: CharacterInfo[] = [];
 

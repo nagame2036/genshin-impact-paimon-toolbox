@@ -25,5 +25,5 @@ export interface RequireMark {
 export interface RequireMarkDetail {
   mark: RequireMark;
 
-  requirement: MaterialList;
+  require: MaterialList;
 }

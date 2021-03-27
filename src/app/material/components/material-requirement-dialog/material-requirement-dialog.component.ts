@@ -13,7 +13,7 @@ import {MaterialDetail} from '../../models/material.model';
   styleUrls: ['./material-requirement-dialog.component.scss'],
 })
 export class MaterialRequirementDialogComponent implements OnInit {
-  i18n = new I18n('inventory');
+  i18n = I18n.create('inventory');
 
   totalAmountPurpose = this.i18n.dict('total-amount');
 

@@ -18,7 +18,7 @@ import {I18n} from '../../models/i18n.model';
   styleUrls: ['./multi-select.component.scss'],
 })
 export class MultiSelectComponent implements OnInit {
-  i18n = new I18n('shared.multi-select');
+  i18n = I18n.create('shared.multi-select');
 
   @Input()
   values!: any[];

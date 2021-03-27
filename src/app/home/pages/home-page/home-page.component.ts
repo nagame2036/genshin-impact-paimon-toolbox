@@ -7,7 +7,7 @@ import {I18n} from '../../../widget/models/i18n.model';
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
-  i18n = new I18n('home');
+  i18n = I18n.create('home');
 
   constructor() {}
 

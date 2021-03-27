@@ -16,7 +16,7 @@ import talentLevelupCost from '../../../data/characters/talent-levelup-cost.json
   providedIn: 'root',
 })
 export class TalentRequirementService {
-  private readonly i18n = new I18n('game-common');
+  private readonly i18n = I18n.create('game-common');
 
   private readonly levels = talentLevelupCost as TalentLevelupCost[];
 

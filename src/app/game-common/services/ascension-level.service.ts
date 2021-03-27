@@ -12,7 +12,7 @@ import {
   providedIn: 'root',
 })
 export class AscensionLevelService {
-  private i18n = new I18n('game-common');
+  private i18n = I18n.create('game-common');
 
   private ascensionRange: [Ascension, Ascension] = [
     0 as Ascension,

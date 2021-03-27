@@ -7,7 +7,7 @@ import {I18n} from '../../../widget/models/i18n.model';
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
-  i18n = new I18n('core');
+  i18n = I18n.create('core');
 
   @Input()
   showMenu!: boolean;

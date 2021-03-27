@@ -14,7 +14,7 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./character-detail.component.scss'],
 })
 export class CharacterDetailComponent implements OnInit {
-  readonly i18n = new I18n('characters');
+  readonly i18n = I18n.create('characters');
 
   character!: Character;
 

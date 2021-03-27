@@ -22,7 +22,7 @@ import {Ascension} from '../../models/ascension.type';
   styleUrls: ['./ascension-level-select.component.scss'],
 })
 export class AscensionLevelSelectComponent implements OnChanges {
-  i18n = new I18n('game-common');
+  i18n = I18n.create('game-common');
 
   @Input()
   data: AscensionLevelData = this.service.correct({ascension: 0, level: 1});

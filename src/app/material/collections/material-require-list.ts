@@ -8,7 +8,7 @@ import {MaterialList} from './material-list';
 import {RequireDetail} from '../models/requirement-detail.model';
 import {I18n} from '../../widget/models/i18n.model';
 
-const i18n = new I18n('game-common');
+const i18n = I18n.create('game-common');
 
 export class MaterialRequireList {
   /**
@@ -34,11 +34,8 @@ export class MaterialRequireList {
       const {key, purpose} = mark;
       this.totalNeed.change(materialId, need);
       const marks = this.marks.get(key) ?? new Map<string, RequireMarkDetail>();
-      const reqMark = marks.get(purpose) ?? {
-        mark,
-        requirement: new MaterialList(),
-      };
-      reqMark.requirement.change(materialId, need);
+      const reqMark = marks.get(purpose) ?? {mark, require: new MaterialList()};
+      reqMark.require.change(materialId, need);
       marks.set(purpose, reqMark);
       this.marks.set(key, marks);
     }
@@ -54,16 +51,16 @@ export class MaterialRequireList {
     const origin = this.marks.get(key);
     if (!origin) {
       for (const mark of thatMarks.values()) {
-        this.totalNeed.combine(mark.requirement);
+        this.totalNeed.combine(mark.require);
       }
     } else {
       for (const [purpose, mark] of origin) {
-        const thatRequirement = thatMarks.get(purpose)?.requirement;
+        const thatRequirement = thatMarks.get(purpose)?.require;
         if (!thatRequirement) {
           continue;
         }
         for (const [id, thatNeed] of thatRequirement.entries()) {
-          const newNeed = thatNeed - mark.requirement.getAmount(id);
+          const newNeed = thatNeed - mark.require.getAmount(id);
           this.totalNeed.change(id, newNeed);
         }
       }
@@ -84,10 +81,10 @@ export class MaterialRequireList {
     const reqMarks = this.marks.get(key);
     if (reqMarks) {
       const total = purposes.get(i18n.module('total-requirement'));
-      for (const {mark, requirement} of reqMarks.values()) {
+      for (const {mark, require} of reqMarks.values()) {
         const purposeType = mark.purposeType;
-        purposes.get(purposeType)?.combine(requirement);
-        total?.combine(requirement);
+        purposes.get(purposeType)?.combine(require);
+        total?.combine(require);
       }
     }
     const results = [];
@@ -102,8 +99,8 @@ export class MaterialRequireList {
   getMarks(materialId: number): MaterialRequireMark[] {
     const results = [];
     for (const reqMarks of this.marks.values()) {
-      for (const {mark, requirement} of reqMarks.values()) {
-        const need = requirement.getAmount(materialId);
+      for (const {mark, require} of reqMarks.values()) {
+        const need = require.getAmount(materialId);
         if (need > 0) {
           results.push({...mark, need});
         }
@@ -127,7 +124,7 @@ export class MaterialRequireList {
       for (const [thatPurpose, thatMark] of thatMarks) {
         const mark = marks.get(thatPurpose);
         if (mark) {
-          mark.requirement.combine(thatMark.requirement);
+          mark.require.combine(thatMark.require);
         } else {
           marks.set(thatPurpose, thatMark);
         }
@@ -145,7 +142,7 @@ export class MaterialRequireList {
     const existing = this.marks.get(key);
     if (existing) {
       for (const mark of existing.values()) {
-        for (const [id, need] of mark.requirement.entries()) {
+        for (const [id, need] of mark.require.entries()) {
           this.totalNeed.change(id, -need);
         }
       }
@@ -165,16 +162,16 @@ function processDetail(
 ): RequireDetail {
   const value = [];
   let reached = true;
-  let existsRequire = false;
+  let exists = false;
   for (const [id, need] of req.entries()) {
     const material = materials.get(id);
     if (material) {
-      existsRequire = true;
+      exists = true;
       const detail = material.copy(material.have, need);
       value.push(detail);
       reached &&= detail.overflow;
     }
   }
-  reached &&= existsRequire;
+  reached &&= exists;
   return {text, value, reached};
 }

@@ -25,7 +25,7 @@ import {MaterialDetail} from '../../../material/models/material.model';
 export class WeaponListComponent
   extends AbstractObservableComponent
   implements OnChanges {
-  i18n = new I18n('weapons');
+  i18n = I18n.create('weapons');
 
   @Input()
   weapons: WeaponOverview[] = [];

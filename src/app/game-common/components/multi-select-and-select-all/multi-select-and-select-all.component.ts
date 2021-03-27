@@ -7,7 +7,7 @@ import {I18n} from '../../../widget/models/i18n.model';
   styleUrls: ['./multi-select-and-select-all.component.scss'],
 })
 export class MultiSelectAndSelectAllComponent implements OnInit {
-  i18n = new I18n('shared.multi-select');
+  i18n = I18n.create('shared.multi-select');
 
   @Input()
   multiSelect = false;

@@ -43,8 +43,6 @@ export class MaterialList {
   }
 
   private changeAmount(id: number, amount: number): void {
-    if (amount !== 0) {
-      this.setAmount(id, amount + this.getAmount(id));
-    }
+    this.setAmount(id, amount + this.getAmount(id));
   }
 }

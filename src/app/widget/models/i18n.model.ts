@@ -1,7 +1,19 @@
 export class I18n {
   static paramPrefix = '@';
 
-  constructor(private moduleName: string) {}
+  private static pool = new Map<string, I18n>();
+
+  private constructor(private moduleName: string) {}
+
+  static create(moduleName: string): I18n {
+    const existing = I18n.pool.get(moduleName);
+    if (existing) {
+      return existing;
+    }
+    const i18n = new I18n(moduleName);
+    I18n.pool.set(moduleName, i18n);
+    return i18n;
+  }
 
   path(key: string): string {
     return `path.${key}`;

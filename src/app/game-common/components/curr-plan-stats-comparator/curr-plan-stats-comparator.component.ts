@@ -7,7 +7,7 @@ import {I18n} from '../../../widget/models/i18n.model';
   styleUrls: ['./curr-plan-stats-comparator.component.scss'],
 })
 export class CurrPlanStatsComparatorComponent implements OnInit {
-  i18n = new I18n('game-common');
+  i18n = I18n.create('game-common');
   @Input()
   type = '';
 

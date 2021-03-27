@@ -13,7 +13,7 @@ import {SettingService} from '../../../setting/services/setting.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  i18n = new I18n('core');
+  i18n = I18n.create('core');
 
   @Output()
   showMenu = new EventEmitter<boolean>();

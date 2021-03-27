@@ -19,7 +19,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
 export class CharacterPlanComponent
   extends AbstractObservableComponent
   implements OnInit {
-  readonly i18n = new I18n('game-common');
+  readonly i18n = I18n.create('game-common');
 
   readonly types: [string, ...MaterialType[]][] = [
     [

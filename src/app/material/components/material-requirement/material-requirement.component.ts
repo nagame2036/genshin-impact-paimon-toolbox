@@ -19,7 +19,7 @@ import {defaultMaterialViewOptions} from '../../models/options.model';
   styleUrls: ['./material-requirement.component.scss'],
 })
 export class MaterialRequirementComponent implements OnInit, OnChanges {
-  i18n = new I18n('inventory');
+  i18n = I18n.create('inventory');
 
   @Input()
   types: [string, ...MaterialType[]][] = [];

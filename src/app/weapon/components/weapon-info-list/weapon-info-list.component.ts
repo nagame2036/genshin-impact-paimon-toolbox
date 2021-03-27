@@ -20,7 +20,7 @@ import {MaterialDetail} from '../../../material/models/material.model';
   styleUrls: ['./weapon-info-list.component.scss'],
 })
 export class WeaponInfoListComponent implements OnChanges {
-  readonly i18n = new I18n('weapons');
+  readonly i18n = I18n.create('weapons');
 
   @Input()
   weapons: WeaponInfo[] = [];

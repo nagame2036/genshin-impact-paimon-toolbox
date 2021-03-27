@@ -22,7 +22,7 @@ import {TalentInfoService} from './talent-info.service';
 export class CharacterPlanner {
   private readonly type = ItemType.CHARACTER;
 
-  private readonly i18n = new I18n('game-common');
+  private readonly i18n = I18n.create('game-common');
 
   private readonly store = 'character-plans';
 

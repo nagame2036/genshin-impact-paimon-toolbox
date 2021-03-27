@@ -10,7 +10,7 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./material-list.component.scss'],
 })
 export class MaterialListComponent implements OnInit {
-  i18n = new I18n('inventory');
+  i18n = I18n.create('inventory');
 
   @Input()
   subtitle!: string;

@@ -35,7 +35,7 @@ type CharacterStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class CharacterInfoService {
-  private i18n = new I18n('characters');
+  private i18n = I18n.create('characters');
 
   private readonly settingKey = 'character-info';
 

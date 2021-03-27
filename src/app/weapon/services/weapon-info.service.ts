@@ -30,7 +30,7 @@ export type WeaponStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class WeaponInfoService {
-  private i18n = new I18n('weapons');
+  private i18n = I18n.create('weapons');
 
   readonly infos = objectMap<WeaponInfo>(load(weaponList));
 

@@ -20,7 +20,7 @@ import {MaterialDetail} from '../../../material/models/material.model';
   styleUrls: ['./character-info-list.component.scss'],
 })
 export class CharacterInfoListComponent implements OnChanges {
-  readonly i18n = new I18n('characters');
+  readonly i18n = I18n.create('characters');
 
   @Input()
   characters: CharacterInfo[] = [];

@@ -21,7 +21,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
 export class WeaponPlanFormComponent
   extends AbstractObservableComponent
   implements OnInit {
-  i18n = new I18n('game-common');
+  i18n = I18n.create('game-common');
 
   @Input()
   weapon!: WeaponOverview;

@@ -18,7 +18,7 @@ import weaponLevelupCost from '../../../data/weapons/weapon-levelup-cost.json';
   providedIn: 'root',
 })
 export class WeaponRequirementService {
-  private readonly i18n = new I18n('game-common');
+  private readonly i18n = I18n.create('game-common');
 
   private ascensions = weaponAscendCost as WeaponAscendCost;
 
