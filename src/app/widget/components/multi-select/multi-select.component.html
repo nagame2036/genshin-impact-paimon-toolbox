@@ -1,63 +1,34 @@
-<app-form-field
-  #container
-  class="form-container"
-  [ngClass]="{hover: hover, focus: focus}"
-  (mouseenter)="hover = true"
-  (mouseleave)="hover = false"
-  (click)="focus = opened = true"
->
-  <label form-label>
+<app-select-container [valueText]="valuesText">
+  <ng-container form-label>
     <ng-content select="[form-label]"></ng-content>
-  </label>
-  <div class="select-container">
-    <div #prefix [class.prefix]="prefix.children.length > 0">
-      <ng-content select="[prefix]"></ng-content>
+  </ng-container>
+  <ng-container prefix>
+    <ng-content select="[prefix]"></ng-content>
+  </ng-container>
+  <ng-container suffix>
+    <ng-content select="[prefix]"></ng-content>
+  </ng-container>
+  <li
+    *ngIf="!ordered"
+    class="select-option"
+    [class.selected]="values.length === options.length"
+    (click)="selectAll()"
+  >
+    {{ i18n.dict('all') | translate }}
+  </li>
+  <li
+    *ngFor="let option of options"
+    class="select-option"
+    [class.selected]="values.includes(option.value)"
+    (click)="change(option)"
+  >
+    <ng-container *ngIf="values.indexOf(option.value) + 1 as index">
+      <div *ngIf="ordered && index >= 1" class="order-hint">
+        {{ index }}
+      </div>
+    </ng-container>
+    <div class="select-option-text">
+      {{ option.text | translate }}
     </div>
-    <input
-      class="select"
-      type="text"
-      [value]="valuesText"
-      readonly
-      (focusin)="focus = opened = true"
-      (focusout)="focus = false"
-    />
-    <div
-      class="material-icons select-arrow"
-      [ngClass]="{hover: hover, focus: focus}"
-    >
-      keyboard_arrow_down
-    </div>
-    <ul
-      *ngIf="opened"
-      class="select-dropdown"
-      [style.width.px]="container.width"
-    >
-      <li
-        *ngIf="!ordered"
-        class="select-option"
-        [class.selected]="values.length === options.length"
-        (click)="selectAll()"
-      >
-        {{ i18n.dict('all') | translate }}
-      </li>
-      <li
-        *ngFor="let option of options"
-        class="select-option"
-        [class.selected]="values.includes(option.value)"
-        (click)="change(option)"
-      >
-        <ng-container *ngIf="values.indexOf(option.value) + 1 as index">
-          <div *ngIf="ordered && index >= 1" class="order-hint">
-            {{ index }}
-          </div>
-        </ng-container>
-        <div class="select-option-text">
-          {{ option.text | translate }}
-        </div>
-      </li>
-    </ul>
-    <div #suffix [class.suffix]="suffix.children.length > 0">
-      <ng-content select="[suffix]"></ng-content>
-    </div>
-  </div>
-</app-form-field>
+  </li>
+</app-select-container>

@@ -1,0 +1,14 @@
+.select-option {
+  @apply px-2;
+  @apply py-0.5;
+  @apply flex;
+  @apply flex-row;
+  @apply cursor-pointer;
+  @apply hover:bg-primary-100;
+
+  &.selected {
+    @apply bg-primary-200;
+    @apply border-l-4;
+    @apply border-primary-400;
+  }
+}

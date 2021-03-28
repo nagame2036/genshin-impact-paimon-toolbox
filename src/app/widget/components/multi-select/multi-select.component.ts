@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SelectOption} from '../../models/select-option.model';
 import {toggleItem} from '../../../shared/utils/collections';
 import {TranslateService} from '@ngx-translate/core';
@@ -36,13 +28,7 @@ export class MultiSelectComponent implements OnInit {
   @Output()
   changed = new EventEmitter<any[]>();
 
-  hover = false;
-
-  focus = false;
-
-  opened = false;
-
-  constructor(private self: ElementRef, private translator: TranslateService) {}
+  constructor(private translator: TranslateService) {}
 
   ngOnInit(): void {
     this.optionsValues = this.options.map(it => it.value);
@@ -75,14 +61,6 @@ export class MultiSelectComponent implements OnInit {
           return this.translator.instant(text);
         })
         .join(', ');
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  clickOutside(event: Event): void {
-    if (!this.self.nativeElement.contains(event.target)) {
-      this.opened = false;
-      this.focus = false;
     }
   }
 

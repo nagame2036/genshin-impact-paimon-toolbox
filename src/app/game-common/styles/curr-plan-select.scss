@@ -22,7 +22,6 @@
     @apply absolute;
     width: 5.75rem;
     height: 2rem;
-    top: -2rem;
 
     &:first-child {
       @apply pl-1;
@@ -43,7 +42,7 @@
 
   .arrow {
     @apply absolute;
-    top: -1rem;
+    top: 0;
     left: 5.75rem;
   }
 }
