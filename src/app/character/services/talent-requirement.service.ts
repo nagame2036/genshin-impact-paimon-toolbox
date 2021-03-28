@@ -65,12 +65,8 @@ export class TalentRequirementService {
         requirement.mark(domainItem.id, cost.domain.amount, mark);
         const mobItem = this.materials.get(mob, cost.mob.rarity);
         requirement.mark(mobItem.id, cost.mob.amount, mark);
-        if (cost.boss) {
-          requirement.mark(boss, cost.boss, mark);
-        }
-        if (cost.event) {
-          requirement.mark(event, cost.event, mark);
-        }
+        requirement.mark(boss, cost.boss ?? 0, mark);
+        requirement.mark(event, cost.event ?? 0, mark);
       }
     }
     return requirement;

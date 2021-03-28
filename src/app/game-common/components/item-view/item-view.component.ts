@@ -35,22 +35,21 @@ export class ItemViewComponent implements OnChanges {
   @Input()
   backgroundDeps = this.rarity;
 
+  @Input()
+  backgroundType: 'rarity' | 'element' = 'rarity';
+
   itemKey!: string;
 
   constructor(public images: ImageService) {}
 
-  get backgroundId(): number {
-    if (this.category === 'characters') {
-      return this.backgroundDeps + 100;
-    }
-    return this.rarity;
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('id')) {
+    if (this.backgroundType === 'rarity' && changes.rarity) {
+      this.backgroundDeps = this.rarity;
+    }
+    if (changes.id) {
       this.itemKey = `${this.category}.${this.id}`;
     }
-    if (changes.hasOwnProperty('rarity')) {
+    if (changes.rarity) {
       this.stars = rangeList(1, this.rarity);
     }
   }

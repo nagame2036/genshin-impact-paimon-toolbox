@@ -11,7 +11,7 @@ import {CurrPlanComparatorComponent} from './components/curr-plan-comparator/cur
 import {ItemOverviewDataComponent} from './components/item-overview-data/item-overview-data.component';
 import {ItemOverviewStatsDataComponent} from './components/item-overview-stats-data/item-overview-stats-data.component';
 import {CurrPlanStatsComparatorComponent} from './components/curr-plan-stats-comparator/curr-plan-stats-comparator.component';
-import {ItemSummaryNotSelectComponent} from './components/item-summary-not-select/item-summary-not-select.component';
+import {ItemGridContainerComponent} from './components/item-list-container/item-grid-container.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import {ItemSummaryNotSelectComponent} from './components/item-summary-not-selec
     ItemOverviewDataComponent,
     ItemOverviewStatsDataComponent,
     CurrPlanStatsComparatorComponent,
-    ItemSummaryNotSelectComponent,
+    ItemGridContainerComponent,
   ],
   imports: [WidgetModule],
   exports: [
@@ -39,7 +39,7 @@ import {ItemSummaryNotSelectComponent} from './components/item-summary-not-selec
     ItemOverviewDataComponent,
     ItemOverviewStatsDataComponent,
     CurrPlanStatsComparatorComponent,
-    ItemSummaryNotSelectComponent,
+    ItemGridContainerComponent,
   ],
 })
 export class GameCommonModule {}

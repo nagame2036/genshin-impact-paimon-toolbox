@@ -1,24 +1,19 @@
 <div class="sub-toolbar">
   <button class="icon-btn" (click)="goBack()">
-    <span class="material-icons"> arrow_back </span>
+    <span class="material-icons">arrow_back</span>
   </button>
   <div class="sub-toolbar-title">
     {{ i18n.module('add') | translate }}
   </div>
 </div>
 <div class="subpage-padding-x">
-  <app-character-info-list
+  <app-character-info-grid
     *ngIf="!selected; else form"
     [characters]="characters"
+    [clickText]="i18n.pModule('summary.info-click')"
+    [doubleClickText]="i18n.pModule('summary.add-double-click')"
     (doubleClicked)="select($event)"
-  >
-    <app-item-summary-not-select
-      not-select
-      [type]="i18n.pDict('character')"
-      [clickText]="i18n.pModule('summary.info-click')"
-      [doubleClickText]="i18n.pModule('summary.add-double-click')"
-    ></app-item-summary-not-select>
-  </app-character-info-list>
+  ></app-character-info-grid>
   <ng-template #form>
     <div class="add-form">
       <app-character-plan-form

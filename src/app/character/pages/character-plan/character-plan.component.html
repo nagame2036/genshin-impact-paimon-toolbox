@@ -4,14 +4,12 @@
     [reachedStates]="reachedStates"
     (executePlan)="executePlan($event)"
     (changed)="save()"
-  >
-  </app-character-plan-form>
+  ></app-character-plan-form>
   <app-material-requirement
     class="cost-list"
     [requirements]="requirements"
     [types]="types"
-  >
-  </app-material-requirement>
+  ></app-material-requirement>
 </div>
 <app-execute-plan-confirm-dialog
   #executePlanConfirm

@@ -5,24 +5,24 @@ import {GameCommonModule} from '../game-common/game-common.module';
 import {WeaponRoutingModule} from './weapon-routing.module';
 import {MaterialModule} from '../material/material.module';
 import {AddWeaponComponent} from './pages/add-weapon/add-weapon.component';
-import {WeaponListComponent} from './components/weapon-list/weapon-list.component';
-import {WeaponInfoListComponent} from './components/weapon-info-list/weapon-info-list.component';
-import {WeaponListPageComponent} from './pages/weapon-list-page/weapon-list-page.component';
+import {WeaponGridComponent} from './components/weapon-grid/weapon-grid.component';
+import {WeaponInfoGridComponent} from './components/weapon-info-grid/weapon-info-grid.component';
+import {WeaponListComponent} from './pages/weapon-list/weapon-list.component';
 import {WeaponDetailComponent} from './pages/weapon-detail/weapon-detail.component';
 import {WeaponPlanComponent} from './pages/weapon-plan/weapon-plan.component';
 import {WeaponPlanFormComponent} from './components/weapon-plan-form/weapon-plan-form.component';
-import {WeaponListOptionsComponent} from './components/weapon-list-options/weapon-list-options.component';
+import {WeaponViewOptionsComponent} from './components/weapon-view-options/weapon-view-options.component';
 
 @NgModule({
   declarations: [
     AddWeaponComponent,
+    WeaponGridComponent,
+    WeaponInfoGridComponent,
     WeaponListComponent,
-    WeaponInfoListComponent,
-    WeaponListPageComponent,
     WeaponDetailComponent,
     WeaponPlanComponent,
     WeaponPlanFormComponent,
-    WeaponListOptionsComponent,
+    WeaponViewOptionsComponent,
   ],
   imports: [
     WidgetModule,

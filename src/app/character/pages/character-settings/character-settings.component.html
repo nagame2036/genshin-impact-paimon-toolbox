@@ -1,7 +1,7 @@
 <div class="settings-page" *ngIf="information.options | async as options">
   <div class="settings-header">
     <button class="icon-btn" (click)="goBack()">
-      <span class="material-icons"> arrow_back </span>
+      <span class="material-icons">arrow_back</span>
     </button>
     <h2 class="text-xl font-bold">
       {{ i18n.module('title') | translate }}
@@ -20,7 +20,7 @@
     <span form-label>
       {{ i18n.dict('list-options') | translate }}
     </span>
-    <app-character-list-options [viewSort]="true" [viewInfoSort]="true">
-    </app-character-list-options>
+    <app-character-view-options [viewSort]="true" [viewInfoSort]="true">
+    </app-character-view-options>
   </app-form-field>
 </div>

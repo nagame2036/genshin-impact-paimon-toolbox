@@ -1,6 +1,6 @@
 <div class="sub-toolbar">
   <button class="icon-btn" (click)="goBack()">
-    <span class="material-icons"> arrow_back </span>
+    <span class="material-icons">arrow_back</span>
   </button>
   <div class="sub-toolbar-title">
     {{ i18n.module('detail') | translate }}
@@ -18,9 +18,8 @@
   </div>
 </div>
 <app-remove-confirm-dialog
+  #removeConfirm
   category="weapons"
   [items]="[weapon]"
   (confirm)="remove()"
-  #removeConfirm
->
-</app-remove-confirm-dialog>
+></app-remove-confirm-dialog>

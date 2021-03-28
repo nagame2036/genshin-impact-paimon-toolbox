@@ -1,0 +1,25 @@
+.container {
+  @apply flex;
+  @apply flex-row;
+  @apply divide-x;
+}
+
+.item-grid {
+  @apply flex-1;
+  @apply p-4;
+  max-height: 72vh;
+  @apply overflow-y-auto;
+  @apply grid;
+  grid-template-rows: repeat(auto-fit, 132px);
+  @apply gap-4;
+  @apply justify-around;
+}
+
+.item-summary {
+  @apply mt-4;
+  @apply w-96;
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply gap-4;
+}

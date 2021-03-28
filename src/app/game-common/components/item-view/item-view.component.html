@@ -1,5 +1,5 @@
 <div class="view-container" [style.width.px]="width">
-  <div class="image-container" [class]="'background-' + backgroundId">
+  <div class="image-container" [class]="backgroundType + '-' + backgroundDeps">
     <img
       class="image"
       [src]="images.get(category, id)"

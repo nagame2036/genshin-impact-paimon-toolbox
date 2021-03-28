@@ -1,0 +1,77 @@
+<app-weapon-view-options [viewInfoSort]="true" (changed)="update()">
+  <ng-content></ng-content>
+</app-weapon-view-options>
+<app-item-grid-container
+  [type]="i18n.pDict('weapon')"
+  [hasSummary]="!!clickedItem"
+  [clickText]="clickText"
+  [doubleClickText]="doubleClickText"
+>
+  <div
+    *ngFor="let item of items"
+    class="item-overview"
+    (click)="click(item)"
+    (dblclick)="doubleClick(item)"
+  >
+    <app-item-view
+      category="weapons"
+      [id]="item.id"
+      [rarity]="item.rarity"
+    ></app-item-view>
+    <img
+      class="weapon-type-hint"
+      [src]="images.get('weapon-types', item.type)"
+      [alt]="i18n.dict('weapon-types.' + item.type) | translate"
+    />
+  </div>
+  <ng-container item-summary *ngIf="clickedItem as item">
+    <app-item-view
+      class="item-summary-thumb"
+      category="weapons"
+      [id]="item.id"
+      [rarity]="item.rarity"
+    ></app-item-view>
+    <table class="item-summary-table">
+      <tr>
+        <td>{{ i18n.dict('rarity') | translate }}</td>
+        <td>★{{ item.rarity }}</td>
+      </tr>
+      <tr>
+        <td>{{ i18n.dict('type') | translate }}</td>
+        <td>{{ i18n.dict('weapon-types.' + item.type) | translate }}</td>
+      </tr>
+    </table>
+    <table
+      *ngIf="service.getStatsAtMaxLevel(item) as stats"
+      class="item-summary-table"
+    >
+      <tr>
+        <td colspan="2">{{ i18n.dict('stats-at-max-level') | translate }}</td>
+      </tr>
+      <tr *ngFor="let type of service.getStatsTypes(item.id); let i = index">
+        <td>{{ i18n.stats(type) | translate }}</td>
+        <td>
+          <app-item-overview-stats-data
+            [type]="type"
+            [left]="stats.get(type)"
+          ></app-item-overview-stats-data>
+        </td>
+      </tr>
+    </table>
+    <div *ngIf="item.ability.id as abilityId" class="item-ability">
+      <h4>
+        {{ i18n.dict('weapon-abilities.' + abilityId + '.name') | translate }}
+      </h4>
+      <div [innerHTML]="service.getAbilityDesc(item, 1, 5)"></div>
+    </div>
+    <div class="item-material-required">
+      <app-item-view
+        *ngFor="let m of clickedItemMaterials"
+        class="item-summary-thumb"
+        category="materials"
+        [id]="m.info.id"
+        [rarity]="m.info.rarity"
+      ></app-item-view>
+    </div>
+  </ng-container>
+</app-item-grid-container>

@@ -7,18 +7,13 @@
   </div>
 </div>
 <div class="subpage-padding-x">
-  <app-weapon-info-list
+  <app-weapon-info-grid
     *ngIf="!selected; else form"
     [weapons]="weapons"
+    [clickText]="i18n.pModule('summary.info-click')"
+    [doubleClickText]="i18n.pModule('summary.add-double-click')"
     (doubleClicked)="select($event)"
-  >
-    <app-item-summary-not-select
-      not-select
-      [type]="i18n.pDict('weapon')"
-      [clickText]="i18n.pModule('summary.info-click')"
-      [doubleClickText]="i18n.pModule('summary.add-double-click')"
-    ></app-item-summary-not-select>
-  </app-weapon-info-list>
+  ></app-weapon-info-grid>
   <ng-template #form>
     <div class="add-form">
       <app-weapon-plan-form [weapon]="selectedWeapon"></app-weapon-plan-form>

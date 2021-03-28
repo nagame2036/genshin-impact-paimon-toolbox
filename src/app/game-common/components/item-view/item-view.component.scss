@@ -5,10 +5,6 @@
 
 .image-container {
   height: 100px;
-  @apply relative;
-  @apply flex;
-  @apply items-center;
-  @apply justify-items-center;
   @apply overflow-hidden;
   @apply rounded-t;
   @apply rounded-br-2xl;
@@ -23,22 +19,22 @@ $rarities: (
 );
 
 @each $rarity, $color in $rarities {
-  .background-#{$rarity} {
+  .rarity-#{$rarity} {
     background: $color;
   }
 }
 
 $elements: (
-  101: #3baeaf,
-  102: #ba9546,
-  103: #8d5abc,
-  105: #3e67af,
-  106: #c26544,
-  107: #76d5e4,
+  1: #3baeaf,
+  2: #ba9546,
+  3: #8d5abc,
+  5: #3e67af,
+  6: #c26544,
+  7: #76d5e4,
 );
 
 @each $element, $color in $elements {
-  .background-#{$element} {
+  .element-#{$element} {
     background: $color;
   }
 }

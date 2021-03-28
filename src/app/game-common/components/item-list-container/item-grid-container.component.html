@@ -1,0 +1,19 @@
+<div class="container">
+  <div
+    class="item-grid"
+    [style]="'grid-template-columns: repeat(auto-fill, ' + colWidth + 'px)'"
+  >
+    <ng-content></ng-content>
+  </div>
+  <div class="item-summary">
+    <ng-container *ngIf="hasSummary; else itemNotSelect">
+      <ng-content select="[item-summary]"></ng-content>
+    </ng-container>
+    <ng-template #itemNotSelect>
+      {{ i18n.module('item-not-selected.1') | paramTranslate: textParams }}
+      <br />
+      {{ i18n.module('item-not-selected.2') | paramTranslate: textParams }}
+      <img src="assets/images/stickers/3.webp" alt="item-not-selected" />
+    </ng-template>
+  </div>
+</div>
