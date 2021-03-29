@@ -30,8 +30,6 @@ export class SelectComponent implements OnChanges {
   @ViewChild('container')
   container!: SelectContainerComponent;
 
-  opened = false;
-
   constructor() {}
 
   get hover(): boolean {
@@ -52,8 +50,8 @@ export class SelectComponent implements OnChanges {
     const value = option.value;
     this.value = value;
     this.changeValueText(this.value);
+    setTimeout(() => (this.container.opened = false), 10);
     this.changed.emit(value);
-    setTimeout(() => (this.opened = false), 10);
   }
 
   changeValueText(value: any): void {

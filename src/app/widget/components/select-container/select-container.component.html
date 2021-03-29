@@ -27,9 +27,9 @@
     >
       keyboard_arrow_down
     </div>
-    <ng-template
-      [ngTemplateOutlet]="customDropdown || defaultDropdown"
-    ></ng-template>
+    <ng-container
+      *ngTemplateOutlet="customDropdown || defaultDropdown"
+    ></ng-container>
     <ng-template #defaultDropdown>
       <ul
         *ngIf="opened"
