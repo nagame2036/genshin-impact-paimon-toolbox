@@ -34,6 +34,7 @@ describe('WeaponPlanFormComponent', () => {
         ability: {
           id: 1,
           params: [],
+          descValues: [],
         },
       },
       progress: {

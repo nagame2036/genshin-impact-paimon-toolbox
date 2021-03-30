@@ -18,7 +18,6 @@ import {MaterialService} from '../../material/services/material.service';
 import {MaterialType} from '../../material/models/material-type.enum';
 import {TranslateService} from '@ngx-translate/core';
 import {allRefineRanks, RefineRank} from '../models/weapon-progress.model';
-import {allWeaponAbilities} from '../models/weapon-ability.model';
 import {I18n} from '../../widget/models/i18n.model';
 
 /**
@@ -87,34 +86,21 @@ export class WeaponInfoService {
     return result;
   }
 
-  getAbilityDesc(
-    {ability: {id, params}}: WeaponInfo,
-    refineStart: RefineRank,
-    refineEnd: RefineRank,
-  ): string {
-    const ability = allWeaponAbilities[id];
-    if (!ability) {
-      return '';
-    }
-    const start = Math.max(refineStart, allRefineRanks[0]) - 1;
-    const end = Math.min(refineEnd, params.length);
-    const paramList = params.map(p => ability.desc(p));
-    const paramArray: string[][] = [];
-    for (let i = 0; i < paramList[0].length; i++) {
-      const paramFields = [];
-      for (let j = start; j < end; j++) {
-        paramFields.push(paramList[j][i]);
-      }
-      paramArray.push(paramFields);
-    }
-    const paramTexts = paramArray.map(it => {
-      const p = new Set(it).size <= 1 ? it[0] : ' (' + it.join(' / ') + ') ';
-      return `<b>${p}</b>`;
-    });
+  getAbilityDesc(info: WeaponInfo, start: RefineRank, end: RefineRank): string {
+    const {id, descValues} = info.ability;
     const key = this.i18n.dict(`weapon-abilities.${id}.desc`);
-    let text: string = this.translator.instant(key);
-    paramTexts.forEach(p => (text = text.replace('{}', p)));
-    return text;
+    let desc: string = this.translator.instant(key);
+    const left = Math.max(start, allRefineRanks[0]) - 1;
+    const right = Math.min(end, descValues.length);
+    for (let i = 0; i < descValues[0].length; i++) {
+      const fields = [];
+      for (let j = left; j < right; j++) {
+        fields.push(descValues[j][i]);
+      }
+      const param = right - left <= 1 ? fields[0] : ` (${fields.join(' / ')}) `;
+      desc = desc.replace('{}', `<b>${param}</b>`);
+    }
+    return desc;
   }
 
   getMaterials(weapon: WeaponInfo): MaterialDetail[] {

@@ -37,6 +37,7 @@ describe('WeaponRequirementService', () => {
         ability: {
           id: 1,
           params: [],
+          descValues: [],
         },
       },
       progress: {
@@ -83,6 +84,7 @@ describe('WeaponRequirementService', () => {
         ability: {
           id: 1,
           params: [],
+          descValues: [],
         },
       },
       progress: {
@@ -123,6 +125,7 @@ describe('WeaponRequirementService', () => {
         ability: {
           id: 1,
           params: [],
+          descValues: [],
         },
       },
       progress: {
