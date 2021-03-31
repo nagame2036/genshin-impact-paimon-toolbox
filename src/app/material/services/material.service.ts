@@ -13,6 +13,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
 import {RequireDetail} from '../models/requirement-detail.model';
+import {Item} from '../../game-common/models/item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -39,18 +40,28 @@ export class MaterialService {
     this.updateDetails();
   }
 
-  getHighestRarityByIdOrGroupId(id: number): MaterialDetail | null {
-    const group = this.grouped.get(id);
-    if (!group) {
-      return this.materials.get(id) ?? null;
-    }
-    let max: MaterialDetail = group[0];
-    for (const m of group) {
-      if (m.info.rarity > max.info.rarity) {
-        max = m;
+  getRequireMaterials(ids: number[], order: MaterialType[]): MaterialDetail[] {
+    const result = [];
+    for (const id of new Set(ids)) {
+      const group = this.grouped.get(id);
+      if (!group) {
+        const material = this.materials.get(id);
+        if (material) {
+          result.push(material);
+        }
+        continue;
+      }
+      let max: MaterialDetail = group[0];
+      for (const m of group) {
+        if (m.info.rarity > max.info.rarity) {
+          max = m;
+        }
+      }
+      if (max) {
+        result.push(max);
       }
     }
-    return max ?? null;
+    return result.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
   }
 
   getRequireDetails(
@@ -102,8 +113,8 @@ export class MaterialService {
     this.quantities.change(change);
   }
 
-  removeAllRequire(type: ItemType, keys: number[]): void {
-    this.requirements.removeAll(type, keys);
+  removeAllRequire(type: ItemType, items: Item<any>[]): void {
+    this.requirements.removeAll(type, items);
   }
 
   private initDetails(): void {

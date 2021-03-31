@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, of, ReplaySubject, throwError, zip} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {WeaponInfoService} from './weapon-info.service';
@@ -7,78 +7,48 @@ import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
-import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {generateItemId} from '../../game-common/utils/generate-id';
 import {MaterialDetail} from '../../material/models/material.model';
 import {CharacterStatsValue} from '../../character/models/character-stats.model';
 import {allAscensions} from '../../game-common/models/ascension.type';
 import {maxItemLevel} from '../../game-common/models/level.type';
-import {RefineRank} from '../models/weapon-progress.model';
+import {RefineRank, WeaponProgress} from '../models/weapon-progress.model';
+import {ItemService} from '../../game-common/services/item.service';
+import {WeaponPlan} from '../models/weapon-plan.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponService {
-  private weapons = new Map<number, Weapon>();
+export class WeaponService extends ItemService<Weapon> {
+  protected type = ItemType.WEAPON;
 
   readonly infos = [...this.information.infos.values()];
 
-  private statsTypeCache = new Map<number, StatsType[]>();
-
-  private updated = new ReplaySubject(1);
-
   constructor(
     private information: WeaponInfoService,
-    private progressor: WeaponProgressService,
+    private progresses: WeaponProgressService,
     private planner: WeaponPlanner,
     private materials: MaterialService,
-    private logger: NGXLogger,
+    logger: NGXLogger,
   ) {
-    zip(this.progressor.ready, this.planner.ready).subscribe(_ => {
-      const weapons = this.weapons;
-      const infos = this.information.infos;
-      const inProgress = this.progressor.inProgress;
-      const plans = this.planner.plans;
-      for (const [id, progress] of inProgress) {
-        const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
-        if (info && plan) {
-          weapons.set(id, {info, progress, plan});
-        }
-      }
-      this.logger.info('loaded weapons', weapons);
-      weapons.forEach(it => this.planner.updateRequire(it));
-      this.logger.info('loaded the requirements of all weapons');
-      this.updated.next();
-    });
+    super(progresses, planner, logger);
   }
 
   create(info: WeaponInfo): WeaponOverview {
-    const id = generateItemId(ItemType.WEAPON);
-    const progress = this.progressor.create(info, id);
-    const plan = this.planner.create(info, id);
-    const weapon = {info, progress, plan};
+    const id = generateItemId(this.type);
+    const weapon = this.createItem(info, id) as Weapon;
     return this.information.getOverview(weapon);
   }
 
   get(id: number): Observable<Weapon> {
-    return this.updated.pipe(
-      switchMap(_ => {
-        const weapon = this.weapons.get(id);
-        this.logger.info('sent weapon', weapon);
-        return weapon ? of(weapon) : throwError('weapon-not-found');
-      }),
-    );
+    return this.doGet(id).pipe(map(it => it as Weapon));
   }
 
   getRequireMaterials(weapon: WeaponInfo): MaterialDetail[] {
-    return this.information.getMaterials(weapon);
-  }
-
-  getRequireDetails(weapon: Weapon): Observable<RequireDetail[]> {
-    return this.planner.getRequireDetails(weapon);
+    return this.information.getRequireMaterials(weapon);
   }
 
   getOverview(weapon: Weapon): WeaponOverview {
@@ -91,20 +61,6 @@ export class WeaponService {
     return this.information.getStatsValue(weapon, level);
   }
 
-  getStatsTypes(weaponId: number): StatsType[] {
-    const existing = this.statsTypeCache.get(weaponId);
-    if (existing) {
-      return existing;
-    }
-    const info = this.information.infos.get(weaponId);
-    if (!info) {
-      return [];
-    }
-    const types = this.getStatsAtMaxLevel(info).getTypes();
-    this.statsTypeCache.set(weaponId, types);
-    return types;
-  }
-
   getAbilityDesc(
     weapon: WeaponInfo,
     refineStart: RefineRank,
@@ -115,32 +71,31 @@ export class WeaponService {
 
   getAll(): Observable<WeaponOverview[]> {
     return this.updated.pipe(
-      map(_ => [...this.weapons.values()].map(it => this.getOverview(it))),
-      tap(weapons => this.logger.info('sent weapons', weapons)),
+      map(_ => {
+        const items = [...this.items.values()];
+        return items.map(it => this.getOverview(it as Weapon));
+      }),
     );
   }
 
-  update(weapon: Weapon): void {
-    const subActions = [
-      this.progressor.update(weapon),
-      this.planner.update(weapon),
-    ];
-    forkJoin(subActions).subscribe(_ => {
-      this.logger.info('updated weapon', weapon);
-      this.weapons.set(weapon.progress.id, weapon);
-      this.updated.next();
-    });
+  protected initItems(): void {
+    const items = this.items;
+    const infos = this.information.infos;
+    const plans = this.planner.plans;
+    for (const [id, p] of this.progresses.progresses) {
+      const progress = p as WeaponProgress;
+      const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
+      if (info && plan) {
+        items.set(id, {info, progress, plan: plan as WeaponPlan});
+      }
+    }
   }
 
-  removeAll(list: Weapon[]): void {
-    const subActions = [
-      this.progressor.removeAll(list),
-      this.planner.removeAll(list),
-    ];
-    forkJoin(subActions).subscribe(_ => {
-      this.logger.info('removed weapons', list);
-      list.forEach(weapon => this.weapons.delete(weapon.progress.id));
-      this.updated.next();
-    });
+  protected doGetStatsTypes(id: number): StatsType[] {
+    const info = this.information.infos.get(id);
+    if (!info) {
+      return [];
+    }
+    return this.getStatsAtMaxLevel(info).getTypes();
   }
 }

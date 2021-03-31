@@ -38,8 +38,10 @@ export class WeaponRequirementService {
   ) {}
 
   requirement(weapon: Weapon): MaterialRequireList {
-    const subRequirements = [this.ascension(weapon), this.levelup(weapon)];
-    const req = new MaterialRequireList(subRequirements);
+    const req = new MaterialRequireList([
+      this.ascension(weapon),
+      this.levelup(weapon),
+    ]);
     this.logger.info('sent requirements of weapon', weapon, req);
     return req;
   }
@@ -48,28 +50,19 @@ export class WeaponRequirementService {
     const {progress, plan} = weapon;
     const {rarity, materials} = weapon.info;
     const {domain, elite, mob} = materials;
-    const requirement = new MaterialRequireList();
+    const req = new MaterialRequireList();
     const label = this.ascensionLabel;
     const start = progress.ascension;
     const end = plan.ascension;
     const mark = this.generateMark(plan, label, `★${start}`, `★${end}`);
-    const ascensionSlice = this.ascensions[rarity].slice(start, end);
-    for (const ascension of ascensionSlice) {
-      const {
-        mora: moraCost,
-        domain: domainCost,
-        elite: eliteCost,
-        mob: mobCost,
-      } = ascension;
-      requirement.mark(mora.id, moraCost, mark);
-      const domainItem = this.materials.get(domain, domainCost.rarity);
-      requirement.mark(domainItem.id, domainCost.amount, mark);
-      const eliteItem = this.materials.get(elite, eliteCost.rarity);
-      requirement.mark(eliteItem.id, eliteCost.amount, mark);
-      const mobItem = this.materials.get(mob, mobCost.rarity);
-      requirement.mark(mobItem.id, mobCost.amount, mark);
+    const costs = this.ascensions[rarity].slice(start, end);
+    for (const cost of costs) {
+      req.mark(mora.id, cost.mora, mark);
+      this.materials.markGroup(req, domain, cost.domain, mark);
+      this.materials.markGroup(req, elite, cost.elite, mark);
+      this.materials.markGroup(req, mob, cost.mob, mark);
     }
-    return requirement;
+    return req;
   }
 
   private levelup(weapon: Weapon): MaterialRequireList {

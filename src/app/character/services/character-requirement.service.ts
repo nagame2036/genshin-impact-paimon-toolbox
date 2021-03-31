@@ -37,11 +37,10 @@ export class CharacterRequirementService {
   ) {}
 
   requirement(character: Character): MaterialRequireList {
-    const subRequirements = [
+    const req = new MaterialRequireList([
       this.ascension(character),
       this.levelup(character),
-    ];
-    const req = new MaterialRequireList(subRequirements);
+    ]);
     this.logger.info('sent requirements', character, req);
     return req;
   }
@@ -49,23 +48,21 @@ export class CharacterRequirementService {
   private ascension(character: Character): MaterialRequireList {
     const {info, progress, plan} = character;
     const {boss, gem, local, mob} = info.materials;
-    const requirement = new MaterialRequireList();
+    const req = new MaterialRequireList();
     const label = this.ascensionLabel;
     const start = progress.ascension;
     const goal = plan.ascension;
     const mark = this.generateMark(plan, label, `★${start}`, `★${goal}`);
-    for (const ascension of this.ascensions.slice(start, goal)) {
-      requirement.mark(mora.id, ascension.mora, mark);
+    for (const cost of this.ascensions.slice(start, goal)) {
+      req.mark(mora.id, cost.mora, mark);
       if (boss) {
-        requirement.mark(boss, ascension.boss, mark);
+        req.mark(boss, cost.boss, mark);
       }
-      const gemItem = this.materials.get(gem, ascension.gem.rarity);
-      requirement.mark(gemItem.id, ascension.gem.amount, mark);
-      requirement.mark(local, ascension.local, mark);
-      const mobItem = this.materials.get(mob, ascension.mob.rarity);
-      requirement.mark(mobItem.id, ascension.mob.amount, mark);
+      this.materials.markGroup(req, gem, cost.gem, mark);
+      req.mark(local, cost.local, mark);
+      this.materials.markGroup(req, mob, cost.mob, mark);
     }
-    return requirement;
+    return req;
   }
 
   private levelup(character: Character): MaterialRequireList {

@@ -29,8 +29,7 @@ export class TalentRequirementService {
     character: Character,
     talents: TalentInfo[],
   ): MaterialRequireList {
-    const subRequirements = [this.levelup(character, talents)];
-    const req = new MaterialRequireList(subRequirements);
+    const req = new MaterialRequireList([this.levelup(character, talents)]);
     this.logger.info('sent requirements', talents, req);
     return req;
   }
@@ -43,33 +42,31 @@ export class TalentRequirementService {
     {progress, plan}: Character,
     talents: TalentInfo[],
   ): MaterialRequireList {
-    const requirement = new MaterialRequireList();
+    const req = new MaterialRequireList();
     for (const {id, materials} of talents) {
       if (!materials) {
         continue;
       }
-      const {domain, mob, boss, event} = materials;
+      const {domain: domainList, mob, boss, event} = materials;
 
       // talent level starts with 1 not 0, so should minus 1
       const start = Math.max(0, progress.talents[id] - 1);
       const goal = Math.max(start, plan.talents[id] - 1);
       const label = this.getLabel(id);
       const mark = generateMark(plan, label, start, goal);
-      const domainLength = domain.length;
+      const domainLength = domainList.length;
       for (let i = start; i < goal; i++) {
         const cost = this.levels[i];
-        requirement.mark(mora.id, cost.mora, mark);
-        const domainGroupIndex = i % domainLength;
-        const domainGroup = domain[domainGroupIndex];
-        const domainItem = this.materials.get(domainGroup, cost.domain.rarity);
-        requirement.mark(domainItem.id, cost.domain.amount, mark);
-        const mobItem = this.materials.get(mob, cost.mob.rarity);
-        requirement.mark(mobItem.id, cost.mob.amount, mark);
-        requirement.mark(boss, cost.boss ?? 0, mark);
-        requirement.mark(event, cost.event ?? 0, mark);
+        req.mark(mora.id, cost.mora, mark);
+        const domainIndex = i % domainLength;
+        const domain = domainList[domainIndex];
+        this.materials.markGroup(req, domain, cost.domain, mark);
+        this.materials.markGroup(req, mob, cost.mob, mark);
+        req.mark(boss, cost.boss ?? 0, mark);
+        req.mark(event, cost.event ?? 0, mark);
       }
     }
-    return requirement;
+    return req;
   }
 }
 

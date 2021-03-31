@@ -13,7 +13,7 @@ import localSpecialtyMaterials from '../../../data/materials/local-specialties.j
 import {processExpMaterials, processExpRequirement} from '../utils/exp-details';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {RequireMark} from '../models/material-require-mark.model';
-import {Rarity} from '../../game-common/models/rarity.type';
+import {MaterialGroupCost} from '../models/material-group-cost.model';
 
 type WeekdayGroup = {[group: number]: {weekday?: number}};
 
@@ -45,10 +45,18 @@ export class MaterialInfoService {
     processExpRequirement(weaponExpMaterials, req, mark);
   }
 
-  get(group: number, rarity: Rarity): MaterialInfo {
-    const grouped = this.grouped.get(group) ?? [];
+  markGroup(
+    list: MaterialRequireList,
+    groupId: number,
+    {rarity, amount}: MaterialGroupCost,
+    mark: RequireMark,
+  ): void {
+    const grouped = this.grouped.get(groupId) ?? [];
     const index = grouped?.findIndex(it => it.rarity === rarity);
-    return grouped[index];
+    const material = grouped[index];
+    if (material) {
+      list.mark(material.id, amount, mark);
+    }
   }
 
   private initTyped(): void {

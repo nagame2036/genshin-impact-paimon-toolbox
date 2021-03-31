@@ -4,6 +4,7 @@ import {ReplaySubject} from 'rxjs';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
+import {Item} from '../../game-common/models/item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -56,14 +57,15 @@ export class MaterialRequirementService {
     }
   }
 
-  removeAll(type: ItemType, keys: number[]): void {
+  removeAll(type: ItemType, items: Item<any>[]): void {
     const typeReq = this.typed.get(type);
     if (typeReq) {
-      for (const key of keys) {
-        typeReq.remove(key);
-        this.total.remove(key);
+      for (const item of items) {
+        const id = item.plan.id;
+        typeReq.remove(id);
+        this.total.remove(id);
       }
-      this.logger.info('remove all requirements of items', type, keys);
+      this.logger.info('remove all requirements of items', type, items);
       this.changes.next(this.total);
     }
   }

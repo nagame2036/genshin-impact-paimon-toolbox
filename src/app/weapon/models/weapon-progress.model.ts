@@ -1,9 +1,11 @@
 import {Ascension} from '../../game-common/models/ascension.type';
+import {ItemProgress} from '../../game-common/models/item.model';
+import {Weapon} from './weapon.model';
 
 /**
  * Represents the levelup progress of a weapon.
  */
-export interface WeaponProgress {
+export interface WeaponProgress extends ItemProgress<Weapon> {
   id: number;
 
   weaponId: number;

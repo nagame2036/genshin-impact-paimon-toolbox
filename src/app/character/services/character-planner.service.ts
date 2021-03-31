@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {CharacterPlan} from '../models/character-plan.model';
-import {map, tap} from 'rxjs/operators';
-import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {CharacterRequirementService} from './character-requirement.service';
 import {TalentRequirementService} from './talent-requirement.service';
 import {Character} from '../models/character.model';
@@ -15,37 +12,25 @@ import {MaterialService} from '../../material/services/material.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {TalentInfoService} from './talent-info.service';
+import {ItemPlanService} from '../../game-common/services/item-plan-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterPlanner {
-  private readonly type = ItemType.CHARACTER;
-
+export class CharacterPlanner extends ItemPlanService<Character> {
   private readonly i18n = I18n.create('game-common');
 
-  private readonly store = 'character-plans';
-
-  readonly plans = new Map<number, CharacterPlan>();
-
-  readonly ready = new ReplaySubject(1);
+  protected type = ItemType.CHARACTER;
 
   constructor(
     private characterReq: CharacterRequirementService,
     private talentReq: TalentRequirementService,
     private talentInfos: TalentInfoService,
-    private materials: MaterialService,
-    private database: NgxIndexedDBService,
-    private logger: NGXLogger,
+    materials: MaterialService,
+    database: NgxIndexedDBService,
+    logger: NGXLogger,
   ) {
-    this.database.getAll(this.store).subscribe(plans => {
-      this.logger.info('fetched character plans', plans);
-      for (const p of plans) {
-        this.plans.set(p.id, p);
-      }
-      this.ready.next();
-      this.ready.complete();
-    });
+    super('character-plans', materials, database, logger);
   }
 
   create(info: CharacterInfo, id: number): CharacterPlan {
@@ -54,51 +39,22 @@ export class CharacterPlanner {
     return {id, ascension: 0, level: 1, talents};
   }
 
-  updateRequire(character: Character): void {
-    const talents = this.talentInfos.getAll(character.info.talentsUpgradable);
-    const subRequirement = [
-      this.characterReq.requirement(character),
-      this.talentReq.requirement(character, talents),
+  protected getRequirements(item: Character): MaterialRequireList[] {
+    const talents = this.talentInfos.getAll(item.info.talentsUpgradable);
+    return [
+      this.characterReq.requirement(item),
+      this.talentReq.requirement(item, talents),
     ];
-    const req = new MaterialRequireList(subRequirement);
-    this.materials.updateRequire(this.type, character.plan.id, req);
   }
 
-  getRequireDetails(character: Character): Observable<RequireDetail[]> {
-    const texts = [
+  protected getRequireLabels(item: Character): string[] {
+    const labels = [
       this.i18n.module('total-requirement'),
       this.characterReq.levelupLabel,
     ];
-    character.info.talentsUpgradable.forEach(it => {
-      texts.push(this.talentReq.getLabel(it));
+    item.info.talentsUpgradable.forEach(it => {
+      labels.push(this.talentReq.getLabel(it));
     });
-    return this.materials
-      .getRequireDetails(this.type, character.plan.id, texts)
-      .pipe(
-        tap(req => this.logger.info('sent require detail', character, req)),
-      );
-  }
-
-  update(character: Character): Observable<void> {
-    const plan = character.plan;
-    return this.database.update(this.store, plan).pipe(
-      map(_ => {
-        this.logger.info('updated character plan', plan);
-        this.plans.set(plan.id, plan);
-        this.updateRequire(character);
-      }),
-    );
-  }
-
-  removeAll(characters: Character[]): Observable<void> {
-    const planIds = characters.map(it => it.plan.id);
-    const remove = planIds.map(it => this.database.delete(this.store, it));
-    return forkJoin(remove).pipe(
-      map(_ => {
-        this.logger.info('removed character plans', characters);
-        planIds.forEach(it => this.plans.delete(it));
-        this.materials.removeAllRequire(this.type, planIds);
-      }),
-    );
+    return labels;
   }
 }

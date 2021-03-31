@@ -1,21 +1,12 @@
 import {Injectable} from '@angular/core';
-import {
-  combineLatest,
-  forkJoin,
-  Observable,
-  of,
-  ReplaySubject,
-  throwError,
-  zip,
-} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
-import {map, switchMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
-import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import {TalentInfoService} from './talent-info.service';
 import {allAscensions} from '../../game-common/models/ascension.type';
@@ -23,62 +14,34 @@ import {CharacterStatsValue} from '../models/character-stats.model';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 import {MaterialDetail} from '../../material/models/material.model';
 import {maxItemLevel} from '../../game-common/models/level.type';
+import {ItemService} from '../../game-common/services/item.service';
+import {CharacterProgress} from '../models/character-progress.model';
+import {CharacterPlan} from '../models/character-plan.model';
+import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterService {
-  private characters = new Map<number, Character>();
-
-  private statsTypeCache = new Map<number, StatsType[]>();
-
-  private updated = new ReplaySubject(1);
+export class CharacterService extends ItemService<Character> {
+  protected type = ItemType.CHARACTER;
 
   constructor(
     private information: CharacterInfoService,
-    private progressor: CharacterProgressService,
+    private progresses: CharacterProgressService,
     private planner: CharacterPlanner,
     private talents: TalentInfoService,
-    private logger: NGXLogger,
+    logger: NGXLogger,
   ) {
-    zip(progressor.ready, planner.ready).subscribe(_ => {
-      const characters = this.characters;
-      const infos = information.infos;
-      const inProgress = progressor.inProgress;
-      const plans = planner.plans;
-      for (const [id, progress] of inProgress) {
-        const [info, plan] = [infos.get(id), plans.get(id)];
-        if (info && plan) {
-          characters.set(id, {info, progress, plan});
-        }
-      }
-      this.logger.info('loaded characters', characters);
-      characters.forEach(character => this.planner.updateRequire(character));
-      this.logger.info('loaded the requirements of all characters');
-      this.updated.next();
-    });
+    super(progresses, planner, logger);
   }
 
   create(info: CharacterInfo): CharacterOverview {
-    const id = info.id;
-    const progress = this.progressor.create(info, id);
-    const plan = this.planner.create(info, id);
-    const character = {info, progress, plan};
+    const character = this.createItem(info, info.id) as Character;
     return this.getOverview(character);
   }
 
   get(id: number): Observable<Character> {
-    return this.updated.pipe(
-      switchMap(_ => {
-        const character = this.characters.get(id);
-        this.logger.info('sent character', character);
-        return character ? of(character) : throwError('character-not-found');
-      }),
-    );
-  }
-
-  getRequireDetails(character: Character): Observable<RequireDetail[]> {
-    return this.planner.getRequireDetails(character);
+    return this.doGet(id).pipe(map(it => it as Character));
   }
 
   getOverview(character: Character): CharacterOverview {
@@ -91,32 +54,16 @@ export class CharacterService {
     return this.information.getStatsValue(character, level);
   }
 
-  getStatsTypes(characterId: number): StatsType[] {
-    const existing = this.statsTypeCache.get(characterId);
-    if (existing) {
-      return existing;
-    }
-    const info = this.information.infos.get(characterId);
-    if (!info) {
-      return [];
-    }
-    const types = this.getStatsAtMaxLevel(info).getTypes();
-    this.statsTypeCache.set(characterId, types);
-    return types;
-  }
-
   getRequireMaterials(character: CharacterInfo): MaterialDetail[] {
-    return this.information.getMaterials(character);
+    return this.information.getRequireMaterials(character);
   }
 
   getAll(): Observable<CharacterOverview[]> {
     return combineLatest([this.updated, this.information.ignoredIds()]).pipe(
       map(([, ids]) => {
-        const list = [...this.characters.values()]
-          .filter(it => !ids.includes(it.info.id))
-          .map(it => this.getOverview(it));
-        this.logger.info('sent characters', list);
-        return list;
+        return [...this.items.values()]
+          .filter(it => !ids.has(it.info.id))
+          .map(it => this.getOverview(it as Character));
       }),
     );
   }
@@ -124,42 +71,45 @@ export class CharacterService {
   getAllNonParty(): Observable<CharacterInfo[]> {
     return combineLatest([this.updated, this.information.ignoredIds()]).pipe(
       map(([, ids]) => {
-        const nonParty = [...this.progressor.noProgress.values()];
-        const list = nonParty.filter(it => !ids.includes(it.id));
-        this.logger.info('sent non-party characters', list);
-        return list;
+        const progress = this.progresses.progresses;
+        const infos = [...this.information.infos.values()];
+        return infos.filter(it => !(ids.has(it.id) || progress.has(it.id)));
       }),
     );
   }
 
-  update(character: Character): void {
-    const characters = this.updateSame(character);
-    const subActions = [];
-    for (const c of characters) {
-      subActions.push(this.progressor.update(c));
-      subActions.push(this.planner.update(c));
+  protected initItems(): void {
+    const items = this.items;
+    const infos = this.information.infos;
+    const plans = this.planner.plans;
+    for (const [id, progressOrigin] of this.progresses.progresses) {
+      const [info, planOrigin] = [infos.get(id), plans.get(id)];
+      if (info && planOrigin) {
+        const progress = progressOrigin as CharacterProgress;
+        const plan = planOrigin as CharacterPlan;
+        items.set(id, {info, progress, plan});
+      }
     }
-    forkJoin(subActions).subscribe(_ => {
-      this.logger.info('updated characters', characters);
-      characters.forEach(c => this.characters.set(c.progress.id, c));
-      this.updated.next();
-    });
   }
 
-  removeAll(list: Character[]): void {
-    const characters: Character[] = [];
-    for (const c of list) {
-      characters.push(...this.sameLevels(c));
+  protected doGetStatsTypes(id: number): StatsType[] {
+    const info = this.information.infos.get(id);
+    if (!info) {
+      return [];
     }
-    const subActions = [
-      this.progressor.removeAll(characters),
-      this.planner.removeAll(characters),
-    ];
-    forkJoin(subActions).subscribe(_ => {
-      this.logger.info('removed characters', characters);
-      characters.forEach(it => this.characters.delete(it.progress.id));
-      this.updated.next();
-    });
+    return this.getStatsAtMaxLevel(info).getTypes();
+  }
+
+  protected getItemsNeedUpdate(item: Character): Character[] {
+    return this.updateSame(item);
+  }
+
+  protected getItemsNeedRemove(items: Character[]): Character[] {
+    const characters = [];
+    for (const item of items) {
+      characters.push(...this.sameLevels(item));
+    }
+    return characters;
   }
 
   private updateSame(character: Character): Character[] {
@@ -198,15 +148,15 @@ export class CharacterService {
       return [target];
     }
     for (const id of ids) {
-      const character = this.characters.get(id);
+      const character = this.items.get(id);
       if (character) {
-        results.push(character);
+        results.push(character as Character);
         continue;
       }
       const info = this.information.infos.get(id);
       if (info) {
         const newCharacter = this.create(info);
-        this.characters.set(newCharacter.progress.id, newCharacter);
+        this.items.set(newCharacter.progress.id, newCharacter);
         results.push(newCharacter);
       }
     }

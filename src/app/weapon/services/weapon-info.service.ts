@@ -103,20 +103,8 @@ export class WeaponInfoService {
     return desc;
   }
 
-  getMaterials(weapon: WeaponInfo): MaterialDetail[] {
-    const ids = [];
-    const weaponMaterials = weapon.materials;
-    ids.push(weaponMaterials.domain);
-    ids.push(weaponMaterials.elite);
-    ids.push(weaponMaterials.mob);
-    const result = [];
-    for (const id of new Set(ids)) {
-      const material = this.materials.getHighestRarityByIdOrGroupId(id);
-      if (material) {
-        result.push(material);
-      }
-    }
-    const order = this.materialOrder;
-    return result.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
+  getRequireMaterials({materials}: WeaponInfo): MaterialDetail[] {
+    const ids = [materials.domain, materials.elite, materials.mob];
+    return this.materials.getRequireMaterials(ids, this.materialOrder);
   }
 }

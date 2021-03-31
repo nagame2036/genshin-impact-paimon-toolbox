@@ -86,15 +86,17 @@ export class CharacterInfoService {
       .subscribe(options => this.options$.next(options));
   }
 
-  ignoredIds(): Observable<number[]> {
+  ignoredIds(): Observable<Set<number>> {
     return this.options.pipe(
       first(),
       map(options => {
         const genderOption = options.travelerGender;
-        const shouldRemove: number[] = [];
+        const shouldRemove = new Set<number>();
         for (const [gender, travelers] of this.travelersGendered) {
           if (gender !== genderOption) {
-            shouldRemove.push(...travelers);
+            for (const t of travelers) {
+              shouldRemove.add(t);
+            }
           }
         }
         return shouldRemove;
@@ -138,7 +140,7 @@ export class CharacterInfoService {
     return result;
   }
 
-  getMaterials(character: CharacterInfo): MaterialDetail[] {
+  getRequireMaterials(character: CharacterInfo): MaterialDetail[] {
     const ids = [];
     for (const t of this.talents.getAll(character.talentsUpgradable)) {
       const materials = t.materials;
@@ -154,15 +156,7 @@ export class CharacterInfoService {
     }
     ids.push(characterMaterials.gem);
     ids.push(characterMaterials.local);
-    const result = [];
-    for (const id of new Set(ids)) {
-      const material = this.materials.getHighestRarityByIdOrGroupId(id);
-      if (material) {
-        result.push(material);
-      }
-    }
-    const order = this.materialOrder;
-    return result.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
+    return this.materials.getRequireMaterials(ids, this.materialOrder);
   }
 
   changeTravelerGender(travelerGender: Gender): void {

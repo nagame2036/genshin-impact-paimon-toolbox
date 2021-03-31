@@ -7,15 +7,15 @@ import {
   CharacterStatsCurveAscension,
   CharacterStatsInfo,
 } from './character-stats.model';
+import {ItemInfo} from '../../game-common/models/item.model';
+import {Character} from './character.model';
 
 export const allCharacterRarities: Rarity[] = [5, 4];
 
 /**
  * Represents the game data info of a character.
  */
-export interface CharacterInfo {
-  id: number;
-
+export interface CharacterInfo extends ItemInfo<Character> {
   rarity: Rarity;
 
   weapon: WeaponType;
