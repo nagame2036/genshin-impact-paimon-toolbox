@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MaterialRequirementDialogComponent} from './material-requirement-dialog.component';
+import {MaterialDetailDialogComponent} from './material-detail-dialog.component';
 import {InventoryModule} from '../../../inventory/inventory.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
-describe('MaterialRequirementDialogComponent', () => {
-  let component: MaterialRequirementDialogComponent;
-  let fixture: ComponentFixture<MaterialRequirementDialogComponent>;
+describe('MaterialDetailDialogComponent', () => {
+  let component: MaterialDetailDialogComponent;
+  let fixture: ComponentFixture<MaterialDetailDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MaterialRequirementDialogComponent],
+      declarations: [MaterialDetailDialogComponent],
       imports: [InventoryModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MaterialRequirementDialogComponent);
+    fixture = TestBed.createComponent(MaterialDetailDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

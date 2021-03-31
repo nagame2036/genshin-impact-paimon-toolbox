@@ -1,60 +1,60 @@
-<ng-container *ngIf="items">
-  <span *ngIf="items.length > 0" class="title">
-    {{ i18n.module(subtitle) | translate }}
-  </span>
-  <div class="item-list">
-    <div
-      *ngFor="let item of items; trackBy: trackItem"
-      class="detail-container"
-    >
-      <app-item-view
-        category="materials"
-        [width]="138"
-        [id]="item.info.id"
-        [rarity]="item.info.rarity || 1"
+<ng-container *ngFor="let items of materials">
+  <app-form-field *ngIf="items.materials.length > 0">
+    <span class="title" form-label>
+      {{ i18n.module(items.type) | translate }}
+    </span>
+    <div class="item-list">
+      <div
+        *ngFor="let item of items.materials; trackBy: trackItem"
+        class="detail-container"
       >
-      </app-item-view>
-      <button
-        *ngIf="showCostDetails"
-        class="cost-detail-btn"
-        (click)="requirementDialog.open(item)"
-      >
-        <span class="material-icons"> info </span>
-      </button>
-      <div class="detail">
-        <app-form-field>
-          <span form-label>
-            {{ i18n.module('need') | translate }}
-          </span>
-          {{ item.need | number: '1.0-0' }}
-        </app-form-field>
-        <app-form-field [ngStyle]="{color: item.overflow ? 'gray' : 'red'}">
-          <span form-label>
-            {{ i18n.module(item.overflow ? 'overflow' : 'lack') | translate }}
-          </span>
-          {{ item.lack | number: '1.0-0' }}
-        </app-form-field>
-        <app-text-field
-          [value]="(item.have | number: '1.0-0') || '0'"
-          [disabled]="item.readonly"
-          (changed)="correct(item, $event)"
+        <app-item-view
+          category="materials"
+          [width]="138"
+          [id]="item.info.id"
+          [rarity]="item.info.rarity || 1"
         >
-          <span form-label>
-            {{ i18n.module('have') | translate }}
-          </span>
-        </app-text-field>
-        <app-ring-button
-          class="craft-btn"
-          [disabled]="notCraftable(item)"
-          (clicked)="craftDialog.open(item)"
+        </app-item-view>
+        <button
+          *ngIf="!hiddenDetail"
+          class="cost-detail-btn"
+          (click)="detailDialog.open(item)"
         >
-          {{ getCraftBtnText(item) | translate }}
-        </app-ring-button>
+          <span class="material-icons"> info </span>
+        </button>
+        <div class="detail">
+          <app-form-field>
+            <span form-label>
+              {{ i18n.module('need') | translate }}
+            </span>
+            {{ item.need | number: '1.0-0' }}
+          </app-form-field>
+          <app-form-field [ngStyle]="{color: item.overflow ? 'gray' : 'red'}">
+            <span form-label>
+              {{ i18n.module(item.overflow ? 'overflow' : 'lack') | translate }}
+            </span>
+            {{ item.lack | number: '1.0-0' }}
+          </app-form-field>
+          <app-text-field
+            [value]="(item.have | number: '1.0-0') || '0'"
+            [disabled]="item.readonly"
+            (changed)="correct(item, $event)"
+          >
+            <span form-label>
+              {{ i18n.module('have') | translate }}
+            </span>
+          </app-text-field>
+          <app-ring-button
+            class="craft-btn"
+            [disabled]="notCraftable(item)"
+            (clicked)="craftDialog.open(item)"
+          >
+            {{ getCraftBtnText(item) | translate }}
+          </app-ring-button>
+        </div>
       </div>
     </div>
-  </div>
+  </app-form-field>
 </ng-container>
-<app-material-requirement-dialog
-  #requirementDialog
-></app-material-requirement-dialog>
+<app-material-detail-dialog #detailDialog></app-material-detail-dialog>
 <app-craft-dialog #craftDialog></app-craft-dialog>

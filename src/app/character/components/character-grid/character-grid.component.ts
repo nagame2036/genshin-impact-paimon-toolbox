@@ -10,7 +10,7 @@ import {CharacterOverview} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {toggleItem} from '../../../shared/utils/collections';
 import {CharacterService} from '../../services/character.service';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 import {ImageService} from '../../../image/services/image.service';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterViewService} from '../../services/character-view.service';
@@ -23,7 +23,7 @@ import {MaterialDetail} from '../../../material/models/material.model';
   styleUrls: ['./character-grid.component.scss'],
 })
 export class CharacterGridComponent
-  extends AbstractObservableComponent
+  extends AbstractObservableDirective
   implements OnChanges {
   readonly i18n = I18n.create('characters');
 

@@ -1,41 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MaterialViewService} from '../../../material/services/material-view.service';
-import {MaterialDetail} from '../../../material/models/material.model';
 import {MaterialType} from '../../../material/models/material-type.enum';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {takeUntil} from 'rxjs/operators';
+import {MaterialDetail} from '../../../material/models/material.model';
+import {MaterialListData} from '../../../material/models/material-list-data.model';
+import {AbstractSubInventoryDirective} from '../../directives/abstract-sub-inventory.directive';
 
 @Component({
   selector: 'app-character-material-inventory',
   templateUrl: './character-material-inventory.component.html',
   styleUrls: ['./character-material-inventory.component.scss'],
 })
-export class CharacterMaterialInventoryComponent
-  extends AbstractObservableComponent
-  implements OnInit {
-  common!: MaterialDetail[];
+export class CharacterMaterialInventoryComponent extends AbstractSubInventoryDirective {
+  types = [
+    [MaterialType.CHARACTER_EXP],
+    [MaterialType.CHARACTER_BOSS],
+    [MaterialType.CHARACTER_GEM],
+  ];
 
-  boss!: MaterialDetail[];
-
-  gem!: MaterialDetail[];
-
-  constructor(private view: MaterialViewService) {
-    super();
+  constructor(view: MaterialViewService) {
+    super(view);
   }
 
-  ngOnInit(): void {
-    const types = [
-      [MaterialType.CHARACTER_EXP],
-      [MaterialType.CHARACTER_BOSS],
-      [MaterialType.CHARACTER_GEM],
+  getMaterials([common, boss, gem]: MaterialDetail[][]): MaterialListData[] {
+    return [
+      {type: 'common', materials: common},
+      {type: 'boss', materials: boss},
+      {type: 'gem', materials: gem},
     ];
-    this.view
-      .viewTypes(types)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([common, boss, gem]) => {
-        this.common = common;
-        this.boss = boss;
-        this.gem = gem;
-      });
   }
 }

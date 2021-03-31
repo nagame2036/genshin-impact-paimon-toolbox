@@ -1,45 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {MaterialDetail} from '../../../material/models/material.model';
+import {Component} from '@angular/core';
 import {MaterialViewService} from '../../../material/services/material-view.service';
 import {MaterialType} from '../../../material/models/material-type.enum';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
-import {takeUntil} from 'rxjs/operators';
+import {MaterialDetail} from '../../../material/models/material.model';
+import {MaterialListData} from '../../../material/models/material-list-data.model';
+import {AbstractSubInventoryDirective} from '../../directives/abstract-sub-inventory.directive';
 
 @Component({
   selector: 'app-talent-material-inventory',
   templateUrl: './talent-material-inventory.component.html',
   styleUrls: ['./talent-material-inventory.component.scss'],
 })
-export class TalentMaterialInventoryComponent
-  extends AbstractObservableComponent
-  implements OnInit {
-  common!: MaterialDetail[];
+export class TalentMaterialInventoryComponent extends AbstractSubInventoryDirective {
+  types = [
+    [MaterialType.TALENT_COMMON],
+    [MaterialType.TALENT_147],
+    [MaterialType.TALENT_257],
+    [MaterialType.TALENT_367],
+  ];
 
-  monThu!: MaterialDetail[];
-
-  tueFri!: MaterialDetail[];
-
-  wedSat!: MaterialDetail[];
-
-  constructor(private view: MaterialViewService) {
-    super();
+  constructor(view: MaterialViewService) {
+    super(view);
   }
 
-  ngOnInit(): void {
-    const types = [
-      [MaterialType.TALENT_COMMON],
-      [MaterialType.TALENT_147],
-      [MaterialType.TALENT_257],
-      [MaterialType.TALENT_367],
+  getMaterials([
+    common,
+    monThu,
+    tueFri,
+    wedSat,
+  ]: MaterialDetail[][]): MaterialListData[] {
+    return [
+      {type: 'common', materials: common},
+      {type: '1/4/7', materials: monThu},
+      {type: '2/5/7', materials: tueFri},
+      {type: '3/6/7', materials: wedSat},
     ];
-    this.view
-      .viewTypes(types)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([common, monThu, tueFri, wedSat]) => {
-        this.common = common;
-        this.monThu = monThu;
-        this.tueFri = tueFri;
-        this.wedSat = wedSat;
-      });
   }
 }

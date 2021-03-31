@@ -9,7 +9,7 @@ import {RequireDetail} from '../../../material/models/requirement-detail.model';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 
 @Component({
   selector: 'app-weapon-plan',
@@ -17,7 +17,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
   styleUrls: ['./weapon-plan.component.scss'],
 })
 export class WeaponPlanComponent
-  extends AbstractObservableComponent
+  extends AbstractObservableDirective
   implements OnInit {
   readonly i18n = I18n.create('game-common');
 

@@ -3,6 +3,7 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {MaterialDetail} from '../../models/material.model';
 import {MaterialService} from '../../services/material.service';
 import {NGXLogger} from 'ngx-logger';
+import {MaterialListData} from '../../models/material-list-data.model';
 
 @Component({
   selector: 'app-material-list',
@@ -13,15 +14,15 @@ export class MaterialListComponent implements OnInit {
   i18n = I18n.create('inventory');
 
   @Input()
-  subtitle!: string;
+  materials!: MaterialListData[];
 
   @Input()
-  showCostDetails = true;
+  subtitle!: string[];
 
   @Input()
-  items!: MaterialDetail[];
+  hiddenDetail = false;
 
-  constructor(public materials: MaterialService, private logger: NGXLogger) {}
+  constructor(public service: MaterialService, private logger: NGXLogger) {}
 
   ngOnInit(): void {
     this.logger.info('init');
@@ -30,7 +31,7 @@ export class MaterialListComponent implements OnInit {
   setHave(detail: MaterialDetail, value: number): void {
     const have = Math.max(0, value);
     const id = detail.info.id;
-    this.materials.updateHave(id, have);
+    this.service.updateHave(id, have);
     this.logger.info('set material have', id, have);
   }
 

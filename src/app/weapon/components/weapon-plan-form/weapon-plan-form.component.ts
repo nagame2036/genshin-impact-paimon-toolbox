@@ -11,7 +11,7 @@ import {
 } from '../../models/weapon-progress.model';
 import {WeaponInfo} from '../../models/weapon-info.model';
 import {WeaponService} from '../../services/weapon.service';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 
 @Component({
   selector: 'app-weapon-plan-form',
@@ -19,7 +19,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
   styleUrls: ['./weapon-plan-form.component.scss'],
 })
 export class WeaponPlanFormComponent
-  extends AbstractObservableComponent
+  extends AbstractObservableDirective
   implements OnInit {
   i18n = I18n.create('game-common');
 

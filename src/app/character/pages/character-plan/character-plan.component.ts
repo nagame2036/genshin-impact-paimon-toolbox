@@ -9,7 +9,7 @@ import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialService} from '../../../material/services/material.service';
 import {ExecutePlanConfirmDialogComponent} from '../../../material/components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 
 @Component({
   selector: 'app-character-plan',
@@ -17,7 +17,7 @@ import {AbstractObservableComponent} from '../../../shared/components/abstract-o
   styleUrls: ['./character-plan.component.scss'],
 })
 export class CharacterPlanComponent
-  extends AbstractObservableComponent
+  extends AbstractObservableDirective
   implements OnInit {
   readonly i18n = I18n.create('game-common');
 

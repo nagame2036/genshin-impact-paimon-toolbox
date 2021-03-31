@@ -5,7 +5,7 @@ import {CharacterOverview} from '../../models/character.model';
 import {CharacterInfo} from '../../models/character-info.model';
 import {CharacterService} from '../../services/character.service';
 import {takeUntil} from 'rxjs/operators';
-import {AbstractObservableComponent} from '../../../shared/components/abstract-observable.component';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 import {NGXLogger} from 'ngx-logger';
 
 @Component({
@@ -14,7 +14,7 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./add-character.component.scss'],
 })
 export class AddCharacterComponent
-  extends AbstractObservableComponent
+  extends AbstractObservableDirective
   implements OnInit {
   readonly i18n = I18n.create('characters');
 

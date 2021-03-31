@@ -4,7 +4,7 @@ import {WidgetModule} from '../widget/widget.module';
 import {GameCommonModule} from '../game-common/game-common.module';
 import {MaterialListComponent} from './components/material-list/material-list.component';
 import {MaterialRequirementComponent} from './components/material-requirement/material-requirement.component';
-import {MaterialRequirementDialogComponent} from './components/material-requirement-dialog/material-requirement-dialog.component';
+import {MaterialDetailDialogComponent} from './components/material-detail-dialog/material-detail-dialog.component';
 import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.component';
 
@@ -12,7 +12,7 @@ import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.compo
   declarations: [
     MaterialListComponent,
     MaterialRequirementComponent,
-    MaterialRequirementDialogComponent,
+    MaterialDetailDialogComponent,
     ExecutePlanConfirmDialogComponent,
     CraftDialogComponent,
   ],

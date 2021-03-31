@@ -12,6 +12,7 @@ import {SelectOption} from '../../../widget/models/select-option.model';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialViewService} from '../../services/material-view.service';
 import {defaultMaterialViewOptions} from '../../models/options.model';
+import {MaterialListData} from '../../models/material-list-data.model';
 
 @Component({
   selector: 'app-material-requirement',
@@ -29,11 +30,9 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   requirementOptions: SelectOption[] = [];
 
+  materials: MaterialListData[] = [];
+
   currentIndex = 0;
-
-  subtitles: string[] = [];
-
-  details: MaterialDetail[][] = [];
 
   detailsEmpty = true;
 
@@ -41,7 +40,6 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.subtitles = this.types.map(([it]) => it);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -61,10 +59,10 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   changeRequirement(index: number): void {
     this.currentIndex = index;
-    const materials = this.requirements[index].value;
-    this.detailsEmpty = materials.length === 0;
+    const requirement = this.requirements[index].value;
+    this.detailsEmpty = requirement.length === 0;
     const detailsMap = new Map<string, MaterialDetail[]>();
-    for (const material of materials) {
+    for (const material of requirement) {
       for (const [type, ...materialTypes] of this.types) {
         if (materialTypes.includes(material.type)) {
           const details = detailsMap.get(type) ?? [];
@@ -74,13 +72,13 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
         }
       }
     }
-    this.details = this.types.map(([it]) => {
-      const details = detailsMap.get(it) ?? [];
-      return this.view.viewDetails(details, defaultMaterialViewOptions);
+    this.materials = this.types.map(([type]) => {
+      const details = detailsMap.get(type) ?? [];
+      const materials = this.view.viewDetails(
+        details,
+        defaultMaterialViewOptions,
+      );
+      return {type, materials};
     });
-  }
-
-  trackIndex(index: number, _: any): number {
-    return index;
   }
 }

@@ -10,12 +10,7 @@
   </app-select>
 </div>
 <div class="item-list">
-  <app-material-list
-    *ngFor="let items of details; let i = index; trackBy: trackIndex"
-    [subtitle]="subtitles[i]"
-    [items]="items"
-    [showCostDetails]="false"
-  >
+  <app-material-list [materials]="materials" [hiddenDetail]="true">
   </app-material-list>
   <div *ngIf="detailsEmpty" class="requirement-reached">
     <img src="assets/images/stickers/2.webp" alt="requirement-reached" />

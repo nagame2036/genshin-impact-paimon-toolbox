@@ -8,11 +8,11 @@ import {MaterialService} from '../../services/material.service';
 import {MaterialDetail} from '../../models/material.model';
 
 @Component({
-  selector: 'app-material-requirement-dialog',
-  templateUrl: './material-requirement-dialog.component.html',
-  styleUrls: ['./material-requirement-dialog.component.scss'],
+  selector: 'app-material-detail-dialog',
+  templateUrl: './material-detail-dialog.component.html',
+  styleUrls: ['./material-detail-dialog.component.scss'],
 })
-export class MaterialRequirementDialogComponent implements OnInit {
+export class MaterialDetailDialogComponent implements OnInit {
   i18n = I18n.create('inventory');
 
   totalAmountPurpose = this.i18n.dict('total-amount');

@@ -4,6 +4,7 @@
 }
 
 .item-list {
+  @apply pb-2;
   @apply grid;
   @apply gap-x-3;
   @apply gap-y-6;
