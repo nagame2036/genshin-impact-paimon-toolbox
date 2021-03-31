@@ -9,7 +9,7 @@ import {
 import {MaterialDetail} from '../models/material.model';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialService} from './material.service';
-import {first, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
 import {MaterialInfoService} from './material-info.service';
 
@@ -95,10 +95,7 @@ export class MaterialViewService {
   }
 
   private updateView(update: Partial<MaterialViewOptions>): void {
-    this.options.pipe(first()).subscribe(options => {
-      const newOptions = {...options, ...update};
-      this.settings.set(this.settingKey, newOptions);
-    });
+    this.settings.update(this.settingKey, update);
   }
 }
 

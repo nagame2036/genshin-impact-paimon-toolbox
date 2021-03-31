@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, of, ReplaySubject, zip} from 'rxjs';
-import {distinctUntilChanged, map, switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, first, map, switchMap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
@@ -35,13 +35,15 @@ export class SettingService {
     return this.settings.pipe(
       switchMap(settings => {
         const setting = settings.get(id);
-        if (setting && ensureOptionsValue(setting, defaultValue)) {
+        if (setting && optionHasValue(setting, defaultValue)) {
           return of(setting);
         }
         const value = defaultValue;
         return this.database.update(this.storeName, {id, value}).pipe(
-          map(_ => settings.set(id, value)),
-          map(_ => value),
+          map(_ => {
+            settings.set(id, value);
+            return value;
+          }),
         );
       }),
       distinctUntilChanged(),
@@ -56,9 +58,19 @@ export class SettingService {
       this.settings.next(settings);
     });
   }
+
+  update(id: string, value: any): void {
+    this.settings.pipe(
+      first(),
+      map(settings => {
+        const curr = settings.get(id) ?? {};
+        return this.set(id, {...curr, ...value});
+      }),
+    );
+  }
 }
 
-function ensureOptionsValue<T>(setting: any, defaultValue: T): boolean {
+function optionHasValue<T>(setting: any, defaultValue: T): boolean {
   return (
     typeof defaultValue === 'string' ||
     defaultValue instanceof Array ||

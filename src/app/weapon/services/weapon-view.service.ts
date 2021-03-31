@@ -120,10 +120,7 @@ export class WeaponViewService {
   }
 
   private updateView(update: Partial<WeaponViewOptions>): void {
-    this.options.pipe(first()).subscribe(options => {
-      Object.assign(options, update);
-      this.settings.set(this.settingKey, options);
-    });
+    this.settings.update(this.settingKey, update);
   }
 }
 

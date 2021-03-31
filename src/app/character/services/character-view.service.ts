@@ -125,10 +125,7 @@ export class CharacterViewService {
   }
 
   private updateView(update: Partial<CharacterViewOptions>): void {
-    this.options.pipe(first()).subscribe(options => {
-      Object.assign(options, update);
-      this.settings.set(this.settingKey, options);
-    });
+    this.settings.update(this.settingKey, update);
   }
 }
 

@@ -164,9 +164,6 @@ export class CharacterInfoService {
   }
 
   private updateSetting(update: Partial<CharacterInfoOptions>): void {
-    this.options.pipe(first()).subscribe(options => {
-      Object.assign(options, update);
-      this.settings.set(this.settingKey, options);
-    });
+    this.settings.update(this.settingKey, update);
   }
 }
