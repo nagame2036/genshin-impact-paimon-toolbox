@@ -15,6 +15,7 @@ import {toggleItem} from '../../../shared/utils/collections';
 import {WeaponViewService} from '../../services/weapon-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
 import {MaterialDetail} from '../../../material/models/material.model';
+import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
 
 @Component({
   selector: 'app-weapon-grid',
@@ -32,9 +33,9 @@ export class WeaponGridComponent implements OnChanges {
   @Input()
   clickText!: string;
 
-  clickedItem: WeaponOverview | null = null;
+  clicked: WeaponOverview | null = null;
 
-  clickedItemMaterials!: MaterialDetail[];
+  summaryMaterials!: MaterialDetail[];
 
   @Input()
   doubleClickText!: string;
@@ -43,7 +44,7 @@ export class WeaponGridComponent implements OnChanges {
   doubleClicked = new EventEmitter<WeaponOverview>();
 
   @Input()
-  selectedItems: WeaponOverview[] = [];
+  selected: WeaponOverview[] = [];
 
   multiSelect = false;
 
@@ -74,18 +75,16 @@ export class WeaponGridComponent implements OnChanges {
   select(item: WeaponOverview): void {
     this.logger.info('clicked weapon', item);
     if (!this.multiSelect) {
-      this.clickedItem = this.clickedItem === item ? null : item;
+      this.clicked = this.clicked === item ? null : item;
     } else {
-      const origin = this.selectedItems;
-      const itemId = item.progress.id;
-      const list = toggleItem(origin, item, it => it.progress.id === itemId);
-      this.selectedItems = list;
-      this.clickedItem = list[list.length - 1] ?? null;
+      const id = item.progress.id;
+      const list = toggleItem(this.selected, item, it => it.progress.id === id);
+      this.selected = list;
+      this.clicked = list[list.length - 1] ?? null;
       this.multiSelected.emit(list);
     }
-    if (this.clickedItem) {
-      const info = this.clickedItem.info;
-      this.clickedItemMaterials = this.service.getRequireMaterials(info);
+    if (this.clicked) {
+      this.summaryMaterials = this.service.getRequireMaterials(item.info);
     }
   }
 
@@ -94,11 +93,11 @@ export class WeaponGridComponent implements OnChanges {
     this.doubleClicked.emit(item);
   }
 
-  onMultiSelectChange(event: {multiSelect: boolean; selectAll: boolean}): void {
-    this.multiSelect = event.multiSelect;
-    this.logger.info('select all', event.selectAll);
-    this.selectedItems = event.selectAll ? this.weapons : [];
-    this.multiSelected.emit(this.selectedItems);
+  onMultiSelect({multiSelect, selectAll}: MultiSelectEvent): void {
+    this.multiSelect = multiSelect;
+    this.logger.info('select all', selectAll);
+    this.selected = selectAll ? this.weapons : [];
+    this.multiSelected.emit(this.selected);
   }
 
   trackItem(index: number, item: Weapon): number {

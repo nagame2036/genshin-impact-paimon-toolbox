@@ -17,13 +17,8 @@
       </span>
     </app-select>
     <div class="recipe-materials">
-      <div class="recipe-material" *ngFor="let material of materials">
-        <app-item-view
-          category="materials"
-          [id]="material[0].info.id"
-          [rarity]="material[0].info.rarity"
-          [width]="158"
-        >
+      <div class="recipe-material" *ngFor="let m of materials">
+        <app-item-view category="materials" [width]="158" [item]="m[0].info">
         </app-item-view>
         <table>
           <tr>
@@ -31,7 +26,7 @@
               {{ i18n.module('have') | translate }}
             </td>
             <td class="text-right">
-              {{ material[0].have | number: '1.0-0' }}
+              {{ m[0].have | number: '1.0-0' }}
             </td>
           </tr>
           <tr>
@@ -39,7 +34,7 @@
               {{ i18n.module('need') | translate }}
             </td>
             <td class="text-right">
-              {{ material[1] * times | number: '1.0-0' }}
+              {{ m[1] * times | number: '1.0-0' }}
             </td>
           </tr>
         </table>

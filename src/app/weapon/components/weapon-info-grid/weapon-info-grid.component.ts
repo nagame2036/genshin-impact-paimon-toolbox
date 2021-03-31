@@ -30,9 +30,9 @@ export class WeaponInfoGridComponent implements OnChanges {
   @Input()
   clickText!: string;
 
-  clickedItem: WeaponInfo | null = null;
+  clicked: WeaponInfo | null = null;
 
-  clickedItemMaterials!: MaterialDetail[];
+  summaryMaterials!: MaterialDetail[];
 
   @Input()
   doubleClickText!: string;
@@ -62,9 +62,9 @@ export class WeaponInfoGridComponent implements OnChanges {
 
   click(item: WeaponInfo): void {
     this.logger.info('clicked weapon', item);
-    this.clickedItem = this.clickedItem === item ? null : item;
-    if (this.clickedItem) {
-      this.clickedItemMaterials = this.service.getRequireMaterials(item);
+    this.clicked = this.clicked === item ? null : item;
+    if (this.clicked) {
+      this.summaryMaterials = this.service.getRequireMaterials(item);
     }
   }
 

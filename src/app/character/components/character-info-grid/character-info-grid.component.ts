@@ -30,9 +30,9 @@ export class CharacterInfoGridComponent implements OnChanges {
   @Input()
   clickText!: string;
 
-  clickedItem: CharacterInfo | null = null;
+  clicked: CharacterInfo | null = null;
 
-  clickedItemMaterials!: MaterialDetail[];
+  summaryMaterials!: MaterialDetail[];
 
   @Input()
   doubleClickText!: string;
@@ -62,9 +62,9 @@ export class CharacterInfoGridComponent implements OnChanges {
 
   click(item: CharacterInfo): void {
     this.logger.info('clicked character', item);
-    this.clickedItem = this.clickedItem === item ? null : item;
-    if (this.clickedItem) {
-      this.clickedItemMaterials = this.service.getRequireMaterials(item);
+    this.clicked = this.clicked === item ? null : item;
+    if (this.clicked) {
+      this.summaryMaterials = this.service.getRequireMaterials(item);
     }
   }
 

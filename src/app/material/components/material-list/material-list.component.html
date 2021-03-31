@@ -8,12 +8,7 @@
         *ngFor="let item of items.materials; trackBy: trackItem"
         class="detail-container"
       >
-        <app-item-view
-          category="materials"
-          [width]="138"
-          [id]="item.info.id"
-          [rarity]="item.info.rarity || 1"
-        >
+        <app-item-view category="materials" [width]="138" [item]="item.info">
         </app-item-view>
         <button
           *ngIf="!hiddenDetail"

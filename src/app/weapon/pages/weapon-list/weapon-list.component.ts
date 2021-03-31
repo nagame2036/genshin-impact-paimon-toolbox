@@ -5,17 +5,21 @@ import {WeaponService} from '../../services/weapon.service';
 import {WeaponGridComponent} from '../../components/weapon-grid/weapon-grid.component';
 import {Router} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
-import {Observable} from 'rxjs';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {takeUntil} from 'rxjs/operators';
+import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
 
 @Component({
   selector: 'app-weapon-list',
   templateUrl: './weapon-list.component.html',
   styleUrls: ['./weapon-list.component.scss'],
 })
-export class WeaponListComponent implements OnInit {
+export class WeaponListComponent
+  extends AbstractObservableDirective
+  implements OnInit {
   i18n = I18n.create('weapons');
 
-  weapons$!: Observable<WeaponOverview[]>;
+  items: WeaponOverview[] = [];
 
   multiSelect = false;
 
@@ -30,15 +34,20 @@ export class WeaponListComponent implements OnInit {
     private service: WeaponService,
     private router: Router,
     private logger: NGXLogger,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.weapons$ = this.service.getAll();
+    this.service
+      .getAll()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(weapons => (this.items = weapons));
   }
 
   goToAdd(): void {
-    this.router.navigate(['weapons/add']).then(_ => this.updateSelected([]));
+    this.router.navigate(['weapons/add']).then();
   }
 
   goToDetail(weapon: WeaponOverview): void {
@@ -57,12 +66,11 @@ export class WeaponListComponent implements OnInit {
     this.selectAll =
       this.multiSelect &&
       selected.length > 0 &&
-      selected.length === this.list.weapons.length;
+      selected.length === this.items.length;
   }
 
-  onMultiSelectChange(event: {multiSelect: boolean; selectAll: boolean}): void {
+  onMultiSelect(event: MultiSelectEvent): void {
     this.multiSelect = event.multiSelect;
     this.selectAll = event.selectAll;
-    this.list.onMultiSelectChange(event);
   }
 }

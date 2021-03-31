@@ -8,6 +8,10 @@ import {
 import {I18n} from '../../../widget/models/i18n.model';
 import {ImageService, ImageType} from '../../../image/services/image.service';
 import {rangeList} from '../../../shared/utils/range-list';
+import {Rarity} from '../../models/rarity.type';
+import {ElementType} from '../../models/element-type.enum';
+
+const backgroundType = ['element', 'rarity'] as const;
 
 @Component({
   selector: 'app-item-view',
@@ -25,32 +29,31 @@ export class ItemViewComponent implements OnChanges {
   category!: ImageType;
 
   @Input()
-  id!: number;
-
-  @Input()
-  rarity = 1;
+  item!: {id: number; rarity: Rarity; element?: ElementType};
 
   stars: number[] = [];
 
-  @Input()
-  backgroundDeps = this.rarity;
+  backgroundType = '';
 
-  @Input()
-  backgroundType: 'rarity' | 'element' = 'rarity';
+  backgroundDeps = 0;
 
   itemKey!: string;
 
   constructor(public images: ImageService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.backgroundType === 'rarity' && changes.rarity) {
-      this.backgroundDeps = this.rarity;
+    for (const type of backgroundType) {
+      const curr = changes.item.currentValue;
+      const prev = changes.item.previousValue;
+      if (curr[type] && curr[type] !== prev?.[type]) {
+        this.backgroundType = type;
+        this.backgroundDeps = this.item[type] ?? 0;
+        break;
+      }
     }
-    if (changes.id) {
-      this.itemKey = `${this.category}.${this.id}`;
-    }
-    if (changes.rarity) {
-      this.stars = rangeList(1, this.rarity);
+    if (changes.item) {
+      this.itemKey = `${this.category}.${this.item.id}`;
+      this.stars = rangeList(1, this.item.rarity);
     }
   }
 }

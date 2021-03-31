@@ -5,15 +5,7 @@
   <div class="remove-list-container" *ngIf="items">
     <div class="remove-list">
       <div *ngFor="let item of items" class="remove-item-view">
-        <app-item-view
-          *ngIf="item"
-          [category]="category"
-          [id]="item.info.id"
-          [rarity]="item.info.rarity"
-          [backgroundType]="item.info.element ? 'element' : 'rarity'"
-          [backgroundDeps]="item.info.element || item.info.rarity"
-        >
-        </app-item-view>
+        <app-item-view [category]="category" [item]="item.info"></app-item-view>
       </div>
     </div>
   </div>

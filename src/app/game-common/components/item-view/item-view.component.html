@@ -2,7 +2,7 @@
   <div class="image-container" [class]="backgroundType + '-' + backgroundDeps">
     <img
       class="image"
-      [src]="images.get(category, id)"
+      [src]="images.get(category, item.id)"
       [alt]="i18n.dict(itemKey) | translate"
     />
   </div>

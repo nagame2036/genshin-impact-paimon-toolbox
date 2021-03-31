@@ -3,7 +3,7 @@
 </app-character-view-options>
 <app-item-grid-container
   [type]="i18n.pDict('character')"
-  [hasSummary]="!!clickedItem"
+  [hasSummary]="!!clicked"
   [clickText]="clickText"
   [doubleClickText]="doubleClickText"
 >
@@ -13,27 +13,18 @@
     (click)="click(item)"
     (dblclick)="doubleClick(item)"
   >
-    <app-item-view
-      category="characters"
-      [id]="item.id"
-      [rarity]="item.rarity"
-      backgroundType="element"
-      [backgroundDeps]="item.element"
-    ></app-item-view>
+    <app-item-view category="characters" [item]="item"></app-item-view>
     <img
       class="weapon-type-hint"
       [src]="images.get('weapon-types', item.weapon)"
       [alt]="i18n.dict('weapon-types.' + item.weapon) | translate"
     />
   </div>
-  <ng-container item-summary *ngIf="clickedItem as item">
+  <ng-container item-summary *ngIf="clicked as item">
     <app-item-view
       class="item-summary-thumb"
       category="characters"
-      [id]="item.id"
-      [rarity]="item.rarity"
-      backgroundType="element"
-      [backgroundDeps]="item.element"
+      [item]="item"
     ></app-item-view>
     <table class="item-summary-table">
       <tr>
@@ -72,11 +63,10 @@
     </table>
     <div class="item-material-required">
       <app-item-view
-        *ngFor="let m of clickedItemMaterials"
+        *ngFor="let m of summaryMaterials"
         class="item-summary-thumb"
         category="materials"
-        [id]="m.info.id"
-        [rarity]="m.info.rarity"
+        [item]="m.info"
       ></app-item-view>
     </div>
   </ng-container>

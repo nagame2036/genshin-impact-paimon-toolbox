@@ -1,21 +1,24 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Character, CharacterOverview} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
-import {CharacterGridComponent} from '../../components/character-grid/character-grid.component';
 import {CharacterService} from '../../services/character.service';
 import {Router} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
-import {Observable} from 'rxjs';
+import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.scss'],
 })
-export class CharacterListComponent implements OnInit {
+export class CharacterListComponent
+  extends AbstractObservableDirective
+  implements OnInit {
   i18n = I18n.create('characters');
 
-  characters$!: Observable<CharacterOverview[]>;
+  items: CharacterOverview[] = [];
 
   multiSelect = false;
 
@@ -23,22 +26,24 @@ export class CharacterListComponent implements OnInit {
 
   selectedItems: CharacterOverview[] = [];
 
-  @ViewChild('list')
-  list!: CharacterGridComponent;
-
   constructor(
     private service: CharacterService,
     private router: Router,
     private logger: NGXLogger,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.logger.info('init');
-    this.characters$ = this.service.getAll();
+    this.service
+      .getAll()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(items => (this.items = items));
   }
 
   gotoAdd(): void {
-    this.router.navigate(['characters/add']).then(_ => this.updateSelected([]));
+    this.router.navigate(['characters/add']).then();
   }
 
   goToDetail(character: Character): void {
@@ -59,12 +64,11 @@ export class CharacterListComponent implements OnInit {
     this.selectAll =
       this.multiSelect &&
       selected.length > 0 &&
-      selected.length === this.list.characters.length;
+      selected.length === this.items.length;
   }
 
-  onMultiSelect(event: {multiSelect: boolean; selectAll: boolean}): void {
+  onMultiSelect(event: MultiSelectEvent): void {
     this.multiSelect = event.multiSelect;
     this.selectAll = event.selectAll;
-    this.list.onMultiSelect(event);
   }
 }

@@ -1,11 +1,5 @@
 <div *ngIf="character" class="plan-form-container">
-  <app-item-view
-    category="characters"
-    [id]="info.id"
-    [rarity]="info.rarity"
-    backgroundType="element"
-    [backgroundDeps]="info.element"
-  ></app-item-view>
+  <app-item-view category="characters" [item]="info"></app-item-view>
   <app-select
     class="attribute-select"
     [options]="constellations"

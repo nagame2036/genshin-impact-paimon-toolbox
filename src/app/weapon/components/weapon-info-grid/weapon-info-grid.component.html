@@ -3,7 +3,7 @@
 </app-weapon-view-options>
 <app-item-grid-container
   [type]="i18n.pDict('weapon')"
-  [hasSummary]="!!clickedItem"
+  [hasSummary]="!!clicked"
   [clickText]="clickText"
   [doubleClickText]="doubleClickText"
 >
@@ -13,23 +13,18 @@
     (click)="click(item)"
     (dblclick)="doubleClick(item)"
   >
-    <app-item-view
-      category="weapons"
-      [id]="item.id"
-      [rarity]="item.rarity"
-    ></app-item-view>
+    <app-item-view category="weapons" [item]="item"></app-item-view>
     <img
       class="weapon-type-hint"
       [src]="images.get('weapon-types', item.type)"
       [alt]="i18n.dict('weapon-types.' + item.type) | translate"
     />
   </div>
-  <ng-container item-summary *ngIf="clickedItem as item">
+  <ng-container item-summary *ngIf="clicked as item">
     <app-item-view
       class="item-summary-thumb"
       category="weapons"
-      [id]="item.id"
-      [rarity]="item.rarity"
+      [item]="item"
     ></app-item-view>
     <table class="item-summary-table">
       <tr>
@@ -66,11 +61,10 @@
     </div>
     <div class="item-material-required">
       <app-item-view
-        *ngFor="let m of clickedItemMaterials"
+        *ngFor="let m of summaryMaterials"
         class="item-summary-thumb"
         category="materials"
-        [id]="m.info.id"
-        [rarity]="m.info.rarity"
+        [item]="m.info"
       ></app-item-view>
     </div>
   </ng-container>

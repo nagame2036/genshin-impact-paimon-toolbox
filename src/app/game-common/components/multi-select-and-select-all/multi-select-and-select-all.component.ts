@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
+import {MultiSelectEvent} from '../../models/multi-select-event.model';
 
 @Component({
   selector: 'app-multi-select-and-select-all',
@@ -16,7 +17,7 @@ export class MultiSelectAndSelectAllComponent implements OnInit {
   selectAll = false;
 
   @Output()
-  changed = new EventEmitter<{multiSelect: boolean; selectAll: boolean}>();
+  changed = new EventEmitter<MultiSelectEvent>();
 
   constructor() {}
 
