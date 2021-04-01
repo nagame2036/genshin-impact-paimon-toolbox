@@ -1,34 +1,36 @@
-<app-select-container [valueText]="valuesText">
+<app-select [valueText]="valueText" [customOptions]="customOptions">
   <ng-container form-label>
     <ng-content select="[form-label]"></ng-content>
   </ng-container>
   <ng-container prefix>
     <ng-content select="[prefix]"></ng-content>
   </ng-container>
+  <ng-template #customOptions>
+    <li
+      *ngIf="!ordered"
+      class="select-option"
+      [class.selected]="value.length === options.length"
+      (click)="selectAll()"
+    >
+      {{ i18n.dict('all') | translate }}
+    </li>
+    <li
+      *ngFor="let option of options"
+      class="select-option"
+      [class.selected]="value.includes(option.value)"
+      (click)="change(option)"
+    >
+      <ng-container *ngIf="value.indexOf(option.value) + 1 as index">
+        <div *ngIf="ordered && index >= 1" class="order-hint">
+          {{ index }}
+        </div>
+      </ng-container>
+      <div class="select-option-text">
+        {{ option.text | translate }}
+      </div>
+    </li>
+  </ng-template>
   <ng-container suffix>
     <ng-content select="[prefix]"></ng-content>
   </ng-container>
-  <li
-    *ngIf="!ordered"
-    class="select-option"
-    [class.selected]="values.length === options.length"
-    (click)="selectAll()"
-  >
-    {{ i18n.dict('all') | translate }}
-  </li>
-  <li
-    *ngFor="let option of options"
-    class="select-option"
-    [class.selected]="values.includes(option.value)"
-    (click)="change(option)"
-  >
-    <ng-container *ngIf="values.indexOf(option.value) + 1 as index">
-      <div *ngIf="ordered && index >= 1" class="order-hint">
-        {{ index }}
-      </div>
-    </ng-container>
-    <div class="select-option-text">
-      {{ option.text | translate }}
-    </div>
-  </li>
-</app-select-container>
+</app-select>

@@ -13,9 +13,9 @@ export class MultiSelectComponent implements OnInit {
   i18n = I18n.create('shared.multi-select');
 
   @Input()
-  values!: any[];
+  value!: any[];
 
-  valuesText = '';
+  valueText = '';
 
   @Input()
   options!: SelectOption[];
@@ -37,24 +37,24 @@ export class MultiSelectComponent implements OnInit {
 
   change(option: SelectOption): void {
     const item = option.value;
-    this.values = toggleItem(this.values, item, it => it === item);
+    this.value = toggleItem(this.value, item, it => it === item);
     if (!this.ordered) {
-      this.values.sort(
+      this.value.sort(
         (a, b) => this.optionsValues.indexOf(a) - this.optionsValues.indexOf(b),
       );
     }
     this.updateValuesText();
-    this.changed.emit(this.values);
+    this.changed.emit(this.value);
   }
 
   updateValuesText(): void {
-    const length = this.values.length;
+    const length = this.value.length;
     if (length === 0) {
-      this.valuesText = this.translator.instant(this.i18n.dict('none'));
+      this.valueText = this.translator.instant(this.i18n.dict('none'));
     } else if (!this.ordered && length === this.options.length) {
-      this.valuesText = this.translator.instant(this.i18n.dict('all'));
+      this.valueText = this.translator.instant(this.i18n.dict('all'));
     } else {
-      this.valuesText = this.values
+      this.valueText = this.value
         .map(it => {
           const index = this.optionsValues.indexOf(it);
           const text = this.options[index]?.text ?? '';
@@ -65,9 +65,9 @@ export class MultiSelectComponent implements OnInit {
   }
 
   selectAll(): void {
-    this.values =
-      this.values.length === this.options.length ? [] : this.optionsValues;
+    this.value =
+      this.value.length === this.options.length ? [] : this.optionsValues;
     this.updateValuesText();
-    this.changed.emit(this.values);
+    this.changed.emit(this.value);
   }
 }

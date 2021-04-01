@@ -1,7 +1,7 @@
 <div *ngIf="view.options | async as options" class="inventory-header">
   <app-multi-select
     [options]="view.rarities"
-    [values]="options.rarities"
+    [value]="options.rarities"
     (changed)="view.changeRarity($event)"
   >
     <span form-label>

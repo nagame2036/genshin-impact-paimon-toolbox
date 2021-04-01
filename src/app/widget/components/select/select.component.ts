@@ -1,14 +1,15 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
-  ViewChild,
+  TemplateRef,
 } from '@angular/core';
 import {SelectOption} from '../../models/select-option.model';
-import {SelectContainerComponent} from '../select-container/select-container.component';
 
 @Component({
   selector: 'app-select',
@@ -19,6 +20,7 @@ export class SelectComponent implements OnChanges {
   @Input()
   value!: any;
 
+  @Input()
   valueText!: string;
 
   @Input()
@@ -27,18 +29,20 @@ export class SelectComponent implements OnChanges {
   @Output()
   changed = new EventEmitter<any>();
 
-  @ViewChild('container')
-  container!: SelectContainerComponent;
+  @Input()
+  customDropdown!: TemplateRef<any>;
 
-  constructor() {}
+  @Input()
+  customOptions!: TemplateRef<any>;
 
-  get hover(): boolean {
-    return this.container?.hover ?? false;
-  }
+  hover = false;
 
-  get focus(): boolean {
-    return this.container?.focus ?? false;
-  }
+  focus = false;
+
+  @Input()
+  opened = false;
+
+  constructor(private self: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (['value', 'options'].some(it => changes.hasOwnProperty(it))) {
@@ -50,11 +54,19 @@ export class SelectComponent implements OnChanges {
     const value = option.value;
     this.value = value;
     this.changeValueText(this.value);
-    setTimeout(() => (this.container.opened = false), 10);
+    setTimeout(() => (this.opened = false), 10);
     this.changed.emit(value);
   }
 
   changeValueText(value: any): void {
     this.valueText = this.options?.find(it => it.value === value)?.text ?? '';
+  }
+
+  @HostListener('window:click', ['$event'])
+  clickOutside(event: Event): void {
+    if (!this.self.nativeElement.contains(event.target)) {
+      this.opened = false;
+      this.focus = false;
+    }
   }
 }

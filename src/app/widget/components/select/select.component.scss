@@ -1,1 +1,42 @@
+@import '../../styles/form-field.scss';
+@import '../../styles/prefix-suffix.scss';
+@import '../../styles/select-dropdown.scss';
 @import '../../styles/select-option.scss';
+
+.form-container {
+  @apply cursor-pointer;
+}
+
+.select-container {
+  @apply box-border;
+  @apply flex;
+  @apply flex-row;
+  @apply relative;
+  @apply pr-6;
+}
+
+.select {
+  @apply box-border;
+  @apply flex-grow;
+  @apply appearance-none;
+  @apply outline-none;
+  @apply cursor-pointer;
+  @apply truncate;
+}
+
+.select-arrow {
+  @apply absolute;
+  @apply right-0;
+  @apply w-6;
+  @apply h-6;
+  @apply cursor-pointer;
+  @apply text-gray-400;
+
+  &.hover {
+    @apply text-black;
+  }
+
+  &.focus {
+    @apply text-primary-500;
+  }
+}

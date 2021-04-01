@@ -4,7 +4,7 @@
     class="option"
     [ordered]="true"
     [options]="view.sorts"
-    [values]="options.sort"
+    [value]="options.sort"
     (changed)="view.changeSort($event); changed.emit()"
   >
     <span form-label>
@@ -17,7 +17,7 @@
     class="option"
     [ordered]="true"
     [options]="view.infoSorts"
-    [values]="options.infoSort"
+    [value]="options.infoSort"
     (changed)="view.changeInfoSort($event); changed.emit()"
   >
     <span form-label>
@@ -28,7 +28,7 @@
   <app-multi-select
     class="option"
     [options]="view.rarities"
-    [values]="options.rarities"
+    [value]="options.rarities"
     (changed)="view.filterRarity($event); changed.emit()"
   >
     <span form-label>
@@ -38,7 +38,7 @@
   <app-multi-select
     class="option"
     [options]="view.types"
-    [values]="options.types"
+    [value]="options.types"
     (changed)="view.filterType($event); changed.emit()"
   >
     <span form-label>

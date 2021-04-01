@@ -19,7 +19,7 @@ describe('MultiSelectComponent', () => {
     fixture = TestBed.createComponent(MultiSelectComponent);
     component = fixture.componentInstance;
     component.options = [];
-    component.values = [];
+    component.value = [];
     fixture.detectChanges();
   });
 
