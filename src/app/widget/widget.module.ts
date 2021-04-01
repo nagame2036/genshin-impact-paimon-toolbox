@@ -4,7 +4,7 @@ import {SharedModule} from '../shared/shared.module';
 import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {DialogComponent} from './components/dialog/dialog.component';
 import {FormFieldComponent} from './components/form-field/form-field.component';
-import {TextFieldComponent} from './components/text-field/text-field.component';
+import {InputFieldComponent} from './components/input-field/input-field.component';
 import {NumberFieldComponent} from './components/number-field/number-field.component';
 import {SelectComponent} from './components/select/select.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
@@ -19,7 +19,7 @@ import {SelectContainerComponent} from './components/select-container/select-con
     CheckboxComponent,
     DialogComponent,
     FormFieldComponent,
-    TextFieldComponent,
+    InputFieldComponent,
     NumberFieldComponent,
     SelectComponent,
     MultiSelectComponent,
@@ -35,7 +35,7 @@ import {SelectContainerComponent} from './components/select-container/select-con
     CheckboxComponent,
     DialogComponent,
     FormFieldComponent,
-    TextFieldComponent,
+    InputFieldComponent,
     NumberFieldComponent,
     SelectComponent,
     MultiSelectComponent,

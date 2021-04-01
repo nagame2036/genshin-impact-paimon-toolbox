@@ -9,17 +9,16 @@ export class NumberFieldComponent implements OnInit {
   @Input()
   value!: number;
 
+  wrong = false;
+
+  @Input()
+  disabled!: boolean;
+
   @Output()
   inputted = new EventEmitter<number>();
 
   @Output()
   changed = new EventEmitter<number>();
-
-  hover = false;
-
-  focus = false;
-
-  wrong = false;
 
   constructor() {}
 

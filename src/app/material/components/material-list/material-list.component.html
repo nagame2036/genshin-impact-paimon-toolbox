@@ -30,7 +30,7 @@
             </span>
             {{ item.lack | number: '1.0-0' }}
           </app-form-field>
-          <app-text-field
+          <app-input-field
             [value]="(item.have | number: '1.0-0') || '0'"
             [disabled]="item.readonly"
             (changed)="correct(item, $event)"
@@ -38,7 +38,7 @@
             <span form-label>
               {{ i18n.module('have') | translate }}
             </span>
-          </app-text-field>
+          </app-input-field>
           <app-ring-button
             class="craft-btn"
             [disabled]="notCraftable(item)"
