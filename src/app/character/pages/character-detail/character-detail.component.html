@@ -7,7 +7,7 @@
     -
     {{ i18n.dict('characters.' + characterId) | translate }}
   </div>
-  <button class="icon-btn remove-btn" (click)="removeConfirm.open()">
+  <button class="icon-btn remove-btn" (click)="removeDialog.open([character])">
     <span class="material-icons">person_remove</span>
   </button>
 </div>
@@ -18,8 +18,7 @@
   </div>
 </div>
 <app-remove-confirm-dialog
-  #removeConfirm
+  #removeDialog
   category="characters"
-  [items]="[character]"
   (confirm)="remove()"
 ></app-remove-confirm-dialog>

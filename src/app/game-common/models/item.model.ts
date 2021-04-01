@@ -1,3 +1,5 @@
+import {Rarity} from './rarity.type';
+
 export interface Item<T> {
   info: ItemInfo<T>;
 
@@ -8,6 +10,8 @@ export interface Item<T> {
 
 export interface ItemInfo<T> {
   id: number;
+
+  rarity: Rarity;
 }
 
 export interface ItemProgress<T> {

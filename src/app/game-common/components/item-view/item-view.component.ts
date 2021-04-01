@@ -8,8 +8,7 @@ import {
 import {I18n} from '../../../widget/models/i18n.model';
 import {ImageService, ImageType} from '../../../image/services/image.service';
 import {rangeList} from '../../../shared/utils/range-list';
-import {Rarity} from '../../models/rarity.type';
-import {ElementType} from '../../models/element-type.enum';
+import {ItemInfo} from '../../models/item.model';
 
 const backgroundType = ['element', 'rarity'] as const;
 
@@ -29,7 +28,7 @@ export class ItemViewComponent implements OnChanges {
   category!: ImageType;
 
   @Input()
-  item!: {id: number; rarity: Rarity; element?: ElementType};
+  item!: ItemInfo<any>;
 
   stars: number[] = [];
 
@@ -47,7 +46,7 @@ export class ItemViewComponent implements OnChanges {
       const prev = changes.item.previousValue;
       if (curr[type] && curr[type] !== prev?.[type]) {
         this.backgroundType = type;
-        this.backgroundDeps = this.item[type] ?? 0;
+        this.backgroundDeps = (this.item as any)[type] ?? 0;
         break;
       }
     }

@@ -21,14 +21,13 @@
   <app-ring-button
     *ngIf="selectedItems.length > 0"
     color="red"
-    (clicked)="removeConfirm.open()"
+    (clicked)="removeDialog.open(selectedItems)"
   >
     {{ i18n.module('remove') | translate }}
   </app-ring-button>
 </app-character-grid>
 <app-remove-confirm-dialog
+  #removeDialog
   category="characters"
-  [items]="selectedItems"
   (confirm)="remove()"
-  #removeConfirm
 ></app-remove-confirm-dialog>

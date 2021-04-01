@@ -7,8 +7,8 @@
     -
     {{ i18n.dict('weapons.' + weaponId) | translate }}
   </div>
-  <button class="icon-btn remove-btn" (click)="removeConfirm.open()">
-    <span class="material-icons"> delete </span>
+  <button class="icon-btn remove-btn" (click)="removeDialog.open([weapon])">
+    <span class="material-icons">delete</span>
   </button>
 </div>
 <div class="detail-content">
@@ -18,8 +18,7 @@
   </div>
 </div>
 <app-remove-confirm-dialog
-  #removeConfirm
+  #removeDialog
   category="weapons"
-  [items]="[weapon]"
   (confirm)="remove()"
 ></app-remove-confirm-dialog>

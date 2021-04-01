@@ -8,10 +8,9 @@ import {
 } from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {I18n} from '../../../widget/models/i18n.model';
-import {Rarity} from '../../models/rarity.type';
 import {NGXLogger} from 'ngx-logger';
 import {ImageType} from '../../../image/services/image.service';
-import {ElementType} from '../../models/element-type.enum';
+import {Item} from '../../models/item.model';
 
 @Component({
   selector: 'app-remove-confirm-dialog',
@@ -24,8 +23,7 @@ export class RemoveConfirmDialogComponent implements OnInit {
   @Input()
   category!: ImageType;
 
-  @Input()
-  items!: {info: {id: number; rarity: Rarity; element?: ElementType}}[];
+  items: Item<any>[] = [];
 
   @Output()
   confirm = new EventEmitter();
@@ -37,7 +35,8 @@ export class RemoveConfirmDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  open(): void {
+  open(items: Item<any>[]): void {
+    this.items = items;
     this.dialog.open();
   }
 
