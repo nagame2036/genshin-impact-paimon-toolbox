@@ -63,13 +63,12 @@ export class MaterialInfoService {
     this.typed.set(MaterialType.CURRENCY, [mora]);
 
     const characterExps = characterExpMaterials as MaterialInfo[];
-    this.typed.set(MaterialType.CHARACTER_EXP, [
-      characterExp,
-      ...characterExps,
-    ]);
+    characterExps.forEach(it => (it.group = characterExp.id));
+    this.typed.set(MaterialType.CHARACTER_EXP, characterExps);
 
     const weaponExps = weaponExpMaterials as MaterialInfo[];
-    this.typed.set(MaterialType.WEAPON_EXP, [weaponExp, ...weaponExps]);
+    weaponExps.forEach(it => (it.group = weaponExp.id));
+    this.typed.set(MaterialType.WEAPON_EXP, weaponExps);
 
     const ores = oreMaterials as MaterialInfo[];
     this.typed.set(MaterialType.ORE, ores);
