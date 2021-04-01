@@ -14,7 +14,7 @@ import {Rarity} from '../../game-common/models/rarity.type';
 import {Observable, ReplaySubject} from 'rxjs';
 import {SettingService} from '../../setting/services/setting.service';
 import {CharacterViewOptions} from '../models/options.model';
-import {first, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {sortItems} from '../../shared/utils/collections';
 
 const i18n = I18n.create('characters');
@@ -83,7 +83,6 @@ export class CharacterViewService {
 
   view(characters: CharacterOverview[]): Observable<CharacterOverview[]> {
     return this.options.pipe(
-      first(),
       map(options => {
         const sorts = options.sort.map(it => sortMap.get(it) ?? (() => 0));
         const filtered = characters.filter(c => filterInfo(c.info, options));
@@ -94,7 +93,6 @@ export class CharacterViewService {
 
   viewInfos(characters: CharacterInfo[]): Observable<CharacterInfo[]> {
     return this.options.pipe(
-      first(),
       map(options => {
         const option = options.infoSort;
         const sorts = option.map(it => infoSortMap.get(it) ?? (() => 0));
@@ -108,8 +106,8 @@ export class CharacterViewService {
     this.updateView({sort});
   }
 
-  changeInfoSort(sort: string[]): void {
-    this.updateView({infoSort: sort});
+  changeInfoSort(infoSort: string[]): void {
+    this.updateView({infoSort});
   }
 
   filterRarity(rarities: Rarity[]): void {

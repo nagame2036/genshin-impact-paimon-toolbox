@@ -8,7 +8,7 @@ import {Rarity} from '../../game-common/models/rarity.type';
 import {Observable, ReplaySubject} from 'rxjs';
 import {WeaponViewOptions} from '../models/options.model';
 import {SettingService} from '../../setting/services/setting.service';
-import {first, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {sortItems} from '../../shared/utils/collections';
 
 const i18n = I18n.create('weapons');
@@ -82,7 +82,6 @@ export class WeaponViewService {
 
   view(weapons: WeaponOverview[]): Observable<WeaponOverview[]> {
     return this.options.pipe(
-      first(),
       map(options => {
         const sorts = options.sort.map(it => sortMap.get(it) ?? (() => 0));
         const filtered = weapons.filter(c => filterInfo(c.info, options));
@@ -93,7 +92,6 @@ export class WeaponViewService {
 
   viewInfos(weapons: WeaponInfo[]): Observable<WeaponInfo[]> {
     return this.options.pipe(
-      first(),
       map(options => {
         const option = options.infoSort;
         const sorts = option.map(it => infoSortMap.get(it) ?? (() => 0));
@@ -107,8 +105,8 @@ export class WeaponViewService {
     this.updateView({sort});
   }
 
-  changeInfoSort(sort: string[]): void {
-    this.updateView({infoSort: sort});
+  changeInfoSort(infoSort: string[]): void {
+    this.updateView({infoSort});
   }
 
   filterRarity(rarities: Rarity[]): void {

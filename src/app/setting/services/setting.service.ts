@@ -54,19 +54,17 @@ export class SettingService {
     const update = this.database.update(this.storeName, {id, value});
     zip(update, this.settings).subscribe(([, settings]) => {
       settings.set(id, value);
-      this.logger.info('update settings', id, value);
+      this.logger.info('set setting', id, value);
       this.settings.next(settings);
     });
   }
 
   update(id: string, value: any): void {
-    this.settings.pipe(
-      first(),
-      map(settings => {
-        const curr = settings.get(id) ?? {};
-        return this.set(id, {...curr, ...value});
-      }),
-    );
+    this.settings.pipe(first()).subscribe(settings => {
+      const curr = settings.get(id) ?? {};
+      this.logger.info('update setting', id, value);
+      this.set(id, {...curr, ...value});
+    });
   }
 }
 
