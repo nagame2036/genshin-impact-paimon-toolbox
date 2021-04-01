@@ -1,17 +1,17 @@
 .remove-list-container {
   @apply max-h-96;
-  @apply overflow-auto;
+  @apply overflow-y-auto;
 }
 
 .remove-list {
-  @apply m-4;
+  @apply p-2;
   @apply grid;
-  @apply grid-cols-4;
   @apply gap-4;
   @apply place-content-around;
 }
 
 .remove-item-view {
+  width: 102px;
   @apply rounded;
   @apply border;
 }

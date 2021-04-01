@@ -3,4 +3,4 @@ export enum ItemType {
   WEAPON,
 }
 
-export const itemTypeNames = ['character', 'weapon'];
+export const itemTypeNames = ['character', 'weapon'] as const;

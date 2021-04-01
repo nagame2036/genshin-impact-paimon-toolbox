@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {itemTypeNames} from '../../game-common/models/item-type.enum';
 
 export type ImageType =
   | 'character-portraits'
@@ -8,6 +9,13 @@ export type ImageType =
   | 'materials'
   | 'weapon-types'
   | 'weapons';
+
+type TypeMapping = Partial<Record<ImageType, typeof itemTypeNames[number]>>;
+
+export const imageTypeToItemTypes: TypeMapping = {
+  characters: 'character',
+  weapons: 'weapon',
+};
 
 const characterPortraitMapping = new Map([
   [1002, 1001],

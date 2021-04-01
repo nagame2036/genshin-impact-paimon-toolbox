@@ -1,9 +1,9 @@
 <app-dialog #dialog>
   <h2 title>
-    {{ i18n.module('confirm-to-remove') | translate }}
+    {{ i18n.module('confirm-to-remove') | paramTranslate: titleParams }}
   </h2>
   <div class="remove-list-container" *ngIf="items">
-    <div class="remove-list">
+    <div class="remove-list" [style.grid-template-columns]="gridCols">
       <div *ngFor="let item of items" class="remove-item-view">
         <app-item-view [category]="category" [item]="item.info"></app-item-view>
       </div>
