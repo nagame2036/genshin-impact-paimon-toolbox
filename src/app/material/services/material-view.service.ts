@@ -94,6 +94,10 @@ export class MaterialViewService {
     this.updateView({showOverflow});
   }
 
+  switchConciseMode(conciseMode: boolean): void {
+    this.updateView({conciseMode});
+  }
+
   private updateView(update: Partial<MaterialViewOptions>): void {
     this.settings.update(this.settingKey, update);
   }

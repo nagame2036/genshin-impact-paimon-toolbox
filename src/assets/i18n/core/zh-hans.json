@@ -77,6 +77,7 @@
     },
     "inventory": {
       "show-overflow": "显示溢出",
+      "concise-mode": "简洁模式",
       "need": "需求",
       "craftable": "可合成 {{ amount }} 次",
       "recipe": "配方",

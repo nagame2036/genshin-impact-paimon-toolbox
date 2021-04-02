@@ -12,6 +12,10 @@
     [label]="i18n.module('show-overflow') | translate"
     [value]="options.showOverflow"
     (checked)="view.changeShowOverflow($event)"
-  >
-  </app-checkbox>
+  ></app-checkbox>
+  <app-checkbox
+    [label]="i18n.module('concise-mode') | translate"
+    [value]="options.conciseMode"
+    (checked)="view.switchConciseMode($event)"
+  ></app-checkbox>
 </div>

@@ -13,6 +13,7 @@
 }
 
 .detail-container {
+  @apply pb-2;
   @apply relative;
   @apply rounded;
   @apply border-2;
@@ -52,7 +53,9 @@
 }
 
 .craft-btn {
-  @apply m-2;
+  @apply mx-2;
+  @apply mt-2;
+  @apply mb-1;
 
   ::ng-deep .ring-btn {
     @apply w-full;

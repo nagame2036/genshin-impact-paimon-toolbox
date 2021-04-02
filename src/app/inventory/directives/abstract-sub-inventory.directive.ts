@@ -14,7 +14,7 @@ export abstract class AbstractSubInventoryDirective
 
   materials: MaterialListData[] = [];
 
-  protected constructor(private view: MaterialViewService) {
+  protected constructor(public view: MaterialViewService) {
     super();
   }
 

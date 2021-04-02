@@ -11,7 +11,7 @@
         <app-item-view category="materials" [width]="138" [item]="item.info">
         </app-item-view>
         <button
-          *ngIf="!hiddenDetail"
+          *ngIf="!(conciseMode || hiddenDetail)"
           class="cost-detail-btn"
           [tabIndex]="-1"
           (click)="detailDialog.open(item)"
@@ -19,18 +19,22 @@
           <span class="material-icons"> info </span>
         </button>
         <div class="detail">
-          <app-form-field>
-            <span form-label>
-              {{ i18n.module('need') | translate }}
-            </span>
-            {{ item.need | number: '1.0-0' }}
-          </app-form-field>
-          <app-form-field [ngStyle]="{color: item.overflow ? 'gray' : 'red'}">
-            <span form-label>
-              {{ i18n.module(item.overflow ? 'overflow' : 'lack') | translate }}
-            </span>
-            {{ item.lack | number: '1.0-0' }}
-          </app-form-field>
+          <ng-container *ngIf="!conciseMode">
+            <app-form-field>
+              <span form-label>
+                {{ i18n.module('need') | translate }}
+              </span>
+              {{ item.need | number: '1.0-0' }}
+            </app-form-field>
+            <app-form-field [style.color]="item.overflow ? 'gray' : 'red'">
+              <span form-label>
+                {{
+                  i18n.module(item.overflow ? 'overflow' : 'lack') | translate
+                }}
+              </span>
+              {{ item.lack | number: '1.0-0' }}
+            </app-form-field>
+          </ng-container>
           <app-input-field
             [value]="(item.have | number: '1.0-0') || '0'"
             [disabled]="item.readonly"
@@ -41,6 +45,7 @@
             </span>
           </app-input-field>
           <app-ring-button
+            *ngIf="!conciseMode"
             class="craft-btn"
             [disableTab]="true"
             [disabled]="notCraftable(item)"

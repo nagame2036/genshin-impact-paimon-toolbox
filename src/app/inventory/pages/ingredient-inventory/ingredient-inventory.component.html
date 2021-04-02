@@ -1,1 +1,7 @@
-<app-material-list [materials]="materials"></app-material-list>
+<ng-container *ngIf="view.options | async as options">
+  <app-material-list
+    [materials]="materials"
+    [conciseMode]="options.conciseMode"
+  >
+  </app-material-list>
+</ng-container>

@@ -14,6 +14,9 @@ export class MaterialListComponent implements OnInit {
   i18n = I18n.create('inventory');
 
   @Input()
+  conciseMode = false;
+
+  @Input()
   materials!: MaterialListData[];
 
   @Input()
