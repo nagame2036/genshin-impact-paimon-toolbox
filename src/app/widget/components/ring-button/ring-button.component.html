@@ -2,6 +2,7 @@
   class="ring-btn"
   [ngClass]="colorClass"
   [class.disabled]="disabled"
+  [tabIndex]="disableTab ? -1 : 0"
   (click)="emitClick()"
 >
   <ng-content></ng-content>

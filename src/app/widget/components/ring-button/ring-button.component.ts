@@ -14,6 +14,9 @@ export class RingButtonComponent implements OnInit {
   @Input()
   disabled = false;
 
+  @Input()
+  disableTab = false;
+
   @Output()
   clicked = new EventEmitter();
 

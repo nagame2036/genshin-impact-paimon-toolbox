@@ -13,6 +13,7 @@
         <button
           *ngIf="!hiddenDetail"
           class="cost-detail-btn"
+          [tabIndex]="-1"
           (click)="detailDialog.open(item)"
         >
           <span class="material-icons"> info </span>
@@ -41,6 +42,7 @@
           </app-input-field>
           <app-ring-button
             class="craft-btn"
+            [disableTab]="true"
             [disabled]="notCraftable(item)"
             (clicked)="craftDialog.open(item)"
           >
