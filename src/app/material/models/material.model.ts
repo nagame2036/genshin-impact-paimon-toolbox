@@ -38,11 +38,9 @@ export class MaterialDetail {
     info: MaterialInfo,
     have: number = 0,
     need: number = 0,
-    craftable: boolean = false,
   ) {
     this.type = type;
     this.info = info;
-    this.craftable = craftable;
     this.update(have, need);
   }
 
@@ -55,7 +53,11 @@ export class MaterialDetail {
   }
 
   copy(have: number, need: number): MaterialDetail {
-    return new MaterialDetail(this.type, this.info, have, need, this.craftable);
+    const copy = new MaterialDetail(this.type, this.info, have, need);
+    copy.lack = this.overflow ? 0 : Math.max(0, need - have);
+    copy.overflow = copy.lack <= 0;
+    copy.craftable = this.craftable;
+    return copy;
   }
 
   private update(have: number, need: number): void {

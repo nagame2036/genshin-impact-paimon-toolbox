@@ -2,10 +2,8 @@ import {MaterialDetail} from '../models/material.model';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {RequireMark} from '../models/material-require-mark.model';
 
-type Exp = {id: number; exp?: number};
-
 export function processExpMaterials(
-  exps: Exp[],
+  exps: {id: number; exp?: number}[],
   materials: Map<number, MaterialDetail>,
 ): void {
   const expId = exps[0].id;
@@ -23,10 +21,20 @@ export function processExpMaterials(
   }
   expMaterial.lack = Math.max(0, expMaterial.need - expMaterial.have);
   expMaterial.overflow = expMaterial.lack === 0;
+  if (!expMaterial.overflow) {
+    return;
+  }
+  for (const {id} of exps) {
+    const material = materials.get(id);
+    if (material) {
+      material.lack = 0;
+      material.overflow = true;
+    }
+  }
 }
 
 export function processExpRequirement(
-  exps: Exp[],
+  exps: {id: number; exp?: number}[],
   requirement: MaterialRequireList,
   mark: RequireMark,
 ): void {
@@ -34,7 +42,7 @@ export function processExpRequirement(
   if (length < 2) {
     return;
   }
-  const {exp: lastItemExp} = exps[length - 2];
+  const lastItemExp = exps[length - 2].exp ?? 0;
   const expId = exps[0].id;
   let expNeed = requirement.getNeed(expId);
   for (let i = exps.length - 1; i >= 1; i--) {
@@ -47,7 +55,7 @@ export function processExpRequirement(
     }
     let need = Math.floor(expNeed / currItemExp);
     expNeed -= need * currItemExp;
-    if (currItemExp - expNeed < (lastItemExp ?? 0)) {
+    if (currItemExp - expNeed < lastItemExp) {
       need += 1;
       expNeed -= currItemExp;
     }
