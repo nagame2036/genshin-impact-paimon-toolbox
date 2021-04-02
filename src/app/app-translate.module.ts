@@ -27,6 +27,8 @@ const translateConfig = {
   },
 };
 
+export const defaultLanguage = translateConfig.defaultLanguage;
+
 @NgModule({
   imports: [HttpClientModule, TranslateModule.forRoot(translateConfig)],
   exports: [TranslateModule],

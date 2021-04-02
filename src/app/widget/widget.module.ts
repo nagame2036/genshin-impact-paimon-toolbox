@@ -5,7 +5,6 @@ import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {DialogComponent} from './components/dialog/dialog.component';
 import {FormFieldComponent} from './components/form-field/form-field.component';
 import {InputFieldComponent} from './components/input-field/input-field.component';
-import {NumberFieldComponent} from './components/number-field/number-field.component';
 import {SelectComponent} from './components/select/select.component';
 import {MultiSelectComponent} from './components/multi-select/multi-select.component';
 import {RingButtonComponent} from './components/ring-button/ring-button.component';
@@ -19,7 +18,6 @@ import {ParamTranslatePipe} from './pipes/param-translate.pipe';
     DialogComponent,
     FormFieldComponent,
     InputFieldComponent,
-    NumberFieldComponent,
     SelectComponent,
     MultiSelectComponent,
     RingButtonComponent,
@@ -34,7 +32,6 @@ import {ParamTranslatePipe} from './pipes/param-translate.pipe';
     DialogComponent,
     FormFieldComponent,
     InputFieldComponent,
-    NumberFieldComponent,
     SelectComponent,
     MultiSelectComponent,
     RingButtonComponent,

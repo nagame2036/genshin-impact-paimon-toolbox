@@ -1,0 +1,33 @@
+<div class="page">
+  <h1 class="title">
+    {{ i18n.module('replenish-time.title') | translate }}
+  </h1>
+  <div class="resin-inputs">
+    <div class="resin-field">
+      {{ i18n.module('current-resin') | translate: {value: currentResin} }}
+      <app-slider
+        [min]="0"
+        [max]="service.maxResin"
+        (changed)="setCurrentResin($event)"
+      ></app-slider>
+    </div>
+    <div class="resin-field">
+      {{ i18n.module('replenished-in') | translate: {value: minutes} }}
+      <app-slider
+        [min]="0"
+        [max]="service.replenishUseMinutes"
+        (changed)="setReplenishInMinutes($event)"
+      ></app-slider>
+    </div>
+    <app-form-field
+      *ngFor="let r of results"
+      class="result"
+      [class.disabled]="currentResin >= r.target"
+    >
+      <span form-label>
+        {{ i18n.module('replenish-to-number') | translate: {value: r.target} }}
+      </span>
+      {{ currentResin >= r.target ? (i18n.dict('now') | translate) : r.time }}
+    </app-form-field>
+  </div>
+</div>

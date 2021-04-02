@@ -18,14 +18,11 @@
       "language": "语言"
     },
     "resin": {
-      "replenish": {
-        "title": "树脂恢复计算器",
-        "resin": "树脂",
-        "minutes": "分钟",
-        "current": "当前剩余树脂",
-        "replenished-in": "下次恢复时间",
-        "replenished-to": "恢复到",
-        "now": "现在"
+      "current-resin": "当前剩余 {{ value }} 树脂",
+      "replenished-in": "下次恢复还需 {{ value }} 分钟",
+      "replenish-to-number": "恢复到 {{ value }} 树脂",
+      "replenish-time": {
+        "title": "树脂恢复时间计算器"
       }
     },
     "game-common": {
@@ -112,6 +109,7 @@
     },
     "title": "派蒙工具箱",
     "menu": "菜单",
+    "now": "现在",
     "and": "和",
     "total-amount": "合计",
     "all": "全部",

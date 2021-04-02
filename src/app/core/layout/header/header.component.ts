@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {TranslateService} from '@ngx-translate/core';
 import {
+  defaultLanguage,
   languageSettingKey,
   supportedLanguages,
 } from '../../../app-translate.module';
@@ -26,12 +27,10 @@ export class HeaderComponent implements OnInit {
     private settings: SettingService,
     private translator: TranslateService,
   ) {
-    settings
-      .get(languageSettingKey, supportedLanguages[0].value)
-      .subscribe(lang => {
-        this.currentLanguage = lang;
-        translator.use(lang);
-      });
+    settings.get(languageSettingKey, defaultLanguage).subscribe(lang => {
+      this.currentLanguage = lang;
+      translator.use(lang);
+    });
   }
 
   ngOnInit(): void {}

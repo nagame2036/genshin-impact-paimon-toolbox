@@ -13,19 +13,15 @@
     <div #prefix [class.prefix]="prefix.children.length > 0">
       <ng-content select="[prefix]"></ng-content>
     </div>
-    <ng-container *ngTemplateOutlet="customInput || defaultInput">
-    </ng-container>
-    <ng-template #defaultInput>
-      <input
-        #field
-        class="input-field w-full"
-        type="text"
-        [value]="value"
-        [disabled]="disabled"
-        (input)="inputted.emit((value = field.value))"
-        (change)="changed.emit((value = field.value))"
-      />
-    </ng-template>
+    <input
+      #field
+      class="input-field w-full"
+      type="text"
+      [value]="value"
+      [disabled]="disabled"
+      (input)="inputted.emit((value = field.value))"
+      (change)="changed.emit((value = field.value))"
+    />
     <div #suffix [class.suffix]="suffix.children.length > 0">
       <ng-content select="[suffix]"></ng-content>
     </div>

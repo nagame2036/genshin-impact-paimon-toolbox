@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-input-field',
@@ -31,9 +24,6 @@ export class InputFieldComponent implements OnInit {
 
   @Output()
   changed = new EventEmitter<string>();
-
-  @Input()
-  customInput!: TemplateRef<any>;
 
   constructor() {}
 

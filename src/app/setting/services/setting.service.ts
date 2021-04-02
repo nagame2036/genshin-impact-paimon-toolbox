@@ -13,6 +13,8 @@ export class SettingService {
 
   private readonly settings = new ReplaySubject<Map<string, any>>(1);
 
+  private defaultValues = new Map<string, any>();
+
   constructor(
     private database: NgxIndexedDBService,
     private translator: TranslateService,
@@ -31,14 +33,17 @@ export class SettingService {
     });
   }
 
-  get<T>(id: string, defaultValue: T): Observable<T> {
+  get<T>(id: string, defaultValue?: T): Observable<T> {
     return this.settings.pipe(
       switchMap(settings => {
         const setting = settings.get(id);
-        if (setting && optionHasValue(setting, defaultValue)) {
+        if (defaultValue && !this.defaultValues.has(id)) {
+          this.defaultValues.set(id, defaultValue);
+        }
+        const value = this.defaultValues.get(id) ?? {};
+        if (setting && optionHasValue(setting, value)) {
           return of(setting);
         }
-        const value = defaultValue;
         return this.database.update(this.storeName, {id, value}).pipe(
           map(_ => {
             settings.set(id, value);

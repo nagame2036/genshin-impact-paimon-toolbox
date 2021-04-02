@@ -13,8 +13,10 @@
 }
 
 .resin-inputs {
+  @apply m-4;
   @apply grid;
   @apply grid-cols-4;
+  @apply gap-x-4;
 }
 
 .resin-field {
