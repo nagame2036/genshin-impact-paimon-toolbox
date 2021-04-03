@@ -18,6 +18,7 @@ describe('ItemViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemViewComponent);
     component = fixture.componentInstance;
+    component.item = {id: 1, rarity: 1};
     fixture.detectChanges();
   });
 

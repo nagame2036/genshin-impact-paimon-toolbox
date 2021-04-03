@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {AppTranslateModule} from './app-translate.module';
+import {AppLocaleModule} from './app-locale.module';
 import {AppIndexedDbModule} from './app-indexed-db.module';
 import {AppLoggerModule} from './app-logger.module';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -12,7 +12,7 @@ import {SharedModule} from './shared/shared.module';
     SharedModule,
     RouterTestingModule,
     HttpClientModule,
-    AppTranslateModule,
+    AppLocaleModule,
     AppIndexedDbModule,
     AppLoggerModule,
   ],
@@ -20,7 +20,7 @@ import {SharedModule} from './shared/shared.module';
     SharedModule,
     RouterTestingModule,
     HttpClientModule,
-    AppTranslateModule,
+    AppLocaleModule,
     AppIndexedDbModule,
     AppLoggerModule,
   ],

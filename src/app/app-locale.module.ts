@@ -3,12 +3,16 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
-export const languageSettingKey = 'app-language';
+export const localeSettingKey = 'locale';
 
-export const supportedLanguages = [
+const supportedLocales = [
   {value: 'zh-hans', text: '简体中文'},
   {value: 'en', text: 'English'},
-];
+] as const;
+
+export type Locale = typeof supportedLocales[number]['value'];
+
+export const allLocales = [...supportedLocales];
 
 function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
   return new MultiTranslateHttpLoader(http, [
@@ -17,9 +21,9 @@ function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
   ]);
 }
 
-const translateConfig = {
-  defaultLanguage: supportedLanguages[0].value,
-  languages: supportedLanguages.map(it => it.value),
+const config = {
+  defaultLanguage: allLocales[0].value,
+  languages: allLocales.map(it => it.value),
   loader: {
     provide: TranslateLoader,
     useFactory: createTranslateLoader,
@@ -27,10 +31,10 @@ const translateConfig = {
   },
 };
 
-export const defaultLanguage = translateConfig.defaultLanguage;
+export const defaultLocale = config.defaultLanguage;
 
 @NgModule({
-  imports: [HttpClientModule, TranslateModule.forRoot(translateConfig)],
+  imports: [HttpClientModule, TranslateModule.forRoot(config)],
   exports: [TranslateModule],
 })
-export class AppTranslateModule {}
+export class AppLocaleModule {}
