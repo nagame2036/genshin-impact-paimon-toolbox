@@ -19,7 +19,7 @@ export class ResinReplenishTimeComponent
 
   minutes = 0;
 
-  results = rangeList(0, this.service.maxResin, 20)
+  results = rangeList(20, this.service.maxResin, 20)
     .map(it => ({target: it, time: ''}))
     .reverse();
 

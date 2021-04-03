@@ -3,6 +3,6 @@ export function rangeList<T extends number>(
   max: T,
   step: number = 1,
 ): T[] {
-  const length = (max - min + 1) / step;
+  const length = (max - min) / step + 1;
   return Array.from({length}, (_, i) => max - i * step) as T[];
 }
