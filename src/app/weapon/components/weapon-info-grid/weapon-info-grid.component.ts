@@ -13,13 +13,17 @@ import {NGXLogger} from 'ngx-logger';
 import {WeaponService} from '../../services/weapon.service';
 import {WeaponViewService} from '../../services/weapon-view.service';
 import {MaterialDetail} from '../../../material/models/material.model';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-weapon-info-grid',
   templateUrl: './weapon-info-grid.component.html',
   styleUrls: ['./weapon-info-grid.component.scss'],
 })
-export class WeaponInfoGridComponent implements OnChanges {
+export class WeaponInfoGridComponent
+  extends AbstractObservableDirective
+  implements OnChanges {
   readonly i18n = I18n.create('weapons');
 
   @Input()
@@ -45,7 +49,9 @@ export class WeaponInfoGridComponent implements OnChanges {
     public view: WeaponViewService,
     public images: ImageService,
     private logger: NGXLogger,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.weapons) {
@@ -55,9 +61,12 @@ export class WeaponInfoGridComponent implements OnChanges {
   }
 
   update(): void {
-    this.view.viewInfos(this.weapons).subscribe(items => {
-      this.items = items;
-    });
+    this.view
+      .viewInfos(this.weapons)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(items => {
+        this.items = items;
+      });
   }
 
   click(item: WeaponInfo): void {

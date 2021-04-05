@@ -11,18 +11,22 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
 import {NGXLogger} from 'ngx-logger';
 import {ImageService} from '../../../image/services/image.service';
-import {toggleItem} from '../../../shared/utils/collections';
 import {WeaponViewService} from '../../services/weapon-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
+import {handleItemGridClick} from '../../../game-common/utils/handle-item-grid-click';
+import {takeUntil} from 'rxjs/operators';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 
 @Component({
   selector: 'app-weapon-grid',
   templateUrl: './weapon-grid.component.html',
   styleUrls: ['./weapon-grid.component.scss'],
 })
-export class WeaponGridComponent implements OnChanges {
+export class WeaponGridComponent
+  extends AbstractObservableDirective
+  implements OnChanges {
   i18n = I18n.create('weapons');
 
   @Input()
@@ -57,7 +61,9 @@ export class WeaponGridComponent implements OnChanges {
     public level: AscensionLevelService,
     public images: ImageService,
     private logger: NGXLogger,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.weapons) {
@@ -67,9 +73,12 @@ export class WeaponGridComponent implements OnChanges {
   }
 
   update(): void {
-    this.view.view(this.weapons).subscribe(items => {
-      this.items = items;
-    });
+    this.view
+      .view(this.weapons)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(items => {
+        this.items = items;
+      });
   }
 
   click(item: WeaponOverview): void {

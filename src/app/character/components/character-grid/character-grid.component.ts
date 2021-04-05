@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {CharacterOverview} from '../../models/character.model';
 import {I18n} from '../../../widget/models/i18n.model';
-import {toggleItem} from '../../../shared/utils/collections';
 import {CharacterService} from '../../services/character.service';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 import {ImageService} from '../../../image/services/image.service';
@@ -17,6 +16,8 @@ import {CharacterViewService} from '../../services/character-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
+import {handleItemGridClick} from '../../../game-common/utils/handle-item-grid-click';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-grid',
@@ -72,9 +73,12 @@ export class CharacterGridComponent
   }
 
   update(): void {
-    this.view.view(this.characters).subscribe(items => {
-      this.items = items;
-    });
+    this.view
+      .view(this.characters)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(items => {
+        this.items = items;
+      });
   }
 
   click(item: CharacterOverview): void {

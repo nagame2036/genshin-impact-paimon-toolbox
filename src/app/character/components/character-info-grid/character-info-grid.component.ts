@@ -13,13 +13,16 @@ import {NGXLogger} from 'ngx-logger';
 import {CharacterService} from '../../services/character.service';
 import {CharacterViewService} from '../../services/character-view.service';
 import {MaterialDetail} from '../../../material/models/material.model';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 
 @Component({
   selector: 'app-character-info-grid',
   templateUrl: './character-info-grid.component.html',
   styleUrls: ['./character-info-grid.component.scss'],
 })
-export class CharacterInfoGridComponent implements OnChanges {
+export class CharacterInfoGridComponent
+  extends AbstractObservableDirective
+  implements OnChanges {
   readonly i18n = I18n.create('characters');
 
   @Input()
@@ -45,7 +48,9 @@ export class CharacterInfoGridComponent implements OnChanges {
     public view: CharacterViewService,
     public images: ImageService,
     private logger: NGXLogger,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.characters) {
