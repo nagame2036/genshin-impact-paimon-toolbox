@@ -11,6 +11,7 @@ import {RingButtonComponent} from './components/ring-button/ring-button.componen
 import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
 import {SliderComponent} from './components/slider/slider.component';
 import {ParamTranslatePipe} from './pipes/param-translate.pipe';
+import {DatetimePickerComponent} from './components/datetime-picker/datetime-picker.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {ParamTranslatePipe} from './pipes/param-translate.pipe';
     NavTabsComponent,
     SliderComponent,
     ParamTranslatePipe,
+    DatetimePickerComponent,
   ],
   imports: [SharedModule],
   exports: [
@@ -38,6 +40,7 @@ import {ParamTranslatePipe} from './pipes/param-translate.pipe';
     NavTabsComponent,
     SliderComponent,
     ParamTranslatePipe,
+    DatetimePickerComponent,
   ],
 })
 export class WidgetModule {}

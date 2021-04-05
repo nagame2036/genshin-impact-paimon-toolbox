@@ -12,22 +12,38 @@
   @apply font-semibold;
 }
 
-.resin-inputs {
-  @apply m-4;
+.resin-inputs-grid {
   @apply grid;
   @apply grid-cols-4;
   @apply gap-x-4;
+
+  + .resin-inputs-grid {
+    @apply mt-2;
+    @apply border-t-2;
+  }
 }
 
 .resin-field {
   @apply col-span-2;
 }
 
-.result {
+.replenish-result {
   &.disabled ::ng-deep {
     .form-field-label,
     .form-field-content {
       @apply text-gray-300;
     }
+  }
+}
+
+.resin-checked-results {
+  @apply max-h-96;
+  @apply overflow-y-auto;
+
+  > li {
+    @apply mx-4;
+    @apply py-2;
+    @apply list-inside;
+    @apply list-disc;
   }
 }

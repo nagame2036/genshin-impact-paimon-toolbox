@@ -1,0 +1,48 @@
+<div class="page">
+  <h1 class="title">
+    {{ i18n.module('replenish-time-title') | translate }}
+  </h1>
+  <div class="resin-inputs-grid">
+    <div class="resin-field p-2">
+      {{ i18n.module('current-resin') | translate: {value: currentResin} }}
+      <app-slider
+        [min]="0"
+        [max]="service.maxResin"
+        (changed)="setCurrentResin($event)"
+      ></app-slider>
+    </div>
+    <div class="resin-field p-2">
+      {{ i18n.module('replenish-in-minutes') | translate: {value: minutes} }}
+      <app-slider
+        [min]="1"
+        [max]="service.replenishUseMinutes"
+        (changed)="setReplenishInMinutes($event)"
+      ></app-slider>
+    </div>
+    <app-form-field
+      *ngFor="let r of replenishResults"
+      class="replenish-result"
+      [class.disabled]="currentResin >= r.target"
+    >
+      <span form-label>
+        {{ i18n.module('replenish-to') | translate: {value: r.target} }}
+      </span>
+      {{ currentResin >= r.target ? (i18n.dict('now') | translate) : r.time }}
+    </app-form-field>
+  </div>
+  <div class="resin-inputs-grid">
+    <div class="resin-field">
+      <app-datetime-picker (changed)="setTargetDate($event)">
+        <span form-label>{{ i18n.module('target-time') | translate }}</span>
+      </app-datetime-picker>
+    </div>
+    <app-form-field class="resin-field">
+      <span form-label>{{
+        i18n.module('resin-exceed-check') | translate
+      }}</span>
+      <ul class="resin-checked-results">
+        <li *ngFor="let result of checkedResults">{{ result }}</li>
+      </ul>
+    </app-form-field>
+  </div>
+</div>

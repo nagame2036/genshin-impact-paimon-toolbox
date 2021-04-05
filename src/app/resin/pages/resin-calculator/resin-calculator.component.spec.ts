@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ResinReplenishTimeComponent} from './resin-replenish-time.component';
+import {ResinCalculatorComponent} from './resin-calculator.component';
 import {AppTestingModule} from '../../../app-testing.module';
 import {ResinModule} from '../../resin.module';
 
-describe('ResinReplenishTimeComponent', () => {
-  let component: ResinReplenishTimeComponent;
-  let fixture: ComponentFixture<ResinReplenishTimeComponent>;
+describe('ResinCalculatorComponent', () => {
+  let component: ResinCalculatorComponent;
+  let fixture: ComponentFixture<ResinCalculatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResinReplenishTimeComponent],
+      declarations: [ResinCalculatorComponent],
       imports: [ResinModule, AppTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResinReplenishTimeComponent);
+    fixture = TestBed.createComponent(ResinCalculatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

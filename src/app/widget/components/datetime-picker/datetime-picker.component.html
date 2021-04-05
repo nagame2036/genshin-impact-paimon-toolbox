@@ -1,0 +1,61 @@
+<app-select
+  [customDropdown]="customDropdown"
+  [valueText]="service.formatDatetime(value)"
+  [opened]="opened"
+  (click)="opened = true"
+>
+  <ng-container form-label>
+    <ng-content select="[form-label]"></ng-content>
+  </ng-container>
+  <ng-template #customDropdown>
+    <div *ngIf="opened" class="select-dropdown">
+      <div class="calendar-header">
+        <button class="icon-btn" (click)="moveMonth(-1)">
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <div>{{ service.formatYearMonth(yearMonth) }}</div>
+        <button class="icon-btn" (click)="moveMonth(1)">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+      <div class="calendar-body" *ngIf="service.weekdays | async as weekdays">
+        <div *ngFor="let weekday of weekdays">{{ weekday }}</div>
+        <div *ngFor="let day of daysPrevMonth"></div>
+        <button
+          *ngFor="let day of daysCurrMonth"
+          class="day"
+          [class.today]="isToday(day)"
+          [class.selected]="isSelected(day)"
+          (click)="setDate(day)"
+        >
+          {{ day }}
+        </button>
+      </div>
+      <div class="time-picker">
+        <app-slider
+          [min]="0"
+          [max]="23"
+          [value]="hour"
+          (changed)="setHour($event)"
+        ></app-slider>
+        <div>
+          {{ i18n.module('hour') | translate: {value: value.getHours()} }}
+        </div>
+        <app-slider
+          [min]="0"
+          [max]="59"
+          [value]="minute"
+          (changed)="setMinute($event)"
+        ></app-slider>
+        <div>
+          {{ i18n.module('minute') | translate: {value: value.getMinutes()} }}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="now-btn" (click)="setValueNow()">
+          {{ i18n.module('now') | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</app-select>

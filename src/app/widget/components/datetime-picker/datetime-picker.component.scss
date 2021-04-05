@@ -1,0 +1,91 @@
+@import '../../styles/select-dropdown.scss';
+@import '../../styles/icon-btn.scss';
+
+.select-dropdown {
+  @apply w-80;
+  max-height: 32rem;
+  @apply flex;
+  @apply flex-col;
+  @apply text-sm;
+  @apply cursor-default;
+}
+
+.calendar-header {
+  @apply flex;
+  @apply flex-row;
+  @apply place-items-center;
+  @apply bg-primary-500;
+  @apply text-white;
+
+  > div {
+    @apply flex-1;
+    @apply text-center;
+  }
+}
+
+.calendar-body {
+  @apply p-1;
+  @apply grid;
+  @apply grid-cols-7;
+  @apply gap-0.5;
+  @apply place-items-center;
+
+  > button, div {
+    @apply h-8;
+    @apply w-8;
+    @apply rounded;
+    @apply text-center;
+    line-height: 2rem;
+    @apply select-none;
+  }
+}
+
+.weekday {
+  @apply font-bold;
+}
+
+.day {
+  @apply cursor-pointer;
+  @apply appearance-none;
+  @apply outline-none;
+  @apply hover:bg-primary-200;
+  @apply hover:text-black;
+}
+
+.today {
+  @apply bg-primary-400;
+  @apply text-white;
+
+  &.selected {
+    @apply ring-black;
+  }
+}
+
+.selected {
+  @apply ring-2;
+  @apply ring-primary-500;
+}
+
+.time-picker {
+  @apply p-2;
+  @apply flex;
+  @apply flex-col;
+  @apply gap-1;
+  @apply border-t;
+
+  > div {
+    @apply text-center;
+  }
+}
+
+.actions {
+  @apply border-t;
+}
+
+.now-btn {
+  @apply w-full;
+  @apply p-3;
+  @apply text-lg;
+  @apply text-primary-500;
+  @apply outline-none;
+}

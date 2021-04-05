@@ -18,12 +18,15 @@
       "language": "语言"
     },
     "resin": {
+      "replenish-time-title": "树脂恢复时间计算器",
       "current-resin": "当前剩余 {{ value }} 树脂",
-      "replenished-in": "下次恢复还需 {{ value }} 分钟",
-      "replenish-to-number": "恢复到 {{ value }} 树脂",
-      "replenish-time": {
-        "title": "树脂恢复时间计算器"
-      }
+      "replenish-in-minutes": "下次恢复还需 {{ value }} 分钟",
+      "replenish-to": "恢复到 {{ value }} 树脂",
+      "target-time": "目标时间",
+      "resin-exceed-check": "树脂溢出计算",
+      "target-time-resin": "{{ time }} - 拥有 {{ value }} 树脂",
+      "craft-condensed-resin": "{{ time }} - 合成 {{ value }} 个浓缩树脂",
+      "spend-resin": "{{ time }} - 消耗 {{ value }} 树脂"
     },
     "game-common": {
       "confirm-to-remove": "确定要将以下{{ type }}移出Box吗？",
@@ -101,6 +104,11 @@
       "requirement": "需求",
       "plan-requirement": "培养需求",
       "requirement-reached": "任务做完了，来陪姐姐聊会天吧"
+    },
+    "widget": {
+      "now": "此刻",
+      "hour": "{{ value }}时",
+      "minute": "{{ value }}分"
     }
   },
   "dict": {
