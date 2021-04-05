@@ -16,7 +16,7 @@
     *ngFor="let item of items; trackBy: trackItem"
     class="item-overview"
     [class.selected]="selected.includes(item)"
-    (click)="select(item)"
+    (click)="click(item)"
     (dblclick)="doubleClick(item)"
   >
     <app-item-view category="weapons" [item]="item.info"></app-item-view>

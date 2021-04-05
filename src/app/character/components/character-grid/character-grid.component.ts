@@ -79,15 +79,7 @@ export class CharacterGridComponent
 
   click(item: CharacterOverview): void {
     this.logger.info('clicked character', item);
-    if (!this.multiSelect) {
-      this.clicked = this.clicked === item ? null : item;
-    } else {
-      const id = item.progress.id;
-      const list = toggleItem(this.selected, item, it => it.progress.id === id);
-      this.selected = list;
-      this.clicked = list[list.length - 1] ?? null;
-      this.multiSelected.emit(list);
-    }
+    handleItemGridClick(item, this);
     if (this.clicked) {
       this.summaryMaterials = this.service.getRequireMaterials(item.info);
     }
