@@ -58,6 +58,7 @@ export class ResinService {
     let remainingResin: number;
     if (minutesDiff < exceedMinutes) {
       result = [];
+      now.setMinutes(now.getMinutes() + minutesDiff);
       const next = minutesDiff + replenishInMinutes;
       const replenishedResin = Math.floor(next / replenishUseMinutes);
       remainingResin = currentResin + replenishedResin;
@@ -102,6 +103,7 @@ export class ResinService {
       now.setMinutes(now.getMinutes() + replenishLimitUseMinutes);
       this.pushResult(results, 'spend-resin', now, limit);
     }
+    now.setMinutes(now.getMinutes() + minutes);
     const resin = Math.floor((minutes * limit) / replenishLimitUseMinutes);
     return {results, resin};
   }
