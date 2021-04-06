@@ -10,7 +10,7 @@ import {
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Character, CharacterOverview} from '../models/character.model';
 import {StatsType} from '../../game-common/models/stats.model';
-import characterList from '../../../data/characters/character-list.json';
+import itemList from '../../../data/characters/character-list.json';
 import statsCurvesLevel from '../../../data/characters/character-stats-curve-level.json';
 import {SettingService} from '../../setting/services/setting.service';
 import {allGenders, Gender} from '../models/gender.enum';
@@ -39,7 +39,7 @@ export class CharacterInfoService {
 
   private readonly settingKey = 'character-info';
 
-  readonly infos = objectMap<CharacterInfo>(load(characterList));
+  readonly infos = objectMap<CharacterInfo>(load(itemList));
 
   private statsLevel = load(statsCurvesLevel) as CharacterStatsCurveLevel;
 
@@ -94,9 +94,7 @@ export class CharacterInfoService {
         const shouldRemove = new Set<number>();
         for (const [gender, travelers] of this.travelersGendered) {
           if (gender !== genderOption) {
-            for (const t of travelers) {
-              shouldRemove.add(t);
-            }
+            travelers.forEach(t => shouldRemove.add(t));
           }
         }
         return shouldRemove;
@@ -117,12 +115,12 @@ export class CharacterInfoService {
     info: CharacterInfo,
     dependency: CharacterStatsDependency,
   ): CharacterStatsValue {
+    const result = new CharacterStatsValue();
     const {id, stats, curvesAscension} = info;
     const {ascension, level} = dependency;
-    const result = new CharacterStatsValue();
     for (const [type, statsInfo] of Object.entries(stats)) {
-      const statsType = type as StatsType;
       if (statsInfo) {
+        const statsType = type as StatsType;
         const {initial, curve} = statsInfo;
         const curvesLevel = this.statsLevel;
         const value = curve ? initial * curvesLevel[curve][level] : initial;
@@ -130,8 +128,8 @@ export class CharacterInfoService {
       }
     }
     for (const [type, values] of Object.entries(curvesAscension)) {
-      const statsType = type as StatsType;
       if (values) {
+        const statsType = type as StatsType;
         const value = values[ascension];
         result.add(statsType, value);
       }

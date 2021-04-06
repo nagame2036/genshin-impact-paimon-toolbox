@@ -10,7 +10,7 @@ import {
 import {Ascension} from '../../game-common/models/ascension.type';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {StatsType} from '../../game-common/models/stats.model';
-import weaponList from '../../../data/weapons/weapon-list.json';
+import itemList from '../../../data/weapons/weapon-list.json';
 import statsLevel from '../../../data/weapons/weapon-stats-curve-level.json';
 import statsAscension from '../../../data/weapons/weapon-stats-curve-ascension.json';
 import {MaterialDetail} from '../../material/models/material.model';
@@ -23,7 +23,7 @@ import {I18n} from '../../widget/models/i18n.model';
 /**
  * Represents the dependency of weapon stats value.
  */
-export type WeaponStatsDependency = {ascension: Ascension; level: number};
+type WeaponStatsDependency = {ascension: Ascension; level: number};
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export type WeaponStatsDependency = {ascension: Ascension; level: number};
 export class WeaponInfoService {
   private i18n = I18n.create('weapons');
 
-  readonly infos = objectMap<WeaponInfo>(load(weaponList));
+  readonly infos = objectMap<WeaponInfo>(load(itemList));
 
   private statsLevel = load(statsLevel) as WeaponStatsCurveLevel;
 
@@ -49,40 +49,38 @@ export class WeaponInfoService {
     private materials: MaterialService,
     private translator: TranslateService,
     private logger: NGXLogger,
-  ) {}
+  ) {
+    logger.info('loaded item list', this.infos);
+    logger.info('loaded stats curves for level', this.statsLevel);
+    logger.info('loaded stats curves for ascension', this.statsAscension);
+  }
 
   getOverview(weapon: Weapon): WeaponOverview {
     const {info, progress, plan} = weapon;
     const currentStats = this.getStatsValue(info, progress);
     const planStats = this.getStatsValue(info, plan);
-    const overview = {
-      ...weapon,
-      currentStats,
-      planStats,
-    };
-    this.logger.info('sent weapon overview', overview);
-    return overview;
+    return {...weapon, currentStats, planStats};
   }
 
   getStatsValue(
     {id, rarity, stats}: WeaponInfo,
     dependency: WeaponStatsDependency,
   ): WeaponStatsValue {
-    const {ascension, level} = dependency;
     const result = new WeaponStatsValue();
+    const {ascension, level} = dependency;
     for (const [type, statsInfo] of Object.entries(stats)) {
+      if (!statsInfo) {
+        continue;
+      }
       const statsType = type as StatsType;
-      if (statsInfo) {
-        const {initial, curve} = statsInfo;
-        const value = initial * this.statsLevel[curve][level];
-        result.add(statsType, value);
-        const curveAscension = this.statsAscension[rarity][statsType];
-        if (curveAscension) {
-          result.add(statsType, curveAscension[ascension]);
-        }
+      const {initial, curve} = statsInfo;
+      const value = initial * this.statsLevel[curve][level];
+      result.add(statsType, value);
+      const curveAscension = this.statsAscension[rarity][statsType];
+      if (curveAscension) {
+        result.add(statsType, curveAscension[ascension]);
       }
     }
-    this.logger.info('sent weapon stats', id, dependency, result);
     return result;
   }
 
