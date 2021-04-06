@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {I18n} from '../../models/i18n.model';
+import {I18n} from '../../../widget/models/i18n.model';
 import {DatetimeService} from '../../services/datetime.service';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 import {takeUntil} from 'rxjs/operators';

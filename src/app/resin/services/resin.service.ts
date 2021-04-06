@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {SettingService} from '../../setting/services/setting.service';
 import {ReplaySubject} from 'rxjs';
 import {Locale} from '../../app-locale.module';
-import {DatetimeService} from '../../widget/services/datetime.service';
+import {DatetimeService} from './datetime.service';
 import {I18n} from '../../widget/models/i18n.model';
 import {TranslateService} from '@ngx-translate/core';
 

@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DatetimePickerComponent} from './datetime-picker.component';
-import {WidgetModule} from '../../widget.module';
+import {WidgetModule} from '../../../widget/widget.module';
 import {AppTestingModule} from '../../../app-testing.module';
 
 describe('DatetimePickerComponent', () => {

@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 
 import {WidgetModule} from '../widget/widget.module';
 import {ResinRoutingModule} from './resin-routing.module';
-import {ResinPageComponent} from './pages/resin-page/resin-page.component';
 import {ResinCalculatorComponent} from './pages/resin-calculator/resin-calculator.component';
+import {DatetimePickerComponent} from './components/datetime-picker/datetime-picker.component';
 
 @NgModule({
-  declarations: [ResinPageComponent, ResinCalculatorComponent],
+  declarations: [ResinCalculatorComponent, DatetimePickerComponent],
   imports: [WidgetModule, ResinRoutingModule],
 })
 export class ResinModule {}

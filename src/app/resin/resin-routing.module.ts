@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {ResinCalculatorComponent} from './pages/resin-calculator/resin-calculator.component';
 
-import {ResinPageComponent} from './pages/resin-page/resin-page.component';
-
-const routes: Routes = [{path: '', component: ResinPageComponent}];
+const routes: Routes = [{path: '', component: ResinCalculatorComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
