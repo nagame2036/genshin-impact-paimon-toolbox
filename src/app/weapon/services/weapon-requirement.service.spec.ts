@@ -6,6 +6,7 @@ import {WeaponType} from '../models/weapon-type.enum';
 import {WeaponModule} from '../weapon.module';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {AppTestingModule} from '../../app-testing.module';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
 
 describe('WeaponRequirementService', () => {
   let service: WeaponRequirementService;
@@ -54,7 +55,7 @@ describe('WeaponRequirementService', () => {
         level: 90,
       },
     };
-    const res = service.requirement(weapon);
+    const res = new MaterialRequireList(service.requirement(weapon));
     expect(res.getNeed(mora.id)).toBe(503820);
     expect(res.getNeed(weaponExp.id)).toBe(3988200);
     expect(res.getNeed(4000)).toBe(2);
@@ -101,7 +102,7 @@ describe('WeaponRequirementService', () => {
         level: 50,
       },
     };
-    const res = service.requirement(weapon);
+    const res = new MaterialRequireList(service.requirement(weapon));
     expect(res.getNeed(mora.id)).toBe(111485);
     expect(res.getNeed(weaponExp.id)).toBe(914850);
     expect(res.getNeed(4040)).toBe(3);
@@ -142,7 +143,7 @@ describe('WeaponRequirementService', () => {
         level: 90,
       },
     };
-    const res = service.requirement(weapon);
+    const res = new MaterialRequireList(service.requirement(weapon));
     expect(res.getNeed(mora.id)).toBe(964195);
     expect(res.getNeed(weaponExp.id)).toBe(7691950);
     expect(res.getNeed(4031)).toBe(9);

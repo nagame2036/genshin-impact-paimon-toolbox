@@ -2,11 +2,7 @@ import {Rarity} from '../../game-common/models/rarity.type';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {ElementType} from '../../game-common/models/element-type.enum';
 import {Nation} from '../../game-common/models/nation.enum';
-import {ExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
-import {
-  CharacterStatsCurveAscension,
-  CharacterStatsInfo,
-} from './character-stats.model';
+import {CharacterStatsCurveAscension, CharacterStatsInfo} from './character-stats.model';
 import {ItemInfo} from '../../game-common/models/item.model';
 import {Character} from './character.model';
 
@@ -35,8 +31,6 @@ export interface CharacterInfo extends ItemInfo<Character> {
   talentsOther: number[];
 
   materials: CharacterMaterialRequirement;
-
-  expBonus?: ExpBonus[];
 
   stats: CharacterStatsInfo;
 

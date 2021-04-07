@@ -43,8 +43,8 @@ export class CharacterPlanner extends ItemPlanService<Character> {
   protected getRequirements(item: Character): MaterialRequireList[] {
     const talents = this.talentInfos.getAll(item.info.talentsUpgradable);
     return [
-      this.characterReq.requirement(item),
-      this.talentReq.requirement(item, talents),
+      ...this.characterReq.requirement(item),
+      ...this.talentReq.requirement(item, talents),
     ];
   }
 

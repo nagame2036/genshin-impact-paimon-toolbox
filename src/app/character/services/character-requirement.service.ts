@@ -10,8 +10,8 @@ import {MaterialRequireList} from '../../material/collections/material-require-l
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
-import characterAscendCost from '../../../data/characters/character-ascend-cost.json';
-import characterLevelupCost from '../../../data/characters/character-levelup-cost.json';
+import ascendCost from '../../../data/characters/character-ascend-cost.json';
+import levelupCost from '../../../data/characters/character-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',
@@ -19,15 +19,15 @@ import characterLevelupCost from '../../../data/characters/character-levelup-cos
 export class CharacterRequirementService {
   private readonly i18n = I18n.create('game-common');
 
-  private readonly ascensions = characterAscendCost as CharacterAscendCost[];
+  private readonly ascensions = ascendCost as CharacterAscendCost[];
 
   /**
    * Stores the cost of exp per level for character level up.
    * @private
    */
-  private readonly levels = characterLevelupCost as number[];
+  private readonly levels = levelupCost;
 
-  readonly ascensionLabel = this.i18n.dict('ascension');
+  readonly ascendLabel = this.i18n.dict('ascend');
 
   readonly levelupLabel = this.i18n.dict('levelup');
 
@@ -36,23 +36,19 @@ export class CharacterRequirementService {
     logger.info('loaded levelup cost', this.levels);
   }
 
-  requirement(character: Character): MaterialRequireList {
-    const req = new MaterialRequireList([
-      this.ascension(character),
-      this.levelup(character),
-    ]);
+  requirement(character: Character): MaterialRequireList[] {
+    const req = [this.ascend(character), this.levelup(character)];
     this.logger.info('sent requirements', character, req);
     return req;
   }
 
-  private ascension(character: Character): MaterialRequireList {
+  private ascend(character: Character): MaterialRequireList {
+    const req = new MaterialRequireList();
     const {info, progress, plan} = character;
     const {boss, gem, local, mob} = info.materials;
-    const req = new MaterialRequireList();
-    const label = this.ascensionLabel;
     const start = progress.ascension;
     const goal = plan.ascension;
-    const mark = this.generateMark(plan, label, `★${start}`, `★${goal}`);
+    const mark = this.generateMark(plan, this.ascendLabel, `★${start}`, `★${goal}`);
     for (const cost of this.ascensions.slice(start, goal)) {
       req.mark(mora.id, cost.mora, mark);
       if (boss) {
@@ -66,20 +62,17 @@ export class CharacterRequirementService {
   }
 
   private levelup(character: Character): MaterialRequireList {
+    const req = new MaterialRequireList();
     const {info, progress, plan} = character;
-    const requirement = new MaterialRequireList();
-    const label = this.levelupLabel;
     const start = progress.level;
     const goal = plan.level;
-    const mark = this.generateMark(plan, label, `${start}`, `${goal}`);
-    const expCostBase = this.levels
-      .slice(start, goal)
-      .reduce((sum, curr) => sum + curr, 0);
-    const {moraCost, expCost} = processExpBonus(info, expCostBase, 0.2);
-    requirement.mark(mora.id, moraCost, mark);
-    requirement.mark(characterExp.id, expCost, mark);
-    this.materials.processSpecialRequirement(requirement, mark);
-    return requirement;
+    const mark = this.generateMark(plan, this.levelupLabel, `${start}`, `${goal}`);
+    const expAmount = this.levels.slice(start, goal).reduce((sum, curr) => sum + curr, 0);
+    const {moraCost, expCost} = processExpBonus(info, expAmount, 0.2);
+    req.mark(mora.id, moraCost, mark);
+    req.mark(characterExp.id, expCost, mark);
+    this.materials.processSpecialRequirement(req, mark);
+    return req;
   }
 
   private generateMark(

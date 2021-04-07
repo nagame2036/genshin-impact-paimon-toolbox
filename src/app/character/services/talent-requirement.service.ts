@@ -10,7 +10,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 import {TalentInfo} from '../models/talent-info.model';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {CharacterPlan} from '../models/character-plan.model';
-import talentLevelupCost from '../../../data/characters/talent-levelup-cost.json';
+import levelupCost from '../../../data/characters/talent-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',
@@ -18,20 +18,20 @@ import talentLevelupCost from '../../../data/characters/talent-levelup-cost.json
 export class TalentRequirementService {
   private readonly i18n = I18n.create('game-common');
 
-  private readonly levels = talentLevelupCost as TalentLevelupCost[];
+  private readonly levels = levelupCost as TalentLevelupCost[];
 
   constructor(private materials: MaterialInfoService, private logger: NGXLogger) {
     logger.info('loaded levelup cost', this.levels);
   }
 
-  requirement(character: Character, talents: TalentInfo[]): MaterialRequireList {
-    const req = new MaterialRequireList([this.levelup(character, talents)]);
-    this.logger.info('sent requirements', talents, req);
-    return req;
-  }
-
   getLabel(talentId: number): string {
     return this.i18n.dict(`talent-types.${talentId % 10}`);
+  }
+
+  requirement(character: Character, talents: TalentInfo[]): MaterialRequireList[] {
+    const req = [this.levelup(character, talents)];
+    this.logger.info('sent requirements', talents, req);
+    return req;
   }
 
   private levelup(
@@ -48,11 +48,13 @@ export class TalentRequirementService {
       // talent level starts with 1 not 0, so should minus 1
       const start = Math.max(0, progress.talents[id] - 1);
       const goal = Math.max(start, plan.talents[id] - 1);
-      const label = this.getLabel(id);
-      const mark = generateMark(plan, label, start, goal);
+      const mark = generateMark(plan, this.getLabel(id), start, goal);
       const domainLength = domainList.length;
       for (let i = start; i < goal; i++) {
         const cost = this.levels[i];
+        if (!cost) {
+          continue;
+        }
         req.mark(mora.id, cost.mora, mark);
         const domainIndex = i % domainLength;
         const domain = domainList[domainIndex];
@@ -78,7 +80,7 @@ function generateMark(
     key: plan.id,
     purposeType: purpose,
     purpose,
-    start: (start + 1).toString(),
-    goal: (goal + 1).toString(),
+    start: `${start + 1}`,
+    goal: `${goal + 1}`,
   };
 }

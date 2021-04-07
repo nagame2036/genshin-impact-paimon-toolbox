@@ -8,6 +8,7 @@ import {ElementType} from '../../game-common/models/element-type.enum';
 import {WeaponType} from '../../weapon/models/weapon-type.enum';
 import {mora} from '../../material/models/mora-and-exp.model';
 import {TalentInfo} from '../models/talent-info.model';
+import {MaterialRequireList} from '../../material/collections/material-require-list';
 
 describe('TalentRequirementService', () => {
   let service: TalentRequirementService;
@@ -70,7 +71,7 @@ describe('TalentRequirementService', () => {
         event: 7000,
       },
     };
-    const res = service.requirement(character, [talent]);
+    const res = new MaterialRequireList(service.requirement(character, [talent]));
     expect(res.getNeed(mora.id)).toBe(1652500);
     expect(res.getNeed(5000)).toBe(3);
     expect(res.getNeed(5001)).toBe(21);
@@ -127,7 +128,7 @@ describe('TalentRequirementService', () => {
         event: 7000,
       },
     };
-    const res = service.requirement(character, [talent]);
+    const res = new MaterialRequireList(service.requirement(character, [talent]));
     expect(res.getNeed(mora.id)).toBe(122500);
     expect(res.getNeed(5000)).toBe(3);
     expect(res.getNeed(5001)).toBe(21);
@@ -180,7 +181,7 @@ describe('TalentRequirementService', () => {
         event: 7000,
       },
     };
-    const res = service.requirement(character, [talent]);
+    const res = new MaterialRequireList(service.requirement(character, [talent]));
     expect(res.getNeed(mora.id)).toBe(1530000);
     expect(res.getNeed(5002)).toBe(38);
     expect(res.getNeed(6002)).toBe(6);
@@ -233,7 +234,7 @@ describe('TalentRequirementService', () => {
         event: 7000,
       },
     };
-    const res = service.requirement(character, [talent]);
+    const res = new MaterialRequireList(service.requirement(character, [talent]));
     expect(res.getNeed(mora.id)).toBe(1652500);
     expect(res.getNeed(5000)).toBe(3);
     expect(res.getNeed(5001)).toBe(6);

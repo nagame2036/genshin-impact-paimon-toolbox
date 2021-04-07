@@ -11,8 +11,8 @@ import {NGXLogger} from 'ngx-logger';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import weaponAscendCost from '../../../data/weapons/weapon-ascend-cost.json';
-import weaponLevelupCost from '../../../data/weapons/weapon-levelup-cost.json';
+import ascendCost from '../../../data/weapons/weapon-ascend-cost.json';
+import levelupCost from '../../../data/weapons/weapon-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',
@@ -20,15 +20,15 @@ import weaponLevelupCost from '../../../data/weapons/weapon-levelup-cost.json';
 export class WeaponRequirementService {
   private readonly i18n = I18n.create('game-common');
 
-  private ascensions = weaponAscendCost as WeaponAscendCost;
+  private ascensions = ascendCost as WeaponAscendCost;
 
   /**
    * Stores the cost of exp per level for weapon level up.
    * @private
    */
-  private levels = weaponLevelupCost as WeaponLevelupCost;
+  private levels = levelupCost as WeaponLevelupCost;
 
-  readonly ascensionLabel = this.i18n.dict('ascension');
+  readonly ascendLabel = this.i18n.dict('ascend');
 
   readonly levelupLabel = this.i18n.dict('levelup');
 
@@ -37,22 +37,21 @@ export class WeaponRequirementService {
     logger.info('loaded levelup cost', this.levels);
   }
 
-  requirement(weapon: Weapon): MaterialRequireList {
-    const req = new MaterialRequireList([this.ascension(weapon), this.levelup(weapon)]);
+  requirement(weapon: Weapon): MaterialRequireList[] {
+    const req = [this.ascend(weapon), this.levelup(weapon)];
     this.logger.info('sent requirements of weapon', weapon, req);
     return req;
   }
 
-  private ascension(weapon: Weapon): MaterialRequireList {
+  private ascend(weapon: Weapon): MaterialRequireList {
+    const req = new MaterialRequireList();
     const {progress, plan} = weapon;
     const {rarity, materials} = weapon.info;
     const {domain, elite, mob} = materials;
-    const req = new MaterialRequireList();
-    const label = this.ascensionLabel;
     const start = progress.ascension;
     const end = plan.ascension;
-    const mark = this.generateMark(plan, label, `★${start}`, `★${end}`);
-    const costs = this.ascensions[rarity].slice(start, end);
+    const mark = this.generateMark(plan, this.ascendLabel, `★${start}`, `★${end}`);
+    const costs = this.ascensions[rarity]?.slice(start, end) ?? [];
     for (const cost of costs) {
       req.mark(mora.id, cost.mora, mark);
       this.materials.markGroup(req, domain, cost.domain, mark);
@@ -63,20 +62,18 @@ export class WeaponRequirementService {
   }
 
   private levelup(weapon: Weapon): MaterialRequireList {
+    const req = new MaterialRequireList();
     const {info, progress, plan} = weapon;
-    const requirement = new MaterialRequireList();
-    const label = this.levelupLabel;
     const start = progress.level;
     const end = plan.level;
-    const mark = this.generateMark(plan, label, `${start}`, `${end}`);
-    const expAmount = this.levels[info.rarity]
-      .slice(start, end)
-      .reduce((sum, curr) => sum + curr, 0);
+    const mark = this.generateMark(plan, this.levelupLabel, `${start}`, `${end}`);
+    const levels = this.levels[info.rarity]?.slice(start, end) ?? [];
+    const expAmount = levels.reduce((sum, curr) => sum + curr, 0);
     const {moraCost, expCost} = processExpBonus(info, expAmount, 0.1);
-    requirement.mark(mora.id, moraCost, mark);
-    requirement.mark(weaponExp.id, expCost, mark);
-    this.materials.processSpecialRequirement(requirement, mark);
-    return requirement;
+    req.mark(mora.id, moraCost, mark);
+    req.mark(weaponExp.id, expCost, mark);
+    this.materials.processSpecialRequirement(req, mark);
+    return req;
   }
 
   private generateMark(

@@ -34,7 +34,7 @@ export class WeaponPlanner extends ItemPlanService<Weapon> {
   }
 
   protected getRequirements(item: Weapon): MaterialRequireList[] {
-    return [this.weaponReq.requirement(item)];
+    return this.weaponReq.requirement(item);
   }
 
   protected getRequireLabels(item: Weapon): string[] {
