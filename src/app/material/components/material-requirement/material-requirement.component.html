@@ -1,17 +1,13 @@
 <div class="list-options" *ngIf="requirements.length > 0">
   <app-select
+    [label]="i18n.module('plan-requirement')"
     [value]="currentIndex"
     [options]="requirementOptions"
     (changed)="changeRequirement($event)"
-  >
-    <span form-label>
-      {{ i18n.module('plan-requirement') | translate }}
-    </span>
-  </app-select>
+  ></app-select>
 </div>
 <div class="item-list">
-  <app-material-list [materials]="materials" [hiddenDetail]="true">
-  </app-material-list>
+  <app-material-list [materials]="materials" [hiddenDetail]="true"> </app-material-list>
   <div *ngIf="detailsEmpty" class="requirement-reached">
     <img src="assets/images/stickers/2.webp" alt="requirement-reached" />
     {{ i18n.module('requirement-reached') | translate }}

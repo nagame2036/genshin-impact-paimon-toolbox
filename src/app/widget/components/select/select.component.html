@@ -2,13 +2,11 @@
   #container
   class="form-container"
   [ngClass]="{hover: hover, focus: focus}"
+  [label]="label"
   (mouseenter)="hover = true"
   (mouseleave)="hover = false"
   (click)="focus = opened = true"
 >
-  <label form-label>
-    <ng-content select="[form-label]"></ng-content>
-  </label>
   <div class="select-container">
     <div #prefix [class.prefix]="prefix.children.length > 0">
       <ng-content select="[prefix]"></ng-content>
@@ -21,22 +19,13 @@
       (focusin)="focus = opened = true"
       (focusout)="focus = false"
     />
-    <div
-      class="material-icons select-arrow"
-      [ngClass]="{hover: hover, focus: focus}"
-    >
+    <div class="material-icons select-arrow" [ngClass]="{hover: hover, focus: focus}">
       keyboard_arrow_down
     </div>
-    <ng-container *ngTemplateOutlet="customDropdown || defaultDropdown">
-    </ng-container>
+    <ng-container *ngTemplateOutlet="customDropdown || defaultDropdown"> </ng-container>
     <ng-template #defaultDropdown>
-      <ul
-        *ngIf="opened"
-        class="select-dropdown"
-        [style.width.px]="container.width"
-      >
-        <ng-container *ngTemplateOutlet="customOptions || defaultOptions">
-        </ng-container>
+      <ul *ngIf="opened" class="select-dropdown" [style.width.px]="container.width">
+        <ng-container *ngTemplateOutlet="customOptions || defaultOptions"> </ng-container>
       </ul>
       <ng-template #defaultOptions>
         <li

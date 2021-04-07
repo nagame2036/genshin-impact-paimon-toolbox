@@ -1,8 +1,5 @@
 <ng-container *ngFor="let items of materials">
-  <app-form-field *ngIf="items.materials.length > 0">
-    <span class="title" form-label>
-      {{ i18n.module(items.type) | translate }}
-    </span>
+  <app-form-field *ngIf="items.materials.length > 0" [label]="i18n.module(items.type)">
     <div class="item-list">
       <div
         *ngFor="let item of items.materials; trackBy: trackItem"
@@ -20,30 +17,22 @@
         </button>
         <div class="detail">
           <ng-container *ngIf="!conciseMode">
-            <app-form-field>
-              <span form-label>
-                {{ i18n.module('need') | translate }}
-              </span>
+            <app-form-field [label]="i18n.module('need')">
               {{ item.need | number: '1.0-0' }}
             </app-form-field>
-            <app-form-field [style.color]="item.overflow ? 'gray' : 'red'">
-              <span form-label>
-                {{
-                  i18n.module(item.overflow ? 'overflow' : 'lack') | translate
-                }}
-              </span>
+            <app-form-field
+              [style.color]="item.overflow ? 'gray' : 'red'"
+              [label]="i18n.module(item.overflow ? 'overflow' : 'lack')"
+            >
               {{ item.lack | number: '1.0-0' }}
             </app-form-field>
           </ng-container>
           <app-input-field
+            [label]="i18n.module('have')"
             [value]="(item.have | number: '1.0-0') || '0'"
             [disabled]="item.readonly"
             (changed)="correct(item, $event)"
-          >
-            <span form-label>
-              {{ i18n.module('have') | translate }}
-            </span>
-          </app-input-field>
+          ></app-input-field>
           <app-ring-button
             *ngIf="!conciseMode"
             class="craft-btn"

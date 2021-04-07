@@ -9,10 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {
-  AscensionLevel,
-  AscensionLevelData,
-} from '../../models/ascension-level.model';
+import {AscensionLevel, AscensionLevelData} from '../../models/ascension-level.model';
 import {AscensionLevelService} from '../../services/ascension-level.service';
 import {Ascension} from '../../models/ascension.type';
 
@@ -23,6 +20,9 @@ import {Ascension} from '../../models/ascension.type';
 })
 export class AscensionLevelSelectComponent implements OnChanges {
   i18n = I18n.create('game-common');
+
+  @Input()
+  label = '';
 
   @Input()
   data: AscensionLevelData = this.service.correct({ascension: 0, level: 1});
@@ -49,10 +49,7 @@ export class AscensionLevelSelectComponent implements OnChanges {
 
   opened = false;
 
-  constructor(
-    private self: ElementRef,
-    private service: AscensionLevelService,
-  ) {}
+  constructor(private self: ElementRef, private service: AscensionLevelService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('data') || changes.hasOwnProperty('dataStart')) {

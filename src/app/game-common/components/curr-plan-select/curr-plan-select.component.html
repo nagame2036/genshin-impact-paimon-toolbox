@@ -2,10 +2,8 @@
   class="form-container"
   [class.hover]="left.hover || right.hover"
   [class.focus]="left.focus || right.focus"
+  [label]="label"
 >
-  <span form-label>
-    <ng-content></ng-content>
-  </span>
   <div class="form">
     <app-select
       #left
@@ -13,8 +11,7 @@
       [options]="currOptions"
       [value]="curr"
       (changed)="setCurr($event)"
-    >
-    </app-select>
+    ></app-select>
     <button
       class="execute-plan-btn"
       [class.reached]="checkReached(reached)"
@@ -29,7 +26,6 @@
       [options]="planOptions"
       [value]="plan"
       (changed)="setPlan($event)"
-    >
-    </app-select>
+    ></app-select>
   </div>
 </app-form-field>

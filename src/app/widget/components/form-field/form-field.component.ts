@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-form-field',
@@ -10,6 +10,9 @@ export class FormFieldComponent implements AfterViewInit {
   private container!: ElementRef;
 
   width = 0;
+
+  @Input()
+  label = '';
 
   constructor() {}
 

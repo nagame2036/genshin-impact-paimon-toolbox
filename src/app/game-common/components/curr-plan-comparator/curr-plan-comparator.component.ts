@@ -7,6 +7,9 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class CurrPlanComparatorComponent implements OnInit {
   @Input()
+  label = '';
+
+  @Input()
   curr!: string | null;
 
   @Input()

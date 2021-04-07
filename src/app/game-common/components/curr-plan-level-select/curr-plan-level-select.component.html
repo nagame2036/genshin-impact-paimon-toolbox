@@ -2,10 +2,8 @@
   class="form-container"
   [class.hover]="left.hover || right.hover"
   [class.focus]="left.focus || right.focus"
+  [label]="i18n.dict('level')"
 >
-  <span form-label>
-    {{ i18n.dict('level') | translate }}
-  </span>
   <div class="form">
     <app-ascension-level-select
       #left

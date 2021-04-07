@@ -23,23 +23,19 @@
       *ngFor="let r of replenishResults"
       class="replenish-result"
       [class.disabled]="currentResin >= r.target"
+      [label]="i18n.module('replenish-to') | translate: {value: r.target}"
     >
-      <span form-label>
-        {{ i18n.module('replenish-to') | translate: {value: r.target} }}
-      </span>
       {{ currentResin >= r.target ? (i18n.dict('now') | translate) : r.time }}
     </app-form-field>
   </div>
   <div class="resin-inputs-grid">
     <div class="resin-field">
-      <app-datetime-picker (changed)="setTargetDate($event)">
-        <span form-label>{{ i18n.module('target-time') | translate }}</span>
-      </app-datetime-picker>
+      <app-datetime-picker
+        [label]="i18n.module('target-time')"
+        (changed)="setTargetDate($event)"
+      ></app-datetime-picker>
     </div>
-    <app-form-field class="resin-field">
-      <span form-label>{{
-        i18n.module('resin-exceed-check') | translate
-      }}</span>
+    <app-form-field class="resin-field" [label]="i18n.module('resin-exceed-check')">
       <ul class="resin-checked-results">
         <li *ngFor="let result of checkedResults">{{ result }}</li>
       </ul>

@@ -8,14 +8,11 @@
   </h1>
   <div *ngIf="recipes.length > 0" class="craft-dialog">
     <app-select
+      [label]="i18n.module('recipe')"
       [options]="recipes"
       [value]="recipe"
       (changed)="changeRecipe($event)"
-    >
-      <span form-label>
-        {{ i18n.module('recipe') | translate }}
-      </span>
-    </app-select>
+    ></app-select>
     <div class="recipe-materials">
       <div class="recipe-material" *ngFor="let m of materials">
         <app-item-view category="materials" [width]="158" [item]="m[0].info">
@@ -59,11 +56,7 @@
     <app-ring-button (clicked)="close()">
       {{ i18n.dict('close') | translate }}
     </app-ring-button>
-    <app-ring-button
-      color="primary"
-      [disabled]="times === 0"
-      (clicked)="craft()"
-    >
+    <app-ring-button color="primary" [disabled]="times === 0" (clicked)="craft()">
       {{ i18n.module('craft') | translate }}
     </app-ring-button>
   </div>

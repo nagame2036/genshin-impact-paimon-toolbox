@@ -78,7 +78,7 @@ export class CharacterGridComponent
       .subscribe(items => {
         this.items = items;
       });
-    this.updated$.next();
+    this.update();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

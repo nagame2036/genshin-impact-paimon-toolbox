@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -20,6 +21,9 @@ export class DatetimePickerComponent
   extends AbstractObservableDirective
   implements OnInit {
   i18n = I18n.create('widget');
+
+  @Input()
+  label = '';
 
   yearMonth = new Date();
 
@@ -40,9 +44,7 @@ export class DatetimePickerComponent
 
   constructor(public service: DatetimeService, private self: ElementRef) {
     super();
-    service.weekdays
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(_ => this.updateCalendar());
+    service.weekdays.pipe(takeUntil(this.destroy$)).subscribe(_ => this.updateCalendar());
   }
 
   ngOnInit(): void {}

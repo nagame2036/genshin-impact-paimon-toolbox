@@ -18,6 +18,9 @@ import {SelectOption} from '../../models/select-option.model';
 })
 export class SelectComponent implements OnChanges {
   @Input()
+  label = '';
+
+  @Input()
   value!: any;
 
   @Input()

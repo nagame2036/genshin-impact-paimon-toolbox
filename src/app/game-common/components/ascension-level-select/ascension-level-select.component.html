@@ -1,12 +1,10 @@
 <app-select
   [customDropdown]="customDropdown"
+  [label]="label"
   [valueText]="valueText"
   [opened]="opened"
   (click)="opened = true"
 >
-  <ng-container form-label>
-    <ng-content select="[form-label]"></ng-content>
-  </ng-container>
   <ng-template #customDropdown>
     <div *ngIf="opened" class="select-dropdown p-2">
       <div>

@@ -2,16 +2,15 @@
   <app-item-view category="characters" [item]="info"></app-item-view>
   <app-select
     class="attribute-select"
+    [label]="
+      (i18n.dict('constellation') | translate) +
+      ' - ' +
+      (i18n.dict('constellations.' + info.id + '.name') | translate)
+    "
     [options]="constellations"
     [value]="progress.constellation"
     (changed)="setConstellation($event)"
-  >
-    <span form-label>
-      {{ i18n.dict('constellation') | translate }}
-      -
-      {{ i18n.dict('constellations.' + info.id + '.name') | translate }}
-    </span>
-  </app-select>
+  ></app-select>
   <app-curr-plan-level-select
     label="character"
     [currLevel]="progress"
@@ -20,8 +19,7 @@
     (executePlan)="executePlan.emit(1)"
     (currChange)="setCurrLevel($event)"
     (planChange)="setPlanLevel($event)"
-  >
-  </app-curr-plan-level-select>
+  ></app-curr-plan-level-select>
   <app-curr-plan-stats-comparator
     *ngFor="let type of service.getStatsTypes(info.id); let i = index"
     [type]="type"
@@ -30,6 +28,11 @@
   ></app-curr-plan-stats-comparator>
   <app-curr-plan-select
     *ngFor="let talent of info.talentsUpgradable; let i = index"
+    [label]="
+      (i18n.dict('talent-types.' + (talent % 10)) | translate) +
+      ' - ' +
+      (i18n.dict('talents.' + talent) | translate)
+    "
     [currOptions]="currTalentLevels[talent]"
     [planOptions]="planTalentLevels[talent]"
     [curr]="progress.talents[talent] || 1"
@@ -38,11 +41,7 @@
     (planChange)="setPlanTalent(talent, $event)"
     [reached]="reachedStates[2 + i]"
     (executePlan)="executePlan.emit(2 + i)"
-  >
-    {{ i18n.dict('talent-types.' + (talent % 10)) | translate }}
-    -
-    {{ i18n.dict('talents.' + talent) | translate }}
-  </app-curr-plan-select>
+  ></app-curr-plan-select>
   <div *ngFor="let bonus of info.expBonus || []">
     {{ i18n.module('exp-bonus') | translate: bonus }}
   </div>

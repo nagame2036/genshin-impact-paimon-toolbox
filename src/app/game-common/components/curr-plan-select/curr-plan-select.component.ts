@@ -8,6 +8,9 @@ import {SelectOption} from '../../../widget/models/select-option.model';
 })
 export class CurrPlanSelectComponent implements OnInit {
   @Input()
+  label = '';
+
+  @Input()
   currOptions!: SelectOption[];
 
   @Input()

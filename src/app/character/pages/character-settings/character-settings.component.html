@@ -8,18 +8,12 @@
     </h2>
   </div>
   <app-select
+    [label]="i18n.module('traveler-gender')"
     [options]="information.genders"
     [value]="options.travelerGender"
     (changed)="information.changeTravelerGender($event)"
-  >
-    <span form-label>
-      {{ i18n.module('traveler-gender') | translate }}
-    </span>
-  </app-select>
-  <app-form-field>
-    <span form-label>
-      {{ i18n.dict('list-options') | translate }}
-    </span>
+  ></app-select>
+  <app-form-field [label]="i18n.dict('list-options')">
     <app-character-view-options [viewSort]="true" [viewInfoSort]="true">
     </app-character-view-options>
   </app-form-field>

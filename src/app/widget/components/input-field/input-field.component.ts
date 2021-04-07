@@ -7,6 +7,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class InputFieldComponent implements OnInit {
   @Input()
+  label = '';
+
+  @Input()
   value = '';
 
   hover = false;

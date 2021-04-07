@@ -4,13 +4,10 @@
   </h1>
   <div class="settings">
     <app-select
+      [label]="i18n.module('language')"
       [options]="languages"
       [value]="currentLanguage"
       (changed)="switchLanguage($event)"
-    >
-      <span form-label>
-        {{ i18n.module('language') | translate }}
-      </span>
-    </app-select>
+    ></app-select>
   </div>
 </div>

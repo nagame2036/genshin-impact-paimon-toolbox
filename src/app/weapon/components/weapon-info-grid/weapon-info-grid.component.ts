@@ -66,7 +66,7 @@ export class WeaponInfoGridComponent
       .subscribe(items => {
         this.items = items;
       });
-    this.updated$.next();
+    this.update();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

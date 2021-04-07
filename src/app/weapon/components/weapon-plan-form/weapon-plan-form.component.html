@@ -2,14 +2,11 @@
   <app-item-view category="weapons" [item]="info"></app-item-view>
   <app-select
     class="attribute-select"
+    [label]="i18n.dict('refine-rank')"
     [options]="refineRanks"
     [value]="progress.refine"
     (changed)="setRefineRank($event)"
-  >
-    <span form-label>
-      {{ i18n.dict('refine-rank') | translate }}
-    </span>
-  </app-select>
+  ></app-select>
   <app-curr-plan-level-select
     label="weapon"
     [currLevel]="progress"

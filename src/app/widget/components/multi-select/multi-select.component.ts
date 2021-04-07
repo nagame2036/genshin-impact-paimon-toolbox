@@ -13,6 +13,9 @@ export class MultiSelectComponent implements OnInit {
   i18n = I18n.create('shared.multi-select');
 
   @Input()
+  label = '';
+
+  @Input()
   value!: any[];
 
   valueText = '';
@@ -65,8 +68,7 @@ export class MultiSelectComponent implements OnInit {
   }
 
   selectAll(): void {
-    this.value =
-      this.value.length === this.options.length ? [] : this.optionsValues;
+    this.value = this.value.length === this.options.length ? [] : this.optionsValues;
     this.updateValuesText();
     this.changed.emit(this.value);
   }

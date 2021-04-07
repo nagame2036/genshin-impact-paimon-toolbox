@@ -2,59 +2,42 @@
   <app-multi-select
     *ngIf="viewSort"
     class="option"
+    [label]="i18n.dict(viewInfoSort ? 'progress-list' : 'sort')"
     [ordered]="true"
     [options]="view.sorts"
     [value]="options.sort"
     (changed)="view.changeSort($event); changed.emit()"
-  >
-    <span form-label>
-      {{ viewInfoSort ? (i18n.dict('progress-list') | translate) : '' }}
-      {{ i18n.dict('sort') | translate }}
-    </span>
-  </app-multi-select>
+  ></app-multi-select>
   <app-multi-select
     *ngIf="viewInfoSort"
     class="option"
+    [label]="i18n.dict(viewSort ? 'info-list' : 'sort')"
     [ordered]="true"
     [options]="view.infoSorts"
     [value]="options.infoSort"
     (changed)="view.changeInfoSort($event); changed.emit()"
-  >
-    <span form-label>
-      {{ viewSort ? (i18n.dict('info-list') | translate) : '' }}
-      {{ i18n.dict('sort') | translate }}
-    </span>
-  </app-multi-select>
+  ></app-multi-select>
   <app-multi-select
     class="option"
+    [label]="i18n.dict('rarity')"
     [options]="view.rarities"
     [value]="options.rarities"
     (changed)="view.filterRarity($event); changed.emit()"
-  >
-    <span form-label>
-      {{ i18n.dict('rarity') | translate }}
-    </span>
-  </app-multi-select>
+  ></app-multi-select>
   <app-multi-select
     class="option"
+    [label]="i18n.dict('element')"
     [options]="view.elements"
     [value]="options.elements"
     (changed)="view.filterElement($event); changed.emit()"
-  >
-    <span form-label>
-      {{ i18n.dict('element') | translate }}
-    </span>
-  </app-multi-select>
+  ></app-multi-select>
   <app-multi-select
     class="option"
+    [label]="i18n.dict('weapon-type')"
     [options]="view.weapons"
     [value]="options.weapons"
     (changed)="view.filterWeapon($event); changed.emit()"
-  >
-    <span form-label>
-      {{ i18n.dict('weapon-type') | translate }}
-    </span>
-  </app-multi-select>
+  ></app-multi-select>
   <div class="actions">
     <ng-content></ng-content>
   </div>

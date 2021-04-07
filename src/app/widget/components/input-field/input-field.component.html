@@ -1,14 +1,12 @@
 <app-form-field
   class="form-container"
   [ngClass]="{hover: hover, focus: focus, wrong: wrong}"
+  [label]="label"
   (mouseenter)="hover = true"
   (mouseleave)="hover = false"
   (focusin)="focus = true"
   (focusout)="focus = false"
 >
-  <ng-container form-label>
-    <ng-content select="[form-label]"></ng-content>
-  </ng-container>
   <div class="input-container">
     <div #prefix [class.prefix]="prefix.children.length > 0">
       <ng-content select="[prefix]"></ng-content>
