@@ -11,7 +11,7 @@ export function handleItemGridClick<T extends Item<any>>(
     multiSelected: EventEmitter<T[]>;
   },
 ): void {
-  if (!grid.multiSelected) {
+  if (!grid.multiSelect) {
     grid.clicked = grid.clicked === item ? null : item;
     return;
   }
