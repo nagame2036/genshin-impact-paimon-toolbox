@@ -36,7 +36,8 @@ export class CharacterService extends ItemService<Character> {
   }
 
   create(info: CharacterInfo): CharacterOverview {
-    const character = this.createItem(info, info.id) as Character;
+    const meta = {id: info.id};
+    const character = this.createItem(info, meta) as Character;
     return this.getOverview(character);
   }
 

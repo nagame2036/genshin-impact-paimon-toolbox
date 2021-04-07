@@ -17,7 +17,8 @@ export class WeaponProgressService extends ItemProgressService<Weapon> {
     super('weapon-progresses', database, logger);
   }
 
-  create(info: WeaponInfo, id: number): WeaponProgress {
+  create(info: WeaponInfo, meta: {id: number}): WeaponProgress {
+    const id = meta.id;
     return {id, weaponId: info.id, refine: 1, ascension: 0, level: 1};
   }
 }

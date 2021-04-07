@@ -8,7 +8,7 @@ import {MaterialService} from '../../material/services/material.service';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 
-export abstract class ItemPlanService<T> {
+export abstract class ItemPlanService<T extends Item<any>> {
   protected abstract type: ItemType;
 
   readonly plans = new Map<number, ItemPlan<T>>();
@@ -33,7 +33,7 @@ export abstract class ItemPlanService<T> {
     return itemTypeNames[this.type];
   }
 
-  abstract create(info: ItemInfo<T>, id: number): ItemProgress<T>;
+  abstract create(info: ItemInfo<T>, meta: Partial<T['progress']>): ItemProgress<T>;
 
   getRequireDetails(item: Item<T>): Observable<RequireDetail[]> {
     return this.materials
@@ -58,9 +58,7 @@ export abstract class ItemPlanService<T> {
   }
 
   removeAll(list: Item<T>[]): Observable<void> {
-    const remove = list.map(it =>
-      this.database.delete(this.storeName, it.plan.id),
-    );
+    const remove = list.map(it => this.database.delete(this.storeName, it.plan.id));
     return forkJoin(remove).pipe(
       map(_ => {
         list.forEach(it => this.plans.delete(it.plan.id));

@@ -33,7 +33,8 @@ export class CharacterPlanner extends ItemPlanService<Character> {
     super('character-plans', materials, database, logger);
   }
 
-  create(info: CharacterInfo, id: number): CharacterPlan {
+  create(info: CharacterInfo, meta: {id: number}): CharacterPlan {
+    const id = meta.id;
     const talents: TalentProgress = {};
     info.talentsUpgradable.forEach(t => (talents[t] = 1));
     return {id, ascension: 0, level: 1, talents};

@@ -8,7 +8,7 @@ import {ItemPlanService} from './item-plan-service';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {ItemType, itemTypeNames} from '../models/item-type.enum';
 
-export abstract class ItemService<T> {
+export abstract class ItemService<T extends Item<any>> {
   protected abstract type: ItemType;
 
   private statsTypeCache = new Map<number, StatsType[]>();
@@ -77,9 +77,9 @@ export abstract class ItemService<T> {
 
   protected abstract initItems(): void;
 
-  protected createItem(info: ItemInfo<T>, id: number): Item<T> {
-    const progress = this.progressService.create(info, id);
-    const plan = this.planService.create(info, id);
+  protected createItem(info: ItemInfo<T>, meta: Partial<T['progress']>): Item<T> {
+    const progress = this.progressService.create(info, meta);
+    const plan = this.planService.create(info, meta);
     return {info, progress, plan};
   }
 

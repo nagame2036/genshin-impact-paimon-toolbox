@@ -28,7 +28,8 @@ export class WeaponPlanner extends ItemPlanService<Weapon> {
     super('weapon-plans', materials, database, logger);
   }
 
-  create(info: WeaponInfo, id: number): WeaponPlan {
+  create(info: WeaponInfo, meta: {id: number}): WeaponPlan {
+    const id = meta.id;
     return {id, weaponId: info.id, ascension: 0, level: 1};
   }
 

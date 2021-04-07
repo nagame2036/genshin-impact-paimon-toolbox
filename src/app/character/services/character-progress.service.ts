@@ -23,7 +23,8 @@ export class CharacterProgressService extends ItemProgressService<Character> {
     super('character-progresses', database, logger);
   }
 
-  create(info: CharacterInfo, id: number): CharacterProgress {
+  create(info: CharacterInfo, meta: {id: number}): CharacterProgress {
+    const id = meta.id;
     const talents: TalentProgress = {};
     info.talentsUpgradable.forEach(t => (talents[t] = 1));
     return {id, constellation: 0, ascension: 0, level: 1, talents};

@@ -39,7 +39,8 @@ export class WeaponService extends ItemService<Weapon> {
 
   create(info: WeaponInfo): WeaponOverview {
     const id = generateItemId(this.type);
-    const weapon = this.createItem(info, id) as Weapon;
+    const meta = {id};
+    const weapon = this.createItem(info, meta) as Weapon;
     return this.information.getOverview(weapon);
   }
 

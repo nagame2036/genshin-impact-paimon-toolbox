@@ -5,7 +5,7 @@ import {Item, ItemInfo, ItemProgress} from '../models/item.model';
 import {map} from 'rxjs/operators';
 import {ItemType, itemTypeNames} from '../models/item-type.enum';
 
-export abstract class ItemProgressService<T> {
+export abstract class ItemProgressService<T extends Item<any>> {
   protected abstract type: ItemType;
 
   readonly progresses = new Map<number, ItemProgress<T>>();
@@ -25,11 +25,11 @@ export abstract class ItemProgressService<T> {
     });
   }
 
-  abstract create(info: ItemInfo<T>, id: number): ItemProgress<T>;
-
   get typeName(): string {
     return itemTypeNames[this.type];
   }
+
+  abstract create(info: ItemInfo<T>, meta: Partial<T['progress']>): ItemProgress<T>;
 
   update(item: Item<T>): Observable<void> {
     return this.database.update(this.storeName, item.progress).pipe(
@@ -41,9 +41,7 @@ export abstract class ItemProgressService<T> {
   }
 
   removeAll(list: Item<T>[]): Observable<void> {
-    const remove = list.map(it =>
-      this.database.delete(this.storeName, it.progress.id),
-    );
+    const remove = list.map(it => this.database.delete(this.storeName, it.progress.id));
     return forkJoin(remove).pipe(
       map(_ => {
         list.forEach(it => this.progresses.delete(it.progress.id));
