@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CharacterInfo} from '../models/character-info.model';
 import {NGXLogger} from 'ngx-logger';
-import {objectMap, load} from '../../shared/utils/json';
+import {load, objectMap} from '../../shared/utils/json';
 import {unionMap} from '../../shared/utils/collections';
 import {
   CharacterStatsCurveLevel,
@@ -15,10 +15,7 @@ import statsCurvesLevel from '../../../data/characters/character-stats-curve-lev
 import {SettingService} from '../../setting/services/setting.service';
 import {allGenders, Gender} from '../models/gender.enum';
 import {Observable, ReplaySubject} from 'rxjs';
-import {
-  CharacterInfoOptions,
-  defaultCharacterInfoOptions,
-} from '../models/options.model';
+import {CharacterInfoOptions, defaultCharacterInfoOptions} from '../models/options.model';
 import {first, map} from 'rxjs/operators';
 import {I18n} from '../../widget/models/i18n.model';
 import {MaterialService} from '../../material/services/material.service';
@@ -81,6 +78,8 @@ export class CharacterInfoService {
     private materials: MaterialService,
     private logger: NGXLogger,
   ) {
+    logger.info('loaded item list', this.infos);
+    logger.info('loaded stats curves for level', this.statsLevel);
     settings
       .get(this.settingKey, defaultCharacterInfoOptions)
       .subscribe(options => this.options$.next(options));

@@ -32,16 +32,13 @@ export class WeaponRequirementService {
 
   readonly levelupLabel = this.i18n.dict('levelup');
 
-  constructor(
-    private materials: MaterialInfoService,
-    private logger: NGXLogger,
-  ) {}
+  constructor(private materials: MaterialInfoService, private logger: NGXLogger) {
+    logger.info('loaded ascend cost', this.ascensions);
+    logger.info('loaded levelup cost', this.levels);
+  }
 
   requirement(weapon: Weapon): MaterialRequireList {
-    const req = new MaterialRequireList([
-      this.ascension(weapon),
-      this.levelup(weapon),
-    ]);
+    const req = new MaterialRequireList([this.ascension(weapon), this.levelup(weapon)]);
     this.logger.info('sent requirements of weapon', weapon, req);
     return req;
   }

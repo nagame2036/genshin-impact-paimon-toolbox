@@ -31,10 +31,10 @@ export class CharacterRequirementService {
 
   readonly levelupLabel = this.i18n.dict('levelup');
 
-  constructor(
-    private materials: MaterialInfoService,
-    private logger: NGXLogger,
-  ) {}
+  constructor(private materials: MaterialInfoService, private logger: NGXLogger) {
+    logger.info('loaded ascend cost', this.ascensions);
+    logger.info('loaded levelup cost', this.levels);
+  }
 
   requirement(character: Character): MaterialRequireList {
     const req = new MaterialRequireList([

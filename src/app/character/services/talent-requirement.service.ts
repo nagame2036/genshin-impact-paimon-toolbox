@@ -20,15 +20,11 @@ export class TalentRequirementService {
 
   private readonly levels = talentLevelupCost as TalentLevelupCost[];
 
-  constructor(
-    private materials: MaterialInfoService,
-    private logger: NGXLogger,
-  ) {}
+  constructor(private materials: MaterialInfoService, private logger: NGXLogger) {
+    logger.info('loaded levelup cost', this.levels);
+  }
 
-  requirement(
-    character: Character,
-    talents: TalentInfo[],
-  ): MaterialRequireList {
+  requirement(character: Character, talents: TalentInfo[]): MaterialRequireList {
     const req = new MaterialRequireList([this.levelup(character, talents)]);
     this.logger.info('sent requirements', talents, req);
     return req;
