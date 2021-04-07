@@ -683,7 +683,7 @@
         "initial": 43.7349,
         "curve": "ATK-202"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.075067,
         "curve": "CHC-201"
       }
@@ -1106,7 +1106,7 @@
         "initial": 47.537,
         "curve": "ATK-302"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.09,
         "curve": "CHC-301"
       }
@@ -1659,7 +1659,7 @@
         "initial": 38.7413,
         "curve": "ATK-101"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.0956,
         "curve": "CHC-101"
       }
@@ -2355,7 +2355,7 @@
         "initial": 43.7349,
         "curve": "ATK-202"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.075067,
         "curve": "CHC-201"
       }
@@ -2934,7 +2934,7 @@
         "initial": 43.7349,
         "curve": "ATK-202"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.075067,
         "curve": "CHC-201"
       }
@@ -3325,7 +3325,7 @@
         "initial": 41.0671,
         "curve": "ATK-204"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.150133,
         "curve": "CHC-201"
       }
@@ -5635,7 +5635,7 @@
         "initial": 41.0671,
         "curve": "ATK-204"
       },
-      "PHY DMG%": {
+      "Physical DMG%": {
         "initial": 0.150133,
         "curve": "CHC-201"
       }

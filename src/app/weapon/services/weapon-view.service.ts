@@ -32,7 +32,7 @@ const sortMap = new Map<string, WeaponSort>([
     'CHC%',
     'CHD%',
     'ER%',
-    'PHY DMG%',
+    'Physical DMG%',
     'HP%',
     'EM',
     'DEF%',

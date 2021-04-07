@@ -6,7 +6,7 @@ export const allDmgBonusStatsTypes = [
   'Hydro DMG%', // Hydro Damage bonus %
   'Pyro DMG%', // Pyro Damage bonus %
   'Cryo DMG%', // Cryo Damage bonus %
-  'PHY DMG%', // Physical Damage bonus %
+  'Physical DMG%', // Physical Damage bonus %
 ] as const;
 
 export const allResBonusStatsTypes = [
@@ -17,7 +17,7 @@ export const allResBonusStatsTypes = [
   'Hydro RES%', // Hydro Resistance bonus %
   'Pyro RES%', // Pyro Resistance bonus %
   'Cryo RES%', // Cryo Resistance bonus %
-  'PHY RES%', // Physical Resistance bonus %
+  'Physical RES%', // Physical Resistance bonus %
 ] as const;
 
 export const allStatsTypes = [
@@ -33,8 +33,8 @@ export const allStatsTypes = [
   'DEF Base', // Defense base
   'DEF%', // Defense bonus %
   'DEF Flat', // Defense Flat
-  'CHC%', // Critical Hit Chance (CRIT Rate) bonus %
-  'CHD%', // Critical Hit Damage (CRIT DMG) bonus %
+  'CHC%', // Critical Hit Chance % (CRIT Rate)
+  'CHD%', // Critical Hit Damage % (CRIT DMG)
   'ER%', // Energy Recharge %
   'EM', // Element Mastery
   'Healing%', // Healing bonus %
