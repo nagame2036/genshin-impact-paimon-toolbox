@@ -18,24 +18,20 @@ type WeaponSort = (a: WeaponOverview, b: WeaponOverview) => number;
 const sortMap = new Map<string, WeaponSort>([
   [
     i18n.dict('level'),
-    ({progress: a}, {progress: b}) =>
-      b.ascension - a.ascension || b.level - a.level,
+    ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level,
   ],
   [i18n.dict('rarity'), ({info: a}, {info: b}) => b.rarity - a.rarity],
-  [
-    i18n.dict('refine-rank'),
-    ({progress: a}, {progress: b}) => b.refine - a.refine,
-  ],
+  [i18n.dict('refine-rank'), ({progress: a}, {progress: b}) => b.refine - a.refine],
   ...generateSorts([
     'ATK Base',
-    'ATK%',
     'CHC%',
     'CHD%',
+    'ATK%',
     'ER%',
-    'Physical DMG%',
     'HP%',
-    'EM',
     'DEF%',
+    'Physical DMG%',
+    'EM',
   ]),
 ]);
 
@@ -55,10 +51,7 @@ export class WeaponViewService {
 
   readonly infoSorts = [...infoSortMap].map(([text]) => ({text, value: text}));
 
-  readonly rarities = allWeaponRarities.map(it => ({
-    value: it,
-    text: `★${it}`,
-  }));
+  readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
 
   readonly types = allWeaponTypes.map(it => ({
     value: it,
@@ -84,7 +77,7 @@ export class WeaponViewService {
     return this.options.pipe(
       map(options => {
         const sorts = options.sort.map(it => sortMap.get(it) ?? (() => 0));
-        const filtered = weapons.filter(c => filterInfo(c.info, options));
+        const filtered = weapons.filter(it => filterInfo(it.info, options));
         return sortItems(filtered, [...sorts, (a, b) => b.info.id - a.info.id]);
       }),
     );
@@ -95,7 +88,7 @@ export class WeaponViewService {
       map(options => {
         const option = options.infoSort;
         const sorts = option.map(it => infoSortMap.get(it) ?? (() => 0));
-        const filtered = weapons.filter(c => filterInfo(c, options));
+        const filtered = weapons.filter(it => filterInfo(it, options));
         return sortItems(filtered, [...sorts, (a, b) => b.id - a.id]);
       }),
     );

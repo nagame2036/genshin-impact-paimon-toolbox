@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -16,8 +17,9 @@ import {AscensionLevelService} from '../../../game-common/services/ascension-lev
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
 import {handleItemGridClick} from '../../../game-common/utils/handle-item-grid-click';
-import {takeUntil} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-weapon-grid',
@@ -26,7 +28,7 @@ import {AbstractObservableDirective} from '../../../shared/directives/abstract-o
 })
 export class WeaponGridComponent
   extends AbstractObservableDirective
-  implements OnChanges {
+  implements OnInit, OnChanges {
   i18n = I18n.create('weapons');
 
   @Input()
@@ -55,6 +57,8 @@ export class WeaponGridComponent
   @Output()
   multiSelected = new EventEmitter<WeaponOverview[]>();
 
+  private updated$ = new Subject();
+
   constructor(
     public service: WeaponService,
     public view: WeaponViewService,
@@ -65,6 +69,18 @@ export class WeaponGridComponent
     super();
   }
 
+  ngOnInit(): void {
+    this.updated$
+      .pipe(
+        switchMap(_ => this.view.view(this.weapons)),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(items => {
+        this.items = items;
+      });
+    this.updated$.next();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.weapons) {
       this.logger.info('received weapons', this.weapons);
@@ -73,12 +89,7 @@ export class WeaponGridComponent
   }
 
   update(): void {
-    this.view
-      .view(this.weapons)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(items => {
-        this.items = items;
-      });
+    this.updated$.next();
   }
 
   click(item: WeaponOverview): void {

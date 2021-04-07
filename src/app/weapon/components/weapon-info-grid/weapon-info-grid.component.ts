@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -14,7 +15,8 @@ import {WeaponService} from '../../services/weapon.service';
 import {WeaponViewService} from '../../services/weapon-view.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
-import {takeUntil} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-weapon-info-grid',
@@ -23,7 +25,7 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class WeaponInfoGridComponent
   extends AbstractObservableDirective
-  implements OnChanges {
+  implements OnInit, OnChanges {
   readonly i18n = I18n.create('weapons');
 
   @Input()
@@ -44,6 +46,8 @@ export class WeaponInfoGridComponent
   @Output()
   doubleClicked = new EventEmitter<WeaponInfo>();
 
+  private updated$ = new Subject();
+
   constructor(
     public service: WeaponService,
     public view: WeaponViewService,
@@ -51,6 +55,18 @@ export class WeaponInfoGridComponent
     private logger: NGXLogger,
   ) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.updated$
+      .pipe(
+        switchMap(_ => this.view.viewInfos(this.weapons)),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(items => {
+        this.items = items;
+      });
+    this.updated$.next();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -61,12 +77,7 @@ export class WeaponInfoGridComponent
   }
 
   update(): void {
-    this.view
-      .viewInfos(this.weapons)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(items => {
-        this.items = items;
-      });
+    this.updated$.next();
   }
 
   click(item: WeaponInfo): void {

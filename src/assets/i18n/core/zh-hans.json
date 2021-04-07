@@ -207,8 +207,8 @@
       "Pyro RES%": "火元素抗性",
       "Cryo DMG%": "冰元素增伤",
       "Cryo RES%": "冰元素抗性",
-      "PHY DMG%": "物理增伤",
-      "PHY RES%": "物理抗性"
+      "Physical DMG%": "物理增伤",
+      "Physical RES%": "物理抗性"
     },
     "weapon-type": "武器类型",
     "weapon-types": {

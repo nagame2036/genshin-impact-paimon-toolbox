@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -17,7 +18,8 @@ import {AscensionLevelService} from '../../../game-common/services/ascension-lev
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MultiSelectEvent} from '../../../game-common/models/multi-select-event.model';
 import {handleItemGridClick} from '../../../game-common/utils/handle-item-grid-click';
-import {takeUntil} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-character-grid',
@@ -26,7 +28,7 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class CharacterGridComponent
   extends AbstractObservableDirective
-  implements OnChanges {
+  implements OnInit, OnChanges {
   readonly i18n = I18n.create('characters');
 
   @Input()
@@ -55,6 +57,8 @@ export class CharacterGridComponent
   @Output()
   multiSelected = new EventEmitter<CharacterOverview[]>();
 
+  private updated$ = new Subject();
+
   constructor(
     public service: CharacterService,
     public view: CharacterViewService,
@@ -65,6 +69,18 @@ export class CharacterGridComponent
     super();
   }
 
+  ngOnInit(): void {
+    this.updated$
+      .pipe(
+        switchMap(_ => this.view.view(this.characters)),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(items => {
+        this.items = items;
+      });
+    this.updated$.next();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.characters) {
       this.logger.info('received characters', this.characters);
@@ -73,12 +89,7 @@ export class CharacterGridComponent
   }
 
   update(): void {
-    this.view
-      .view(this.characters)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(items => {
-        this.items = items;
-      });
+    this.updated$.next();
   }
 
   click(item: CharacterOverview): void {

@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -14,6 +15,8 @@ import {CharacterService} from '../../services/character.service';
 import {CharacterViewService} from '../../services/character-view.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {Subject} from 'rxjs';
+import {switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-character-info-grid',
@@ -22,7 +25,7 @@ import {AbstractObservableDirective} from '../../../shared/directives/abstract-o
 })
 export class CharacterInfoGridComponent
   extends AbstractObservableDirective
-  implements OnChanges {
+  implements OnInit, OnChanges {
   readonly i18n = I18n.create('characters');
 
   @Input()
@@ -43,6 +46,8 @@ export class CharacterInfoGridComponent
   @Output()
   doubleClicked = new EventEmitter<CharacterInfo>();
 
+  private updated$ = new Subject();
+
   constructor(
     public service: CharacterService,
     public view: CharacterViewService,
@@ -50,6 +55,18 @@ export class CharacterInfoGridComponent
     private logger: NGXLogger,
   ) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.updated$
+      .pipe(
+        switchMap(_ => this.view.viewInfos(this.characters)),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(items => {
+        this.items = items;
+      });
+    this.updated$.next();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,9 +77,7 @@ export class CharacterInfoGridComponent
   }
 
   update(): void {
-    this.view.viewInfos(this.characters).subscribe(items => {
-      this.items = items;
-    });
+    this.updated$.next();
   }
 
   click(item: CharacterInfo): void {
