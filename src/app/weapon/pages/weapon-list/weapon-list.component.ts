@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WeaponOverview} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
-import {WeaponGridComponent} from '../../components/weapon-grid/weapon-grid.component';
 import {Router} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
@@ -27,9 +26,6 @@ export class WeaponListComponent
 
   selectedItems: WeaponOverview[] = [];
 
-  @ViewChild('list')
-  list!: WeaponGridComponent;
-
   constructor(
     private service: WeaponService,
     private router: Router,
@@ -46,10 +42,6 @@ export class WeaponListComponent
       .subscribe(weapons => (this.items = weapons));
   }
 
-  goToAdd(): void {
-    this.router.navigate(['weapons/add']).then();
-  }
-
   goToDetail(weapon: WeaponOverview): void {
     this.router.navigate(['weapons/progresses', weapon.progress.id]).then();
   }
@@ -63,10 +55,9 @@ export class WeaponListComponent
   updateSelected(selected: WeaponOverview[]): void {
     this.logger.info('updated selected weapons', selected);
     this.selectedItems = selected;
-    this.selectAll =
-      this.multiSelect &&
-      selected.length > 0 &&
-      selected.length === this.items.length;
+    this.selectAll = this.multiSelect
+      && selected.length > 0
+      && selected.length === this.items.length;
   }
 
   onMultiSelect(event: MultiSelectEvent): void {

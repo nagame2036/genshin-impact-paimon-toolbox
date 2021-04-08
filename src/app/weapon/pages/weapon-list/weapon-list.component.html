@@ -7,7 +7,7 @@
   (doubleClicked)="goToDetail($event)"
   (multiSelected)="updateSelected($event)"
 >
-  <app-ring-button class="add-btn" (clicked)="goToAdd()">
+  <app-ring-button class="add-btn" routerLink="/weapons/add">
     {{ i18n.module('add') | translate }}
   </app-ring-button>
   <app-multi-select-and-select-all

@@ -42,10 +42,6 @@ export class CharacterListComponent
       .subscribe(items => (this.items = items));
   }
 
-  gotoAdd(): void {
-    this.router.navigate(['characters/add']).then();
-  }
-
   goToDetail(character: Character): void {
     this.router
       .navigate(['characters/progresses', character.progress.id])
@@ -61,10 +57,9 @@ export class CharacterListComponent
   updateSelected(selected: CharacterOverview[]): void {
     this.logger.info('updated selected characters', selected);
     this.selectedItems = selected;
-    this.selectAll =
-      this.multiSelect &&
-      selected.length > 0 &&
-      selected.length === this.items.length;
+    this.selectAll = this.multiSelect
+      && selected.length > 0
+      && selected.length === this.items.length;
   }
 
   onMultiSelect(event: MultiSelectEvent): void {
