@@ -22,9 +22,7 @@ import {ItemType} from '../../game-common/models/item-type.enum';
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterService extends ItemService<Character> {
-  protected type = ItemType.CHARACTER;
-
+export class CharacterService extends ItemService<Character, CharacterOverview> {
   constructor(
     private information: CharacterInfoService,
     private progresses: CharacterProgressService,
@@ -32,17 +30,12 @@ export class CharacterService extends ItemService<Character> {
     private talents: TalentInfoService,
     logger: NGXLogger,
   ) {
-    super(progresses, planner, logger);
+    super(ItemType.CHARACTER, progresses, planner, logger);
   }
 
   create(info: CharacterInfo): CharacterOverview {
     const meta = {id: info.id};
-    const character = this.createItem(info, meta) as Character;
-    return this.getOverview(character);
-  }
-
-  get(id: number): Observable<Character> {
-    return this.doGet(id).pipe(map(it => it as Character));
+    return this.createItem(info, meta);
   }
 
   getOverview(character: Character): CharacterOverview {
@@ -59,19 +52,9 @@ export class CharacterService extends ItemService<Character> {
     return this.information.getRequireMaterials(character);
   }
 
-  getAll(): Observable<CharacterOverview[]> {
-    return combineLatest([this.updated, this.information.ignoredIds()]).pipe(
-      map(([, ids]) => {
-        return [...this.items.values()]
-          .filter(it => !ids.has(it.info.id))
-          .map(it => this.getOverview(it as Character));
-      }),
-    );
-  }
-
   getAllNonParty(): Observable<CharacterInfo[]> {
-    return combineLatest([this.updated, this.information.ignoredIds()]).pipe(
-      map(([, ids]) => {
+    return combineLatest([this.getIgnoredIds(), this.updated]).pipe(
+      map(([ids]) => {
         const progress = this.progresses.progresses;
         const infos = [...this.information.infos.values()];
         return infos.filter(it => !(ids.has(it.id) || progress.has(it.id)));
@@ -93,12 +76,16 @@ export class CharacterService extends ItemService<Character> {
     }
   }
 
-  protected doGetStatsTypes(id: number): StatsType[] {
+  protected calcStatsTypes(id: number): StatsType[] {
     const info = this.information.infos.get(id);
     if (!info) {
       return [];
     }
     return this.getStatsAtMaxLevel(info).getTypes();
+  }
+
+  protected getIgnoredIds(): Observable<Set<number>> {
+    return this.information.getIgnoredIds();
   }
 
   protected getItemsNeedUpdate(item: Character): Character[] {

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {WeaponInfoService} from './weapon-info.service';
@@ -7,12 +6,11 @@ import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {map} from 'rxjs/operators';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {StatsType} from '../../game-common/models/stats.model';
 import {generateItemId} from '../../game-common/utils/generate-id';
 import {MaterialDetail} from '../../material/models/material.model';
-import {CharacterStatsValue} from '../../character/models/character-stats.model';
+import {WeaponStatsValue} from '../models/weapon-stats.model';
 import {allAscensions} from '../../game-common/models/ascension.type';
 import {maxItemLevel} from '../../game-common/models/level.type';
 import {RefineRank, WeaponProgress} from '../models/weapon-progress.model';
@@ -22,9 +20,7 @@ import {WeaponPlan} from '../models/weapon-plan.model';
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponService extends ItemService<Weapon> {
-  protected type = ItemType.WEAPON;
-
+export class WeaponService extends ItemService<Weapon, WeaponOverview> {
   readonly infos = [...this.information.infos.values()];
 
   constructor(
@@ -34,18 +30,12 @@ export class WeaponService extends ItemService<Weapon> {
     private materials: MaterialService,
     logger: NGXLogger,
   ) {
-    super(progresses, planner, logger);
+    super(ItemType.WEAPON, progresses, planner, logger);
   }
 
   create(info: WeaponInfo): WeaponOverview {
-    const id = generateItemId(this.type);
-    const meta = {id};
-    const weapon = this.createItem(info, meta) as Weapon;
-    return this.information.getOverview(weapon);
-  }
-
-  get(id: number): Observable<Weapon> {
-    return this.doGet(id).pipe(map(it => it as Weapon));
+    const meta = {id: generateItemId(this.type)};
+    return this.createItem(info, meta);
   }
 
   getRequireMaterials(weapon: WeaponInfo): MaterialDetail[] {
@@ -56,7 +46,7 @@ export class WeaponService extends ItemService<Weapon> {
     return this.information.getOverview(weapon);
   }
 
-  getStatsAtMaxLevel(weapon: WeaponInfo): CharacterStatsValue {
+  getStatsAtMaxLevel(weapon: WeaponInfo): WeaponStatsValue {
     const ascension = allAscensions[allAscensions.length - 1];
     const level = {ascension, level: maxItemLevel};
     return this.information.getStatsValue(weapon, level);
@@ -68,15 +58,6 @@ export class WeaponService extends ItemService<Weapon> {
     refineEnd: RefineRank = refineStart,
   ): string {
     return this.information.getAbilityDesc(weapon, refineStart, refineEnd);
-  }
-
-  getAll(): Observable<WeaponOverview[]> {
-    return this.updated.pipe(
-      map(_ => {
-        const items = [...this.items.values()];
-        return items.map(it => this.getOverview(it as Weapon));
-      }),
-    );
   }
 
   protected initItems(): void {
@@ -92,7 +73,7 @@ export class WeaponService extends ItemService<Weapon> {
     }
   }
 
-  protected doGetStatsTypes(id: number): StatsType[] {
+  protected calcStatsTypes(id: number): StatsType[] {
     const info = this.information.infos.get(id);
     if (!info) {
       return [];

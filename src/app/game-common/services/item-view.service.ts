@@ -16,7 +16,7 @@ export abstract class ItemViewService<
 
   private options$ = new ReplaySubject<Options>(1);
 
-  readonly options = this.options$.asObservable();
+  readonly options: Observable<Options> = this.options$.asObservable();
 
   protected constructor(
     private sortMap: Map<string, ItemSort<T>>,

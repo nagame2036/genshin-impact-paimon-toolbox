@@ -1,3 +1,4 @@
+// noinspection DuplicatedCode
 import {TestBed} from '@angular/core/testing';
 
 import {TalentRequirementService} from './talent-requirement.service';

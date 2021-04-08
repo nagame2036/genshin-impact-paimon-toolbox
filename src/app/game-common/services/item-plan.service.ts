@@ -1,19 +1,19 @@
 import {forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
-import {Item, ItemInfo, ItemPlan, ItemProgress} from '../models/item.model';
+import {Item} from '../models/item.model';
 import {map, tap} from 'rxjs/operators';
 import {ItemType, itemTypeNames} from '../models/item-type.enum';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 
-export abstract class ItemPlanService<T extends Item<any>> {
-  protected abstract type: ItemType;
-
-  readonly plans = new Map<number, ItemPlan<T>>();
+export abstract class ItemPlanService<T extends Item<T>> {
+  readonly plans = new Map<number, T['plan']>();
 
   readonly ready = new ReplaySubject(1);
+
+  protected abstract type: ItemType;
 
   protected constructor(
     protected storeName: string,
@@ -33,15 +33,15 @@ export abstract class ItemPlanService<T extends Item<any>> {
     return itemTypeNames[this.type];
   }
 
-  abstract create(info: ItemInfo<T>, meta: Partial<T['progress']>): ItemProgress<T>;
+  abstract create(info: T['info'], meta: Partial<T['progress']>): T['plan'];
 
-  getRequireDetails(item: Item<T>): Observable<RequireDetail[]> {
+  getRequireDetails(item: T): Observable<RequireDetail[]> {
     return this.materials
       .getRequireDetails(this.type, item.plan.id, this.getRequireLabels(item))
       .pipe(tap(_ => this.logger.info('sent require detail', item)));
   }
 
-  update(item: Item<T>): Observable<void> {
+  update(item: T): Observable<void> {
     const plan = item.plan;
     return this.database.update(this.storeName, plan).pipe(
       map(_ => {
@@ -52,12 +52,12 @@ export abstract class ItemPlanService<T extends Item<any>> {
     );
   }
 
-  updateRequire(item: Item<T>): void {
+  updateRequire(item: T): void {
     const req = new MaterialRequireList(this.getRequirements(item));
     this.materials.updateRequire(this.type, item.plan.id, req);
   }
 
-  removeAll(list: Item<T>[]): Observable<void> {
+  removeAll(list: T[]): Observable<void> {
     const remove = list.map(it => this.database.delete(this.storeName, it.plan.id));
     return forkJoin(remove).pipe(
       map(_ => {
@@ -68,7 +68,7 @@ export abstract class ItemPlanService<T extends Item<any>> {
     );
   }
 
-  protected abstract getRequirements(item: Item<T>): MaterialRequireList[];
+  protected abstract getRequirements(item: T): MaterialRequireList[];
 
-  protected abstract getRequireLabels(item: Item<T>): string[];
+  protected abstract getRequireLabels(item: T): string[];
 }

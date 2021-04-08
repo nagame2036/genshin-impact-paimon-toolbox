@@ -1,23 +1,24 @@
 import {NGXLogger} from 'ngx-logger';
-import {forkJoin, Observable, of, ReplaySubject, throwError, zip} from 'rxjs';
-import {Item, ItemInfo} from '../models/item.model';
-import {switchMap} from 'rxjs/operators';
+import {combineLatest, forkJoin, Observable, of, ReplaySubject, throwError, zip} from 'rxjs';
+import {Item} from '../models/item.model';
+import {map, switchMap} from 'rxjs/operators';
 import {StatsType} from '../models/stats.model';
 import {ItemProgressService} from './item-progress.service';
 import {ItemPlanService} from './item-plan.service';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {ItemType, itemTypeNames} from '../models/item-type.enum';
 
-export abstract class ItemService<T extends Item<any>> {
-  protected abstract type: ItemType;
+export abstract class ItemService<T extends Item<T>, TO extends T> {
+  private typeName = itemTypeNames[this.type];
 
-  private statsTypeCache = new Map<number, StatsType[]>();
-
-  readonly items = new Map<number, Item<T>>();
+  protected readonly items = new Map<number, T>();
 
   protected updated = new ReplaySubject(1);
 
+  private statsTypeCache = new Map<number, StatsType[]>();
+
   protected constructor(
+    protected type: ItemType,
     private progressService: ItemProgressService<T>,
     private planService: ItemPlanService<T>,
     protected logger: NGXLogger,
@@ -30,8 +31,25 @@ export abstract class ItemService<T extends Item<any>> {
     });
   }
 
-  get typeName(): string {
-    return itemTypeNames[this.type];
+  abstract getOverview(item: T): TO;
+
+  get(id: number): Observable<T> {
+    return this.updated.pipe(
+      switchMap(_ => {
+        const item = this.items.get(id);
+        return item ? of(item) : throwError('item-not-found');
+      }),
+    );
+  }
+
+  getAll(): Observable<TO[]> {
+    return combineLatest([this.getIgnoredIds(), this.updated]).pipe(
+      map(([ids]) => {
+        return [...this.items.values()]
+          .filter(it => !ids.has(it.info.id))
+          .map(it => this.getOverview(it));
+      }),
+    );
   }
 
   getStatsTypes(id: number): StatsType[] {
@@ -39,16 +57,16 @@ export abstract class ItemService<T extends Item<any>> {
     if (existing) {
       return existing;
     }
-    const types = this.doGetStatsTypes(id);
+    const types = this.calcStatsTypes(id);
     this.statsTypeCache.set(id, types);
     return types;
   }
 
-  getRequireDetails(item: Item<T>): Observable<RequireDetail[]> {
+  getRequireDetails(item: T): Observable<RequireDetail[]> {
     return this.planService.getRequireDetails(item);
   }
 
-  update(item: Item<T>): void {
+  update(item: T): void {
     const items = this.getItemsNeedUpdate(item);
     const subActions = [];
     for (const it of items) {
@@ -62,7 +80,7 @@ export abstract class ItemService<T extends Item<any>> {
     });
   }
 
-  removeAll(list: Item<T>[]): void {
+  removeAll(list: T[]): void {
     const items = this.getItemsNeedRemove(list);
     const subActions = [
       this.progressService.removeAll(items),
@@ -77,28 +95,25 @@ export abstract class ItemService<T extends Item<any>> {
 
   protected abstract initItems(): void;
 
-  protected createItem(info: ItemInfo<T>, meta: Partial<T['progress']>): Item<T> {
+  protected createItem(info: T['info'], meta: Partial<T['progress']>): TO {
     const progress = this.progressService.create(info, meta);
     const plan = this.planService.create(info, meta);
-    return {info, progress, plan};
+    return this.getOverview({info, progress, plan} as T);
   }
 
-  protected doGet(id: number): Observable<Item<T>> {
-    return this.updated.pipe(
-      switchMap(_ => {
-        const item = this.items.get(id);
-        return item ? of(item) : throwError('item-not-found');
-      }),
-    );
+  protected getIgnoredIds(): Observable<Set<number>> {
+    return of(new Set());
   }
 
-  protected abstract doGetStatsTypes(id: number): StatsType[];
+  protected calcStatsTypes(id: number): StatsType[] {
+    return [];
+  }
 
-  protected getItemsNeedUpdate(item: Item<T>): Item<T>[] {
+  protected getItemsNeedUpdate(item: T): T[] {
     return [item];
   }
 
-  protected getItemsNeedRemove(items: Item<T>[]): Item<T>[] {
+  protected getItemsNeedRemove(items: T[]): T[] {
     return items;
   }
 }
