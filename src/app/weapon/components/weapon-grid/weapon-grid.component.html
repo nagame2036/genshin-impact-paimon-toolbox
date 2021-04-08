@@ -13,7 +13,7 @@
   [doubleClickText]="doubleClickText"
 >
   <div
-    *ngFor="let item of items; trackBy: trackItem"
+    *ngFor="let item of itemsView; trackBy: trackItem"
     class="item-overview"
     [class.selected]="selected.includes(item)"
     (click)="click(item)"
@@ -54,9 +54,7 @@
       <h4>
         {{ i18n.dict('weapon-abilities.' + abilityId + '.name') | translate }}
       </h4>
-      <div
-        [innerHTML]="service.getAbilityDesc(item.info, item.progress.refine)"
-      ></div>
+      <div [innerHTML]="service.getAbilityDesc(item.info, item.progress.refine)"></div>
     </div>
     <div class="item-material-required">
       <app-item-view

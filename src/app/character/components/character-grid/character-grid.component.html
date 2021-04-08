@@ -9,7 +9,7 @@
   [doubleClickText]="doubleClickText"
 >
   <div
-    *ngFor="let item of items"
+    *ngFor="let item of itemsView; trackBy: trackItem"
     class="item-overview"
     [class.selected]="selected.includes(item)"
     (click)="click(item)"
@@ -59,18 +59,14 @@
       </tr>
       <ng-container *ngTemplateOutlet="itemInfo; context: {$implicit: item}">
       </ng-container>
-      <tr
-        *ngFor="let type of service.getStatsTypes(item.info.id); let i = index"
-      >
+      <tr *ngFor="let type of service.getStatsTypes(item.info.id); let i = index">
         <td>{{ i18n.stats(type) | translate }}</td>
         <td>
           <app-item-overview-stats-data
             [type]="type"
             [left]="item.currentStats.get(type)"
             [right]="item.planStats.get(type)"
-            [displayRight]="
-              item.currentStats.get(type) < item.planStats.get(type)
-            "
+            [displayRight]="item.currentStats.get(type) < item.planStats.get(type)"
           ></app-item-overview-stats-data>
         </td>
       </tr>

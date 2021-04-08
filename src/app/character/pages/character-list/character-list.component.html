@@ -1,6 +1,6 @@
 <app-character-grid
   #list
-  [characters]="items"
+  [items]="items"
   [selected]="selectedItems"
   [clickText]="i18n.pModule('summary.info-click')"
   [doubleClickText]="i18n.pModule('summary.detail-double-click')"
@@ -10,7 +10,7 @@
   <app-ring-button routerLink="/characters/settings">
     {{ i18n.module('settings.title') | translate }}
   </app-ring-button>
-  <app-ring-button (clicked)="gotoAdd()">
+  <app-ring-button routerLink="add">
     {{ i18n.module('add') | translate }}
   </app-ring-button>
   <app-multi-select-and-select-all

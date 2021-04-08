@@ -1,6 +1,6 @@
 <app-weapon-grid
   #list
-  [weapons]="items"
+  [items]="items"
   [selected]="selectedItems"
   [clickText]="i18n.pModule('summary.info-click')"
   [doubleClickText]="i18n.pModule('summary.detail-double-click')"
@@ -14,8 +14,7 @@
     [multiSelect]="multiSelect"
     [selectAll]="selectAll"
     (changed)="onMultiSelect($event); list.onMultiSelect($event)"
-  >
-  </app-multi-select-and-select-all>
+  ></app-multi-select-and-select-all>
   <app-ring-button
     *ngIf="selectedItems.length > 0"
     color="red"

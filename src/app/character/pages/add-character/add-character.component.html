@@ -9,7 +9,7 @@
 <div class="subpage-padding-x">
   <app-character-info-grid
     *ngIf="!selected; else form"
-    [characters]="characters"
+    [items]="characters"
     [clickText]="i18n.pModule('summary.info-click')"
     [doubleClickText]="i18n.pModule('summary.add-double-click')"
     (doubleClicked)="select($event)"

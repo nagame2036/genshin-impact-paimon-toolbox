@@ -8,7 +8,7 @@
   [doubleClickText]="doubleClickText"
 >
   <div
-    *ngFor="let item of items"
+    *ngFor="let item of itemsView; trackBy: trackItem"
     class="item-overview"
     (click)="click(item)"
     (dblclick)="doubleClick(item)"
