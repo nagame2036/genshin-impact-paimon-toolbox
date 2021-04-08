@@ -12,7 +12,7 @@ import {MaterialService} from '../../material/services/material.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {TalentInfoService} from './talent-info.service';
-import {ItemPlanService} from '../../game-common/services/item-plan-service';
+import {ItemPlanService} from '../../game-common/services/item-plan.service';
 
 @Injectable({
   providedIn: 'root',

@@ -15,7 +15,10 @@ import statsCurvesLevel from '../../../data/characters/character-stats-curve-lev
 import {SettingService} from '../../setting/services/setting.service';
 import {allGenders, Gender} from '../models/gender.enum';
 import {Observable, ReplaySubject} from 'rxjs';
-import {CharacterInfoOptions, defaultCharacterInfoOptions} from '../models/options.model';
+import {
+  CharacterInfoOptions,
+  defaultCharacterInfoOptions,
+} from '../models/character-options.model';
 import {first, map} from 'rxjs/operators';
 import {I18n} from '../../widget/models/i18n.model';
 import {MaterialService} from '../../material/services/material.service';

@@ -4,7 +4,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {Weapon} from '../models/weapon.model';
-import {ItemProgressService} from '../../game-common/services/item-progress-service';
+import {ItemProgressService} from '../../game-common/services/item-progress.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({

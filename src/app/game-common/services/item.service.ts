@@ -3,8 +3,8 @@ import {forkJoin, Observable, of, ReplaySubject, throwError, zip} from 'rxjs';
 import {Item, ItemInfo} from '../models/item.model';
 import {switchMap} from 'rxjs/operators';
 import {StatsType} from '../models/stats.model';
-import {ItemProgressService} from './item-progress-service';
-import {ItemPlanService} from './item-plan-service';
+import {ItemProgressService} from './item-progress.service';
+import {ItemPlanService} from './item-plan.service';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {ItemType, itemTypeNames} from '../models/item-type.enum';
 

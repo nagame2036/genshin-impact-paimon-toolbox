@@ -6,7 +6,7 @@ import {CharacterProgress} from '../models/character-progress.model';
 import {TalentProgress} from '../models/talent-progress.model';
 import {Character} from '../models/character.model';
 import {CharacterInfoService} from './character-info.service';
-import {ItemProgressService} from '../../game-common/services/item-progress-service';
+import {ItemProgressService} from '../../game-common/services/item-progress.service';
 import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({

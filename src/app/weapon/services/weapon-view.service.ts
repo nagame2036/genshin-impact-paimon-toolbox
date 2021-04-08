@@ -5,17 +5,13 @@ import {allWeaponTypes, WeaponType} from '../models/weapon-type.enum';
 import {I18n} from '../../widget/models/i18n.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import {Rarity} from '../../game-common/models/rarity.type';
-import {Observable, ReplaySubject} from 'rxjs';
-import {WeaponViewOptions} from '../models/options.model';
+import {WeaponViewOptions} from '../models/weapon-options.model';
 import {SettingService} from '../../setting/services/setting.service';
-import {map} from 'rxjs/operators';
-import {sortItems} from '../../shared/utils/collections';
+import {ItemSort, ItemViewService} from '../../game-common/services/item-view.service';
 
 const i18n = I18n.create('weapons');
 
-type WeaponSort = (a: WeaponOverview, b: WeaponOverview) => number;
-
-const sortMap = new Map<string, WeaponSort>([
+const sortMap = new Map<string, ItemSort<WeaponOverview>>([
   [
     i18n.dict('level'),
     ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level,
@@ -35,22 +31,17 @@ const sortMap = new Map<string, WeaponSort>([
   ]),
 ]);
 
-type WeaponInfoSort = (a: WeaponInfo, b: WeaponInfo) => number;
-
-const infoSortMap = new Map<string, WeaponInfoSort>([
+const infoSortMap = new Map<string, ItemSort<WeaponInfo>>([
   [i18n.dict('rarity'), (a, b) => b.rarity - a.rarity],
 ]);
 
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponViewService {
-  private readonly settingKey = 'weapon-view';
-
-  readonly sorts = [...sortMap].map(([text]) => ({text, value: text}));
-
-  readonly infoSorts = [...infoSortMap].map(([text]) => ({text, value: text}));
-
+export class WeaponViewService extends ItemViewService<
+  WeaponOverview,
+  WeaponViewOptions
+> {
   readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
 
   readonly types = allWeaponTypes.map(it => ({
@@ -58,48 +49,11 @@ export class WeaponViewService {
     text: i18n.dict(`weapon-types.${it}`),
   }));
 
-  private options$ = new ReplaySubject<WeaponViewOptions>(1);
-
-  readonly options = this.options$.asObservable();
-
-  constructor(private settings: SettingService) {
-    settings
-      .get(this.settingKey, {
-        sort: [this.sorts[0].text],
-        infoSort: [this.infoSorts[0].text],
-        rarities: allWeaponRarities,
-        types: allWeaponTypes,
-      })
-      .subscribe(options => this.options$.next(options));
-  }
-
-  view(weapons: WeaponOverview[]): Observable<WeaponOverview[]> {
-    return this.options.pipe(
-      map(options => {
-        const sorts = options.sort.map(it => sortMap.get(it) ?? (() => 0));
-        const filtered = weapons.filter(it => filterInfo(it.info, options));
-        return sortItems(filtered, [...sorts, (a, b) => b.info.id - a.info.id]);
-      }),
-    );
-  }
-
-  viewInfos(weapons: WeaponInfo[]): Observable<WeaponInfo[]> {
-    return this.options.pipe(
-      map(options => {
-        const option = options.infoSort;
-        const sorts = option.map(it => infoSortMap.get(it) ?? (() => 0));
-        const filtered = weapons.filter(it => filterInfo(it, options));
-        return sortItems(filtered, [...sorts, (a, b) => b.id - a.id]);
-      }),
-    );
-  }
-
-  changeSort(sort: string[]): void {
-    this.updateView({sort});
-  }
-
-  changeInfoSort(infoSort: string[]): void {
-    this.updateView({infoSort});
+  constructor(settings: SettingService) {
+    super(sortMap, infoSortMap, settings, 'weapon-view', {
+      rarities: allWeaponRarities,
+      types: allWeaponTypes,
+    });
   }
 
   filterRarity(rarities: Rarity[]): void {
@@ -110,19 +64,15 @@ export class WeaponViewService {
     this.updateView({types});
   }
 
-  private updateView(update: Partial<WeaponViewOptions>): void {
-    this.settings.update(this.settingKey, update);
+  protected filterInfo(
+    {rarity, type}: WeaponInfo,
+    {rarities, types}: WeaponViewOptions,
+  ): boolean {
+    return rarities.includes(rarity) && types.includes(type);
   }
 }
 
-function filterInfo(
-  {rarity, type}: WeaponInfo,
-  {rarities, types}: WeaponViewOptions,
-): boolean {
-  return rarities.includes(rarity) && types.includes(type);
-}
-
-function generateSorts(types: StatsType[]): [string, WeaponSort][] {
+function generateSorts(types: StatsType[]): [string, ItemSort<WeaponOverview>][] {
   return types.map(type => [
     i18n.stats(type),
     (a, b) => b.currentStats.get(type) - a.currentStats.get(type),
