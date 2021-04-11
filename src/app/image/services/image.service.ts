@@ -1,21 +1,15 @@
 import {Injectable} from '@angular/core';
-import {itemTypeNames} from '../../game-common/models/item-type.enum';
 
 export type ImageType =
-  | 'character-portraits'
-  | 'characters'
-  | 'elements'
-  | 'enemies'
-  | 'materials'
-  | 'weapon-types'
-  | 'weapons';
-
-type TypeMapping = Partial<Record<ImageType, typeof itemTypeNames[number]>>;
-
-export const imageTypeToItemTypes: TypeMapping = {
-  characters: 'character',
-  weapons: 'weapon',
-};
+  | 'character-portrait'
+  | 'character'
+  | 'element'
+  | 'weapon'
+  | 'weapon-type'
+  | 'artifact'
+  | 'artifact-type'
+  | 'material'
+  | 'enemy';
 
 const characterPortraitMapping = new Map([
   [1002, 1001],
@@ -49,10 +43,10 @@ const enemiesMapping = new Map([
 })
 export class ImageService {
   private readonly specificImages = new Map<ImageType, Map<number, number>>([
-    ['character-portraits', characterPortraitMapping],
-    ['characters', characterMapping],
-    ['materials', materialMapping],
-    ['enemies', enemiesMapping],
+    ['character-portrait', characterPortraitMapping],
+    ['character', characterMapping],
+    ['material', materialMapping],
+    ['enemy', enemiesMapping],
   ]);
 
   constructor() {}

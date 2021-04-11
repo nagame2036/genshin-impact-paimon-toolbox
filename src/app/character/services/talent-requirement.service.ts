@@ -25,7 +25,7 @@ export class TalentRequirementService {
   }
 
   getLabel(talentId: number): string {
-    return this.i18n.dict(`talent-types.${talentId % 10}`);
+    return this.i18n.data(`talent-type.${talentId % 10}`);
   }
 
   requirement(character: Character, talents: TalentInfo[]): MaterialRequireList[] {

@@ -18,6 +18,7 @@ function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
   return new MultiTranslateHttpLoader(http, [
     {prefix: './assets/i18n/core/', suffix: '.json'},
     {prefix: './assets/i18n/data/', suffix: '.json'},
+    {prefix: './assets/i18n/data-extracted/', suffix: '.json'},
   ]);
 }
 

@@ -46,7 +46,7 @@ export class WeaponViewService extends ItemViewService<
 
   readonly types = allWeaponTypes.map(it => ({
     value: it,
-    text: i18n.dict(`weapon-types.${it}`),
+    text: i18n.data(`weapon-type.${it}`),
   }));
 
   constructor(settings: SettingService) {

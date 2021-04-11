@@ -85,7 +85,7 @@ export class CharacterPlanComponent
   executePlan(planIndex: number): void {
     this.logger.info('clicked to execute plan', planIndex);
     const {text: title, value: requirement} = this.requirements[planIndex];
-    const item = this.i18n.dict(`characters.${this.character.info.id}`);
+    const item = this.i18n.data(`character.${this.character.info.id}`);
     const data = {title, requirement, item};
     this.executePlanConfirm
       .open(data)

@@ -1,6 +1,6 @@
 <app-dialog #dialog (closed)="close()">
   <div title>
-    {{ i18n.dict('materials.' + id) | translate }}
+    {{ i18n.data('material', id) | translate }}
     -
     {{ i18n.module('have') | translate }}
     {{ have | number: '1.0-0' }}
@@ -31,7 +31,7 @@
               class="requirement-cell cell-border-b text-center"
               [rowSpan]="markGroup.length"
             >
-              {{ i18n.dict(types[mark.type] + 's.' + mark.id) | translate }}
+              {{ i18n.data(types[mark.type], mark.id) | translate }}
             </td>
             <td
               class="requirement-cell text-center"

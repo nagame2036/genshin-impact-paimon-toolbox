@@ -13,19 +13,15 @@
     (click)="click(item)"
     (dblclick)="doubleClick(item)"
   >
-    <app-item-view category="weapons" [item]="item"></app-item-view>
+    <app-item-view [item]="item" type="weapon"></app-item-view>
     <img
       class="weapon-type-hint"
-      [src]="images.get('weapon-types', item.type)"
-      [alt]="i18n.dict('weapon-types.' + item.type) | translate"
+      [src]="images.get('weapon-type', item.type)"
+      [alt]="i18n.data('weapon-type', item.type) | translate"
     />
   </div>
   <ng-container item-summary *ngIf="clicked as item">
-    <app-item-view
-      class="item-summary-thumb"
-      category="weapons"
-      [item]="item"
-    ></app-item-view>
+    <app-item-view [item]="item" class="item-summary-thumb" type="weapon"></app-item-view>
     <table class="item-summary-table">
       <tr>
         <td>{{ i18n.dict('rarity') | translate }}</td>
@@ -33,13 +29,10 @@
       </tr>
       <tr>
         <td>{{ i18n.dict('type') | translate }}</td>
-        <td>{{ i18n.dict('weapon-types.' + item.type) | translate }}</td>
+        <td>{{ i18n.data('weapon-type', item.type) | translate }}</td>
       </tr>
     </table>
-    <table
-      *ngIf="service.getStatsAtMaxLevel(item) as stats"
-      class="item-summary-table"
-    >
+    <table *ngIf="service.getStatsAtMaxLevel(item) as stats" class="item-summary-table">
       <tr>
         <td colspan="2">{{ i18n.dict('stats-at-max-level') | translate }}</td>
       </tr>
@@ -55,7 +48,7 @@
     </table>
     <div *ngIf="item.ability.id as abilityId" class="item-ability">
       <h4>
-        {{ i18n.dict('weapon-abilities.' + abilityId + '.name') | translate }}
+        {{ i18n.data('weapon-ability', abilityId, '.name') | translate }}
       </h4>
       <div [innerHTML]="service.getAbilityDesc(item, 1, 5)"></div>
     </div>
@@ -63,7 +56,7 @@
       <app-item-view
         *ngFor="let m of summaryMaterials"
         class="item-summary-thumb"
-        category="materials"
+        type="material"
         [item]="m.info"
       ></app-item-view>
     </div>

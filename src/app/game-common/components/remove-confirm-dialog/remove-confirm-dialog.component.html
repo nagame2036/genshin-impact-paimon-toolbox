@@ -5,7 +5,7 @@
   <div class="remove-list-container" *ngIf="items">
     <div class="remove-list" [style.grid-template-columns]="gridCols">
       <div *ngFor="let item of items" class="remove-item-view">
-        <app-item-view [category]="category" [item]="item.info"></app-item-view>
+        <app-item-view [type]="type" [item]="item.info"></app-item-view>
       </div>
     </div>
   </div>

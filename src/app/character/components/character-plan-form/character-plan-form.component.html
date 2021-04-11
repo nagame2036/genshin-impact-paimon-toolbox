@@ -1,11 +1,11 @@
 <div *ngIf="character" class="plan-form-container">
-  <app-item-view category="characters" [item]="info"></app-item-view>
+  <app-item-view [item]="info" type="character"></app-item-view>
   <app-select
     class="attribute-select"
     [label]="
       (i18n.dict('constellation') | translate) +
       ' - ' +
-      (i18n.dict('constellations.' + info.id + '.name') | translate)
+      (i18n.data('constellation', info.id, '.name') | translate)
     "
     [options]="constellations"
     [value]="progress.constellation"
@@ -29,9 +29,9 @@
   <app-curr-plan-select
     *ngFor="let talent of info.talentsUpgradable; let i = index"
     [label]="
-      (i18n.dict('talent-types.' + (talent % 10)) | translate) +
+      (i18n.data('talent-type', talent % 10) | translate) +
       ' - ' +
-      (i18n.dict('talents.' + talent) | translate)
+      (i18n.data('talent', talent) | translate)
     "
     [currOptions]="currTalentLevels[talent]"
     [planOptions]="planTalentLevels[talent]"

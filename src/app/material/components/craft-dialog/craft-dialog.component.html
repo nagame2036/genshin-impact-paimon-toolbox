@@ -1,7 +1,7 @@
 <app-dialog #dialog (closed)="close()">
   <h1 title *ngIf="item">
     {{ i18n.module('craft') | translate }}
-    {{ i18n.dict('materials.' + item.info.id) | translate }}
+    {{ i18n.data('material', item.info.id) | translate }}
     -
     {{ i18n.module('lack') | translate }}
     {{ item.lack | number: '1.0-0' }}
@@ -15,8 +15,7 @@
     ></app-select>
     <div class="recipe-materials">
       <div class="recipe-material" *ngFor="let m of materials">
-        <app-item-view category="materials" [width]="158" [item]="m[0].info">
-        </app-item-view>
+        <app-item-view [item]="m[0].info" [width]="158" type="material"></app-item-view>
         <table>
           <tr>
             <td class="pr-2">

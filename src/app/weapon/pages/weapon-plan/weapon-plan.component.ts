@@ -16,9 +16,7 @@ import {AbstractObservableDirective} from '../../../shared/directives/abstract-o
   templateUrl: './weapon-plan.component.html',
   styleUrls: ['./weapon-plan.component.scss'],
 })
-export class WeaponPlanComponent
-  extends AbstractObservableDirective
-  implements OnInit {
+export class WeaponPlanComponent extends AbstractObservableDirective implements OnInit {
   readonly i18n = I18n.create('game-common');
 
   readonly types: [string, ...MaterialType[]][] = [
@@ -77,7 +75,7 @@ export class WeaponPlanComponent
     const data = {
       title,
       requirement,
-      item: this.i18n.dict(`weapons.${this.weapon.info.id}`),
+      item: this.i18n.data(`weapon.${this.weapon.info.id}`),
     };
     this.executePlanConfirm
       .open(data)

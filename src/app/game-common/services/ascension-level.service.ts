@@ -3,10 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {allAscensions, Ascension} from '../models/ascension.type';
 import {coerceRange} from '../../shared/utils/coerce';
 import {I18n} from '../../widget/models/i18n.model';
-import {
-  AscensionLevelData,
-  AscensionLevel,
-} from '../models/ascension-level.model';
+import {AscensionLevel, AscensionLevelData} from '../models/ascension-level.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +28,7 @@ export class AscensionLevelService {
 
   constructor(private translator: TranslateService) {}
 
-  getText({ascension, level}: AscensionLevel): string {
+  format({ascension, level}: AscensionLevel): string {
     let result = `${level}`;
     if (ascension > 0 && level === this.levelRanges[ascension][0]) {
       const ascended = this.translator.instant(this.i18n.dict('ascended'));

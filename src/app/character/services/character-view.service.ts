@@ -38,12 +38,12 @@ export class CharacterViewService extends ItemViewService<
 
   readonly elements = allElements.map(it => ({
     value: it,
-    text: i18n.dict(`elements.${it}`),
+    text: i18n.data(`element.${it}`),
   }));
 
   readonly weapons = allWeaponTypes.map(it => ({
     value: it,
-    text: i18n.dict(`weapon-types.${it}`),
+    text: i18n.data(`weapon-type.${it}`),
   }));
 
   constructor(settings: SettingService) {

@@ -19,7 +19,7 @@ const routes: Routes = [
       },
       {path: 'talent-materials', component: TalentMaterialInventoryComponent},
       {path: 'weapon-materials', component: WeaponMaterialInventoryComponent},
-      {path: 'enemies-materials', component: EnemyMaterialInventoryComponent},
+      {path: 'enemy-materials', component: EnemyMaterialInventoryComponent},
       {path: 'ingredients', component: IngredientInventoryComponent},
     ],
   },

@@ -35,8 +35,12 @@ export class I18n {
     return `${I18n.paramPrefix}${this.dict(key)}`;
   }
 
+  data(...keys: any[]): string {
+    return `data.${keys.join('.')}`;
+  }
+
   stats(key: string): string {
-    return `dict.stats.${key}`;
+    return `data.stats.${key}`;
   }
 
   error(key: string): string {

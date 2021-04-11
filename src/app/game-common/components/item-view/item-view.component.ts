@@ -25,7 +25,7 @@ export class ItemViewComponent implements OnChanges {
   width = 100;
 
   @Input()
-  category!: ImageType;
+  type!: ImageType;
 
   @Input()
   item!: ItemInfo<any>;
@@ -51,7 +51,7 @@ export class ItemViewComponent implements OnChanges {
       }
     }
     if (changes.item) {
-      this.itemKey = `${this.category}.${this.item.id}`;
+      this.itemKey = `${this.type}.${this.item.id}`;
       this.stars = rangeList(1, this.item.rarity);
     }
   }

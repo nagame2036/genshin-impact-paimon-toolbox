@@ -5,8 +5,7 @@
         *ngFor="let item of items.materials; trackBy: trackItem"
         class="detail-container"
       >
-        <app-item-view category="materials" [width]="138" [item]="item.info">
-        </app-item-view>
+        <app-item-view [item]="item.info" [width]="138" type="material"></app-item-view>
         <button
           *ngIf="!(conciseMode || hiddenDetail)"
           class="cost-detail-btn"

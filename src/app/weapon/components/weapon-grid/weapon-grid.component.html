@@ -19,11 +19,11 @@
     (click)="click(item)"
     (dblclick)="doubleClick(item)"
   >
-    <app-item-view category="weapons" [item]="item.info"></app-item-view>
+    <app-item-view [item]="item.info" type="weapon"></app-item-view>
     <img
       class="weapon-type-hint"
-      [src]="images.get('weapon-types', item.info.type)"
-      [alt]="i18n.dict('weapon-types.' + item.info.type) | translate"
+      [src]="images.get('weapon-type', item.info.type)"
+      [alt]="i18n.data('weapon-type', item.info.type) | translate"
     />
     <table class="item-overview-table">
       <ng-container *ngTemplateOutlet="itemInfo; context: {$implicit: item}">
@@ -33,7 +33,7 @@
   <ng-container item-summary *ngIf="clicked as item">
     <app-item-view
       class="item-summary-thumb"
-      category="weapons"
+      type="weapon"
       [item]="item.info"
     ></app-item-view>
     <table class="item-summary-table">
@@ -42,8 +42,8 @@
         <td>★{{ item.info.rarity }}</td>
       </tr>
       <tr>
-        <td>{{ i18n.dict('type') | translate }}</td>
-        <td>{{ i18n.dict('weapon-types.' + item.info.type) | translate }}</td>
+        <td>{{ i18n.dict('weapon-type') | translate }}</td>
+        <td>{{ i18n.data('weapon-type', item.info.type) | translate }}</td>
       </tr>
     </table>
     <table class="item-summary-table">
@@ -52,7 +52,7 @@
     </table>
     <div *ngIf="item.info.ability.id as abilityId" class="item-ability">
       <h4>
-        {{ i18n.dict('weapon-abilities.' + abilityId + '.name') | translate }}
+        {{ i18n.data('weapon-ability', abilityId, '.name') | translate }}
       </h4>
       <div [innerHTML]="service.getAbilityDesc(item.info, item.progress.refine)"></div>
     </div>
@@ -60,7 +60,7 @@
       <app-item-view
         *ngFor="let m of summaryMaterials"
         class="item-summary-thumb"
-        category="materials"
+        type="material"
         [item]="m.info"
       ></app-item-view>
     </div>
@@ -77,8 +77,8 @@
     <td>{{ i18n.dict('level') | translate }}</td>
     <td>
       <app-item-overview-data
-        [left]="level.getText(item.progress)"
-        [right]="level.getText(item.plan)"
+        [left]="level.format(item.progress)"
+        [right]="level.format(item.plan)"
         [displayRight]="
           item.progress.ascension < item.plan.ascension ||
           item.progress.level < item.plan.level

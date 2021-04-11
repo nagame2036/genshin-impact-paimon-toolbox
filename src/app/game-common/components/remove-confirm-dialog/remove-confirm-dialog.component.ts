@@ -1,18 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {I18n} from '../../../widget/models/i18n.model';
 import {NGXLogger} from 'ngx-logger';
-import {
-  ImageType,
-  imageTypeToItemTypes,
-} from '../../../image/services/image.service';
+import {ImageType} from '../../../image/services/image.service';
 import {Item} from '../../models/item.model';
 
 @Component({
@@ -24,7 +14,7 @@ export class RemoveConfirmDialogComponent implements OnInit {
   i18n = I18n.create('game-common');
 
   @Input()
-  category!: ImageType;
+  type!: ImageType;
 
   titleParams!: Record<string, string>;
 
@@ -41,8 +31,7 @@ export class RemoveConfirmDialogComponent implements OnInit {
   constructor(private logger: NGXLogger) {}
 
   ngOnInit(): void {
-    const type = imageTypeToItemTypes[this.category] ?? '';
-    this.titleParams = {type: this.i18n.pDict(type)};
+    this.titleParams = {type: this.i18n.pDict(this.type)};
   }
 
   open(items: Item<any>[]): void {

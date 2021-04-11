@@ -5,7 +5,7 @@
   <div class="sub-toolbar-title">
     {{ i18n.module('detail') | translate }}
     -
-    {{ i18n.dict('characters.' + characterId) | translate }}
+    {{ i18n.data('character.' + characterId) | translate }}
   </div>
   <button class="icon-btn remove-btn" (click)="removeDialog.open([character])">
     <span class="material-icons">person_remove</span>
@@ -19,6 +19,6 @@
 </div>
 <app-remove-confirm-dialog
   #removeDialog
-  category="characters"
+  type="characters"
   (confirm)="remove()"
 ></app-remove-confirm-dialog>

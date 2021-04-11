@@ -1,5 +1,5 @@
 <div *ngIf="weapon" class="plan-form-container">
-  <app-item-view category="weapons" [item]="info"></app-item-view>
+  <app-item-view [item]="info" type="weapon"></app-item-view>
   <app-select
     class="attribute-select"
     [label]="i18n.dict('refine-rank')"

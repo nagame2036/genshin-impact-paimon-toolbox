@@ -88,7 +88,7 @@ export class AscensionLevelSelectComponent implements OnChanges {
     this.ascension = ascension;
     this.levelRange = levelRange;
     this.level = level;
-    this.valueText = this.service.getText(data);
+    this.valueText = this.service.format(data);
   }
 
   private emitChange(): void {

@@ -16,14 +16,11 @@ export class InventoryPageComponent implements OnInit {
     {path: 'character-materials', text: this.i18n.dict('character-materials')},
     {path: 'talent-materials', text: this.i18n.dict('talent-materials')},
     {path: 'weapon-materials', text: this.i18n.dict('weapon-materials')},
-    {path: 'enemies-materials', text: this.i18n.dict('enemies-materials')},
+    {path: 'enemy-materials', text: this.i18n.dict('enemy-materials')},
     {path: 'ingredients', text: this.i18n.dict('ingredients')},
   ];
 
-  constructor(
-    public characters: CharacterService,
-    public weapons: WeaponService,
-  ) {
+  constructor(public characters: CharacterService, public weapons: WeaponService) {
     // inject these services because materials required by item's plans.
   }
 

@@ -64,15 +64,13 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
     this.item = item;
     this.times = 0;
     this.index = 0;
-    this.subscription = this.service
-      .getCraftDetails(item)
-      .subscribe(details => {
-        this.details = details;
-        this.recipes = this.recipeOptions(recipes, details);
-        this.changeRecipe(this.recipes[this.index].value);
-        this.logger.info('received material craft details', item, details);
-        this.dialog.open();
-      });
+    this.subscription = this.service.getCraftDetails(item).subscribe(details => {
+      this.details = details;
+      this.recipes = this.recipeOptions(recipes, details);
+      this.changeRecipe(this.recipes[this.index].value);
+      this.logger.info('received material craft details', item, details);
+      this.dialog.open();
+    });
   }
 
   close(): void {
@@ -104,9 +102,7 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
       const times = this.translator.instant(this.i18n.module(key), params);
       const materials = usage
         .map(({info}) => {
-          return this.translator.instant(
-            this.i18n.dict(`materials.${info.id}`),
-          );
+          return this.translator.instant(this.i18n.data(`material.${info.id}`));
         })
         .join(', ');
       return {text: `${times} - ${materials}`, value: recipes[index]};

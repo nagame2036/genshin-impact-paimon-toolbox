@@ -8,7 +8,7 @@
   <div class="material-list-container">
     <div class="material-list" *ngIf="data.requirement">
       <div *ngFor="let item of data.requirement" class="material-item-view">
-        <app-item-view category="materials" [item]="item.info"></app-item-view>
+        <app-item-view [item]="item.info" type="material"></app-item-view>
         <div class="material-item-need">
           {{ item.need | number: '1.0-0' }}
         </div>

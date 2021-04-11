@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {WeaponOverview} from '../../models/weapon.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponService} from '../../services/weapon.service';
-import {NGXLogger} from 'ngx-logger';
 import {ImageService} from '../../../image/services/image.service';
 import {WeaponViewService} from '../../services/weapon-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
@@ -24,9 +23,8 @@ export class WeaponGridComponent extends ItemGridDirective<WeaponOverview> {
     public level: AscensionLevelService,
     public images: ImageService,
     view: WeaponViewService,
-    logger: NGXLogger,
   ) {
-    super(view, logger);
+    super(view);
   }
 
   afterClick(item: WeaponOverview): void {

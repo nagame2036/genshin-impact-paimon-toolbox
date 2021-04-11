@@ -13,9 +13,7 @@ import {NGXLogger} from 'ngx-logger';
   templateUrl: './add-character.component.html',
   styleUrls: ['./add-character.component.scss'],
 })
-export class AddCharacterComponent
-  extends AbstractObservableDirective
-  implements OnInit {
+export class AddCharacterComponent extends AbstractObservableDirective implements OnInit {
   readonly i18n = I18n.create('characters');
 
   characters: CharacterInfo[] = [];
