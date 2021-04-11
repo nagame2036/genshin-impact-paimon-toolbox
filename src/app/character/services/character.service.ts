@@ -52,7 +52,7 @@ export class CharacterService extends ItemService<Character, CharacterOverview> 
     return this.information.getRequireMaterials(character);
   }
 
-  getAllNonParty(): Observable<CharacterInfo[]> {
+  getAllNotInProgress(): Observable<CharacterInfo[]> {
     return combineLatest([this.getIgnoredIds(), this.updated]).pipe(
       map(([ids]) => {
         const progress = this.progresses.progresses;

@@ -35,7 +35,7 @@ export class AddCharacterComponent
   ngOnInit(): void {
     this.logger.info('init');
     this.service
-      .getAllNonParty()
+      .getAllNotInProgress()
       .pipe(takeUntil(this.destroy$))
       .subscribe(characters => {
         this.logger.info('received non-party characters', characters);
