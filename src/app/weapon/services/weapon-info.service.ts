@@ -19,6 +19,7 @@ import {MaterialType} from '../../material/models/material-type.enum';
 import {TranslateService} from '@ngx-translate/core';
 import {allRefineRanks, RefineRank} from '../models/weapon-progress.model';
 import {I18n} from '../../widget/models/i18n.model';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 /**
  * Represents the dependency of weapon stats value.
@@ -29,9 +30,9 @@ type WeaponStatsDependency = {ascension: Ascension; level: number};
   providedIn: 'root',
 })
 export class WeaponInfoService {
-  private i18n = I18n.create('weapons');
-
   readonly infos = objectMap<WeaponInfo>(load(itemList));
+
+  private i18n = I18n.create('weapons');
 
   private statsLevel = load(statsLevel) as WeaponStatsCurveLevel;
 
@@ -48,6 +49,7 @@ export class WeaponInfoService {
   constructor(
     private materials: MaterialService,
     private translator: TranslateService,
+    private sanitizer: DomSanitizer,
     private logger: NGXLogger,
   ) {
     logger.info('loaded item list', this.infos);
@@ -84,21 +86,21 @@ export class WeaponInfoService {
     return result;
   }
 
-  getAbilityDesc(info: WeaponInfo, start: RefineRank, end: RefineRank): string {
+  getAbilityDesc(info: WeaponInfo, ...refines: RefineRank[]): SafeHtml {
     const {id, descValues} = info.ability;
     const key = this.i18n.data('weapon-ability', id, 'desc');
     let desc: string = this.translator.instant(key);
-    const left = Math.max(start, allRefineRanks[0]) - 1;
-    const right = Math.min(end, descValues.length);
+    const start = Math.max(refines[0], allRefineRanks[0]) - 1;
+    const end = Math.min(refines[refines.length - 1], descValues.length);
     for (let i = 0; i < descValues[0].length; i++) {
       const fields = [];
-      for (let j = left; j < right; j++) {
+      for (let j = start; j < end; j++) {
         fields.push(descValues[j][i]);
       }
-      const param = right - left <= 1 ? fields[0] : ` (${fields.join(' / ')}) `;
-      desc = desc.replace('{}', `<b>${param}</b>`);
+      const value = fields.length <= 1 ? fields[0] : `[${fields.join(' / ')}]`;
+      desc = desc.replace('{}', `<b style="color: #4b94aa">${value}</b>`);
     }
-    return desc;
+    return this.sanitizer.bypassSecurityTrustHtml(desc);
   }
 
   getRequireMaterials({materials}: WeaponInfo): MaterialDetail[] {

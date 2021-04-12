@@ -46,11 +46,9 @@
         </td>
       </tr>
     </table>
-    <div *ngIf="item.ability.id as abilityId" class="item-ability">
-      <h4>
-        {{ i18n.data('weapon-ability', abilityId, 'name') | translate }}
-      </h4>
-      <div [innerHTML]="service.getAbilityDesc(item, 1, 5)"></div>
+    <div class="item-ability">
+      <h4>{{ i18n.data('weapon-ability', item.ability.id, 'name') | translate }}</h4>
+      <div [innerHTML]="abilityDesc"></div>
     </div>
     <div class="item-material-required">
       <app-item-view

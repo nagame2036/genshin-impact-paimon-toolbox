@@ -7,6 +7,7 @@ import {WeaponViewService} from '../../services/weapon-view.service';
 import {AscensionLevelService} from '../../../game-common/services/ascension-level.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {ItemGridDirective} from '../../../game-common/directives/item-grid.directive';
+import {SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-weapon-grid',
@@ -18,6 +19,8 @@ export class WeaponGridComponent extends ItemGridDirective<WeaponOverview> {
 
   summaryMaterials!: MaterialDetail[];
 
+  abilityDesc!: SafeHtml;
+
   constructor(
     public service: WeaponService,
     public level: AscensionLevelService,
@@ -27,7 +30,8 @@ export class WeaponGridComponent extends ItemGridDirective<WeaponOverview> {
     super(view);
   }
 
-  afterClick(item: WeaponOverview): void {
-    this.summaryMaterials = this.service.getRequireMaterials(item.info);
+  afterClick({info, progress}: WeaponOverview): void {
+    this.summaryMaterials = this.service.getRequireMaterials(info);
+    this.abilityDesc = this.service.getAbilityDesc(info, progress.refine);
   }
 }

@@ -8,6 +8,8 @@ import {WeaponViewService} from '../../services/weapon-view.service';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {InfoGridDirective} from '../../../game-common/directives/info-grid.directive';
 import {WeaponOverview} from '../../models/weapon.model';
+import {allRefineRanks} from '../../models/weapon-progress.model';
+import {SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-weapon-info-grid',
@@ -21,6 +23,8 @@ export class WeaponInfoGridComponent
 
   summaryMaterials!: MaterialDetail[];
 
+  abilityDesc!: SafeHtml;
+
   constructor(
     public service: WeaponService,
     public images: ImageService,
@@ -32,5 +36,6 @@ export class WeaponInfoGridComponent
 
   afterClick(item: WeaponInfo): void {
     this.summaryMaterials = this.service.getRequireMaterials(item);
+    this.abilityDesc = this.service.getAbilityDesc(item, ...allRefineRanks);
   }
 }

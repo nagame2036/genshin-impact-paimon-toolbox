@@ -50,11 +50,9 @@
       <ng-container *ngTemplateOutlet="itemInfo; context: {$implicit: item}">
       </ng-container>
     </table>
-    <div *ngIf="item.info.ability.id as abilityId" class="item-ability">
-      <h4>
-        {{ i18n.data('weapon-ability', abilityId, 'name') | translate }}
-      </h4>
-      <div [innerHTML]="service.getAbilityDesc(item.info, item.progress.refine)"></div>
+    <div class="item-ability">
+      <h4>{{ i18n.data('weapon-ability', item.info.ability.id, 'name') | translate }}</h4>
+      <div [innerHTML]="abilityDesc"></div>
     </div>
     <div class="item-material-required">
       <app-item-view

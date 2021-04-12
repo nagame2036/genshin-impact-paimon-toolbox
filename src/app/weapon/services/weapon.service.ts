@@ -16,6 +16,7 @@ import {maxItemLevel} from '../../game-common/models/level.type';
 import {RefineRank, WeaponProgress} from '../models/weapon-progress.model';
 import {ItemService} from '../../game-common/services/item.service';
 import {WeaponPlan} from '../models/weapon-plan.model';
+import {SafeHtml} from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root',
@@ -52,12 +53,8 @@ export class WeaponService extends ItemService<Weapon, WeaponOverview> {
     return this.information.getStatsValue(weapon, level);
   }
 
-  getAbilityDesc(
-    weapon: WeaponInfo,
-    refineStart: RefineRank,
-    refineEnd: RefineRank = refineStart,
-  ): string {
-    return this.information.getAbilityDesc(weapon, refineStart, refineEnd);
+  getAbilityDesc(weapon: WeaponInfo, ...refines: RefineRank[]): SafeHtml {
+    return this.information.getAbilityDesc(weapon, ...refines);
   }
 
   protected initItems(): void {
@@ -75,9 +72,6 @@ export class WeaponService extends ItemService<Weapon, WeaponOverview> {
 
   protected calcStatsTypes(id: number): StatsType[] {
     const info = this.information.infos.get(id);
-    if (!info) {
-      return [];
-    }
-    return this.getStatsAtMaxLevel(info).getTypes();
+    return info ? this.getStatsAtMaxLevel(info).getTypes() : [];
   }
 }
