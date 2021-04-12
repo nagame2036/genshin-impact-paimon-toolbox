@@ -5,7 +5,7 @@
     [label]="
       (i18n.dict('constellation') | translate) +
       ' - ' +
-      (i18n.data('constellation', info.id, '.name') | translate)
+      (i18n.data('constellation', info.id, 'name') | translate)
     "
     [options]="constellations"
     [value]="progress.constellation"

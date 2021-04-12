@@ -86,7 +86,7 @@ export class WeaponInfoService {
 
   getAbilityDesc(info: WeaponInfo, start: RefineRank, end: RefineRank): string {
     const {id, descValues} = info.ability;
-    const key = this.i18n.dict(`weapon-abilities.${id}.desc`);
+    const key = this.i18n.data('weapon-ability', id, 'desc');
     let desc: string = this.translator.instant(key);
     const left = Math.max(start, allRefineRanks[0]) - 1;
     const right = Math.min(end, descValues.length);

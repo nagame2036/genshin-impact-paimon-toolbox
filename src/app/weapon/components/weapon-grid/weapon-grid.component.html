@@ -52,7 +52,7 @@
     </table>
     <div *ngIf="item.info.ability.id as abilityId" class="item-ability">
       <h4>
-        {{ i18n.data('weapon-ability', abilityId, '.name') | translate }}
+        {{ i18n.data('weapon-ability', abilityId, 'name') | translate }}
       </h4>
       <div [innerHTML]="service.getAbilityDesc(item.info, item.progress.refine)"></div>
     </div>

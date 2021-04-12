@@ -60,12 +60,11 @@ export class CharacterPlanFormComponent implements OnInit {
     this.info = this.character.info;
     this.progress = this.character.progress;
     this.plan = this.character.plan;
-    this.constellations = allConstellations.map(it => {
-      const key = it === 0 ? 'none' : `constellations.${this.info.id}.${it}`;
-      return {
-        value: it,
-        text: `${it} - ${this.translator.instant(this.i18n.dict(key))}`,
-      };
+    const i18n = this.i18n;
+    const id = this.info.id;
+    this.constellations = allConstellations.map(value => {
+      const key = value === 0 ? i18n.dict('none') : i18n.data('constellation', id, value);
+      return {value, text: `${value} - ${this.translator.instant(key)}`};
     });
     this.updateCurrTalentLevels();
     this.updatePlanTalentLevels();
