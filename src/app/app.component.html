@@ -1,4 +1,42 @@
-<app-header (showMenu)="nav.showMenu = $event"></app-header>
-<app-sidenav [routers]="routers" #nav>
-  <router-outlet></router-outlet>
-</app-sidenav>
+<nav [class.opened]="showMenu" class="menu">
+  <h1 class="menu-title">
+    {{ i18n.dict('title') | translate }}
+  </h1>
+  <button (click)="showMenu = false" class="menu-close-btn">
+    <span class="material-icons">close</span>
+  </button>
+  <div class="menu-links">
+    <a
+      (click)="showMenu = false"
+      *ngFor="let router of routers"
+      [routerLink]="router.path"
+      class="menu-link"
+      routerLinkActive="active"
+    >
+      {{ i18n.path(router.path) | translate }}
+    </a>
+  </div>
+</nav>
+<app-header (showMenu)="showMenu = $event"></app-header>
+<main (click)="showMenu = false" class="main">
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-content">
+    <span>
+      <a href="https://beian.miit.gov.cn">粤ICP备2020142744号</a>
+      © {{ year }}
+      <a href="https://github.com/nagame2036">nagame2036</a>
+    </span>
+    <div class="footer-links">
+      <a href="https://github.com/nagame2036/paimon-toolbox/issues">
+        {{ i18n.dict('report-issue') | translate }}
+      </a>
+      <a href="https://github.com/nagame2036/paimon-toolbox/pulls">
+        {{ i18n.dict('pull-request') | translate }}
+      </a>
+    </div>
+  </div>
+</footer>

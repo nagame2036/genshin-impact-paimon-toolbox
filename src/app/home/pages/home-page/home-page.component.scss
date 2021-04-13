@@ -40,10 +40,8 @@ a {
     height: 0.1rem;
   }
 
-  &:hover {
-    &:before {
-      @extend .animated-underline-after;
-    }
+  &:hover:before {
+    @extend .animated-underline-hover;
   }
 }
 
