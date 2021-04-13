@@ -30,11 +30,7 @@ export class ResinService {
     this.localeChanged = settings.locale;
   }
 
-  getReplenishDate(
-    target: number,
-    current: number,
-    replenishInMinutes: number,
-  ): string {
+  getReplenishDate(target: number, current: number, replenishInMinutes: number): string {
     const remaining = target - current - 1;
     let minutes = remaining * this.replenishUseMinutes + replenishInMinutes;
     minutes = Math.max(0, minutes);
@@ -72,7 +68,7 @@ export class ResinService {
       result = results;
       remainingResin = resin;
     }
-    this.pushResult(result, 'target-time-resin', now, remainingResin);
+    this.pushResult(result, 'target-time-resin', targetDate, remainingResin);
     return result;
   }
 
@@ -108,12 +104,7 @@ export class ResinService {
     return {results, resin};
   }
 
-  private pushResult(
-    list: string[],
-    key: string,
-    date: Date,
-    value: number,
-  ): void {
+  private pushResult(list: string[], key: string, date: Date, value: number): void {
     const i18n = this.i18n.module(key);
     const time = this.datetime.formatDatetime(date);
     list.push(this.translator.instant(i18n, {time, value}));
