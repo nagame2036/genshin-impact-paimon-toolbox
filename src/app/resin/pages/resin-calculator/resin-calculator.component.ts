@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {NGXLogger} from 'ngx-logger';
 import {ResinService} from '../../services/resin.service';
 import {rangeList} from '../../../shared/utils/range-list';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
@@ -27,7 +26,7 @@ export class ResinCalculatorComponent
 
   checkedResults: string[] = [];
 
-  constructor(public service: ResinService, private logger: NGXLogger) {
+  constructor(public service: ResinService) {
     super();
   }
 
@@ -40,21 +39,18 @@ export class ResinCalculatorComponent
 
   setCurrentResin(value: number): void {
     this.currentResin = value;
-    this.logger.info('set current resin', value);
     this.updateReplenishTimes();
     this.updateResinCheckResults();
   }
 
   setReplenishInMinutes(value: number): void {
     this.minutes = value;
-    this.logger.info('set replenish in minutes', value);
     this.updateReplenishTimes();
     this.updateResinCheckResults();
   }
 
   setTargetDate(value: Date): void {
     this.targetDate = value;
-    this.logger.info('set target date', value);
     this.updateResinCheckResults();
   }
 
@@ -62,12 +58,12 @@ export class ResinCalculatorComponent
     const current = this.currentResin;
     const inMinutes = this.minutes;
     for (const i of this.replenishResults) {
-      i.time = this.service.getReplenishDate(i.target, current, inMinutes);
+      i.time = this.service.formatRefillDate(i.target, current, inMinutes);
     }
   }
 
   private updateResinCheckResults(): void {
-    this.checkedResults = this.service.getAvoidResinExceedAdvice(
+    this.checkedResults = this.service.getAvoidExceedAdvice(
       this.targetDate,
       this.currentResin,
       this.minutes,
