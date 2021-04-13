@@ -7,6 +7,7 @@
       *ngIf="!ordered"
       class="select-option"
       [class.selected]="value.length === options.length"
+      [title]="i18n.dict('all') | translate"
       (click)="selectAll()"
     >
       {{ i18n.dict('all') | translate }}
@@ -15,6 +16,7 @@
       *ngFor="let option of options"
       class="select-option"
       [class.selected]="value.includes(option.value)"
+      [title]="option.text | translate"
       (click)="change(option)"
     >
       <ng-container *ngIf="value.indexOf(option.value) + 1 as index">

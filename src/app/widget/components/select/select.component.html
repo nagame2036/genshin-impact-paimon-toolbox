@@ -32,6 +32,7 @@
           *ngFor="let option of options"
           class="select-option"
           [class.selected]="option.value === value"
+          [title]="option.text | translate"
           (click)="change(option)"
         >
           {{ option.text | translate }}
