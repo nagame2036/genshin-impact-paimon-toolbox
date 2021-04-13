@@ -4,8 +4,9 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  OnInit,
+  OnChanges,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {DatetimeService} from '../../services/datetime.service';
@@ -19,7 +20,7 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class DatetimePickerComponent
   extends AbstractObservableDirective
-  implements OnInit {
+  implements OnChanges {
   i18n = I18n.create('widget');
 
   @Input()
@@ -31,11 +32,12 @@ export class DatetimePickerComponent
 
   daysCurrMonth: number[] = [];
 
+  @Input()
   value = new Date();
 
-  hour = this.value.getHours();
+  hour = 0;
 
-  minute = this.value.getMinutes();
+  minute = 0;
 
   @Output()
   changed = new EventEmitter<Date>();
@@ -47,7 +49,13 @@ export class DatetimePickerComponent
     service.weekdays.pipe(takeUntil(this.destroy$)).subscribe(_ => this.updateCalendar());
   }
 
-  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    const value = changes.value;
+    if (value && value.currentValue > value.previousValue) {
+      this.hour = this.value.getHours();
+      this.minute = this.value.getMinutes();
+    }
+  }
 
   isToday(day: number): boolean {
     return this.service.is(new Date(), this.yearMonth, day);

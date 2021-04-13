@@ -32,6 +32,7 @@
     <div class="resin-field">
       <app-datetime-picker
         [label]="i18n.module('target-time')"
+        [value]="targetDate"
         (changed)="setTargetDate($event)"
       ></app-datetime-picker>
     </div>

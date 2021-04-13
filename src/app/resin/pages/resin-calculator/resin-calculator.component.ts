@@ -3,6 +3,8 @@ import {I18n} from '../../../widget/models/i18n.model';
 import {ResinService} from '../../services/resin.service';
 import {rangeList} from '../../../shared/utils/range-list';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {takeUntil} from 'rxjs/operators';
+import {combineLatest, timer} from 'rxjs';
 
 @Component({
   selector: 'app-resin-calculator',
@@ -31,26 +33,32 @@ export class ResinCalculatorComponent
   }
 
   ngOnInit(): void {
-    this.service.localeChanged.subscribe(_ => {
-      this.updateReplenishTimes();
-      this.updateResinCheckResults();
-    });
+    combineLatest([timer(0, 10_000), this.service.localeChanged])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(_ => this.updateAll());
   }
 
   setCurrentResin(value: number): void {
     this.currentResin = value;
-    this.updateReplenishTimes();
-    this.updateResinCheckResults();
+    this.updateAll();
   }
 
   setReplenishInMinutes(value: number): void {
     this.minutes = value;
-    this.updateReplenishTimes();
-    this.updateResinCheckResults();
+    this.updateAll();
   }
 
   setTargetDate(value: Date): void {
     this.targetDate = value;
+    this.updateResinCheckResults();
+  }
+
+  private updateAll(): void {
+    const now = new Date();
+    if (this.targetDate < now) {
+      this.targetDate = now;
+    }
+    this.updateReplenishTimes();
     this.updateResinCheckResults();
   }
 
