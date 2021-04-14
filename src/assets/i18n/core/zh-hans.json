@@ -1,9 +1,8 @@
 {
   "path": {
     "home": "首页",
-    "characters": "角色",
-    "weapons": "武器",
-    "artifacts": "圣遗物",
+    "character": "角色",
+    "weapon": "武器",
     "inventory": "背包",
     "resin": "树脂",
     "settings": "设置"
@@ -92,7 +91,7 @@
         "2": "双击则可{{ doubleClick }}"
       }
     },
-    "characters": {
+    "character": {
       "title": "角色列表",
       "reset": "重选角色",
       "add": "添加角色",
@@ -112,7 +111,7 @@
         "traveler-gender": "旅行者性别"
       }
     },
-    "weapons": {
+    "weapon": {
       "title": "武器列表",
       "reset": "重选武器",
       "add": "添加武器",

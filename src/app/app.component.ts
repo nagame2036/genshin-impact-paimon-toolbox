@@ -11,9 +11,8 @@ export class AppComponent {
 
   routers = [
     {path: 'home'},
-    {path: 'characters'},
-    {path: 'weapons'},
-    {path: 'artifacts'},
+    {path: 'character'},
+    {path: 'weapon'},
     {path: 'inventory'},
     {path: 'resin'},
     {path: 'settings'},

@@ -6,11 +6,11 @@ import {WeaponDetailComponent} from './pages/weapon-detail/weapon-detail.compone
 import {WeaponPlanComponent} from './pages/weapon-plan/weapon-plan.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'progresses', pathMatch: 'full'},
+  {path: '', redirectTo: 'progress', pathMatch: 'full'},
   {path: 'add', component: AddWeaponComponent},
-  {path: 'progresses', component: WeaponListComponent},
+  {path: 'progress', component: WeaponListComponent},
   {
-    path: 'progresses/:id',
+    path: 'progress/:id',
     component: WeaponDetailComponent,
     children: [
       {path: '', redirectTo: 'plan', pathMatch: 'full'},

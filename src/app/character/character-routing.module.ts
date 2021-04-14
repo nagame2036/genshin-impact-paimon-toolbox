@@ -7,11 +7,11 @@ import {CharacterPlanComponent} from './pages/character-plan/character-plan.comp
 import {CharacterSettingsComponent} from './pages/character-settings/character-settings.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'progresses', pathMatch: 'full'},
+  {path: '', redirectTo: 'progress', pathMatch: 'full'},
   {path: 'add', component: AddCharacterComponent},
-  {path: 'progresses', component: CharacterListComponent},
+  {path: 'progress', component: CharacterListComponent},
   {
-    path: 'progresses/:id',
+    path: 'progress/:id',
     component: CharacterDetailComponent,
     children: [
       {path: '', redirectTo: 'plan', pathMatch: 'full'},

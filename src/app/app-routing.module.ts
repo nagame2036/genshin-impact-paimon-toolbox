@@ -13,23 +13,19 @@ const routes: Routes = [
   },
   {
     path: 'settings',
-    loadChildren: () =>
-      import('./setting/setting.module').then(m => m.SettingModule),
+    loadChildren: () => import('./setting/setting.module').then(m => m.SettingModule),
   },
   {
-    path: 'characters',
-    loadChildren: () =>
-      import('./character/character.module').then(m => m.CharacterModule),
+    path: 'character',
+    loadChildren: () => import('./character/character.module').then(m => m.CharacterModule),
   },
   {
-    path: 'weapons',
-    loadChildren: () =>
-      import('./weapon/weapon.module').then(m => m.WeaponModule),
+    path: 'weapon',
+    loadChildren: () => import('./weapon/weapon.module').then(m => m.WeaponModule),
   },
   {
     path: 'inventory',
-    loadChildren: () =>
-      import('./inventory/inventory.module').then(m => m.InventoryModule),
+    loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule),
   },
   {
     path: 'resin',
