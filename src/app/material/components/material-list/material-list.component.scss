@@ -13,7 +13,6 @@
 }
 
 .detail-container {
-  @apply pb-2;
   @apply relative;
   @apply rounded;
   @apply border-2;
@@ -42,20 +41,18 @@
       @apply my-0.5;
     }
 
-    .form-field-content {
+    .form-field-content, .input-field {
       @apply text-right;
     }
+  }
 
-    .input-field {
-      @apply text-right;
-    }
+  &.conciseMode {
+    @apply pb-2;
   }
 }
 
 .craft-btn {
-  @apply mx-2;
-  @apply mt-2;
-  @apply mb-1;
+  @apply m-2;
 
   ::ng-deep .ring-btn {
     @apply w-full;

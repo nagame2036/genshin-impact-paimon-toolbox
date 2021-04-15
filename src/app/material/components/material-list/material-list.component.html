@@ -12,9 +12,9 @@
           [tabIndex]="-1"
           (click)="detailDialog.open(item)"
         >
-          <span class="material-icons"> info </span>
+          <span class="material-icons">info</span>
         </button>
-        <div class="detail">
+        <div [class.conciseMode]="conciseMode" class="detail">
           <ng-container *ngIf="!conciseMode">
             <app-form-field [label]="i18n.module('need')">
               {{ item.need | number: '1.0-0' }}
