@@ -65,7 +65,7 @@
 .content {
   @apply mx-auto;
   min-height: 90vh;
-  @apply xl:container;
+  @apply xl:max-w-[1280px];
 }
 
 .footer {
