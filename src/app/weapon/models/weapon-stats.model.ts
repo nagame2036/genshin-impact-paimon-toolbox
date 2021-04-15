@@ -39,6 +39,8 @@ export interface WeaponStatsCurveAscension {
  */
 export class WeaponStatsValue extends StatsValue {
   constructor() {
-    super();
+    super(defaultValues);
   }
 }
+
+const defaultValues = new Map<StatsType, number>();

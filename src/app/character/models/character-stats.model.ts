@@ -1,8 +1,4 @@
-import {
-  allResBonusStatsTypes,
-  StatsType,
-  StatsValue,
-} from '../../game-common/models/stats.model';
+import {allResBonusStatsTypes, StatsType, StatsValue} from '../../game-common/models/stats.model';
 
 /**
  * Represents the stats info of a character.
@@ -41,16 +37,7 @@ export type CharacterStatsCurveAscension = Partial<Record<StatsType, number[]>>;
  */
 export class CharacterStatsValue extends StatsValue {
   constructor() {
-    const defaults = new Map<StatsType, number>();
-    const specifics: [StatsType, number][] = [
-      ['CHC%', defaultCHC],
-      ['CHD%', defaultCHD],
-      ['ER%', defaultER],
-      ['STA recover speed', defaultSTARecoverSpeed],
-    ];
-    specifics.forEach(([type, value]) => defaults.set(type, value));
-    allResBonusStatsTypes.forEach(res => defaults.set(res, defaultRES));
-    super(defaults);
+    super(defaultValues);
   }
 }
 
@@ -63,3 +50,11 @@ const defaultCHD = 0.5;
 const defaultER = 1.0;
 
 const defaultSTARecoverSpeed = 25.0;
+
+const defaultValues = new Map<StatsType, number>([
+  ['CHC%', defaultCHC],
+  ['CHD%', defaultCHD],
+  ['ER%', defaultER],
+  ['STA recover speed', defaultSTARecoverSpeed],
+  ...allResBonusStatsTypes.map(res => [res, defaultRES] as [StatsType, number]),
+]);

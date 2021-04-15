@@ -50,7 +50,7 @@ export type StatsType = typeof allStatsTypes[number];
 export abstract class StatsValue {
   private values = new Map<StatsType, number>();
 
-  protected constructor(private defaults: Map<StatsType, number> = new Map()) {}
+  protected constructor(private defaults: Map<StatsType, number>) {}
 
   get(type: StatsType): number {
     return this.values.get(type) ?? this.defaults.get(type) ?? 0;
