@@ -1,16 +1,12 @@
 import {Injectable} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 import {allAscensions, Ascension} from '../models/ascension.type';
 import {coerceRange} from '../../shared/utils/coerce';
-import {I18n} from '../../widget/models/i18n.model';
 import {AscensionLevel, AscensionLevelData} from '../models/ascension-level.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AscensionLevelService {
-  private i18n = I18n.create('game-common');
-
   private ascensionRange: [Ascension, Ascension] = [
     0 as Ascension,
     allAscensions[allAscensions.length - 1],
@@ -26,15 +22,11 @@ export class AscensionLevelService {
     [80, 90],
   ];
 
-  constructor(private translator: TranslateService) {}
+  constructor() {}
 
   format({ascension, level}: AscensionLevel): string {
-    let result = `${level}`;
-    if (ascension > 0 && level === this.levelRanges[ascension][0]) {
-      const ascended = this.translator.instant(this.i18n.dict('ascended'));
-      result += ascended;
-    }
-    return result;
+    const ascended = ascension > 0 && level === this.levelRanges[ascension][0];
+    return ascended ? `${level}+` : `${level}`;
   }
 
   correct(curr: AscensionLevel, start?: AscensionLevel): AscensionLevelData {
