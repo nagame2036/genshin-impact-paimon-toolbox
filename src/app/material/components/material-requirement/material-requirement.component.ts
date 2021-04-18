@@ -1,15 +1,8 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MaterialType} from '../../models/material-type.enum';
 import {MaterialDetail} from '../../models/material.model';
 import {I18n} from '../../../widget/models/i18n.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
-import {NGXLogger} from 'ngx-logger';
 import {MaterialViewService} from '../../services/material-view.service';
 import {defaultMaterialViewOptions} from '../../models/options.model';
 import {MaterialListData} from '../../models/material-list-data.model';
@@ -36,15 +29,12 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
 
   detailsEmpty = true;
 
-  constructor(private view: MaterialViewService, private logger: NGXLogger) {}
+  constructor(private view: MaterialViewService) {}
 
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('requirements')) {
-      this.logger.info('received requirements', this.requirements);
+    if (changes.requirements) {
       const options = [];
       for (let i = 0; i < this.requirements.length; i++) {
         const {text, value} = this.requirements[i];
@@ -72,12 +62,11 @@ export class MaterialRequirementComponent implements OnInit, OnChanges {
         }
       }
     }
-    this.materials = this.types.map(([type]) => {
+    this.materials = this.types.map(([type, ...types]) => {
       const details = detailsMap.get(type) ?? [];
-      const materials = this.view.viewDetails(
-        details,
-        defaultMaterialViewOptions,
-      );
+      const materials = this.view
+        .viewDetails(details, defaultMaterialViewOptions)
+        .sort((a, b) => types.indexOf(a.type) - types.indexOf(b.type));
       return {type, materials};
     });
   }
