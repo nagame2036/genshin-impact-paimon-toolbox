@@ -3,13 +3,15 @@ import {SelectOption} from '../../models/select-option.model';
 import {toggleItem} from '../../../shared/utils/collections';
 import {TranslateService} from '@ngx-translate/core';
 import {I18n} from '../../models/i18n.model';
+import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-multi-select',
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
 })
-export class MultiSelectComponent implements OnInit {
+export class MultiSelectComponent extends AbstractObservableDirective implements OnInit {
   i18n = I18n.create('shared.multi-select');
 
   @Input()
@@ -31,26 +33,28 @@ export class MultiSelectComponent implements OnInit {
   @Output()
   changed = new EventEmitter<any[]>();
 
-  constructor(private translator: TranslateService) {}
+  constructor(private translator: TranslateService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.optionsValues = this.options.map(it => it.value);
-    this.updateValuesText();
+    this.updateValueText();
+    this.translator.onLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateValueText());
   }
 
-  change(option: SelectOption): void {
-    const item = option.value;
-    this.value = toggleItem(this.value, item, it => it === item);
+  change({value}: SelectOption): void {
+    this.value = toggleItem(this.value, value, it => it === value);
     if (!this.ordered) {
-      this.value.sort(
-        (a, b) => this.optionsValues.indexOf(a) - this.optionsValues.indexOf(b),
-      );
+      this.value.sort((a, b) => this.optionsValues.indexOf(a) - this.optionsValues.indexOf(b));
     }
-    this.updateValuesText();
+    this.updateValueText();
     this.changed.emit(this.value);
   }
 
-  updateValuesText(): void {
+  updateValueText(): void {
     const length = this.value.length;
     if (length === 0) {
       this.valueText = this.translator.instant(this.i18n.dict('none'));
@@ -69,7 +73,7 @@ export class MultiSelectComponent implements OnInit {
 
   selectAll(): void {
     this.value = this.value.length === this.options.length ? [] : this.optionsValues;
-    this.updateValuesText();
+    this.updateValueText();
     this.changed.emit(this.value);
   }
 }

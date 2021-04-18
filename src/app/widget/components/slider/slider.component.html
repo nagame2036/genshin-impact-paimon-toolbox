@@ -1,43 +1,31 @@
-<div class="container">
-  <table class="input-container">
-    <tr>
-      <td rowspan="2">
-        <button
-          class="change-num-btn"
-          [class.disabled]="value - step < min"
-          (click)="change(-step)"
-        >
-          <span class="material-icons">remove</span>
-        </button>
-      </td>
-      <td class="slider-container">
-        <input
-          type="range"
-          class="slider"
-          [valueAsNumber]="value"
-          [min]="min"
-          [max]="max"
-          [step]="step"
-          (input)="emitChange(input.value)"
-          #input
-        />
-      </td>
-      <td rowspan="2">
-        <button
-          class="change-num-btn"
-          [class.disabled]="value + step > max"
-          (click)="change(step)"
-        >
-          <span class="material-icons">add</span>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="tick-marks">
-          <div *ngFor="let i of range" class="tick-mark"></div>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
+<table class="input-container">
+  <tr>
+    <td rowspan="2">
+      <button (click)="change(-step)" [class.disabled]="value - step < min" class="change-num-btn">
+        <span class="material-icons">remove</span>
+      </button>
+    </td>
+    <td class="slider-container">
+      <input
+        #input
+        (input)="emitChange(input.value)"
+        [max]="max"
+        [min]="min"
+        [step]="step"
+        [valueAsNumber]="value"
+        class="slider"
+        type="range"
+      />
+    </td>
+    <td rowspan="2">
+      <button (click)="change(step)" [class.disabled]="value + step > max" class="change-num-btn">
+        <span class="material-icons">add</span>
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td class="tick-marks">
+      <div *ngFor="let i of range" class="tick-mark"></div>
+    </td>
+  </tr>
+</table>
