@@ -2,12 +2,11 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {MaterialService} from '../../services/material.service';
-import {NGXLogger} from 'ngx-logger';
 import {CraftRecipe, MaterialDetail} from '../../models/material.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 import {coerceIn} from '../../../shared/utils/coerce';
-import {Subscription} from 'rxjs';
+import {combineLatest, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-craft-dialog',
@@ -42,15 +41,9 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(
-    private service: MaterialService,
-    private translator: TranslateService,
-    private logger: NGXLogger,
-  ) {}
+  constructor(private service: MaterialService, private translator: TranslateService) {}
 
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
@@ -64,11 +57,12 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
     this.item = item;
     this.times = 0;
     this.index = 0;
-    this.subscription = this.service.getCraftDetails(item).subscribe(details => {
+    const details$ = this.service.getCraftDetails(item);
+    const locale$ = this.translator.onLangChange.asObservable();
+    this.subscription = combineLatest([details$, locale$]).subscribe(([details]) => {
       this.details = details;
       this.recipes = this.recipeOptions(recipes, details);
       this.changeRecipe(this.recipes[this.index].value);
-      this.logger.info('received material craft details', item, details);
       this.dialog.open();
     });
   }
@@ -101,9 +95,7 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
       const params = {amount: craftableAmount};
       const times = this.translator.instant(this.i18n.module(key), params);
       const materials = usage
-        .map(({info}) => {
-          return this.translator.instant(this.i18n.data(`material.${info.id}`));
-        })
+        .map(({info}) => this.translator.instant(this.i18n.data(`material.${info.id}`)))
         .join(', ');
       return {text: `${times} - ${materials}`, value: recipes[index]};
     });
