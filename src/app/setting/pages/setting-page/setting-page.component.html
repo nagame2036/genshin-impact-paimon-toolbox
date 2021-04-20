@@ -4,10 +4,11 @@
   </h1>
   <div class="settings">
     <app-select
+      (changed)="settings.useLocale($event)"
       [label]="i18n.module('language')"
-      [options]="languages"
-      [value]="currentLanguage"
-      (changed)="switchLanguage($event)"
+      [options]="settings.allLocales"
+      [value]="locale"
+      *ngIf="settings.locale | async as locale"
     ></app-select>
   </div>
 </div>

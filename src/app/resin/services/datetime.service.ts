@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {SettingService} from '../../setting/services/setting.service';
-import {defaultLocale, Locale} from '../../app-locale.module';
+import {Locale} from '../../app-locale.module';
 import {rangeList} from '../../shared/utils/range-list';
 
 const relateDateFormat = {
@@ -33,7 +33,7 @@ const weekdayDates = rangeList(4, 10)
   providedIn: 'root',
 })
 export class DatetimeService {
-  currentLocale: Locale = defaultLocale;
+  currentLocale = this.settings.defaultLocale;
 
   weekdays = new ReplaySubject<string[]>(1);
 

@@ -9,14 +9,14 @@
   </div>
   <div class="language-settings">
     <span id="language-btn" class="material-icons toolbar-btn">language</span>
-    <ul class="language-menu">
+    <ul *ngIf="settings.locale | async as currLocale" class="language-menu">
       <li
-        *ngFor="let lang of languages"
         class="language-option"
-        [class.selected]="lang.value === currentLanguage"
-        (click)="switchLanguage(lang.value)"
+        *ngFor="let locale of settings.allLocales"
+        [class.selected]="locale.value === currLocale"
+        (click)="settings.useLocale(locale.value)"
       >
-        {{ lang.text }}
+        {{ locale.text }}
       </li>
     </ul>
   </div>

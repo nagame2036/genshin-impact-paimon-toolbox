@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {I18n} from '../../models/i18n.model';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 import {takeUntil} from 'rxjs/operators';
+import {SettingService} from '../../../setting/services/setting.service';
 
 @Component({
   selector: 'app-multi-select',
@@ -33,16 +34,14 @@ export class MultiSelectComponent extends AbstractObservableDirective implements
   @Output()
   changed = new EventEmitter<any[]>();
 
-  constructor(private translator: TranslateService) {
+  constructor(private translator: TranslateService, private settings: SettingService) {
     super();
   }
 
   ngOnInit(): void {
     this.optionsValues = this.options.map(it => it.value);
     this.updateValueText();
-    this.translator.onLangChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateValueText());
+    this.settings.locale.pipe(takeUntil(this.destroy$)).subscribe(() => this.updateValueText());
   }
 
   change({value}: SelectOption): void {
@@ -67,6 +66,8 @@ export class MultiSelectComponent extends AbstractObservableDirective implements
           const text = this.options[index]?.text ?? '';
           return this.translator.instant(text);
         })
+        // .map(it => this.options[this.optionsValues.indexOf(it)]?.text ?? '')
+        // .map(it => this.translator.instant(it))
         .join(', ');
     }
   }

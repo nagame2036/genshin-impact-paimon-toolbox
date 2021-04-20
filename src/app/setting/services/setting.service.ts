@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {Observable, of, ReplaySubject, zip} from 'rxjs';
 import {distinctUntilChanged, first, map, switchMap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {defaultLocale, Locale, localeSettingKey} from '../../app-locale.module';
+import {allLocales, defaultLocale, Locale, localeSettingKey} from '../../app-locale.module';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +14,13 @@ export class SettingService {
 
   readonly settings = new ReplaySubject<Map<string, any>>(1);
 
-  private defaultValues = new Map<string, any>();
+  allLocales = allLocales;
+
+  defaultLocale = defaultLocale;
 
   locale = new ReplaySubject<Locale>(1);
+
+  private defaultValues = new Map<string, any>();
 
   constructor(
     private database: NgxIndexedDBService,
@@ -34,7 +38,7 @@ export class SettingService {
       this.logger.info('fetched settings', settings);
       this.settings.next(settings);
     });
-    this.get(localeSettingKey, defaultLocale).subscribe(locale => {
+    this.get(localeSettingKey, this.defaultLocale).subscribe(locale => {
       this.translator.use(locale);
       this.locale.next(locale);
     });
@@ -77,6 +81,10 @@ export class SettingService {
       this.logger.info('update setting', id, value);
       this.set(id, {...curr, ...value});
     });
+  }
+
+  useLocale(value: Locale): void {
+    this.set(localeSettingKey, value);
   }
 }
 
