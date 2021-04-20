@@ -61,13 +61,8 @@ export class MultiSelectComponent extends AbstractObservableDirective implements
       this.valueText = this.translator.instant(this.i18n.dict('all'));
     } else {
       this.valueText = this.value
-        .map(it => {
-          const index = this.optionsValues.indexOf(it);
-          const text = this.options[index]?.text ?? '';
-          return this.translator.instant(text);
-        })
-        // .map(it => this.options[this.optionsValues.indexOf(it)]?.text ?? '')
-        // .map(it => this.translator.instant(it))
+        .map(it => this.options[this.optionsValues.indexOf(it)]?.text ?? '')
+        .map(it => this.translator.instant(it))
         .join(', ');
     }
   }

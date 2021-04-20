@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, of, ReplaySubject, zip} from 'rxjs';
-import {distinctUntilChanged, first, map, switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, first, mapTo, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {allLocales, defaultLocale, Locale, localeSettingKey} from '../../app-locale.module';
 
@@ -29,19 +29,17 @@ export class SettingService {
   ) {
     database.getAll(this.storeName).subscribe(data => {
       const settings = new Map<string, any>();
-      const properties = ['id', 'value'];
       for (const datum of data) {
-        if (properties.every(it => datum.hasOwnProperty(it))) {
+        if (['id', 'value'].every(it => datum.hasOwnProperty(it))) {
           settings.set(String(datum.id), datum.value);
         }
       }
       this.logger.info('fetched settings', settings);
       this.settings.next(settings);
     });
-    this.get(localeSettingKey, this.defaultLocale).subscribe(locale => {
-      this.translator.use(locale);
-      this.locale.next(locale);
-    });
+    this.get(localeSettingKey, this.defaultLocale)
+      .pipe(switchMap(locale => translator.use(locale).pipe(mapTo(locale))))
+      .subscribe(locale => this.locale.next(locale));
   }
 
   get<T>(id: string, defaultValue?: T): Observable<T> {
@@ -52,15 +50,12 @@ export class SettingService {
           this.defaultValues.set(id, defaultValue);
         }
         const value = this.defaultValues.get(id) ?? {};
-        if (setting && optionHasValue(setting, value)) {
-          return of(setting);
-        }
-        return this.database.update(this.storeName, {id, value}).pipe(
-          map(_ => {
-            settings.set(id, value);
-            return value;
-          }),
-        );
+        return setting && optionHasValue(setting, value)
+          ? of(setting)
+          : this.database.update(this.storeName, {id, value}).pipe(
+              tap(_ => settings.set(id, value)),
+              mapTo(value),
+            );
       }),
       distinctUntilChanged(),
     );
