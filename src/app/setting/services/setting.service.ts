@@ -10,9 +10,9 @@ import {defaultLocale, Locale, localeSettingKey} from '../../app-locale.module';
   providedIn: 'root',
 })
 export class SettingService {
-  private readonly storeName = 'settings';
+  readonly storeName = 'settings';
 
-  private readonly settings = new ReplaySubject<Map<string, any>>(1);
+  readonly settings = new ReplaySubject<Map<string, any>>(1);
 
   private defaultValues = new Map<string, any>();
 
@@ -35,8 +35,8 @@ export class SettingService {
       this.settings.next(settings);
     });
     this.get(localeSettingKey, defaultLocale).subscribe(locale => {
-      this.locale.next(locale);
       this.translator.use(locale);
+      this.locale.next(locale);
     });
   }
 
