@@ -10,28 +10,26 @@ import {Item} from '../../game-common/models/item.model';
   providedIn: 'root',
 })
 export class MaterialRequirementService {
+  readonly changes = new ReplaySubject<MaterialRequireList>(1);
+
   private typed = new Map<ItemType, MaterialRequireList>();
 
   private total = new MaterialRequireList();
-
-  readonly changes = new ReplaySubject<MaterialRequireList>(1);
 
   constructor(private logger: NGXLogger) {
     this.changes.next(this.total);
   }
 
   getMarks(id: number): MaterialRequireMark[] {
-    const marks = this.total.getMarks(id);
-    this.logger.info('sent marks of material', id, marks);
-    return marks;
+    return this.total.getMarks(id);
   }
 
   getType(type: ItemType): MaterialRequireList {
-    const req = this.typed.get(type) ?? new MaterialRequireList();
-    if (!this.typed.has(type)) {
+    let req = this.typed.get(type);
+    if (!req) {
+      req = new MaterialRequireList();
       this.typed.set(type, req);
     }
-    this.logger.info('sent requirement of item type', type, req);
     return req;
   }
 
@@ -44,17 +42,7 @@ export class MaterialRequirementService {
     }
     this.logger.info('update requirement of item', type, key, req);
     this.total.update(key, req);
-    this.changes.next(this.total);
-  }
-
-  remove(type: ItemType, key: number): void {
-    const typeReq = this.typed.get(type);
-    if (typeReq) {
-      typeReq.remove(key);
-      this.total.remove(key);
-      this.logger.info('remove requirement of item', type, key);
-      this.changes.next(this.total);
-    }
+    this.changes.next(typeReq || req);
   }
 
   removeAll(type: ItemType, items: Item<any>[]): void {
@@ -66,7 +54,7 @@ export class MaterialRequirementService {
         this.total.remove(id);
       }
       this.logger.info('remove all requirements of items', type, items);
-      this.changes.next(this.total);
+      this.changes.next(typeReq);
     }
   }
 }

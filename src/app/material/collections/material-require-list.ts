@@ -10,6 +10,8 @@ import {I18n} from '../../widget/models/i18n.model';
 
 const i18n = I18n.create('game-common');
 
+type Materials = Map<number, MaterialDetail>;
+
 export class MaterialRequireList {
   /**
    * The Map of item's id to the Map of its purpose to its mark.
@@ -17,22 +19,16 @@ export class MaterialRequireList {
    */
   private marks = new Map<number, Map<string, RequireMarkDetail>>();
 
-  private totalNeed = new MaterialList();
+  private need = new MaterialList();
 
-  constructor(list?: MaterialRequireList[]) {
-    if (list) {
-      this.combineAll(list);
-    }
+  constructor(list: MaterialRequireList[] = []) {
+    list.forEach(it => this.combine(it));
   }
 
-  mark(
-    materialId: number,
-    need: number,
-    mark: RequireMark,
-  ): MaterialRequireList {
+  mark(materialId: number, need: number, mark: RequireMark): MaterialRequireList {
     if (need > 0) {
       const {key, purpose} = mark;
-      this.totalNeed.change(materialId, need);
+      this.need.change(materialId, need);
       const marks = this.marks.get(key) ?? new Map<string, RequireMarkDetail>();
       const reqMark = marks.get(purpose) ?? {mark, require: new MaterialList()};
       reqMark.require.change(materialId, need);
@@ -48,73 +44,47 @@ export class MaterialRequireList {
       this.remove(key);
       return this;
     }
-    const origin = this.marks.get(key);
-    if (!origin) {
-      for (const mark of thatMarks.values()) {
-        this.totalNeed.combine(mark.require);
+    this.marks.get(key)?.forEach(mark => {
+      for (const [id, need] of mark.require.entries()) {
+        this.need.change(id, -need);
       }
-    } else {
-      for (const [purpose, mark] of origin) {
-        const thatRequirement = thatMarks.get(purpose)?.require;
-        if (!thatRequirement) {
-          continue;
-        }
-        for (const [id, thatNeed] of thatRequirement.entries()) {
-          const newNeed = thatNeed - mark.require.getAmount(id);
-          this.totalNeed.change(id, newNeed);
-        }
-      }
-    }
+    });
     this.marks.set(key, thatMarks);
+    this.need.combineAll(Array.from(thatMarks.values(), it => it.require));
     return this;
   }
 
-  getDetails(
-    key: number,
-    totalPurposes: string[],
-    materials: Map<number, MaterialDetail>,
-  ): RequireDetail[] {
-    const purposes = new Map<string, MaterialList>();
-    for (const p of totalPurposes) {
-      purposes.set(p, new MaterialList());
-    }
+  getDetails(key: number, purposes: string[], materials: Materials): RequireDetail[] {
+    const purposeMap = new Map(purposes.map(it => [it, new MaterialList()]));
     const reqMarks = this.marks.get(key);
     if (reqMarks) {
-      const total = purposes.get(i18n.module('total-requirement'));
+      const total = purposeMap.get(i18n.module('total-requirement'));
       for (const {mark, require} of reqMarks.values()) {
-        const purposeType = mark.purposeType;
-        purposes.get(purposeType)?.combine(require);
+        purposeMap.get(mark.purposeType)?.combine(require);
         total?.combine(require);
       }
     }
-    const results = [];
-    for (const [purpose, req] of purposes) {
-      results.push(processDetail(purpose, req, materials));
-    }
-    return results.sort(
-      (a, b) => totalPurposes.indexOf(a.text) - totalPurposes.indexOf(b.text),
-    );
+    const list = Array.from(purposeMap, it => processDetail(it, materials));
+    return list.sort((a, b) => purposes.indexOf(a.text) - purposes.indexOf(b.text));
   }
 
   getMarks(materialId: number): MaterialRequireMark[] {
-    const results = [];
-    for (const reqMarks of this.marks.values()) {
-      for (const {mark, require} of reqMarks.values()) {
-        const need = require.getAmount(materialId);
-        if (need > 0) {
-          results.push({...mark, need});
-        }
-      }
-    }
-    return results;
+    return [...this.marks.values()]
+      .flatMap(it =>
+        Array.from(it.values(), ({mark, require}) => {
+          const need = require.getAmount(materialId);
+          return need <= 0 ? null : {...mark, need};
+        }),
+      )
+      .filter((it): it is MaterialRequireMark => !!it);
   }
 
   getNeed(id: number): number {
-    return this.totalNeed.getAmount(id);
+    return this.need.getAmount(id);
   }
 
   combine(that: MaterialRequireList): MaterialRequireList {
-    this.totalNeed.combine(that.totalNeed);
+    this.need.combine(that.need);
     for (const [thatItemKey, thatMarks] of that.marks) {
       const marks = this.marks.get(thatItemKey);
       if (!marks) {
@@ -123,44 +93,34 @@ export class MaterialRequireList {
       }
       for (const [thatPurpose, thatMark] of thatMarks) {
         const mark = marks.get(thatPurpose);
-        if (mark) {
-          mark.require.combine(thatMark.require);
-        } else {
+        if (!mark) {
           marks.set(thatPurpose, thatMark);
+          continue;
         }
+        mark.require.combine(thatMark.require);
       }
       this.marks.set(thatItemKey, marks);
     }
     return this;
   }
 
-  combineAll(list: MaterialRequireList[]): MaterialRequireList {
-    return list.reduce((total, acc) => total.combine(acc), this);
-  }
-
   remove(key: number): void {
-    const existing = this.marks.get(key);
-    if (existing) {
-      for (const mark of existing.values()) {
-        for (const [id, need] of mark.require.entries()) {
-          this.totalNeed.change(id, -need);
-        }
+    this.marks.get(key)?.forEach(mark => {
+      for (const [id, need] of mark.require.entries()) {
+        this.need.change(id, -need);
       }
-      this.marks.delete(key);
-    }
+    });
+    this.marks.delete(key);
   }
 
   entries(): [number, number][] {
-    return this.totalNeed.entries();
+    return this.need.entries();
   }
 }
 
-function processDetail(
-  text: string,
-  req: MaterialList,
-  materials: Map<number, MaterialDetail>,
-): RequireDetail {
+function processDetail(origin: [string, MaterialList], materials: Materials): RequireDetail {
   const value = [];
+  const [text, req] = origin;
   let reached = true;
   let exists = false;
   for (const [id, need] of req.entries()) {

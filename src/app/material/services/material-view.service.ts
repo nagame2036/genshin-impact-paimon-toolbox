@@ -2,10 +2,7 @@ import {Injectable} from '@angular/core';
 import {allRarities, Rarity} from '../../game-common/models/rarity.type';
 import {SettingService} from '../../setting/services/setting.service';
 import {combineLatest, Observable, ReplaySubject} from 'rxjs';
-import {
-  defaultMaterialViewOptions,
-  MaterialViewOptions,
-} from '../models/options.model';
+import {defaultMaterialViewOptions, MaterialViewOptions} from '../models/options.model';
 import {MaterialDetail} from '../models/material.model';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialService} from './material.service';
@@ -17,9 +14,9 @@ import {MaterialInfoService} from './material-info.service';
   providedIn: 'root',
 })
 export class MaterialViewService {
-  private readonly settingKey = 'material-view';
-
   readonly rarities = allRarities.map(it => ({value: it, text: `★${it}`}));
+
+  private readonly settingKey = 'material-view';
 
   private options$ = new ReplaySubject<MaterialViewOptions>(1);
 
@@ -27,7 +24,7 @@ export class MaterialViewService {
 
   constructor(
     private materials: MaterialService,
-    private information: MaterialInfoService,
+    private infos: MaterialInfoService,
     private settings: SettingService,
   ) {
     settings
@@ -49,7 +46,7 @@ export class MaterialViewService {
         continue;
       }
       const group = info.group;
-      if (!group || this.information.ignoreGroupTypes.includes(type)) {
+      if (!group || this.infos.ignoreGroupTypes.includes(type)) {
         results.push(detail);
         continue;
       }
@@ -72,16 +69,13 @@ export class MaterialViewService {
   viewTypes(types: MaterialType[][]): Observable<MaterialDetail[][]> {
     return combineLatest([this.options, this.materials.updated]).pipe(
       map(([options]) => {
-        const results: MaterialDetail[][] = [];
-        for (const type of types) {
-          const typed: MaterialDetail[] = [];
-          for (const subType of type) {
-            const subTyped = this.materials.typed.get(subType) ?? [];
-            typed.push(...subTyped.values());
-          }
-          results.push(this.viewDetails(typed, options));
-        }
-        return results;
+        return types.map(list => {
+          const materials = list.flatMap(type => {
+            const typed = this.materials.typed.get(type);
+            return typed ? [...typed.values()] : [];
+          });
+          return this.viewDetails(materials, options);
+        });
       }),
     );
   }
@@ -103,15 +97,12 @@ export class MaterialViewService {
   }
 }
 
-/**
- * Materials id which has prior order in view.
- */
 const prior = [mora.id, characterExp.id, weaponExp.id];
 
 function compare({info: a}: MaterialDetail, {info: b}: MaterialDetail): number {
   return (
     prior.indexOf(b.id) - prior.indexOf(a.id) ||
-    (a.group ?? 0) - (b.group ?? 0) ||
+    Number(a.group) - Number(b.group) ||
     b.rarity - a.rarity
   );
 }

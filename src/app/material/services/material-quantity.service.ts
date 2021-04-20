@@ -16,42 +16,35 @@ export class MaterialQuantityService {
 
   readonly changes = this.changes$.asObservable();
 
-  constructor(
-    private database: NgxIndexedDBService,
-    private logger: NGXLogger,
-  ) {
+  constructor(private database: NgxIndexedDBService, private logger: NGXLogger) {
     this.database.getAll(this.store).subscribe(materials => {
       this.logger.info('fetched materials quantity', materials);
-      const quantities = new MaterialList();
-      materials.forEach(({id, quantity}) => quantities.change(id, quantity));
-      this.quantities.combine(quantities);
-      this.changes$.next(quantities);
+      materials.forEach(({id, quantity}) => this.quantities.change(id, quantity));
+      this.changes$.next(this.quantities);
     });
   }
 
   update(id: number, quantity: number): void {
     this.updateDatabase(id, quantity).subscribe(_ => {
       this.quantities.setAmount(id, quantity);
-      const quantities = new MaterialList();
-      quantities.setAmount(id, quantity);
+      const changes = new MaterialList();
+      changes.setAmount(id, quantity);
       this.logger.info('update material quantity', id, quantity);
-      this.changes$.next(quantities);
+      this.changes$.next(changes);
     });
   }
 
-  change(materialChanges: MaterialList): void {
-    const changes = new MaterialList();
-    const updateObs = materialChanges
-      .entries()
-      .map(([itemId, itemAmountChange]) => {
-        const newAmount = this.quantities.getAmount(itemId) + itemAmountChange;
-        changes.setAmount(itemId, newAmount);
-        return this.updateDatabase(itemId, newAmount);
-      });
+  change(changes: MaterialList): void {
+    const updated = new MaterialList();
+    const updateObs = changes.entries().map(([id, amountChange]) => {
+      const newAmount = this.quantities.getAmount(id) + amountChange;
+      updated.change(id, newAmount);
+      return this.updateDatabase(id, newAmount);
+    });
     forkJoin(updateObs).subscribe(_ => {
-      this.logger.info('change materials quantities', materialChanges);
-      this.quantities.combine(materialChanges);
-      this.changes$.next(changes);
+      this.logger.info('change materials quantities', changes);
+      this.quantities.combine(changes);
+      this.changes$.next(updated);
     });
   }
 

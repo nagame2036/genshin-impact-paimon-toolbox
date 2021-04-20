@@ -1,21 +1,16 @@
 export class MaterialList {
-  /**
-   * item's id to it's amount.
-   */
-  private map = new Map<number, number>();
+  private idAmount = new Map<number, number>();
 
-  constructor(list?: MaterialList[]) {
-    if (list) {
-      this.combineAll(list);
-    }
+  constructor(list: MaterialList[] = []) {
+    this.combineAll(list);
   }
 
   getAmount(id: number): number {
-    return this.map.get(id) ?? 0;
+    return this.idAmount.get(id) ?? 0;
   }
 
   setAmount(id: number, amount: number): MaterialList {
-    this.map.set(id, amount);
+    this.idAmount.set(id, amount);
     return this;
   }
 
@@ -25,21 +20,17 @@ export class MaterialList {
   }
 
   combine(that: MaterialList): MaterialList {
-    for (const [id, amount] of that.map) {
-      this.change(id, amount);
-    }
+    that.idAmount.forEach((amount, id) => this.change(id, amount));
     return this;
   }
 
   combineAll(list: MaterialList[]): MaterialList {
-    for (const materials of list) {
-      this.combine(materials);
-    }
+    list.forEach(it => this.combine(it));
     return this;
   }
 
   entries(): [number, number][] {
-    return [...this.map];
+    return [...this.idAmount];
   }
 
   private changeAmount(id: number, amount: number): void {

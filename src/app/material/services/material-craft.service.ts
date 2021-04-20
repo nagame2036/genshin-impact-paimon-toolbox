@@ -8,10 +8,7 @@ import {MaterialList} from '../collections/material-list';
 export class MaterialCraftService {
   constructor() {}
 
-  isCraftable(
-    target: MaterialDetail,
-    materials: Map<number, MaterialDetail>,
-  ): boolean {
+  isCraftable(target: MaterialDetail, materials: Map<number, MaterialDetail>): boolean {
     for (const recipe of target.info.recipes ?? []) {
       const every = Object.entries(recipe).every(([itemId, itemAmount]) => {
         const itemHave = materials.get(Number(itemId))?.have ?? 0;

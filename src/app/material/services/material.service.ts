@@ -19,7 +19,7 @@ import {Item} from '../../game-common/models/item.model';
   providedIn: 'root',
 })
 export class MaterialService {
-  materials = new Map<number, MaterialDetail>();
+  readonly materials = new Map<number, MaterialDetail>();
 
   readonly typed = new Map<MaterialType, Map<number, MaterialDetail>>();
 
@@ -57,23 +57,14 @@ export class MaterialService {
           max = m;
         }
       }
-      if (max) {
-        result.push(max);
-      }
+      result.push(max);
     }
     return result.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
   }
 
-  getRequireDetails(
-    type: ItemType,
-    key: number,
-    purposes: string[],
-  ): Observable<RequireDetail[]> {
+  getRequireDetails(type: ItemType, key: number, purposes: string[]): Observable<RequireDetail[]> {
     return this.updated.pipe(
-      map(_ => {
-        const req = this.requirements.getType(type);
-        return req.getDetails(key, purposes, this.materials);
-      }),
+      map(_ => this.requirements.getType(type).getDetails(key, purposes, this.materials)),
     );
   }
 
@@ -84,13 +75,7 @@ export class MaterialService {
   getCraftDetails(
     item: MaterialDetail,
   ): Observable<{usage: MaterialDetail[]; craftableAmount: number}[]> {
-    return this.updated.pipe(
-      map(_ => {
-        const details = this.crafter.getCraftDetails(item, this.materials);
-        this.logger.info('sent craft details', item, details);
-        return details;
-      }),
-    );
+    return this.updated.pipe(map(_ => this.crafter.getCraftDetails(item, this.materials)));
   }
 
   updateHave(id: number, have: number): void {
@@ -136,23 +121,21 @@ export class MaterialService {
   }
 
   private updateDetails(): void {
-    combineLatest([
-      this.quantities.changes,
-      this.requirements.changes,
-    ]).subscribe(([quantities, requirements]) => {
-      const materials = this.materials;
-      for (const [id, have] of quantities.entries()) {
-        materials.get(id)?.updateHave(have);
-      }
-      for (const [id, need] of requirements.entries()) {
-        materials.get(id)?.updateNeed(need);
-      }
-      for (const material of materials.values()) {
-        material.craftable = this.crafter.isCraftable(material, materials);
-      }
-      this.infos.processSpecialMaterials(materials);
-      this.logger.info('updated materials', materials);
-      this.updated$.next();
-    });
+    combineLatest([this.quantities.changes, this.requirements.changes]).subscribe(
+      ([quantities, requirements]) => {
+        for (const [id, have] of quantities.entries()) {
+          this.materials.get(id)?.updateHave(have);
+        }
+        for (const [id, need] of requirements.entries()) {
+          this.materials.get(id)?.updateNeed(need);
+        }
+        for (const material of this.materials.values()) {
+          material.craftable = this.crafter.isCraftable(material, this.materials);
+        }
+        this.infos.processSpecialMaterials(this.materials);
+        this.logger.info('updated materials', this.materials);
+        this.updated$.next();
+      },
+    );
   }
 }

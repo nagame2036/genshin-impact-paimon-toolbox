@@ -25,10 +25,7 @@ export class MaterialInfoService {
 
   readonly grouped = new Map<number, MaterialInfo[]>();
 
-  readonly ignoreGroupTypes = [
-    MaterialType.TALENT_COMMON,
-    MaterialType.LOCAL_SPECIALTY,
-  ];
+  readonly ignoreGroupTypes = [MaterialType.TALENT_COMMON, MaterialType.LOCAL_SPECIALTY];
 
   constructor() {
     this.initTyped();
@@ -136,11 +133,7 @@ export class MaterialInfoService {
   }
 }
 
-function isWeekday(
-  groups: WeekdayGroup,
-  material: MaterialInfo,
-  weekday: number,
-): boolean {
+function isWeekday(groups: WeekdayGroup, material: MaterialInfo, weekday: number): boolean {
   const group = material.group;
   return group ? groups[group]?.weekday === weekday : false;
 }
