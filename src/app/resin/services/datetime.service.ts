@@ -4,25 +4,30 @@ import {SettingService} from '../../setting/services/setting.service';
 import {defaultLocale, Locale} from '../../app-locale.module';
 import {rangeList} from '../../shared/utils/range-list';
 
-const datetimeFormat = {
-  year: 'numeric',
+const relateDateFormat = {
   month: 'short',
-  weekday: 'short',
   day: 'numeric',
+};
+
+const relateTimeFormat = {
   hour: 'numeric',
   minute: 'numeric',
   hourCycle: 'h23',
 };
 
-const weekdayDates = [
-  new Date('2021-03-28'),
-  new Date('2021-03-29'),
-  new Date('2021-03-30'),
-  new Date('2021-03-31'),
-  new Date('2021-04-01'),
-  new Date('2021-04-02'),
-  new Date('2021-04-03'),
-];
+const datetimeFormat = {
+  ...relateDateFormat,
+  year: 'numeric',
+  weekday: 'short',
+};
+
+const weekdayDates = rangeList(4, 10)
+  .reverse()
+  .map(it => {
+    const date = new Date('2021-04-04');
+    date.setDate(it);
+    return date;
+  });
 
 @Injectable({
   providedIn: 'root',
@@ -41,9 +46,23 @@ export class DatetimeService {
     en: 0,
   };
 
+  relativeFormat!: Intl.RelativeTimeFormat;
+
+  relateDateFormat!: Intl.DateTimeFormat;
+
+  relateTimeFormat!: Intl.DateTimeFormat;
+
+  weekdayDateFormat!: Intl.DateTimeFormat;
+
+  weekdayFormat!: Intl.DateTimeFormat;
+
+  yearMonthFormat!: Intl.DateTimeFormat;
+
   constructor(private settings: SettingService) {
+    this.updateFormatters(this.currentLocale);
     settings.locale.subscribe(locale => {
       this.currentLocale = locale;
+      this.updateFormatters(locale);
       this.emitWeekdays(locale);
     });
   }
@@ -56,13 +75,17 @@ export class DatetimeService {
     );
   }
 
-  formatDatetime(date: Date): string {
-    return date.toLocaleString(this.currentLocale, datetimeFormat);
-  }
-
-  formatYearMonth(date: Date): string {
-    const options = {year: 'numeric', month: 'short'};
-    return date.toLocaleString(this.currentLocale, options);
+  formatRelateDatetime(target: Date): string {
+    const dates = [new Date(), new Date(target)];
+    dates.forEach(it => {
+      it.setHours(0);
+      it.setMinutes(0);
+    });
+    const dayDiff = Math.round((dates[1].getTime() - dates[0].getTime()) / 86_400_000);
+    const relative = this.relativeFormat.format(dayDiff, 'day');
+    const date = this.relateDateFormat.format(target);
+    const time = this.relateTimeFormat.format(target);
+    return `${time}, ${relative} (${date})`;
   }
 
   getCalendar(date: Date, locale: Locale = this.currentLocale): [number[], number[]] {
@@ -77,11 +100,20 @@ export class DatetimeService {
     return [daysPrevMonth, daysCurrMonth];
   }
 
+  private updateFormatters(locale: Locale): void {
+    this.relativeFormat = new Intl.RelativeTimeFormat(locale, {numeric: 'auto'});
+    this.relateDateFormat = new Intl.DateTimeFormat(locale, relateDateFormat);
+    this.relateTimeFormat = new Intl.DateTimeFormat(locale, relateTimeFormat);
+    this.weekdayDateFormat = new Intl.DateTimeFormat(locale, datetimeFormat);
+    this.weekdayFormat = new Intl.DateTimeFormat(locale, {weekday: 'short'});
+    this.yearMonthFormat = new Intl.DateTimeFormat(locale, {year: 'numeric', month: 'short'});
+  }
+
   private emitWeekdays(locale: Locale): void {
-    const formatter = new Intl.DateTimeFormat(locale, {weekday: 'short'});
-    const weekStart = this.specialWeekStart[locale] ?? this.defaultWeekStart;
-    const dates = [...weekdayDates.slice(weekStart, 7), ...weekdayDates.slice(0, weekStart)];
-    const result = dates.map(it => formatter.format(it));
+    const special = this.specialWeekStart[locale];
+    const start = special !== undefined ? special : this.defaultWeekStart;
+    const dates = [...weekdayDates.slice(start, 7), ...weekdayDates.slice(0, start)];
+    const result = dates.map(it => this.weekdayFormat.format(it));
     this.weekdays.next(result);
   }
 }

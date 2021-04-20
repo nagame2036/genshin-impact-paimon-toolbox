@@ -30,7 +30,7 @@ export class ResinService {
 
   formatReplenishDate(target: number, current: number, replenishInMinutes: number): string {
     const date = this.getRefillDate(target, current, replenishInMinutes);
-    return this.datetime.formatDatetime(date);
+    return this.datetime.formatRelateDatetime(date);
   }
 
   getAvoidExceedAdvice(
@@ -106,7 +106,7 @@ export class ResinService {
 
   private pushResult(list: string[], key: string, date: Date, value: number): void {
     const i18n = this.i18n.module(key);
-    const time = this.datetime.formatDatetime(date);
+    const time = this.datetime.formatRelateDatetime(date);
     list.push(this.translator.instant(i18n, {time, value}));
   }
 }

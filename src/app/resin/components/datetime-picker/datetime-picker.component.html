@@ -1,7 +1,7 @@
 <app-select
   [customDropdown]="customDropdown"
   [label]="label"
-  [valueText]="service.formatDatetime(value)"
+  [valueText]="service.weekdayDateFormat.format(value)"
   [opened]="opened"
   (click)="opened = true"
 >
@@ -11,7 +11,7 @@
         <button class="icon-btn" (click)="moveMonth(-1)">
           <span class="material-icons">chevron_left</span>
         </button>
-        <div>{{ service.formatYearMonth(yearMonth) }}</div>
+        <div>{{ service.yearMonthFormat.format(yearMonth) }}</div>
         <button class="icon-btn" (click)="moveMonth(1)">
           <span class="material-icons">chevron_right</span>
         </button>
@@ -30,12 +30,7 @@
         </button>
       </div>
       <div class="time-picker">
-        <app-slider
-          [min]="0"
-          [max]="23"
-          [value]="hour"
-          (changed)="setHour($event)"
-        ></app-slider>
+        <app-slider (changed)="setHour($event)" [max]="23" [min]="0" [value]="hour"></app-slider>
         <div>
           {{ i18n.module('hour') | translate: {value: value.getHours()} }}
         </div>
