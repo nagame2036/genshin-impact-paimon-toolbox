@@ -33,7 +33,7 @@ export class DatetimeService {
   weekdays = new ReplaySubject<string[]>(1);
 
   /**
-   * For locale zh-hans.
+   * For locale zh.
    */
   defaultWeekStart = 1;
 
@@ -65,10 +65,7 @@ export class DatetimeService {
     return date.toLocaleString(this.currentLocale, options);
   }
 
-  getCalendar(
-    date: Date,
-    locale: Locale = this.currentLocale,
-  ): [number[], number[]] {
+  getCalendar(date: Date, locale: Locale = this.currentLocale): [number[], number[]] {
     const year = date.getFullYear();
     const month = date.getMonth();
     const weekStart = this.specialWeekStart[locale] ?? this.defaultWeekStart;
@@ -81,15 +78,9 @@ export class DatetimeService {
   }
 
   private emitWeekdays(locale: Locale): void {
-    const dates: Date[] = [];
     const formatter = new Intl.DateTimeFormat(locale, {weekday: 'short'});
     const weekStart = this.specialWeekStart[locale] ?? this.defaultWeekStart;
-    for (let i = weekStart; i <= 6; i++) {
-      dates.push(weekdayDates[i]);
-    }
-    for (let i = 0; i < weekStart; i++) {
-      dates.push(weekdayDates[i]);
-    }
+    const dates = [...weekdayDates.slice(weekStart, 7), ...weekdayDates.slice(0, weekStart)];
     const result = dates.map(it => formatter.format(it));
     this.weekdays.next(result);
   }

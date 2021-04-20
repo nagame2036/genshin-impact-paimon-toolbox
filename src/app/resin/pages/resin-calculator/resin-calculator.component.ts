@@ -5,15 +5,14 @@ import {rangeList} from '../../../shared/utils/range-list';
 import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
 import {takeUntil} from 'rxjs/operators';
 import {combineLatest, timer} from 'rxjs';
+import {SettingService} from '../../../setting/services/setting.service';
 
 @Component({
   selector: 'app-resin-calculator',
   templateUrl: './resin-calculator.component.html',
   styleUrls: ['./resin-calculator.component.scss'],
 })
-export class ResinCalculatorComponent
-  extends AbstractObservableDirective
-  implements OnInit {
+export class ResinCalculatorComponent extends AbstractObservableDirective implements OnInit {
   i18n = I18n.create('resin');
 
   currentResin = 0;
@@ -28,12 +27,12 @@ export class ResinCalculatorComponent
 
   checkedResults: string[] = [];
 
-  constructor(public service: ResinService) {
+  constructor(public service: ResinService, private settings: SettingService) {
     super();
   }
 
   ngOnInit(): void {
-    combineLatest([timer(0, 10_000), this.service.localeChanged])
+    combineLatest([timer(0, 10_000), this.settings.locale])
       .pipe(takeUntil(this.destroy$))
       .subscribe(_ => this.updateAll());
   }
@@ -63,10 +62,8 @@ export class ResinCalculatorComponent
   }
 
   private updateReplenishTimes(): void {
-    const current = this.currentResin;
-    const inMinutes = this.minutes;
-    for (const i of this.replenishResults) {
-      i.time = this.service.formatRefillDate(i.target, current, inMinutes);
+    for (const r of this.replenishResults) {
+      r.time = this.service.formatReplenishDate(r.target, this.currentResin, this.minutes);
     }
   }
 

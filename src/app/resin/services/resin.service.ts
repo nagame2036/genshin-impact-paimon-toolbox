@@ -1,7 +1,4 @@
 import {Injectable} from '@angular/core';
-import {SettingService} from '../../setting/services/setting.service';
-import {ReplaySubject} from 'rxjs';
-import {Locale} from '../../app-locale.module';
 import {DatetimeService} from './datetime.service';
 import {I18n} from '../../widget/models/i18n.model';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,15 +17,7 @@ export class ResinService {
 
   replenishUseMinutes = 8;
 
-  localeChanged: ReplaySubject<Locale>;
-
-  constructor(
-    private datetime: DatetimeService,
-    private translator: TranslateService,
-    settings: SettingService,
-  ) {
-    this.localeChanged = settings.locale;
-  }
+  constructor(private datetime: DatetimeService, private translator: TranslateService) {}
 
   getRefillDate(target: number, current: number, replenishInMinutes: number): Date {
     const remaining = target - current - 1;
@@ -39,7 +28,7 @@ export class ResinService {
     return time;
   }
 
-  formatRefillDate(target: number, current: number, replenishInMinutes: number): string {
+  formatReplenishDate(target: number, current: number, replenishInMinutes: number): string {
     const date = this.getRefillDate(target, current, replenishInMinutes);
     return this.datetime.formatDatetime(date);
   }
