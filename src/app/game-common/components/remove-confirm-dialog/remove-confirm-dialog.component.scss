@@ -7,13 +7,7 @@
   @apply p-2;
   @apply grid;
   @apply gap-4;
-  @apply place-content-around;
-}
-
-.remove-item-view {
-  width: 102px;
-  @apply rounded;
-  @apply border;
+  @apply place-items-center;
 }
 
 .remove-confirm-actions {
