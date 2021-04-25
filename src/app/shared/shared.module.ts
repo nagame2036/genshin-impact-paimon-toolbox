@@ -6,20 +6,10 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {LoggerModule} from 'ngx-logger';
 
+const imports = [CommonModule, RouterModule, TranslateModule, NgxIndexedDBModule, LoggerModule];
+
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    TranslateModule,
-    NgxIndexedDBModule,
-    LoggerModule,
-  ],
-  exports: [
-    CommonModule,
-    RouterModule,
-    TranslateModule,
-    NgxIndexedDBModule,
-    LoggerModule,
-  ],
+  imports,
+  exports: imports,
 })
 export class SharedModule {}
