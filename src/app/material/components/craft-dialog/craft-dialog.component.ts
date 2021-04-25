@@ -7,6 +7,9 @@ import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 import {coerceIn} from '../../../shared/utils/coerce';
 import {combineLatest, Subscription} from 'rxjs';
+import {startWith} from 'rxjs/operators';
+import {defaultLocale} from '../../../app-locale.module';
+import {CraftDetail} from '../../models/craft-detail.type';
 
 @Component({
   selector: 'app-craft-dialog',
@@ -27,7 +30,7 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
    */
   materials: [MaterialDetail, number][] = [];
 
-  details: {usage: MaterialDetail[]; craftableAmount: number}[] = [];
+  details: CraftDetail[] = [];
 
   index = 0;
 
@@ -58,7 +61,7 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
     this.times = 0;
     this.index = 0;
     const details$ = this.service.getCraftDetails(item);
-    const locale$ = this.translator.onLangChange.asObservable();
+    const locale$ = this.translator.onLangChange.asObservable().pipe(startWith(defaultLocale));
     this.subscription = combineLatest([details$, locale$]).subscribe(([details]) => {
       this.details = details;
       this.recipes = this.recipeOptions(recipes, details);
@@ -74,22 +77,17 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
 
   changeRecipe(recipe: CraftRecipe): void {
     this.index = this.recipes.findIndex(it => it.value === recipe);
-    const detail = this.details[this.index];
-    const amount = detail.craftableAmount;
-    const minAmount = amount > 0 ? 1 : 0;
-    this.times = coerceIn(this.times, minAmount, amount);
+    const {craftableAmount, usage} = this.details[this.index];
+    this.times = coerceIn(this.times, 0, craftableAmount);
     this.recipe = recipe;
-    this.materials = detail.usage.map(it => [it, recipe[it.info.id] ?? 0]);
+    this.materials = usage.map(it => [it, recipe[it.info.id] ?? 0]);
   }
 
   craft(): void {
     this.service.craft(this.item.info.id, this.recipe, this.times);
   }
 
-  private recipeOptions(
-    recipes: CraftRecipe[],
-    details: {usage: MaterialDetail[]; craftableAmount: number}[],
-  ): SelectOption[] {
+  private recipeOptions(recipes: CraftRecipe[], details: CraftDetail[]): SelectOption[] {
     return details.map(({usage, craftableAmount}, index) => {
       const key = craftableAmount > 0 ? 'craftable' : 'insufficient';
       const params = {amount: craftableAmount};

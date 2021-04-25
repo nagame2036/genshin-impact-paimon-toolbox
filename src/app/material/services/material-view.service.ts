@@ -32,13 +32,10 @@ export class MaterialViewService {
       .subscribe(options => this.options$.next(options));
   }
 
-  viewDetails(
-    details: MaterialDetail[],
-    {rarities, showOverflow}: MaterialViewOptions,
-  ): MaterialDetail[] {
+  viewDetails(details: MaterialDetail[], options: MaterialViewOptions): MaterialDetail[] {
     const results = [];
-    const detailMap = new Map<number, MaterialDetail>();
-    details.forEach(it => detailMap.set(it.info.id, it));
+    const detailMap = new Map(details.map(it => [it.info.id, it]));
+    const {rarities, showOverflow} = options;
     const groups = new Set<number>();
     for (const detail of details) {
       const {info, type, overflow} = detail;

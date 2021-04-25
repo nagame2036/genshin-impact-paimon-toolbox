@@ -33,12 +33,7 @@ export class MaterialDetail {
 
   readonly = false;
 
-  constructor(
-    type: MaterialType,
-    info: MaterialInfo,
-    have: number = 0,
-    need: number = 0,
-  ) {
+  constructor(type: MaterialType, info: MaterialInfo, have: number = 0, need: number = 0) {
     this.type = type;
     this.info = info;
     this.update(have, need);
@@ -68,9 +63,7 @@ export class MaterialDetail {
   }
 }
 
-export interface CraftRecipe {
-  /**
-   * Item id to amount.
-   */
-  [id: number]: number;
-}
+/**
+ * Item id to amount.
+ */
+export type CraftRecipe = Record<number, number>;

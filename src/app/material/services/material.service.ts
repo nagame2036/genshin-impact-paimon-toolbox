@@ -14,6 +14,7 @@ import {MaterialType} from '../models/material-type.enum';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
 import {RequireDetail} from '../models/requirement-detail.model';
 import {Item} from '../../game-common/models/item.model';
+import {CraftDetail} from '../models/craft-detail.type';
 
 @Injectable({
   providedIn: 'root',
@@ -72,9 +73,7 @@ export class MaterialService {
     return this.requirements.getMarks(id);
   }
 
-  getCraftDetails(
-    item: MaterialDetail,
-  ): Observable<{usage: MaterialDetail[]; craftableAmount: number}[]> {
+  getCraftDetails(item: MaterialDetail): Observable<CraftDetail[]> {
     return this.updated.pipe(map(_ => this.crafter.getCraftDetails(item, this.materials)));
   }
 

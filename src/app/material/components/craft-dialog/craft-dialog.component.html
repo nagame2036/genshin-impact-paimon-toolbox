@@ -18,25 +18,17 @@
         <app-item-view [item]="m[0].info" [width]="158" type="material"></app-item-view>
         <table>
           <tr>
-            <td class="pr-2">
-              {{ i18n.module('have') | translate }}
-            </td>
-            <td class="text-right">
-              {{ m[0].have | number: '1.0-0' }}
-            </td>
+            <td class="pr-2">{{ i18n.module('have') | translate }}</td>
+            <td class="text-right">{{ m[0].have | number: '1.0-0' }}</td>
           </tr>
           <tr>
-            <td class="pr-2">
-              {{ i18n.module('need') | translate }}
-            </td>
-            <td class="text-right">
-              {{ m[1] * times | number: '1.0-0' }}
-            </td>
+            <td class="pr-2">{{ i18n.module('need') | translate }}</td>
+            <td class="text-right">{{ m[1] * times | number: '1.0-0' }}</td>
           </tr>
         </table>
       </div>
     </div>
-    <div class="perform-times">
+    <div class="text-center">
       {{
         (details[index].craftableAmount === 0
           ? this.i18n.module('insufficient')

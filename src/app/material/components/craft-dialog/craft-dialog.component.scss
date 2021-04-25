@@ -6,24 +6,19 @@
 }
 
 .recipe-materials {
-  @apply flex;
-  @apply flex-row;
-  @apply flex-wrap;
-  @apply place-content-center;
+  @apply grid;
+  @apply grid-cols-2;
+  @apply place-items-center;
   @apply gap-2;
 }
 
 .recipe-material {
-  width: 160px;
+  max-width: 138px;
   @apply flex;
   @apply flex-col;
   @apply place-items-center;
   @apply border;
   @apply rounded;
-}
-
-.perform-times {
-  @apply text-center;
 }
 
 .craft-actions {

@@ -8,19 +8,15 @@ import {MaterialDetailDialogComponent} from './components/material-detail-dialog
 import {ExecutePlanConfirmDialogComponent} from './components/execute-plan-confirm-dialog/execute-plan-confirm-dialog.component';
 import {CraftDialogComponent} from './components/craft-dialog/craft-dialog.component';
 
+const exports = [
+  MaterialListComponent,
+  MaterialRequirementComponent,
+  ExecutePlanConfirmDialogComponent,
+];
+
 @NgModule({
-  declarations: [
-    MaterialListComponent,
-    MaterialRequirementComponent,
-    MaterialDetailDialogComponent,
-    ExecutePlanConfirmDialogComponent,
-    CraftDialogComponent,
-  ],
+  declarations: [...exports, MaterialDetailDialogComponent, CraftDialogComponent],
   imports: [WidgetModule, GameCommonModule],
-  exports: [
-    MaterialListComponent,
-    MaterialRequirementComponent,
-    ExecutePlanConfirmDialogComponent,
-  ],
+  exports,
 })
 export class MaterialModule {}
