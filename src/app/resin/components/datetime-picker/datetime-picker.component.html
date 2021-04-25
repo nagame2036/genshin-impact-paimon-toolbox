@@ -1,7 +1,7 @@
 <app-select
   [customDropdown]="customDropdown"
   [label]="label"
-  [valueText]="service.weekdayDateFormat.format(value)"
+  [valueText]="service.formatRelateDatetime(value)"
   [opened]="opened"
   (click)="opened = true"
 >

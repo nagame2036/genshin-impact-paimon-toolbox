@@ -17,7 +17,8 @@ describe('DatetimeService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('get calender', () => {
+  it('get calender for locale zh', () => {
+    service.currentLocale = 'zh-hans';
     const month202002 = service.getCalendar(new Date(2020, 1));
     expect(month202002[0].length).toBe(5);
     expect(month202002[1].length).toBe(29);
@@ -26,11 +27,12 @@ describe('DatetimeService', () => {
     expect(month202104[1].length).toBe(30);
   });
 
-  it('get calender of locale en', () => {
-    const month202002 = service.getCalendar(new Date(2020, 1), 'en');
+  it('get calender for locale en', () => {
+    service.currentLocale = 'en';
+    const month202002 = service.getCalendar(new Date(2020, 1));
     expect(month202002[0].length).toBe(6);
     expect(month202002[1].length).toBe(29);
-    const month202104 = service.getCalendar(new Date(2021, 3), 'en');
+    const month202104 = service.getCalendar(new Date(2021, 3));
     expect(month202104[0].length).toBe(4);
     expect(month202104[1].length).toBe(30);
   });

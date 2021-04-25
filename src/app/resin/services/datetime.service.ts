@@ -4,30 +4,13 @@ import {SettingService} from '../../setting/services/setting.service';
 import {Locale} from '../../app-locale.module';
 import {rangeList} from '../../shared/utils/range-list';
 
-const relateDateFormat = {
-  month: 'short',
-  day: 'numeric',
-};
+const relateDateFormat = {month: 'short', day: 'numeric'};
 
-const relateTimeFormat = {
-  hour: 'numeric',
-  minute: 'numeric',
-  hourCycle: 'h23',
-};
-
-const datetimeFormat = {
-  ...relateDateFormat,
-  year: 'numeric',
-  weekday: 'short',
-};
+const relateTimeFormat = {hour: 'numeric', minute: 'numeric', hourCycle: 'h23'};
 
 const weekdayDates = rangeList(4, 10)
   .reverse()
-  .map(it => {
-    const date = new Date('2021-04-04');
-    date.setDate(it);
-    return date;
-  });
+  .map(date => new Date(2021, 3, date));
 
 @Injectable({
   providedIn: 'root',
@@ -51,8 +34,6 @@ export class DatetimeService {
   relateDateFormat!: Intl.DateTimeFormat;
 
   relateTimeFormat!: Intl.DateTimeFormat;
-
-  weekdayDateFormat!: Intl.DateTimeFormat;
 
   weekdayFormat!: Intl.DateTimeFormat;
 
@@ -81,17 +62,17 @@ export class DatetimeService {
       it.setHours(0);
       it.setMinutes(0);
     });
-    const dayDiff = Math.round((dates[1].getTime() - dates[0].getTime()) / 86_400_000);
+    const dayDiff = Math.trunc((dates[1].getTime() - dates[0].getTime()) / 86_400_000);
     const relative = this.relativeFormat.format(dayDiff, 'day');
     const date = this.relateDateFormat.format(target);
     const time = this.relateTimeFormat.format(target);
     return `${time}, ${relative} (${date})`;
   }
 
-  getCalendar(date: Date, locale: Locale = this.currentLocale): [number[], number[]] {
+  getCalendar(date: Date): [number[], number[]] {
     const year = date.getFullYear();
     const month = date.getMonth();
-    const weekStart = this.specialWeekStart[locale] ?? this.defaultWeekStart;
+    const weekStart = this.specialWeekStart[this.currentLocale] ?? this.defaultWeekStart;
     const weekday1st = new Date(year, month).getDay();
     const weekday1stOffset = (7 + weekday1st - weekStart) % 7;
     const daysPrevMonth = rangeList(1, weekday1stOffset);
@@ -104,7 +85,6 @@ export class DatetimeService {
     this.relativeFormat = new Intl.RelativeTimeFormat(locale, {numeric: 'auto'});
     this.relateDateFormat = new Intl.DateTimeFormat(locale, relateDateFormat);
     this.relateTimeFormat = new Intl.DateTimeFormat(locale, relateTimeFormat);
-    this.weekdayDateFormat = new Intl.DateTimeFormat(locale, datetimeFormat);
     this.weekdayFormat = new Intl.DateTimeFormat(locale, {weekday: 'short'});
     this.yearMonthFormat = new Intl.DateTimeFormat(locale, {year: 'numeric', month: 'short'});
   }
