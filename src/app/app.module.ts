@@ -20,7 +20,6 @@ import {AppLoggerModule} from './app-logger.module';
     AppLoggerModule,
     CoreModule,
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
