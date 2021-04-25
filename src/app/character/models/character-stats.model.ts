@@ -41,20 +41,10 @@ export class CharacterStatsValue extends StatsValue {
   }
 }
 
-const defaultRES = 0.15000000596046448;
-
-const defaultCHC = 0.05000000074505806;
-
-const defaultCHD = 0.5;
-
-const defaultER = 1.0;
-
-const defaultSTARecoverSpeed = 25.0;
-
 const defaultValues = new Map<StatsType, number>([
-  ['CHC%', defaultCHC],
-  ['CHD%', defaultCHD],
-  ['ER%', defaultER],
-  ['STA recover speed', defaultSTARecoverSpeed],
-  ...allResBonusStatsTypes.map(res => [res, defaultRES] as [StatsType, number]),
+  ['CHC%', Math.fround(0.05)],
+  ['CHD%', 0.5],
+  ['ER%', 1],
+  ['STA recover speed', 25],
+  ...allResBonusStatsTypes.map(res => [res, Math.fround(0.15)] as [StatsType, number]),
 ]);
