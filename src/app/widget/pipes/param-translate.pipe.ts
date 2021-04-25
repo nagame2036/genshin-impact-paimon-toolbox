@@ -4,11 +4,12 @@ import {I18n} from '../models/i18n.model';
 
 @Pipe({
   name: 'paramTranslate',
+  pure: false,
 })
 export class ParamTranslatePipe implements PipeTransform {
   constructor(private translator: TranslateService) {}
 
-  transform(query: string, params: {[key: string]: any}): object {
+  transform(query: string, params: {[key: string]: any}): string {
     const prefix = I18n.paramPrefix;
     const newParams = Object.assign({}, params);
     Object.entries(params).forEach(([key, value]) => {
