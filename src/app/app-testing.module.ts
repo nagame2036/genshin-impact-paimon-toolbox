@@ -6,23 +6,17 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from './shared/shared.module';
 
+const imports = [
+  SharedModule,
+  RouterTestingModule,
+  HttpClientModule,
+  AppLocaleModule,
+  AppIndexedDbModule,
+  AppLoggerModule,
+];
+
 @NgModule({
-  declarations: [],
-  imports: [
-    SharedModule,
-    RouterTestingModule,
-    HttpClientModule,
-    AppLocaleModule,
-    AppIndexedDbModule,
-    AppLoggerModule,
-  ],
-  exports: [
-    SharedModule,
-    RouterTestingModule,
-    HttpClientModule,
-    AppLocaleModule,
-    AppIndexedDbModule,
-    AppLoggerModule,
-  ],
+  imports,
+  exports: imports,
 })
 export class AppTestingModule {}

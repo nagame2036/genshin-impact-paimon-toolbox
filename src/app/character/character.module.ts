@@ -26,12 +26,6 @@ import {CharacterSettingsComponent} from './pages/character-settings/character-s
     CharacterViewOptionsComponent,
     CharacterSettingsComponent,
   ],
-  imports: [
-    WidgetModule,
-    GameCommonModule,
-    MaterialModule,
-    CharacterRoutingModule,
-  ],
-  exports: [],
+  imports: [WidgetModule, GameCommonModule, MaterialModule, CharacterRoutingModule],
 })
 export class CharacterModule {}

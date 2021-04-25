@@ -12,32 +12,22 @@ import {NavTabsComponent} from './components/nav-tabs/nav-tabs.component';
 import {SliderComponent} from './components/slider/slider.component';
 import {ParamTranslatePipe} from './pipes/param-translate.pipe';
 
+const declarations = [
+  CheckboxComponent,
+  DialogComponent,
+  FormFieldComponent,
+  InputFieldComponent,
+  SelectComponent,
+  MultiSelectComponent,
+  RingButtonComponent,
+  NavTabsComponent,
+  SliderComponent,
+  ParamTranslatePipe,
+];
+
 @NgModule({
-  declarations: [
-    CheckboxComponent,
-    DialogComponent,
-    FormFieldComponent,
-    InputFieldComponent,
-    SelectComponent,
-    MultiSelectComponent,
-    RingButtonComponent,
-    NavTabsComponent,
-    SliderComponent,
-    ParamTranslatePipe,
-  ],
+  declarations,
   imports: [SharedModule],
-  exports: [
-    SharedModule,
-    CheckboxComponent,
-    DialogComponent,
-    FormFieldComponent,
-    InputFieldComponent,
-    SelectComponent,
-    MultiSelectComponent,
-    RingButtonComponent,
-    NavTabsComponent,
-    SliderComponent,
-    ParamTranslatePipe,
-  ],
+  exports: [SharedModule, ...declarations],
 })
 export class WidgetModule {}

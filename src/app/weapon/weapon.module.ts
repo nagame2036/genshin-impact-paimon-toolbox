@@ -24,12 +24,6 @@ import {WeaponViewOptionsComponent} from './components/weapon-view-options/weapo
     WeaponPlanFormComponent,
     WeaponViewOptionsComponent,
   ],
-  imports: [
-    WidgetModule,
-    GameCommonModule,
-    MaterialModule,
-    WeaponRoutingModule,
-  ],
-  exports: [],
+  imports: [WidgetModule, GameCommonModule, MaterialModule, WeaponRoutingModule],
 })
 export class WeaponModule {}
