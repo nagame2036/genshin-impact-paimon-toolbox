@@ -1,5 +1,4 @@
-@import '../../../widget/styles/select-dropdown.scss';
-
-.select-dropdown {
-  min-width: 240px;
+.select-container {
+  @apply p-2;
+  min-width: 16rem;
 }

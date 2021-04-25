@@ -72,4 +72,8 @@ export class SelectComponent implements OnChanges {
       this.focus = false;
     }
   }
+
+  getMinWidth(width: number): number {
+    return Math.max(width, 80);
+  }
 }

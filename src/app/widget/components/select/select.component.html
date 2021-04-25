@@ -22,11 +22,11 @@
     <div class="material-icons select-arrow" [ngClass]="{hover: hover, focus: focus}">
       keyboard_arrow_down
     </div>
-    <ng-container *ngIf="opened">
+    <div *ngIf="opened" [style.min-width.px]="getMinWidth(container.width)" class="select-dropdown">
       <ng-container *ngTemplateOutlet="customDropdown || defaultDropdown"></ng-container>
-    </ng-container>
+    </div>
     <ng-template #defaultDropdown>
-      <ul *ngIf="opened" class="select-dropdown" [style.width.px]="container.width">
+      <ul>
         <ng-container *ngTemplateOutlet="customOptions || defaultOptions"></ng-container>
       </ul>
       <ng-template #defaultOptions>

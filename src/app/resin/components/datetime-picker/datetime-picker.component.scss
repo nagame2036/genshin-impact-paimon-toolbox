@@ -1,12 +1,6 @@
-@import '../../../widget/styles/select-dropdown.scss';
 @import '../../../widget/styles/icon-btn.scss';
 
-.select-dropdown {
-  @apply w-80;
-  max-height: 32rem;
-  @apply flex;
-  @apply flex-col;
-  @apply text-sm;
+.datetime-picker-container {
   @apply cursor-default;
 }
 
@@ -37,6 +31,10 @@
     @apply text-center;
     line-height: 2rem;
     @apply select-none;
+  }
+
+  > button {
+    @apply cursor-pointer;
   }
 }
 
