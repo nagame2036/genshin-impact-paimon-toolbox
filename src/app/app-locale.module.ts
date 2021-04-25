@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule, TranslateModuleConfig} from '@ngx-translate/core';
 
 export const localeSettingKey = 'locale';
 
@@ -22,17 +22,16 @@ function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
   ]);
 }
 
-const config = {
-  defaultLanguage: allLocales[0].value,
-  languages: allLocales.map(it => it.value),
+export const defaultLocale: Locale = allLocales[0].value;
+
+const config: TranslateModuleConfig = {
+  defaultLanguage: defaultLocale,
   loader: {
     provide: TranslateLoader,
     useFactory: createTranslateLoader,
     deps: [HttpClient],
   },
 };
-
-export const defaultLocale = config.defaultLanguage;
 
 @NgModule({
   imports: [HttpClientModule, TranslateModule.forRoot(config)],
