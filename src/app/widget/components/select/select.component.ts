@@ -57,7 +57,7 @@ export class SelectComponent implements OnChanges {
     const value = option.value;
     this.value = value;
     this.changeValueText(this.value);
-    setTimeout(() => (this.opened = false), 10);
+    this.opened = false;
     this.changed.emit(value);
   }
 
@@ -71,9 +71,5 @@ export class SelectComponent implements OnChanges {
       this.opened = false;
       this.focus = false;
     }
-  }
-
-  getMinWidth(width: number): number {
-    return Math.max(width, 80);
   }
 }

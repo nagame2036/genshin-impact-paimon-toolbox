@@ -41,11 +41,11 @@
 }
 
 .select-dropdown {
+  @apply min-w-full;
   @apply overflow-y-auto;
   @apply bg-white;
   @apply absolute;
   @apply top-7;
-  @apply -left-2;
   @apply shadow-xl;
   @apply z-10;
   @apply ring-2;
