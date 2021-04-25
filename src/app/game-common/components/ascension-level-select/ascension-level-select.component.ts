@@ -52,11 +52,9 @@ export class AscensionLevelSelectComponent implements OnChanges {
   constructor(private self: ElementRef, private service: AscensionLevelService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('data') || changes.hasOwnProperty('dataStart')) {
-      if (this.data) {
-        const data = this.service.correct(this.data, this.dataStart);
-        this.update(data);
-      }
+    if (changes.data || changes.dataStart) {
+      const data = this.service.correct(this.data, this.dataStart);
+      this.update(data);
     }
   }
 

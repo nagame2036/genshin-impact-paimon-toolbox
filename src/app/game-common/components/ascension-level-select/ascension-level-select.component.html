@@ -6,7 +6,7 @@
   (click)="opened = true"
 >
   <ng-template #customDropdown>
-    <div *ngIf="opened" class="select-dropdown p-2">
+    <div class="select-dropdown p-2">
       <div>
         {{ i18n.dict('ascension') | translate }}
         {{ ascension }}
@@ -16,8 +16,7 @@
         [min]="ascensionRange[0]"
         [max]="ascensionRange[1]"
         (changed)="changeAscension($event)"
-      >
-      </app-slider>
+      ></app-slider>
       <div class="mt-4">
         {{ i18n.dict('level') | translate }}
         {{ level }}
