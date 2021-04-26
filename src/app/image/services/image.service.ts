@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 
 export type ImageType =
-  | 'character-portrait'
   | 'character'
   | 'element'
   | 'weapon'
-  | 'weapon-type'
   | 'artifact'
   | 'artifact-type'
   | 'material'
@@ -37,7 +35,6 @@ const enemiesMapping = new Map([
 })
 export class ImageService {
   private readonly specificImages = new Map<ImageType, Map<number, number>>([
-    ['character-portrait', characterPortraitMapping],
     ['character', characterMapping],
     ['material', materialMapping],
     ['enemy', enemiesMapping],
