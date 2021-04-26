@@ -1,16 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {
-  AscensionLevel,
-  AscensionLevelData,
-} from '../../models/ascension-level.model';
+import {AscensionLevel, AscensionLevelData} from '../../models/ascension-level.model';
 import {AscensionLevelService} from '../../services/ascension-level.service';
 
 @Component({
@@ -49,32 +39,23 @@ export class CurrPlanLevelSelectComponent implements OnChanges {
   constructor(private service: AscensionLevelService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('currLevel')) {
-      this.emitCurrChange(this.currLevel);
+    if (changes.currLevel) {
+      this.setCurr(this.currLevel);
     }
-    if (changes.hasOwnProperty('planLevel')) {
-      this.emitPlanChange(this.planLevel);
+    if (changes.planLevel) {
+      this.setPlan(this.planLevel);
     }
   }
 
-  checkReached(reached: boolean | null): boolean {
-    if (!reached) {
-      return false;
-    }
-    const curr = this.currData;
-    const plan = this.planData;
-    return curr.ascension !== plan.ascension && curr.level !== plan.level;
-  }
-
-  emitCurrChange(value: AscensionLevel): void {
+  setCurr(value: AscensionLevel): void {
     this.currData = this.service.correct(value);
     this.currChange.emit(this.currData);
     if (this.planData) {
-      this.emitPlanChange(this.planData);
+      this.setPlan(this.planData);
     }
   }
 
-  emitPlanChange(value: AscensionLevel): void {
+  setPlan(value: AscensionLevel): void {
     this.planData = this.service.correct(value, this.currData);
     this.planChange.emit(this.planData);
   }

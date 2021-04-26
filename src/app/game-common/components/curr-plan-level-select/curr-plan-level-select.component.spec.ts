@@ -18,6 +18,8 @@ describe('CurrPlanLevelSelectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CurrPlanLevelSelectComponent);
     component = fixture.componentInstance;
+    component.currData = {ascension: 0, level: 1, ascensionRange: [0, 6], levelRange: [1, 1]};
+    component.planData = {ascension: 0, level: 1, ascensionRange: [0, 6], levelRange: [1, 1]};
     fixture.detectChanges();
   });
 

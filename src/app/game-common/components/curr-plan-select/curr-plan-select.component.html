@@ -14,8 +14,8 @@
     ></app-select>
     <button
       class="execute-plan-btn"
-      [class.reached]="checkReached(reached)"
-      [disabled]="!checkReached(reached)"
+      [class.reached]="!!reached"
+      [disabled]="!reached"
       (click)="executePlan.emit()"
     >
       <span class="material-icons arrow">chevron_right</span>

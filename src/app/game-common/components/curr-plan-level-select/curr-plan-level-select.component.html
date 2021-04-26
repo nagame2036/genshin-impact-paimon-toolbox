@@ -9,13 +9,12 @@
       #left
       class="value"
       [data]="currData"
-      (changed)="emitCurrChange($event)"
-    >
-    </app-ascension-level-select>
+      (changed)="setCurr($event)"
+    ></app-ascension-level-select>
     <button
       class="execute-plan-btn"
-      [class.reached]="checkReached(reached)"
-      [disabled]="!checkReached(reached)"
+      [class.reached]="!!reached"
+      [disabled]="!reached"
       (click)="executePlan.emit()"
     >
       <span class="material-icons arrow">chevron_right</span>
@@ -25,8 +24,7 @@
       class="value"
       [data]="planData"
       [dataStart]="currData"
-      (changed)="emitPlanChange($event)"
-    >
-    </app-ascension-level-select>
+      (changed)="setPlan($event)"
+    ></app-ascension-level-select>
   </div>
 </app-form-field>

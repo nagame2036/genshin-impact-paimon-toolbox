@@ -50,8 +50,4 @@ export class CurrPlanSelectComponent implements OnInit {
     this.plan = value;
     this.planChange.emit(value);
   }
-
-  checkReached(reached: boolean | null): boolean {
-    return reached === true && this.curr !== this.plan;
-  }
 }
