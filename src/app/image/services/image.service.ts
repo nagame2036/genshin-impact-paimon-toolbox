@@ -11,15 +11,9 @@ export type ImageType =
   | 'material'
   | 'enemy';
 
-const characterPortraitMapping = new Map([
-  [1002, 1001],
-  [1012, 1011],
-]);
-
 const characterMapping = new Map([
   [1002, 1001],
-  [1011, 1001],
-  [1012, 1001],
+  [1012, 1011],
 ]);
 
 const materialMapping = new Map([[200, 100]]);
