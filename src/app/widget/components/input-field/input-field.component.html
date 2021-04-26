@@ -1,6 +1,8 @@
 <app-form-field
   class="form-container"
-  [ngClass]="{hover: hover, focus: focus, wrong: wrong}"
+  [class.focus]="focus"
+  [class.hover]="hover"
+  [class.wrong]="wrong"
   [label]="label"
   (mouseenter)="hover = true"
   (mouseleave)="hover = false"
@@ -11,7 +13,7 @@
     <ng-content select="[prefix]"></ng-content>
     <input
       #field
-      class="input-field w-full"
+      class="input-field"
       type="text"
       [value]="value"
       [disabled]="disabled"

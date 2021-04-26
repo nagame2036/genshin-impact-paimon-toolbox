@@ -1,6 +1,7 @@
 <app-form-field
   class="form-container"
-  [ngClass]="{hover: hover, focus: focus}"
+  [class.focus]="focus"
+  [class.hover]="hover"
   [label]="label"
   (mouseenter)="hover = true"
   (mouseleave)="hover = false"
@@ -16,8 +17,8 @@
       (focusin)="focus = opened = true"
       (focusout)="focus = false"
     />
-    <div class="material-icons select-arrow" [ngClass]="{hover: hover, focus: focus}">
-      keyboard_arrow_down
+    <div [class.focus]="focus" [class.hover]="hover" class="material-icons select-arrow">
+      {{ focus ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
     </div>
     <div *ngIf="opened" class="select-dropdown">
       <ng-container *ngTemplateOutlet="customDropdown || defaultDropdown"></ng-container>
