@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {rangeList} from '../../../shared/utils/range-list';
 
 @Component({
@@ -38,11 +31,8 @@ export class SliderComponent implements OnChanges {
       const min = this.min;
       const max = this.max;
       const step = this.step;
-      if ((max - min) / step > 10) {
-        this.range = rangeList(0, 4);
-      } else {
-        this.range = rangeList(min, max, step);
-      }
+      const toShort = (max - min) / step > 10;
+      this.range = toShort ? rangeList(0, 4) : rangeList(min, max, step);
     }
   }
 

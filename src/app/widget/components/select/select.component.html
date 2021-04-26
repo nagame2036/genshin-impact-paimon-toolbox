@@ -1,5 +1,4 @@
 <app-form-field
-  #container
   class="form-container"
   [ngClass]="{hover: hover, focus: focus}"
   [label]="label"
@@ -8,9 +7,7 @@
   (click)="focus = opened = true"
 >
   <div class="select-container">
-    <div #prefix [class.prefix]="prefix.children.length > 0">
-      <ng-content select="[prefix]"></ng-content>
-    </div>
+    <ng-content select="[prefix]"></ng-content>
     <input
       class="select"
       type="text"
@@ -41,8 +38,6 @@
         </li>
       </ng-template>
     </ng-template>
-    <div #suffix [class.suffix]="suffix.children.length > 0">
-      <ng-content select="[suffix]"></ng-content>
-    </div>
+    <ng-content select="[suffix]"></ng-content>
   </div>
 </app-form-field>

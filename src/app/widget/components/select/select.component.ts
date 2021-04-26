@@ -53,10 +53,10 @@ export class SelectComponent implements OnChanges {
     }
   }
 
-  change(option: SelectOption): void {
-    const value = option.value;
+  change({value}: SelectOption): void {
     this.value = value;
     this.changeValueText(this.value);
+    this.hover = false;
     this.opened = false;
     this.changed.emit(value);
   }
@@ -66,8 +66,8 @@ export class SelectComponent implements OnChanges {
   }
 
   @HostListener('window:click', ['$event'])
-  clickOutside(event: Event): void {
-    if (!this.self.nativeElement.contains(event.target)) {
+  clickOutside({target}: Event): void {
+    if (!this.self.nativeElement.contains(target)) {
       this.opened = false;
       this.focus = false;
     }

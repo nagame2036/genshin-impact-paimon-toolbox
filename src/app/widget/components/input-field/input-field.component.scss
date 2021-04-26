@@ -1,5 +1,4 @@
 @import '../../styles/form-field.scss';
-@import '../../styles/prefix-suffix.scss';
 
 .input-container {
   @apply box-border;
@@ -9,6 +8,7 @@
 
 .input-field {
   @apply box-border;
+  @apply pl-1;
   @apply flex-grow;
   @apply appearance-none;
   @apply outline-none;

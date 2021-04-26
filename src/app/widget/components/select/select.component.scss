@@ -1,13 +1,15 @@
 @import '../../styles/form-field.scss';
-@import '../../styles/prefix-suffix.scss';
 @import '../../styles/select-option.scss';
 
 .form-container {
   @apply cursor-pointer;
+
+  ::ng-deep .form-field-content {
+    @apply p-0;
+  }
 }
 
 .select-container {
-  @apply box-border;
   @apply flex;
   @apply flex-row;
   @apply relative;
@@ -15,7 +17,7 @@
 }
 
 .select {
-  @apply box-border;
+  @apply pl-1;
   @apply flex-grow;
   @apply appearance-none;
   @apply outline-none;
@@ -49,7 +51,9 @@
   @apply shadow-xl;
   @apply z-10;
   @apply ring-2;
+  @apply ring-offset-2;
   @apply ring-primary-200;
+  @apply cursor-default;
 }
 
 .select-options {

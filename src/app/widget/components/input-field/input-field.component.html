@@ -8,9 +8,7 @@
   (focusout)="focus = false"
 >
   <div class="input-container">
-    <div #prefix [class.prefix]="prefix.children.length > 0">
-      <ng-content select="[prefix]"></ng-content>
-    </div>
+    <ng-content select="[prefix]"></ng-content>
     <input
       #field
       class="input-field w-full"
@@ -20,8 +18,6 @@
       (input)="inputted.emit((value = field.value))"
       (change)="changed.emit((value = field.value))"
     />
-    <div #suffix [class.suffix]="suffix.children.length > 0">
-      <ng-content select="[suffix]"></ng-content>
-    </div>
+    <ng-content select="[suffix]"></ng-content>
   </div>
 </app-form-field>
