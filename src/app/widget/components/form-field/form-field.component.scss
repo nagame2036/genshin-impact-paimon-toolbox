@@ -4,6 +4,18 @@
   @apply p-0.5;
   @apply border-2;
   @apply rounded;
+
+  &.hover {
+    @apply border-black;
+  }
+
+  &.focus {
+    @apply border-primary-400;
+  }
+
+  &.wrong {
+    @apply border-red-400;
+  }
 }
 
 .form-field-label {

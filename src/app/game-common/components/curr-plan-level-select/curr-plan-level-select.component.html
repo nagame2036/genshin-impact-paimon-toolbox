@@ -1,8 +1,8 @@
 <app-form-field
   class="form-container"
-  [class.hover]="left.hover || right.hover"
-  [class.focus]="left.focus || right.focus"
   [label]="i18n.dict('level')"
+  [focus]="left.focus || right.focus"
+  [hover]="left.hover || right.hover"
 >
   <div class="form">
     <app-ascension-level-select

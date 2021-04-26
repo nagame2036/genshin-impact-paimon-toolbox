@@ -9,5 +9,14 @@ export class FormFieldComponent {
   @Input()
   label = '';
 
+  @Input()
+  hover = false;
+
+  @Input()
+  focus = false;
+
+  @Input()
+  wrong = false;
+
   constructor() {}
 }
