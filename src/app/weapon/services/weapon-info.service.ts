@@ -97,8 +97,7 @@ export class WeaponInfoService {
       for (let j = start; j < end; j++) {
         fields.push(descValues[j][i]);
       }
-      const value = fields.length <= 1 ? fields[0] : `[${fields.join(' / ')}]`;
-      desc = desc.replace('{}', `<b style="color: #4b94aa">${value}</b>`);
+      desc = desc.replace(/{(\S+?)}/, `<b class="$1">[${fields.join(' / ')}]</b>`);
     }
     return this.sanitizer.bypassSecurityTrustHtml(desc);
   }
