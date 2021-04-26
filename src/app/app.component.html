@@ -1,3 +1,4 @@
+<app-header (showMenu)="showMenu = $event"></app-header>
 <nav [class.opened]="showMenu" class="menu">
   <h1 class="menu-title">
     {{ i18n.dict('title') | translate }}
@@ -17,7 +18,6 @@
     </a>
   </div>
 </nav>
-<app-header (showMenu)="showMenu = $event"></app-header>
 <main (click)="showMenu = false" class="main">
   <div class="content">
     <router-outlet></router-outlet>
