@@ -10,5 +10,9 @@
     @apply bg-primary-200;
     @apply border-l-4;
     @apply border-primary-400;
+
+    + .selected {
+      @apply border-t;
+    }
   }
 }

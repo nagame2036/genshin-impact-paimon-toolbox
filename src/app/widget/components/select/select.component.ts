@@ -48,7 +48,7 @@ export class SelectComponent implements OnChanges {
   constructor(private self: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (['value', 'options'].some(it => changes[it])) {
+    if (['value', 'options'].some(it => changes.hasOwnProperty(it))) {
       this.changeValueText(this.value);
     }
   }
