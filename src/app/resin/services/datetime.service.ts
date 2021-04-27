@@ -62,7 +62,7 @@ export class DatetimeService {
       it.setHours(0);
       it.setMinutes(0);
     });
-    const dayDiff = Math.trunc((dates[1].getTime() - dates[0].getTime()) / 86_400_000);
+    const dayDiff = Math.round((dates[1].getTime() - dates[0].getTime()) / 86_400_000);
     const relative = this.relativeFormat.format(dayDiff, 'day');
     const date = this.relateDateFormat.format(target);
     const time = this.relateTimeFormat.format(target);
