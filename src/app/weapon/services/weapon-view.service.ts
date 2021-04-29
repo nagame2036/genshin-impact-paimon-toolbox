@@ -1,15 +1,28 @@
 import {Injectable} from '@angular/core';
 import {WeaponOverview} from '../models/weapon.model';
 import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
-import {allWeaponTypes, WeaponType} from '../models/weapon-type.enum';
+import {allWeaponTypes, WeaponType} from '../models/weapon-type.type';
 import {I18n} from '../../widget/models/i18n.model';
 import {StatsType} from '../../game-common/models/stats.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 import {WeaponViewOptions} from '../models/weapon-options.model';
 import {SettingService} from '../../setting/services/setting.service';
 import {ItemSort, ItemViewService} from '../../game-common/services/item-view.service';
+import {WeaponService} from './weapon.service';
 
-const i18n = I18n.create('weapons');
+const i18n = I18n.create('weapon');
+
+const statsTypes: StatsType[] = [
+  'ATK Base',
+  'CHC%',
+  'CHD%',
+  'ATK%',
+  'ER%',
+  'HP%',
+  'DEF%',
+  'Physical DMG%',
+  'EM',
+];
 
 const sortMap = new Map<string, ItemSort<WeaponOverview>>([
   [
@@ -18,17 +31,7 @@ const sortMap = new Map<string, ItemSort<WeaponOverview>>([
   ],
   [i18n.dict('rarity'), ({info: a}, {info: b}) => b.rarity - a.rarity],
   [i18n.dict('refine-rank'), ({progress: a}, {progress: b}) => b.refine - a.refine],
-  ...generateSorts([
-    'ATK Base',
-    'CHC%',
-    'CHD%',
-    'ATK%',
-    'ER%',
-    'HP%',
-    'DEF%',
-    'Physical DMG%',
-    'EM',
-  ]),
+  ...generateSorts(statsTypes),
 ]);
 
 const infoSortMap = new Map<string, ItemSort<WeaponInfo>>([
@@ -38,22 +41,17 @@ const infoSortMap = new Map<string, ItemSort<WeaponInfo>>([
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponViewService extends ItemViewService<
-  WeaponOverview,
-  WeaponViewOptions
-> {
+export class WeaponViewService extends ItemViewService<WeaponOverview, WeaponViewOptions> {
   readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
 
-  readonly types = allWeaponTypes.map(it => ({
-    value: it,
-    text: i18n.data(`weapon-type.${it}`),
-  }));
+  readonly types = allWeaponTypes.map(it => ({value: it, text: i18n.data(`weapon-type.${it}`)}));
 
-  constructor(settings: SettingService) {
-    super(sortMap, infoSortMap, settings, 'weapon-view', {
-      rarities: allWeaponRarities,
-      types: allWeaponTypes,
+  constructor(private weapons: WeaponService, settings: SettingService) {
+    super(weapons.type, sortMap, infoSortMap, settings, 'weapon-view', {
+      rarities: [5, 4],
+      types: [...allWeaponTypes],
     });
+    this.init();
   }
 
   filterRarity(rarities: Rarity[]): void {
@@ -64,10 +62,17 @@ export class WeaponViewService extends ItemViewService<
     this.updateView({types});
   }
 
-  protected filterInfo(
-    {rarity, type}: WeaponInfo,
-    {rarities, types}: WeaponViewOptions,
-  ): boolean {
+  protected init(): void {
+    const getStats = this.weapons.getStatsAtMaxLevel;
+    statsTypes.forEach(t => {
+      const key = i18n.stats(t);
+      this.infoSortMap.set(key, (a, b) => getStats(b).get(t) - getStats(a).get(t));
+    });
+    this.infoSorts.length = 0;
+    this.infoSorts.push(...this.getOptions(this.infoSortMap));
+  }
+
+  protected filterInfo({rarity, type}: WeaponInfo, {rarities, types}: WeaponViewOptions): boolean {
     return rarities.includes(rarity) && types.includes(type);
   }
 }

@@ -8,7 +8,7 @@ import {Weapon} from './weapon.model';
 export interface WeaponPlan extends ItemPlan<Weapon> {
   id: number;
 
-  weaponId: number;
+  infoId: number;
 
   ascension: Ascension;
 

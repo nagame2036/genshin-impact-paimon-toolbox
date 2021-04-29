@@ -6,32 +6,23 @@ import {WeaponProgressService} from './weapon-progress.service';
 import {WeaponPlanner} from './weapon-planner.service';
 import {MaterialService} from '../../material/services/material.service';
 import {NGXLogger} from 'ngx-logger';
-import {ItemType} from '../../game-common/models/item-type.enum';
-import {StatsType} from '../../game-common/models/stats.model';
 import {generateItemId} from '../../game-common/utils/generate-id';
-import {MaterialDetail} from '../../material/models/material.model';
-import {WeaponStatsValue} from '../models/weapon-stats.model';
-import {allAscensions} from '../../game-common/models/ascension.type';
-import {maxItemLevel} from '../../game-common/models/level.type';
-import {RefineRank, WeaponProgress} from '../models/weapon-progress.model';
-import {ItemService} from '../../game-common/services/item.service';
-import {WeaponPlan} from '../models/weapon-plan.model';
+import {RefineRank} from '../models/weapon-progress.model';
 import {SafeHtml} from '@angular/platform-browser';
+import {AscendableItemService} from '../../game-common/services/ascendable-item.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponService extends ItemService<Weapon, WeaponOverview> {
-  readonly infos = [...this.information.infos.values()];
-
+export class WeaponService extends AscendableItemService<Weapon, WeaponOverview> {
   constructor(
-    private information: WeaponInfoService,
+    private infos: WeaponInfoService,
     private progresses: WeaponProgressService,
     private planner: WeaponPlanner,
     private materials: MaterialService,
     logger: NGXLogger,
   ) {
-    super(ItemType.WEAPON, progresses, planner, logger);
+    super(infos, progresses, planner, logger);
   }
 
   create(info: WeaponInfo): WeaponOverview {
@@ -39,39 +30,18 @@ export class WeaponService extends ItemService<Weapon, WeaponOverview> {
     return this.createItem(info, meta);
   }
 
-  getRequireMaterials(weapon: WeaponInfo): MaterialDetail[] {
-    return this.information.getRequireMaterials(weapon);
-  }
-
-  getOverview(weapon: Weapon): WeaponOverview {
-    return this.information.getOverview(weapon);
-  }
-
-  getStatsAtMaxLevel(weapon: WeaponInfo): WeaponStatsValue {
-    const ascension = allAscensions[allAscensions.length - 1];
-    const level = {ascension, level: maxItemLevel};
-    return this.information.getStatsValue(weapon, level);
-  }
-
-  getAbilityDesc(weapon: WeaponInfo, ...refines: RefineRank[]): SafeHtml {
-    return this.information.getAbilityDesc(weapon, ...refines);
+  getAbilityDesc(info: WeaponInfo, ...refines: RefineRank[]): SafeHtml {
+    return this.infos.getAbilityDesc(info, refines);
   }
 
   protected initItems(): void {
-    const items = this.items;
-    const infos = this.information.infos;
+    const infos = this.infos.infos;
     const plans = this.planner.plans;
-    for (const [id, p] of this.progresses.progresses) {
-      const progress = p as WeaponProgress;
-      const [info, plan] = [infos.get(progress.weaponId), plans.get(id)];
+    for (const [id, progress] of this.progresses.progresses) {
+      const [info, plan] = [infos.get(progress.infoId), plans.get(id)];
       if (info && plan) {
-        items.set(id, {info, progress, plan: plan as WeaponPlan});
+        this.items.set(id, {info, progress, plan});
       }
     }
-  }
-
-  protected calcStatsTypes(id: number): StatsType[] {
-    const info = this.information.infos.get(id);
-    return info ? this.getStatsAtMaxLevel(info).getTypes() : [];
   }
 }

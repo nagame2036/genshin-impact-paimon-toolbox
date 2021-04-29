@@ -3,12 +3,10 @@
     "rarity": 5,
     "element": 1,
     "weapon": 1,
-    "talentsUpgradable": [
+    "talents": [
       10010,
       10011,
-      10014
-    ],
-    "talentsOther": [
+      10014,
       10015,
       10016
     ],
@@ -74,12 +72,10 @@
     "rarity": 5,
     "element": 2,
     "weapon": 1,
-    "talentsUpgradable": [
+    "talents": [
       10020,
       10021,
-      10024
-    ],
-    "talentsOther": [
+      10024,
       10025,
       10026
     ],
@@ -145,12 +141,10 @@
     "rarity": 5,
     "element": 1,
     "weapon": 1,
-    "talentsUpgradable": [
+    "talents": [
       10110,
       10011,
-      10014
-    ],
-    "talentsOther": [
+      10014,
       10015,
       10016
     ],
@@ -216,12 +210,10 @@
     "rarity": 5,
     "element": 2,
     "weapon": 1,
-    "talentsUpgradable": [
+    "talents": [
       10120,
       10021,
-      10024
-    ],
-    "talentsOther": [
+      10024,
       10025,
       10026
     ],
@@ -288,12 +280,10 @@
     "element": 6,
     "weapon": 5,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40000,
       40001,
-      40004
-    ],
-    "talentsOther": [
+      40004,
       40005,
       40006,
       40007
@@ -362,12 +352,10 @@
     "element": 7,
     "weapon": 1,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40010,
       40011,
-      40014
-    ],
-    "talentsOther": [
+      40014,
       40015,
       40016,
       40017
@@ -436,12 +424,10 @@
     "element": 3,
     "weapon": 4,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40020,
       40021,
-      40024
-    ],
-    "talentsOther": [
+      40024,
       40025,
       40026,
       40027
@@ -510,12 +496,10 @@
     "element": 5,
     "weapon": 4,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40030,
       40031,
-      40034
-    ],
-    "talentsOther": [
+      40034,
       40035,
       40036,
       40037
@@ -584,12 +568,10 @@
     "element": 3,
     "weapon": 2,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40040,
       40041,
-      40044
-    ],
-    "talentsOther": [
+      40044,
       40045,
       40046,
       40047
@@ -658,12 +640,10 @@
     "element": 6,
     "weapon": 3,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       40050,
       40051,
-      40054
-    ],
-    "talentsOther": [
+      40054,
       40055,
       40056,
       40057
@@ -732,12 +712,10 @@
     "element": 3,
     "weapon": 2,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       40060,
       40061,
-      40064
-    ],
-    "talentsOther": [
+      40064,
       40065,
       40066,
       40067
@@ -806,12 +784,10 @@
     "element": 5,
     "weapon": 1,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       40070,
       40071,
-      40074
-    ],
-    "talentsOther": [
+      40074,
       40075,
       40076,
       40077
@@ -880,12 +856,10 @@
     "element": 2,
     "weapon": 4,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       40080,
       40081,
-      40084
-    ],
-    "talentsOther": [
+      40084,
       40085,
       40086,
       40087
@@ -954,12 +928,10 @@
     "element": 3,
     "weapon": 5,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40090,
       40091,
-      40094
-    ],
-    "talentsOther": [
+      40094,
       40095,
       40096,
       40097
@@ -1028,12 +1000,10 @@
     "element": 6,
     "weapon": 1,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40100,
       40101,
-      40104
-    ],
-    "talentsOther": [
+      40104,
       40105,
       40106,
       40107
@@ -1102,12 +1072,10 @@
     "element": 2,
     "weapon": 2,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40110,
       40111,
-      40114
-    ],
-    "talentsOther": [
+      40114,
       40115,
       40116,
       40117
@@ -1176,12 +1144,10 @@
     "element": 7,
     "weapon": 2,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       40120,
       40121,
-      40124
-    ],
-    "talentsOther": [
+      40124,
       40125,
       40126,
       40127
@@ -1250,12 +1216,10 @@
     "element": 1,
     "weapon": 4,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40130,
       40131,
-      40134
-    ],
-    "talentsOther": [
+      40134,
       40135,
       40136,
       40137
@@ -1324,12 +1288,10 @@
     "element": 7,
     "weapon": 5,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40140,
       40141,
-      40144
-    ],
-    "talentsOther": [
+      40144,
       40145,
       40146,
       40147
@@ -1398,12 +1360,10 @@
     "element": 6,
     "weapon": 2,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       40150,
       40151,
-      40154
-    ],
-    "talentsOther": [
+      40154,
       40155,
       40156,
       40157
@@ -1472,12 +1432,10 @@
     "element": -1,
     "weapon": 3,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       40160,
       40161,
-      40164
-    ],
-    "talentsOther": [
+      40164,
       40165,
       40166,
       40167
@@ -1546,12 +1504,10 @@
     "element": 1,
     "weapon": 1,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       50000,
       50001,
-      50004
-    ],
-    "talentsOther": [
+      50004,
       50005,
       50006,
       50007
@@ -1620,12 +1576,10 @@
     "element": 6,
     "weapon": 2,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       50010,
       50011,
-      50014
-    ],
-    "talentsOther": [
+      50014,
       50015,
       50016,
       50017
@@ -1694,12 +1648,10 @@
     "element": 7,
     "weapon": 1,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       50020,
       50021,
-      50024
-    ],
-    "talentsOther": [
+      50024,
       50025,
       50026,
       50027
@@ -1768,12 +1720,10 @@
     "element": 5,
     "weapon": 4,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       50030,
       50031,
-      50034
-    ],
-    "talentsOther": [
+      50034,
       50032,
       50035,
       50036,
@@ -1843,12 +1793,10 @@
     "element": 3,
     "weapon": 1,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       50040,
       50041,
-      50044
-    ],
-    "talentsOther": [
+      50044,
       50045,
       50046,
       50047
@@ -1917,12 +1865,10 @@
     "element": 1,
     "weapon": 5,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       50050,
       50051,
-      50054
-    ],
-    "talentsOther": [
+      50054,
       50055,
       50056,
       50057
@@ -1991,12 +1937,10 @@
     "element": 6,
     "weapon": 4,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       50060,
       50061,
-      50064
-    ],
-    "talentsOther": [
+      50064,
       50065,
       50066,
       50067
@@ -2065,12 +2009,10 @@
     "element": 5,
     "weapon": 5,
     "nation": 7,
-    "talentsUpgradable": [
+    "talents": [
       50070,
       50071,
-      50074
-    ],
-    "talentsOther": [
+      50074,
       50075,
       50076,
       50077
@@ -2139,12 +2081,10 @@
     "element": 2,
     "weapon": 3,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       50080,
       50081,
-      50084
-    ],
-    "talentsOther": [
+      50084,
       50085,
       50086,
       50087
@@ -2213,12 +2153,10 @@
     "element": 2,
     "weapon": 1,
     "nation": 1,
-    "talentsUpgradable": [
+    "talents": [
       50090,
       50091,
-      50094
-    ],
-    "talentsOther": [
+      50094,
       50095,
       50096,
       50097
@@ -2287,12 +2225,10 @@
     "element": 7,
     "weapon": 5,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       50100,
       50101,
-      50104
-    ],
-    "talentsOther": [
+      50104,
       50105,
       50106,
       50107
@@ -2361,12 +2297,10 @@
     "element": 1,
     "weapon": 3,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       50110,
       50111,
-      50114
-    ],
-    "talentsOther": [
+      50114,
       50115,
       50116,
       50117
@@ -2435,12 +2369,10 @@
     "element": 6,
     "weapon": 3,
     "nation": 2,
-    "talentsUpgradable": [
+    "talents": [
       50120,
       50121,
-      50124
-    ],
-    "talentsOther": [
+      50124,
       50125,
       50126,
       50127

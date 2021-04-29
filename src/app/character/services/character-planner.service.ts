@@ -9,7 +9,6 @@ import {TalentProgress} from '../models/talent-progress.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {MaterialService} from '../../material/services/material.service';
-import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {TalentInfoService} from './talent-info.service';
 import {ItemPlanService} from '../../game-common/services/item-plan.service';
@@ -18,9 +17,9 @@ import {ItemPlanService} from '../../game-common/services/item-plan.service';
   providedIn: 'root',
 })
 export class CharacterPlanner extends ItemPlanService<Character> {
-  private readonly i18n = I18n.create('game-common');
+  readonly type = 'character';
 
-  protected type = ItemType.CHARACTER;
+  private readonly i18n = I18n.create('game-common');
 
   constructor(
     private characterReq: CharacterRequirementService,
@@ -36,26 +35,20 @@ export class CharacterPlanner extends ItemPlanService<Character> {
   create(info: CharacterInfo, meta: {id: number}): CharacterPlan {
     const id = meta.id;
     const talents: TalentProgress = {};
-    info.talentsUpgradable.forEach(t => (talents[t] = 1));
+    info.talents.forEach(t => (talents[t] = 1));
     return {id, ascension: 0, level: 1, talents};
   }
 
   protected getRequirements(item: Character): MaterialRequireList[] {
-    const talents = this.talentInfos.getAll(item.info.talentsUpgradable);
-    return [
-      ...this.characterReq.requirement(item),
-      ...this.talentReq.requirement(item, talents),
-    ];
+    const talents = this.talentInfos.getUpgradableInfos(item.info);
+    return [...this.characterReq.requirement(item), ...this.talentReq.requirement(item, talents)];
   }
 
   protected getRequireLabels(item: Character): string[] {
-    const labels = [
+    return [
       this.i18n.module('total-requirement'),
       this.characterReq.levelupLabel,
+      ...this.talentInfos.getUpgradableInfos(item.info).map(it => this.talentReq.getLabel(it.id)),
     ];
-    item.info.talentsUpgradable.forEach(it => {
-      labels.push(this.talentReq.getLabel(it));
-    });
-    return labels;
   }
 }

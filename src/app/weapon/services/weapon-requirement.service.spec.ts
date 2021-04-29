@@ -2,7 +2,6 @@ import {TestBed} from '@angular/core/testing';
 
 import {WeaponRequirementService} from './weapon-requirement.service';
 import {Weapon} from '../models/weapon.model';
-import {WeaponType} from '../models/weapon-type.enum';
 import {WeaponModule} from '../weapon.module';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {AppTestingModule} from '../../app-testing.module';
@@ -28,7 +27,7 @@ describe('WeaponRequirementService', () => {
       info: {
         id: 1,
         rarity: 3,
-        type: WeaponType.SWORD,
+        type: 1,
         materials: {
           domain: 400,
           elite: 900,
@@ -43,14 +42,14 @@ describe('WeaponRequirementService', () => {
       },
       progress: {
         id: 10000,
-        weaponId: 1,
+        infoId: 1,
         refine: 1,
         ascension: 0,
         level: 1,
       },
       plan: {
         id: 10000,
-        weaponId: 1,
+        infoId: 1,
         ascension: 6,
         level: 90,
       },
@@ -75,7 +74,7 @@ describe('WeaponRequirementService', () => {
       info: {
         id: 1,
         rarity: 4,
-        type: WeaponType.SWORD,
+        type: 1,
         materials: {
           domain: 404,
           elite: 905,
@@ -90,14 +89,14 @@ describe('WeaponRequirementService', () => {
       },
       progress: {
         id: 10000,
-        weaponId: 1,
+        infoId: 1,
         refine: 1,
         ascension: 0,
         level: 1,
       },
       plan: {
         id: 10000,
-        weaponId: 1,
+        infoId: 1,
         ascension: 2,
         level: 50,
       },
@@ -116,7 +115,7 @@ describe('WeaponRequirementService', () => {
       info: {
         id: 1,
         rarity: 5,
-        type: WeaponType.SWORD,
+        type: 1,
         materials: {
           domain: 403,
           elite: 904,
@@ -131,14 +130,14 @@ describe('WeaponRequirementService', () => {
       },
       progress: {
         id: 10000,
-        weaponId: 1,
+        infoId: 1,
         refine: 1,
         ascension: 2,
         level: 50,
       },
       plan: {
         id: 10000,
-        weaponId: 1,
+        infoId: 1,
         ascension: 6,
         level: 90,
       },

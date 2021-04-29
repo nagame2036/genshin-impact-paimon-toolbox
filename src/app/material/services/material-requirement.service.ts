@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {ReplaySubject} from 'rxjs';
-import {ItemType} from '../../game-common/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.type';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
 import {Item} from '../../game-common/models/item.model';
@@ -33,16 +33,17 @@ export class MaterialRequirementService {
     return req;
   }
 
-  update(type: ItemType, key: number, req: MaterialRequireList): void {
+  update(type: ItemType, key: number, req: MaterialRequireList[]): void {
+    const update = new MaterialRequireList(req);
     const typeReq = this.typed.get(type);
     if (typeReq) {
-      typeReq.update(key, req);
+      typeReq.update(key, update);
     } else {
-      this.typed.set(type, req);
+      this.typed.set(type, update);
     }
-    this.logger.info('update requirement of item', type, key, req);
-    this.total.update(key, req);
-    this.changes.next(typeReq || req);
+    this.logger.info('update requirement of item', type, key, update);
+    this.total.update(key, update);
+    this.changes.next(typeReq || update);
   }
 
   removeAll(type: ItemType, items: Item<any>[]): void {

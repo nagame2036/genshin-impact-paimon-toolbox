@@ -2,10 +2,9 @@ import {MaterialDetail} from '../models/material.model';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {RequireMark} from '../models/material-require-mark.model';
 
-export function processExpMaterials(
-  exps: {id: number; exp?: number}[],
-  materials: Map<number, MaterialDetail>,
-): void {
+type Exp = {id: number; exp?: number};
+
+export function processExpMaterials(exps: Exp[], materials: Map<number, MaterialDetail>): void {
   const expId = exps[0].id;
   const expMaterial = materials.get(expId);
   if (!expMaterial) {
@@ -21,7 +20,7 @@ export function processExpMaterials(
   }
   expMaterial.lack = Math.max(0, expMaterial.need - expMaterial.have);
   expMaterial.overflow = expMaterial.lack === 0;
-  if (!expMaterial.overflow) {
+  if (expMaterial.overflow) {
     return;
   }
   for (const {id} of exps) {
@@ -34,7 +33,7 @@ export function processExpMaterials(
 }
 
 export function processExpRequirement(
-  exps: {id: number; exp?: number}[],
+  exps: Exp[],
   requirement: MaterialRequireList,
   mark: RequireMark,
 ): void {

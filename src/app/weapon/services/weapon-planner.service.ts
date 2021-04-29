@@ -5,7 +5,6 @@ import {MaterialRequireList} from '../../material/collections/material-require-l
 import {WeaponRequirementService} from './weapon-requirement.service';
 import {Weapon} from '../models/weapon.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialService} from '../../material/services/material.service';
 import {WeaponInfo} from '../models/weapon-info.model';
@@ -15,9 +14,9 @@ import {ItemPlanService} from '../../game-common/services/item-plan.service';
   providedIn: 'root',
 })
 export class WeaponPlanner extends ItemPlanService<Weapon> {
-  private readonly i18n = I18n.create('game-common');
+  readonly type = 'weapon';
 
-  protected type = ItemType.WEAPON;
+  private readonly i18n = I18n.create('game-common');
 
   constructor(
     private weaponReq: WeaponRequirementService,
@@ -30,7 +29,7 @@ export class WeaponPlanner extends ItemPlanService<Weapon> {
 
   create(info: WeaponInfo, meta: {id: number}): WeaponPlan {
     const id = meta.id;
-    return {id, weaponId: info.id, ascension: 0, level: 1};
+    return {id, infoId: info.id, ascension: 0, level: 1};
   }
 
   protected getRequirements(item: Weapon): MaterialRequireList[] {

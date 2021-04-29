@@ -28,8 +28,7 @@ describe('CharacterInfoService', () => {
         element: 1,
         weapon: 4,
         nation: 1,
-        talentsUpgradable: [40130, 40131, 40134],
-        talentsOther: [40135, 40136, 40137],
+        talents: [40130, 40131, 40134, 40135, 40136, 40137],
         materials: {
           boss: 2001,
           gem: 301,

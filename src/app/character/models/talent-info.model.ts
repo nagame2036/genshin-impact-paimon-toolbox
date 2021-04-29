@@ -1,7 +1,11 @@
-export interface TalentInfo {
-  id: number;
+export type TalentInfo = BaseTalentInfo | UpgradableTalentInfo;
 
-  materials?: TalentMaterialRequirements;
+interface BaseTalentInfo {
+  id: number;
+}
+
+export interface UpgradableTalentInfo extends BaseTalentInfo {
+  materials: TalentMaterialRequirements;
 }
 
 export interface TalentMaterialRequirements {
@@ -18,10 +22,10 @@ export interface TalentMaterialRequirements {
   event: number;
 }
 
-export const allTalentLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
+export const baseTalentLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
 
-export const allExtraTalentLevels = [11, 12, 13, 14, 15] as const;
+export const extraTalentLevels = [11, 12, 13, 14, 15] as const;
 
-export type TalentLevel =
-  | typeof allTalentLevels[number]
-  | typeof allExtraTalentLevels[number];
+export const allTalentLevels = [...baseTalentLevels, ...extraTalentLevels] as const;
+
+export type TalentLevel = typeof allTalentLevels[number];

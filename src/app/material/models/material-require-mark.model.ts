@@ -1,4 +1,4 @@
-import {ItemType} from '../../game-common/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.type';
 import {MaterialList} from '../collections/material-list';
 
 export type MaterialRequireMark = RequireMark & {need: number};

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {CraftRecipe, MaterialDetail} from '../models/material.model';
+import {MaterialDetail} from '../models/material.model';
 import {MaterialList} from '../collections/material-list';
+import {CraftDetail, CraftRecipe} from '../models/craft.type';
 
 @Injectable({
   providedIn: 'root',
@@ -10,27 +11,20 @@ export class MaterialCraftService {
 
   isCraftable(target: MaterialDetail, materials: Map<number, MaterialDetail>): boolean {
     for (const recipe of target.info.recipes ?? []) {
-      const every = Object.entries(recipe).every(([itemId, itemAmount]) => {
-        const itemHave = materials.get(Number(itemId))?.have ?? 0;
-        return itemHave >= itemAmount;
-      });
-      if (every) {
-        return true;
+      for (const [id, amount] of Object.entries(recipe)) {
+        const have = materials.get(Number(id))?.have ?? 0;
+        if (have > amount) {
+          return true;
+        }
       }
     }
     return false;
   }
 
-  getCraftDetails(
-    item: MaterialDetail,
-    materials: Map<number, MaterialDetail>,
-  ): {usage: MaterialDetail[]; craftableAmount: number}[] {
-    if (!item.info.recipes) {
-      return [];
-    }
-    const result: {usage: MaterialDetail[]; craftableAmount: number}[] = [];
-    for (const recipe of item.info.recipes) {
-      const usage: MaterialDetail[] = [];
+  getCraftDetails(item: MaterialDetail, materials: Map<number, MaterialDetail>): CraftDetail[] {
+    const result: CraftDetail[] = [];
+    for (const recipe of item.info.recipes ?? []) {
+      const usage = [];
       let craftableAmount = Infinity;
       for (const [itemId, itemAmount] of Object.entries(recipe)) {
         const recipeMaterial = materials.get(Number(itemId));
@@ -54,9 +48,9 @@ export class MaterialCraftService {
     if (performedTimes <= 0) {
       return change;
     }
-    for (const [itemIdString, itemAmount] of Object.entries(recipe)) {
+    for (const [itemId, itemAmount] of Object.entries(recipe)) {
       const itemCost = itemAmount * performedTimes;
-      change.change(Number(itemIdString), -itemCost);
+      change.change(Number(itemId), -itemCost);
     }
     return change.change(id, performedTimes);
   }

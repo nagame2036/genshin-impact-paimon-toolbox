@@ -1,18 +1,11 @@
 export function toggleItem<T>(list: T[], item: T, equals: (a: T) => boolean): T[] {
-  const notFound = list.findIndex(it => equals(it)) === -1;
-  const result = list.filter(it => !equals(it));
-  if (notFound) {
-    result.push(item);
+  if (list.findIndex(it => equals(it)) !== -1) {
+    return list.filter(it => !equals(it));
   }
-  return result;
+  list.push(item);
+  return list;
 }
 
 export function unionMap<T>(items: T[][]): Map<T, T[]> {
-  const map = new Map<T, T[]>();
-  for (const list of items) {
-    for (const item of list) {
-      map.set(item, list);
-    }
-  }
-  return map;
+  return new Map<T, T[]>(items.flatMap(list => list.map(item => [item, list])));
 }

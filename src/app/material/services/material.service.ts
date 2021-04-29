@@ -4,17 +4,17 @@ import {MaterialQuantityService} from './material-quantity.service';
 import {combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {MaterialRequirementService} from './material-requirement.service';
 import {NGXLogger} from 'ngx-logger';
-import {CraftRecipe, MaterialDetail} from '../models/material.model';
+import {MaterialDetail} from '../models/material.model';
 import {MaterialCraftService} from './material-craft.service';
 import {map} from 'rxjs/operators';
 import {MaterialList} from '../collections/material-list';
 import {MaterialRequireList} from '../collections/material-require-list';
-import {ItemType} from '../../game-common/models/item-type.enum';
+import {ItemType} from '../../game-common/models/item-type.type';
 import {MaterialType} from '../models/material-type.enum';
 import {MaterialRequireMark} from '../models/material-require-mark.model';
 import {RequireDetail} from '../models/requirement-detail.model';
 import {Item} from '../../game-common/models/item.model';
-import {CraftDetail} from '../models/craft-detail.type';
+import {CraftDetail, CraftRecipe} from '../models/craft.type';
 
 @Injectable({
   providedIn: 'root',
@@ -81,7 +81,7 @@ export class MaterialService {
     this.quantities.update(id, have);
   }
 
-  updateRequire(type: ItemType, key: number, req: MaterialRequireList): void {
+  updateRequire(type: ItemType, key: number, req: MaterialRequireList[]): void {
     this.requirements.update(type, key, req);
   }
 
@@ -109,7 +109,7 @@ export class MaterialService {
         const material = new MaterialDetail(type, info);
         this.materials.set(id, material);
         materials.set(id, material);
-        if (group && !this.infos.ignoreGroupTypes.includes(type)) {
+        if (group && !this.infos.ignoredGroupTypes.includes(type)) {
           const grouped = this.grouped.get(group) ?? [];
           grouped.push(material);
           this.grouped.set(group, grouped);

@@ -9,7 +9,7 @@
   </div>
   <app-select
     [label]="i18n.module('traveler-gender')"
-    [options]="information.genders"
+    [options]="genders"
     [value]="options.travelerGender"
     (changed)="information.changeTravelerGender($event)"
   ></app-select>

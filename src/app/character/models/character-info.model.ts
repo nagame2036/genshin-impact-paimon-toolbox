@@ -1,6 +1,6 @@
 import {Rarity} from '../../game-common/models/rarity.type';
-import {WeaponType} from '../../weapon/models/weapon-type.enum';
-import {ElementType} from '../../game-common/models/element-type.enum';
+import {WeaponType} from '../../weapon/models/weapon-type.type';
+import {ElementType} from '../../game-common/models/element-type.type';
 import {Nation} from '../../game-common/models/nation.enum';
 import {CharacterStatsCurveAscension, CharacterStatsInfo} from './character-stats.model';
 import {ItemInfo} from '../../game-common/models/item.model';
@@ -20,15 +20,7 @@ export interface CharacterInfo extends ItemInfo<Character> {
 
   nation?: Nation;
 
-  /**
-   * Character talents ids which is level upgradable.
-   */
-  talentsUpgradable: number[];
-
-  /**
-   * Character talents ids which isn't level upgradable.
-   */
-  talentsOther: number[];
+  talents: number[];
 
   materials: CharacterMaterialRequirement;
 

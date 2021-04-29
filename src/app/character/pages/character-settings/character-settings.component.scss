@@ -1,7 +1,9 @@
 @import '../../../widget/styles/icon-btn.scss';
 
 .settings-page {
+  @apply w-3/4;
   @apply mt-8;
+  @apply mx-auto;
   @apply flex;
   @apply flex-col;
   @apply gap-2;

@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {MaterialDetail, MaterialInfo} from '../models/material.model';
 import {characterExp, mora, weaponExp} from '../models/mora-and-exp.model';
 import {MaterialType} from '../models/material-type.enum';
-import characterExpMaterials from '../../../data/materials/character-exps.json';
-import weaponExpMaterials from '../../../data/materials/weapon-exps.json';
-import oreMaterials from '../../../data/materials/ore-materials.json';
-import characterAscendMaterials from '../../../data/materials/character-ascend-materials.json';
-import weaponAscendMaterials from '../../../data/materials/weapon-ascend-materials.json';
-import talentLevelupMaterials from '../../../data/materials/talent-levelup-materials.json';
-import enemyMaterials from '../../../data/materials/enemy-materials.json';
-import localSpecialtyMaterials from '../../../data/materials/local-specialties.json';
+import characterExpMaterials from '../../../data/material/character-exps.json';
+import weaponExpMaterials from '../../../data/material/weapon-exps.json';
+import oreMaterials from '../../../data/material/ore-materials.json';
+import characterAscendMaterials from '../../../data/material/character-ascend-materials.json';
+import weaponAscendMaterials from '../../../data/material/weapon-ascend-materials.json';
+import talentLevelupMaterials from '../../../data/material/talent-levelup-materials.json';
+import enemyMaterials from '../../../data/material/enemy-materials.json';
+import localSpecialtyMaterials from '../../../data/material/local-specialties.json';
 import {processExpMaterials, processExpRequirement} from '../utils/exp-details';
 import {MaterialRequireList} from '../collections/material-require-list';
 import {RequireMark} from '../models/material-require-mark.model';
@@ -25,7 +25,7 @@ export class MaterialInfoService {
 
   readonly grouped = new Map<number, MaterialInfo[]>();
 
-  readonly ignoreGroupTypes = [MaterialType.TALENT_COMMON, MaterialType.LOCAL_SPECIALTY];
+  readonly ignoredGroupTypes = [MaterialType.TALENT_COMMON, MaterialType.LOCAL_SPECIALTY];
 
   constructor() {
     this.initTyped();
@@ -48,11 +48,10 @@ export class MaterialInfoService {
     {rarity, amount}: MaterialGroupCost,
     mark: RequireMark,
   ): void {
-    const grouped = this.grouped.get(groupId) ?? [];
-    const index = grouped?.findIndex(it => it.rarity === rarity);
-    const material = grouped[index];
-    if (material) {
-      list.mark(material.id, amount, mark);
+    const grouped = this.grouped.get(groupId);
+    if (grouped) {
+      const index = grouped.findIndex(it => it.rarity === rarity);
+      list.mark(grouped[index].id, amount, mark);
     }
   }
 

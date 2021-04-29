@@ -1,39 +1,11 @@
-/**
- * Represents the seven nations in Teyvat.
- */
-export enum Nation {
-  /**
-   * In chinese: 蒙德.
-   */
-  MONDSTADT = 1,
+export const nations = [
+  1, // 蒙德
+  2, // 璃月
+  3, // 稻妻
+  4, // 须弥
+  5, // 枫丹
+  6, // 穆纳塔
+  7, // 至冬
+] as const;
 
-  /**
-   * In chinese: 璃月.
-   */
-  LIYUE,
-
-  /**
-   * In chinese: 稻妻.
-   */
-  INAZUMA,
-
-  /**
-   * In chinese: 须弥.
-   */
-  SUMERU,
-
-  /**
-   * In chinese: 枫丹.
-   */
-  FONTAINE,
-
-  /**
-   * In chinese: 穆纳塔.
-   */
-  NATLAN,
-
-  /**
-   * In chinese: 至冬.
-   */
-  SNEZHNAYA,
-}
+export type Nation = typeof nations[number];

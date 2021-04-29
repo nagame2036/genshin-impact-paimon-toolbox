@@ -1,5 +1,6 @@
 import {Rarity} from '../../game-common/models/rarity.type';
 import {MaterialType} from './material-type.enum';
+import {CraftRecipe} from './craft.type';
 
 export interface MaterialInfo {
   id: number;
@@ -62,8 +63,3 @@ export class MaterialDetail {
     this.overflow = this.lack <= 0;
   }
 }
-
-/**
- * Item id to amount.
- */
-export type CraftRecipe = Record<number, number>;

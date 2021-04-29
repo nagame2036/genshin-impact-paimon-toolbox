@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {CharacterOverview} from '../models/character.model';
 import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
-import {allElements, ElementType} from '../../game-common/models/element-type.enum';
-import {allWeaponTypes, WeaponType} from '../../weapon/models/weapon-type.enum';
+import {allElements, ElementType} from '../../game-common/models/element-type.type';
+import {allWeaponTypes, WeaponType} from '../../weapon/models/weapon-type.type';
 import {I18n} from '../../widget/models/i18n.model';
 import {Rarity} from '../../game-common/models/rarity.type';
 import {SettingService} from '../../setting/services/setting.service';
 import {CharacterViewOptions} from '../models/character-options.model';
 import {ItemSort, ItemViewService} from '../../game-common/services/item-view.service';
+import {CharacterService} from './character.service';
 
-const i18n = I18n.create('characters');
+const i18n = I18n.create('character');
 
 const sortMap = new Map<string, ItemSort<CharacterOverview>>([
   [
@@ -17,10 +18,7 @@ const sortMap = new Map<string, ItemSort<CharacterOverview>>([
     ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level,
   ],
   [i18n.dict('rarity'), ({info: a}, {info: b}) => b.rarity - a.rarity],
-  [
-    i18n.dict('constellation'),
-    ({progress: a}, {progress: b}) => b.constellation - a.constellation,
-  ],
+  [i18n.dict('constellation'), ({progress: a}, {progress: b}) => b.constellation - a.constellation],
 ]);
 
 const infoSortMap = new Map<string, ItemSort<CharacterInfo>>([
@@ -30,10 +28,7 @@ const infoSortMap = new Map<string, ItemSort<CharacterInfo>>([
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterViewService extends ItemViewService<
-  CharacterOverview,
-  CharacterViewOptions
-> {
+export class CharacterViewService extends ItemViewService<CharacterOverview, CharacterViewOptions> {
   readonly rarities = allCharacterRarities.map(it => ({value: it, text: `★${it}`}));
 
   readonly elements = allElements.map(it => ({
@@ -46,11 +41,11 @@ export class CharacterViewService extends ItemViewService<
     text: i18n.data(`weapon-type.${it}`),
   }));
 
-  constructor(settings: SettingService) {
-    super(sortMap, infoSortMap, settings, 'character-view', {
+  constructor(characters: CharacterService, settings: SettingService) {
+    super(characters.type, sortMap, infoSortMap, settings, 'character-view', {
       rarities: allCharacterRarities,
-      elements: allElements,
-      weapons: allWeaponTypes,
+      elements: [...allElements],
+      weapons: [...allWeaponTypes],
     });
   }
 
@@ -70,8 +65,6 @@ export class CharacterViewService extends ItemViewService<
     {rarity, element, weapon}: CharacterInfo,
     {rarities, elements, weapons}: CharacterViewOptions,
   ): boolean {
-    return (
-      rarities.includes(rarity) && elements.includes(element) && weapons.includes(weapon)
-    );
+    return rarities.includes(rarity) && elements.includes(element) && weapons.includes(weapon);
   }
 }

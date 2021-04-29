@@ -4,8 +4,6 @@ import {CharacterRequirementService} from './character-requirement.service';
 import {AppTestingModule} from '../../app-testing.module';
 import {CharacterModule} from '../character.module';
 import {Character} from '../models/character.model';
-import {WeaponType} from '../../weapon/models/weapon-type.enum';
-import {ElementType} from '../../game-common/models/element-type.enum';
 import {characterExp, mora} from '../../material/models/mora-and-exp.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 
@@ -29,16 +27,15 @@ describe('CharacterRequirementService', () => {
       info: {
         id: 1,
         rarity: 4,
-        element: ElementType.PYRO,
-        weapon: WeaponType.BOW,
+        element: 6,
+        weapon: 5,
         materials: {
           boss: 2060,
           gem: 306,
           local: 10105,
           mob: 803,
         },
-        talentsUpgradable: [],
-        talentsOther: [],
+        talents: [],
         stats: {},
         curvesAscension: {},
       },
@@ -75,15 +72,14 @@ describe('CharacterRequirementService', () => {
       info: {
         id: 1,
         rarity: 4,
-        element: ElementType.PYRO,
-        weapon: WeaponType.BOW,
+        element: 6,
+        weapon: 5,
         materials: {
           gem: 300,
           local: 10105,
           mob: 806,
         },
-        talentsUpgradable: [],
-        talentsOther: [],
+        talents: [],
         stats: {},
         curvesAscension: {},
       },
@@ -115,16 +111,15 @@ describe('CharacterRequirementService', () => {
       info: {
         id: 1,
         rarity: 4,
-        element: ElementType.PYRO,
-        weapon: WeaponType.BOW,
+        element: 6,
+        weapon: 5,
         materials: {
           boss: 2060,
           gem: 303,
           local: 10105,
           mob: 801,
         },
-        talentsUpgradable: [],
-        talentsOther: [],
+        talents: [],
         stats: {},
         curvesAscension: {},
       },

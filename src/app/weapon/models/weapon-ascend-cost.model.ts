@@ -6,7 +6,7 @@ import {Rarity} from '../../game-common/models/rarity.type';
  */
 export type WeaponAscendCost = Partial<Record<Rarity, WeaponRarityAscendCost[]>>;
 
-export interface WeaponRarityAscendCost {
+interface WeaponRarityAscendCost {
   mora: number;
 
   domain: MaterialGroupCost;

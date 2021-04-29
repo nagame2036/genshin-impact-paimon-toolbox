@@ -13,10 +13,10 @@ export class InventoryPageComponent implements OnInit {
   i18n = I18n.create('inventory');
 
   links: NavBarLink[] = [
-    {path: 'character-materials', text: this.i18n.dict('character-materials')},
-    {path: 'talent-materials', text: this.i18n.dict('talent-materials')},
-    {path: 'weapon-materials', text: this.i18n.dict('weapon-materials')},
-    {path: 'enemy-materials', text: this.i18n.dict('enemy-materials')},
+    {path: 'character-material', text: this.i18n.dict('character-material')},
+    {path: 'talent-material', text: this.i18n.dict('talent-material')},
+    {path: 'weapon-material', text: this.i18n.dict('weapon-material')},
+    {path: 'enemy-material', text: this.i18n.dict('enemy-material')},
     {path: 'ingredients', text: this.i18n.dict('ingredients')},
   ];
 

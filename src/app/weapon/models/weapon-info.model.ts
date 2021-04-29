@@ -1,4 +1,4 @@
-import {WeaponType} from './weapon-type.enum';
+import {WeaponType} from './weapon-type.type';
 import {Rarity} from '../../game-common/models/rarity.type';
 import {WeaponStatsInfo} from './weapon-stats.model';
 import {WeaponAbility} from './weapon-ability.model';

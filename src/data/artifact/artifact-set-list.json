@@ -1,0 +1,613 @@
+{
+  "10001": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10001.2",
+        "stats": {
+          "ATK%": 0.18
+        }
+      },
+      {
+        "require": 4,
+        "id": "10001.4",
+        "params": [
+          0.3
+        ]
+      }
+    ]
+  },
+  "10002": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10002.2",
+        "stats": {
+          "ATK%": 0.18
+        }
+      },
+      {
+        "require": 4,
+        "id": "10002.4",
+        "params": [
+          0.3,
+          0.5
+        ]
+      }
+    ]
+  },
+  "10003": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10003.2",
+        "stats": {
+          "DEF%": 0.3
+        }
+      },
+      {
+        "require": 4,
+        "id": "10003.4",
+        "params": [
+          0.3
+        ]
+      }
+    ]
+  },
+  "10004": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10004.2",
+        "params": [
+          0.2
+        ]
+      },
+      {
+        "require": 4,
+        "id": "10004.4",
+        "params": [
+          0.3,
+          10,
+          10
+        ]
+      }
+    ]
+  },
+  "10005": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10005.2",
+        "stats": {
+          "CHC%": 0.12
+        }
+      },
+      {
+        "require": 4,
+        "id": "10005.4",
+        "params": [
+          0.24,
+          0.7
+        ]
+      }
+    ]
+  },
+  "10006": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10006.2",
+        "params": [
+          0.15
+        ]
+      },
+      {
+        "require": 4,
+        "id": "10006.4",
+        "params": [
+          8,
+          1,
+          0.25
+        ]
+      }
+    ]
+  },
+  "10007": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10007.2",
+        "stats": {
+          "EM": 80
+        }
+      },
+      {
+        "require": 4,
+        "id": "10007.4",
+        "params": [
+          8,
+          120
+        ]
+      }
+    ]
+  },
+  "10008": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10008.2",
+        "params": [
+          0.2
+        ]
+      },
+      {
+        "require": 4,
+        "id": "10008.4",
+        "params": [
+          15,
+          1
+        ]
+      }
+    ]
+  },
+  "10009": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10009.2",
+        "stats": {
+          "ER%": 0.2
+        }
+      },
+      {
+        "require": 4,
+        "id": "10009.4",
+        "params": [
+          2,
+          6
+        ]
+      }
+    ]
+  },
+  "10012": {
+    "rarities": [
+      4
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "10012.2",
+        "stats": {
+          "ER%": 0.2
+        }
+      },
+      {
+        "require": 4,
+        "id": "10012.4",
+        "params": [
+          3
+        ]
+      }
+    ]
+  },
+  "14001": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "14001.2",
+        "stats": {
+          "Cryo DMG%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "14001.4",
+        "params": [
+          0.2,
+          0.2
+        ]
+      }
+    ]
+  },
+  "14002": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "14002.2",
+        "stats": {
+          "Electro RES%": 0.4
+        }
+      },
+      {
+        "require": 4,
+        "id": "14002.4",
+        "params": [
+          0.35
+        ]
+      }
+    ]
+  },
+  "14003": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "14003.2",
+        "stats": {
+          "Pyro RES%": 0.4
+        }
+      },
+      {
+        "require": 4,
+        "id": "14003.4",
+        "params": [
+          0.35
+        ]
+      }
+    ]
+  },
+  "14004": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "14004.2",
+        "stats": {
+          "Healing%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "14004.4",
+        "params": [
+          0.2,
+          10
+        ]
+      }
+    ]
+  },
+  "15001": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15001.2",
+        "stats": {
+          "ATK%": 0.18
+        }
+      },
+      {
+        "require": 4,
+        "id": "15001.4",
+        "params": [
+          0.35
+        ]
+      }
+    ]
+  },
+  "15002": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15002.2",
+        "stats": {
+          "Anemo DMG%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "15002.4",
+        "params": [
+          0.6,
+          0.4,
+          10
+        ]
+      }
+    ]
+  },
+  "15003": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15003.2",
+        "stats": {
+          "EM": 80
+        }
+      },
+      {
+        "require": 4,
+        "id": "15003.4",
+        "params": [
+          0.35
+        ]
+      }
+    ]
+  },
+  "15005": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15005.2",
+        "stats": {
+          "Electro DMG%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "15005.4",
+        "params": [
+          0.4,
+          0.8
+        ]
+      }
+    ]
+  },
+  "15006": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15006.2",
+        "stats": {
+          "Pyro DMG%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "15006.4",
+        "params": [
+          0.4,
+          0.15,
+          0.15,
+          0.5,
+          10
+        ]
+      }
+    ]
+  },
+  "15007": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15007.2",
+        "params": [
+          0.2
+        ]
+      },
+      {
+        "require": 4,
+        "id": "15007.4",
+        "params": [
+          0.2,
+          12
+        ]
+      }
+    ]
+  },
+  "15008": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15008.2",
+        "stats": {
+          "Physical DMG%": 0.25
+        }
+      },
+      {
+        "require": 4,
+        "id": "15008.4",
+        "params": [
+          10,
+          0.5,
+          -5,
+          0.1
+        ]
+      }
+    ]
+  },
+  "15009": {
+    "rarities": [
+      4
+    ],
+    "onlyTypes": [
+      5
+    ],
+    "abilities": [
+      {
+        "require": 1,
+        "id": "15009.1",
+        "params": [
+          0.4
+        ]
+      }
+    ]
+  },
+  "15010": {
+    "rarities": [
+      4
+    ],
+    "onlyTypes": [
+      5
+    ],
+    "abilities": [
+      {
+        "require": 1,
+        "id": "15010.1",
+        "params": [
+          0.4
+        ]
+      }
+    ]
+  },
+  "15011": {
+    "rarities": [
+      4
+    ],
+    "onlyTypes": [
+      5
+    ],
+    "abilities": [
+      {
+        "require": 1,
+        "id": "15011.1",
+        "params": [
+          0.4
+        ]
+      }
+    ]
+  },
+  "15013": {
+    "rarities": [
+      4
+    ],
+    "onlyTypes": [
+      5
+    ],
+    "abilities": [
+      {
+        "require": 1,
+        "id": "15013.1",
+        "params": [
+          0.4
+        ]
+      }
+    ]
+  },
+  "15014": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15014.2",
+        "stats": {
+          "Geo DMG%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "15014.4",
+        "params": [
+          0.35,
+          10
+        ]
+      }
+    ]
+  },
+  "15015": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15015.2",
+        "stats": {
+          "Shield STR%": 0.35
+        }
+      },
+      {
+        "require": 4,
+        "id": "15015.4",
+        "params": [
+          0.4
+        ]
+      }
+    ]
+  },
+  "15016": {
+    "rarities": [
+      4,
+      5
+    ],
+    "abilities": [
+      {
+        "require": 2,
+        "id": "15016.2",
+        "stats": {
+          "Hydro DMG%": 0.15
+        }
+      },
+      {
+        "require": 4,
+        "id": "15016.4",
+        "params": [
+          0.3,
+          1,
+          15
+        ]
+      }
+    ]
+  }
+}

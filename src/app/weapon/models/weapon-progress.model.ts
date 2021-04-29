@@ -8,7 +8,7 @@ import {Weapon} from './weapon.model';
 export interface WeaponProgress extends ItemProgress<Weapon> {
   id: number;
 
-  weaponId: number;
+  infoId: number;
 
   refine: RefineRank;
 
@@ -17,6 +17,6 @@ export interface WeaponProgress extends ItemProgress<Weapon> {
   level: number;
 }
 
-export type RefineRank = 1 | 2 | 3 | 4 | 5;
+export const allRefineRanks = [1, 2, 3, 4, 5] as const;
 
-export const allRefineRanks: RefineRank[] = [1, 2, 3, 4, 5];
+export type RefineRank = typeof allRefineRanks[number];

@@ -6,51 +6,46 @@ import {Weapon} from '../models/weapon.model';
 import {processExpBonus} from '../../game-common/models/levelup-exp-bonus.model';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {I18n} from '../../widget/models/i18n.model';
-import {ItemType} from '../../game-common/models/item-type.enum';
 import {NGXLogger} from 'ngx-logger';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireMark} from '../../material/models/material-require-mark.model';
 import {WeaponPlan} from '../models/weapon-plan.model';
-import ascendCost from '../../../data/weapons/weapon-ascend-cost.json';
-import levelupCost from '../../../data/weapons/weapon-levelup-cost.json';
+import ascendCost from '../../../data/weapon/weapon-ascend-cost.json';
+import levelupCost from '../../../data/weapon/weapon-levelup-cost.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeaponRequirementService {
-  private readonly i18n = I18n.create('game-common');
+  readonly i18n = I18n.create('game-common');
+
+  readonly ascendLabel = this.i18n.dict('ascend');
+
+  readonly levelupLabel = this.i18n.dict('levelup');
 
   private ascensions = ascendCost as WeaponAscendCost;
-
   /**
    * Stores the cost of exp per level for weapon level up.
    * @private
    */
   private levels = levelupCost as WeaponLevelupCost;
 
-  readonly ascendLabel = this.i18n.dict('ascend');
-
-  readonly levelupLabel = this.i18n.dict('levelup');
-
   constructor(private materials: MaterialInfoService, private logger: NGXLogger) {
     logger.info('loaded ascend cost', this.ascensions);
     logger.info('loaded levelup cost', this.levels);
   }
 
-  requirement(weapon: Weapon): MaterialRequireList[] {
-    const req = [this.ascend(weapon), this.levelup(weapon)];
-    this.logger.info('sent requirements of weapon', weapon, req);
-    return req;
+  requirement(item: Weapon): MaterialRequireList[] {
+    return [this.ascend(item), this.levelup(item)];
   }
 
-  private ascend(weapon: Weapon): MaterialRequireList {
+  private ascend({info, progress, plan}: Weapon): MaterialRequireList {
     const req = new MaterialRequireList();
-    const {progress, plan} = weapon;
-    const {rarity, materials} = weapon.info;
+    const {rarity, materials} = info;
     const {domain, elite, mob} = materials;
     const start = progress.ascension;
     const end = plan.ascension;
-    const mark = this.generateMark(plan, this.ascendLabel, `★${start}`, `★${end}`);
+    const mark = this.getMark(plan, this.ascendLabel, `★${start}`, `★${end}`);
     const costs = this.ascensions[rarity]?.slice(start, end) ?? [];
     for (const cost of costs) {
       req.mark(mora.id, cost.mora, mark);
@@ -61,12 +56,11 @@ export class WeaponRequirementService {
     return req;
   }
 
-  private levelup(weapon: Weapon): MaterialRequireList {
+  private levelup({info, progress, plan}: Weapon): MaterialRequireList {
     const req = new MaterialRequireList();
-    const {info, progress, plan} = weapon;
     const start = progress.level;
     const end = plan.level;
-    const mark = this.generateMark(plan, this.levelupLabel, `${start}`, `${end}`);
+    const mark = this.getMark(plan, this.levelupLabel, `${start}`, `${end}`);
     const levels = this.levels[info.rarity]?.slice(start, end) ?? [];
     const expAmount = levels.reduce((sum, curr) => sum + curr, 0);
     const {moraCost, expCost} = processExpBonus(info, expAmount, 0.1);
@@ -76,20 +70,8 @@ export class WeaponRequirementService {
     return req;
   }
 
-  private generateMark(
-    plan: WeaponPlan,
-    purpose: string,
-    start: string,
-    goal: string,
-  ): RequireMark {
-    return {
-      type: ItemType.WEAPON,
-      id: plan.weaponId,
-      key: plan.id,
-      purposeType: this.levelupLabel,
-      purpose,
-      start,
-      goal,
-    };
+  private getMark(plan: WeaponPlan, purpose: string, start: string, goal: string): RequireMark {
+    const purposeType = this.levelupLabel;
+    return {type: 'weapon', id: plan.infoId, key: plan.id, purposeType, purpose, start, goal};
   }
 }

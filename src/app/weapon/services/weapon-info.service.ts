@@ -7,12 +7,11 @@ import {
   WeaponStatsCurveLevel,
   WeaponStatsValue,
 } from '../models/weapon-stats.model';
-import {Ascension} from '../../game-common/models/ascension.type';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
 import {StatsType} from '../../game-common/models/stats.model';
-import itemList from '../../../data/weapons/weapon-list.json';
-import statsLevel from '../../../data/weapons/weapon-stats-curve-level.json';
-import statsAscension from '../../../data/weapons/weapon-stats-curve-ascension.json';
+import itemList from '../../../data/weapon/weapon-list.json';
+import statsLevel from '../../../data/weapon/weapon-stats-curve-level.json';
+import statsAscension from '../../../data/weapon/weapon-stats-curve-ascension.json';
 import {MaterialDetail} from '../../material/models/material.model';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialType} from '../../material/models/material-type.enum';
@@ -20,19 +19,16 @@ import {TranslateService} from '@ngx-translate/core';
 import {allRefineRanks, RefineRank} from '../models/weapon-progress.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-
-/**
- * Represents the dependency of weapon stats value.
- */
-type WeaponStatsDependency = {ascension: Ascension; level: number};
+import {ItemInfoService} from '../../game-common/services/item-info.service';
+import {AscensionLevel} from '../../game-common/models/ascension-level.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponInfoService {
-  readonly infos = objectMap<WeaponInfo>(load(itemList));
+export class WeaponInfoService extends ItemInfoService<Weapon, WeaponOverview> {
+  readonly i18n = I18n.create('weapon');
 
-  private i18n = I18n.create('weapons');
+  readonly infos = objectMap<WeaponInfo>(load(itemList));
 
   private statsLevel = load(statsLevel) as WeaponStatsCurveLevel;
 
@@ -52,22 +48,20 @@ export class WeaponInfoService {
     private sanitizer: DomSanitizer,
     private logger: NGXLogger,
   ) {
+    super();
     logger.info('loaded item list', this.infos);
     logger.info('loaded stats curves for level', this.statsLevel);
     logger.info('loaded stats curves for ascension', this.statsAscension);
   }
 
-  getOverview(weapon: Weapon): WeaponOverview {
-    const {info, progress, plan} = weapon;
+  getOverview(item: Weapon): WeaponOverview {
+    const {info, progress, plan} = item;
     const currentStats = this.getStatsValue(info, progress);
     const planStats = this.getStatsValue(info, plan);
-    return {...weapon, currentStats, planStats};
+    return {...item, currentStats, planStats};
   }
 
-  getStatsValue(
-    {id, rarity, stats}: WeaponInfo,
-    dependency: WeaponStatsDependency,
-  ): WeaponStatsValue {
+  getStatsValue({id, rarity, stats}: WeaponInfo, dependency: AscensionLevel): WeaponStatsValue {
     const result = new WeaponStatsValue();
     const {ascension, level} = dependency;
     for (const [type, statsInfo] of Object.entries(stats)) {
@@ -86,7 +80,7 @@ export class WeaponInfoService {
     return result;
   }
 
-  getAbilityDesc(info: WeaponInfo, ...refines: RefineRank[]): SafeHtml {
+  getAbilityDesc(info: WeaponInfo, refines: RefineRank[]): SafeHtml {
     const {id, descValues} = info.ability;
     const key = this.i18n.data('weapon-ability', id, 'desc');
     let desc: string = this.translator.instant(key);

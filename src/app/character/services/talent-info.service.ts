@@ -1,37 +1,36 @@
 import {Injectable} from '@angular/core';
-import {NGXLogger} from 'ngx-logger';
-import {TalentInfo, TalentLevel} from '../models/talent-info.model';
+import {TalentInfo, TalentLevel, UpgradableTalentInfo} from '../models/talent-info.model';
 import {unionMap} from '../../shared/utils/collections';
 import {Ascension} from '../../game-common/models/ascension.type';
 import {coerceIn} from '../../shared/utils/coerce';
 import {rangeList} from '../../shared/utils/range-list';
 import {TalentProgress} from '../models/talent-progress.model';
-import talentList from '../../../data/characters/talent-list.json';
+import talentList from '../../../data/character/talent-list.json';
 import {load, objectMap} from '../../shared/utils/json';
+import {CharacterInfo} from '../models/character-info.model';
+import {SelectOption} from '../../widget/models/select-option.model';
+
+type Talent = {talents: TalentProgress};
+
+type TalentAscension = Talent & {ascension: Ascension};
 
 @Injectable({
   providedIn: 'root',
 })
 export class TalentInfoService {
-  readonly talents = objectMap<TalentInfo>(load(talentList));
+  readonly infos = objectMap<TalentInfo>(load(talentList));
 
   readonly sameLevels = unionMap([
     [10010, 10110],
     [10020, 10120],
   ]);
 
-  constructor(private logger: NGXLogger) {}
+  constructor() {}
 
-  getAll(ids: number[]): TalentInfo[] {
-    const results = [];
-    for (const id of ids) {
-      const talent = this.talents.get(id);
-      if (talent) {
-        results.push(talent);
-      }
-    }
-    this.logger.info('sent talents', ids, results);
-    return results;
+  getUpgradableInfos(info: CharacterInfo): UpgradableTalentInfo[] {
+    return info.talents
+      .map(id => this.infos.get(id))
+      .filter((it): it is UpgradableTalentInfo => !!it && 'materials' in it);
   }
 
   /**
@@ -46,20 +45,16 @@ export class TalentInfoService {
     return (ascension < 2 ? 1 : (ascension - 1) * 2) as TalentLevel;
   }
 
-  levels(ascension: Ascension, start: number = 1): TalentLevel[] {
+  levels(ascension: Ascension, start: number = 1): SelectOption[] {
     const min = Math.max(1, start) as TalentLevel;
-    return rangeList(min, this.maxLevel(ascension));
+    return rangeList(min, this.maxLevel(ascension)).map(it => ({value: it, text: `${it}`}));
   }
 
-  copyProgress(source: TalentProgress, target: TalentProgress): void {
-    for (const idStr of Object.keys(source)) {
+  copyProgress({talents: curr}: Talent, {talents: plan}: Talent): void {
+    for (const idStr of Object.keys(curr)) {
       const id = Number(idStr);
       const sameLevels = this.sameLevels.get(id) ?? [id];
-      for (const sameId of sameLevels) {
-        if (target.hasOwnProperty(sameId)) {
-          source[id] = target[sameId];
-        }
-      }
+      sameLevels.filter(it => plan[it]).forEach(it => (curr[id] = plan[it]));
     }
   }
 
@@ -68,16 +63,12 @@ export class TalentInfoService {
     return coerceIn(level, 1, max) as TalentLevel;
   }
 
-  correctLevels(
-    levels: TalentProgress,
-    ascension: Ascension,
-    starts: TalentProgress = {},
-  ): void {
+  correctLevels({ascension, talents}: TalentAscension, starts: TalentProgress = {}): void {
     const max = this.maxLevel(ascension);
-    for (const [idString, level] of Object.entries(levels)) {
+    for (const [idString, level] of Object.entries(talents)) {
       const id = Number(idString);
       const min = coerceIn(starts[id] ?? 1, 1, max);
-      levels[id] = coerceIn(level, min, max) as TalentLevel;
+      talents[id] = coerceIn(level, min, max) as TalentLevel;
     }
   }
 }

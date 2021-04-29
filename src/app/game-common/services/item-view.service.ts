@@ -3,24 +3,24 @@ import {SettingService} from '../../setting/services/setting.service';
 import {Observable, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ItemViewOptions} from '../models/item-view-options.model';
+import {SelectOption} from '../../widget/models/select-option.model';
+import {ItemType} from '../models/item-type.type';
 
 export type ItemSort<T> = (a: T, b: T) => number;
 
-export abstract class ItemViewService<
-  T extends Item<any>,
-  Options extends ItemViewOptions
-> {
-  readonly sorts = [...this.sortMap].map(([text]) => ({text, value: text}));
+export abstract class ItemViewService<T extends Item<any>, Options extends ItemViewOptions> {
+  readonly sorts = this.getOptions(this.sortMap);
 
-  readonly infoSorts = [...this.infoSortMap].map(([text]) => ({text, value: text}));
+  readonly infoSorts = this.getOptions(this.infoSortMap);
 
   private options$ = new ReplaySubject<Options>(1);
 
   readonly options: Observable<Options> = this.options$.asObservable();
 
   protected constructor(
-    private sortMap: Map<string, ItemSort<T>>,
-    private infoSortMap: Map<string, ItemSort<T['info']>>,
+    public type: ItemType,
+    protected sortMap: Map<string, ItemSort<T>>,
+    protected infoSortMap: Map<string, ItemSort<T['info']>>,
     private settings: SettingService,
     private settingKey: string,
     private defaultOptions: Omit<Options, 'sort' | 'infoSort'>,
@@ -61,8 +61,8 @@ export abstract class ItemViewService<
     this.updateView({infoSort} as Partial<Options>);
   }
 
-  protected updateView(update: Partial<Options>): void {
-    this.settings.update(this.settingKey, update);
+  protected getOptions(sorts: Map<string, any>): SelectOption[] {
+    return [...sorts].map(([text]) => ({text, value: text}));
   }
 
   protected filterItem(item: T, options: Options): boolean {
@@ -70,6 +70,10 @@ export abstract class ItemViewService<
   }
 
   protected abstract filterInfo(info: T['info'], options: Options): boolean;
+
+  protected updateView(update: Partial<Options>): void {
+    this.settings.update(this.settingKey, update);
+  }
 
   private useOptions<R>(action: (options: Options) => R[]): Observable<R[]> {
     return this.options.pipe(map(options => action(options)));

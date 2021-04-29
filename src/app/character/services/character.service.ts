@@ -1,36 +1,26 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, Observable} from 'rxjs';
 import {Character, CharacterOverview} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
-import {map} from 'rxjs/operators';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
 import {CharacterProgressService} from './character-progress.service';
 import {CharacterPlanner} from './character-planner.service';
-import {StatsType} from '../../game-common/models/stats.model';
 import {TalentInfoService} from './talent-info.service';
-import {allAscensions} from '../../game-common/models/ascension.type';
-import {CharacterStatsValue} from '../models/character-stats.model';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
-import {MaterialDetail} from '../../material/models/material.model';
-import {maxItemLevel} from '../../game-common/models/level.type';
-import {ItemService} from '../../game-common/services/item.service';
-import {CharacterProgress} from '../models/character-progress.model';
-import {CharacterPlan} from '../models/character-plan.model';
-import {ItemType} from '../../game-common/models/item-type.enum';
+import {AscendableItemService} from '../../game-common/services/ascendable-item.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterService extends ItemService<Character, CharacterOverview> {
+export class CharacterService extends AscendableItemService<Character, CharacterOverview> {
   constructor(
-    private information: CharacterInfoService,
+    private infos: CharacterInfoService,
     private progresses: CharacterProgressService,
     private planner: CharacterPlanner,
     private talents: TalentInfoService,
     logger: NGXLogger,
   ) {
-    super(ItemType.CHARACTER, progresses, planner, logger);
+    super(infos, progresses, planner, logger);
   }
 
   create(info: CharacterInfo): CharacterOverview {
@@ -38,121 +28,69 @@ export class CharacterService extends ItemService<Character, CharacterOverview> 
     return this.createItem(info, meta);
   }
 
-  getOverview(character: Character): CharacterOverview {
-    return this.information.getOverview(character);
-  }
-
-  getStatsAtMaxLevel(character: CharacterInfo): CharacterStatsValue {
-    const ascension = allAscensions[allAscensions.length - 1];
-    const level = {ascension, level: maxItemLevel};
-    return this.information.getStatsValue(character, level);
-  }
-
-  getRequireMaterials(character: CharacterInfo): MaterialDetail[] {
-    return this.information.getRequireMaterials(character);
-  }
-
-  getAllNotInProgress(): Observable<CharacterInfo[]> {
-    return combineLatest([this.getIgnoredIds(), this.updated]).pipe(
-      map(([ids]) => {
-        const progress = this.progresses.progresses;
-        const infos = [...this.information.infos.values()];
-        return infos.filter(it => !(ids.has(it.id) || progress.has(it.id)));
-      }),
-    );
-  }
-
   protected initItems(): void {
-    const items = this.items;
-    const infos = this.information.infos;
+    const infos = this.infos.infos;
     const plans = this.planner.plans;
-    for (const [id, progressOrigin] of this.progresses.progresses) {
-      const [info, planOrigin] = [infos.get(id), plans.get(id)];
-      if (info && planOrigin) {
-        const progress = progressOrigin as CharacterProgress;
-        const plan = planOrigin as CharacterPlan;
-        items.set(id, {info, progress, plan});
+    for (const [id, progress] of this.progresses.progresses) {
+      const [info, plan] = [infos.get(id), plans.get(id)];
+      if (info && plan) {
+        this.items.set(id, {info, progress, plan});
       }
     }
   }
 
-  protected calcStatsTypes(id: number): StatsType[] {
-    const info = this.information.infos.get(id);
-    if (!info) {
-      return [];
-    }
-    return this.getStatsAtMaxLevel(info).getTypes();
-  }
-
-  protected getIgnoredIds(): Observable<Set<number>> {
-    return this.information.getIgnoredIds();
+  protected getAddableInfos(ignoreIds: Set<number>): CharacterInfo[] {
+    const progress = this.progresses.progresses;
+    return this.infosInArray.filter(it => !(ignoreIds.has(it.id) || progress.has(it.id)));
   }
 
   protected getItemsNeedUpdate(item: Character): Character[] {
-    return this.updateSame(item);
-  }
-
-  protected getItemsNeedRemove(items: Character[]): Character[] {
-    const characters = [];
-    for (const item of items) {
-      characters.push(...this.sameLevels(item));
-    }
-    return characters;
-  }
-
-  private updateSame(character: Character): Character[] {
     const results = new Set<Character>();
-    const {progress, plan} = character;
-    for (const c of this.sameLevels(character)) {
+    const {progress, plan} = item;
+    for (const c of this.getSame(item, this.infos.sameLevels)) {
       results.add(c);
-      if (c === character) {
+      if (c !== item) {
         copyLevel(c.progress, progress);
         copyLevel(c.plan, plan);
       }
     }
-    for (const c of this.sameTalents(character)) {
+    for (const c of this.getSame(item, this.infos.sameTalents)) {
       results.add(c);
-      if (c !== character) {
-        this.talents.copyProgress(c.progress.talents, progress.talents);
-        this.talents.copyProgress(c.plan.talents, plan.talents);
+      if (c !== item) {
+        this.talents.copyProgress(c.progress, progress);
+        this.talents.copyProgress(c.plan, plan);
       }
     }
     return [...results];
   }
 
-  private sameLevels(target: Character): Character[] {
-    return this.getSame(target, this.information.sameLevels);
+  protected getItemsNeedRemove(items: Character[]): Character[] {
+    return items.flatMap(it => this.getSame(it, this.infos.sameLevels));
   }
 
-  private sameTalents(target: Character): Character[] {
-    return this.getSame(target, this.information.sameTalents);
-  }
-
-  private getSame(target: Character, data: Map<number, number[]>): Character[] {
-    const results = [];
-    const targetId = target.progress.id;
-    const ids = data.get(targetId);
+  private getSame(item: Character, data: Map<number, number[]>): Character[] {
+    const ids = data.get(item.progress.id);
     if (!ids) {
-      return [target];
+      return [item];
     }
+    const results = [];
     for (const id of ids) {
       const character = this.items.get(id);
       if (character) {
-        results.push(character as Character);
+        results.push(character);
         continue;
       }
-      const info = this.information.infos.get(id);
+      const info = this.infos.infos.get(id);
       if (info) {
-        const newCharacter = this.create(info);
-        this.items.set(newCharacter.progress.id, newCharacter);
-        results.push(newCharacter);
+        const same = this.create(info);
+        this.items.set(same.progress.id, same);
+        results.push(same);
       }
     }
     return results;
   }
 }
 
-function copyLevel(target: AscensionLevel, source: AscensionLevel): void {
-  const {ascension, level} = source;
+function copyLevel(target: AscensionLevel, {ascension, level}: AscensionLevel): void {
   Object.assign(target, {ascension, level});
 }

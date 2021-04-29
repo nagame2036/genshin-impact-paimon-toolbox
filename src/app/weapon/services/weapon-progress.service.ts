@@ -5,20 +5,21 @@ import {NGXLogger} from 'ngx-logger';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {Weapon} from '../models/weapon.model';
 import {ItemProgressService} from '../../game-common/services/item-progress.service';
-import {ItemType} from '../../game-common/models/item-type.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeaponProgressService extends ItemProgressService<Weapon> {
-  protected type = ItemType.WEAPON;
-
   constructor(database: NgxIndexedDBService, logger: NGXLogger) {
     super('weapon-progresses', database, logger);
   }
 
   create(info: WeaponInfo, meta: {id: number}): WeaponProgress {
     const id = meta.id;
-    return {id, weaponId: info.id, refine: 1, ascension: 0, level: 1};
+    return {id, infoId: info.id, refine: 1, ascension: 0, level: 1};
+  }
+
+  getMaxLevel(info: WeaponInfo): number {
+    return 90;
   }
 }

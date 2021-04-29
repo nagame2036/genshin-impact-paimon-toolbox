@@ -2,7 +2,6 @@ import {TestBed} from '@angular/core/testing';
 
 import {WeaponInfoService} from './weapon-info.service';
 import {Weapon} from '../models/weapon.model';
-import {WeaponType} from '../models/weapon-type.enum';
 import {WeaponModule} from '../weapon.module';
 import {AppTestingModule} from '../../app-testing.module';
 import {TranslateService} from '@ngx-translate/core';
@@ -28,7 +27,7 @@ describe('WeaponInfoService', () => {
     weapon = {
       info: {
         id: 15502,
-        type: WeaponType.BOW,
+        type: 5,
         rarity: 5,
         materials: {
           domain: 402,
@@ -53,14 +52,14 @@ describe('WeaponInfoService', () => {
       },
       progress: {
         id: 1,
-        weaponId: 15502,
+        infoId: 15502,
         refine: 1,
         ascension: 6,
         level: 90,
       },
       plan: {
         id: 1,
-        weaponId: 15502,
+        infoId: 15502,
         ascension: 6,
         level: 90,
       },

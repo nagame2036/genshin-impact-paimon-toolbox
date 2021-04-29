@@ -43,7 +43,7 @@ export class MaterialViewService {
         continue;
       }
       const group = info.group;
-      if (!group || this.infos.ignoreGroupTypes.includes(type)) {
+      if (!group || this.infos.ignoredGroupTypes.includes(type)) {
         results.push(detail);
         continue;
       }

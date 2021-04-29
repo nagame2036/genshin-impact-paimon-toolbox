@@ -3,17 +3,17 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Item} from '../models/item.model';
 import {map, tap} from 'rxjs/operators';
-import {ItemType, itemTypeNames} from '../models/item-type.enum';
+import {ItemType} from '../models/item-type.type';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
 import {RequireDetail} from '../../material/models/requirement-detail.model';
 
 export abstract class ItemPlanService<T extends Item<T>> {
+  abstract readonly type: ItemType;
+
   readonly plans = new Map<number, T['plan']>();
 
   readonly ready = new ReplaySubject(1);
-
-  protected abstract type: ItemType;
 
   protected constructor(
     protected storeName: string,
@@ -23,14 +23,10 @@ export abstract class ItemPlanService<T extends Item<T>> {
   ) {
     this.database.getAll(this.storeName).subscribe(plans => {
       plans.forEach(it => this.plans.set(it.id, it));
-      this.logger.info(`fetched ${this.typeName} plans`, plans);
+      this.logger.info(`loaded all plans`, plans);
       this.ready.next();
       this.ready.complete();
     });
-  }
-
-  get typeName(): string {
-    return itemTypeNames[this.type];
   }
 
   abstract create(info: T['info'], meta: Partial<T['progress']>): T['plan'];
@@ -47,14 +43,13 @@ export abstract class ItemPlanService<T extends Item<T>> {
       map(_ => {
         this.plans.set(plan.id, plan);
         this.updateRequire(item);
-        this.logger.info(`updated ${this.typeName} plan`, item);
+        this.logger.info(`updated plan`, item);
       }),
     );
   }
 
   updateRequire(item: T): void {
-    const req = new MaterialRequireList(this.getRequirements(item));
-    this.materials.updateRequire(this.type, item.plan.id, req);
+    this.materials.updateRequire(this.type, item.plan.id, this.getRequirements(item));
   }
 
   removeAll(list: T[]): Observable<void> {
@@ -63,7 +58,7 @@ export abstract class ItemPlanService<T extends Item<T>> {
       map(_ => {
         list.forEach(it => this.plans.delete(it.plan.id));
         this.materials.removeAllRequire(this.type, list);
-        this.logger.info(`removed ${this.typeName} plans`, list);
+        this.logger.info(`removed plans`, list);
       }),
     );
   }
