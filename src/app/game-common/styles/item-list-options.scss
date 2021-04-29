@@ -1,10 +1,15 @@
 .options {
   @apply flex;
   @apply flex-row;
+  @apply ml-2;
 }
 
 .option {
   @apply w-32;
+
+  ::ng-deep .select-dropdown {
+    @apply top-14;
+  }
 }
 
 .actions {

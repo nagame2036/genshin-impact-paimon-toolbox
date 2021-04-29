@@ -5,7 +5,7 @@
   [hover]="hover"
   (mouseenter)="hover = true"
   (mouseleave)="hover = false"
-  (click)="focus = opened = true"
+  (click)="opened = !opened"
 >
   <div class="select-container">
     <ng-content select="[prefix]"></ng-content>
@@ -14,31 +14,31 @@
       type="text"
       [value]="valueText | translate"
       readonly
-      (focusin)="focus = opened = true"
+      (focusin)="focus = true"
       (focusout)="focus = false"
     />
     <div [class.focus]="focus" [class.hover]="hover" class="material-icons select-arrow">
       {{ focus ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
     </div>
-    <div *ngIf="opened" class="select-dropdown">
-      <ng-container *ngTemplateOutlet="customDropdown || defaultDropdown"></ng-container>
-    </div>
-    <ng-template #defaultDropdown>
-      <ul class="select-options">
-        <ng-container *ngTemplateOutlet="customOptions || defaultOptions"></ng-container>
-      </ul>
-      <ng-template #defaultOptions>
-        <li
-          *ngFor="let option of options"
-          class="select-option"
-          [class.selected]="option.value === value"
-          [title]="option.text | translate"
-          (click)="change(option)"
-        >
-          {{ option.text | translate }}
-        </li>
-      </ng-template>
-    </ng-template>
     <ng-content select="[suffix]"></ng-content>
   </div>
 </app-form-field>
+<div [class.opened]="opened" [class.visible]="dropdownVisible" class="select-dropdown">
+  <ng-container *ngTemplateOutlet="customDropdown || defaultDropdown"></ng-container>
+</div>
+<ng-template #defaultDropdown>
+  <ul class="select-options">
+    <ng-container *ngTemplateOutlet="customOptions || defaultOptions"></ng-container>
+  </ul>
+  <ng-template #defaultOptions>
+    <li
+      (click)="change(option)"
+      *ngFor="let option of options"
+      [class.selected]="option.value === value"
+      [title]="option.text | translate"
+      class="select-option"
+    >
+      {{ option.text | translate }}
+    </li>
+  </ng-template>
+</ng-template>

@@ -1,11 +1,11 @@
 .icon-btn {
   @apply w-12;
   @apply h-12;
+  @apply pt-2;
   @apply appearance-none;
   @apply focus:outline-none;
+
   > span {
-    @apply mx-auto;
-    @apply text-center;
     @apply select-none;
   }
 }

@@ -2,34 +2,34 @@
   <ng-container prefix>
     <ng-content select="[prefix]"></ng-content>
   </ng-container>
-  <ng-template #customOptions>
-    <li
-      *ngIf="!ordered"
-      class="select-option"
-      [class.selected]="value.length === options.length"
-      [title]="i18n.dict('all') | translate"
-      (click)="selectAll()"
-    >
-      {{ i18n.dict('all') | translate }}
-    </li>
-    <li
-      *ngFor="let option of options"
-      class="select-option"
-      [class.selected]="value.includes(option.value)"
-      [title]="option.text | translate"
-      (click)="change(option)"
-    >
-      <ng-container *ngIf="value.indexOf(option.value) + 1 as index">
-        <div *ngIf="ordered && index >= 1" class="order-hint">
-          {{ index }}
-        </div>
-      </ng-container>
-      <div class="select-option-text">
-        {{ option.text | translate }}
-      </div>
-    </li>
-  </ng-template>
   <ng-container suffix>
     <ng-content select="[prefix]"></ng-content>
   </ng-container>
 </app-select>
+<ng-template #customOptions>
+  <li
+    (click)="selectAll()"
+    *ngIf="!ordered"
+    [class.selected]="value.length === options.length"
+    [title]="i18n.dict('all') | translate"
+    class="select-option"
+  >
+    {{ i18n.dict('all') | translate }}
+  </li>
+  <li
+    (click)="change(option)"
+    *ngFor="let option of options"
+    [class.selected]="value.includes(option.value)"
+    [title]="option.text | translate"
+    class="select-option"
+  >
+    <ng-container *ngIf="value.indexOf(option.value) + 1 as index">
+      <div *ngIf="ordered && index >= 1" class="order-hint">
+        {{ index }}
+      </div>
+    </ng-container>
+    <div class="select-option-text">
+      {{ option.text | translate }}
+    </div>
+  </li>
+</ng-template>

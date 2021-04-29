@@ -15,6 +15,7 @@
     height: 2rem;
 
     &:last-child {
+      @apply top-0;
       @apply right-0;
     }
 
@@ -44,5 +45,10 @@
 }
 
 .arrow {
-  @apply w-16;
+  @apply w-8;
+}
+
+.dropdown-offset-fix {
+  @apply top-10;
+  @apply -left-0.5;
 }

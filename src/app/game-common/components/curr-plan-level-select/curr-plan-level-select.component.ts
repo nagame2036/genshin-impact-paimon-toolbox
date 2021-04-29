@@ -39,10 +39,10 @@ export class CurrPlanLevelSelectComponent implements OnChanges {
   constructor(private service: AscensionLevelService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.currLevel) {
+    if (changes.hasOwnProperty('currLevel')) {
       this.setCurr(this.currLevel);
     }
-    if (changes.planLevel) {
+    if (changes.hasOwnProperty('planLevel')) {
       this.setPlan(this.planLevel);
     }
   }

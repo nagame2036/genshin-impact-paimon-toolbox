@@ -1,5 +1,10 @@
 @import '../../styles/select-option.scss';
 
+:host {
+  @apply block;
+  @apply relative;
+}
+
 .form-container {
   @apply cursor-pointer;
 
@@ -42,18 +47,27 @@
 }
 
 .select-dropdown {
-  @apply min-w-full;
+  min-width: calc(100% - 16px);
+  @apply hidden;
   @apply overflow-y-auto;
   @apply bg-white;
   @apply absolute;
-  @apply top-7;
+  @apply top-16;
+  @apply left-2;
   @apply shadow-xl;
   @apply z-10;
-  @apply rounded-b;
+  @apply rounded;
   @apply ring-2;
-  @apply ring-offset-2;
   @apply ring-primary-200;
   @apply cursor-default;
+
+  &.opened {
+    @apply block;
+  }
+
+  &.visible {
+    @apply overflow-y-visible;
+  }
 }
 
 .select-options {

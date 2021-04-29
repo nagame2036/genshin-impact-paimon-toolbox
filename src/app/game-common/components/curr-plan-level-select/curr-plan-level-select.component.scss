@@ -1,1 +1,5 @@
 @import '../../styles/curr-plan-select.scss';
+
+:host ::ng-deep .select-dropdown {
+  @extend .dropdown-offset-fix;
+}

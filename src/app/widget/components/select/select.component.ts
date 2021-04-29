@@ -33,6 +33,9 @@ export class SelectComponent implements OnChanges {
   changed = new EventEmitter<any>();
 
   @Input()
+  dropdownVisible = false;
+
+  @Input()
   customDropdown!: TemplateRef<any>;
 
   @Input()
@@ -44,6 +47,8 @@ export class SelectComponent implements OnChanges {
 
   @Input()
   opened = false;
+
+  valueChanged = false;
 
   constructor(private self: ElementRef) {}
 
@@ -58,6 +63,7 @@ export class SelectComponent implements OnChanges {
     this.changeValueText(this.value);
     this.hover = false;
     this.opened = false;
+    this.valueChanged = true;
     this.changed.emit(value);
   }
 
@@ -66,10 +72,12 @@ export class SelectComponent implements OnChanges {
   }
 
   @HostListener('window:click', ['$event'])
-  clickOutside({target}: Event): void {
-    if (!this.self.nativeElement.contains(target)) {
-      this.opened = false;
-      this.focus = false;
+  handleClick({target}: Event): void {
+    const outside = !this.self.nativeElement.contains(target);
+    if (outside) {
+      this.opened = !(outside || this.valueChanged);
+      this.focus = this.opened;
     }
+    this.valueChanged = false;
   }
 }

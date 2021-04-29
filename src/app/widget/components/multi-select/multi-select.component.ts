@@ -61,7 +61,7 @@ export class MultiSelectComponent extends AbstractObservableDirective implements
       this.valueText = this.translator.instant(this.i18n.dict('all'));
     } else {
       this.valueText = this.value
-        .map(it => this.options[this.optionsValues.indexOf(it)]?.text ?? '')
+        .map(it => this.options[this.optionsValues.indexOf(it)]?.text ?? 'unknown')
         .map(it => this.translator.instant(it))
         .join(', ');
     }
