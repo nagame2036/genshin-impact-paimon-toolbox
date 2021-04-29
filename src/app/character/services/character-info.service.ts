@@ -101,23 +101,16 @@ export class CharacterInfoService extends ItemInfoService<Character, CharacterOv
         const statsType = type as StatsType;
         const {initial, curve} = statsInfo;
         const value = !curve ? initial : initial * this.statsLevel[curve][level];
-        if (isNaN(value)) {
-          return result.asWrong();
-        }
         result.add(statsType, value);
       }
     }
     for (const [type, values] of Object.entries(curvesAscension)) {
       if (values) {
         const statsType = type as StatsType;
-        const value = values[ascension];
-        if (isNaN(value)) {
-          return result.asWrong();
-        }
-        result.add(statsType, value);
+        result.add(statsType, values[ascension]);
       }
     }
-    return result;
+    return result.getOrWrong();
   }
 
   getRequireMaterials(info: CharacterInfo): MaterialDetail[] {

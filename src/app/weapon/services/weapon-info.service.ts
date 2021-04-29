@@ -71,21 +71,13 @@ export class WeaponInfoService extends ItemInfoService<Weapon, WeaponOverview> {
       const statsType = type as StatsType;
       const {initial, curve} = statsInfo;
       const value = initial * this.statsLevel[curve][level];
-      if (isNaN(value)) {
-        return result.asWrong();
-      }
       result.add(statsType, value);
       const curveAscension = this.statsAscension[rarity][statsType];
-      if (!curveAscension) {
-        continue;
+      if (curveAscension) {
+        result.add(statsType, curveAscension[ascension]);
       }
-      const valueAscended = curveAscension[ascension];
-      if (isNaN(valueAscended)) {
-        return result.asWrong();
-      }
-      result.add(statsType, valueAscended);
     }
-    return result;
+    return result.getOrWrong();
   }
 
   getAbilityDesc(info: WeaponInfo, refines: RefineRank[]): SafeHtml {

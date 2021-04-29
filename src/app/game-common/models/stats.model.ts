@@ -50,10 +50,12 @@ export type StatsType = typeof allStatsTypes[number];
 export abstract class StatsValue {
   private values = new Map<StatsType, number>();
 
+  private wrong = false;
+
   protected constructor(private defaults: Map<StatsType, number>) {}
 
-  asWrong(): StatsValue {
-    return new WrongStatsValue();
+  getOrWrong(): StatsValue {
+    return this.wrong ? new WrongStatsValue() : this;
   }
 
   get(type: StatsType): number {
@@ -65,7 +67,15 @@ export abstract class StatsValue {
   }
 
   add(type: StatsType, value: number): void {
-    this.values.set(type, value + this.get(type));
+    if (this.wrong || isNaN(value)) {
+      this.wrong = true;
+    } else {
+      this.values.set(type, value + this.get(type));
+    }
+  }
+
+  entries(): [StatsType, number][] {
+    return [...new Map([...this.defaults, ...this.values])];
   }
 }
 
