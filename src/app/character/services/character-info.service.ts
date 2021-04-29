@@ -5,7 +5,7 @@ import {load, objectMap} from '../../shared/utils/json';
 import {unionMap} from '../../shared/utils/collections';
 import {CharacterStatsCurveLevel, CharacterStatsValue} from '../models/character-stats.model';
 import {Character, CharacterOverview} from '../models/character.model';
-import {StatsType} from '../../game-common/models/stats.model';
+import {StatsType, StatsValue} from '../../game-common/models/stats.model';
 import itemList from '../../../data/character/character-list.json';
 import statsCurvesLevel from '../../../data/character/character-stats-curve-level.json';
 import {SettingService} from '../../setting/services/setting.service';
@@ -92,7 +92,7 @@ export class CharacterInfoService extends ItemInfoService<Character, CharacterOv
     return {...item, currentStats, planStats};
   }
 
-  getStatsValue(info: CharacterInfo, dependency: AscensionLevel): CharacterStatsValue {
+  getStatsValue(info: CharacterInfo, dependency: AscensionLevel): StatsValue {
     const result = new CharacterStatsValue();
     const {stats, curvesAscension} = info;
     const {ascension, level} = dependency;
@@ -101,6 +101,9 @@ export class CharacterInfoService extends ItemInfoService<Character, CharacterOv
         const statsType = type as StatsType;
         const {initial, curve} = statsInfo;
         const value = !curve ? initial : initial * this.statsLevel[curve][level];
+        if (isNaN(value)) {
+          return result.asWrong();
+        }
         result.add(statsType, value);
       }
     }
@@ -108,6 +111,9 @@ export class CharacterInfoService extends ItemInfoService<Character, CharacterOv
       if (values) {
         const statsType = type as StatsType;
         const value = values[ascension];
+        if (isNaN(value)) {
+          return result.asWrong();
+        }
         result.add(statsType, value);
       }
     }

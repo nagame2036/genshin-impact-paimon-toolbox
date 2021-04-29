@@ -45,6 +45,6 @@ const defaultValues = new Map<StatsType, number>([
   ['CHC%', Math.fround(0.05)],
   ['CHD%', 0.5],
   ['ER%', 1],
-  ['STA recover speed', 25],
+  ['STA recover SPD', 25],
   ...allResBonusStatsTypes.map(res => [res, Math.fround(0.15)] as [StatsType, number]),
 ]);

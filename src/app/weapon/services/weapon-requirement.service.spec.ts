@@ -6,10 +6,12 @@ import {WeaponModule} from '../weapon.module';
 import {mora, weaponExp} from '../../material/models/mora-and-exp.model';
 import {AppTestingModule} from '../../app-testing.module';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
+import itemList from '../../../data/weapon/weapon-list.json';
+import {WeaponInfo} from '../models/weapon-info.model';
 
 describe('WeaponRequirementService', () => {
   let service: WeaponRequirementService;
-  let weapon: Weapon;
+  const amosInfo = {...itemList[15502], id: 15502} as WeaponInfo;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,24 +24,9 @@ describe('WeaponRequirementService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Rarity 3 weapon level-up from (0, 1) to (6, 90) with domain 400, elite 900, mob 800', () => {
-    weapon = {
-      info: {
-        id: 1,
-        rarity: 3,
-        type: 1,
-        materials: {
-          domain: 400,
-          elite: 900,
-          mob: 800,
-        },
-        stats: {},
-        ability: {
-          id: 1,
-          params: [],
-          descValues: [],
-        },
-      },
+  it('calculate Amos Bow requirement', () => {
+    const weapon: Weapon = {
+      info: amosInfo,
       progress: {
         id: 10000,
         infoId: 1,
@@ -55,101 +42,18 @@ describe('WeaponRequirementService', () => {
       },
     };
     const res = new MaterialRequireList(service.requirement(weapon));
-    expect(res.getNeed(mora.id)).toBe(503820);
-    expect(res.getNeed(weaponExp.id)).toBe(3988200);
-    expect(res.getNeed(4000)).toBe(2);
-    expect(res.getNeed(4001)).toBe(6);
-    expect(res.getNeed(4002)).toBe(6);
-    expect(res.getNeed(4003)).toBe(3);
-    expect(res.getNeed(8000)).toBe(6);
-    expect(res.getNeed(8001)).toBe(10);
-    expect(res.getNeed(8002)).toBe(12);
-    expect(res.getNeed(9000)).toBe(10);
-    expect(res.getNeed(9001)).toBe(12);
-    expect(res.getNeed(9002)).toBe(18);
-  });
-
-  it('Rarity 4 weapon level-up from (0, 1) to (2, 50) with domain 404, elite 905, mob 805', () => {
-    weapon = {
-      info: {
-        id: 1,
-        rarity: 4,
-        type: 1,
-        materials: {
-          domain: 404,
-          elite: 905,
-          mob: 805,
-        },
-        stats: {},
-        ability: {
-          id: 1,
-          params: [],
-          descValues: [],
-        },
-      },
-      progress: {
-        id: 10000,
-        infoId: 1,
-        refine: 1,
-        ascension: 0,
-        level: 1,
-      },
-      plan: {
-        id: 10000,
-        infoId: 1,
-        ascension: 2,
-        level: 50,
-      },
-    };
-    const res = new MaterialRequireList(service.requirement(weapon));
-    expect(res.getNeed(mora.id)).toBe(111485);
-    expect(res.getNeed(weaponExp.id)).toBe(914850);
-    expect(res.getNeed(4040)).toBe(3);
-    expect(res.getNeed(4041)).toBe(3);
-    expect(res.getNeed(8050)).toBe(10);
-    expect(res.getNeed(9050)).toBe(15);
-  });
-
-  it('Rarity 5 weapon level-up from (2, 50) to (6, 90) with domain 403, elite 904, mon 807', () => {
-    weapon = {
-      info: {
-        id: 1,
-        rarity: 5,
-        type: 1,
-        materials: {
-          domain: 403,
-          elite: 904,
-          mob: 807,
-        },
-        stats: {},
-        ability: {
-          id: 1,
-          params: [],
-          descValues: [],
-        },
-      },
-      progress: {
-        id: 10000,
-        infoId: 1,
-        refine: 1,
-        ascension: 2,
-        level: 50,
-      },
-      plan: {
-        id: 10000,
-        infoId: 1,
-        ascension: 6,
-        level: 90,
-      },
-    };
-    const res = new MaterialRequireList(service.requirement(weapon));
-    expect(res.getNeed(mora.id)).toBe(964195);
-    expect(res.getNeed(weaponExp.id)).toBe(7691950);
-    expect(res.getNeed(4031)).toBe(9);
-    expect(res.getNeed(4032)).toBe(14);
-    expect(res.getNeed(8071)).toBe(23);
-    expect(res.getNeed(8072)).toBe(27);
-    expect(res.getNeed(9041)).toBe(27);
-    expect(res.getNeed(9042)).toBe(41);
+    console.log(res.entries());
+    expect(res.getNeed(mora.id)).toBe(1131445);
+    expect(res.getNeed(weaponExp.id)).toBe(9064450);
+    expect(res.getNeed(4020)).toBe(5);
+    expect(res.getNeed(4021)).toBe(14);
+    expect(res.getNeed(4022)).toBe(14);
+    expect(res.getNeed(4023)).toBe(6);
+    expect(res.getNeed(8000)).toBe(15);
+    expect(res.getNeed(8001)).toBe(23);
+    expect(res.getNeed(8002)).toBe(27);
+    expect(res.getNeed(9030)).toBe(23);
+    expect(res.getNeed(9031)).toBe(27);
+    expect(res.getNeed(9032)).toBe(41);
   });
 });

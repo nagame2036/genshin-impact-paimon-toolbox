@@ -40,7 +40,7 @@ export const allStatsTypes = [
   'Healing%', // Healing bonus %
   'Incoming Healing%', // Incoming Healing bonus %
   'Shield STR%', // Shield Strength bonus %
-  'STA recover speed', // Stamina recover speed
+  'STA recover SPD', // Stamina recover speed
   ...allDmgBonusStatsTypes,
   ...allResBonusStatsTypes,
 ] as const;
@@ -52,6 +52,10 @@ export abstract class StatsValue {
 
   protected constructor(private defaults: Map<StatsType, number>) {}
 
+  asWrong(): StatsValue {
+    return new WrongStatsValue();
+  }
+
   get(type: StatsType): number {
     return this.values.get(type) ?? this.defaults.get(type) ?? 0;
   }
@@ -62,5 +66,15 @@ export abstract class StatsValue {
 
   add(type: StatsType, value: number): void {
     this.values.set(type, value + this.get(type));
+  }
+}
+
+export class WrongStatsValue extends StatsValue {
+  constructor() {
+    super(new Map());
+  }
+
+  get(type: StatsType): number {
+    return NaN;
   }
 }

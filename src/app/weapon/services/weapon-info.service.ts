@@ -8,7 +8,7 @@ import {
   WeaponStatsValue,
 } from '../models/weapon-stats.model';
 import {Weapon, WeaponOverview} from '../models/weapon.model';
-import {StatsType} from '../../game-common/models/stats.model';
+import {StatsType, StatsValue} from '../../game-common/models/stats.model';
 import itemList from '../../../data/weapon/weapon-list.json';
 import statsLevel from '../../../data/weapon/weapon-stats-curve-level.json';
 import statsAscension from '../../../data/weapon/weapon-stats-curve-ascension.json';
@@ -61,7 +61,7 @@ export class WeaponInfoService extends ItemInfoService<Weapon, WeaponOverview> {
     return {...item, currentStats, planStats};
   }
 
-  getStatsValue({id, rarity, stats}: WeaponInfo, dependency: AscensionLevel): WeaponStatsValue {
+  getStatsValue({id, rarity, stats}: WeaponInfo, dependency: AscensionLevel): StatsValue {
     const result = new WeaponStatsValue();
     const {ascension, level} = dependency;
     for (const [type, statsInfo] of Object.entries(stats)) {
@@ -71,11 +71,19 @@ export class WeaponInfoService extends ItemInfoService<Weapon, WeaponOverview> {
       const statsType = type as StatsType;
       const {initial, curve} = statsInfo;
       const value = initial * this.statsLevel[curve][level];
+      if (isNaN(value)) {
+        return result.asWrong();
+      }
       result.add(statsType, value);
       const curveAscension = this.statsAscension[rarity][statsType];
-      if (curveAscension) {
-        result.add(statsType, curveAscension[ascension]);
+      if (!curveAscension) {
+        continue;
       }
+      const valueAscended = curveAscension[ascension];
+      if (isNaN(valueAscended)) {
+        return result.asWrong();
+      }
+      result.add(statsType, valueAscended);
     }
     return result;
   }

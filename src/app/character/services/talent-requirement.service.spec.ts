@@ -6,13 +6,34 @@ import {CharacterModule} from '../character.module';
 import {AppTestingModule} from '../../app-testing.module';
 import {Character} from '../models/character.model';
 import {mora} from '../../material/models/mora-and-exp.model';
-import {TalentInfo} from '../models/talent-info.model';
+import {UpgradableTalentInfo} from '../models/talent-info.model';
 import {MaterialRequireList} from '../../material/collections/material-require-list';
+import itemList from '../../../data/character/character-list.json';
+import {CharacterInfo} from '../models/character-info.model';
+import talentList from '../../../data/character/talent-list.json';
+import {Ascension} from '../../game-common/models/ascension.type';
 
 describe('TalentRequirementService', () => {
   let service: TalentRequirementService;
-  let character: Character;
-  let talent: TalentInfo;
+  const fullLevelup = {
+    progress: {
+      id: 1,
+      constellation: 0,
+      ascension: 6 as Ascension,
+      level: 90,
+      talents: {
+        40000: 1,
+      },
+    },
+    plan: {
+      id: 1,
+      ascension: 6 as Ascension,
+      level: 90,
+      talents: {
+        40000: 10,
+      },
+    },
+  } as const;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,50 +46,13 @@ describe('TalentRequirementService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('calculation talent levelup from 1 to 10 with domain 400, mob 800, boss 6002, event 7000', () => {
-    character = {
-      info: {
-        id: 1,
-        rarity: 4,
-        element: 6,
-        weapon: 5,
-        materials: {
-          boss: 2060,
-          gem: 303,
-          local: 10105,
-          mob: 801,
-        },
-        talents: [40000],
-        stats: {},
-        curvesAscension: {},
-      },
-      progress: {
-        id: 1,
-        constellation: 0,
-        ascension: 6,
-        level: 90,
-        talents: {
-          40000: 1,
-        },
-      },
-      plan: {
-        id: 1,
-        ascension: 6,
-        level: 90,
-        talents: {
-          40000: 10,
-        },
-      },
+  it('calculate amber requirement', () => {
+    const info = {...itemList[4000], id: 4000} as CharacterInfo;
+    const character: Character = {
+      info,
+      ...fullLevelup,
     };
-    talent = {
-      id: 40000,
-      materials: {
-        domain: [500],
-        mob: 800,
-        boss: 6002,
-        event: 7000,
-      },
-    };
+    const talent: UpgradableTalentInfo = {...talentList[40000], id: 40000};
     const res = new MaterialRequireList(service.requirement(character, [talent]));
     expect(res.getNeed(mora.id)).toBe(1652500);
     expect(res.getNeed(5000)).toBe(3);
@@ -76,55 +60,19 @@ describe('TalentRequirementService', () => {
     expect(res.getNeed(5002)).toBe(38);
     expect(res.getNeed(6002)).toBe(6);
     expect(res.getNeed(7000)).toBe(1);
-    expect(res.getNeed(8000)).toBe(6);
-    expect(res.getNeed(8001)).toBe(22);
-    expect(res.getNeed(8002)).toBe(31);
+    expect(res.getNeed(8030)).toBe(6);
+    expect(res.getNeed(8031)).toBe(22);
+    expect(res.getNeed(8032)).toBe(31);
   });
 
-  it('calculation talent levelup from 1 to 10 with multiple domain material group', () => {
-    character = {
-      info: {
-        id: 1,
-        rarity: 4,
-        element: 6,
-        weapon: 5,
-        materials: {
-          boss: 2060,
-          gem: 303,
-          local: 10105,
-          mob: 801,
-        },
-        talents: [4000],
-        stats: {},
-        curvesAscension: {},
-      },
-      progress: {
-        id: 1,
-        constellation: 0,
-        ascension: 6,
-        level: 90,
-        talents: {
-          40000: 1,
-        },
-      },
-      plan: {
-        id: 1,
-        ascension: 6,
-        level: 90,
-        talents: {
-          40000: 10,
-        },
-      },
+  it('calculate traveler requirement', () => {
+    const info = {...itemList[1001], id: 1001} as CharacterInfo;
+    const character: Character = {
+      info,
+      progress: {...fullLevelup.progress, talents: {10010: 1}},
+      plan: {...fullLevelup.plan, talents: {10010: 10}},
     };
-    talent = {
-      id: 40000,
-      materials: {
-        domain: [500, 501, 502],
-        mob: 800,
-        boss: 6002,
-        event: 7000,
-      },
-    };
+    const talent: UpgradableTalentInfo = {...talentList[10010], id: 10010};
     const res = new MaterialRequireList(service.requirement(character, [talent]));
     expect(res.getNeed(5000)).toBe(3);
     expect(res.getNeed(5001)).toBe(6);
