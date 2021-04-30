@@ -3,6 +3,8 @@ import {DatetimeService} from './datetime.service';
 import {I18n} from '../../widget/models/i18n.model';
 import {TranslateService} from '@ngx-translate/core';
 
+type Advice = {advice: string[]; resin: number};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,35 +21,30 @@ export class ResinService {
 
   constructor(private datetime: DatetimeService, private translator: TranslateService) {}
 
-  getRefillDate(target: number, current: number, replenishInMinutes: number): Date {
+  getReplenishDate(target: number, current: number, replenishInMinutes: number): Date {
     const remaining = target - current - 1;
-    let minutes = remaining * this.replenishUseMinutes + replenishInMinutes;
-    minutes = Math.max(0, minutes);
+    const minutes = Math.max(0, remaining * this.replenishUseMinutes + replenishInMinutes);
     const time = new Date();
     time.setMinutes(time.getMinutes() + minutes);
     return time;
   }
 
   formatReplenishDate(target: number, current: number, replenishInMinutes: number): string {
-    const date = this.getRefillDate(target, current, replenishInMinutes);
+    const date = this.getReplenishDate(target, current, replenishInMinutes);
     return this.datetime.formatRelateDatetime(date);
   }
 
-  getAvoidExceedAdvice(
-    targetDate: Date,
-    currentResin: number,
-    replenishInMinutes: number,
-  ): string[] {
+  getStoreAdvice(targetDate: Date, currentResin: number, replenishInMinutes: number): string[] {
     const now = new Date();
     const minutesDiff = (targetDate.getTime() - now.getTime()) / 60000;
     const limit = this.maxResin;
     const replenishUseMinutes = this.replenishUseMinutes;
     const capacity = limit - currentResin;
     const exceedMinutes = capacity * replenishUseMinutes + replenishInMinutes;
-    let result: string[];
+    let results: string[];
     let remainingResin: number;
     if (minutesDiff < exceedMinutes) {
-      result = [];
+      results = [];
       now.setMinutes(now.getMinutes() + minutesDiff);
       const next = minutesDiff + replenishInMinutes;
       const replenishedResin = Math.floor(next / replenishUseMinutes);
@@ -56,32 +53,28 @@ export class ResinService {
         remainingResin += 1;
       }
     } else {
-      const nextRefillDate = this.getRefillDate(limit, currentResin, replenishInMinutes);
-      const {results, resin} = this.getResinSpendAdvice(now, minutesDiff, nextRefillDate);
-      result = results;
+      const nextReplenish = this.getReplenishDate(limit, currentResin, replenishInMinutes);
+      const {advice, resin} = this.getStoreAdviceList(now, minutesDiff, nextReplenish);
+      results = advice;
       remainingResin = resin;
     }
-    this.pushResult(result, 'target-time-resin', targetDate, remainingResin);
-    return result;
+    this.pushResult(results, 'target-time-resin', targetDate, remainingResin);
+    return results;
   }
 
-  private getResinSpendAdvice(
-    now: Date,
-    minutes: number,
-    nextRefillDate: Date,
-  ): {results: string[]; resin: number} {
-    const results: string[] = [];
+  private getStoreAdviceList(now: Date, minutes: number, nextReplenish: Date): Advice {
+    const advice: string[] = [];
     const limit = this.maxResin;
     const replenishUseMinutes = this.replenishUseMinutes;
     const condensedAmount = this.condensedResinAmount;
     const condensedUseMinutes = condensedAmount * replenishUseMinutes;
     let condensedCapacity = this.maxCondensedResin;
-    const minutesFirstRefill = (nextRefillDate.getTime() - now.getTime()) / 60000;
-    now.setMinutes(now.getMinutes() + minutesFirstRefill);
+    const minutesFirstReplenish = (nextReplenish.getTime() - now.getTime()) / 60000;
+    now.setMinutes(now.getMinutes() + minutesFirstReplenish);
     const firstCraft = limit / condensedAmount;
     condensedCapacity -= firstCraft;
-    minutes -= minutesFirstRefill;
-    this.pushResult(results, 'craft-condensed-resin', now, firstCraft);
+    minutes -= minutesFirstReplenish;
+    this.pushResult(advice, 'craft-condensed-resin', now, firstCraft);
     while (condensedCapacity > 0) {
       const craft = Math.min(condensedCapacity, limit / condensedAmount);
       condensedCapacity -= craft;
@@ -91,17 +84,17 @@ export class ResinService {
       }
       minutes -= minutesPassed;
       now.setMinutes(now.getMinutes() + minutesPassed);
-      this.pushResult(results, 'craft-condensed-resin', now, craft);
+      this.pushResult(advice, 'craft-condensed-resin', now, craft);
     }
     const replenishLimitUseMinutes = limit * replenishUseMinutes;
     while (minutes > replenishLimitUseMinutes) {
       minutes -= replenishLimitUseMinutes;
       now.setMinutes(now.getMinutes() + replenishLimitUseMinutes);
-      this.pushResult(results, 'spend-resin', now, limit);
+      this.pushResult(advice, 'spend-resin', now, limit);
     }
     now.setMinutes(now.getMinutes() + minutes);
     const resin = Math.ceil((minutes * limit) / replenishLimitUseMinutes);
-    return {results, resin};
+    return {advice, resin};
   }
 
   private pushResult(list: string[], key: string, date: Date, value: number): void {

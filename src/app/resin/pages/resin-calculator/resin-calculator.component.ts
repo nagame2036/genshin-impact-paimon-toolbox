@@ -24,7 +24,7 @@ export class ResinCalculatorComponent extends WithOnDestroy implements OnInit {
 
   targetDate = new Date();
 
-  checkedResults: string[] = [];
+  advice: string[] = [];
 
   constructor(public service: ResinService, private settings: SettingService) {
     super();
@@ -48,7 +48,7 @@ export class ResinCalculatorComponent extends WithOnDestroy implements OnInit {
 
   setTargetDate(value: Date): void {
     this.targetDate = value;
-    this.updateResinCheckResults();
+    this.updateStoreAdvice();
   }
 
   private updateAll(): void {
@@ -57,7 +57,7 @@ export class ResinCalculatorComponent extends WithOnDestroy implements OnInit {
       this.targetDate = now;
     }
     this.updateReplenishTimes();
-    this.updateResinCheckResults();
+    this.updateStoreAdvice();
   }
 
   private updateReplenishTimes(): void {
@@ -66,11 +66,7 @@ export class ResinCalculatorComponent extends WithOnDestroy implements OnInit {
     }
   }
 
-  private updateResinCheckResults(): void {
-    this.checkedResults = this.service.getAvoidExceedAdvice(
-      this.targetDate,
-      this.currentResin,
-      this.minutes,
-    );
+  private updateStoreAdvice(): void {
+    this.advice = this.service.getStoreAdvice(this.targetDate, this.currentResin, this.minutes);
   }
 }
