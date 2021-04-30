@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 export type NavBarLink = {path: string; text: string};
 
@@ -7,11 +7,9 @@ export type NavBarLink = {path: string; text: string};
   templateUrl: './nav-tabs.component.html',
   styleUrls: ['./nav-tabs.component.scss'],
 })
-export class NavTabsComponent implements OnInit {
+export class NavTabsComponent {
   @Input()
   links!: NavBarLink[];
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

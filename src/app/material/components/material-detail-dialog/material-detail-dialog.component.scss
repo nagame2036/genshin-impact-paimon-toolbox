@@ -4,23 +4,19 @@
   @apply overflow-auto;
 }
 
-.requirement-table {
+table {
   @apply w-full;
   @apply table-auto;
   @apply border-2;
   @apply border-collapse;
   @apply border-primary-400;
-}
 
-.requirement-cell {
-  @apply px-3;
-  @apply py-1.5;
-  @apply border;
-  @apply border-primary-400;
-}
-
-.cell-border-b {
-  @apply border-b-2;
+  th, td {
+    @apply px-3;
+    @apply py-1.5;
+    @apply border;
+    @apply border-primary-400;
+  }
 }
 
 .detail-cell {

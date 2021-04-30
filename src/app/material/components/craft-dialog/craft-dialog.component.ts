@@ -1,22 +1,22 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {MaterialService} from '../../services/material.service';
-import {CraftRecipe, MaterialDetail} from '../../models/material.model';
+import {MaterialDetail} from '../../models/material.model';
 import {SelectOption} from '../../../widget/models/select-option.model';
 import {TranslateService} from '@ngx-translate/core';
 import {coerceIn} from '../../../shared/utils/coerce';
 import {combineLatest, Subscription} from 'rxjs';
 import {startWith} from 'rxjs/operators';
 import {defaultLocale} from '../../../app-locale.module';
-import {CraftDetail} from '../../models/craft-detail.type';
+import {CraftDetail, CraftRecipe} from '../../models/craft.type';
 
 @Component({
   selector: 'app-craft-dialog',
   templateUrl: './craft-dialog.component.html',
   styleUrls: ['./craft-dialog.component.scss'],
 })
-export class CraftDialogComponent implements OnInit, OnDestroy {
+export class CraftDialogComponent implements OnDestroy {
   i18n = I18n.create('inventory');
 
   item!: MaterialDetail;
@@ -46,10 +46,8 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
 
   constructor(private service: MaterialService, private translator: TranslateService) {}
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.close();
   }
 
   open(item: MaterialDetail): void {
@@ -90,8 +88,7 @@ export class CraftDialogComponent implements OnInit, OnDestroy {
   private recipeOptions(recipes: CraftRecipe[], details: CraftDetail[]): SelectOption[] {
     return details.map(({usage, craftableAmount}, index) => {
       const key = craftableAmount > 0 ? 'craftable' : 'insufficient';
-      const params = {amount: craftableAmount};
-      const times = this.translator.instant(this.i18n.module(key), params);
+      const times = this.translator.instant(this.i18n.module(key), {amount: craftableAmount});
       const materials = usage
         .map(({info}) => this.translator.instant(this.i18n.data(`material.${info.id}`)))
         .join(', ');

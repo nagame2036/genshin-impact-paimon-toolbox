@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
-import {NGXLogger} from 'ngx-logger';
 import {MaterialViewService} from '../../../material/services/material-view.service';
 
 @Component({
@@ -8,12 +7,8 @@ import {MaterialViewService} from '../../../material/services/material-view.serv
   templateUrl: './inventory-header.component.html',
   styleUrls: ['./inventory-header.component.scss'],
 })
-export class InventoryHeaderComponent implements OnInit {
+export class InventoryHeaderComponent {
   i18n = I18n.create('inventory');
 
-  constructor(public view: MaterialViewService, private logger: NGXLogger) {}
-
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  constructor(public view: MaterialViewService) {}
 }

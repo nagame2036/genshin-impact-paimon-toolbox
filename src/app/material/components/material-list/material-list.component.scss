@@ -4,12 +4,11 @@
 }
 
 .item-list {
-  @apply pb-2;
+  @apply p-2;
   @apply grid;
-  @apply gap-x-3;
-  @apply gap-y-6;
-  grid-template-columns: repeat(auto-fill, 142px);
-  @apply place-content-around;
+  @apply gap-4;
+  grid-template-columns: repeat(auto-fill, 140px);
+  @apply place-content-evenly;
 }
 
 .detail-container {

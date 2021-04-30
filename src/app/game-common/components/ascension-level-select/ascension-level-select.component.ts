@@ -1,13 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {AscensionLevel, AscensionLevelData} from '../../models/ascension-level.model';
 import {AscensionLevelService} from '../../services/ascension-level.service';
@@ -49,10 +40,10 @@ export class AscensionLevelSelectComponent implements OnChanges {
 
   opened = false;
 
-  constructor(private self: ElementRef, private service: AscensionLevelService) {}
+  constructor(private service: AscensionLevelService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data || changes.dataStart) {
+    if (['data', 'dataStart'].some(it => changes.hasOwnProperty(it))) {
       const data = this.service.correct(this.data, this.dataStart);
       this.update(data);
     }
@@ -70,14 +61,6 @@ export class AscensionLevelSelectComponent implements OnChanges {
     const data = this.service.correct(level, this.dataStart);
     this.update(data);
     this.emitChange();
-  }
-
-  @HostListener('window:click', ['$event'])
-  clickOutside(event: Event): void {
-    if (!this.self.nativeElement.contains(event.target)) {
-      this.opened = false;
-      this.focus = false;
-    }
   }
 
   private update(data: AscensionLevelData): void {

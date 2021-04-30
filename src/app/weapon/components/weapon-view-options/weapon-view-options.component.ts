@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {WeaponViewService} from '../../services/weapon-view.service';
 
@@ -7,8 +7,8 @@ import {WeaponViewService} from '../../services/weapon-view.service';
   templateUrl: './weapon-view-options.component.html',
   styleUrls: ['./weapon-view-options.component.scss'],
 })
-export class WeaponViewOptionsComponent implements OnInit {
-  readonly i18n = I18n.create('weapons');
+export class WeaponViewOptionsComponent {
+  readonly i18n = I18n.create('weapon');
 
   @Input()
   viewSort = false;
@@ -20,6 +20,4 @@ export class WeaponViewOptionsComponent implements OnInit {
   changed = new EventEmitter();
 
   constructor(public view: WeaponViewService) {}
-
-  ngOnInit(): void {}
 }

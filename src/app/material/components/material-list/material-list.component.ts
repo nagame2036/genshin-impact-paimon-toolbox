@@ -1,8 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {MaterialDetail} from '../../models/material.model';
 import {MaterialService} from '../../services/material.service';
-import {NGXLogger} from 'ngx-logger';
 import {MaterialListData} from '../../models/material-list-data.model';
 
 @Component({
@@ -10,7 +9,7 @@ import {MaterialListData} from '../../models/material-list-data.model';
   templateUrl: './material-list.component.html',
   styleUrls: ['./material-list.component.scss'],
 })
-export class MaterialListComponent implements OnInit {
+export class MaterialListComponent {
   i18n = I18n.create('inventory');
 
   @Input()
@@ -25,17 +24,12 @@ export class MaterialListComponent implements OnInit {
   @Input()
   hiddenDetail = false;
 
-  constructor(public service: MaterialService, private logger: NGXLogger) {}
-
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  constructor(public service: MaterialService) {}
 
   setHave(detail: MaterialDetail, value: number): void {
     const have = Math.max(0, value);
     const id = detail.info.id;
     this.service.updateHave(id, have);
-    this.logger.info('set material have', id, have);
   }
 
   correct(detail: MaterialDetail, value: string): void {

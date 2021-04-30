@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {MultiSelectEvent} from '../../models/multi-select-event.model';
 
@@ -7,7 +7,7 @@ import {MultiSelectEvent} from '../../models/multi-select-event.model';
   templateUrl: './multi-select-and-select-all.component.html',
   styleUrls: ['./multi-select-and-select-all.component.scss'],
 })
-export class MultiSelectAndSelectAllComponent implements OnInit {
+export class MultiSelectAndSelectAllComponent {
   i18n = I18n.create('shared.multi-select');
 
   @Input()
@@ -20,8 +20,6 @@ export class MultiSelectAndSelectAllComponent implements OnInit {
   changed = new EventEmitter<MultiSelectEvent>();
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   setMultiSelect(checked: boolean): void {
     if (!checked) {
@@ -40,9 +38,6 @@ export class MultiSelectAndSelectAllComponent implements OnInit {
   }
 
   emitChange(): void {
-    this.changed.emit({
-      multiSelect: this.multiSelect,
-      selectAll: this.selectAll,
-    });
+    this.changed.emit({multiSelect: this.multiSelect, selectAll: this.selectAll});
   }
 }

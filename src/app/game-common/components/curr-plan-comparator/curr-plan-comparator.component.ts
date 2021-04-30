@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-curr-plan-comparator',
   templateUrl: './curr-plan-comparator.component.html',
   styleUrls: ['./curr-plan-comparator.component.scss'],
 })
-export class CurrPlanComparatorComponent implements OnInit {
+export class CurrPlanComparatorComponent {
   @Input()
   label = '';
 
@@ -16,6 +16,4 @@ export class CurrPlanComparatorComponent implements OnInit {
   plan!: string | null;
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

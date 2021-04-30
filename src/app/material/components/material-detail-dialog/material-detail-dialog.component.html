@@ -6,59 +6,32 @@
     {{ have | number: '1.0-0' }}
   </div>
   <div class="content" *ngIf="marks.length > 0">
-    <table class="requirement-table">
+    <table>
       <thead>
         <tr class="bg-primary-200">
-          <th class="requirement-cell cell-border-b">
-            {{ i18n.module('name') | translate }}
-          </th>
-          <th class="requirement-cell cell-border-b">
-            {{ i18n.module('purpose') | translate }}
-          </th>
-          <th class="requirement-cell cell-border-b">
-            {{ i18n.module('detail') | translate }}
-          </th>
-          <th class="requirement-cell cell-border-b">
-            {{ i18n.module('requirement') | translate }}
-          </th>
+          <th>{{ i18n.module('name') | translate }}</th>
+          <th>{{ i18n.module('purpose') | translate }}</th>
+          <th>{{ i18n.module('detail') | translate }}</th>
+          <th>{{ i18n.module('requirement') | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let markGroup of marks">
           <tr *ngFor="let mark of markGroup; let i = index">
-            <td
-              *ngIf="i === 0"
-              class="requirement-cell cell-border-b text-center"
-              [rowSpan]="markGroup.length"
-            >
-              {{ i18n.data(types[mark.type], mark.id) | translate }}
+            <td *ngIf="i === 0" [rowSpan]="markGroup.length" class="text-center">
+              {{ i18n.data(mark.type, mark.id) | translate }}
             </td>
-            <td
-              class="requirement-cell text-center"
-              [class.cell-border-b]="i === markGroup.length - 1"
-              [colSpan]="mark.purpose !== totalAmountPurpose ? 1 : 2"
-            >
+            <td [colSpan]="mark.purpose !== totalAmountPurpose ? 1 : 2" class="text-center">
               {{ mark.purpose | translate }}
             </td>
-            <td
-              *ngIf="mark.purpose !== totalAmountPurpose"
-              class="requirement-cell"
-              [class.cell-border-b]="i === markGroup.length - 1"
-            >
+            <td *ngIf="mark.purpose !== totalAmountPurpose">
               <div class="detail-cell">
-                <span>
-                  {{ mark.start }}
-                </span>
+                <span>{{ mark.start }}</span>
                 →
-                <span>
-                  {{ mark.goal }}
-                </span>
+                <span>{{ mark.goal }}</span>
               </div>
             </td>
-            <td
-              class="requirement-cell text-right"
-              [class.cell-border-b]="i === markGroup.length - 1"
-            >
+            <td class="text-right">
               {{ mark.need | number: '1.0-0' }}
             </td>
           </tr>

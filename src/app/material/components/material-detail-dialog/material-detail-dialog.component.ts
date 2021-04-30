@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {MaterialRequireMark} from '../../models/material-require-mark.model';
 import {I18n} from '../../../widget/models/i18n.model';
-import {itemTypeNames} from '../../../game-common/models/item-type.enum';
-import {NGXLogger} from 'ngx-logger';
+import {itemTypeNames as types} from '../../../game-common/models/item-type.type';
 import {MaterialService} from '../../services/material.service';
 import {MaterialDetail} from '../../models/material.model';
 
@@ -12,7 +11,7 @@ import {MaterialDetail} from '../../models/material.model';
   templateUrl: './material-detail-dialog.component.html',
   styleUrls: ['./material-detail-dialog.component.scss'],
 })
-export class MaterialDetailDialogComponent implements OnInit {
+export class MaterialDetailDialogComponent {
   i18n = I18n.create('inventory');
 
   totalAmountPurpose = this.i18n.dict('total-amount');
@@ -23,43 +22,33 @@ export class MaterialDetailDialogComponent implements OnInit {
 
   marks: MaterialRequireMark[][] = [];
 
-  types = itemTypeNames;
-
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(public materials: MaterialService, private logger: NGXLogger) {}
-
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  constructor(public materials: MaterialService) {}
 
   open(item: MaterialDetail): void {
     this.id = item.info.id;
     this.have = item.have;
-    const marks = this.materials.getRequireMarks(this.id);
-    const sortedMarks = marks.sort((a, b) => a.type - b.type || b.id - a.id);
+    const marks = this.materials
+      .getRequireMarks(this.id)
+      .sort((a, b) => types.indexOf(a.type) - types.indexOf(b.type) || b.id - a.id);
     const groupedMarks = new Map<number, MaterialRequireMark[]>();
-    for (const mark of sortedMarks) {
+    for (const mark of marks) {
       const key = mark.key;
       const group = groupedMarks.get(key) ?? [];
       group.push(mark);
-      if (!groupedMarks.has(key)) {
-        groupedMarks.set(key, group);
-      }
+      groupedMarks.set(key, group);
     }
-    const purpose = this.totalAmountPurpose;
-    const summedMarks = [];
+    this.marks = [];
     for (const group of groupedMarks.values()) {
       if (group.length > 1) {
         const need = group.reduce((acc, curr) => acc + curr.need, 0);
-        const sumMark = {...group[0], purpose, need};
+        const sumMark = {...group[0], need, purpose: this.totalAmountPurpose};
         group.push(sumMark);
       }
-      summedMarks.push(group);
+      this.marks.push(group);
     }
-    this.marks = summedMarks;
-    this.logger.info('received marks', item, this.marks);
     this.dialog.open();
   }
 

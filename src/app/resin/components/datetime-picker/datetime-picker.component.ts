@@ -70,11 +70,9 @@ export class DatetimePickerComponent
     this.updateCalendar();
   }
 
-  setDate(value: number): void {
-    this.value = new Date(this.yearMonth);
-    this.value.setDate(value);
-    this.value.setHours(this.hour);
-    this.value.setMinutes(this.minute);
+  setDate(date: number): void {
+    const day = this.yearMonth;
+    this.value = new Date(day.getFullYear(), day.getMonth(), date, this.hour, this.minute);
     this.changed.emit(this.value);
   }
 
@@ -95,13 +93,6 @@ export class DatetimePickerComponent
     this.value.setMinutes(value);
     this.minute = value;
     this.changed.emit(this.value);
-  }
-
-  @HostListener('window:click', ['$event'])
-  clickOutside(event: Event): void {
-    if (!this.self.nativeElement.contains(event.target)) {
-      this.opened = false;
-    }
   }
 
   private updateCalendar(): void {

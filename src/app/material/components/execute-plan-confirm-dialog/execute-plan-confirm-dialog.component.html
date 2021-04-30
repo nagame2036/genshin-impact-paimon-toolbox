@@ -1,12 +1,9 @@
 <app-dialog #dialog>
   <h2 title>
-    {{
-      i18n.module('confirm-execute-plan')
-        | translate: {item: data.item | translate, plan: data.title | translate}
-    }}
+    {{ i18n.module('confirm-execute-plan') | paramTranslate: data }}
   </h2>
   <div class="material-list-container">
-    <div class="material-list" *ngIf="data.requirement">
+    <div class="material-list">
       <div *ngFor="let item of data.requirement" class="material-item-view">
         <app-item-view [item]="item.info" type="material"></app-item-view>
         <div class="material-item-need">

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SelectOption} from '../../../widget/models/select-option.model';
 
 @Component({
@@ -6,7 +6,7 @@ import {SelectOption} from '../../../widget/models/select-option.model';
   templateUrl: './curr-plan-select.component.html',
   styleUrls: ['./curr-plan-select.component.scss'],
 })
-export class CurrPlanSelectComponent implements OnInit {
+export class CurrPlanSelectComponent {
   @Input()
   label = '';
 
@@ -35,8 +35,6 @@ export class CurrPlanSelectComponent implements OnInit {
   executePlan = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   setCurr(value: number): void {
     this.curr = value;

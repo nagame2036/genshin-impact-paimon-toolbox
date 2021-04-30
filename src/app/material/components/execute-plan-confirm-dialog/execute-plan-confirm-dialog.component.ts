@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {DialogComponent} from '../../../widget/components/dialog/dialog.component';
 import {I18n} from '../../../widget/models/i18n.model';
 import {Observable, Subject} from 'rxjs';
@@ -11,30 +11,29 @@ type PlanData = {
   requirement: MaterialDetail[];
 };
 
+type DialogData = Omit<PlanData, 'title'> & {plan: string};
+
 @Component({
   selector: 'app-execute-plan-confirm-dialog',
   templateUrl: './execute-plan-confirm-dialog.component.html',
   styleUrls: ['./execute-plan-confirm-dialog.component.scss'],
 })
-export class ExecutePlanConfirmDialogComponent implements OnInit {
+export class ExecutePlanConfirmDialogComponent {
   i18n = I18n.create('game-common');
 
-  data: PlanData = {item: '', title: '', requirement: []};
-
-  private confirm$!: Subject<any>;
+  data: DialogData = {item: '', plan: '', requirement: []};
 
   @ViewChild('dialog')
   dialog!: DialogComponent;
 
-  constructor(private logger: NGXLogger) {}
+  private confirm$!: Subject<unknown>;
 
-  ngOnInit(): void {
-    this.logger.info('init');
-  }
+  constructor(private logger: NGXLogger) {}
 
   open(data: PlanData): ExecutePlanConfirmDialogComponent {
     this.logger.info('open with data', data);
-    this.data = data;
+    const {item, title, requirement} = data;
+    this.data = {item: this.i18n.param(item), plan: this.i18n.param(title), requirement};
     this.dialog.open();
     this.confirm$ = new Subject();
     return this;
@@ -47,7 +46,7 @@ export class ExecutePlanConfirmDialogComponent implements OnInit {
     this.dialog.close();
   }
 
-  afterConfirm(): Observable<any> {
+  afterConfirm(): Observable<unknown> {
     return this.confirm$;
   }
 }

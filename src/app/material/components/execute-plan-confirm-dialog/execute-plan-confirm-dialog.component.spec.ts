@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ExecutePlanConfirmDialogComponent} from './execute-plan-confirm-dialog.component';
 import {GameCommonModule} from '../../../game-common/game-common.module';
 import {AppTestingModule} from '../../../app-testing.module';
+import {WidgetModule} from '../../../widget/widget.module';
 
 describe('ExecutePlanConfirmDialogComponent', () => {
   let component: ExecutePlanConfirmDialogComponent;
@@ -11,7 +12,7 @@ describe('ExecutePlanConfirmDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExecutePlanConfirmDialogComponent],
-      imports: [GameCommonModule, AppTestingModule],
+      imports: [GameCommonModule, AppTestingModule, WidgetModule],
     }).compileComponents();
   });
 
@@ -19,7 +20,7 @@ describe('ExecutePlanConfirmDialogComponent', () => {
     fixture = TestBed.createComponent(ExecutePlanConfirmDialogComponent);
     component = fixture.componentInstance;
     component.data = {
-      title: '',
+      plan: '',
       item: '',
       requirement: [],
     };

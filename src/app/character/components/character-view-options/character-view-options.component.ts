@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {CharacterViewService} from '../../services/character-view.service';
 
@@ -7,8 +7,8 @@ import {CharacterViewService} from '../../services/character-view.service';
   templateUrl: './character-view-options.component.html',
   styleUrls: ['./character-view-options.component.scss'],
 })
-export class CharacterViewOptionsComponent implements OnInit {
-  readonly i18n = I18n.create('characters');
+export class CharacterViewOptionsComponent {
+  readonly i18n = I18n.create('character');
 
   @Input()
   viewSort = false;
@@ -20,6 +20,4 @@ export class CharacterViewOptionsComponent implements OnInit {
   changed = new EventEmitter();
 
   constructor(public view: CharacterViewService) {}
-
-  ngOnInit(): void {}
 }
