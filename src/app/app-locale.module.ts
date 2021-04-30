@@ -15,11 +15,9 @@ export type Locale = typeof supportedLocales[number]['value'];
 export const allLocales = [...supportedLocales];
 
 function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
-  return new MultiTranslateHttpLoader(http, [
-    {prefix: './assets/i18n/core/', suffix: '.json'},
-    {prefix: './assets/i18n/data/', suffix: '.json'},
-    {prefix: './assets/i18n/data-extracted/', suffix: '.json'},
-  ]);
+  const dirs = ['dict', 'modules', 'data', 'data-extracted'];
+  const resources = dirs.map(it => ({prefix: `./assets/i18n/${it}/`, suffix: '.json'}));
+  return new MultiTranslateHttpLoader(http, resources);
 }
 
 export const defaultLocale: Locale = allLocales[0].value;

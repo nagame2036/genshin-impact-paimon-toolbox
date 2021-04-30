@@ -1,63 +1,4 @@
 {
-  "path": {
-    "home": "首页",
-    "character": "角色",
-    "weapon": "武器",
-    "inventory": "背包",
-    "resin": "树脂",
-    "settings": "设置"
-  },
-  "dict": {
-    "errors": {
-      "404": "前面的区域，以后再来探索吧！"
-    },
-    "title": "派蒙工具箱",
-    "report-issue": "提交问题",
-    "pull-request": "帮助改进",
-    "menu": "菜单",
-    "now": "现在",
-    "and": "和",
-    "total-amount": "合计",
-    "all": "全部",
-    "close": "关闭",
-    "list-options": "列表显示",
-    "progress-list": "Box列表排序",
-    "info-list": "资料列表排序",
-    "set-list": "套装列表排序",
-    "resin": "树脂",
-    "none": "无",
-    "sort": "排序",
-    "minutes": "分钟",
-    "multi-select": "多选",
-    "select-all": "全选",
-    "confirm": "我已确定",
-    "cancel": "我再想想",
-    "return-previous-page": "返回上一页",
-    "rarity": "稀有度",
-    "type": "类型",
-    "character": "角色",
-    "constellation": "命座",
-    "ascend": "突破",
-    "ascension": "突破阶段",
-    "level": "等级",
-    "levelup": "升级",
-    "element": "属性",
-    "nation": "国家",
-    "stats-at-max-level": "满级属性",
-    "weapon": "武器",
-    "refine": "精炼",
-    "refine-rank": "精炼阶段",
-    "weapon-type": "武器类型",
-    "artifact": "圣遗物",
-    "artifact-type": "圣遗物类型",
-    "character-materials": "角色素材",
-    "talent-materials": "天赋素材",
-    "weapon-materials": "武器素材",
-    "enemies-materials": "掉落素材",
-    "ingredients": "特产及原料",
-    "talent": "天赋",
-    "enemy": "怪物"
-  },
   "modules": {
     "home": {
       "introduction": "本网站是原神的一些小工具集合，如果有想法、建议、想要的功能，或者发现了 bug，欢迎讨论、",
@@ -85,10 +26,7 @@
       "execute-all-plan": "拉满",
       "confirm-execute-plan": "将按照 {{ item }} 的 {{ plan }} 培养需求扣除库存",
       "total-requirement": "全部",
-      "item-not-selected": {
-        "1": "单击左侧{{ type }}可{{ click }}",
-        "2": "双击则可{{ doubleClick }}"
-      }
+      "item-not-selected": "单击左侧{{ type }}可{{ click }}<br/>双击则可{{ doubleClick }}"
     },
     "character": {
       "title": "角色列表",
@@ -122,6 +60,29 @@
         "detail-double-click": "查看武器详情"
       },
       "detail": "武器详情",
+      "plan": {
+        "title": "规划"
+      }
+    },
+    "artifact": {
+      "title": "圣遗物列表",
+      "reset": "重选圣遗物",
+      "add": "添加圣遗物",
+      "add-success": "成功添加圣遗物 - {{ name }}",
+      "remove": "移除圣遗物",
+      "summary": {
+        "info-click": "查看简略信息",
+        "add-double-click": "添加圣遗物",
+        "detail-double-click": "查看圣遗物详情"
+      },
+      "stats-type": "属性类型",
+      "stats-value": "属性数值",
+      "main-stats-type": "主属性类型",
+      "main-stats-value": "主属性数值",
+      "sub-stats-type": "副属性{{ num }}",
+      "sub-stats-display": "{{ type }}: +{{ value }}",
+      "detail": "圣遗物详情",
+      "piece": "{{ num }}件套",
       "plan": {
         "title": "规划"
       }
