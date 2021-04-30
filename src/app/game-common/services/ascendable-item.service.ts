@@ -9,17 +9,13 @@ import {ItemPlanService} from './item-plan.service';
 import {NGXLogger} from 'ngx-logger';
 import {AscensionLevel} from '../models/ascension-level.model';
 
-type AscendableItemInfoService<T extends Item<T>> = ItemInfoService<T, any> & {
+type AscendableItemInfoService<T extends Item<T>> = ItemInfoService<T> & {
   getStatsValue(info: T['info'], level: AscensionLevel): StatsValue;
 
   getRequireMaterials(info: T['info']): MaterialDetail[];
 };
 
-export abstract class AscendableItemService<
-  T extends Item<T>,
-  TO extends T,
-  TC = TO
-> extends ItemService<T, TO, TC> {
+export abstract class AscendableItemService<T extends Item<T>, TC = T> extends ItemService<T, TC> {
   protected constructor(
     private baseInfos: AscendableItemInfoService<T>,
     progress: ItemProgressService<T>,

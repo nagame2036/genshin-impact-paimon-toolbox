@@ -7,7 +7,7 @@ import {
   WeaponStatsCurveLevel,
   WeaponStatsValue,
 } from '../models/weapon-stats.model';
-import {Weapon, WeaponOverview} from '../models/weapon.model';
+import {Weapon} from '../models/weapon.model';
 import {StatsType, StatsValue} from '../../game-common/models/stats.model';
 import itemList from '../../../data/weapon/weapon-list.json';
 import statsLevel from '../../../data/weapon/weapon-stats-curve-level.json';
@@ -16,16 +16,17 @@ import {MaterialDetail} from '../../material/models/material.model';
 import {MaterialService} from '../../material/services/material.service';
 import {MaterialType} from '../../material/models/material-type.enum';
 import {TranslateService} from '@ngx-translate/core';
-import {allRefineRanks, RefineRank} from '../models/weapon-progress.model';
+import {allRefineRanks, RefineRank, WeaponProgress} from '../models/weapon-progress.model';
 import {I18n} from '../../widget/models/i18n.model';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ItemInfoService} from '../../game-common/services/item-info.service';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+import {WeaponPlan} from '../models/weapon-plan.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponInfoService extends ItemInfoService<Weapon, WeaponOverview> {
+export class WeaponInfoService extends ItemInfoService<Weapon> {
   readonly i18n = I18n.create('weapon');
 
   readonly infos = objectMap<WeaponInfo>(load(itemList));
@@ -54,11 +55,10 @@ export class WeaponInfoService extends ItemInfoService<Weapon, WeaponOverview> {
     logger.info('loaded stats curves for ascension', this.statsAscension);
   }
 
-  getOverview(item: Weapon): WeaponOverview {
-    const {info, progress, plan} = item;
+  refresh(info: WeaponInfo, progress: WeaponProgress, plan: WeaponPlan): Weapon {
     const currentStats = this.getStatsValue(info, progress);
     const planStats = this.getStatsValue(info, plan);
-    return {...item, currentStats, planStats};
+    return {info, progress, plan, currentStats, planStats};
   }
 
   getStatsValue({id, rarity, stats}: WeaponInfo, dependency: AscensionLevel): StatsValue {

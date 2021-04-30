@@ -13,9 +13,7 @@ export interface Weapon extends Item<Weapon> {
   progress: WeaponProgress;
 
   plan: WeaponPlan;
-}
 
-export interface WeaponOverview extends Weapon {
   currentStats: WeaponStatsValue;
 
   planStats: WeaponStatsValue;

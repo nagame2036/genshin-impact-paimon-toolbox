@@ -8,7 +8,7 @@ import {RequireDetail} from '../../material/models/requirement-detail.model';
 import {ItemType} from '../models/item-type.type';
 import {ItemInfoService} from './item-info.service';
 
-export abstract class ItemService<T extends Item<T>, TO extends T, TC = TO> {
+export abstract class ItemService<T extends Item<T>, TC = T> {
   type: ItemType;
 
   protected readonly items = new Map<number, T>();
@@ -19,14 +19,14 @@ export abstract class ItemService<T extends Item<T>, TO extends T, TC = TO> {
 
   readonly infosAddable = this.infosAddable$.asObservable();
 
-  protected readonly itemsInProgress$ = new ReplaySubject<TO[]>(1);
+  protected readonly itemsInProgress$ = new ReplaySubject<T[]>(1);
 
   readonly itemsInProgress = this.itemsInProgress$.asObservable();
 
   protected updated = new ReplaySubject(1);
 
   protected constructor(
-    private infos$: ItemInfoService<T, TO>,
+    private infos$: ItemInfoService<T>,
     private progresses$: ItemProgressService<T>,
     private planner$: ItemPlanService<T>,
     protected logger: NGXLogger,
@@ -41,7 +41,7 @@ export abstract class ItemService<T extends Item<T>, TO extends T, TC = TO> {
     combineLatest([infos$.getIgnoredIds(), this.updated]).subscribe(([ignored]) => {
       const items = [...this.items.values()]
         .filter(it => !ignored.has(it.info.id))
-        .map(it => this.getOverview(it));
+        .map(it => this.refresh(it));
       this.itemsInProgress$.next(items);
       this.infosAddable$.next(this.getAddableInfos(ignored));
     });
@@ -62,12 +62,12 @@ export abstract class ItemService<T extends Item<T>, TO extends T, TC = TO> {
     );
   }
 
-  getOverview(item: T): TO {
-    return this.infos$.getOverview(item);
-  }
-
   getRequireDetails(item: T): Observable<RequireDetail[]> {
     return this.planner$.getRequireDetails(item);
+  }
+
+  refresh({info, plan, progress}: T): T {
+    return this.infos$.refresh(info, progress, plan);
   }
 
   update(item: T): void {
@@ -92,10 +92,10 @@ export abstract class ItemService<T extends Item<T>, TO extends T, TC = TO> {
 
   protected abstract initItems(): void;
 
-  protected createItem(info: T['info'], meta: Partial<T['progress']>): TO {
+  protected createItem(info: T['info'], meta: Partial<T['progress']>): T {
     const progress = this.progresses$.create(info, meta);
     const plan = this.planner$.create(info, meta);
-    return this.getOverview({info, progress, plan} as T);
+    return this.infos$.refresh(info, progress, plan);
   }
 
   protected getAddableInfos(ignoreIds: Set<number>): T['info'][] {

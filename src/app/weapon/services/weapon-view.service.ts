@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {WeaponOverview} from '../models/weapon.model';
+import {Weapon} from '../models/weapon.model';
 import {allWeaponRarities, WeaponInfo} from '../models/weapon-info.model';
 import {allWeaponTypes, WeaponType} from '../models/weapon-type.type';
 import {I18n} from '../../widget/models/i18n.model';
@@ -24,7 +24,7 @@ const statsTypes: StatsType[] = [
   'EM',
 ];
 
-const sortMap = new Map<string, ItemSort<WeaponOverview>>([
+const sortMap = new Map<string, ItemSort<Weapon>>([
   [
     i18n.dict('level'),
     ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level,
@@ -41,7 +41,7 @@ const infoSortMap = new Map<string, ItemSort<WeaponInfo>>([
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponViewService extends ItemViewService<WeaponOverview, WeaponViewOptions> {
+export class WeaponViewService extends ItemViewService<Weapon, WeaponViewOptions> {
   readonly rarities = allWeaponRarities.map(it => ({value: it, text: `★${it}`}));
 
   readonly types = allWeaponTypes.map(it => ({value: it, text: i18n.data(`weapon-type.${it}`)}));
@@ -77,7 +77,7 @@ export class WeaponViewService extends ItemViewService<WeaponOverview, WeaponVie
   }
 }
 
-function generateSorts(types: StatsType[]): [string, ItemSort<WeaponOverview>][] {
+function generateSorts(types: StatsType[]): [string, ItemSort<Weapon>][] {
   return types.map(type => [
     i18n.stats(type),
     (a, b) => b.currentStats.get(type) - a.currentStats.get(type),

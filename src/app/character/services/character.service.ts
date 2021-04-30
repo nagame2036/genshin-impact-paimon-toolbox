@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Character, CharacterOverview} from '../models/character.model';
+import {Character} from '../models/character.model';
 import {CharacterInfo} from '../models/character-info.model';
 import {NGXLogger} from 'ngx-logger';
 import {CharacterInfoService} from './character-info.service';
@@ -12,7 +12,7 @@ import {AscendableItemService} from '../../game-common/services/ascendable-item.
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterService extends AscendableItemService<Character, CharacterOverview> {
+export class CharacterService extends AscendableItemService<Character> {
   constructor(
     private infos: CharacterInfoService,
     private progresses: CharacterProgressService,
@@ -23,7 +23,7 @@ export class CharacterService extends AscendableItemService<Character, Character
     super(infos, progresses, planner, logger);
   }
 
-  create(info: CharacterInfo): CharacterOverview {
+  create(info: CharacterInfo): Character {
     const meta = {id: info.id};
     return this.createItem(info, meta);
   }
@@ -34,7 +34,7 @@ export class CharacterService extends AscendableItemService<Character, Character
     for (const [id, progress] of this.progresses.progresses) {
       const [info, plan] = [infos.get(id), plans.get(id)];
       if (info && plan) {
-        this.items.set(id, {info, progress, plan});
+        this.items.set(id, this.infos.refresh(info, progress, plan));
       }
     }
   }

@@ -13,9 +13,7 @@ export interface Character extends Item<Character> {
   progress: CharacterProgress;
 
   plan: CharacterPlan;
-}
 
-export interface CharacterOverview extends Character {
   currentStats: CharacterStatsValue;
 
   planStats: CharacterStatsValue;

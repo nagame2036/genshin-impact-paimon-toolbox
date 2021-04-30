@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Weapon, WeaponOverview} from '../models/weapon.model';
+import {Weapon} from '../models/weapon.model';
 import {WeaponInfo} from '../models/weapon-info.model';
 import {WeaponInfoService} from './weapon-info.service';
 import {WeaponProgressService} from './weapon-progress.service';
@@ -14,7 +14,7 @@ import {AscendableItemService} from '../../game-common/services/ascendable-item.
 @Injectable({
   providedIn: 'root',
 })
-export class WeaponService extends AscendableItemService<Weapon, WeaponOverview> {
+export class WeaponService extends AscendableItemService<Weapon> {
   constructor(
     private infos: WeaponInfoService,
     private progresses: WeaponProgressService,
@@ -25,7 +25,7 @@ export class WeaponService extends AscendableItemService<Weapon, WeaponOverview>
     super(infos, progresses, planner, logger);
   }
 
-  create(info: WeaponInfo): WeaponOverview {
+  create(info: WeaponInfo): Weapon {
     const meta = {id: generateItemId(this.type)};
     return this.createItem(info, meta);
   }
@@ -40,7 +40,7 @@ export class WeaponService extends AscendableItemService<Weapon, WeaponOverview>
     for (const [id, progress] of this.progresses.progresses) {
       const [info, plan] = [infos.get(progress.infoId), plans.get(id)];
       if (info && plan) {
-        this.items.set(id, {info, progress, plan});
+        this.items.set(id, this.infos.refresh(info, progress, plan));
       }
     }
   }

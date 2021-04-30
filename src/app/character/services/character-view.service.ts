@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CharacterOverview} from '../models/character.model';
+import {Character} from '../models/character.model';
 import {allCharacterRarities, CharacterInfo} from '../models/character-info.model';
 import {allElements, ElementType} from '../../game-common/models/element-type.type';
 import {allWeaponTypes, WeaponType} from '../../weapon/models/weapon-type.type';
@@ -12,7 +12,7 @@ import {CharacterService} from './character.service';
 
 const i18n = I18n.create('character');
 
-const sortMap = new Map<string, ItemSort<CharacterOverview>>([
+const sortMap = new Map<string, ItemSort<Character>>([
   [
     i18n.dict('level'),
     ({progress: a}, {progress: b}) => b.ascension - a.ascension || b.level - a.level,
@@ -28,7 +28,7 @@ const infoSortMap = new Map<string, ItemSort<CharacterInfo>>([
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterViewService extends ItemViewService<CharacterOverview, CharacterViewOptions> {
+export class CharacterViewService extends ItemViewService<Character, CharacterViewOptions> {
   readonly rarities = allCharacterRarities.map(it => ({value: it, text: `★${it}`}));
 
   readonly elements = allElements.map(it => ({

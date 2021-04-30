@@ -29,6 +29,10 @@ export class AscensionLevelService {
     return ascended ? `${level}+` : `${level}`;
   }
 
+  less(left: AscensionLevel, right: AscensionLevel): boolean {
+    return left.ascension < right.ascension || left.level < right.level;
+  }
+
   correct(curr: AscensionLevel, start?: AscensionLevel): AscensionLevelData {
     const ascensionRange = [...this.ascensionRange] as [Ascension, Ascension];
     if (start) {

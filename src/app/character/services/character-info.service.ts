@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {load, objectMap} from '../../shared/utils/json';
 import {unionMap} from '../../shared/utils/collections';
 import {CharacterStatsCurveLevel, CharacterStatsValue} from '../models/character-stats.model';
-import {Character, CharacterOverview} from '../models/character.model';
+import {Character} from '../models/character.model';
 import {StatsType, StatsValue} from '../../game-common/models/stats.model';
 import itemList from '../../../data/character/character-list.json';
 import statsCurvesLevel from '../../../data/character/character-stats-curve-level.json';
@@ -19,11 +19,13 @@ import {MaterialDetail} from '../../material/models/material.model';
 import {MaterialType} from '../../material/models/material-type.enum';
 import {ItemInfoService} from '../../game-common/services/item-info.service';
 import {AscensionLevel} from '../../game-common/models/ascension-level.model';
+import {CharacterProgress} from '../models/character-progress.model';
+import {CharacterPlan} from '../models/character-plan.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterInfoService extends ItemInfoService<Character, CharacterOverview> {
+export class CharacterInfoService extends ItemInfoService<Character> {
   readonly infos = objectMap<CharacterInfo>(load(itemList));
 
   readonly travelersGendered = new Map([
@@ -85,11 +87,10 @@ export class CharacterInfoService extends ItemInfoService<Character, CharacterOv
     );
   }
 
-  getOverview(item: Character): CharacterOverview {
-    const {info, progress, plan} = item;
+  refresh(info: CharacterInfo, progress: CharacterProgress, plan: CharacterPlan): Character {
     const currentStats = this.getStatsValue(info, progress);
     const planStats = this.getStatsValue(info, plan);
-    return {...item, currentStats, planStats};
+    return {info, progress, plan, currentStats, planStats};
   }
 
   getStatsValue(info: CharacterInfo, dependency: AscensionLevel): StatsValue {

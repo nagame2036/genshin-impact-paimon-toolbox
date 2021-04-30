@@ -8,7 +8,7 @@ import {ItemType} from '../models/item-type.type';
 
 export type ItemSort<T> = (a: T, b: T) => number;
 
-export abstract class ItemViewService<T extends Item<any>, Options extends ItemViewOptions> {
+export abstract class ItemViewService<T extends Item<T>, Options extends ItemViewOptions> {
   readonly sorts = this.getOptions(this.sortMap);
 
   readonly infoSorts = this.getOptions(this.infoSortMap);
