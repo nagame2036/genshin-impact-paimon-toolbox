@@ -3,16 +3,16 @@ import {SelectOption} from '../../models/select-option.model';
 import {toggleItem} from '../../../shared/utils/collections';
 import {TranslateService} from '@ngx-translate/core';
 import {I18n} from '../../models/i18n.model';
-import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
-import {takeUntil} from 'rxjs/operators';
 import {SettingService} from '../../../setting/services/setting.service';
+import {WithLocale} from '../../../setting/abstract/with-locale';
+import {Locale} from '../../../app-locale.module';
 
 @Component({
   selector: 'app-multi-select',
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
 })
-export class MultiSelectComponent extends AbstractObservableDirective implements OnInit {
+export class MultiSelectComponent extends WithLocale implements OnInit {
   i18n = I18n.create('shared.multi-select');
 
   @Input()
@@ -34,14 +34,13 @@ export class MultiSelectComponent extends AbstractObservableDirective implements
   @Output()
   changed = new EventEmitter<any[]>();
 
-  constructor(private translator: TranslateService, private settings: SettingService) {
-    super();
+  constructor(private translator: TranslateService, settings: SettingService) {
+    super(settings);
   }
 
   ngOnInit(): void {
     this.optionsValues = this.options.map(it => it.value);
-    this.updateValueText();
-    this.settings.locale.pipe(takeUntil(this.destroy$)).subscribe(() => this.updateValueText());
+    this.listenLocaleChange();
   }
 
   change({value}: SelectOption): void {
@@ -71,5 +70,9 @@ export class MultiSelectComponent extends AbstractObservableDirective implements
     this.value = this.value.length === this.options.length ? [] : this.optionsValues;
     this.updateValueText();
     this.changed.emit(this.value);
+  }
+
+  protected onLocaleChange(locale: Locale): void {
+    this.updateValueText();
   }
 }

@@ -1,26 +1,14 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {DatetimeService} from '../../services/datetime.service';
-import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
-import {takeUntil} from 'rxjs/operators';
+import {WithOnDestroy} from '../../../shared/abstract/on-destroy';
 
 @Component({
   selector: 'app-datetime-picker',
   templateUrl: './datetime-picker.component.html',
   styleUrls: ['./datetime-picker.component.scss'],
 })
-export class DatetimePickerComponent
-  extends AbstractObservableDirective
-  implements OnChanges {
+export class DatetimePickerComponent extends WithOnDestroy implements OnChanges {
   i18n = I18n.create('widget');
 
   @Input()
@@ -44,9 +32,9 @@ export class DatetimePickerComponent
 
   opened = false;
 
-  constructor(public service: DatetimeService, private self: ElementRef) {
+  constructor(public service: DatetimeService) {
     super();
-    service.weekdays.pipe(takeUntil(this.destroy$)).subscribe(_ => this.updateCalendar());
+    service.weekdays.pipe(this.untilDestroy()).subscribe(_ => this.updateCalendar());
   }
 
   ngOnChanges(changes: SimpleChanges): void {

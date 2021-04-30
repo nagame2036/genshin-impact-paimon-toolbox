@@ -23,8 +23,12 @@ export class I18n {
     return `modules.${this.moduleName}.${key}`;
   }
 
+  param(key: string): string {
+    return `${I18n.paramPrefix}${key}`;
+  }
+
   pModule(key: string): string {
-    return `${I18n.paramPrefix}${this.module(key)}`;
+    return this.param(this.module(key));
   }
 
   dict(key: string): string {
@@ -32,7 +36,7 @@ export class I18n {
   }
 
   pDict(key: string): string {
-    return `${I18n.paramPrefix}${this.dict(key)}`;
+    return this.param(this.dict(key));
   }
 
   data(...keys: any[]): string {
@@ -40,10 +44,14 @@ export class I18n {
   }
 
   stats(key: string): string {
-    return `data.stats.${key}`;
+    return key === 'none' ? this.dict('none') : this.data(`stats.${key}`);
+  }
+
+  pStats(type: string | 'none'): string {
+    return this.param(this.stats(type));
   }
 
   error(key: string): string {
-    return `dict.errors.${key}`;
+    return this.dict(`errors.${key}`);
   }
 }

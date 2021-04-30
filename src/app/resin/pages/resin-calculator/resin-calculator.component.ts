@@ -2,17 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '../../../widget/models/i18n.model';
 import {ResinService} from '../../services/resin.service';
 import {rangeList} from '../../../shared/utils/range-list';
-import {AbstractObservableDirective} from '../../../shared/directives/abstract-observable.directive';
-import {takeUntil} from 'rxjs/operators';
 import {combineLatest, timer} from 'rxjs';
 import {SettingService} from '../../../setting/services/setting.service';
+import {WithOnDestroy} from '../../../shared/abstract/on-destroy';
 
 @Component({
   selector: 'app-resin-calculator',
   templateUrl: './resin-calculator.component.html',
   styleUrls: ['./resin-calculator.component.scss'],
 })
-export class ResinCalculatorComponent extends AbstractObservableDirective implements OnInit {
+export class ResinCalculatorComponent extends WithOnDestroy implements OnInit {
   i18n = I18n.create('resin');
 
   currentResin = 0;
@@ -33,7 +32,7 @@ export class ResinCalculatorComponent extends AbstractObservableDirective implem
 
   ngOnInit(): void {
     combineLatest([timer(0, 10_000), this.settings.locale])
-      .pipe(takeUntil(this.destroy$))
+      .pipe(this.untilDestroy())
       .subscribe(_ => this.updateAll());
   }
 

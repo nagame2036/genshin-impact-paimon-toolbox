@@ -12,6 +12,9 @@ export class InputFieldComponent {
   @Input()
   value = '';
 
+  @Input()
+  readOnly = false;
+
   hover = false;
 
   focus = false;

@@ -17,6 +17,7 @@
       type="text"
       [value]="value"
       [disabled]="disabled"
+      [readOnly]="readOnly"
       (input)="inputted.emit((value = field.value))"
       (change)="changed.emit((value = field.value))"
     />

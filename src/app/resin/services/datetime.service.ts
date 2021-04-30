@@ -3,6 +3,7 @@ import {ReplaySubject} from 'rxjs';
 import {SettingService} from '../../setting/services/setting.service';
 import {Locale} from '../../app-locale.module';
 import {rangeList} from '../../shared/utils/range-list';
+import {WithLocale} from '../../setting/abstract/with-locale';
 
 const relateDateFormat = {month: 'short', day: 'numeric'};
 
@@ -15,7 +16,7 @@ const weekdayDates = rangeList(4, 10)
 @Injectable({
   providedIn: 'root',
 })
-export class DatetimeService {
+export class DatetimeService extends WithLocale {
   currentLocale = this.settings.defaultLocale;
 
   weekdays = new ReplaySubject<string[]>(1);
@@ -39,13 +40,9 @@ export class DatetimeService {
 
   yearMonthFormat!: Intl.DateTimeFormat;
 
-  constructor(private settings: SettingService) {
-    this.updateFormatters(this.currentLocale);
-    settings.locale.subscribe(locale => {
-      this.currentLocale = locale;
-      this.updateFormatters(locale);
-      this.emitWeekdays(locale);
-    });
+  constructor(settings: SettingService) {
+    super(settings);
+    this.listenLocaleChange();
   }
 
   is(source: Date, yearMonth: Date, day: number): boolean {
@@ -79,6 +76,12 @@ export class DatetimeService {
     const daysCurrMonthCount = new Date(year, month + 1, 0).getDate();
     const daysCurrMonth = rangeList(1, daysCurrMonthCount).reverse();
     return [daysPrevMonth, daysCurrMonth];
+  }
+
+  protected onLocaleChange(locale: Locale): void {
+    this.currentLocale = locale;
+    this.updateFormatters(locale);
+    this.emitWeekdays(locale);
   }
 
   private updateFormatters(locale: Locale): void {
