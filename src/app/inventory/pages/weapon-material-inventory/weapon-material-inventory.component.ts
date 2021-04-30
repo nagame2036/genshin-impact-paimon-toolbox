@@ -3,14 +3,14 @@ import {MaterialViewService} from '../../../material/services/material-view.serv
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MaterialListData} from '../../../material/models/material-list-data.model';
-import {AbstractSubInventoryDirective} from '../../directives/abstract-sub-inventory.directive';
+import {WithInventory} from '../../abstract/inventory';
 
 @Component({
   selector: 'app-weapon-material-inventory',
   templateUrl: './weapon-material-inventory.component.html',
   styleUrls: ['./weapon-material-inventory.component.scss'],
 })
-export class WeaponMaterialInventoryComponent extends AbstractSubInventoryDirective {
+export class WeaponMaterialInventoryComponent extends WithInventory {
   types = [
     [MaterialType.WEAPON_EXP],
     [MaterialType.WEAPON_147],
@@ -22,12 +22,7 @@ export class WeaponMaterialInventoryComponent extends AbstractSubInventoryDirect
     super(view);
   }
 
-  getMaterials([
-    common,
-    monThu,
-    tueFri,
-    wedSat,
-  ]: MaterialDetail[][]): MaterialListData[] {
+  getMaterials([common, monThu, tueFri, wedSat]: MaterialDetail[][]): MaterialListData[] {
     return [
       {type: 'common', materials: common},
       {type: '1/4/7', materials: monThu},

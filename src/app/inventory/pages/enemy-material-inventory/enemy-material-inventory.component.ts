@@ -3,14 +3,14 @@ import {MaterialViewService} from '../../../material/services/material-view.serv
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MaterialListData} from '../../../material/models/material-list-data.model';
-import {AbstractSubInventoryDirective} from '../../directives/abstract-sub-inventory.directive';
+import {WithInventory} from '../../abstract/inventory';
 
 @Component({
   selector: 'app-enemy-material-inventory',
   templateUrl: './enemy-material-inventory.component.html',
   styleUrls: ['./enemy-material-inventory.component.scss'],
 })
-export class EnemyMaterialInventoryComponent extends AbstractSubInventoryDirective {
+export class EnemyMaterialInventoryComponent extends WithInventory {
   types = [[MaterialType.ENEMY_MOB], [MaterialType.ENEMY_ELITE]];
 
   constructor(view: MaterialViewService) {

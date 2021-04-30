@@ -3,14 +3,14 @@ import {MaterialViewService} from '../../../material/services/material-view.serv
 import {MaterialType} from '../../../material/models/material-type.enum';
 import {MaterialDetail} from '../../../material/models/material.model';
 import {MaterialListData} from '../../../material/models/material-list-data.model';
-import {AbstractSubInventoryDirective} from '../../directives/abstract-sub-inventory.directive';
+import {WithInventory} from '../../abstract/inventory';
 
 @Component({
   selector: 'app-talent-material-inventory',
   templateUrl: './talent-material-inventory.component.html',
   styleUrls: ['./talent-material-inventory.component.scss'],
 })
-export class TalentMaterialInventoryComponent extends AbstractSubInventoryDirective {
+export class TalentMaterialInventoryComponent extends WithInventory {
   types = [
     [MaterialType.TALENT_COMMON],
     [MaterialType.TALENT_147],
@@ -22,12 +22,7 @@ export class TalentMaterialInventoryComponent extends AbstractSubInventoryDirect
     super(view);
   }
 
-  getMaterials([
-    common,
-    monThu,
-    tueFri,
-    wedSat,
-  ]: MaterialDetail[][]): MaterialListData[] {
+  getMaterials([common, monThu, tueFri, wedSat]: MaterialDetail[][]): MaterialListData[] {
     return [
       {type: 'common', materials: common},
       {type: '1/4/7', materials: monThu},
